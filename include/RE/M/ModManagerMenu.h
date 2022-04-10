@@ -32,10 +32,16 @@ namespace RE
 		void Call(Params& a_params) override;  // 01
 
 		// members
+#if !defined(ENABLE_SKYRIM_VR) || (!defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE))
 		std::uint8_t  unk50;  // 50
 		std::uint8_t  pad51;  // 51
 		std::uint16_t pad52;  // 52
 		std::uint32_t pad54;  // 54
+#endif
 	};
+#ifndef ENABLE_SKYRIM_VR
 	static_assert(sizeof(ModManagerMenu) == 0x58);
+#elif !defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE)
+	static_assert(sizeof(ModManagerMenu) == 0x68);
+#endif
 }

@@ -38,9 +38,13 @@ namespace RE
 	float TESForm::GetWeight() const
 	{
 		const auto survival = []() {
+			if (REL::Module::get().IsVR()) {
+				return false;
+			}
+
 			const auto dobj = BGSDefaultObjectManager::GetSingleton();
-			const auto survival = dobj ? dobj->GetObject<TESGlobal>(DEFAULT_OBJECT::kSurvivalModeEnabled) : nullptr;
-			return survival ? survival->value == 1.0F : false;
+			const auto survival = dobj ? dobj->GetObject<TESGlobal>(DefaultObjectID::kSurvivalModeEnabled) : nullptr;
+			return survival && *survival ? (*survival)->value == 1.0F : false;
 		};
 
 		const auto ref = As<TESObjectREFR>();

@@ -23,6 +23,13 @@ namespace RE
 		inline static auto                RTTI = RTTI_CreationClubMenu;
 		constexpr static std::string_view MENU_NAME = "Creation Club Menu";
 
+		struct RUNTIME_DATA
+		{
+			ImageData background;  // 0
+			ImageData details;     // 18
+		};
+		static_assert(sizeof(RUNTIME_DATA) == 0x30);
+
 		~CreationClubMenu() override;  // 00
 
 		// override (IMenu)
@@ -38,9 +45,24 @@ namespace RE
 		// override (BSTEventSink<MenuOpenCloseEvent>)
 		BSEventNotifyControl ProcessEvent(const MenuOpenCloseEvent* a_event, BSTEventSource<MenuOpenCloseEvent>* a_eventSource) override;  // 01
 
+		[[nodiscard]] inline RUNTIME_DATA& GetRuntimeData() noexcept
+		{
+			return REL::RelocateMember<RUNTIME_DATA>(this, 0x58, 0x68);
+		}
+
+		[[nodiscard]] inline const RUNTIME_DATA& GetRuntimeData() const noexcept
+		{
+			return REL::RelocateMember<RUNTIME_DATA>(this, 0x58, 0x68);
+		}
+
 		// members
-		ImageData background;  // 58
-		ImageData details;     // 70
+#if !defined(ENABLE_SKYRIM_VR) || (!defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE))
+		RUNTIME_DATA runtimeData; // 58, 68
+#endif
 	};
+#ifndef ENABLE_SKYRIM_VR
 	static_assert(sizeof(CreationClubMenu) == 0x88);
+#elif !defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE)
+	static_assert(sizeof(CreationClubMenu) == 0x98);
+#endif
 }

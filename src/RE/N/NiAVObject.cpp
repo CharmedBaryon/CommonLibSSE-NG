@@ -29,7 +29,7 @@ namespace RE
 
 	bool NiAVObject::GetAppCulled() const
 	{
-		return flags.all(Flag::kHidden);
+		return GetFlags().all(Flag::kHidden);
 	}
 
 	bhkCollisionObject* NiAVObject::GetCollisionObject() const
@@ -44,7 +44,7 @@ namespace RE
 		BSGeometry* firstGeometry = nullptr;
 
 		BSVisit::TraverseScenegraphGeometries(this, [&](BSGeometry* a_geometry) -> BSVisit::BSVisitControl {
-			auto effect = a_geometry->properties[BSGeometry::States::kEffect];
+			auto effect = a_geometry->GetRuntimeData().properties[BSGeometry::States::kEffect];
 			auto lightingShader = netimmerse_cast<BSLightingShaderProperty*>(effect.get());
 			if (lightingShader) {
 				if (a_type == BSShaderMaterial::Feature::kNone) {
@@ -66,8 +66,9 @@ namespace RE
 
 	TESObjectREFR* NiAVObject::GetUserData() const
 	{
-		if (userData) {
-			return userData;
+		auto* thisUserData = REL::RelocateMember<RE::TESObjectREFR*>(this, 0x0F8, 0x100);
+		if (thisUserData) {
+			return thisUserData;
 		}
 
 		if (parent) {
@@ -88,7 +89,7 @@ namespace RE
 		bool hasShaderType = false;
 
 		BSVisit::TraverseScenegraphGeometries(this, [&](BSGeometry* a_geometry) -> BSVisit::BSVisitControl {
-			auto effect = a_geometry->properties[BSGeometry::States::kEffect];
+			auto effect = a_geometry->GetRuntimeData().properties[BSGeometry::States::kEffect];
 			auto lightingShader = netimmerse_cast<BSLightingShaderProperty*>(effect.get());
 			if (lightingShader) {
 				auto material = lightingShader->material;
@@ -112,7 +113,7 @@ namespace RE
 
 	void NiAVObject::SetAppCulled(bool a_cull)
 	{
-		a_cull ? flags.set(Flag::kHidden) : flags.reset(Flag::kHidden);
+		a_cull ? GetFlags().set(Flag::kHidden) : GetFlags().reset(Flag::kHidden);
 	}
 
 	void NiAVObject::SetCollisionLayer(COL_LAYER a_collisionLayer)
@@ -145,7 +146,7 @@ namespace RE
 			using Flag8 = BSShaderProperty::EShaderPropertyFlag8;
 			using Feature = BSShaderMaterial::Feature;
 
-			auto effect = a_geometry->properties[BSGeometry::States::kEffect];
+			auto effect = a_geometry->GetRuntimeData().properties[BSGeometry::States::kEffect];
 			auto lightingShader = netimmerse_cast<BSLightingShaderProperty*>(effect.get());
 			if (lightingShader) {
 				if (lightingShader->flags.any(Flag::kSkinned) || lightingShader->flags.any(Flag::kTreeAnim) || lightingShader->flags.any(Flag::kBackLighting)) {
@@ -184,7 +185,7 @@ namespace RE
 		newShaderData->baseTexture = gState->defaultTextureWhite;
 
 		BSVisit::TraverseScenegraphGeometries(this, [&](BSGeometry* a_geometry) -> BSVisit::BSVisitControl {
-			auto effect = a_geometry->properties[BSGeometry::States::kEffect];
+			auto effect = a_geometry->GetRuntimeData().properties[BSGeometry::States::kEffect];
 			auto shaderProp = netimmerse_cast<BSShaderProperty*>(effect.get());
 			if (shaderProp && shaderProp->AcceptsEffectData()) {
 				auto shaderData = shaderProp->effectData;
@@ -210,7 +211,7 @@ namespace RE
 			using State = BSGeometry::States;
 			using Feature = BSShaderMaterial::Feature;
 
-			auto effect = a_geometry->properties[State::kEffect].get();
+			auto effect = a_geometry->GetRuntimeData().properties[State::kEffect].get();
 			if (effect) {
 				auto lightingShader = netimmerse_cast<BSLightingShaderProperty*>(effect);
 				if (lightingShader) {
@@ -232,7 +233,7 @@ namespace RE
 			using State = BSGeometry::States;
 			using Feature = BSShaderMaterial::Feature;
 
-			auto effect = a_geometry->properties[State::kEffect].get();
+			auto effect = a_geometry->GetRuntimeData().properties[State::kEffect].get();
 			if (effect) {
 				auto lightingShader = netimmerse_cast<BSLightingShaderProperty*>(effect);
 				if (lightingShader) {
@@ -254,7 +255,7 @@ namespace RE
 			using State = BSGeometry::States;
 			using Feature = BSShaderMaterial::Feature;
 
-			auto effect = a_geometry->properties[State::kEffect].get();
+			auto effect = a_geometry->GetRuntimeData().properties[State::kEffect].get();
 			if (effect) {
 				auto lightingShader = netimmerse_cast<BSLightingShaderProperty*>(effect);
 				if (lightingShader) {
@@ -279,5 +280,80 @@ namespace RE
 		using func_t = decltype(&NiAVObject::UpdateRigidConstraints);
 		REL::Relocation<func_t> func{ REL::RelocationID(76271, 78103) };
 		return func(this, a_enable, a_arg2, a_arg3);
+	}
+
+	void NiAVObject::PerformOp(PerformOpFunc& a_func)
+	{
+		REL::RelocateVirtual<decltype(&NiAVObject::PerformOp)>(0x03, 0x04, this, a_func);
+	}
+
+	void NiAVObject::AttachProperty(NiAlphaProperty* a_property)
+	{
+		REL::RelocateVirtual<decltype(&NiAVObject::AttachProperty)>(0x04, 0x05, this, a_property);
+	}
+
+	void NiAVObject::SetMaterialNeedsUpdate(bool a_needsUpdate)
+	{
+		REL::RelocateVirtual<decltype(&NiAVObject::SetMaterialNeedsUpdate)>(0x05, 0x06, this, a_needsUpdate);
+	}
+
+	void NiAVObject::SetDefaultMaterialNeedsUpdateFlag(bool a_flag)
+	{
+		REL::RelocateVirtual<decltype(&NiAVObject::SetDefaultMaterialNeedsUpdateFlag)>(0x06, 0x07, this, a_flag);
+	}
+
+	NiAVObject* NiAVObject::GetObjectByName(const BSFixedString& a_name)
+	{
+		return REL::RelocateVirtual<decltype(&NiAVObject::GetObjectByName)>(0x07, 0x08, this, a_name);
+	}
+
+	void NiAVObject::SetSelectiveUpdateFlags(bool& a_selectiveUpdate, bool a_selectiveUpdateTransforms, bool& a_rigid)
+	{
+		return REL::RelocateVirtual<decltype(&NiAVObject::SetSelectiveUpdateFlags)>(0x08, 0x09, this, a_selectiveUpdate, a_selectiveUpdateTransforms, a_rigid);
+	}
+
+	void NiAVObject::UpdateDownwardPass(NiUpdateData& a_data, std::uint32_t a_arg2)
+	{
+		REL::RelocateVirtual<decltype(&NiAVObject::UpdateDownwardPass)>(0x09, 0x0A, this, a_data, a_arg2);
+	}
+
+	void NiAVObject::UpdateSelectedDownwardPass(NiUpdateData& a_data, std::uint32_t a_arg2)
+	{
+		REL::RelocateVirtual<decltype(&NiAVObject::UpdateSelectedDownwardPass)>(0x0A, 0x0B, this, a_data, a_arg2);
+	}
+
+	void NiAVObject::UpdateRigidDownwardPass(NiUpdateData& a_data, std::uint32_t a_arg2)
+	{
+		REL::RelocateVirtual<decltype(&NiAVObject::UpdateRigidDownwardPass)>(0x0B, 0x0C, this, a_data, a_arg2);
+	}
+
+	void NiAVObject::UpdateWorldBound()
+	{
+		REL::RelocateVirtual<decltype(&NiAVObject::UpdateWorldBound)>(0x0C, 0x0D, this);
+	}
+
+	void NiAVObject::UpdateWorldData(NiUpdateData* a_data)
+	{
+		REL::RelocateVirtual<decltype(&NiAVObject::UpdateWorldData)>(0x0D, 0x0E, this, a_data);
+	}
+
+	void NiAVObject::UpdateTransformAndBounds(NiUpdateData& a_data)
+	{
+		REL::RelocateVirtual<decltype(&NiAVObject::UpdateTransformAndBounds)>(0x0E, 0x0F, this, a_data);
+	}
+
+	void NiAVObject::PreAttachUpdate(NiNode* a_parent, NiUpdateData& a_data)
+	{
+		REL::RelocateVirtual<decltype(&NiAVObject::PreAttachUpdate)>(0x0F, 0x10, this, a_parent, a_data);
+	}
+
+	void NiAVObject::PostAttachUpdate()
+	{
+		REL::RelocateVirtual<decltype(&NiAVObject::PostAttachUpdate)>(0x10, 0x11, this);
+	}
+
+	void NiAVObject::OnVisible(NiCullingProcess& a_process)
+	{
+		REL::RelocateVirtual<decltype(&NiAVObject::OnVisible)>(0x11, 0x12, this, a_process);
 	}
 }

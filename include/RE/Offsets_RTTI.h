@@ -5682,7 +5682,10 @@ namespace RE
 	inline REL::ID RTTI_std__exception(REL::RelocationID(691525, 399502));
 	inline REL::ID RTTI_std__ios_base(REL::RelocationID(685326, 393103));
 	inline REL::ID RTTI_type_info(REL::RelocationID(692140, 400185));
-#ifdef SKYRIM_FORCE_AE
+#if !defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE)
+	// VR-specific offsets.
+	inline constexpr REL::Offset RTTI_WorldSpaceMenu(0x01EFE318);
+#elif !defined(ENABLE_SKYRIM_SE) && !defined(ENABLE_SKYRIM_VR)
 	inline REL::ID RTTI_AStarSearch_BSFastNavmeshTriLocation_void_3_(REL::ID(393953));
 	inline REL::ID RTTI_AStarSearch_BSNavmeshInfoconst_BSTSmartPointer_BSPathingDoor_BSTSmartPointerIntrusiveRefCount__22_(REL::ID(398950));
 	inline REL::ID RTTI_AutoRegisterCombatObject_CombatInventoryItemMagicT_CombatInventoryItemMagic_CombatMagicCasterArmor__(REL::ID(395598));
@@ -7960,7 +7963,7 @@ namespace RE
 	inline REL::ID RTTI_void___DownloadableContent__DownloadableContentResult_charconst_(REL::ID(394224));
 	inline REL::ID RTTI_void___Upsell__UpsellResult_bool_(REL::ID(396725));
 	inline REL::ID RTTI_void___charconst_bool_(REL::ID(396726));
-#elif defined(SKYRIM_FORCE_SE) || defined(SKYRIM_FORCE_VR)
+#elif !defined(ENABLE_SKYRIM_AE)
 	inline REL::ID RTTI_AStarSearch_BSFastNavmeshTriLocation_void_____ptr64_3_(REL::ID(686144));
 	inline REL::ID RTTI_AStarSearch_BSNavmeshInfo_const_____ptr64_BSTSmartPointer_BSPathingDoor_BSTSmartPointerIntrusiveRefCount__22_(REL::ID(691095));
 	inline REL::ID RTTI_AutoRegisterCombatObject_CombatInventoryItemMagicT_CombatInventoryItemMagic_CombatMagicCasterArmor___(REL::ID(687945));

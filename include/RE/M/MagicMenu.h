@@ -17,6 +17,19 @@ namespace RE
 		inline static auto                RTTI = RTTI_MagicMenu;
 		constexpr static std::string_view MENU_NAME = "MagicMenu";
 
+		struct RUNTIME_DATA
+		{
+			void*         unk30;            // 00 - some variation of the item list
+			ItemCard*     itemCard;         // 08
+			BottomBar*    bottomBar;        // 10
+			GFxValue      root;             // 18 - "Menu_mc"
+			bool          pcControlsReady;  // 30
+			std::uint8_t  pad61;            // 31
+			std::uint16_t pad62;            // 32
+			std::uint32_t pad64;            // 34
+		};
+		static_assert(sizeof(RUNTIME_DATA) == 0x38);
+
 		~MagicMenu() override;  // 00
 
 		// override (IMenu)
@@ -24,15 +37,24 @@ namespace RE
 		UI_MESSAGE_RESULTS ProcessMessage(UIMessage& a_message) override;    // 04
 		void               PostDisplay() override;                           // 06
 
+		[[nodiscard]] inline RUNTIME_DATA& GetRuntimeData() noexcept
+		{
+			return REL::RelocateMember<RUNTIME_DATA>(this, 0x30, 0x40);
+		}
+
+		[[nodiscard]] inline const RUNTIME_DATA& GetRuntimeData() const noexcept
+		{
+			return REL::RelocateMember<RUNTIME_DATA>(this, 0x30, 0x40);
+		}
+
 		// members
-		void*         unk30;            // 30 - some variation of the item list
-		ItemCard*     itemCard;         // 38
-		BottomBar*    bottomBar;        // 40
-		GFxValue      root;             // 48 - "Menu_mc"
-		bool          pcControlsReady;  // 60
-		std::uint8_t  pad61;            // 61
-		std::uint16_t pad62;            // 62
-		std::uint32_t pad64;            // 64
+#if !defined(ENABLE_SKYRIM_VR) || (!defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE))
+		RUNTIME_DATA runtimeData; // 30, 40
+#endif
 	};
+#ifndef ENABLE_SKYRIM_VR
 	static_assert(sizeof(MagicMenu) == 0x68);
+#elif !defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE)
+	static_assert(sizeof(MagicMenu) == 0x78);
+#endif
 }

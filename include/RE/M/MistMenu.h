@@ -34,6 +34,41 @@ namespace RE
 			};
 		};
 
+		struct RUNTIME_DATA
+		{
+			NiColor       ambientColors[Colors::kTotal];  // 000
+			std::uint32_t unk0A0;                         // 048
+			std::uint32_t unk0A4;                         // 04C
+			std::uint64_t unk0A8;                         // 050
+			void*         unk0B0;                         // 058 - smart ptr
+			void*         unk0B8;                         // 060
+			void*         unk0C0;                         // 068
+			void*         unk0C8;                         // 070 - smart ptr
+			void*         unk0D0;                         // 078 - smart ptr
+			void*         unk0D8;                         // 080 - smart ptr
+			void*         unk0E0;                         // 088 - smart ptr
+			std::uint64_t unk0E8;                         // 090
+			std::uint64_t unk0F0;                         // 098
+			std::uint64_t unk0F8;                         // 0A0
+			std::uint32_t unk100;                         // 0A8
+			std::uint32_t unk104;                         // 0AC
+			std::uint32_t unk108;                         // 0B0
+			std::uint32_t unk10C;                         // 0B4
+			float         unk110;                         // 0B8
+			std::uint32_t unk114;                         // 0BC
+			std::uint64_t unk118;                         // 0C0
+			float         unk120;                         // 0C8
+			std::uint32_t unk124;                         // 0CC
+			std::uint64_t unk128;                         // 0D0
+			float         unk130;                         // 0D8
+			std::uint8_t  unk134;                         // 0DC
+			std::uint8_t  unk135;                         // 0DD
+			std::uint16_t unk136;                         // 0DE
+			std::uint32_t unk138;                         // 0E0
+			std::uint32_t pad13C;                         // 0E4
+		};
+		static_assert(sizeof(RUNTIME_DATA) == 0xE8);
+
 		~MistMenu() override;  // 00
 
 		// override (IMenu)
@@ -47,37 +82,24 @@ namespace RE
 		bool ProcessMouseMove(MouseMoveEvent* a_event) override;    // 04
 		bool ProcessButton(ButtonEvent* a_event) override;          // 05
 
+		[[nodiscard]] inline RUNTIME_DATA& GetRuntimeData() noexcept
+		{
+			return REL::RelocateMember<RUNTIME_DATA>(this, 0x58, 0x68);
+		}
+
+		[[nodiscard]] inline const RUNTIME_DATA& GetRuntimeData() const noexcept
+		{
+			return REL::RelocateMember<RUNTIME_DATA>(this, 0x58, 0x68);
+		}
+
 		// members
-		NiColor       ambientColors[Colors::kTotal];  // 058
-		std::uint32_t unk0A0;                         // 0A0
-		std::uint32_t unk0A4;                         // 0A4
-		std::uint64_t unk0A8;                         // 0A8
-		void*         unk0B0;                         // 0B0 - smart ptr
-		void*         unk0B8;                         // 0B8
-		void*         unk0C0;                         // 0C0
-		void*         unk0C8;                         // 0C8 - smart ptr
-		void*         unk0D0;                         // 0D0 - smart ptr
-		void*         unk0D8;                         // 0D8 - smart ptr
-		void*         unk0E0;                         // 0E0 - smart ptr
-		std::uint64_t unk0E8;                         // 0E8
-		std::uint64_t unk0F0;                         // 0F0
-		std::uint64_t unk0F8;                         // 0F8
-		std::uint32_t unk100;                         // 100
-		std::uint32_t unk104;                         // 104
-		std::uint32_t unk108;                         // 108
-		std::uint32_t unk10C;                         // 10C
-		float         unk110;                         // 110
-		std::uint32_t unk114;                         // 114
-		std::uint64_t unk118;                         // 118
-		float         unk120;                         // 120
-		std::uint32_t unk124;                         // 124
-		std::uint64_t unk128;                         // 128
-		float         unk130;                         // 130
-		std::uint8_t  unk134;                         // 134
-		std::uint8_t  unk135;                         // 135
-		std::uint16_t unk136;                         // 136
-		std::uint32_t unk138;                         // 138
-		std::uint32_t pad13C;                         // 13C
+#if !defined(ENABLE_SKYRIM_VR) || (!defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE))
+		RUNTIME_DATA runtimeData; // 58, 68
+#endif
 	};
+#ifndef ENABLE_SKYRIM_VR
 	static_assert(sizeof(MistMenu) == 0x140);
+#elif !defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE)
+	static_assert(sizeof(MistMenu) == 0x150);
+#endif
 }

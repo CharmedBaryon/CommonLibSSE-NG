@@ -21,10 +21,11 @@ namespace RE
 		// override (NiNode)
 		const NiRTTI* GetRTTI() const override;                                                 // 02
 		NiObject*     CreateClone(NiCloningProcess& a_cloning) override;                        // 17
-		void          UpdateDownwardPass(NiUpdateData& a_data, std::uint32_t a_arg2) override;  // 2C
+		// The following are virtual functions past the point where VR compatibility breaks.
+//		void          UpdateDownwardPass(NiUpdateData& a_data, std::uint32_t a_arg2) override;  // 2C
 
 		// add
-		virtual void FixSkinInstances(NiNode* a_skeleton, bool a_arg2);  // 3E
+		void FixSkinInstances(NiNode* a_skeleton, bool a_arg2);  // 3E
 
 		// members
 		NiMatrix3                         baseRotation;   // 128
@@ -36,5 +37,9 @@ namespace RE
 		std::uint16_t                     pad162;         // 162
 		std::uint32_t                     pad164;         // 164
 	};
+#if !defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE)
+	static_assert(sizeof(BSFaceGenNiNode) == 0x190);
+#else
 	static_assert(sizeof(BSFaceGenNiNode) == 0x168);
+#endif
 }

@@ -37,6 +37,43 @@ namespace RE
 		inline static auto                RTTI = RTTI_LockpickingMenu;
 		constexpr static std::string_view MENU_NAME = "Lockpicking Menu";
 
+		struct RUNTIME_DATA
+		{
+			ModelData*            lockpickShiv;         // 00
+			ModelData*            lockpick;             // 08
+			NiMatrix3             unk058;               // 10
+			NiPoint3              lockRotCenter;        // 34
+			NiControllerManager*  shivController;       // 40
+			NiControllerSequence* shivIntro;            // 48
+			NiControllerSequence* shivRotate;           // 50
+			NiControllerManager*  pickController;       // 58
+			NiControllerSequence* pickIntro;            // 60
+			NiControllerSequence* pickDamage;           // 68
+			NiControllerSequence* pickBreak;            // 70
+			NiControllerSequence* currentPickSequence;  // 78
+			float                 pickKeyTime;          // 80
+			std::uint32_t         unk0CC;               // 84
+			NiControllerSequence* currentShivSequence;  // 88
+			float                 shivKeyTime;          // 90
+			std::uint32_t         unk0DC;               // 94
+			float                 currentAngle;         // 98
+			float                 lockAngle;            // 9C
+			std::uint32_t         unk0E8;               // A0
+			BSSoundHandle         unk0EC;               // A4
+			std::uint32_t         unk0F8;               // B0
+			std::uint32_t         unk0FC;               // B4
+			std::uint32_t         unk100;               // B8
+			std::uint32_t         unk104;               // BC
+			std::uint16_t         unk108;               // C0
+			std::uint8_t          unk10A;               // C2
+			std::uint8_t          unk10B;               // C3
+			std::uint8_t          unk10C;               // C4
+			std::uint8_t          unk10D;               // C5
+			std::uint8_t          unk10E;               // C6
+			std::uint8_t          pad10F;               // C7
+		};
+		static_assert(sizeof(RUNTIME_DATA) == 0xC8);
+
 		~LockpickingMenu() override;  // 00
 
 		// override (IMenu)
@@ -53,39 +90,24 @@ namespace RE
 
 		[[nodiscard]] static TESObjectREFR* GetTargetReference();
 
+		[[nodiscard]] inline RUNTIME_DATA& GetRuntimeData() noexcept
+		{
+			return REL::RelocateMember<RUNTIME_DATA>(this, 0x48, 0x58);
+		}
+
+		[[nodiscard]] inline const RUNTIME_DATA& GetRuntimeData() const noexcept
+		{
+			return REL::RelocateMember<RUNTIME_DATA>(this, 0x48, 0x58);
+		}
+
 		// members
-		ModelData*            lockpickShiv;         // 048
-		ModelData*            lockpick;             // 050
-		NiMatrix3             unk058;               // 058
-		NiPoint3              lockRotCenter;        // 07C
-		NiControllerManager*  shivController;       // 088
-		NiControllerSequence* shivIntro;            // 090
-		NiControllerSequence* shivRotate;           // 098
-		NiControllerManager*  pickController;       // 0A0
-		NiControllerSequence* pickIntro;            // 0A8
-		NiControllerSequence* pickDamage;           // 0B0
-		NiControllerSequence* pickBreak;            // 0B8
-		NiControllerSequence* currentPickSequence;  // 0C0
-		float                 pickKeyTime;          // 0C8
-		std::uint32_t         unk0CC;               // 0CC
-		NiControllerSequence* currentShivSequence;  // 0D0
-		float                 shivKeyTime;          // 0D8
-		std::uint32_t         unk0DC;               // 0DC
-		float                 currentAngle;         // 0E0
-		float                 lockAngle;            // 0E4
-		std::uint32_t         unk0E8;               // 0E8
-		BSSoundHandle         unk0EC;               // 0EC
-		std::uint32_t         unk0F8;               // 0F8
-		std::uint32_t         unk0FC;               // 0FC
-		std::uint32_t         unk100;               // 100
-		std::uint32_t         unk104;               // 104
-		std::uint16_t         unk108;               // 108
-		std::uint8_t          unk10A;               // 10A
-		std::uint8_t          unk10B;               // 10B
-		std::uint8_t          unk10C;               // 10C
-		std::uint8_t          unk10D;               // 10D
-		std::uint8_t          unk10E;               // 10E
-		std::uint8_t          pad10F;               // 10F
+#if !defined(ENABLE_SKYRIM_VR) || (!defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE))
+		RUNTIME_DATA runtimeData; // 48, 58
+#endif
 	};
+#ifndef ENABLE_SKYRIM_VR
 	static_assert(sizeof(LockpickingMenu) == 0x110);
+#elif !defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE)
+	static_assert(sizeof(LockpickingMenu) == 0x120);
+#endif
 }

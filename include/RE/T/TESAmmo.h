@@ -42,11 +42,13 @@ namespace RE
 		public TESIcon,                    // 078
 		public BGSMessageIcon,             // 088
 		public TESValueForm,               // 0A0
+#ifndef ENABLE_SKYRIM_VR
 		public TESWeightForm,              // 0B0
-		public BGSDestructibleObjectForm,  // 0C0
-		public BGSPickupPutdownSounds,     // 0D0
-		public TESDescription,             // 0E8
-		public BGSKeywordForm              // 0F8
+#endif
+		public BGSDestructibleObjectForm,  // 0C0, 0B0
+		public BGSPickupPutdownSounds,     // 0D0, 0C0,
+		public TESDescription,             // 0E8, 0D8
+		public BGSKeywordForm              // 0F8, 0E8
 	{
 	public:
 		inline static auto           RTTI = RTTI_TESAmmo;
@@ -75,6 +77,10 @@ namespace RE
 		NiAVObject* Clone3D(TESObjectREFR* a_ref, bool a_arg3) override;                 // 40
 		void        HandleRemoveItemFromContainer(TESObjectREFR* a_container) override;  // 4E
 
+		[[nodiscard]] inline float GetWeight() const noexcept {
+			return REL::Module::get().IsVR() ? 0.0f : REL::RelocateMember<float>(this, 0xB8, 0);
+		}
+
 		// override (BGSKeywordForm)
 		[[nodiscard]] BGSKeyword* GetDefaultKeyword() const override;  // 05
 
@@ -85,5 +91,9 @@ namespace RE
 		AMMO_DATA     data;       // 110 - DATA
 		BSFixedString shortDesc;  // 120 - ONAM
 	};
+#ifndef ENABLE_SKYRIM_VR
 	static_assert(sizeof(TESAmmo) == 0x128);
+#else
+	static_assert(sizeof(TESAmmo) == 0x118);
+#endif
 }

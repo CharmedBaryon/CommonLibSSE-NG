@@ -26,5 +26,9 @@ namespace RE
 		bool ProcessThumbstick(ThumbstickEvent* a_event) override;  // 03
 		bool ProcessMouseMove(MouseMoveEvent* a_event) override;    // 04
 	};
+#ifndef ENABLE_SKYRIM_VR
 	static_assert(sizeof(CursorMenu) == 0x40);
+#elif !defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE)
+	static_assert(sizeof(CursorMenu) == 0x50);
+#endif
 }

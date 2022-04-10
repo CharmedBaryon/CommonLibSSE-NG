@@ -2,6 +2,8 @@
 
 #include "RE/T/TESObjectREFR.h"
 
+using namespace REL;
+
 namespace RE
 {
 	void PlayerCharacter::PlayerSkills::AdvanceLevel(bool a_addThreshold)
@@ -43,7 +45,7 @@ namespace RE
 
 	NiPointer<Actor> PlayerCharacter::GetActorDoingPlayerCommand() const
 	{
-		return actorDoingPlayerCommand.get();
+		return REL::RelocateMember<ActorHandle>(this, 0x894, 0xE8C).get();
 	}
 
 	float PlayerCharacter::GetArmorValue(InventoryEntryData* a_form)
@@ -62,7 +64,10 @@ namespace RE
 
 	NiPointer<TESObjectREFR> PlayerCharacter::GetGrabbedRef()
 	{
-		return grabbedObject.get();
+		if (REL::Module::get().IsVR()) {
+			return nullptr;
+		}
+		return REL::RelocateMember<ObjectRefHandle>(this, 0x8C8, 0).get();
 	}
 
 	std::uint32_t PlayerCharacter::GetNumTints(std::uint32_t a_tintType)
@@ -72,6 +77,7 @@ namespace RE
 		return func(this, a_tintType);
 	}
 
+#ifndef ENABLE_SKYRIM_VR
 	TintMask* PlayerCharacter::GetOverlayTintMask(TintMask* a_original)
 	{
 		if (!overlayTintMasks) {
@@ -98,15 +104,20 @@ namespace RE
 		REL::Relocation<func_t> func{ Offset::PlayerCharacter::GetTintMask };
 		return func(this, a_tintType, a_index);
 	}
+#endif
 
 	bool PlayerCharacter::HasActorDoingCommand() const
 	{
-		return static_cast<bool>(actorDoingPlayerCommand);
+		return static_cast<bool>(REL::RelocateMember<ActorHandle>(this, 0x894, 0xE8C));
 	}
 
 	bool PlayerCharacter::IsGrabbing() const
 	{
-		return static_cast<bool>(grabbedObject);
+		if (Module::get().IsVR())
+		{
+			return false;
+		}
+		return static_cast<bool>(REL::RelocateMember<ObjectRefHandle>(this, 0x8C8, 0));
 	}
 
 	void PlayerCharacter::PlayPickupEvent(TESForm* a_item, TESForm* a_containerOwner, TESObjectREFR* a_containerRef, EventType a_eventType)
@@ -135,5 +146,30 @@ namespace RE
 		using func_t = decltype(&PlayerCharacter::AddSkillExperience);
 		REL::Relocation<func_t> func(REL::RelocationID(39413, 40488));
 		return func(this, a_skill, a_experience);
+	}
+
+	void PlayerCharacter::Unk_12A()
+	{
+		return RelocateVirtual<decltype(&PlayerCharacter::Unk_12A)>(0x12A, 0x12C, this);
+	}
+
+	std::uint32_t PlayerCharacter::GetViolentCrimeGoldValue(const TESFaction* a_faction) const
+	{
+		return RelocateVirtual<decltype(&PlayerCharacter::GetViolentCrimeGoldValue)>(0x12B, 0x12D, this, a_faction);
+	}
+
+	std::uint32_t PlayerCharacter::GetNonViolentCrimeGoldValue(const TESFaction* a_faction) const
+	{
+		return RelocateVirtual<decltype(&PlayerCharacter::GetNonViolentCrimeGoldValue)>(0x12C, 0x12E, this, a_faction);
+	}
+
+	void PlayerCharacter::ClearAllCrimeGold(TESFaction* a_faction)
+	{
+		RelocateVirtual<decltype(&PlayerCharacter::ClearAllCrimeGold)>(0x12D, 0x12F, this, a_faction);
+	}
+
+	void PlayerCharacter::Unk_12E()
+	{
+		return RelocateVirtual<decltype(&PlayerCharacter::Unk_12E)>(0x12E, 0x130, this);
 	}
 }

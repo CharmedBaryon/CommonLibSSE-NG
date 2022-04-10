@@ -24,12 +24,13 @@ namespace RE
 		bool          RegisterStreamables(NiStream& a_stream) override;                                 // 1A
 		void          SaveBinary(NiStream& a_stream) override;                                          // 1B
 		bool          IsEqual(NiObject* a_object) override;                                             // 1C
-		void          UpdateSelectedDownwardPass(NiUpdateData& a_data, std::uint32_t a_arg2) override;  // 2D
-		void          OnVisible(NiCullingProcess& a_process) override;                                  // 34
+		// The following are virtual functions past the point where VR compatibility breaks.
+//		void          UpdateSelectedDownwardPass(NiUpdateData& a_data, std::uint32_t a_arg2) override;  // 2D
+//		void          OnVisible(NiCullingProcess& a_process) override;                                  // 34
 
 		// add
-		virtual BSTreeNode*     AsTreeNode();      // 3E - { return 0; }
-		virtual BSLeafAnimNode* AsLeafAnimNode();  // 3F - { return 0; }
+		BSTreeNode*     AsTreeNode();      // 3E - { return 0; }
+		BSLeafAnimNode* AsLeafAnimNode();  // 3F - { return 0; }
 
 		// members
 		float         unk128;       // 128
@@ -49,5 +50,9 @@ namespace RE
 		std::uint8_t  unk155;       // 155
 		std::uint16_t unk156;       // 156
 	};
+#if !defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE)
+	static_assert(sizeof(BSFadeNode) == 0x180);
+#else
 	static_assert(sizeof(BSFadeNode) == 0x158);
+#endif
 }

@@ -24,5 +24,9 @@ namespace RE
 		float linearAttenuation;     // 144
 		float quadraticAttenuation;  // 148
 	};
+#if !defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE)
+	static_assert(sizeof(NiPointLight) == 0x178);
+#else
 	static_assert(sizeof(NiPointLight) == 0x150);
+#endif
 }

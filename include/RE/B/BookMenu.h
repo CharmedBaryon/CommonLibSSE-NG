@@ -28,6 +28,24 @@ namespace RE
 		inline static auto                VTABLE = VTABLE_BookMenu;
 		constexpr static std::string_view MENU_NAME = "Book Menu";
 
+		struct RUNTIME_DATA
+		{
+			BSTArray<ImageData>   unk50;      // 00
+			GPtr<GFxMovieView>    book;       // 18
+			NiPointer<NiAVObject> book3D;     // 20
+			std::uint32_t         unk78;      // 28
+			std::uint32_t         pad7C;      // 2C
+			std::uint64_t         unk80;      // 30
+			void*                 unk88;      // 38 - smart ptr
+			std::uint16_t         unk90;      // 40
+			std::uint16_t         unk92;      // 42
+			bool                  closeMenu;  // 44
+			bool                  isNote;     // 45
+			std::uint8_t          unk96;      // 46
+			std::uint8_t          pad97;      // 47
+		};
+		static_assert(sizeof(RUNTIME_DATA) == 0x48);
+
 		~BookMenu() override;  // 00
 
 		// override (IMenu)
@@ -42,20 +60,24 @@ namespace RE
 		[[nodiscard]] static TESObjectBOOK* GetTargetForm();
 		[[nodiscard]] static TESObjectREFR* GetTargetReference();  // returns null if opened from inventory
 
+		[[nodiscard]] inline RUNTIME_DATA& GetRuntimeData() noexcept
+		{
+			return REL::RelocateMember<RUNTIME_DATA>(this, 0x50, 0x60);
+		}
+
+		[[nodiscard]] inline const RUNTIME_DATA& GetRuntimeData() const noexcept
+		{
+			return REL::RelocateMember<RUNTIME_DATA>(this, 0x50, 0x60);
+		}
+
 		// members
-		BSTArray<ImageData>   unk50;      // 50
-		GPtr<GFxMovieView>    book;       // 68
-		NiPointer<NiAVObject> book3D;     // 70
-		std::uint32_t         unk78;      // 78
-		std::uint32_t         pad7C;      // 7C
-		std::uint64_t         unk80;      // 80
-		void*                 unk88;      // 88 - smart ptr
-		std::uint16_t         unk90;      // 90
-		std::uint16_t         unk92;      // 92
-		bool                  closeMenu;  // 94
-		bool                  isNote;     // 95
-		std::uint8_t          unk96;      // 96
-		std::uint8_t          pad97;      // 97
+#if !defined(ENABLE_SKYRIM_VR) || (!defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE))
+		RUNTIME_DATA runtimeData; // 50, 60
+#endif
 	};
+#ifndef ENABLE_SKYRIM_VR
 	static_assert(sizeof(BookMenu) == 0x98);
+#elif !defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE)
+	static_assert(sizeof(BookMenu) == 0xA8);
+#endif
 }

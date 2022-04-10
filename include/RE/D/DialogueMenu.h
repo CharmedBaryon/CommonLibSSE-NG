@@ -36,7 +36,13 @@ namespace RE
 		BSEventNotifyControl ProcessEvent(const MenuOpenCloseEvent* a_event, BSTEventSource<MenuOpenCloseEvent>* a_eventSource) override;  // 01
 
 		// members
-		BSTArray<Data> unk38;  // 38
+#if !defined(ENABLE_SKYRIM_VR) || (!defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE))
+		BSTArray<Data> unk38;  // 38, 48
+#endif
 	};
+#ifndef ENABLE_SKYRIM_VR
 	static_assert(sizeof(DialogueMenu) == 0x50);
+#elif !defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE)
+	static_assert(sizeof(DialogueMenu) == 0x60);
+#endif
 }

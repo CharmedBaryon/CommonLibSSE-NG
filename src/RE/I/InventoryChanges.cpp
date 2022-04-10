@@ -1,5 +1,7 @@
 #include "RE/I/InventoryChanges.h"
 
+#include "RE/A/Actor.h"
+
 namespace RE
 {
 	InventoryChanges::InventoryChanges() :
@@ -27,8 +29,31 @@ namespace RE
 		changed = true;
 	}
 
+	void InventoryChanges::GenerateLeveledListChanges()
+	{
+		using func_t = decltype(&InventoryChanges::GenerateLeveledListChanges);
+		REL::Relocation<func_t> func{ REL::RelocationID(15829, 16068) };
+		return func(this);
+	}
+
+	std::int16_t InventoryChanges::GetItemCount(RE::TESBoundObject* a_obj)
+	{
+		using func_t = decltype(&InventoryChanges::GetItemCount);
+		REL::Relocation<func_t> func{ REL::RelocationID(15868, 16047) };
+		return func(this, a_obj);
+	}
+
 	TESObjectARMO* InventoryChanges::GetArmorInSlot(std::int32_t a_slot)
 	{
+		if (REL::Module::get().IsVR()) {
+			auto armorowner = this->owner;
+			auto actor = armorowner ? armorowner->As<RE::Actor>() : nullptr;
+			if (actor) {
+				return actor->GetWornArmor(a_slot);
+			}
+			return nullptr;
+		}
+
 		using func_t = decltype(&InventoryChanges::GetArmorInSlot);
 		REL::Relocation<func_t> func{ REL::RelocationID(15873, 16113) };
 		return func(this, a_slot);

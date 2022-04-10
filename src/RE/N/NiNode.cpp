@@ -48,4 +48,49 @@ namespace RE
 		REL::Relocation<func_t> func{ Offset::NiNode::Ctor };
 		return func(this, a_arrBuffLen);
 	}
+
+	void NiNode::AttachChild(NiAVObject* a_child, bool a_firstAvail)
+	{
+		REL::RelocateVirtual<decltype(&NiNode::AttachChild)>(0x35, 0x36, this, a_child, a_firstAvail);
+	}
+
+	void NiNode::InsertChildAt(std::uint32_t a_idx, NiAVObject* a_child)
+	{
+		REL::RelocateVirtual<decltype(&NiNode::InsertChildAt)>(0x36, 0x37, this, a_idx, a_child);
+	}
+
+	void NiNode::DetachChild1(NiAVObject* a_child, NiPointer<NiAVObject>& a_childOut)
+	{
+		REL::RelocateVirtual<decltype(&NiNode::DetachChild1)>(0x37, 0x38, this, a_child, a_childOut);
+	}
+
+	void NiNode::DetachChild2(NiAVObject* a_child)
+	{
+		REL::RelocateVirtual<decltype(&NiNode::DetachChild2)>(0x38, 0x39, this, a_child);
+	}
+
+	void NiNode::DetachChildAt1(std::uint32_t a_idx, NiPointer<NiAVObject>& a_childOut)
+	{
+		REL::RelocateVirtual<decltype(&NiNode::DetachChildAt1)>(0x39, 0x3A, this, a_idx, a_childOut);
+	}
+
+	void NiNode::DetachChildAt2(std::uint32_t a_idx)
+	{
+		REL::RelocateVirtual<decltype(&NiNode::DetachChildAt2)>(0x3A, 0x3B, this, a_idx);
+	}
+
+	void NiNode::SetAt1(std::uint32_t a_idx, NiAVObject* a_child, NiPointer<NiAVObject>& a_childOut)
+	{
+		REL::RelocateVirtual<decltype(&NiNode::SetAt1)>(0x3B, 0x3C, this, a_idx, a_child, a_childOut);
+	}
+
+	void NiNode::SetAt2(std::uint32_t a_idx, NiAVObject* a_child)
+	{
+		REL::RelocateVirtual<decltype(&NiNode::SetAt2)>(0x3C, 0x3D, this, a_idx, a_child);
+	}
+
+	void NiNode::UpdateUpwardPass(NiUpdateData& a_data)
+	{
+		REL::RelocateVirtual<decltype(&NiNode::UpdateUpwardPass)>(0x3D, 0x3E, this, a_data);
+	}
 }

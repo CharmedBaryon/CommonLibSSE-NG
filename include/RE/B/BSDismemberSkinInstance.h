@@ -48,5 +48,9 @@ namespace RE
 		std::uint16_t pad9A;          // 9A
 		std::uint32_t pad9C;          // 9C
 	};
+#ifndef ENABLE_SKYRIM_VR
 	static_assert(sizeof(BSDismemberSkinInstance) == 0xA0);
+#elif !defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE)
+	static_assert(sizeof(BSDismemberSkinInstance) == 0x80);
+#endif
 }

@@ -32,7 +32,8 @@ namespace RE
 
 		// override (NiNode)
 		const NiRTTI* GetRTTI() const override;                         // 02
-		void          OnVisible(NiCullingProcess& a_process) override;  // 34
+		// The following are virtual functions past the point where VR compatibility breaks.
+//		void          OnVisible(NiCullingProcess& a_process) override;  // 34
 
 		// members
 		std::uint64_t                      unk128;              // 128
@@ -84,5 +85,9 @@ namespace RE
 		std::uint16_t                      pad302;              // 302
 		float                              unk304;              // 304
 	};
+#if !defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE)
+	static_assert(sizeof(ShadowSceneNode) == 0x330);
+#else
 	static_assert(sizeof(ShadowSceneNode) == 0x308);
+#endif
 }

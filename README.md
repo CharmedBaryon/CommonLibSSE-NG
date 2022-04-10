@@ -7,6 +7,8 @@ CommonLibSSE NG is a fork of CommonLibSSE which tracks upstream updates but adds
 * Support for Address Libraries for SE, AE, and VR.
 * Dynamic cross-runtime support (ability to produce a single DLL that works on AE, SE, or VR), with access to all
   cross-compatible features.
+* Complete support (up to modern RE standards) for Skyrim VR, including the ability to use Skyrim VR and Skyrim SE
+  functionality from a single DLL build even where Skyrim VR is normally ABI-incompatible.
 * Ability to build locked to a single runtime, where access to non-portable features is needed.
 * Updated GitHub Actions CI workflows to build for all likely target runtime combinations.
 * Fully extensible native function binding traits (enables custom script object bindings in
@@ -46,7 +48,7 @@ Then add `commonlibsse-ng` as a dependency in `vcpkg.json`. There are also runti
 * `commonlibsse-ng-vr`: Supports VR only.
 * `commonlibsse-ng-prebuilt`: A prebuilt binary for CommonLibSSE NG, avoids the overhead of compiling it. Recommended to
   be used only with `x64-windows-static-md` triplet (or equivalent custom one), but can also be used with
-  `x64-windows-static` (or custom equivalent).
+  `x64-windows-static` (or custom equivalent) if your project links against a compatible version of the MSVC 2022 CRT.
 
 The runtime-specific ports will not attempt to dynamically lookup the version of Skyrim at runtime, and will enable
 access to reverse engineered content that is specific to that version of Skyrim and non-portable (i.e. it does not exist

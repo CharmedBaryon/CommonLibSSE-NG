@@ -48,8 +48,8 @@ namespace RE
 			return 0;
 		}
 
-		auto it = player->crimeGoldMap.find(const_cast<TESFaction*>(this));
-		if (it != player->crimeGoldMap.end()) {
+		auto it = player->GetCrimeValue().crimeGoldMap.find(const_cast<TESFaction*>(this));
+		if (it != player->GetCrimeValue().crimeGoldMap.end()) {
 			return static_cast<std::int32_t>(it->second.nonViolentInfamy + it->second.violentInfamy);
 		} else {
 			return 0;
@@ -63,8 +63,8 @@ namespace RE
 			return 0;
 		}
 
-		auto it = player->crimeGoldMap.find(const_cast<TESFaction*>(this));
-		if (it != player->crimeGoldMap.end()) {
+		auto it = player->GetCrimeValue().crimeGoldMap.find(const_cast<TESFaction*>(this));
+		if (it != player->GetCrimeValue().crimeGoldMap.end()) {
 			return static_cast<std::int32_t>(it->second.nonViolentInfamy);
 		} else {
 			return 0;
@@ -78,8 +78,8 @@ namespace RE
 			return 0;
 		}
 
-		auto it = player->crimeGoldMap.find(const_cast<TESFaction*>(this));
-		if (it != player->crimeGoldMap.end()) {
+		auto it = player->GetCrimeValue().crimeGoldMap.find(const_cast<TESFaction*>(this));
+		if (it != player->GetCrimeValue().crimeGoldMap.end()) {
 			return static_cast<std::int32_t>(it->second.violentInfamy);
 		} else {
 			return 0;
@@ -93,8 +93,8 @@ namespace RE
 			return 0;
 		}
 
-		auto it = player->stolenItemValueMap.find(const_cast<TESFaction*>(this));
-		if (it != player->stolenItemValueMap.end()) {
+		auto it = player->GetCrimeValue().stolenItemValueMap.find(const_cast<TESFaction*>(this));
+		if (it != player->GetCrimeValue().stolenItemValueMap.end()) {
 			return static_cast<std::int32_t>(it->second.witnessed);
 		} else {
 			return 0;
@@ -108,8 +108,8 @@ namespace RE
 			return 0;
 		}
 
-		auto it = player->stolenItemValueMap.find(const_cast<TESFaction*>(this));
-		if (it != player->stolenItemValueMap.end()) {
+		auto it = player->GetCrimeValue().stolenItemValueMap.find(const_cast<TESFaction*>(this));
+		if (it != player->GetCrimeValue().stolenItemValueMap.end()) {
 			return static_cast<std::int32_t>(it->second.unwitnessed);
 		} else {
 			return 0;

@@ -44,10 +44,15 @@ namespace RE
 		struct InputContext
 		{
 		public:
+			[[nodiscard]] static inline std::size_t GetNumDeviceMappings() noexcept {
+				return REL::Module::get().IsVR() ? INPUT_DEVICES::kTotal :
+                    static_cast<std::size_t>(INPUT_DEVICES::kVRRight) - 1;
+			}
+
 			// members
 			BSTArray<UserEventMapping> deviceMappings[INPUT_DEVICES::kTotal];  // 00
 		};
-		static_assert(sizeof(InputContext) == 0x60);
+		static_assert(sizeof(InputContext) == 0xA8);
 
 		struct LinkedMapping
 		{

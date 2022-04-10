@@ -24,6 +24,17 @@ namespace RE
 		inline static auto                RTTI = RTTI_JournalMenu;
 		constexpr static std::string_view MENU_NAME = "Journal Menu";
 
+		struct RUNTIME_DATA
+		{
+			Journal_QuestsTab questsTab;  // 00
+			Journal_StatsTab  statsTab;   // 38
+			Journal_SystemTab systemTab;  // 50
+			std::uint64_t     unkD0;      // 88
+			std::uint64_t     unkD8;      // 90
+			std::uint64_t     unkE0;      // 98
+		};
+		static_assert(sizeof(RUNTIME_DATA) == 0xA0);
+
 		~JournalMenu() override;  // 00
 
 		// override (IMenu)
@@ -39,13 +50,24 @@ namespace RE
 		// override (BSTEventSink<BSSystemEvent>)
 		BSEventNotifyControl ProcessEvent(const BSSystemEvent* a_event, BSTEventSource<BSSystemEvent>* a_eventSource) override;  // 01
 
+		[[nodiscard]] inline RUNTIME_DATA& GetRuntimeData() noexcept
+		{
+			return REL::RelocateMember<RUNTIME_DATA>(this, 0x48, 0x58);
+		}
+
+		[[nodiscard]] inline const RUNTIME_DATA& GetRuntimeData() const noexcept
+		{
+			return REL::RelocateMember<RUNTIME_DATA>(this, 0x48, 0x58);
+		}
+
 		// members
-		Journal_QuestsTab questsTab;  // 48
-		Journal_StatsTab  statsTab;   // 80
-		Journal_SystemTab systemTab;  // 98
-		std::uint64_t     unkD0;      // D0
-		std::uint64_t     unkD8;      // D8
-		std::uint64_t     unkE0;      // E0
+#if !defined(ENABLE_SKYRIM_VR) || (!defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE))
+		RUNTIME_DATA runtimeData; // 48, 58
+#endif
 	};
+#ifndef ENABLE_SKYRIM_VR
 	static_assert(sizeof(JournalMenu) == 0xE8);
+#elif !defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE)
+	static_assert(sizeof(JournalMenu) == 0xF8);
+#endif
 }

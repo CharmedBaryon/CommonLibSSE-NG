@@ -23,6 +23,17 @@ namespace RE
 		inline static auto                RTTI = RTTI_MainMenu;
 		constexpr static std::string_view MENU_NAME = "Main Menu";
 
+		struct RUNTIME_DATA
+		{
+			ImageData     unk50;  // 00
+			std::uint32_t unk68;  // 18
+			std::uint8_t  unk6C;  // 1C
+			std::uint8_t  unk6D;  // 1D
+			std::uint8_t  unk6E;  // 1E
+			std::uint8_t  pad6F;  // 1F
+		};
+		static_assert(sizeof(RUNTIME_DATA) == 0x20);
+
 		~MainMenu() override;  // 00
 
 		// override (IMenu)
@@ -39,13 +50,24 @@ namespace RE
 		// override (GFxFunctionHandler)
 		void Call(Params& a_params) override;  // 01
 
+		[[nodiscard]] inline RUNTIME_DATA& GetRuntimeData() noexcept
+		{
+			return REL::RelocateMember<RUNTIME_DATA>(this, 0x50, 0x60);
+		}
+
+		[[nodiscard]] inline const RUNTIME_DATA& GetRuntimeData() const noexcept
+		{
+			return REL::RelocateMember<RUNTIME_DATA>(this, 0x50, 0x60);
+		}
+
 		// members
-		ImageData     unk50;  // 50
-		std::uint32_t unk68;  // 68
-		std::uint8_t  unk6C;  // 6C
-		std::uint8_t  unk6D;  // 6D
-		std::uint8_t  unk6E;  // 6E
-		std::uint8_t  pad6F;  // 6F
+#if !defined(ENABLE_SKYRIM_VR) || (!defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE))
+		RUNTIME_DATA runtimeData; // 50, 60
+#endif
 	};
+#ifndef ENABLE_SKYRIM_VR
 	static_assert(sizeof(MainMenu) == 0x70);
+#elif !defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE)
+	static_assert(sizeof(MainMenu) == 0x80);
+#endif
 }

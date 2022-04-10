@@ -111,6 +111,15 @@ namespace RE
 		stl::enumeration<Context, std::uint32_t>       inputContext{ Context::kNone };  // 20
 		std::uint32_t                                  pad24{ 0 };                      // 24
 		GPtr<FxDelegate>                               fxDelegate{ nullptr };           // 28
+#if !defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE)
+		std::int32_t                                   unk30{ -1 };
+		std::int32_t                                   unk34{ 1 };
+		std::uint64_t                                  unk38{ 0 };
+#endif
 	};
+#ifndef ENABLE_SKYRIM_VR
 	static_assert(sizeof(IMenu) == 0x30);
+#elif !defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE)
+	static_assert(sizeof(IMenu) == 0x40);
+#endif
 }

@@ -22,9 +22,9 @@ namespace RE
 		~BSMultiIndexTriShape() override;  // 00
 
 		// override (BSGeometry)
-		const NiRTTI*         GetRTTI() const override;                           // 02
-		NiObject*             CreateClone(NiCloningProcess& a_cloning) override;  // 17
-		BSMultiIndexTriShape* AsMultiIndexTriShape() override;                    // 35 - { return this; }
+//		const NiRTTI*         GetRTTI() const override;                           // 02
+//		NiObject*             CreateClone(NiCloningProcess& a_cloning) override;  // 17
+//		BSMultiIndexTriShape* AsMultiIndexTriShape() override;                    // 35 - { return this; }
 
 		// members
 		BSGraphics::IndexBuffer*    altIndexBuffer;            // 160
@@ -40,5 +40,9 @@ namespace RE
 		float                       normalDampener;            // 1D0
 		std::uint32_t               unk1D4;                    // 1D4
 	};
+#if !defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE)
+	static_assert(sizeof(BSMultiIndexTriShape) == 0x220);
+#else
 	static_assert(sizeof(BSMultiIndexTriShape) == 0x1D8);
+#endif
 }

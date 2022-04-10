@@ -11,9 +11,12 @@ namespace RE
 			kMouse,
 			kGamepad,
 			kVirtualKeyboard,
+			kVRRight = 5,
+			kVRLeft = 6,
 
 			kTotal
 		};
+		static_assert(sizeof(INPUT_DEVICE) == 0x4);
 	};
 	using INPUT_DEVICE = INPUT_DEVICES::INPUT_DEVICE;
 }

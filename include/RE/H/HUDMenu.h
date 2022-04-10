@@ -5,6 +5,10 @@
 #include "RE/G/GFxValue.h"
 #include "RE/I/IMenu.h"
 
+#if !defined(ENABLE_SKYRIM_AE) && !(ENABLE_SKYRIM_SE)
+#include "RE/W/WorldSpaceMenu.h"
+#endif
+
 namespace RE
 {
 	class ActorValueMeter;
@@ -17,13 +21,31 @@ namespace RE
 	// flags = kAlwaysOpen | kRequiresUpdate | kAllowSaving | kCustomRendering | kAssignCursorToRenderer
 	// context = kNone
 	class HUDMenu :
+#if !defined(ENABLE_SKYRIM_AE) && !(ENABLE_SKYRIM_SE)
+		public WorldSpaceMenu,                       // 00
+		public BSTEventSink<UserEventEnabledEvent>,  // 40
+		public BSTEventSink<BSRemoteGamepadEvent>    // 48
+#elif !defined(ENABLE_SKYRIM_VR)
 		public IMenu,                                // 00
 		public BSTEventSink<UserEventEnabledEvent>,  // 30
 		public BSTEventSink<BSRemoteGamepadEvent>    // 38
+#else
+		public IMenu                                 // 00
+#endif
 	{
 	public:
 		inline static auto                RTTI = RTTI_HUDMenu;
 		constexpr static std::string_view MENU_NAME = "HUD Menu";
+
+		struct RUNTIME_DATA {
+			BSTArray<HUDObject*> objects;  // 00
+			ActorValueMeter*     health;   // 18
+			ActorValueMeter*     stamina;  // 20
+			ActorValueMeter*     magicka;  // 28
+			ShoutMeter*          shout;    // 30
+			GFxValue             root;     // 38 - kDisplayObject - "_level0.HUDMovieBaseInstance"
+			std::uint64_t        unk90;    // 50
+		};
 
 		~HUDMenu() override;  // 00
 
@@ -33,20 +55,33 @@ namespace RE
 		void               AdvanceMovie(float a_interval, std::uint32_t a_currentTime) override;  // 05
 		void               RefreshPlatform() override;                                            // 08
 
+#if !defined(ENABLE_SKYRIM_VR) || (!defined(ENABLE_SKYRIM_AE) && !(ENABLE_SKYRIM_SE))
 		// override (BSTEventSink<UserEventEnabledEvent>)
 		BSEventNotifyControl ProcessEvent(const UserEventEnabledEvent* a_event, BSTEventSource<UserEventEnabledEvent>* a_eventSource) override;  // 01
 
 		// override (BSTEventSink<BSRemoteGamepadEvent>)
 		BSEventNotifyControl ProcessEvent(const BSRemoteGamepadEvent* a_event, BSTEventSource<BSRemoteGamepadEvent>* a_eventSource) override;  // 01
+#endif
+
+		[[nodiscard]] inline RUNTIME_DATA& GetRuntimeData() noexcept {
+			return REL::RelocateMember<RUNTIME_DATA>(this, 0x40, 0x70);
+		}
+
+		[[nodiscard]] inline const RUNTIME_DATA& GetRuntimeData() const noexcept {
+			return REL::RelocateMember<RUNTIME_DATA>(this, 0x40, 0x70);
+		}
 
 		// members
-		BSTArray<HUDObject*> objects;  // 40
-		ActorValueMeter*     health;   // 58
-		ActorValueMeter*     stamina;  // 60
-		ActorValueMeter*     magicka;  // 68
-		ShoutMeter*          shout;    // 70
-		GFxValue             root;     // 78 - kDisplayObject - "_level0.HUDMovieBaseInstance"
-		std::uint64_t        unk90;    // 90
+#if !defined(ENABLE_SKYRIM_VR) || (!defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE))
+#	if !defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE)
+		std::uint64_t        pad68;       // 68
+#	endif
+		RUNTIME_DATA         runtimeData; // 40, 70
+#endif
 	};
+#ifndef ENABLE_SKYRIM_VR
 	static_assert(sizeof(HUDMenu) == 0x98);
+#elif !defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE)
+	static_assert(sizeof(HUDMenu) == 0xC8);
+#endif
 }

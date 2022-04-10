@@ -31,6 +31,34 @@ namespace RE
 		inline static auto                RTTI = RTTI_MapMenu;
 		constexpr static std::string_view MENU_NAME = "MapMenu";
 
+		struct RUNTIME_DATA
+		{
+			BSTSmartPointer<MapMoveHandler> moveHandler;   // 00000
+			BSTSmartPointer<MapLookHandler> lookHandler;   // 00008
+			BSTSmartPointer<MapZoomHandler> zoomHandler;   // 00010
+			std::uint64_t                   unk00058;      // 00018
+			LocalMapMenu                    localMapMenu;  // 00020
+			RefHandle                       unk30460;      // 30420
+			std::uint32_t                   unk30464;      // 30424
+			std::uint32_t                   unk30468;      // 30428
+			std::uint32_t                   unk3046C;      // 3042C
+			BSTArray<void*>                 unk30470;      // 30430
+			BSTArray<void*>                 unk30488;      // 30448
+			MapCamera                       camera;        // 30460
+			std::uint64_t                   unk30530;      // 304F0
+			TESWorldSpace*                  worldSpace;    // 304F8
+			GFxValue                        unk30540;      // 30500
+			std::uint64_t                   unk30558;      // 30518
+			std::uint64_t                   unk30560;      // 30520
+			std::uint64_t                   unk30568;      // 30528
+			std::uint32_t                   unk30570;      // 30530
+			BSSoundHandle                   unk30574;      // 30534
+			std::uint64_t                   unk30580;      // 30540
+			std::uint64_t                   unk30588;      // 30548
+			std::uint64_t                   unk30590;      // 30550
+		};
+		static_assert(sizeof(RUNTIME_DATA) == 0x30558);
+
 		~MapMenu() override;  // 00
 
 		// override (IMenu)
@@ -49,30 +77,24 @@ namespace RE
 			return func(this);
 		}
 
+		[[nodiscard]] inline RUNTIME_DATA& GetRuntimeData() noexcept
+		{
+			return REL::RelocateMember<RUNTIME_DATA>(this, 0x40, 0x50);
+		}
+
+		[[nodiscard]] inline const RUNTIME_DATA& GetRuntimeData() const noexcept
+		{
+			return REL::RelocateMember<RUNTIME_DATA>(this, 0x40, 0x50);
+		}
+
 		// members
-		BSTSmartPointer<MapMoveHandler> moveHandler;   // 00040
-		BSTSmartPointer<MapLookHandler> lookHandler;   // 00048
-		BSTSmartPointer<MapZoomHandler> zoomHandler;   // 00050
-		std::uint64_t                   unk00058;      // 00058
-		LocalMapMenu                    localMapMenu;  // 00060
-		RefHandle                       unk30460;      // 30460
-		std::uint32_t                   unk30464;      // 30464
-		std::uint32_t                   unk30468;      // 30468
-		std::uint32_t                   unk3046C;      // 3046C
-		BSTArray<void*>                 unk30470;      // 30470
-		BSTArray<void*>                 unk30488;      // 30488
-		MapCamera                       camera;        // 304A0
-		std::uint64_t                   unk30530;      // 30530
-		TESWorldSpace*                  worldSpace;    // 30538
-		GFxValue                        unk30540;      // 30540
-		std::uint64_t                   unk30558;      // 30558
-		std::uint64_t                   unk30560;      // 30560
-		std::uint64_t                   unk30568;      // 30568
-		std::uint32_t                   unk30570;      // 30570
-		BSSoundHandle                   unk30574;      // 30574
-		std::uint64_t                   unk30580;      // 30580
-		std::uint64_t                   unk30588;      // 30588
-		std::uint64_t                   unk30590;      // 30590
+#if !defined(ENABLE_SKYRIM_VR) || (!defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE))
+		RUNTIME_DATA runtimeData; // 40, 50
+#endif
 	};
+#ifndef ENABLE_SKYRIM_VR
 	static_assert(sizeof(MapMenu) == 0x30598);
+#elif !defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE)
+	static_assert(sizeof(MapMenu) == 0x305A8);
+#endif
 }

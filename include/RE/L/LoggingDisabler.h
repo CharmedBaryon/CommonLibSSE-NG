@@ -4,7 +4,7 @@
 
 namespace RE
 {
-#if defined(SKYRIM_FORCE_SE) || defined(SKYRIM_FORCE_VR)
+#if !defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_VR)
 	class LoggingDisabler : public GFxLog
 	{
 	public:

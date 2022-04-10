@@ -27,8 +27,24 @@ namespace RE
 		// override (BSTEventSink<MenuOpenCloseEvent>)
 		BSEventNotifyControl ProcessEvent(const MenuOpenCloseEvent* a_event, BSTEventSource<MenuOpenCloseEvent>* a_eventSource) override;  // 01
 
+		[[nodiscard]] inline GFxValue GetRoot() const noexcept
+		{
+			return REL::RelocateMember<GFxValue>(this, 0x38, 0x48);
+		}
+
+		inline void SetRoot(GFxValue a_root) noexcept
+		{
+			REL::RelocateMember<GFxValue>(this, 0x38, 0x48) = a_root;
+		}
+
 		// members
+#if !defined(ENABLE_SKYRIM_VR) || (!defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE))
 		GFxValue root;  // 38 - "Menu_mc"
+#endif
 	};
+#ifndef ENABLE_SKYRIM_VR
 	static_assert(sizeof(KinectMenu) == 0x50);
+#elif !defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE)
+	static_assert(sizeof(KinectMenu) == 0x60);
+#endif
 }

@@ -1,6 +1,7 @@
 #pragma once
 
 #include "RE/B/BSPointerHandle.h"
+#include "RE/B/BSTEvent.h"
 #include "RE/B/BSTList.h"
 #include "RE/B/BSTSmartPointer.h"
 #include "RE/E/EffectArchetypes.h"
@@ -34,7 +35,7 @@ namespace RE
 			virtual ~ForEachActiveEffectVisitor();  // 00
 
 			// add
-			virtual bool Accept(ActiveEffect* a_effect) = 0;  // 01
+			virtual BSContainer::ForEachResult Accept(ActiveEffect* a_effect) = 0;  // 01
 		};
 		static_assert(sizeof(ForEachActiveEffectVisitor) == 0x8);
 

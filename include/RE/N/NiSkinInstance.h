@@ -46,7 +46,13 @@ namespace RE
 		void*                      boneMatrices;                  // 48
 		void*                      prevBoneMatrices;              // 50
 		void*                      skinToWorldWorldToSkinMatrix;  // 58
+#ifndef ENABLE_SKYRIM_VR
 		WinAPI::CRITICAL_SECTION   lock;                          // 60
 	};
 	static_assert(sizeof(NiSkinInstance) == 0x88);
+#else
+		std::uint64_t unk60;  // 60 - no lock in VR
+	};
+	static_assert(sizeof(NiSkinInstance) == 0x68);
+#endif
 }

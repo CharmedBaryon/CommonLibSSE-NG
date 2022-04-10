@@ -15,5 +15,9 @@ namespace RE
 
 		~SafeZoneMenu() override;  // 00
 	};
+#ifndef ENABLE_SKYRIM_VR
 	static_assert(sizeof(SafeZoneMenu) == 0x30);
+#elif !defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE)
+	static_assert(sizeof(SafeZoneMenu) == 0x40);
+#endif
 }

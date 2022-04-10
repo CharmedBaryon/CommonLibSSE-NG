@@ -39,12 +39,13 @@ namespace RE
 		void InitItemImpl() override;                                               // 13
 		void SetActorCause(ActorCause* a_cause) override;                           // 50
 		void Release3DRelatedData() override;                                       // 6B
-		bool OnAddCellPerformQueueReference(TESObjectCELL& a_cell) const override;  // 90 - { return false; }
+		// Override functions past where Skyrim VR breaks compatibility.
+//		bool OnAddCellPerformQueueReference(TESObjectCELL& a_cell) const override;  // 90 - { return false; }
 
 		// add
-		virtual void Initialize();                // A2
-		virtual void Unk_A3(void);                // A3 - { return; }
-		virtual bool IsNotGeneratedForm() const;  // A4 - { return TESDataHandler::GetSingleton()->IsGeneratedFormID(formID) == 0; }
+		void Initialize();                // A2
+		void Unk_A3(void);                // A3 - { return; }
+		bool IsNotGeneratedForm() const;  // A4 - { return TESDataHandler::GetSingleton()->IsGeneratedFormID(formID) == 0; }
 
 		// members
 		void*                                  hazardDBHandle;  // 98

@@ -24,5 +24,9 @@ namespace RE
 		// override (GFxFunctionHandler)
 		void Call(Params& a_params) override;  // 01
 	};
+#ifndef ENABLE_SKYRIM_VR
 	static_assert(sizeof(CreditsMenu) == 0x40);
+#elif !defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE)
+	static_assert(sizeof(CreditsMenu) == 0x50);
+#endif
 }

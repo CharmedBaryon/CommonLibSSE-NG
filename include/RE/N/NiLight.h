@@ -27,5 +27,9 @@ namespace RE
 		float         fade;     // 134
 		std::uint32_t unk138;   // 138
 	};
+#if !defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE)
+	static_assert(sizeof(NiLight) == 0x168);
+#else
 	static_assert(sizeof(NiLight) == 0x140);
+#endif
 }

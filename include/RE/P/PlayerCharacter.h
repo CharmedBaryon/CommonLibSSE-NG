@@ -26,12 +26,14 @@ namespace RE
 	class BipedAnim;
 	class BSFadeNode;
 	class BSLight;
+	class BSTriShape;
 	class CombatGroup;
 	class ImageSpaceModifierInstanceDOF;
 	class InventoryEntryData;
 	class MenuModeChangeEvent;
 	class MenuOpenCloseEvent;
 	class NiAVObject;
+	class NiBillboardNode;
 	class NiNode;
 	class ObjectListItem;
 	class TESObjectREFR;
@@ -204,6 +206,32 @@ namespace RE
 		};
 		static_assert(sizeof(Data928) == 0x48);
 
+		struct CrimeValue
+		{
+			BSTHashMap<const TESFaction*, CrimeGoldStruct>       crimeGoldMap;       // 00
+			BSTHashMap<const TESFaction*, StolenItemValueStruct> stolenItemValueMap; // 30
+		};
+		static_assert(sizeof(CrimeValue) == 0x60);
+
+		struct RaceData
+		{
+			BGSTextureSet* complexion;   // 00
+			TESRace*       charGenRace;  // 08
+			TESRace*       race2;        // 10
+		};
+		static_assert(sizeof(RaceData) == 0x18);
+
+		struct GameStatsData
+		{
+			std::int32_t                                  difficulty;     // 0
+			std::uint32_t                                 unk4;           // 4
+			std::int8_t                                   murder;         // 8
+			std::int8_t                                   perkCount;      // 9
+			stl::enumeration<ByCharGenFlag, std::uint8_t> byCharGenFlag;  // A
+			std::uint8_t                                  padB;           // B
+		};
+		static_assert(sizeof(GameStatsData) == 0xC);
+
 		struct PlayerSkills
 		{
 		public:
@@ -262,14 +290,72 @@ namespace RE
 		};
 		static_assert(sizeof(PlayerSkills) == 0x8);
 
+		struct CommonData
+		{
+			float                      grabDistance;                                 // 000
+			float                      unk004;                                       // 004
+			std::uint64_t              unk008;                                       // 008
+			std::uint32_t              unk010;                                       // 010
+			std::uint32_t              sleepSeconds;                                 // 014
+			BSTSmartPointer<BipedAnim> largeBiped;                                   // 018
+			NiPointer<NiNode>          firstPerson3D;                                // 020
+			float                      eyeHeight;                                    // 028
+			float                      greetTimer;                                   // 02C
+			float                      encumberedTimer;                              // 030
+			float                      powerAttackTimer;                             // 034
+			std::int32_t               hoursToSleep;                                 // 038
+			std::int32_t               amountStolenSold;                             // 03C
+			std::uint32_t              valueStolen;                                  // 040
+			ActorHandle                lastRiddenMount;                              // 044
+			ActorHandle                lightTarget;                                  // 048
+			float                      sortActorDistanceTimer;                       // 04C
+			float                      sitHeadingDelta;                              // 050
+			std::uint32_t              unk054;                                       // 054
+			Data928*                   unk058;                                       // 058
+			std::uint32_t              skillTrainingsThisLevel;                      // 060
+			std::uint32_t              unk064;                                       // 064
+			TESClass*                  defaultClass;                                 // 068
+			std::uint64_t              unk070;                                       // 070
+			std::uint32_t              crimeCounts[PackageNS::CRIME_TYPES::kTotal];  // 078
+			std::uint32_t              unk094;                                       // 094
+			AlchemyItem*               pendingPoison;                                // 098
+			std::int64_t               lastPlayingTimeUpdate;                        // 0A0
+			std::int64_t               totalPlayingTime;                             // 0A8
+			std::int32_t               characterSeed;                                // 0B0
+			std::uint32_t              unk0B4;                                       // 0B4
+			TESForm*                   lastKnownGoodLocation;                        // 0B8
+			std::uint32_t              unk0C0;                                       // 0C0
+			std::uint32_t              unk0C4;                                       // 0C4
+			NiPointer<BSLight>         firstPersonLight;                             // 0C8
+			NiPointer<BSLight>         thirdPersonLight;                             // 0D0
+			float                      dropAngleMod;                                 // 0D8
+			float                      lastDropAngleMod;                             // 0DC
+			PlayerSkills*              skills;                                       // 0E0
+			ActorHandle                autoAimActor;                                 // 0E8
+			RefHandle                  unk0EC;                                       // 0EC
+			std::uint64_t              unk118;                                       // 0F0
+			NiPointer<NiAVObject>      targeted3D;                                   // 0F8
+			CombatGroup*               combatGroup;                                  // 100
+			BSTArray<ActorHandle>      actorsToDisplayOnTheHUDArray;                 // 108
+			std::uint64_t              unk120;                                       // 120
+			TESBoundObject*            lastOneHandItems[2];                          // 128
+			std::uint32_t              teammateCount;                                // 138
+			float                      combatTimer;                                  // 13C
+			float                      yieldTimer;                                   // 140
+			float                      chaseTimer;                                   // 144
+			float                      drawSheatheSafetyTimer;                       // 148
+			std::uint32_t              unk14C;                                       // 14C
+		};
+		static_assert(sizeof(CommonData) == 0x150);
+
 		~PlayerCharacter() override;  // 000
 
 		// add
-		virtual void          Unk_12A(void);                                                   // 12A
-		virtual std::uint32_t GetViolentCrimeGoldValue(const TESFaction* a_faction) const;     // 12B
-		virtual std::uint32_t GetNonViolentCrimeGoldValue(const TESFaction* a_faction) const;  // 12C
-		virtual void          ClearAllCrimeGold(TESFaction* a_faction);                        // 12D
-		virtual void          Unk_12E(void);                                                   // 12E - { return 0; }
+		void          Unk_12A(void);                                                   // 12A
+		std::uint32_t GetViolentCrimeGoldValue(const TESFaction* a_faction) const;     // 12B
+		std::uint32_t GetNonViolentCrimeGoldValue(const TESFaction* a_faction) const;  // 12C
+		void          ClearAllCrimeGold(TESFaction* a_faction);                        // 12D
+		void          Unk_12E(void);                                                   // 12E - { return 0; }
 
 		static PlayerCharacter* GetSingleton();
 
@@ -283,9 +369,11 @@ namespace RE
 		float                    GetDamage(InventoryEntryData* a_form);
 		NiPointer<TESObjectREFR> GetGrabbedRef();
 		std::uint32_t            GetNumTints(std::uint32_t a_tintType);
+#ifndef ENABLE_SKYRIM_VR
 		TintMask*                GetOverlayTintMask(TintMask* a_original);
 		BSTArray<TintMask*>&     GetTintList();
 		TintMask*                GetTintMask(std::uint32_t a_tintType, std::uint32_t a_index);
+#endif
 		bool                     HasActorDoingCommand() const;
 		bool                     IsGrabbing() const;
 		void                     PlayPickupEvent(TESForm* a_item, TESForm* a_containerOwner, TESObjectREFR* a_containerRef, EventType a_eventType);
@@ -303,7 +391,48 @@ namespace RE
 			GetEventSource<T>()->AddEventSink(a_sink);
 		}
 
+		[[nodiscard]] inline CrimeValue& GetCrimeValue() noexcept
+		{
+			return REL::RelocateMember<CrimeValue>(this, 0x3E0, 0x9D0);
+		}
+
+		[[nodiscard]] inline const CrimeValue& GetCrimeValue() const noexcept
+		{
+			return REL::RelocateMember<CrimeValue>(this, 0x3E0, 0x9D0);
+		}
+
+		[[nodiscard]] inline RaceData& GetRaceData() noexcept
+		{
+			return REL::RelocateMember<RaceData>(this, 0xB30, 0x1228);
+		}
+
+		[[nodiscard]] inline const RaceData& GetRaceData() const noexcept
+		{
+			return REL::RelocateMember<RaceData>(this, 0xB30, 0x1228);
+		}
+
+		[[nodiscard]] inline GameStatsData& GetGameStatsData() noexcept
+		{
+			return REL::RelocateMember<GameStatsData>(this, 0xAF8, 0x11F4);
+		}
+
+		[[nodiscard]] inline const GameStatsData& GetGameStatsData() const noexcept
+		{
+			return REL::RelocateMember<GameStatsData>(this, 0xAF8, 0x11F4);
+		}
+
+		[[nodiscard]] inline CommonData& GetCommonData() noexcept
+		{
+			return REL::RelocateMember<CommonData>(this, 0x8D0, 0xFD0);
+		}
+
+		[[nodiscard]] inline const CommonData& GetCommonData() const noexcept
+		{
+			return REL::RelocateMember<CommonData>(this, 0x8D0, 0xFD0);
+		}
+
 		// members
+#ifndef ENABLE_SKYRIM_VR
 		std::uint32_t                                           unk3D8;                                       // 3D8
 		std::uint32_t                                           unk3DC;                                       // 3DC
 		BSTHashMap<const TESFaction*, CrimeGoldStruct>          crimeGoldMap;                                 // 3E0
@@ -471,9 +600,212 @@ namespace RE
 		stl::enumeration<FlagBDC, std::uint8_t>                 unkBDC;                                       // BDC
 		stl::enumeration<FlagBDD, std::uint8_t>                 unkBDD;                                       // BDD
 		std::uint16_t                                           padBDE;                                       // BDE
+#elif !defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE)
+		std::uint64_t                                        unk3D8;                           // 3D8
+		std::uint64_t                                        unk3E0;                           // 3E0
+		std::uint64_t                                        unk3E8;                           // 3E8
+		NiPointer<NiNode>                                    PlayerWorldNode;                  // 3F0
+		NiPointer<NiNode>                                    FollowNode;                       // 3F8
+		NiPointer<NiNode>                                    FollowOffset;                     // 400
+		NiPointer<NiNode>                                    HeightOffsetNode;                 // 408
+		NiPointer<NiNode>                                    SnapWalkOffsetNode;               // 410
+		NiPointer<NiNode>                                    RoomNode;                         // 418
+		NiPointer<NiNode>                                    BlackSphere;                      // 420
+		NiPointer<NiNode>                                    uiNode;                           // 428
+		NiPointer<BSTriShape>                                InWorldUIQuadGeo;                 // 430
+		NiPointer<NiNode>                                    UIPointerNode;                    // 438
+		NiPointer<BSTriShape>                                UIPointerGeo;                     // 440
+		NiPointer<NiNode>                                    DialogueUINode;                   // 448
+		NiPointer<NiNode>                                    TeleportDestinationPreview;       // 450
+		NiPointer<NiNode>                                    TeleportDestinationFail;          // 458
+		NiPointer<NiNode>                                    TeleportSprintPreview;            // 460
+		NiPointer<NiNode>                                    SpellOrigin;                      // 468
+		NiPointer<NiNode>                                    SpellDestination;                 // 470
+		NiPointer<NiNode>                                    ArrowOrigin;                      // 478
+		NiPointer<NiNode>                                    ArrowDestination;                 // 480
+		NiPointer<NiNode>                                    QuestMarker;                      // 488
+		NiPointer<NiNode>                                    LeftWandNode;                     // 490
+		NiPointer<NiNode>                                    LeftWandShakeNode;                // 498
+		NiPointer<NiNode>                                    LeftValveIndexControllerNode;     // 4A0
+		NiPointer<NiNode>                                    unkNode4A8;                       // 4A8
+		NiPointer<NiNode>                                    LeftWeaponOffsetNode;             // 4B0
+		NiPointer<NiNode>                                    LeftCrossbowOffsetNode;           // 4B8
+		NiPointer<NiNode>                                    LeftMeleeWeaponOffsetNode;        // 4C0
+		NiPointer<NiNode>                                    LeftStaffWeaponOffsetNode;        // 4C8
+		NiPointer<NiNode>                                    LeftShieldOffsetNode;             // 4D0
+		NiPointer<NiNode>                                    RightShieldOffsetNode;            // 4D8
+		NiPointer<NiNode>                                    SecondaryMagicOffsetNode;         // 4E0
+		NiPointer<NiNode>                                    SecondaryMagicAimNode;            // 4E8
+		NiPointer<NiNode>                                    SecondaryStaffMagicOffsetNode;    // 4F0
+		NiPointer<NiNode>                                    RightWandNode;                    // 4F8
+		NiPointer<NiNode>                                    RightWandShakeNode;               // 500
+		NiPointer<NiNode>                                    RightValveIndexControllerNode;    // 508
+		NiPointer<NiNode>                                    unkNode510;                       // 510
+		NiPointer<NiNode>                                    RightWeaponOffsetNode;            // 518
+		NiPointer<NiNode>                                    RightCrossbowOffsetNode;          // 520
+		NiPointer<NiNode>                                    RightMeleeWeaponOffsetNode;       // 528
+		NiPointer<NiNode>                                    RightStaffWeaponOffsetNode;       // 530
+		NiPointer<NiNode>                                    PrimaryMagicOffsetNode;           // 538
+		NiPointer<NiNode>                                    PrimaryMagicAimNode;              // 540
+		NiPointer<NiNode>                                    PrimaryStaffMagicOffsetNode;      // 548
+		std::uint64_t                                        unk550;                           // 550
+		NiPointer<NiBillboardNode>                           CrosshairParent;                  // 558
+		NiPointer<NiBillboardNode>                           CrosshairSecondaryParent;         // 560
+		NiPointer<NiBillboardNode>                           TargetLockParent;                 // 568
+		NiPointer<NiNode>                                    unkNode570;                       // 570
+		NiPointer<NiNode>                                    LastSyncPos;                      // 578
+		NiPointer<NiNode>                                    UprightHmdNode;                   // 580
+		NiPointer<NiNode>                                    MapMarkers3D;                     // 588
+		NiPointer<NiNode>                                    NPCLHnd;                          // 590
+		NiPointer<NiNode>                                    NPCRHnd;                          // 598
+		NiPointer<NiNode>                                    NPCLClv;                          // 5A0
+		NiPointer<NiNode>                                    NPCRClv;                          // 5A8
+		std::uint32_t                                        unk5B0;                           // 5B0
+		std::uint32_t                                        unk5B4;                           // 5B4
+		std::uint64_t                                        unk5B8;                           // 5B8
+		std::uint64_t                                        unk5C0;                           // 5C0
+		NiPointer<NiNode>                                    BowAimNode;                       // 5C8
+		NiPointer<NiNode>                                    BowRotationNode;                  // 5D0
+		NiPointer<NiNode>                                    ArrowSnapNode;                    // 5D8
+		NiPointer<BSFadeNode>                                ArrowNode;                        // 5E0
+		NiPointer<BSFadeNode>                                ArrowFireNode;                    // 5E8
+		std::uint64_t                                        unk5F0;                           // 5F0
+		NiPointer<NiNode>                                    ArrowHoldOffsetNode;              // 5F8
+		NiPointer<NiNode>                                    ArrowHoldNode;                    // 600
+		std::uint64_t                                        unk608;                           // 608
+		float                                                unkFloat610;                      // 610
+		std::uint32_t                                        unk614;                           // 614
+		std::uint64_t                                        unk618;                           // 618
+		std::uint64_t                                        unk620;                           // 620
+		std::uint64_t                                        unk628;                           // 628
+		std::uint64_t                                        unk630;                           // 630
+		void*                                                QuestMarkerBillBoardsNodeArray;   // 638    TODO - Make into proper data structure
+		void*                                                TeleportNodeArray;                // 640    TODO - Make into proper data structure
+		void*                                                QuestMarkerBillBoardsNodeArray2;  // 648    TODO - Make into proper data structure -> points to same place as QuestMarkerBillBoardsNodeArray
+		std::uint64_t                                        unk650;                           // 650
+		void*                                                TeleportNodeArray2;               // 658    TODO - Make into proper data structure -> points to same place as TeleportNodeArray
+		void*                                                QuestMarkerBillBoardsNodeArray3;  // 660    TODO - Make into proper data structure -> points to same place as QuestMarkerBillBoardsNodeArray
+		std::uint64_t                                        unk668;                           // 668
+		float                                                unkFloat670;                      // 670
+		std::uint32_t                                        unk674;                           // 674
+		void*                                                TeleportNodeArray3;               // 678    TODO - Make into proper data structure
+		std::uint64_t                                        unk680;                           // 680
+		std::uint64_t                                        unk688;                           // 688
+		std::uint64_t                                        unk690;                           // 690
+		std::uint64_t                                        unk698;                           // 698
+		std::uint64_t                                        unk6A0;                           // 6A0
+		std::uint64_t                                        unk6A8[0x65];                     // 6A8
+		BSTHashMap<const TESFaction*, CrimeGoldStruct>       crimeGoldMap;                     // 9D0
+		BSTHashMap<const TESFaction*, StolenItemValueStruct> stolenItemValueMap;               // A00
+		std::uint64_t                                        unkA30[0x11];                     // A30
+		void*                                                perkArray;                        // AB8
+		std::uint64_t                                        unk6C0[0x14];                     // AC0
+		//BSTArray<PerkRankData*>								addedPerks;									  // B60
+		//BSTArray<BGSPerk*>									perks;										  // B68
+		//BSTArray<BGSPerk*>									standingStonePerks;							  // B70
+		std::uint64_t addedPerks;                                                                   // B60 // these 3 here gotta be fixed
+		std::uint64_t perks;                                                                        // B68
+		std::uint64_t standingStonePerks;                                                           // B70
+		std::uint64_t unkB78;                                                                       // B78
+		std::uint64_t unkB80;                                                                       // B80
+		std::uint64_t unkMessageArrayPtr;                                                           // B88
+		std::uint64_t unkB90;                                                                       // B90
+		std::uint64_t unkB98;                                                                       // B98
+		std::uint64_t unkBA0;                                                                       // BA0
+		std::uint64_t unkBA8;                                                                       // BA8
+		std::uint64_t unkBB0[0x25];                                                                 // BB0
+		std::uint64_t imageSpaceModifierAnims1;                                                     // CD8 - Wrong Datatype from Below
+		std::uint64_t imageSpaceModifierAnims2;                                                     // CE0 - Wrong Datatype from below
+		std::uint64_t unkCE8[0x34];                                                                 // CE8
+		std::uint32_t padE90;                                                                       // E88
+		ActorHandle   actorDoingPlayerCommand;                                                      // E8C
+		std::uint64_t unkE90;                                                                       // E90
+		std::uint64_t unkE98[0x27];                                                                 // E98
+																									//		BSTSmallArray<hkRefPtr<bhkMouseSpringAction>, 4>		grabSpring;                                   // F00    // not used in vr as far as i can tell   F08??????
+		float                                         grabDistance;                                 // FD0
+		float                                         unkFloatFD4;                                  // FD4
+		std::uint64_t                                 unkFD8;                                       // FD8
+		std::uint32_t                                 sleepSeconds;                                 // FE0
+		std::uint32_t                                 unkFE4;                                       // FE4
+		BSTSmartPointer<BipedAnim>                    largeBiped;                                   // FE8
+		NiPointer<NiNode>                             firstPerson3D;                                // FF0
+		float                                         eyeHeight;                                    // FF8
+		float                                         powerAttackTimer;                             // FFC
+		float                                         encumberedTimer;                              // 1000
+		float                                         unknownTimer;                                 // 1004
+		std::int32_t                                  hoursToSleep;                                 // 1008
+		std::int32_t                                  amountStolenSold;                             // 100C
+		std::uint32_t                                 valueStolen;                                  // 1010
+		ActorHandle                                   lastRiddenMount;                              // 1014
+		ActorHandle                                   lightTarget;                                  // 1018
+		float                                         sortActorDistanceTimer;                       // 101C
+		float                                         sitHeadingDelta;                              // 1020
+		std::uint32_t                                 unk1024;                                      // 1024
+		Data928*                                      unk1028;                                      // 1028
+		std::uint32_t                                 skillTrainingsThisLevel;                      // 1030
+		std::uint32_t                                 unk1034;                                      // 1034
+		TESClass*                                     defaultClass;                                 // 1038
+		std::uint64_t                                 unk1040;                                      // 1040
+		std::uint32_t                                 crimeCounts[PackageNS::CRIME_TYPES::kTotal];  // 1048
+		std::uint32_t                                 unk964;                                       // 1064
+		AlchemyItem*                                  pendingPoison;                                // 1068
+		std::int64_t                                  lastPlayingTimeUpdate;                        // 1070
+		std::int64_t                                  totalPlayingTime;                             // 1078
+		std::int32_t                                  characterSeed;                                // 1080
+		std::uint32_t                                 unk984;                                       // 1084
+		TESForm*                                      lastKnownGoodLocation;                        // 1088
+		std::uint32_t                                 unk990;                                       // 1090
+		std::uint32_t                                 unk994;                                       // 1094
+		NiPointer<BSLight>                            firstPersonLight;                             // 1098
+		NiPointer<BSLight>                            thirdPersonLight;                             // 10A0
+		float                                         dropAngleMod;                                 // 10A8
+		float                                         lastDropAngleMod;                             // 10AC
+		PlayerSkills*                                 skills;                                       // 10B0
+		ActorHandle                                   autoAimActor;                                 // 10B8
+		RefHandle                                     unk9BC;                                       // 10BC
+		std::uint64_t                                 unk9C0;                                       // 10C0
+		NiPointer<NiAVObject>                         targeted3D;                                   // 10C8
+		CombatGroup*                                  combatGroup;                                  // 10D0
+		BSTArray<ActorHandle>                         actorsToDisplayOnTheHUDArray;                 // 10D8
+		std::uint64_t                                 unk9F0;                                       // 10F0
+		TESBoundObject*                               lastOneHandItems[2];                          // 10F8
+		std::uint32_t                                 teammateCount;                                // 1108
+		float                                         combatTimer;                                  // 110C
+		float                                         yieldTimer;                                   // 1110
+		float                                         chaseTimer;                                   // 1114
+		float                                         drawSheatheSafetyTimer;                       // 1118
+		std::uint32_t                                 unk111C;                                      // 111C
+		std::uint64_t                                 unk1120[0x1A];                                // 1120
+		std::uint32_t                                 unk11F0;                                      // 11F0
+		std::int32_t                                  difficulty;                                   // 11F4
+		std::uint32_t                                 unkAFC;                                       // 11F8
+		std::int8_t                                   murder;                                       // 11FC
+		std::int8_t                                   perkCount;                                    // 11FD
+		stl::enumeration<ByCharGenFlag, std::uint8_t> byCharGenFlag;                                // 11FE
+		std::uint8_t                                  padB03;                                       // 11FF
+		std::uint64_t                                 unk1200;                                      // 1200
+		std::uint64_t                                 unk1208;                                      // 1208
+		std::uint64_t                                 unk1210;                                      // 1210
+		std::uint64_t                                 unk1218;                                      // 1218
+		std::uint64_t                                 unk1220;                                      // 1220
+		BGSTextureSet*                                complexion;                                   // 1228
+		TESRace*                                      charGenRace;                                  // 1230
+		TESRace*                                      race2;                                        // 1238
+		std::uint64_t                                 unk1240[0x12];                                // 1240
+		std::uint8_t                                  pad12D0;                                      // 12D0
+		std::uint8_t                                  flags;                                        // 12D1  -- TODO MAP THESE FLAGS OUT
+		std::uint16_t                                 pad12D2;                                      // 12D2
+		std::uint32_t                                 unk12D4;                                      // 12D4
+#endif
 
 	private:
 		bool CenterOnCell_Impl(const char* a_cellName, RE::TESObjectCELL* a_cell);
 	};
+#ifndef ENABLE_SKYRIM_VR
 	static_assert(sizeof(PlayerCharacter) == 0xBE0);
+#elif !defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE)
+	static_assert(sizeof(PlayerCharacter) == 0x12D8);
+#else
+	static_assert(sizeof(PlayerCharacter) == 0x3D8);
+#endif
 }

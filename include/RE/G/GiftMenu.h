@@ -18,6 +18,20 @@ namespace RE
 		inline static auto                RTTI = RTTI_GiftMenu;
 		constexpr static std::string_view MENU_NAME = "GiftMenu";
 
+		struct RUNTIME_DATA
+		{
+			GFxValue        root;             // 00 - "Menu_mc"
+			ItemList*       itemList;         // 18
+			ItemCard*       itemCard;         // 20
+			BSTArray<void*> unk58;            // 28
+			std::uint64_t   unk70;            // 40
+			bool            pcControlsReady;  // 48
+			std::uint8_t    pad79;            // 49
+			std::uint16_t   pad7A;            // 4A
+			std::uint32_t   pad7C;            // 4C
+		};
+		static_assert(sizeof(RUNTIME_DATA) == 0x50);
+
 		~GiftMenu() override;  // 00
 
 		// override (IMenu)
@@ -27,16 +41,24 @@ namespace RE
 
 		[[nodiscard]] static RefHandle GetTargetRefHandle();
 
+		[[nodiscard]] inline RUNTIME_DATA& GetRuntimeData() noexcept
+		{
+			return REL::RelocateMember<RUNTIME_DATA>(this, 0x30, 0x40);
+		}
+
+		[[nodiscard]] inline const RUNTIME_DATA& GetRuntimeData() const noexcept
+		{
+			return REL::RelocateMember<RUNTIME_DATA>(this, 0x30, 0x40);
+		}
+
 		// members
-		GFxValue        root;             // 30 - "Menu_mc"
-		ItemList*       itemList;         // 48
-		ItemCard*       itemCard;         // 50
-		BSTArray<void*> unk58;            // 58
-		std::uint64_t   unk70;            // 70
-		bool            pcControlsReady;  // 78
-		std::uint8_t    pad79;            // 79
-		std::uint16_t   pad7A;            // 7A
-		std::uint32_t   pad7C;            // 7C
+#if !defined(ENABLE_SKYRIM_VR) || (!defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE))
+		RUNTIME_DATA runtimeData; // 30, 40
+#endif
 	};
+#ifndef ENABLE_SKYRIM_VR
 	static_assert(sizeof(GiftMenu) == 0x80);
+#elif !defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE)
+	static_assert(sizeof(GiftMenu) == 0x90);
+#endif
 }

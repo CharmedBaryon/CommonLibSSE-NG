@@ -27,10 +27,11 @@ namespace RE
 		bool              RegisterStreamables(NiStream& a_stream) override;                         // 1A
 		void              SaveBinary(NiStream& a_stream) override;                                  // 1B
 		bool              IsEqual(NiObject* a_object) override;                                     // 1C
-		void              UpdateDownwardPass(NiUpdateData& a_data, std::uint32_t a_arg2) override;  // 2C
-		void              UpdateWorldBound() override;                                              // 2F
-		void              OnVisible(NiCullingProcess& a_process) override;                          // 34
-		void              UpdateUpwardPass(NiUpdateData& a_data) override;                          // 3D
+		// The following are virtual functions past the point where VR compatibility breaks.
+//		void              UpdateDownwardPass(NiUpdateData& a_data, std::uint32_t a_arg2) override;  // 2C
+//		void              UpdateWorldBound() override;                                              // 2F
+//		void              OnVisible(NiCullingProcess& a_process) override;                          // 34
+//		void              UpdateUpwardPass(NiUpdateData& a_data) override;                          // 3D
 
 		// add
 		virtual BSMultiBoundRoom* GetMultiBoundRoom();                    // 3E - { return 0; }
@@ -43,5 +44,9 @@ namespace RE
 		BSCullingProcess::BSCPCullingType cullingMode;    // 130
 		float                             lastAccumTime;  // 134
 	};
+#if !defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE)
+	static_assert(sizeof(BSMultiBoundNode) == 0x160);
+#else
 	static_assert(sizeof(BSMultiBoundNode) == 0x138);
+#endif
 }

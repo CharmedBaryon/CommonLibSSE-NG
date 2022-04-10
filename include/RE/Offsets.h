@@ -283,7 +283,7 @@ namespace RE
 			inline REL::ID SetNorthRotation(REL::RelocationID(16089, 16330));
 		}
 
-#if defined(SKYRIM_FORCE_SE) || defined(SKYRIM_FORCE_VR)
+#ifndef ENABLE_SKYRIM_AE
 		namespace LooseFileStream
 		{
 			inline constexpr REL::ID Ctor(REL::ID(68663));

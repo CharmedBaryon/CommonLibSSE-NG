@@ -142,5 +142,135 @@ namespace RE
 
 			TraceStack(buf.data(), a_stackID, a_severity);
 		}
+
+		bool IVirtualMachine::FindBoundObject(VMHandle a_handle, const char* a_className, BSTSmartPointer<Object>& a_result) const
+		{
+			return REL::RelocateVirtual<decltype(&IVirtualMachine::FindBoundObject)>(0x1C, 0x1E, this, a_handle, a_className, a_result);
+		}
+
+		void IVirtualMachine::MoveBoundObjects(VMHandle a_from, VMHandle a_to)
+		{
+			REL::RelocateVirtual<decltype(&IVirtualMachine::MoveBoundObjects)>(0x1D, 0x1F, this, a_from, a_to);
+		}
+
+		void IVirtualMachine::ResetAllBoundObjects(VMHandle a_handle)
+		{
+			REL::RelocateVirtual<decltype(&IVirtualMachine::ResetAllBoundObjects)>(0x1E, 0x20, this, a_handle);
+		}
+
+		bool IVirtualMachine::CastObject(const BSTSmartPointer<Object>& a_fromObjPtr, const BSTSmartPointer<ObjectTypeInfo>& a_toTypeInfoPtr, BSTSmartPointer<Object>& a_toObjPtr)
+		{
+			return REL::RelocateVirtual<decltype(&IVirtualMachine::CastObject)>(0x1F, 0x21, this, a_fromObjPtr, a_toTypeInfoPtr, a_toObjPtr);
+		}
+
+		bool IVirtualMachine::SetPropertyValue(BSTSmartPointer<Object>& a_obj, const char* a_propertyName, Variable& a_setVal)
+		{
+			return REL::RelocateVirtual<decltype(&IVirtualMachine::SetPropertyValue)>(0x20, 0x22, this, a_obj, a_propertyName, a_setVal);
+		}
+
+		bool IVirtualMachine::GetPropertyValue(BSTSmartPointer<Object>& a_obj, const char* a_propertyName, Variable& a_getVal)
+		{
+			return REL::RelocateVirtual<decltype(&IVirtualMachine::GetPropertyValue)>(0x21, 0x23, this, a_obj, a_propertyName, a_getVal);
+		}
+
+		bool IVirtualMachine::GetVariableValue1(const BSTSmartPointer<Object>& a_objPtr, std::uint32_t a_index, Variable& a_out) const
+		{
+			return REL::RelocateVirtual<decltype(&IVirtualMachine::GetVariableValue1)>(0x22, 0x24, this, a_objPtr, a_index, a_out);
+		}
+
+		bool IVirtualMachine::GetVariableValue2(VMHandle a_handle, const BSFixedString& a_className, std::int32_t a_variableIndex, Variable& a_out) const
+		{
+			return REL::RelocateVirtual<decltype(&IVirtualMachine::GetVariableValue2)>(0x23, 0x25, this, a_handle, a_className, a_variableIndex, a_out);
+		}
+
+		void IVirtualMachine::SendEvent(VMHandle a_handle, const BSFixedString& a_eventName, IFunctionArguments* a_args)
+		{
+			REL::RelocateVirtual<decltype(&IVirtualMachine::SendEvent)>(0x24, 0x26, this, a_handle, a_eventName, a_args);
+		}
+
+		void IVirtualMachine::SendEventAll(const BSFixedString& a_eventName, IFunctionArguments* a_args)
+		{
+			REL::RelocateVirtual<decltype(&IVirtualMachine::SendEventAll)>(0x25, 0x27, this, a_eventName, a_args);
+		}
+
+		bool IVirtualMachine::DispatchStaticCall(const BSFixedString& a_className, const BSFixedString& a_fnName, IFunctionArguments* a_args, BSTSmartPointer<IStackCallbackFunctor>& a_result)
+		{
+			return REL::RelocateVirtual<decltype(&IVirtualMachine::DispatchStaticCall)>(0x26, 0x28, this, a_className, a_fnName, a_args, a_result);
+		}
+
+		bool IVirtualMachine::DispatchMethodCall1(BSTSmartPointer<Object>& a_obj, const BSFixedString& a_fnName, IFunctionArguments* a_args, BSTSmartPointer<IStackCallbackFunctor>& a_result)
+		{
+			return REL::RelocateVirtual<decltype(&IVirtualMachine::DispatchMethodCall1)>(0x27, 0x29, this, a_obj, a_fnName, a_args, a_result);
+		}
+
+		bool IVirtualMachine::DispatchMethodCall2(VMHandle a_handle, const BSFixedString& a_className, const BSFixedString& a_fnName, IFunctionArguments* a_args, BSTSmartPointer<IStackCallbackFunctor>& a_result)
+		{
+			return REL::RelocateVirtual<decltype(&IVirtualMachine::DispatchMethodCall2)>(0x28, 0x2A, this, a_handle, a_className, a_fnName, a_args, a_result);
+		}
+
+		bool IVirtualMachine::DispatchUnboundMethodCall()
+		{
+			return REL::RelocateVirtual<decltype(&IVirtualMachine::DispatchUnboundMethodCall)>(0x29, 0x2B, this);
+		}
+
+		bool IVirtualMachine::IsWaitingOnLatent(VMStackID a_stackID) const
+		{
+			return REL::RelocateVirtual<decltype(&IVirtualMachine::IsWaitingOnLatent)>(0x2A, 0x2C, this, a_stackID);
+		}
+
+		void IVirtualMachine::ReturnFromLatent(VMStackID a_stackID, const Variable& a_val)
+		{
+			REL::RelocateVirtual<decltype(&IVirtualMachine::ReturnFromLatent)>(0x2B, 0x2D, this, a_stackID, a_val);
+		}
+
+		ErrorLogger* IVirtualMachine::GetErrorLogger()
+		{
+			return REL::RelocateVirtual<decltype(&IVirtualMachine::GetErrorLogger)>(0x2C, 0x2E, this);
+		}
+
+		IObjectHandlePolicy* IVirtualMachine::GetObjectHandlePolicy1()
+		{
+			return REL::RelocateVirtual<decltype(&IVirtualMachine::GetObjectHandlePolicy1)>(0x2D, 0x2F, this);
+		}
+
+		const IObjectHandlePolicy* IVirtualMachine::GetObjectHandlePolicy2() const
+		{
+			return REL::RelocateVirtual<decltype(&IVirtualMachine::GetObjectHandlePolicy2)>(0x2E, 0x30, this);
+		}
+
+		ObjectBindPolicy* IVirtualMachine::GetObjectBindPolicy1()
+		{
+			return REL::RelocateVirtual<decltype(&IVirtualMachine::GetObjectBindPolicy1)>(0x2F, 0x31, this);
+		}
+
+		const ObjectBindPolicy* IVirtualMachine::GetObjectBindPolicy2() const
+		{
+			return REL::RelocateVirtual<decltype(&IVirtualMachine::GetObjectBindPolicy2)>(0x30, 0x32, this);
+		}
+
+		ISavePatcherInterface* IVirtualMachine::GetSavePatcherInterface()
+		{
+			return REL::RelocateVirtual<decltype(&IVirtualMachine::GetSavePatcherInterface)>(0x31, 0x33, this);
+		}
+
+		void IVirtualMachine::RegisterForLogEvent(BSTEventSink<LogEvent>* a_sink)
+		{
+			REL::RelocateVirtual<decltype(&IVirtualMachine::RegisterForLogEvent)>(0x32, 0x34, this, a_sink);
+		}
+
+		void IVirtualMachine::UnregisterForLogEvent(BSTEventSink<LogEvent>* a_sink)
+		{
+			REL::RelocateVirtual<decltype(&IVirtualMachine::UnregisterForLogEvent)>(0x33, 0x35, this, a_sink);
+		}
+
+		void IVirtualMachine::RegisterForStatsEvent(BSTEventSink<StatsEvent>* a_sink)
+		{
+			REL::RelocateVirtual<decltype(&IVirtualMachine::RegisterForStatsEvent)>(0x34, 0x36, this, a_sink);
+		}
+
+		void IVirtualMachine::UnregisterForStatsEvent(BSTEventSink<StatsEvent>* a_sink)
+		{
+			REL::RelocateVirtual<decltype(&IVirtualMachine::UnregisterForStatsEvent)>(0x35, 0x37, this, a_sink);
+		}
 	}
 }

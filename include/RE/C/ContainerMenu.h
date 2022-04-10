@@ -27,6 +27,30 @@ namespace RE
 			kNPCMode = 3
 		};
 
+		struct RUNTIME_DATA
+		{
+			GFxValue        root;             // 00 - "Menu_mc"
+			ItemList*       itemList;         // 18
+			ItemCard*       itemCard;         // 20
+			BottomBar*      bottomBar;        // 28
+			BSTArray<void*> unk60;            // 30
+			BSTArray<void*> unk78;            // 48
+			std::uint64_t   unk90;            // 60
+			std::uint64_t   unk98;            // 68
+			std::uint64_t   unkA0;            // 70
+			std::uint8_t    unkA8;            // 78
+			std::uint8_t    padA9;            // 79
+			std::uint16_t   padAA;            // 7A
+			std::uint32_t   padAC;            // 7C
+			std::int32_t    value;            // 80
+			std::uint32_t   unkB4;            // 84
+			std::uint8_t    unkB8;            // 88
+			bool            pcControlsReady;  // 89
+			std::uint16_t   padBA;            // 8A
+			std::uint32_t   padBC;            // 8C
+		};
+		static_assert(sizeof(RUNTIME_DATA) == 0x90);
+
 		~ContainerMenu() override;  // 00
 
 		// override (IMenu)
@@ -37,26 +61,27 @@ namespace RE
 		[[nodiscard]] ContainerMode    GetContainerMode();
 		[[nodiscard]] static RefHandle GetTargetRefHandle();
 
+		[[nodiscard]] GFxValue GetRoot() const noexcept;
+		[[nodiscard]] ItemList* GetItemList() const noexcept;
+
+		[[nodiscard]] inline RUNTIME_DATA& GetRuntimeData() noexcept
+		{
+			return REL::RelocateMember<RUNTIME_DATA>(this, 0x30, 0x40);
+		}
+
+		[[nodiscard]] inline const RUNTIME_DATA& GetRuntimeData() const noexcept
+		{
+			return REL::RelocateMember<RUNTIME_DATA>(this, 0x30, 0x40);
+		}
+
 		// members
-		GFxValue        root;             // 30 - "Menu_mc"
-		ItemList*       itemList;         // 48
-		ItemCard*       itemCard;         // 50
-		BottomBar*      bottomBar;        // 58
-		BSTArray<void*> unk60;            // 60
-		BSTArray<void*> unk78;            // 78
-		std::uint64_t   unk90;            // 90
-		std::uint64_t   unk98;            // 98
-		std::uint64_t   unkA0;            // A0
-		std::uint8_t    unkA8;            // A8
-		std::uint8_t    padA9;            // A9
-		std::uint16_t   padAA;            // AA
-		std::uint32_t   padAC;            // AC
-		std::int32_t    value;            // B0
-		std::uint32_t   unkB4;            // B4
-		std::uint8_t    unkB8;            // B8
-		bool            pcControlsReady;  // B9
-		std::uint16_t   padBA;            // BA
-		std::uint32_t   padBC;            // BC
+#if !defined(ENABLE_SKYRIM_VR) || (!defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE))
+		RUNTIME_DATA runtimeData; // 30, 40
+#endif
 	};
+#ifndef ENABLE_SKYRIM_VR
 	static_assert(sizeof(ContainerMenu) == 0xC0);
+#elif !defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE)
+	static_assert(sizeof(ContainerMenu) == 0xD0);
+#endif
 }
