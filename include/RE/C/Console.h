@@ -19,11 +19,14 @@ namespace RE
 
 		struct RUNTIME_DATA
 		{
-			void*         opcode;  // 00
-			std::uint64_t unk38;   // 08
-			std::uint64_t unk40;   // 10
-			std::uint64_t unk48;   // 18
-			std::uint64_t unk50;   // 20
+#define RUNTIME_DATA_CONTENT       \
+	void*         opcode; /* 00 */ \
+	std::uint64_t unk38;  /* 08 */ \
+	std::uint64_t unk40;  /* 10 */ \
+	std::uint64_t unk48;  /* 18 */ \
+	std::uint64_t unk50;  /* 20 */
+
+			RUNTIME_DATA_CONTENT
 		};
 		static_assert(sizeof(RUNTIME_DATA) == 0x28);
 
@@ -52,7 +55,7 @@ namespace RE
 
 		// members
 #if !defined(ENABLE_SKYRIM_VR) || (!defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE))
-		RUNTIME_DATA runtimeData; // 30, 40
+		RUNTIME_DATA_CONTENT  // 30, 40
 #endif
 
 	protected:
@@ -64,3 +67,4 @@ namespace RE
 	static_assert(sizeof(Console) == 0x68);
 #endif
 }
+#undef RUNTIME_DATA_CONTENT

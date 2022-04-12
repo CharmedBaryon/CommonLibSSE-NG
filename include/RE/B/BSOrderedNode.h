@@ -10,29 +10,51 @@ namespace RE
 		inline static auto RTTI = RTTI_BSOrderedNode;
 		inline static auto Ni_RTTI = NiRTTI_BSOrderedNode;
 
+		struct RUNTIME_DATA
+		{
+#define RUNTIME_DATA_CONTENT               \
+	NiBound       orderedBound;   /* 00 */ \
+	bool          useStaticBound; /* 10 */ \
+	std::uint32_t pad13C;         /* 11 */
+
+			RUNTIME_DATA_CONTENT
+		};
+		static_assert(sizeof(RUNTIME_DATA) == 0x18);
+
 		~BSOrderedNode() override;  // 00
 
 		// override (BSNiNode)
-		const NiRTTI* GetRTTI() const override;                                                         // 02
-		NiObject*     CreateClone(NiCloningProcess& a_cloning) override;                                // 17
-		void          LoadBinary(NiStream& a_stream) override;                                          // 18
-		void          LinkObject(NiStream& a_stream) override;                                          // 19
-		bool          RegisterStreamables(NiStream& a_stream) override;                                 // 1A
-		void          SaveBinary(NiStream& a_stream) override;                                          // 1B
-		bool          IsEqual(NiObject* a_object) override;                                             // 1C
+		const NiRTTI* GetRTTI() const override;                           // 02
+		NiObject*     CreateClone(NiCloningProcess& a_cloning) override;  // 17
+		void          LoadBinary(NiStream& a_stream) override;            // 18
+		void          LinkObject(NiStream& a_stream) override;            // 19
+		bool          RegisterStreamables(NiStream& a_stream) override;   // 1A
+		void          SaveBinary(NiStream& a_stream) override;            // 1B
+		bool          IsEqual(NiObject* a_object) override;               // 1C
 		// The following are virtual functions past the point where VR compatibility breaks.
-//		void          UpdateDownwardPass(NiUpdateData& a_data, std::uint32_t a_arg2) override;          // 2C
-//		void          UpdateSelectedDownwardPass(NiUpdateData& a_data, std::uint32_t a_arg2) override;  // 2D
-//		void          OnVisible(NiCullingProcess& a_process) override;                                  // 34
+		//		void          UpdateDownwardPass(NiUpdateData& a_data, std::uint32_t a_arg2) override;          // 2C
+		//		void          UpdateSelectedDownwardPass(NiUpdateData& a_data, std::uint32_t a_arg2) override;  // 2D
+		//		void          OnVisible(NiCullingProcess& a_process) override;                                  // 34
+
+		[[nodiscard]] inline RUNTIME_DATA& GetRuntimeData() noexcept
+		{
+			return REL::RelocateMember<RUNTIME_DATA>(this, 0x128, 0x150);
+		}
+
+		[[nodiscard]] inline const RUNTIME_DATA& GetRuntimeData() const noexcept
+		{
+			return REL::RelocateMember<RUNTIME_DATA>(this, 0x128, 0x150);
+		}
 
 		// members
-		NiBound       orderedBound;    // 128
-		bool          useStaticBound;  // 138
-		std::uint32_t pad13C;          // 13C
+#if !defined(ENABLE_SKYRIM_VR) || (!defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE))
+		RUNTIME_DATA_CONTENT  // 128, 150
+#endif
 	};
-#if !defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE)
-	static_assert(sizeof(BSOrderedNode) == 0x168);
-#else
+#ifndef ENABLE_SKYRIM_VR
 	static_assert(sizeof(BSOrderedNode) == 0x140);
+#elif !defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE)
+	static_assert(sizeof(BSOrderedNode) == 0x168);
 #endif
 }
+#undef RUNTIME_DATA_CONTENT

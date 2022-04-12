@@ -16,9 +16,13 @@ namespace RE
 	// kDisablePauseMenu if game load prevented
 	// context = kJournal
 	class JournalMenu :
-		public IMenu,                       // 00
+		public IMenu,  // 00
+#if !defined(ENABLE_SKYRIM_VR) || (!defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE))
 		public MenuEventHandler,            // 30
 		public BSTEventSink<BSSystemEvent>  // 40
+#else
+		public MenuEventHandler  // 30
+#endif
 	{
 	public:
 		inline static auto                RTTI = RTTI_JournalMenu;
@@ -26,12 +30,15 @@ namespace RE
 
 		struct RUNTIME_DATA
 		{
-			Journal_QuestsTab questsTab;  // 00
-			Journal_StatsTab  statsTab;   // 38
-			Journal_SystemTab systemTab;  // 50
-			std::uint64_t     unkD0;      // 88
-			std::uint64_t     unkD8;      // 90
-			std::uint64_t     unkE0;      // 98
+#define RUNTIME_DATA_CONTENT              \
+	Journal_QuestsTab questsTab; /* 00 */ \
+	Journal_StatsTab  statsTab;  /* 38 */ \
+	Journal_SystemTab systemTab; /* 50 */ \
+	std::uint64_t     unkD0;     /* 88 */ \
+	std::uint64_t     unkD8;     /* 90 */ \
+	std::uint64_t     unkE0;     /* 98 */
+
+			RUNTIME_DATA_CONTENT
 		};
 		static_assert(sizeof(RUNTIME_DATA) == 0xA0);
 
@@ -43,12 +50,14 @@ namespace RE
 		void               AdvanceMovie(float a_interval, std::uint32_t a_currentTime) override;  // 05
 		void               PostDisplay() override;                                                // 06
 
+#if !defined(ENABLE_SKYRIM_VR) || (!defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE))
 		// override (MenuEventHandler)
 		bool CanProcess(InputEvent* a_event) override;              // 01
 		bool ProcessThumbstick(ThumbstickEvent* a_event) override;  // 03
 
 		// override (BSTEventSink<BSSystemEvent>)
 		BSEventNotifyControl ProcessEvent(const BSSystemEvent* a_event, BSTEventSource<BSSystemEvent>* a_eventSource) override;  // 01
+#endif
 
 		[[nodiscard]] inline RUNTIME_DATA& GetRuntimeData() noexcept
 		{
@@ -62,7 +71,7 @@ namespace RE
 
 		// members
 #if !defined(ENABLE_SKYRIM_VR) || (!defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE))
-		RUNTIME_DATA runtimeData; // 48, 58
+		RUNTIME_DATA_CONTENT  // 48, 58
 #endif
 	};
 #ifndef ENABLE_SKYRIM_VR
@@ -71,3 +80,4 @@ namespace RE
 	static_assert(sizeof(JournalMenu) == 0xF8);
 #endif
 }
+#undef RUNTIME_DATA_CONTENT

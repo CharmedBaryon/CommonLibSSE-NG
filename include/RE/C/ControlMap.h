@@ -44,15 +44,24 @@ namespace RE
 		struct InputContext
 		{
 		public:
-			[[nodiscard]] static inline std::size_t GetNumDeviceMappings() noexcept {
+			[[nodiscard]] static SKYRIM_REL_VR std::size_t GetNumDeviceMappings() noexcept
+			{
+#if !defined(ENABLE_SKYRIM_VR) || (!defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE))
+				return INPUT_DEVICES::kTotal;
+#else
 				return REL::Module::get().IsVR() ? INPUT_DEVICES::kTotal :
-                    static_cast<std::size_t>(INPUT_DEVICES::kVRRight) - 1;
+                                                   static_cast<std::size_t>(INPUT_DEVICES::kVirtualKeyboard) + 1;
+#endif
 			}
 
 			// members
 			BSTArray<UserEventMapping> deviceMappings[INPUT_DEVICES::kTotal];  // 00
 		};
+#ifdef ENABLE_SKYRIM_VR
 		static_assert(sizeof(InputContext) == 0xA8);
+#else
+		static_assert(sizeof(InputContext) == 0x60);
+#endif
 
 		struct LinkedMapping
 		{

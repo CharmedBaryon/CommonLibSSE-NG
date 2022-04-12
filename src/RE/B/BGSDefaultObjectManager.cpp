@@ -10,8 +10,7 @@ namespace RE
 
 		inline std::size_t MapIndex(std::underlying_type_t<DefaultObjectID> a_idx) noexcept
 		{
-			if (a_idx <= stl::to_underlying(DefaultObjectID::kKeywordActivatorFurnitureNoPlayer))
-			{
+			if (a_idx <= stl::to_underlying(DefaultObjectID::kKeywordActivatorFurnitureNoPlayer)) {
 				return a_idx;
 			}
 			std::size_t result;
@@ -32,7 +31,8 @@ namespace RE
 			return nullptr;
 		}
 		return RelocateMember<bool*>(this, 0xB80, 0xBA8)[idx] ?
-		    &RelocateMember<TESForm**>(this, 0x20, 0x20)[idx] : nullptr;
+                   &RelocateMember<TESForm**>(this, 0x20, 0x20)[idx] :
+                   nullptr;
 	}
 
 	bool BGSDefaultObjectManager::IsObjectInitialized(DefaultObjectID a_object) const noexcept

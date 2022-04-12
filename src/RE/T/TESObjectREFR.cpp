@@ -787,124 +787,153 @@ namespace RE
 		return func(this, a_manager, a_toSeq, a_fromSeq, a_arg4);
 	}
 
-	void TESObjectREFR::SetObjectReference(TESBoundObject* a_object) {
+	void TESObjectREFR::SetObjectReference(TESBoundObject* a_object)
+	{
 		REL::RelocateVirtual<decltype(&TESObjectREFR::SetObjectReference)>(0x84, 0x85, this, a_object);
 	}
 
-	void TESObjectREFR::MoveHavok(bool a_forceRec) {
+	void TESObjectREFR::MoveHavok(bool a_forceRec)
+	{
 		REL::RelocateVirtual<decltype(&TESObjectREFR::MoveHavok)>(0x85, 0x86, this, a_forceRec);
 	}
 
-	void TESObjectREFR::GetLinearVelocity(NiPoint3& a_velocity) const {
+	void TESObjectREFR::GetLinearVelocity(NiPoint3& a_velocity) const
+	{
 		REL::RelocateVirtual<decltype(&TESObjectREFR::GetLinearVelocity)>(0x86, 0x87, this, a_velocity);
 	}
 
-	void TESObjectREFR::SetActionComplete(bool a_set) {
+	void TESObjectREFR::SetActionComplete(bool a_set)
+	{
 		REL::RelocateVirtual<decltype(&TESObjectREFR::SetActionComplete)>(0x87, 0x88, this, a_set);
 	}
 
-	void TESObjectREFR::SetMovementComplete(bool a_set) {
+	void TESObjectREFR::SetMovementComplete(bool a_set)
+	{
 		REL::RelocateVirtual<decltype(&TESObjectREFR::SetMovementComplete)>(0x88, 0x89, this, a_set);
 	}
 
-	void TESObjectREFR::Disable() {
+	void TESObjectREFR::Disable()
+	{
 		REL::RelocateVirtual<decltype(&TESObjectREFR::Disable)>(0x89, 0x8A, this);
 	}
 
-	void TESObjectREFR::ResetInventory(bool a_leveledOnly) {
+	void TESObjectREFR::ResetInventory(bool a_leveledOnly)
+	{
 		REL::RelocateVirtual<decltype(&TESObjectREFR::ResetInventory)>(0x8A, 0x8B, this, a_leveledOnly);
 	}
 
-	void TESObjectREFR::Unk_8B() {
+	void TESObjectREFR::Unk_8B()
+	{
 		REL::RelocateVirtual<decltype(&TESObjectREFR::Unk_8B)>(0x8B, 0x8C, this);
 	}
 
-	void TESObjectREFR::Unk_8C() {
+	void TESObjectREFR::Unk_8C()
+	{
 		REL::RelocateVirtual<decltype(&TESObjectREFR::Unk_8C)>(0x8C, 0x8D, this);
 	}
 
-	NiAVObject* TESObjectREFR::GetCurrent3D() const {
+	NiAVObject* TESObjectREFR::GetCurrent3D() const
+	{
 		return REL::RelocateVirtual<decltype(&TESObjectREFR::GetCurrent3D)>(0x8D, 0x8E, this);
 	}
 
-	Explosion* TESObjectREFR::AsExplosion() {
+	Explosion* TESObjectREFR::AsExplosion()
+	{
 		return REL::RelocateVirtual<decltype(&TESObjectREFR::AsExplosion)>(0x8E, 0x8F, this);
 	}
 
-	Projectile* TESObjectREFR::AsProjectile() {
+	Projectile* TESObjectREFR::AsProjectile()
+	{
 		return REL::RelocateVirtual<decltype(&TESObjectREFR::AsProjectile)>(0x8F, 0x90, this);
 	}
 
-	bool TESObjectREFR::OnAddCellPerformQueueReference(TESObjectCELL& a_cell) const {
+	bool TESObjectREFR::OnAddCellPerformQueueReference(TESObjectCELL& a_cell) const
+	{
 		return REL::RelocateVirtual<decltype(&TESObjectREFR::OnAddCellPerformQueueReference)>(0x90, 0x91, this, a_cell);
 	}
 
-	void TESObjectREFR::DoMoveToHigh() {
+	void TESObjectREFR::DoMoveToHigh()
+	{
 		REL::RelocateVirtual<decltype(&TESObjectREFR::DoMoveToHigh)>(0x91, 0x92, this);
 	}
 
-	void TESObjectREFR::TryMoveToMiddleLow() {
+	void TESObjectREFR::TryMoveToMiddleLow()
+	{
 		REL::RelocateVirtual<decltype(&TESObjectREFR::TryMoveToMiddleLow)>(0x92, 0x93, this);
 	}
 
-	bool TESObjectREFR::TryChangeSkyCellActorsProcessLevel() {
+	bool TESObjectREFR::TryChangeSkyCellActorsProcessLevel()
+	{
 		return REL::RelocateVirtual<decltype(&TESObjectREFR::TryChangeSkyCellActorsProcessLevel)>(0x93, 0x94, this);
 	}
 
-	void TESObjectREFR::Unk_94() {
+	void TESObjectREFR::Unk_94()
+	{
 		REL::RelocateVirtual<decltype(&TESObjectREFR::Unk_94)>(0x94, 0x95, this);
 	}
 
-	void TESObjectREFR::Unk_95() {
+	void TESObjectREFR::Unk_95()
+	{
 		REL::RelocateVirtual<decltype(&TESObjectREFR::Unk_95)>(0x95, 0x96, this);
 	}
 
-	void TESObjectREFR::Unk_96() {
-
+	void TESObjectREFR::Unk_96()
+	{
 		REL::RelocateVirtual<decltype(&TESObjectREFR::Unk_96)>(0x96, 0x97, this);
 	}
 
-	TESObjectCELL* TESObjectREFR::GetSaveParentCell() const {
+	TESObjectCELL* TESObjectREFR::GetSaveParentCell() const
+	{
 		return REL::RelocateVirtual<decltype(&TESObjectREFR::GetSaveParentCell)>(0x97, 0x98, this);
 	}
 
-	void TESObjectREFR::SetParentCell(TESObjectCELL* a_cell) {
+	void TESObjectREFR::SetParentCell(TESObjectCELL* a_cell)
+	{
 		REL::RelocateVirtual<decltype(&TESObjectREFR::SetParentCell)>(0x98, 0x99, this, a_cell);
 	}
 
-	bool TESObjectREFR::IsDead(bool a_notEssential) const {
+	bool TESObjectREFR::IsDead(bool a_notEssential) const
+	{
 		return REL::RelocateVirtual<decltype(&TESObjectREFR::IsDead)>(0x99, 0x9A, this, a_notEssential);
 	}
 
-	BSAnimNoteReceiver* TESObjectREFR::CreateAnimNoteReceiver() {
+	BSAnimNoteReceiver* TESObjectREFR::CreateAnimNoteReceiver()
+	{
 		return REL::RelocateVirtual<decltype(&TESObjectREFR::CreateAnimNoteReceiver)>(0x9A, 0x9B, this);
 	}
 
-	BSAnimNoteReceiver* TESObjectREFR::GetAnimNoteReceiver() {
+	BSAnimNoteReceiver* TESObjectREFR::GetAnimNoteReceiver()
+	{
 		return REL::RelocateVirtual<decltype(&TESObjectREFR::GetAnimNoteReceiver)>(0x9B, 0x9C, this);
 	}
 
-	bool TESObjectREFR::ProcessInWater(hkpCollidable* a_collidable, float a_waterHeight, float a_deltaTime) {
+	bool TESObjectREFR::ProcessInWater(hkpCollidable* a_collidable, float a_waterHeight, float a_deltaTime)
+	{
 		return REL::RelocateVirtual<decltype(&TESObjectREFR::ProcessInWater)>(0x9C, 0x9D, this, a_collidable, a_waterHeight, a_deltaTime);
 	}
 
-	void TESObjectREFR::Unk_9D() {
+	void TESObjectREFR::Unk_9D()
+	{
 		REL::RelocateVirtual<decltype(&TESObjectREFR::Unk_9D)>(0x9D, 0x9E, this);
 	}
 
-	TESAmmo* TESObjectREFR::GetCurrentAmmo() const {
+	TESAmmo* TESObjectREFR::GetCurrentAmmo() const
+	{
 		return REL::RelocateVirtual<decltype(&TESObjectREFR::GetCurrentAmmo)>(0x9E, 0x9F, this);
 	}
 
-	BGSDecalGroup* TESObjectREFR::GetDecalGroup() const {
+	BGSDecalGroup* TESObjectREFR::GetDecalGroup() const
+	{
 		return REL::RelocateVirtual<decltype(&TESObjectREFR::GetDecalGroup)>(0x9F, 0xA0, this);
 	}
 
-	void TESObjectREFR::Unk_A0() {
+	void TESObjectREFR::Unk_A0()
+	{
 		REL::RelocateVirtual<decltype(&TESObjectREFR::Unk_A0)>(0xA0, 0xA1, this);
 	}
 
-	void TESObjectREFR::UnequipItem(std::uint64_t a_arg1, TESBoundObject* a_object) {
+	void TESObjectREFR::UnequipItem(std::uint64_t a_arg1, TESBoundObject* a_object)
+	{
 		REL::RelocateVirtual<decltype(&TESObjectREFR::UnequipItem)>(0xA1, 0xA2, this, a_arg1, a_object);
 	}
 }

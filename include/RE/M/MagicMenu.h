@@ -19,14 +19,17 @@ namespace RE
 
 		struct RUNTIME_DATA
 		{
-			void*         unk30;            // 00 - some variation of the item list
-			ItemCard*     itemCard;         // 08
-			BottomBar*    bottomBar;        // 10
-			GFxValue      root;             // 18 - "Menu_mc"
-			bool          pcControlsReady;  // 30
-			std::uint8_t  pad61;            // 31
-			std::uint16_t pad62;            // 32
-			std::uint32_t pad64;            // 34
+#define RUNTIME_DATA_CONTENT \
+			void*         unk30;            /* 00 - some variation of the item list */ \
+			ItemCard*     itemCard;         /* 08 */ \
+			BottomBar*    bottomBar;        /* 10 */ \
+			GFxValue      root;             /* 18 - "Menu_mc" */ \
+			bool          pcControlsReady;  /* 30 */ \
+			std::uint8_t  pad61;            /* 31 */ \
+			std::uint16_t pad62;            /* 32 */ \
+			std::uint32_t pad64;            /* 34 */
+
+			RUNTIME_DATA_CONTENT
 		};
 		static_assert(sizeof(RUNTIME_DATA) == 0x38);
 
@@ -49,7 +52,7 @@ namespace RE
 
 		// members
 #if !defined(ENABLE_SKYRIM_VR) || (!defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE))
-		RUNTIME_DATA runtimeData; // 30, 40
+		RUNTIME_DATA_CONTENT  // 30, 40
 #endif
 	};
 #ifndef ENABLE_SKYRIM_VR
@@ -58,3 +61,4 @@ namespace RE
 	static_assert(sizeof(MagicMenu) == 0x78);
 #endif
 }
+#undef RUNTIME_DATA_CONTENT

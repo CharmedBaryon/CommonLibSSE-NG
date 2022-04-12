@@ -17,13 +17,16 @@ namespace RE
 
 		struct RUNTIME_DATA
 		{
-			std::uint32_t unk30;  // 00
-			std::uint32_t pad34;  // 04
-			GFxValue      root;   // 08 - "SleepWaitMenu_mc"
-			std::uint8_t  unk50;  // 20
-			std::uint8_t  unk51;  // 21
-			std::uint16_t pad52;  // 22
-			std::uint32_t pad54;  // 24
+#define RUNTIME_DATA_CONTENT                           \
+	std::uint32_t unk30; /* 00 */                      \
+	std::uint32_t pad34; /* 04 */                      \
+	GFxValue      root;  /* 08 - "SleepWaitMenu_mc" */ \
+	std::uint8_t  unk50; /* 20 */                      \
+	std::uint8_t  unk51; /* 21 */                      \
+	std::uint16_t pad52; /* 22 */                      \
+	std::uint32_t pad54; /* 24 */
+
+			RUNTIME_DATA_CONTENT
 		};
 		static_assert(sizeof(RUNTIME_DATA) == 0x28);
 
@@ -45,7 +48,7 @@ namespace RE
 
 		// members
 #if !defined(ENABLE_SKYRIM_VR) || (!defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE))
-		RUNTIME_DATA runtimeData; // 30, 40
+		RUNTIME_DATA_CONTENT  // 30, 40
 #endif
 	};
 #ifndef ENABLE_SKYRIM_VR
@@ -54,3 +57,4 @@ namespace RE
 	static_assert(sizeof(SleepWaitMenu) == 0x68);
 #endif
 }
+#undef RUNTIME_DATA_CONTENT

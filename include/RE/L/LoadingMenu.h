@@ -17,16 +17,19 @@ namespace RE
 
 		struct RUNTIME_DATA
 		{
-			GFxValue        root;   // 00 - "Menu_mc"
-			std::uint64_t   unk48;  // 18
-			std::uint8_t    unk50;  // 20
-			std::uint8_t    unk51;  // 21
-			std::uint16_t   pad52;  // 22
-			std::uint32_t   pad54;  // 24
-			BSTArray<void*> unk58;  // 28
-			std::uint32_t   unk70;  // 40
-			std::uint32_t   pad74;  // 44
-			std::uint64_t   unk78;  // 48
+#define RUNTIME_DATA_CONTENT                    \
+	GFxValue        root;  /* 00 - "Menu_mc" */ \
+	std::uint64_t   unk48; /* 18 */             \
+	std::uint8_t    unk50; /* 20 */             \
+	std::uint8_t    unk51; /* 21 */             \
+	std::uint16_t   pad52; /* 22 */             \
+	std::uint32_t   pad54; /* 24 */             \
+	BSTArray<void*> unk58; /* 28 */             \
+	std::uint32_t   unk70; /* 40 */             \
+	std::uint32_t   pad74; /* 44 */             \
+	std::uint64_t   unk78; /* 48 */
+
+			RUNTIME_DATA_CONTENT
 		};
 		static_assert(sizeof(RUNTIME_DATA) == 0x50);
 
@@ -48,7 +51,7 @@ namespace RE
 
 		// members
 #if !defined(ENABLE_SKYRIM_VR) || (!defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE))
-		RUNTIME_DATA runtimeData; // 30, 40
+		RUNTIME_DATA_CONTENT  // 30, 40
 #endif
 	};
 #ifndef ENABLE_SKYRIM_VR
@@ -57,3 +60,4 @@ namespace RE
 	static_assert(sizeof(LoadingMenu) == 0x90);
 #endif
 }
+#undef RUNTIME_DATA_CONTENT

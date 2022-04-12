@@ -2,6 +2,7 @@
 
 #include "RE/B/BSPCGamepadDeviceDelegate.h"
 #include "RE/B/BSPCGamepadDeviceHandler.h"
+#include "RE/B/BSTrackedControllerDevice.h"
 #include "RE/B/BSWin32KeyboardDevice.h"
 #include "RE/B/BSWin32MouseDevice.h"
 #include "RE/B/BSWin32VirtualKeyboardDevice.h"
@@ -33,6 +34,30 @@ namespace RE
 	BSWin32MouseDevice* BSInputDeviceManager::GetMouse()
 	{
 		return static_cast<BSWin32MouseDevice*>(devices[stl::to_underlying(INPUT_DEVICE::kMouse)]);
+	}
+
+	BSTrackedControllerDevice* BSInputDeviceManager::GetVRControllerRight()
+	{
+#ifndef ENABLE_SKYRIM_VR
+		return nullptr;
+#else
+		if (!REL::Module::get().IsVR()) {
+			return nullptr;
+		}
+		return static_cast<BSTrackedControllerDevice*>(devices[stl::to_underlying(INPUT_DEVICE::kVRRight)]);
+#endif
+	}
+
+	BSTrackedControllerDevice* BSInputDeviceManager::GetVRControllerLeft()
+	{
+#ifndef ENABLE_SKYRIM_VR
+		return nullptr;
+#else
+		if (!REL::Module::get().IsVR()) {
+			return nullptr;
+		}
+		return static_cast<BSTrackedControllerDevice*>(devices[stl::to_underlying(INPUT_DEVICE::kVRLeft)]);
+#endif
 	}
 
 	BSWin32VirtualKeyboardDevice* BSInputDeviceManager::GetVirtualKeyboard()

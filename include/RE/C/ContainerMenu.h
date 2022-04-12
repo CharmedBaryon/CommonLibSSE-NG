@@ -29,25 +29,28 @@ namespace RE
 
 		struct RUNTIME_DATA
 		{
-			GFxValue        root;             // 00 - "Menu_mc"
-			ItemList*       itemList;         // 18
-			ItemCard*       itemCard;         // 20
-			BottomBar*      bottomBar;        // 28
-			BSTArray<void*> unk60;            // 30
-			BSTArray<void*> unk78;            // 48
-			std::uint64_t   unk90;            // 60
-			std::uint64_t   unk98;            // 68
-			std::uint64_t   unkA0;            // 70
-			std::uint8_t    unkA8;            // 78
-			std::uint8_t    padA9;            // 79
-			std::uint16_t   padAA;            // 7A
-			std::uint32_t   padAC;            // 7C
-			std::int32_t    value;            // 80
-			std::uint32_t   unkB4;            // 84
-			std::uint8_t    unkB8;            // 88
-			bool            pcControlsReady;  // 89
-			std::uint16_t   padBA;            // 8A
-			std::uint32_t   padBC;            // 8C
+#define RUNTIME_DATA_CONTENT \
+			GFxValue        root;             /* 00 - "Menu_mc" */ \
+			ItemList*       itemList;         /* 18 */ \
+			ItemCard*       itemCard;         /* 20 */ \
+			BottomBar*      bottomBar;        /* 28 */ \
+			BSTArray<void*> unk60;            /* 30 */ \
+			BSTArray<void*> unk78;            /* 48 */ \
+			std::uint64_t   unk90;            /* 60 */ \
+			std::uint64_t   unk98;            /* 68 */ \
+			std::uint64_t   unkA0;            /* 70 */ \
+			std::uint8_t    unkA8;            /* 78 */ \
+			std::uint8_t    padA9;            /* 79 */ \
+			std::uint16_t   padAA;            /* 7A */ \
+			std::uint32_t   padAC;            /* 7C */ \
+			std::int32_t    value;            /* 80 */ \
+			std::uint32_t   unkB4;            /* 84 */ \
+			std::uint8_t    unkB8;            /* 88 */ \
+			bool            pcControlsReady;  /* 89 */ \
+			std::uint16_t   padBA;            /* 8A */ \
+			std::uint32_t   padBC;            /* 8C */
+
+			RUNTIME_DATA_CONTENT
 		};
 		static_assert(sizeof(RUNTIME_DATA) == 0x90);
 
@@ -61,7 +64,7 @@ namespace RE
 		[[nodiscard]] ContainerMode    GetContainerMode();
 		[[nodiscard]] static RefHandle GetTargetRefHandle();
 
-		[[nodiscard]] GFxValue GetRoot() const noexcept;
+		[[nodiscard]] GFxValue  GetRoot() const noexcept;
 		[[nodiscard]] ItemList* GetItemList() const noexcept;
 
 		[[nodiscard]] inline RUNTIME_DATA& GetRuntimeData() noexcept
@@ -76,7 +79,7 @@ namespace RE
 
 		// members
 #if !defined(ENABLE_SKYRIM_VR) || (!defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE))
-		RUNTIME_DATA runtimeData; // 30, 40
+		RUNTIME_DATA_CONTENT  // 30, 40
 #endif
 	};
 #ifndef ENABLE_SKYRIM_VR
@@ -85,3 +88,4 @@ namespace RE
 	static_assert(sizeof(ContainerMenu) == 0xD0);
 #endif
 }
+#undef RUNTIME_DATA_CONTENT

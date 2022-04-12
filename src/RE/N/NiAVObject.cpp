@@ -44,7 +44,7 @@ namespace RE
 		BSGeometry* firstGeometry = nullptr;
 
 		BSVisit::TraverseScenegraphGeometries(this, [&](BSGeometry* a_geometry) -> BSVisit::BSVisitControl {
-			auto effect = a_geometry->GetRuntimeData().properties[BSGeometry::States::kEffect];
+			auto effect = a_geometry->GetGeometryRuntimeData().properties[BSGeometry::States::kEffect];
 			auto lightingShader = netimmerse_cast<BSLightingShaderProperty*>(effect.get());
 			if (lightingShader) {
 				if (a_type == BSShaderMaterial::Feature::kNone) {
@@ -78,6 +78,11 @@ namespace RE
 		return nullptr;
 	}
 
+	void NiAVObject::SetUserData(TESObjectREFR* a_ref) noexcept
+	{
+		REL::RelocateMember<RE::TESObjectREFR*>(this, 0x0F8, 0x100) = a_ref;
+	}
+
 	bool NiAVObject::HasAnimation() const
 	{
 		const auto bsxFlags = GetExtraData<BSXFlags>("BSX");
@@ -89,7 +94,7 @@ namespace RE
 		bool hasShaderType = false;
 
 		BSVisit::TraverseScenegraphGeometries(this, [&](BSGeometry* a_geometry) -> BSVisit::BSVisitControl {
-			auto effect = a_geometry->GetRuntimeData().properties[BSGeometry::States::kEffect];
+			auto effect = a_geometry->GetGeometryRuntimeData().properties[BSGeometry::States::kEffect];
 			auto lightingShader = netimmerse_cast<BSLightingShaderProperty*>(effect.get());
 			if (lightingShader) {
 				auto material = lightingShader->material;
@@ -146,7 +151,7 @@ namespace RE
 			using Flag8 = BSShaderProperty::EShaderPropertyFlag8;
 			using Feature = BSShaderMaterial::Feature;
 
-			auto effect = a_geometry->GetRuntimeData().properties[BSGeometry::States::kEffect];
+			auto effect = a_geometry->GetGeometryRuntimeData().properties[BSGeometry::States::kEffect];
 			auto lightingShader = netimmerse_cast<BSLightingShaderProperty*>(effect.get());
 			if (lightingShader) {
 				if (lightingShader->flags.any(Flag::kSkinned) || lightingShader->flags.any(Flag::kTreeAnim) || lightingShader->flags.any(Flag::kBackLighting)) {
@@ -185,7 +190,7 @@ namespace RE
 		newShaderData->baseTexture = gState->defaultTextureWhite;
 
 		BSVisit::TraverseScenegraphGeometries(this, [&](BSGeometry* a_geometry) -> BSVisit::BSVisitControl {
-			auto effect = a_geometry->GetRuntimeData().properties[BSGeometry::States::kEffect];
+			auto effect = a_geometry->GetGeometryRuntimeData().properties[BSGeometry::States::kEffect];
 			auto shaderProp = netimmerse_cast<BSShaderProperty*>(effect.get());
 			if (shaderProp && shaderProp->AcceptsEffectData()) {
 				auto shaderData = shaderProp->effectData;
@@ -211,7 +216,7 @@ namespace RE
 			using State = BSGeometry::States;
 			using Feature = BSShaderMaterial::Feature;
 
-			auto effect = a_geometry->GetRuntimeData().properties[State::kEffect].get();
+			auto effect = a_geometry->GetGeometryRuntimeData().properties[State::kEffect].get();
 			if (effect) {
 				auto lightingShader = netimmerse_cast<BSLightingShaderProperty*>(effect);
 				if (lightingShader) {
@@ -233,7 +238,7 @@ namespace RE
 			using State = BSGeometry::States;
 			using Feature = BSShaderMaterial::Feature;
 
-			auto effect = a_geometry->GetRuntimeData().properties[State::kEffect].get();
+			auto effect = a_geometry->GetGeometryRuntimeData().properties[State::kEffect].get();
 			if (effect) {
 				auto lightingShader = netimmerse_cast<BSLightingShaderProperty*>(effect);
 				if (lightingShader) {
@@ -255,7 +260,7 @@ namespace RE
 			using State = BSGeometry::States;
 			using Feature = BSShaderMaterial::Feature;
 
-			auto effect = a_geometry->GetRuntimeData().properties[State::kEffect].get();
+			auto effect = a_geometry->GetGeometryRuntimeData().properties[State::kEffect].get();
 			if (effect) {
 				auto lightingShader = netimmerse_cast<BSLightingShaderProperty*>(effect);
 				if (lightingShader) {

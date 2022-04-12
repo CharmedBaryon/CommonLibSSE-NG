@@ -23,6 +23,7 @@ CommonLibSSE NG is a fork of CommonLibSSE which tracks upstream updates but adds
   project structure but a full-featured dev environment and implementation of a number of features using the library,
   including support for AE, SE, and VR with a single DLL.
 
+## Use
 CommonLibSSE NG is available as a Vcpkg port. To add it to your project, create a `vcpkg-configuration.json` file in the
 project root (next to `vcpkg.json`) with the following contents:
 
@@ -46,6 +47,7 @@ Then add `commonlibsse-ng` as a dependency in `vcpkg.json`. There are also runti
 * `commonlibsse-ng-ae`: Supports AE executables (1.6.x) only.
 * `commonlibsse-ng-se`: Supports pre-AE executables (1.5.x) only.
 * `commonlibsse-ng-vr`: Supports VR only.
+* `commonlibsse-ng-flatrim`: Support for SE/AE, but not VR.
 * `commonlibsse-ng-prebuilt`: A prebuilt binary for CommonLibSSE NG, avoids the overhead of compiling it. Recommended to
   be used only with `x64-windows-static-md` triplet (or equivalent custom one), but can also be used with
   `x64-windows-static` (or custom equivalent) if your project links against a compatible version of the MSVC 2022 CRT.
@@ -66,6 +68,57 @@ target_link_libraries(${PROJECT_NAME} PUBLIC CommonLibSSE::CommonLibSSE)
 
 For more information on how to use CommonLibSSE NG, you can look at the
 [example plugin](https://gitlab.com/colorglass/commonlibsse-sample-plugin).
+
+### Targeting Multiple Runtimes
+This fork of CommonLibSSE can target multiple Skyrim runtimes with a single build, allowing for a single DLL to work
+in Skyrim SE, AE, and even VR. Multitargeting for all runtimes is the default behavior. When targeting multiple runtimes
+certain functionality may become inaccessible or only indirectly accessible. This is because there are some fundamental
+ABI incompatibilities between SE/AE and VR in particular. In much fewer cases, there may be differences between AE and
+SE (a tiny number of offsets remain which are not found in AE).
+
+The largest difference caused by multi-targeting is found when enabling VR and SE, AE, or both. Some classes have
+different ABIs in VR. As a result only a portion, or even none of their member variables may be accessible, since the
+correct offset cannot be determined at compile time. To handle this, accesors have been provided which can return
+pointers structs which contain the member variables, which can be looked up at runtime. This accessor is usually called
+`GetRuntimeData()` and returns a reference to a `RUNTIME_DATA` struct with the variables which are common to SE and VR.
+If build to exclude VR, or for only VR, then the member variables become accessible directly on the class since this
+problem is eliminated, in order to maintain compatibility with other branches of CommonLibSSE (although the accessor
+function still remains, and is recommended for the broadest compatibility). In some classes there are multiple accessors
+due to multiple variant memory offsets.
+
+In general, classes and data not common to all runtimes is always available, despite it not always being present. For
+example, the `RE::PlayerCharacter` class always makes the VR data available via an accessor, `GetVRNodeData()`, which
+returns a pointer to a struct with the data. If the current runtime is not Skyrim VR, this accessor returns a `nullptr`.
+This behavior allows a plugin author to dynamically check for VR and add special handling for that case if found. Even
+classes specific to one runtime are always available (e.g. `RE::BSOpenVRControllerDevice` for VR controllers), but when
+using multi-targeting their member variables and even member functions cannot be directly invoked without proxy
+accessors or invokers that handle the non-VR case gracefully.
+
+#### Selective Targeting
+To allow for direct access to more functionality (and more compatibility with other CommonLibSSE forks and the
+upstream), it is possible to build with a limited number of runtimes supported. There are three options that enable
+runtimes to be supported:
+
+* `ENABLE_SKYRIM_SE`: For Skyrim SE versions prior to AE (1.5.x).
+* `ENABLE_SKYRIM_AE`: For Skyrim SE versions post-AE (1.6.x).
+* `ENABLE_SKYRIM_VR`: For Skyrim VR.
+
+By default all three are enabled. Any runtime can be selectively disabled through CMake, by passing e.g.
+`-DENABLE_SKYRIM_VR=off`. Any combination of runtime can be used, as long as at least one runtime is enabled. Accessors
+for multi-targeting are still usable in selectively targeted builds, but member functions become directly accessible
+again if using only VR or using only non-VR. If using only a single runtime the functions which do dynamic lookup of the
+current runtime will bypass the dynamic lookup.
+
+#### Cases of Inaccessible Functionality in SE+VR
+There is a limited number of cases of some functionality not yet being available at all when using VR and non-VR in the
+same build. Various sub-classes of `RE::IMenu` include some virtual callback functions for event handlers in the menu.
+These currently do not become accessible due to the complexity of handling the level of ABI incompatibility in these
+classes. The missing functionality is generally irrelevant (these are only callbacks the menu registers with events, not
+sources of events themselves, and unlikely to be needed by plugin authors).
+
+The `RE::PlayerCharacter` class has extremely complex differences between SE/AE and VR, and the VR version has not been
+fully reverse engineered to the point of finding all of the same member variables. Development of accessors that work
+across both runtimes for this class is still a work in progress.
 
 ## Build Dependencies
 * [Boost](https://www.boost.org/)

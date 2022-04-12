@@ -24,9 +24,9 @@ namespace RE
 		std::uint32_t AddGroup(std::uint32_t a_numInstances, std::uint16_t& a_instanceData, std::uint32_t a_arg3, float a_arg4);  // 3C
 		void          RemoveGroup(std::uint32_t a_numInstance);                                                                   // 3D
 	};
-#if !defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE)
-	static_assert(sizeof(BSInstanceTriShape) == 0x1A8);
-#else
+#ifndef ENABLE_SKYRIM_VR
 	static_assert(sizeof(BSInstanceTriShape) == 0x160);
+#elif !defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE)
+	static_assert(sizeof(BSInstanceTriShape) == 0x1A8);
 #endif
 }

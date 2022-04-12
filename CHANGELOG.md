@@ -5,6 +5,7 @@
 * Add `REL::RelocateVirtual` call to allow dynamic dispatch to virtual functions given the variable vtable structure of
   the currently in-use Skyrim runtime (to support Skyrim VR).
 * Further overhaul of CMakePresets.json to handle various build options.
+* Add Skyrim runtime checks to `REL::Module`, retires `USING_AE` and `USING_VR` macros.
 
 ## [2.0.0-2.1.0] - 4/9/2022
 * Sync to upstream changes as of EOD 4/8/2022.

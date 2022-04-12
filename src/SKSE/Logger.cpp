@@ -104,7 +104,7 @@ namespace SKSE
 
 			std::filesystem::path path = knownPath.get();
 			path /= "My Games";
-			if (USING_VR) {
+			if (REL::Module::get().IsVR()) {
 				path /= "Skyrim VR";
 			} else {
 				path /= "Skyrim Special Edition";

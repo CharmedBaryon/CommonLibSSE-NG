@@ -112,9 +112,9 @@ namespace RE
 		std::uint32_t                                  pad24{ 0 };                      // 24
 		GPtr<FxDelegate>                               fxDelegate{ nullptr };           // 28
 #if !defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE)
-		std::int32_t                                   unk30{ -1 };
-		std::int32_t                                   unk34{ 1 };
-		std::uint64_t                                  unk38{ 0 };
+		std::int32_t  unk30{ -1 };
+		std::int32_t  unk34{ 1 };
+		std::uint64_t unk38{ 0 };
 #endif
 	};
 #ifndef ENABLE_SKYRIM_VR

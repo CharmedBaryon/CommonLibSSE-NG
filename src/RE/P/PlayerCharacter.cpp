@@ -113,8 +113,7 @@ namespace RE
 
 	bool PlayerCharacter::IsGrabbing() const
 	{
-		if (Module::get().IsVR())
-		{
+		if (Module::get().IsVR()) {
 			return false;
 		}
 		return static_cast<bool>(REL::RelocateMember<ObjectRefHandle>(this, 0x8C8, 0));

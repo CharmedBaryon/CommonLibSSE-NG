@@ -155,6 +155,24 @@
             ],
             "name": "vs2022-windows-vcpkg-pre-ae",
             "binaryDir": "${sourceDir}/build/pre-ae"
+        },
+        {
+            "cacheVariables": {
+                "ENABLE_SKYRIM_SE": {
+                    "type": "STRING",
+                    "value": "OFF"
+                }
+            },
+            "hidden": true,
+            "name": "current"
+        },
+        {
+            "inherits": [
+                "vs2022-windows-vcpkg",
+                "current"
+            ],
+            "name": "vs2022-windows-vcpkg-current",
+            "binaryDir": "${sourceDir}/build/current"
         }
     ],
     "buildPresets": [
@@ -187,6 +205,11 @@
             "name": "Debug-Pre-AE",
             "displayName": "Debug (Pre-AE)",
             "configurePreset": "vs2022-windows-vcpkg-pre-ae"
+        },
+        {
+            "name": "Debug-Current",
+            "displayName": "Debug (Current)",
+            "configurePreset": "vs2022-windows-vcpkg-current"
         }
     ],
     "version": 2

@@ -44,33 +44,33 @@ namespace RE
 			virtual ~IVirtualMachine();  // 00
 
 			// add
-			virtual void                       SetLinkedCallback(ITypeLinkedCallback* a_callback) = 0;                                                                                                                                     // 01
-			virtual void                       TraceStack(const char* a_str, VMStackID a_stackID, Severity a_severity = Severity::kError) = 0;                                                                                             // 02
-			virtual void                       Unk_03(void) = 0;                                                                                                                                                                           // 03
-			virtual void                       Update(float a_budget) = 0;                                                                                                                                                                 // 04
-			virtual void                       UpdateTasklets(float a_budget) = 0;                                                                                                                                                         // 05
-			virtual void                       SetOverstressed(bool a_set) = 0;                                                                                                                                                            // 06
-			virtual bool                       IsCompletelyFrozen() const = 0;                                                                                                                                                             // 07
-			virtual bool                       RegisterObjectType(VMTypeID a_typeID, const char* a_className) = 0;                                                                                                                         // 08
-			virtual bool                       GetScriptObjectType1(const BSFixedString& a_className, BSTSmartPointer<ObjectTypeInfo>& a_outTypeInfoPtr) = 0;                                                                              // 09
-			virtual bool                       GetScriptObjectType2(VMTypeID a_typeID, BSTSmartPointer<ObjectTypeInfo>& a_outTypeInfoPtr) = 0;                                                                                             // 0A
-			virtual bool                       GetScriptObjectTypeNoLoad1(const BSFixedString& a_className, BSTSmartPointer<ObjectTypeInfo>& a_typeInfoPtr) const = 0;                                                                     // 0B
-			virtual bool                       GetScriptObjectTypeNoLoad2(VMTypeID a_typeID, BSTSmartPointer<ObjectTypeInfo>& a_outTypeInfoPtr) const = 0;                                                                                 // 0C
-			virtual bool                       GetTypeIDForScriptObject(const BSFixedString& a_className, VMTypeID& a_typeID) const = 0;                                                                                                   // 0D
-			virtual void                       GetScriptObjectsWithATypeID(BSScrapArray<BSFixedString>& a_classes) const = 0;                                                                                                              // 0E
-			virtual bool                       GetParentNativeType(const BSFixedString& a_className, BSTSmartPointer<ObjectTypeInfo>& a_typeInfoPtr) = 0;                                                                                  // 0F
-			virtual bool                       TypeIsValid(const BSFixedString& a_className) = 0;                                                                                                                                          // 10
-			virtual bool                       ReloadType(const char* a_className) = 0;                                                                                                                                                    // 11
-			virtual void                       TasksToJobs(BSJobs::JobList& a_jobList) = 0;                                                                                                                                                // 12
-			virtual void                       CalculateFullReloadList(void) const = 0;                                                                                                                                                    // 13
-			virtual bool                       CreateObject1(const BSFixedString& a_className, void* a_property, BSTSmartPointer<Object>& a_objPtr) = 0;                                                                                   // 14
-			virtual bool                       CreateObject2(const BSFixedString& a_className, BSTSmartPointer<Object>& a_result) = 0;                                                                                                     // 15
-			virtual bool                       CreateArray1(const TypeInfo& a_typeInfo, std::uint32_t a_size, BSTSmartPointer<Array>& a_arrayPtr) = 0;                                                                                     // 16
-			virtual bool                       CreateArray2(TypeInfo::RawType a_typeID, const BSFixedString& a_className, std::uint32_t a_size, BSTSmartPointer<Array>& a_arrayPtr) = 0;                                                   // 17
-			virtual bool                       BindNativeMethod(IFunction* a_fn) = 0;                                                                                                                                                      // 18
-			virtual void                       SetCallableFromTasklets1(const char* a_className, const char* a_stateName, const char* a_fnName, bool a_callable) = 0;                                                                      // 19
-			virtual void                       SetCallableFromTasklets2(const char* a_className, const char* a_fnName, bool a_callable) = 0;                                                                                               // 1A
-			virtual void                       ForEachBoundObject(VMHandle a_handle, IForEachScriptObjectFunctor* a_functor) = 0;                                                                                                          // 1B
+			virtual void SetLinkedCallback(ITypeLinkedCallback* a_callback) = 0;                                                                                    // 01
+			virtual void TraceStack(const char* a_str, VMStackID a_stackID, Severity a_severity = Severity::kError) = 0;                                            // 02
+			virtual void Unk_03(void) = 0;                                                                                                                          // 03
+			virtual void Update(float a_budget) = 0;                                                                                                                // 04
+			virtual void UpdateTasklets(float a_budget) = 0;                                                                                                        // 05
+			virtual void SetOverstressed(bool a_set) = 0;                                                                                                           // 06
+			virtual bool IsCompletelyFrozen() const = 0;                                                                                                            // 07
+			virtual bool RegisterObjectType(VMTypeID a_typeID, const char* a_className) = 0;                                                                        // 08
+			virtual bool GetScriptObjectType1(const BSFixedString& a_className, BSTSmartPointer<ObjectTypeInfo>& a_outTypeInfoPtr) = 0;                             // 09
+			virtual bool GetScriptObjectType2(VMTypeID a_typeID, BSTSmartPointer<ObjectTypeInfo>& a_outTypeInfoPtr) = 0;                                            // 0A
+			virtual bool GetScriptObjectTypeNoLoad1(const BSFixedString& a_className, BSTSmartPointer<ObjectTypeInfo>& a_typeInfoPtr) const = 0;                    // 0B
+			virtual bool GetScriptObjectTypeNoLoad2(VMTypeID a_typeID, BSTSmartPointer<ObjectTypeInfo>& a_outTypeInfoPtr) const = 0;                                // 0C
+			virtual bool GetTypeIDForScriptObject(const BSFixedString& a_className, VMTypeID& a_typeID) const = 0;                                                  // 0D
+			virtual void GetScriptObjectsWithATypeID(BSScrapArray<BSFixedString>& a_classes) const = 0;                                                             // 0E
+			virtual bool GetParentNativeType(const BSFixedString& a_className, BSTSmartPointer<ObjectTypeInfo>& a_typeInfoPtr) = 0;                                 // 0F
+			virtual bool TypeIsValid(const BSFixedString& a_className) = 0;                                                                                         // 10
+			virtual bool ReloadType(const char* a_className) = 0;                                                                                                   // 11
+			virtual void TasksToJobs(BSJobs::JobList& a_jobList) = 0;                                                                                               // 12
+			virtual void CalculateFullReloadList(void) const = 0;                                                                                                   // 13
+			virtual bool CreateObject1(const BSFixedString& a_className, void* a_property, BSTSmartPointer<Object>& a_objPtr) = 0;                                  // 14
+			virtual bool CreateObject2(const BSFixedString& a_className, BSTSmartPointer<Object>& a_result) = 0;                                                    // 15
+			virtual bool CreateArray1(const TypeInfo& a_typeInfo, std::uint32_t a_size, BSTSmartPointer<Array>& a_arrayPtr) = 0;                                    // 16
+			virtual bool CreateArray2(TypeInfo::RawType a_typeID, const BSFixedString& a_className, std::uint32_t a_size, BSTSmartPointer<Array>& a_arrayPtr) = 0;  // 17
+			virtual bool BindNativeMethod(IFunction* a_fn) = 0;                                                                                                     // 18
+			virtual void SetCallableFromTasklets1(const char* a_className, const char* a_stateName, const char* a_fnName, bool a_callable) = 0;                     // 19
+			virtual void SetCallableFromTasklets2(const char* a_className, const char* a_fnName, bool a_callable) = 0;                                              // 1A
+			virtual void ForEachBoundObject(VMHandle a_handle, IForEachScriptObjectFunctor* a_functor) = 0;                                                         // 1B
 #if !defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE)
 			virtual void New_1C(void) = 0;
 			virtual void New_1D(void) = 0;

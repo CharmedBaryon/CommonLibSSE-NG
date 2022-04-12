@@ -32,7 +32,7 @@ namespace RE
 
 		// members
 #if !defined(ENABLE_SKYRIM_VR) || (!defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE))
-		GFxValue root;  // 30 - "Menu_mc"
+		GFxValue root;  // 30, 40 - "Menu_mc"
 #endif
 	};
 #ifndef ENABLE_SKYRIM_VR

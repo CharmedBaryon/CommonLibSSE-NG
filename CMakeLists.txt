@@ -16,7 +16,7 @@ endif()
 project(
 	CommonLibSSE
 	LANGUAGES CXX
-	VERSION 2.1.1
+	VERSION 3.0.0
 )
 
 include(GNUInstallDirs)

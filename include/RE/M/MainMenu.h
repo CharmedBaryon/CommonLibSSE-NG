@@ -14,10 +14,14 @@ namespace RE
 	// flags = kPausesGame | kDisablePauseMenu | kRequiresUpdate | kUpdateUsesCursor | kApplicationMenu
 	// context = kMenuMode
 	class MainMenu :
+#if !defined(ENABLE_SKYRIM_VR) || (!defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE))
 		public IMenu,                          // 00
 		public BSTEventSink<BSSystemEvent>,    // 30
 		public BSTEventSink<BSSaveDataEvent>,  // 38
 		public GFxFunctionHandler              // 40
+#else
+		public IMenu  // 00
+#endif
 	{
 	public:
 		inline static auto                RTTI = RTTI_MainMenu;
@@ -25,12 +29,15 @@ namespace RE
 
 		struct RUNTIME_DATA
 		{
-			ImageData     unk50;  // 00
-			std::uint32_t unk68;  // 18
-			std::uint8_t  unk6C;  // 1C
-			std::uint8_t  unk6D;  // 1D
-			std::uint8_t  unk6E;  // 1E
-			std::uint8_t  pad6F;  // 1F
+#define RUNTIME_DATA_CONTENT      \
+	ImageData     unk50; /* 00 */ \
+	std::uint32_t unk68; /* 18 */ \
+	std::uint8_t  unk6C; /* 1C */ \
+	std::uint8_t  unk6D; /* 1D */ \
+	std::uint8_t  unk6E; /* 1E */ \
+	std::uint8_t  pad6F; /* 1F */
+
+			RUNTIME_DATA_CONTENT
 		};
 		static_assert(sizeof(RUNTIME_DATA) == 0x20);
 
@@ -41,6 +48,7 @@ namespace RE
 		UI_MESSAGE_RESULTS ProcessMessage(UIMessage& a_message) override;                         // 04
 		void               AdvanceMovie(float a_interval, std::uint32_t a_currentTime) override;  // 05
 
+#if !defined(ENABLE_SKYRIM_VR) || (!defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE))
 		// override (BSTEventSink<BSSystemEvent>)
 		BSEventNotifyControl ProcessEvent(const BSSystemEvent* a_event, BSTEventSource<BSSystemEvent>* a_eventSource) override;  // 01
 
@@ -49,6 +57,7 @@ namespace RE
 
 		// override (GFxFunctionHandler)
 		void Call(Params& a_params) override;  // 01
+#endif
 
 		[[nodiscard]] inline RUNTIME_DATA& GetRuntimeData() noexcept
 		{
@@ -62,7 +71,7 @@ namespace RE
 
 		// members
 #if !defined(ENABLE_SKYRIM_VR) || (!defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE))
-		RUNTIME_DATA runtimeData; // 50, 60
+		RUNTIME_DATA_CONTENT  // 50, 60
 #endif
 	};
 #ifndef ENABLE_SKYRIM_VR
@@ -71,3 +80,4 @@ namespace RE
 	static_assert(sizeof(MainMenu) == 0x80);
 #endif
 }
+#undef RUNTIME_DATA_CONTENT

@@ -1052,7 +1052,7 @@ namespace RE
 
 		[[nodiscard]] bool IsObjectInitialized(std::size_t a_idx) const noexcept
 		{
-				return REL::RelocateMember<bool*>(this, 0xB80, 0xBA8)[a_idx];
+			return REL::RelocateMember<bool*>(this, 0xB80, 0xBA8)[a_idx];
 		}
 
 		[[nodiscard]] static bool SupportsVR(DefaultObjectID a_object) noexcept;
@@ -1067,12 +1067,12 @@ namespace RE
 		[[nodiscard]] static bool SupportsCurrentRuntime(DefaultObjectID a_object) noexcept;
 
 		// members
-		TESForm*      objects[DEFAULT_OBJECTS::kTotal];     // 020 - DNAM
+		TESForm* objects[DEFAULT_OBJECTS::kTotal];  // 020 - DNAM
 #if !defined(ENABLE_SKYRIM_VR) || (!defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE))
 		bool          objectInit[DEFAULT_OBJECTS::kTotal];  // B80
 		std::uint32_t padCEC;                               // CEC
 #else
-		std::uint8_t  unk5D8[0x718];                        // 5D8
+		std::uint8_t unk5D8[0x718];  // 5D8
 #endif
 	};
 #if !defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE)

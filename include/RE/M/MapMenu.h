@@ -10,6 +10,10 @@
 #include "RE/L/LocalMapMenu.h"
 #include "RE/M/MapCamera.h"
 
+#if !defined(ENABLE_SKYRIM_AE) && !(ENABLE_SKYRIM_SE)
+#	include "RE/W/WorldSpaceMenu.h"
+#endif
+
 namespace RE
 {
 	class BSAudioManager;
@@ -23,9 +27,17 @@ namespace RE
 	// flags = kPausesGame | kUsesCursor | kRendersOffscreenTargets | kCustomRendering
 	// context = kMap
 	class MapMenu :
+#if !defined(ENABLE_SKYRIM_AE) && !(ENABLE_SKYRIM_SE)
+		public WorldSpaceMenu,                    // 00000
+		public BSTEventSink<MenuOpenCloseEvent>,  // 00058
+		public IMapCameraCallbacks                // 00060
+#elif !defined(ENABLE_SKYRIM_VR)
 		public IMenu,                             // 00000
 		public BSTEventSink<MenuOpenCloseEvent>,  // 00030
 		public IMapCameraCallbacks                // 00038
+#else
+		public IMenu
+#endif
 	{
 	public:
 		inline static auto                RTTI = RTTI_MapMenu;
@@ -33,31 +45,45 @@ namespace RE
 
 		struct RUNTIME_DATA
 		{
-			BSTSmartPointer<MapMoveHandler> moveHandler;   // 00000
-			BSTSmartPointer<MapLookHandler> lookHandler;   // 00008
-			BSTSmartPointer<MapZoomHandler> zoomHandler;   // 00010
-			std::uint64_t                   unk00058;      // 00018
-			LocalMapMenu                    localMapMenu;  // 00020
-			RefHandle                       unk30460;      // 30420
-			std::uint32_t                   unk30464;      // 30424
-			std::uint32_t                   unk30468;      // 30428
-			std::uint32_t                   unk3046C;      // 3042C
-			BSTArray<void*>                 unk30470;      // 30430
-			BSTArray<void*>                 unk30488;      // 30448
-			MapCamera                       camera;        // 30460
-			std::uint64_t                   unk30530;      // 304F0
-			TESWorldSpace*                  worldSpace;    // 304F8
-			GFxValue                        unk30540;      // 30500
-			std::uint64_t                   unk30558;      // 30518
-			std::uint64_t                   unk30560;      // 30520
-			std::uint64_t                   unk30568;      // 30528
-			std::uint32_t                   unk30570;      // 30530
-			BSSoundHandle                   unk30574;      // 30534
-			std::uint64_t                   unk30580;      // 30540
-			std::uint64_t                   unk30588;      // 30548
-			std::uint64_t                   unk30590;      // 30550
+#define RUNTIME_DATA_CONTENT                               \
+	BSTSmartPointer<MapMoveHandler> moveHandler;  /* 00 */ \
+	BSTSmartPointer<MapLookHandler> lookHandler;  /* 08 */ \
+	BSTSmartPointer<MapZoomHandler> zoomHandler;  /* 10 */ \
+	std::uint64_t                   unk00058;     /* 18 */ \
+	LocalMapMenu                    localMapMenu; /* 20 */
+
+			RUNTIME_DATA_CONTENT
 		};
-		static_assert(sizeof(RUNTIME_DATA) == 0x30558);
+#ifndef ENABLE_SKYRIM_VR
+		static_assert(sizeof(RUNTIME_DATA) == 0x30420);
+#elif !defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE)
+		static_assert(sizeof(RUNTIME_DATA) == 0x304A0);
+#endif
+
+		struct RUNTIME_DATA2
+		{
+#define RUNTIME_DATA2_CONTENT             \
+	RefHandle       unk30460;   /* 000 */ \
+	std::uint32_t   unk30464;   /* 004 */ \
+	std::uint32_t   unk30468;   /* 008 */ \
+	std::uint32_t   unk3046C;   /* 00C */ \
+	BSTArray<void*> unk30470;   /* 010 */ \
+	BSTArray<void*> unk30488;   /* 028 */ \
+	MapCamera       camera;     /* 040 */ \
+	std::uint64_t   unk30530;   /* 0D0 */ \
+	TESWorldSpace*  worldSpace; /* 0D8 */ \
+	GFxValue        unk30540;   /* 0E0 */ \
+	std::uint64_t   unk30558;   /* 0F8 */ \
+	std::uint64_t   unk30560;   /* 100 */ \
+	std::uint64_t   unk30568;   /* 108 */ \
+	std::uint32_t   unk30570;   /* 110 */ \
+	BSSoundHandle   unk30574;   /* 114 */ \
+	std::uint64_t   unk30580;   /* 120 */ \
+	std::uint64_t   unk30588;   /* 128 */ \
+	std::uint64_t   unk30590;   /* 130 */
+            RUNTIME_DATA2_CONTENT
+		};
+		static_assert(sizeof(RUNTIME_DATA2) == 0x138);
 
 		~MapMenu() override;  // 00
 
@@ -68,7 +94,7 @@ namespace RE
 		void               RefreshPlatform() override;                                            // 08
 
 		// override (BSTEventSink<MenuOpenCloseEvent>)
-		BSEventNotifyControl ProcessEvent(const MenuOpenCloseEvent* a_event, BSTEventSource<MenuOpenCloseEvent>* a_eventSource) override;  // 01
+		BSEventNotifyControl ProcessEvent(const MenuOpenCloseEvent* a_event, BSTEventSource<MenuOpenCloseEvent>* a_eventSource);  // 01
 
 		void PlaceMarker()
 		{
@@ -79,22 +105,36 @@ namespace RE
 
 		[[nodiscard]] inline RUNTIME_DATA& GetRuntimeData() noexcept
 		{
-			return REL::RelocateMember<RUNTIME_DATA>(this, 0x40, 0x50);
+			return REL::RelocateMember<RUNTIME_DATA>(this, 0x40, 0x68);
 		}
 
 		[[nodiscard]] inline const RUNTIME_DATA& GetRuntimeData() const noexcept
 		{
-			return REL::RelocateMember<RUNTIME_DATA>(this, 0x40, 0x50);
+			return REL::RelocateMember<RUNTIME_DATA>(this, 0x40, 0x68);
+		}
+
+		[[nodiscard]] inline RUNTIME_DATA2& GetRuntimeData2() noexcept
+		{
+			return REL::RelocateMember<RUNTIME_DATA2>(this, 0x30460, 0x30508);
+		}
+
+		[[nodiscard]] inline const RUNTIME_DATA2& GetRuntimeData2() const noexcept
+		{
+			return REL::RelocateMember<RUNTIME_DATA2>(this, 0x30460, 0x30508);
 		}
 
 		// members
 #if !defined(ENABLE_SKYRIM_VR) || (!defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE))
-		RUNTIME_DATA runtimeData; // 40, 50
+		RUNTIME_DATA_CONTENT  // 40, 68
+		RUNTIME_DATA2_CONTENT // 30460, 30508
 #endif
 	};
 #ifndef ENABLE_SKYRIM_VR
 	static_assert(sizeof(MapMenu) == 0x30598);
 #elif !defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE)
-	static_assert(sizeof(MapMenu) == 0x305A8);
+	static_assert(sizeof(MapMenu) == 0x30640);
 #endif
 }
+
+#undef RUNTIME_DATA_CONTENT
+#undef RUNTIME_DATA2_CONTENT

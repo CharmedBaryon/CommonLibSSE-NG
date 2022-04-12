@@ -23,19 +23,22 @@ namespace RE
 
 		struct RUNTIME_DATA
 		{
-			GFxValue        root;             // 00 - kDisplayObject - "_level0.Menu_mc"
-			ItemList*       itemList;         // 18
-			ItemCard*       itemCard;         // 20
-			BottomBar*      bottomBar;        // 28
-			BSTArray<void*> unk60;            // 30
-			std::uint8_t    unk78;            // 48
-			std::uint8_t    pad79;            // 49
-			std::uint16_t   pad7A;            // 4A
-			std::uint32_t   unk7C;            // 4C
-			bool            pcControlsReady;  // 50
-			std::uint8_t    unk81;            // 51
-			std::uint16_t   pad82;            // 52
-			std::uint32_t   pad84;            // 54
+#define RUNTIME_DATA_CONTENT \
+			GFxValue        root;             /* 00 - kDisplayObject - "_level0.Menu_mc" */ \
+			ItemList*       itemList;         /* 18 */ \
+			ItemCard*       itemCard;         /* 20 */ \
+			BottomBar*      bottomBar;        /* 28 */ \
+			BSTArray<void*> unk60;            /* 30 */ \
+			std::uint8_t    unk78;            /* 48 */ \
+			std::uint8_t    pad79;            /* 49 */ \
+			std::uint16_t   pad7A;            /* 4A */ \
+			std::uint32_t   unk7C;            /* 4C */ \
+			bool            pcControlsReady;  /* 50 */ \
+			std::uint8_t    unk81;            /* 51 */ \
+			std::uint16_t   pad82;            /* 52 */ \
+			std::uint32_t   pad84;            /* 54 */
+
+			RUNTIME_DATA_CONTENT
 		};
 		static_assert(sizeof(RUNTIME_DATA) == 0x58);
 
@@ -46,17 +49,19 @@ namespace RE
 		UI_MESSAGE_RESULTS ProcessMessage(UIMessage& a_message) override;    // 04
 		void               PostDisplay() override;                           // 06
 
-		[[nodiscard]] inline RUNTIME_DATA& GetRuntimeData() noexcept {
+		[[nodiscard]] inline RUNTIME_DATA& GetRuntimeData() noexcept
+		{
 			return REL::RelocateMember<RUNTIME_DATA>(this, 0x30, 0x40);
 		}
 
-		[[nodiscard]] inline const RUNTIME_DATA& GetRuntimeData() const noexcept {
+		[[nodiscard]] inline const RUNTIME_DATA& GetRuntimeData() const noexcept
+		{
 			return REL::RelocateMember<RUNTIME_DATA>(this, 0x30, 0x40);
 		}
 
 		// members
 #if !defined(ENABLE_SKYRIM_VR) || (!defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE))
-		RUNTIME_DATA runtimeData; // 30, 40
+		RUNTIME_DATA_CONTENT  // 30, 40
 #endif
 	};
 #ifndef ENABLE_SKYRIM_VR
@@ -65,3 +70,4 @@ namespace RE
 	static_assert(sizeof(InventoryMenu) == 0x98);
 #endif
 }
+#undef RUNTIME_DATA_CONTENT

@@ -14,8 +14,12 @@ namespace RE
 	// flags = kPausesGame | kUpdateUsesCursor | kInventoryItemMenu | kCustomRendering
 	// context = kFavorites
 	class FavoritesMenu :
+#if !defined(ENABLE_SKYRIM_VR) || (!defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE))
 		public IMenu,            // 00
 		public MenuEventHandler  // 30
+#else
+		public IMenu  // 00
+#endif
 	{
 	public:
 		inline static auto                RTTI = RTTI_FavoritesMenu;
@@ -30,12 +34,15 @@ namespace RE
 
 		struct RUNTIME_DATA
 		{
-			GFxValue        root;             // 00 - "Menu_mc"
-			BSTArray<Entry> favorites;        // 18
-			std::uint16_t   unk70;            // 30
-			bool            pcControlsReady;  // 32
-			bool            isVampire;        // 33
-			std::uint32_t   pad74;            // 34
+#define RUNTIME_DATA_CONTENT                              \
+	GFxValue        root;            /* 00 - "Menu_mc" */ \
+	BSTArray<Entry> favorites;       /* 18 */             \
+	std::uint16_t   unk70;           /* 30 */             \
+	bool            pcControlsReady; /* 32 */             \
+	bool            isVampire;       /* 33 */             \
+	std::uint32_t   pad74;           /* 34 */
+
+			RUNTIME_DATA_CONTENT
 		};
 		static_assert(sizeof(RUNTIME_DATA) == 0x38);
 
@@ -46,9 +53,11 @@ namespace RE
 		UI_MESSAGE_RESULTS ProcessMessage(UIMessage& a_message) override;    // 04
 
 		// override (MenuEventHandler)
+#if !defined(ENABLE_SKYRIM_VR) || (!defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE))
 		bool CanProcess(InputEvent* a_event) override;      // 01
 		bool ProcessKinect(KinectEvent* a_event) override;  // 02
 		bool ProcessButton(ButtonEvent* a_event) override;  // 05
+#endif
 
 		[[nodiscard]] inline RUNTIME_DATA& GetRuntimeData() noexcept
 		{
@@ -62,7 +71,7 @@ namespace RE
 
 		// members
 #if !defined(ENABLE_SKYRIM_VR) || (!defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE))
-		RUNTIME_DATA runtimeData; // 40, 50
+		RUNTIME_DATA_CONTENT  // 40, 50
 #endif
 	};
 #ifndef ENABLE_SKYRIM_VR
@@ -71,3 +80,4 @@ namespace RE
 	static_assert(sizeof(FavoritesMenu) == 0x88);
 #endif
 }
+#undef RUNTIME_DATA_CONTENT

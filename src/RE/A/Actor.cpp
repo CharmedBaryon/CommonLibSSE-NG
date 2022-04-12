@@ -894,21 +894,11 @@ namespace RE
 		return base ? base->crimeFaction : nullptr;
 	}
 
-
-
-
-
-
-
-
-
-
-
 	void Actor::Unk_A2()
 	{
 		RelocateVirtual<decltype(&Actor::Unk_A2)>(0x0A2, 0x0A3, this);
 	}
-	
+
 	void Actor::PlayPickUpSound(TESBoundObject* a_object, bool a_pickup, bool a_use)
 	{
 		RelocateVirtual<decltype(&Actor::PlayPickUpSound)>(0x0A3, 0x0A4, this, a_object, a_pickup, a_use);

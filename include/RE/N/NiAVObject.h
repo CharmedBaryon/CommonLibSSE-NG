@@ -95,7 +95,7 @@ namespace RE
 		void          ProcessClone(NiCloningProcess& a_cloning) override;  // 1D
 
 		// add
-		virtual void        UpdateControllers(NiUpdateData& a_data);                                                            // 25
+		virtual void UpdateControllers(NiUpdateData& a_data);  // 25
 #if !defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE)
 		virtual void Unk_VRFunc(void);
 #endif
@@ -120,6 +120,7 @@ namespace RE
 		[[nodiscard]] bhkCollisionObject* GetCollisionObject() const;
 		[[nodiscard]] BSGeometry*         GetFirstGeometryOfShaderType(BSShaderMaterial::Feature a_type);
 		[[nodiscard]] TESObjectREFR*      GetUserData() const;
+		[[nodiscard]] void                SetUserData(TESObjectREFR* a_ref) noexcept;
 		[[nodiscard]] bool                HasAnimation() const;
 		[[nodiscard]] bool                HasShaderType(BSShaderMaterial::Feature a_type);
 		void                              RemoveDecals();
@@ -146,14 +147,14 @@ namespace RE
 		}
 
 		// members
-		NiNode*                               parent;                   // 030
-		std::uint32_t                         parentIndex;              // 038
-		std::uint32_t                         unk03C;                   // 03C
-		NiPointer<NiCollisionObject>          collisionObject;          // 040
-		NiTransform                           local;                    // 048
-		NiTransform                           world;                    // 07C
-		NiTransform                           previousWorld;            // 0B0
-		NiBound                               worldBound;               // 0E4
+		NiNode*                      parent;           // 030
+		std::uint32_t                parentIndex;      // 038
+		std::uint32_t                unk03C;           // 03C
+		NiPointer<NiCollisionObject> collisionObject;  // 040
+		NiTransform                  local;            // 048
+		NiTransform                  world;            // 07C
+		NiTransform                  previousWorld;    // 0B0
+		NiBound                      worldBound;       // 0E4
 #ifndef ENABLE_SKYRIM_VR
 		stl::enumeration<Flag, std::uint32_t> flags;                    // 0F4
 		TESObjectREFR*                        userData;                 // 0F8
@@ -182,11 +183,11 @@ namespace RE
 	};
 	static_assert(sizeof(NiAVObject) == 0x138);
 #else
-		uint32_t                              unkF4;                    // 0F4
-		uint64_t*                             unkF8;                    // 0F8
-		float                                 fadeAmount;               // 100
-		uint64_t                              unk104;                   // 104
+		uint32_t  unkF4;       // 0F4
+		uint64_t* unkF8;       // 0F8
+		float     fadeAmount;  // 100
+		std::uint32_t lastUpdatedFrameCounter; // 104
+		uint64_t  unk104;      // 108
 	};
-	static_assert(sizeof(NiAVObject) == 0x110);
 #endif
 }

@@ -16,9 +16,9 @@ namespace RE
 		const NiRTTI* GetRTTI() const override;                           // 02
 		NiObject*     CreateClone(NiCloningProcess& a_cloning) override;  // 17
 	};
-#if !defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE)
-	static_assert(sizeof(BSNiNode) == 0x150);
-#else
+#ifndef ENABLE_SKYRIM_VR
 	static_assert(sizeof(BSNiNode) == 0x128);
+#elif !defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE)
+	static_assert(sizeof(BSNiNode) == 0x150);
 #endif
 }

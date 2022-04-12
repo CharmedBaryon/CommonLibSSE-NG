@@ -262,6 +262,7 @@ set(SOURCES
 	include/RE/B/BSNavmeshInfoMap.h
 	include/RE/B/BSNiAllocator.h
 	include/RE/B/BSNiNode.h
+	include/RE/B/BSOpenVRControllerDevice.h
 	include/RE/B/BSOrderedNode.h
 	include/RE/B/BSPCGamepadDeviceDelegate.h
 	include/RE/B/BSPCGamepadDeviceHandler.h
@@ -311,6 +312,7 @@ set(SOURCES
 	include/RE/B/BSTObjectDictionary.h
 	include/RE/B/BSTPoint.h
 	include/RE/B/BSTPointerAndFlags.h
+	include/RE/B/BSTrackedControllerDevice.h
 	include/RE/B/BSTSingleton.h
 	include/RE/B/BSTSmartPointer.h
 	include/RE/B/BSTTuple.h
@@ -1502,8 +1504,6 @@ set(SOURCES
 	src/RE/G/GameSettingCollection.cpp
 	src/RE/G/GiftMenu.cpp
 	src/RE/H/Hazard.cpp
-	src/RE/H/HUDMeter.cpp
-	src/RE/H/HUDObject.cpp
 	src/RE/H/HeapBlock.cpp
 	src/RE/H/hkBaseTypes.cpp
 	src/RE/H/hkReferencedObject.cpp
@@ -1514,10 +1514,14 @@ set(SOURCES
 	src/RE/H/hkpCharacterProxyListener.cpp
 	src/RE/H/hkpMaterial.cpp
 	src/RE/H/hkpWorldObject.cpp
+	src/RE/H/HUDMenu.cpp
+	src/RE/H/HUDMeter.cpp
+	src/RE/H/HUDObject.cpp
 	src/RE/I/IAnimationGraphManagerHolder.cpp
 	src/RE/I/IFormFactory.cpp
 	src/RE/I/IFunction.cpp
 	src/RE/I/IHandlerFunctor.cpp
+	src/RE/I/IMapCameraCallbacks.cpp
 	src/RE/I/IMemoryStore.cpp
 	src/RE/I/IMenu.cpp
 	src/RE/I/INIPrefSettingCollection.cpp
@@ -1545,6 +1549,7 @@ set(SOURCES
 	src/RE/M/MagicItem.cpp
 	src/RE/M/MagicTarget.cpp
 	src/RE/M/Main.cpp
+	src/RE/M/MapMenu.cpp
 	src/RE/M/MemoryPage.cpp
 	src/RE/M/MenuControls.cpp
 	src/RE/M/MenuEventHandler.cpp
@@ -1566,6 +1571,7 @@ set(SOURCES
 	src/RE/N/NiFloatExtraData.cpp
 	src/RE/N/NiFloatKey.cpp
 	src/RE/N/NiFloatsExtraData.cpp
+	src/RE/N/NiGeometry.cpp
 	src/RE/N/NiIntegerExtraData.cpp
 	src/RE/N/NiIntegersExtraData.cpp
 	src/RE/N/NiInterpolator.cpp

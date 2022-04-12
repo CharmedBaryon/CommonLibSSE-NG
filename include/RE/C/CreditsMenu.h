@@ -9,8 +9,12 @@ namespace RE
 	// flags = kPausesGame
 	// context = kMenuMode
 	class CreditsMenu :
+#if !defined(ENABLE_SKYRIM_VR) || (!defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE))
 		public IMenu,              // 00
 		public GFxFunctionHandler  // 30
+#else
+		public IMenu  // 00
+#endif
 	{
 	public:
 		inline static auto                RTTI = RTTI_CreditsMenu;
@@ -21,8 +25,10 @@ namespace RE
 		// override (IMenu)
 		UI_MESSAGE_RESULTS ProcessMessage(UIMessage& a_message) override;  // 04
 
+#if !defined(ENABLE_SKYRIM_VR) || (!defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE))
 		// override (GFxFunctionHandler)
 		void Call(Params& a_params) override;  // 01
+#endif
 	};
 #ifndef ENABLE_SKYRIM_VR
 	static_assert(sizeof(CreditsMenu) == 0x40);

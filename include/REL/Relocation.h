@@ -426,7 +426,8 @@ namespace REL
 		/**
 		 * Identifies a Skyrim runtime.
 		 */
-		enum class Runtime : uint8_t {
+		enum class Runtime : uint8_t
+		{
 			/**
 			 * The Skyrim runtime is a post-Anniversary Edition Skyrim SE release (version 1.6.x and later).
 			 */
@@ -449,9 +450,9 @@ namespace REL
 			return singleton;
 		}
 
-		[[nodiscard]] std::uintptr_t               base() const noexcept { return _base; }
-		[[nodiscard]] stl::zwstring                filename() const noexcept { return _filename; }
-		[[nodiscard]] Version                      version() const noexcept { return _version; }
+		[[nodiscard]] std::uintptr_t base() const noexcept { return _base; }
+		[[nodiscard]] stl::zwstring  filename() const noexcept { return _filename; }
+		[[nodiscard]] Version        version() const noexcept { return _version; }
 
 		[[nodiscard]] Segment segment(Segment::Name a_segment) const noexcept { return _segments[a_segment]; }
 
@@ -571,11 +572,9 @@ namespace REL
 			std::make_pair(".gfids"sv, static_cast<std::uint32_t>(0))
 		};
 
-		static constexpr auto ENVIRONMENT = L"SKSE_RUNTIME"sv;
-		static constexpr std::array<std::wstring_view, 2> RUNTIMES{ {
-			L"SkyrimVR.exe",
-			L"SkyrimSE.exe"
-		} };
+		static constexpr auto                             ENVIRONMENT = L"SKSE_RUNTIME"sv;
+		static constexpr std::array<std::wstring_view, 2> RUNTIMES{ { L"SkyrimVR.exe",
+			L"SkyrimSE.exe" } };
 
 		std::wstring                        _filename;
 		std::array<Segment, Segment::total> _segments;
@@ -583,13 +582,6 @@ namespace REL
 		std::uintptr_t                      _base{ 0 };
 		Runtime                             _runtime{ Runtime::AE };
 	};
-
-#ifndef USING_AE
-#	define USING_AE (REL::Module::get().version()[1] > 5)
-#endif
-#ifndef USING_VR
-#	define USING_VR (REL::Module::get().version()[1] == 4)
-#endif
 
 	class IDDatabase
 	{
@@ -634,12 +626,12 @@ namespace REL
 			{
 				const mapping_t elem{ 0, a_offset };
 				const auto      it = std::lower_bound(
-                    _offset2id.begin(),
-                    _offset2id.end(),
-                    elem,
-                    [](auto&& a_lhs, auto&& a_rhs) {
+						 _offset2id.begin(),
+						 _offset2id.end(),
+						 elem,
+						 [](auto&& a_lhs, auto&& a_rhs) {
                         return a_lhs.offset < a_rhs.offset;
-                    });
+						 });
 				if (it == _offset2id.end()) {
 					stl::report_and_fail(
 						fmt::format(
@@ -705,7 +697,7 @@ namespace REL
 			void read(binary_io::file_istream& a_in)
 			{
 				const auto [format] = a_in.read<std::int32_t>();
-				if (format != (USING_AE ? 2 : 1)) {
+				if (format != (Module::get().IsAE() ? 2 : 1)) {
 					stl::report_and_fail(
 						fmt::format(
 							"Unsupported address library format: {}\n"
@@ -751,7 +743,7 @@ namespace REL
 		void load()
 		{
 			const auto version = Module::get().version();
-			if (USING_VR) {
+			if (Module::get().IsVR()) {
 				const auto filename =
 					stl::utf8_to_utf16(
 						fmt::format(
@@ -762,7 +754,7 @@ namespace REL
 			} else {
 				const auto filename =
 					stl::utf8_to_utf16(
-						USING_AE ?
+						Module::get().IsAE() ?
 							fmt::format("Data/SKSE/Plugins/versionlib-{}.bin"sv,
 								version.string()) :
                             fmt::format("Data/SKSE/Plugins/version-{}.bin"sv,
@@ -1276,6 +1268,66 @@ namespace REL
 	static_assert(make_pattern<"B8 D0 ?? ?? D4 6E">().match(
 		detail::make_byte_array(0xB8, 0xD0, 0x35, 0x2A, 0xD4, 0x6E)));
 
+#if !defined(ENABLE_SKYRIM_AE) || (!defined(ENABLE_SKYRIM_SE) && !defined(ENABLE_SKYRIM_VR))
+	/**
+	 * A macro which defines a modifier for expressions that vary by Skyrim Address Library IDs.
+	 *
+	 * <p>
+	 * Currently defined as <code>constexpr</code> since this build only targets one family of Address Library.
+	 * </p>
+	 */
+#	define SKYRIM_ADDR constexpr
+#else
+	/**
+ 	 * A macro which defines a modifier for expressions that vary by Skyrim address library IDs.
+ 	 *
+ 	 * <p>
+ 	 * Currently defined as <code>inline</code> to support multiple Address Library ID families dynamically.
+ 	 * </p>
+ 	 */
+#	define SKYRIM_ADDR inline
+#endif
+
+#if (!defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_VR)) || (!defined(ENABLE_SKYRIM_SE) && !defined(ENABLE_SKYRIM_VR)) || (!defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE))
+	/**
+	 * A macro which defines a modifier for expressions that vary by the specific Skyrim runtime.
+	 *
+	 * <p>
+	 * Currently defined as <code>constexpr</code> since this build is for only a single runtime.
+	 * </p>
+	 */
+#	define SKYRIM_REL constexpr
+#else
+	/**
+	 * A macro which defines a modifier for expressions that vary by the specific Skyrim runtime.
+	 *
+	 * <p>
+	 * Currently defined as <code>inline</code> to support multiple runtimes dynamically.
+	 * </p>
+	 */
+#	define SKYRIM_REL inline
+#endif
+
+#if !defined(ENABLE_SKYRIM_VR) || (!defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE))
+	/**
+	 * A macro which defines a modifier for expressions that vary between Skyrim SE/AE and Skyrim VR.
+	 *
+	 * <p>
+	 * Currently defined as <code>constexpr</code> since this build is only for VR or non-VR.
+	 * </p>
+	 */
+#	define SKYRIM_REL_VR constexpr
+#else
+	/**
+	 * A macro which defines a modifier for expressions that vary between Skyrim SE/AE and Skyrim VR.
+	 *
+	 * <p>
+	 * Currently defined as <code>inline</code> since this build is for both VR and non-VR.
+	 * </p>
+	 */
+#	define SKYRIM_REL_VR inline
+#endif
+
 	/**
 	 * Selects a proper <code>REL::ID</code> based on the current Skyrim runtime.
 	 *
@@ -1296,9 +1348,15 @@ namespace REL
 	 * @param ae the ID to sue for Skyrim AE.
 	 * @return The correct ID based on the currently running Skyrim executable.
 	 */
-	[[nodiscard]] inline REL::ID RelocationID(uint64_t seAndVR, uint64_t ae) noexcept
+	[[nodiscard]] SKYRIM_ADDR REL::ID RelocationID([[maybe_unused]] uint64_t seAndVR, [[maybe_unused]] uint64_t ae) noexcept
 	{
+#ifndef ENABLE_SKYRIM_AE
+		return REL::ID(seAndVR);
+#elif !defined(ENABLE_SKYRIM_SE) && !defined(ENABLE_SKYRIM_VR)
+		return REL::ID(ae);
+#else
 		return REL::ID(Module::get().IsAE() ? ae : seAndVR);
+#endif
 	}
 
 	/**
@@ -1321,8 +1379,16 @@ namespace REL
 	 * @param vr the ID To use for Skyrim VR.
 	 * @return the correct ID for the current runtime of Skyrim.
 	 */
-	[[nodiscard]] inline REL::ID RelocationID(std::uint64_t se, std::uint64_t ae, std::uint64_t vr) noexcept
+	[[nodiscard]] SKYRIM_REL REL::ID RelocationID([[maybe_unused]] std::uint64_t se, [[maybe_unused]] std::uint64_t ae,
+		[[maybe_unused]] std::uint64_t vr) noexcept
 	{
+#if !defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_VR)
+		return REL::ID(se);
+#elif !defined(ENABLE_SKYRIM_SE) && !defined(ENABLE_SKYRIM_VR)
+		return REL::ID(ae);
+#elif !defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE)
+		return REL::ID(vr);
+#else
 		switch (Module::get().GetRuntime()) {
 		case Module::Runtime::AE:
 			return REL::ID(ae);
@@ -1331,6 +1397,7 @@ namespace REL
 		default:
 			return REL::ID(se);
 		}
+#endif
 	}
 
 	/**
@@ -1349,9 +1416,15 @@ namespace REL
 	 * @return Either <code>seAndVR</code> if the current runtime is Skyrim SE or VR, or <code>ae</code> if the runtime is AE.
 	 */
 	template <class T>
-	[[nodiscard]] inline T Relocate(T&& seAndVR, T&& ae) noexcept
+	[[nodiscard]] SKYRIM_ADDR T Relocate([[maybe_unused]] T&& seAndVR, [[maybe_unused]] T&& ae) noexcept
 	{
+#ifndef ENABLE_SKYRIM_AE
+		return seAndVR;
+#elif !defined(ENABLE_SKYRIM_SE) && !defined(ENABLE_SKYRIM_VR)
+		return ae;
+#else
 		return Module::get().IsAE() ? ae : seAndVR;
+#endif
 	}
 
 	/**
@@ -1372,8 +1445,16 @@ namespace REL
 	 * <code>vr</code> if running Skyrim VR.
 	 */
 	template <class T>
-	[[nodiscard]] inline T Relocate(T se, T ae, T vr) noexcept
+	[[nodiscard]] SKYRIM_REL T Relocate([[maybe_unused]] T se, [[maybe_unused]] T ae,
+		[[maybe_unused]] T vr) noexcept
 	{
+#if !defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_VR)
+		return se;
+#elif !defined(ENABLE_SKYRIM_SE) && !defined(ENABLE_SKYRIM_VR)
+		return ae;
+#elif !defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE)
+		return vr;
+#else
 		switch (Module::get().GetRuntime()) {
 		case Module::Runtime::AE:
 			return ae;
@@ -1382,6 +1463,7 @@ namespace REL
 		default:
 			return se;
 		}
+#endif
 	}
 
 	namespace detail
@@ -1408,7 +1490,7 @@ namespace REL
 		};
 
 		template <class Ret, class This>
-		struct RelocateVirtualHelper<Ret(This::*)()>
+		struct RelocateVirtualHelper<Ret (This::*)()>
 		{
 			using this_type = This;
 			using return_type = Ret;
@@ -1416,7 +1498,7 @@ namespace REL
 		};
 
 		template <class Ret, class This, class... Args>
-		struct RelocateVirtualHelper<Ret(This::*)(Args...)>
+		struct RelocateVirtualHelper<Ret (This::*)(Args...)>
 		{
 			using this_type = This;
 			using return_type = Ret;
@@ -1424,7 +1506,7 @@ namespace REL
 		};
 
 		template <class Ret, class This>
-		struct RelocateVirtualHelper<Ret(This::*)() const>
+		struct RelocateVirtualHelper<Ret (This::*)() const>
 		{
 			using this_type = const This;
 			using return_type = Ret;
@@ -1432,7 +1514,7 @@ namespace REL
 		};
 
 		template <class Ret, class This, class... Args>
-		struct RelocateVirtualHelper<Ret(This::*)(Args...) const>
+		struct RelocateVirtualHelper<Ret (This::*)(Args...) const>
 		{
 			using this_type = const This;
 			using return_type = Ret;
@@ -1452,6 +1534,52 @@ namespace REL
 	 *
 	 * @tparam Fn the type of the function being called.
 	 * @tparam Args the types of the arguments being passed.
+	 * @param seAndAEVtableOffset the offset from the <code>this</code> pointer to the vtable with the virtual function in SE/AE.
+	 * @param vrVtableIndex the offset from the <code>this</code> pointer to the vtable with the virtual function in VR.
+	 * @param seAndAEVtableIndex the index of the function in the class' vtable in SE and AE.
+	 * @param vrVtableIndex the index of the function in the class' vtable in VR.
+	 * @param self the <code>this</code> argument for the call.
+	 * @param args the remaining arguments for the call, if any.
+	 * @return The result of the function call.
+	 */
+	template <class Fn, class... Args>
+	[[nodiscard]] inline typename detail::RelocateVirtualHelper<Fn>::return_type RelocateVirtual(
+		[[maybe_unused]] std::ptrdiff_t seAndAEVtableOffset, [[maybe_unused]] std::ptrdiff_t vrVtableOffset,
+		[[maybe_unused]] std::ptrdiff_t seAndAEVtableIndex, [[maybe_unused]] std::ptrdiff_t vrVtableIndex,
+		typename detail::RelocateVirtualHelper<Fn>::this_type* self, Args&&... args)
+	{
+		return (*reinterpret_cast<typename detail::RelocateVirtualHelper<Fn>::function_type**>(
+			*reinterpret_cast<const uintptr_t*>(reinterpret_cast<uintptr_t>(self) +
+#ifndef ENABLE_SKYRIM_VR
+												seAndAEVtableOffset) +
+			seAndAEVtableIndex
+#elif !defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE)
+												vrVtableOffset) +
+			vrVtableIndex
+#else
+												(Module::get().IsVR() ? vrVtableOffset : seAndAEVtableOffset)) +
+			(Module::get().IsVR() ? vrVtableIndex : seAndAEVtableIndex)
+#endif
+				* sizeof(uintptr_t)))(self, std::forward<Args>(args)...);
+	}
+
+	/**
+	 * Invokes a virtual function in a cross-platform way where the vtable structure is variant across AE/SE and VR runtimes.
+	 *
+	 * <p>
+	 * Some classes in Skyrim VR add new virtual functions in the middle of the vtable structure, which makes it ABI-incompatible with AE/SE.
+	 * A naive virtual function call, therefore, cannot work across all runtimes without the plugin being recompiled specifically for VR.
+	 * This call works with types which have variant vtables to allow a non-virtual function definition to be created in the virtual function's
+	 * place, and to have that call dynamically lookup the correct function based on the vtable structure expected in the current runtime.
+	 * </p>
+	 *
+	 * <p>
+	 * This call assumes the vtable to be used is the one at offset 0, i.e. it invokes a virtual function either on the first parent class
+	 * or the current class.
+	 * </p>
+	 *
+	 * @tparam Fn the type of the function being called.
+	 * @tparam Args the types of the arguments being passed.
 	 * @param seAndAEVtableIndex the index of the function in the class' vtable in SE and AE.
 	 * @param vrVtableIndex the index of the function in the class' vtable in VR.
 	 * @param self the <code>this</code> argument for the call.
@@ -1463,9 +1591,7 @@ namespace REL
 		std::ptrdiff_t seAndAEVtableIndex, std::ptrdiff_t vrVtableIndex,
 		typename detail::RelocateVirtualHelper<Fn>::this_type* self, Args&&... args)
 	{
-		return (*reinterpret_cast<typename detail::RelocateVirtualHelper<Fn>::function_type**>(
-			*reinterpret_cast<const uintptr_t*>(self) + (Module::get().IsVR() ? vrVtableIndex : seAndAEVtableIndex) *
-													  sizeof(uintptr_t)))(self, std::forward<Args>(args)...);
+		return RelocateVirtual<Fn, Args...>(0, 0, seAndAEVtableIndex, vrVtableIndex, self, std::forward<Args>(args)...);
 	}
 
 	/**
@@ -1486,7 +1612,8 @@ namespace REL
 	 * @return A reference to the member.
 	 */
 	template <class T, class This>
-	[[nodiscard]] inline T& RelocateMember(This* self, ptrdiff_t seAndAE, ptrdiff_t vr) {
+	[[nodiscard]] inline T& RelocateMember(This* self, ptrdiff_t seAndAE, ptrdiff_t vr)
+	{
 		return *reinterpret_cast<T*>(reinterpret_cast<uintptr_t>(self) + Relocate(seAndAE, seAndAE, vr));
 	}
 }

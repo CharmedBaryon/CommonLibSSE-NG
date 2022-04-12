@@ -319,9 +319,9 @@ namespace RE
 		virtual void                              SetBiped(const BSTSmartPointer<BipedAnim>& a_biped);                                                                                                                                                         // 81 - { return; }
 		virtual void                              Unk_82(void);                                                                                                                                                                                                // 82 - { return; }
 		virtual void                              Unk_83(void);                                                                                                                                                                                                // 83 - { return; }
-		// Virtual functions defined in TESObjectREFR after the vtable structure becomes different in VR.
+																																																															   // Virtual functions defined in TESObjectREFR after the vtable structure becomes different in VR.
 #if !defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE)
-		virtual             void Unk_84(void);                                                                    // 84 - sets flag 24 if the object has destructibles
+		virtual void Unk_84(void);  // 84 - sets flag 24 if the object has destructibles
 #endif
 		void                SetObjectReference(TESBoundObject* a_object);                                         // 84 - sets flag 24 if the object has destructibles
 		void                MoveHavok(bool a_forceRec);                                                           // 85

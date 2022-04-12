@@ -11,7 +11,7 @@ namespace RE
 
 		~FavoritesHandler() override;  // 00
 
-		// add
+		// override
 		bool CanProcess(InputEvent* a_event) override;      // 01
 		bool ProcessKinect(KinectEvent* a_event) override;  // 02
 		bool ProcessButton(ButtonEvent* a_event) override;  // 05

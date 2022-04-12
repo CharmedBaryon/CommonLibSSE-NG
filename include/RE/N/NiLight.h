@@ -12,6 +12,19 @@ namespace RE
 		inline static auto RTTI = RTTI_NiLight;
 		inline static auto Ni_RTTI = NiRTTI_NiLight;
 
+		struct LIGHT_RUNTIME_DATA
+		{
+#define RUNTIME_DATA_CONTENT         \
+	NiColor       ambient; /* 00 */  \
+	NiColor       diffuse; /* 0C */  \
+	NiPoint3      radius;  /* 018 */ \
+	float         fade;    /* 024 */ \
+	std::uint32_t unk138;  /* 028 */
+
+			RUNTIME_DATA_CONTENT
+		};
+		static_assert(sizeof(LIGHT_RUNTIME_DATA) == 0x2C);
+
 		~NiLight() override;  // 00
 
 		// override (NiAVObject)
@@ -20,16 +33,25 @@ namespace RE
 		void          SaveBinary(NiStream& a_stream) override;  // 1B
 		bool          IsEqual(NiObject* a_object) override;     // 1C
 
+		[[nodiscard]] inline LIGHT_RUNTIME_DATA& GetLightRuntimeData() noexcept
+		{
+			return REL::RelocateMember<LIGHT_RUNTIME_DATA>(this, 0x110, 0x138);
+		}
+
+		[[nodiscard]] inline const LIGHT_RUNTIME_DATA& GetLightRuntimeData() const noexcept
+		{
+			return REL::RelocateMember<LIGHT_RUNTIME_DATA>(this, 0x110, 0x138);
+		}
+
 		// members
-		NiColor       ambient;  // 110
-		NiColor       diffuse;  // 11C
-		NiPoint3      radius;   // 128
-		float         fade;     // 134
-		std::uint32_t unk138;   // 138
+#if !defined(ENABLE_SKYRIM_VR) || (!defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE))
+		RUNTIME_DATA_CONTENT  // 110, 138
+#endif
 	};
-#if !defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE)
-	static_assert(sizeof(NiLight) == 0x168);
-#else
+#ifndef ENABLE_SKYRIM_VR
 	static_assert(sizeof(NiLight) == 0x140);
+#elif !defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE)
+	static_assert(sizeof(NiLight) == 0x168);
 #endif
 }
+#undef RUNTIME_DATA_CONTENT

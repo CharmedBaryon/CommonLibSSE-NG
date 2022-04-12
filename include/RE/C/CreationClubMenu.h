@@ -14,10 +14,14 @@ namespace RE
 	// flags = kUsesMenuContext | kDisablePauseMenu | kUpdateUsesCursor | kInventoryItemMenu | kDontHideCursorWhenTopmost
 	// context = kItemMenu
 	class CreationClubMenu :
+#if !defined(ENABLE_SKYRIM_VR) || (!defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE))
 		public IMenu,                            // 00
 		public MenuEventHandler,                 // 30
 		public GFxFunctionHandler,               // 40
 		public BSTEventSink<MenuOpenCloseEvent>  // 50
+#else
+		public IMenu  // 00
+#endif
 	{
 	public:
 		inline static auto                RTTI = RTTI_CreationClubMenu;
@@ -25,8 +29,11 @@ namespace RE
 
 		struct RUNTIME_DATA
 		{
-			ImageData background;  // 0
-			ImageData details;     // 18
+#define RUNTIME_DATA_CONTENT       \
+	ImageData background; /* 00 */ \
+	ImageData details;    /* 18 */
+
+			RUNTIME_DATA_CONTENT
 		};
 		static_assert(sizeof(RUNTIME_DATA) == 0x30);
 
@@ -35,6 +42,7 @@ namespace RE
 		// override (IMenu)
 		void AdvanceMovie(float a_interval, std::uint32_t a_currentTime) override;  // 05
 
+#if !defined(ENABLE_SKYRIM_VR) || (!defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE))
 		// override (MenuEventHandler)
 		bool CanProcess(InputEvent* a_event) override;              // 01
 		bool ProcessThumbstick(ThumbstickEvent* a_event) override;  // 03
@@ -44,6 +52,7 @@ namespace RE
 
 		// override (BSTEventSink<MenuOpenCloseEvent>)
 		BSEventNotifyControl ProcessEvent(const MenuOpenCloseEvent* a_event, BSTEventSource<MenuOpenCloseEvent>* a_eventSource) override;  // 01
+#endif
 
 		[[nodiscard]] inline RUNTIME_DATA& GetRuntimeData() noexcept
 		{
@@ -57,7 +66,7 @@ namespace RE
 
 		// members
 #if !defined(ENABLE_SKYRIM_VR) || (!defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE))
-		RUNTIME_DATA runtimeData; // 58, 68
+		RUNTIME_DATA_CONTENT  // 58, 68
 #endif
 	};
 #ifndef ENABLE_SKYRIM_VR
@@ -66,3 +75,4 @@ namespace RE
 	static_assert(sizeof(CreationClubMenu) == 0x98);
 #endif
 }
+#undef RUNTIME_DATA_CONTENT

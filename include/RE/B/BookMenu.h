@@ -19,9 +19,13 @@ namespace RE
 	// flags = kPausesGame | kUsesMenuContext | kDisablePauseMenu | kRequiresUpdate | kTopmostRenderedMenu | kRendersOffscreenTargets
 	// context = kBook
 	class BookMenu :
+#if !defined(ENABLE_SKYRIM_VR) || (!defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE))
 		public IMenu,                               // 00
 		public SimpleAnimationGraphManagerHolder,   // 30
 		public BSTEventSink<BSAnimationGraphEvent>  // 48
+#else
+		public IMenu  // 00
+#endif
 	{
 	public:
 		inline static auto                RTTI = RTTI_BookMenu;
@@ -30,19 +34,22 @@ namespace RE
 
 		struct RUNTIME_DATA
 		{
-			BSTArray<ImageData>   unk50;      // 00
-			GPtr<GFxMovieView>    book;       // 18
-			NiPointer<NiAVObject> book3D;     // 20
-			std::uint32_t         unk78;      // 28
-			std::uint32_t         pad7C;      // 2C
-			std::uint64_t         unk80;      // 30
-			void*                 unk88;      // 38 - smart ptr
-			std::uint16_t         unk90;      // 40
-			std::uint16_t         unk92;      // 42
-			bool                  closeMenu;  // 44
-			bool                  isNote;     // 45
-			std::uint8_t          unk96;      // 46
-			std::uint8_t          pad97;      // 47
+#define RUNTIME_DATA_CONTENT                              \
+	BSTArray<ImageData>   unk50;     /* 00 */             \
+	GPtr<GFxMovieView>    book;      /* 18 */             \
+	NiPointer<NiAVObject> book3D;    /* 20 */             \
+	std::uint32_t         unk78;     /* 28 */             \
+	std::uint32_t         pad7C;     /* 2C */             \
+	std::uint64_t         unk80;     /* 30 */             \
+	void*                 unk88;     /* 38 - smart ptr */ \
+	std::uint16_t         unk90;     /* 40 */             \
+	std::uint16_t         unk92;     /* 42 */             \
+	bool                  closeMenu; /* 44 */             \
+	bool                  isNote;    /* 45 */             \
+	std::uint8_t          unk96;     /* 46 */             \
+	std::uint8_t          pad97;     /* 47 */
+
+			RUNTIME_DATA_CONTENT
 		};
 		static_assert(sizeof(RUNTIME_DATA) == 0x48);
 
@@ -54,8 +61,10 @@ namespace RE
 		void               PostDisplay() override;                                                // 06
 		void               PreDisplay() override;                                                 // 07
 
+#if !defined(ENABLE_SKYRIM_VR) || (!defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE))
 		// override (BSTEventSink<BSAnimationGraphEvent>)
 		BSEventNotifyControl ProcessEvent(const BSAnimationGraphEvent* a_event, BSTEventSource<BSAnimationGraphEvent>* a_eventSource) override;  // 01
+#endif
 
 		[[nodiscard]] static TESObjectBOOK* GetTargetForm();
 		[[nodiscard]] static TESObjectREFR* GetTargetReference();  // returns null if opened from inventory
@@ -72,7 +81,7 @@ namespace RE
 
 		// members
 #if !defined(ENABLE_SKYRIM_VR) || (!defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE))
-		RUNTIME_DATA runtimeData; // 50, 60
+		RUNTIME_DATA_CONTENT  // 50, 60
 #endif
 	};
 #ifndef ENABLE_SKYRIM_VR
@@ -81,3 +90,4 @@ namespace RE
 	static_assert(sizeof(BookMenu) == 0xA8);
 #endif
 }
+#undef RUNTIME_DATA_CONTENT

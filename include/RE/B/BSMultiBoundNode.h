@@ -16,22 +16,33 @@ namespace RE
 		inline static auto RTTI = RTTI_BSMultiBoundNode;
 		inline static auto Ni_RTTI = NiRTTI_BSMultiBoundNode;
 
+		struct RUNTIME_DATA
+		{
+#define RUNTIME_DATA_CONTENT                                  \
+	NiPointer<BSMultiBound>           multiBound;    /* 00 */ \
+	BSCullingProcess::BSCPCullingType cullingMode;   /* 08 */ \
+	float                             lastAccumTime; /* 0C */
+
+			RUNTIME_DATA_CONTENT
+		};
+		static_assert(sizeof(RUNTIME_DATA) == 0x10);
+
 		~BSMultiBoundNode() override;  // 00
 
 		// override (BSNiNode)
-		const NiRTTI*     GetRTTI() const override;                                                 // 02
-		BSMultiBoundNode* AsMultiBoundNode() override;                                              // 06 - { return this; }
-		NiObject*         CreateClone(NiCloningProcess& a_cloning) override;                        // 17
-		void              LoadBinary(NiStream& a_stream) override;                                  // 18
-		void              LinkObject(NiStream& a_stream) override;                                  // 19
-		bool              RegisterStreamables(NiStream& a_stream) override;                         // 1A
-		void              SaveBinary(NiStream& a_stream) override;                                  // 1B
-		bool              IsEqual(NiObject* a_object) override;                                     // 1C
+		const NiRTTI*     GetRTTI() const override;                           // 02
+		BSMultiBoundNode* AsMultiBoundNode() override;                        // 06 - { return this; }
+		NiObject*         CreateClone(NiCloningProcess& a_cloning) override;  // 17
+		void              LoadBinary(NiStream& a_stream) override;            // 18
+		void              LinkObject(NiStream& a_stream) override;            // 19
+		bool              RegisterStreamables(NiStream& a_stream) override;   // 1A
+		void              SaveBinary(NiStream& a_stream) override;            // 1B
+		bool              IsEqual(NiObject* a_object) override;               // 1C
 		// The following are virtual functions past the point where VR compatibility breaks.
-//		void              UpdateDownwardPass(NiUpdateData& a_data, std::uint32_t a_arg2) override;  // 2C
-//		void              UpdateWorldBound() override;                                              // 2F
-//		void              OnVisible(NiCullingProcess& a_process) override;                          // 34
-//		void              UpdateUpwardPass(NiUpdateData& a_data) override;                          // 3D
+		//		void              UpdateDownwardPass(NiUpdateData& a_data, std::uint32_t a_arg2) override;  // 2C
+		//		void              UpdateWorldBound() override;                                              // 2F
+		//		void              OnVisible(NiCullingProcess& a_process) override;                          // 34
+		//		void              UpdateUpwardPass(NiUpdateData& a_data) override;                          // 3D
 
 		// add
 		virtual BSMultiBoundRoom* GetMultiBoundRoom();                    // 3E - { return 0; }
@@ -39,14 +50,25 @@ namespace RE
 		virtual void              Unk_40(void);                           // 40
 		virtual void              Unk_41(void);                           // 41
 
+		[[nodiscard]] inline RUNTIME_DATA& GetRuntimeData() noexcept
+		{
+			return REL::RelocateMember<RUNTIME_DATA>(this, 0x128, 0x150);
+		}
+
+		[[nodiscard]] inline const RUNTIME_DATA& GetRuntimeData() const noexcept
+		{
+			return REL::RelocateMember<RUNTIME_DATA>(this, 0x128, 0x150);
+		}
+
 		// members
-		NiPointer<BSMultiBound>           multiBound;     // 128
-		BSCullingProcess::BSCPCullingType cullingMode;    // 130
-		float                             lastAccumTime;  // 134
+#if !defined(ENABLE_SKYRIM_VR) || (!defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE))
+		RUNTIME_DATA_CONTENT  // 128, 150
+#endif
 	};
-#if !defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE)
-	static_assert(sizeof(BSMultiBoundNode) == 0x160);
-#else
+#ifndef ENABLE_SKYRIM_VR
 	static_assert(sizeof(BSMultiBoundNode) == 0x138);
+#elif !defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE)
+	static_assert(sizeof(BSMultiBoundNode) == 0x160);
 #endif
 }
+#undef RUNTIME_DATA_CONTENT
