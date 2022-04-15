@@ -32,7 +32,7 @@ namespace RE
 		public IMenu,            // 000
 		public MenuEventHandler  // 030, 040
 #else
-		public IMenu             // 000
+		public IMenu  // 000
 #endif
 	{
 	public:

@@ -22,14 +22,14 @@ namespace RE
 
 		struct RUNTIME_DATA
 		{
-#define RUNTIME_DATA_CONTENT \
-			std::int32_t  numPartitions;  /* 00 */ \
-			std::uint32_t pad8C;          /* 04 */ \
-			Data*         partitions;     /* 08 */ \
-			bool          unk98;          /* 10 */ \
-			std::uint8_t  pad99;          /* 11 */ \
-			std::uint16_t pad9A;          /* 12 */ \
-			std::uint32_t pad9C;          /* 14 */
+#define RUNTIME_DATA_CONTENT              \
+	std::int32_t  numPartitions; /* 00 */ \
+	std::uint32_t pad8C;         /* 04 */ \
+	Data*         partitions;    /* 08 */ \
+	bool          unk98;         /* 10 */ \
+	std::uint8_t  pad99;         /* 11 */ \
+	std::uint16_t pad9A;         /* 12 */ \
+	std::uint32_t pad9C;         /* 14 */
 
 			RUNTIME_DATA_CONTENT
 		};

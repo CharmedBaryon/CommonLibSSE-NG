@@ -125,8 +125,8 @@ namespace RE
 
 		// members
 #if !defined(ENABLE_SKYRIM_VR) || (!defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE))
-		RUNTIME_DATA_CONTENT  // 40, 68
-		RUNTIME_DATA2_CONTENT // 30460, 30508
+		RUNTIME_DATA_CONTENT       // 40, 68
+			RUNTIME_DATA2_CONTENT  // 30460, 30508
 #endif
 	};
 #ifndef ENABLE_SKYRIM_VR

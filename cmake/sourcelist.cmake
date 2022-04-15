@@ -312,7 +312,6 @@ set(SOURCES
 	include/RE/B/BSTObjectDictionary.h
 	include/RE/B/BSTPoint.h
 	include/RE/B/BSTPointerAndFlags.h
-	include/RE/B/BSTrackedControllerDevice.h
 	include/RE/B/BSTSingleton.h
 	include/RE/B/BSTSmartPointer.h
 	include/RE/B/BSTTuple.h
@@ -328,6 +327,7 @@ set(SOURCES
 	include/RE/B/BSThread.h
 	include/RE/B/BSThreadEvent.h
 	include/RE/B/BSTimer.h
+	include/RE/B/BSTrackedControllerDevice.h
 	include/RE/B/BSTriShape.h
 	include/RE/B/BSUIMessageData.h
 	include/RE/B/BSUIScaleformData.h
@@ -1503,6 +1503,9 @@ set(SOURCES
 	src/RE/G/GViewport.cpp
 	src/RE/G/GameSettingCollection.cpp
 	src/RE/G/GiftMenu.cpp
+	src/RE/H/HUDMenu.cpp
+	src/RE/H/HUDMeter.cpp
+	src/RE/H/HUDObject.cpp
 	src/RE/H/Hazard.cpp
 	src/RE/H/HeapBlock.cpp
 	src/RE/H/hkBaseTypes.cpp
@@ -1514,9 +1517,6 @@ set(SOURCES
 	src/RE/H/hkpCharacterProxyListener.cpp
 	src/RE/H/hkpMaterial.cpp
 	src/RE/H/hkpWorldObject.cpp
-	src/RE/H/HUDMenu.cpp
-	src/RE/H/HUDMeter.cpp
-	src/RE/H/HUDObject.cpp
 	src/RE/I/IAnimationGraphManagerHolder.cpp
 	src/RE/I/IFormFactory.cpp
 	src/RE/I/IFunction.cpp

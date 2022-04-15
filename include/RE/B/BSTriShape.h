@@ -12,10 +12,10 @@ namespace RE
 
 		struct TRISHAPE_RUNTIME_DATA
 		{
-#define RUNTIME_DATA_CONTENT \
-			std::uint16_t triangleCount;  /* 0 */ \
-			std::uint16_t vertexCount;    /* 2 */ \
-			std::uint32_t pad15C;         /* 3 */
+#define RUNTIME_DATA_CONTENT             \
+	std::uint16_t triangleCount; /* 0 */ \
+	std::uint16_t vertexCount;   /* 2 */ \
+	std::uint32_t pad15C;        /* 3 */
 
 			RUNTIME_DATA_CONTENT
 		};

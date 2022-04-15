@@ -20,16 +20,16 @@ namespace RE
 
 		struct RUNTIME_DATA
 		{
-#define RUNTIME_DATA_CONTENT \
-			GFxValue        root;             /* 00 - "Menu_mc" */ \
-			ItemList*       itemList;         /* 18 */ \
-			ItemCard*       itemCard;         /* 20 */ \
-			BSTArray<void*> unk58;            /* 28 */ \
-			std::uint64_t   unk70;            /* 40 */ \
-			bool            pcControlsReady;  /* 48 */ \
-			std::uint8_t    pad79;            /* 49 */ \
-			std::uint16_t   pad7A;            /* 4A */ \
-			std::uint32_t   pad7C;            /* 4C */
+#define RUNTIME_DATA_CONTENT                              \
+	GFxValue        root;            /* 00 - "Menu_mc" */ \
+	ItemList*       itemList;        /* 18 */             \
+	ItemCard*       itemCard;        /* 20 */             \
+	BSTArray<void*> unk58;           /* 28 */             \
+	std::uint64_t   unk70;           /* 40 */             \
+	bool            pcControlsReady; /* 48 */             \
+	std::uint8_t    pad79;           /* 49 */             \
+	std::uint16_t   pad7A;           /* 4A */             \
+	std::uint32_t   pad7C;           /* 4C */
 
 			RUNTIME_DATA_CONTENT
 		};

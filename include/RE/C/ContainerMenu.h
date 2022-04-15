@@ -29,26 +29,26 @@ namespace RE
 
 		struct RUNTIME_DATA
 		{
-#define RUNTIME_DATA_CONTENT \
-			GFxValue        root;             /* 00 - "Menu_mc" */ \
-			ItemList*       itemList;         /* 18 */ \
-			ItemCard*       itemCard;         /* 20 */ \
-			BottomBar*      bottomBar;        /* 28 */ \
-			BSTArray<void*> unk60;            /* 30 */ \
-			BSTArray<void*> unk78;            /* 48 */ \
-			std::uint64_t   unk90;            /* 60 */ \
-			std::uint64_t   unk98;            /* 68 */ \
-			std::uint64_t   unkA0;            /* 70 */ \
-			std::uint8_t    unkA8;            /* 78 */ \
-			std::uint8_t    padA9;            /* 79 */ \
-			std::uint16_t   padAA;            /* 7A */ \
-			std::uint32_t   padAC;            /* 7C */ \
-			std::int32_t    value;            /* 80 */ \
-			std::uint32_t   unkB4;            /* 84 */ \
-			std::uint8_t    unkB8;            /* 88 */ \
-			bool            pcControlsReady;  /* 89 */ \
-			std::uint16_t   padBA;            /* 8A */ \
-			std::uint32_t   padBC;            /* 8C */
+#define RUNTIME_DATA_CONTENT                              \
+	GFxValue        root;            /* 00 - "Menu_mc" */ \
+	ItemList*       itemList;        /* 18 */             \
+	ItemCard*       itemCard;        /* 20 */             \
+	BottomBar*      bottomBar;       /* 28 */             \
+	BSTArray<void*> unk60;           /* 30 */             \
+	BSTArray<void*> unk78;           /* 48 */             \
+	std::uint64_t   unk90;           /* 60 */             \
+	std::uint64_t   unk98;           /* 68 */             \
+	std::uint64_t   unkA0;           /* 70 */             \
+	std::uint8_t    unkA8;           /* 78 */             \
+	std::uint8_t    padA9;           /* 79 */             \
+	std::uint16_t   padAA;           /* 7A */             \
+	std::uint32_t   padAC;           /* 7C */             \
+	std::int32_t    value;           /* 80 */             \
+	std::uint32_t   unkB4;           /* 84 */             \
+	std::uint8_t    unkB8;           /* 88 */             \
+	bool            pcControlsReady; /* 89 */             \
+	std::uint16_t   padBA;           /* 8A */             \
+	std::uint32_t   padBC;           /* 8C */
 
 			RUNTIME_DATA_CONTENT
 		};

@@ -9,18 +9,18 @@ namespace RE
 	public:
 		inline static auto RTTI = RTTI_BSMultiStreamInstanceTriShape;
 		inline static auto Ni_RTTI = NiRTTI_BSMultiStreamInstanceTriShape;
-		
+
 		struct MULTISTREAM_TRISHAPE_RUNTIME_DATA
 		{
-#define RUNTIME_DATA_CONTENT \
-			BSTArray<void*> unk160;  /* 00 */ \
-			std::uint32_t   unk178;  /* 18 */ \
-			std::uint32_t   unk17C;  /* 1C */ \
-			std::uint64_t   unk180;  /* 20 */ \
-			std::uint64_t   unk188;  /* 28 */ \
-			std::uint32_t   unk190;  /* 30 */ \
-			std::uint32_t   unk194;  /* 34 */ \
-			std::uint32_t   unk198;  /* 38 */
+#define RUNTIME_DATA_CONTENT         \
+	BSTArray<void*> unk160; /* 00 */ \
+	std::uint32_t   unk178; /* 18 */ \
+	std::uint32_t   unk17C; /* 1C */ \
+	std::uint64_t   unk180; /* 20 */ \
+	std::uint64_t   unk188; /* 28 */ \
+	std::uint32_t   unk190; /* 30 */ \
+	std::uint32_t   unk194; /* 34 */ \
+	std::uint32_t   unk198; /* 38 */
 
 			RUNTIME_DATA_CONTENT
 		};

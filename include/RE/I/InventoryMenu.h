@@ -23,20 +23,20 @@ namespace RE
 
 		struct RUNTIME_DATA
 		{
-#define RUNTIME_DATA_CONTENT \
-			GFxValue        root;             /* 00 - kDisplayObject - "_level0.Menu_mc" */ \
-			ItemList*       itemList;         /* 18 */ \
-			ItemCard*       itemCard;         /* 20 */ \
-			BottomBar*      bottomBar;        /* 28 */ \
-			BSTArray<void*> unk60;            /* 30 */ \
-			std::uint8_t    unk78;            /* 48 */ \
-			std::uint8_t    pad79;            /* 49 */ \
-			std::uint16_t   pad7A;            /* 4A */ \
-			std::uint32_t   unk7C;            /* 4C */ \
-			bool            pcControlsReady;  /* 50 */ \
-			std::uint8_t    unk81;            /* 51 */ \
-			std::uint16_t   pad82;            /* 52 */ \
-			std::uint32_t   pad84;            /* 54 */
+#define RUNTIME_DATA_CONTENT                                                       \
+	GFxValue        root;            /* 00 - kDisplayObject - "_level0.Menu_mc" */ \
+	ItemList*       itemList;        /* 18 */                                      \
+	ItemCard*       itemCard;        /* 20 */                                      \
+	BottomBar*      bottomBar;       /* 28 */                                      \
+	BSTArray<void*> unk60;           /* 30 */                                      \
+	std::uint8_t    unk78;           /* 48 */                                      \
+	std::uint8_t    pad79;           /* 49 */                                      \
+	std::uint16_t   pad7A;           /* 4A */                                      \
+	std::uint32_t   unk7C;           /* 4C */                                      \
+	bool            pcControlsReady; /* 50 */                                      \
+	std::uint8_t    unk81;           /* 51 */                                      \
+	std::uint16_t   pad82;           /* 52 */                                      \
+	std::uint32_t   pad84;           /* 54 */
 
 			RUNTIME_DATA_CONTENT
 		};

@@ -75,9 +75,9 @@ namespace RE
 
 		struct RUNTIME_DATA
 		{
-#define RUNTIME_DATA_CONTENT \
-			AMMO_DATA     data;       /* 00 - DATA */ \
-			BSFixedString shortDesc;  /* 10 - ONAM */
+#define RUNTIME_DATA_CONTENT                 \
+	AMMO_DATA     data;      /* 00 - DATA */ \
+	BSFixedString shortDesc; /* 10 - ONAM */
 
 			RUNTIME_DATA_CONTENT
 		};
@@ -159,7 +159,7 @@ namespace RE
 		}
 
 		// members
-		RUNTIME_DATA_CONTENT       // 110, 100
+		RUNTIME_DATA_CONTENT  // 110, 100
 	};
 #ifndef ENABLE_SKYRIM_VR
 	static_assert(sizeof(TESAmmo) == 0x128);

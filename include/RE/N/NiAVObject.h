@@ -183,11 +183,11 @@ namespace RE
 	};
 	static_assert(sizeof(NiAVObject) == 0x138);
 #else
-		uint32_t  unkF4;       // 0F4
-		uint64_t* unkF8;       // 0F8
-		float     fadeAmount;  // 100
-		std::uint32_t lastUpdatedFrameCounter; // 104
-		uint64_t  unk104;      // 108
+		uint32_t      unkF4;                    // 0F4
+		uint64_t*     unkF8;                    // 0F8
+		float         fadeAmount;               // 100
+		std::uint32_t lastUpdatedFrameCounter;  // 104
+		uint64_t      unk104;                   // 108
 	};
 #endif
 }

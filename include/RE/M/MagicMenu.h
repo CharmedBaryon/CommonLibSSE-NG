@@ -19,15 +19,15 @@ namespace RE
 
 		struct RUNTIME_DATA
 		{
-#define RUNTIME_DATA_CONTENT \
-			void*         unk30;            /* 00 - some variation of the item list */ \
-			ItemCard*     itemCard;         /* 08 */ \
-			BottomBar*    bottomBar;        /* 10 */ \
-			GFxValue      root;             /* 18 - "Menu_mc" */ \
-			bool          pcControlsReady;  /* 30 */ \
-			std::uint8_t  pad61;            /* 31 */ \
-			std::uint16_t pad62;            /* 32 */ \
-			std::uint32_t pad64;            /* 34 */
+#define RUNTIME_DATA_CONTENT                                                  \
+	void*         unk30;           /* 00 - some variation of the item list */ \
+	ItemCard*     itemCard;        /* 08 */                                   \
+	BottomBar*    bottomBar;       /* 10 */                                   \
+	GFxValue      root;            /* 18 - "Menu_mc" */                       \
+	bool          pcControlsReady; /* 30 */                                   \
+	std::uint8_t  pad61;           /* 31 */                                   \
+	std::uint16_t pad62;           /* 32 */                                   \
+	std::uint32_t pad64;           /* 34 */
 
 			RUNTIME_DATA_CONTENT
 		};

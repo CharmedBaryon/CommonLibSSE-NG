@@ -626,12 +626,12 @@ namespace REL
 			{
 				const mapping_t elem{ 0, a_offset };
 				const auto      it = std::lower_bound(
-						 _offset2id.begin(),
-						 _offset2id.end(),
-						 elem,
-						 [](auto&& a_lhs, auto&& a_rhs) {
+                    _offset2id.begin(),
+                    _offset2id.end(),
+                    elem,
+                    [](auto&& a_lhs, auto&& a_rhs) {
                         return a_lhs.offset < a_rhs.offset;
-						 });
+                    });
 				if (it == _offset2id.end()) {
 					stl::report_and_fail(
 						fmt::format(
@@ -755,7 +755,7 @@ namespace REL
 				const auto filename =
 					stl::utf8_to_utf16(
 						Module::get().IsAE() ?
-							fmt::format("Data/SKSE/Plugins/versionlib-{}.bin"sv,
+                            fmt::format("Data/SKSE/Plugins/versionlib-{}.bin"sv,
 								version.string()) :
                             fmt::format("Data/SKSE/Plugins/version-{}.bin"sv,
 								version.string()))

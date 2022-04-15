@@ -16,11 +16,11 @@ namespace RE
 
 		struct RUNTIME_DATA
 		{
-#define RUNTIME_DATA_CONTENT \
-			bool          unk30;  /* 00 */ \
-			std::uint8_t  pad31;  /* 01 */ \
-			std::uint16_t pad32;  /* 02 */ \
-			std::uint32_t pad34;  /* 04 */
+#define RUNTIME_DATA_CONTENT      \
+	bool          unk30; /* 00 */ \
+	std::uint8_t  pad31; /* 01 */ \
+	std::uint16_t pad32; /* 02 */ \
+	std::uint32_t pad34; /* 04 */
 
 			RUNTIME_DATA_CONTENT
 		};
