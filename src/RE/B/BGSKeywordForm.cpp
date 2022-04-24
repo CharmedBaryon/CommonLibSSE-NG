@@ -41,7 +41,7 @@ namespace RE
 		return false;
 	}
 
-	bool BGSKeywordForm::HasKeyword(FormID a_formID) const
+	bool BGSKeywordForm::HasKeywordID(FormID a_formID) const
 	{
 		if (keywords) {
 			for (std::uint32_t idx = 0; idx < numKeywords; ++idx) {

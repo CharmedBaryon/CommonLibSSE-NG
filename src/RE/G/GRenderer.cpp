@@ -89,7 +89,12 @@ namespace RE
 	}
 
 	GRenderer::Cxform::Cxform() :
-		matrix{ 0.0 }
+		matrix{
+			{ 0.0, 0.0 },
+			{ 0.0, 0.0 },
+			{ 0.0, 0.0 },
+			{ 0.0, 0.0 }
+		}
 	{}
 
 	bool GRenderer::Cxform::operator==(const Cxform& a_rhs) const

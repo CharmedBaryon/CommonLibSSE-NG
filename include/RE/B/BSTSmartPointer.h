@@ -21,9 +21,8 @@ namespace RE
 	template <class T>
 	struct BSTSmartPointerAutoPtr
 	{
-		constexpr static void Acquire(T* a_ptr)
+		constexpr static void Acquire([[maybe_unused]] T* a_ptr)
 		{
-			return;
 		}
 
 		static void Release(T* a_ptr)

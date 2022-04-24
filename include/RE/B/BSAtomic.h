@@ -83,8 +83,8 @@ namespace RE
 
 	private:
 		// members
-		volatile std::uint32_t _writerThread;  // 0
-		volatile std::uint32_t _lock;          // 4
+		[[maybe_unused]] volatile std::uint32_t _writerThread;  // 0
+		[[maybe_unused]] volatile std::uint32_t _lock;          // 4
 	};
 	static_assert(sizeof(BSReadWriteLock) == 0x8);
 

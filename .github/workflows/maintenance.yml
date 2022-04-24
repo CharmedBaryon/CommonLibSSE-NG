@@ -1,6 +1,8 @@
 name: Scripted maintenance
 
-on: push
+on:
+  push:
+    branches: [ dev-ng ]
 
 jobs:
   maintenance:

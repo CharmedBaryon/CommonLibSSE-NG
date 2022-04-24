@@ -27,7 +27,7 @@ namespace RE
 
 		if SKYRIM_REL_VR_CONSTEXPR (REL::Module::IsVR()) {
 			// Use SkyrimVR lookup logic, ignore light plugin index which doesn't exist in VR
-			return TESForm::LookupByID(a_rawFormID & 0xFFFFFF | (file->compileIndex << 24));
+			return TESForm::LookupByID((a_rawFormID & 0xFFFFFF) | (file->compileIndex << 24));
 		} else {
 			FormID formID = file->compileIndex << (3 * 8);
 			formID += file->smallFileCompileIndex << ((1 * 8) + 4);

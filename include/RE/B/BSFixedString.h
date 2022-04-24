@@ -136,7 +136,7 @@ namespace RE
 
 			[[nodiscard]] inline friend bool operator==(const BSFixedString& a_lhs, const BSFixedString& a_rhs) noexcept
 			{
-				return a_lhs._data == a_rhs._data || a_lhs.empty() && a_rhs.empty();
+				return a_lhs._data == a_rhs._data || (a_lhs.empty() && a_rhs.empty());
 			}
 
 			[[nodiscard]] inline friend bool operator!=(const BSFixedString& a_lhs, const BSFixedString& a_rhs) noexcept { return !(a_lhs == a_rhs); }

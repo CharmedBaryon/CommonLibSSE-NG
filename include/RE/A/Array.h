@@ -69,12 +69,12 @@ namespace RE
 			static inline constexpr size_type MAX_SIZE = 128;
 
 			// members
-			std::uint32_t      _pad04;        // 04
-			TypeInfo           _elementType;  // 08
-			std::uint32_t      _size;         // 10
-			std::uint32_t      _pad14;        // 14
-			mutable BSSpinLock _lock;         // 18
-			Variable           _data[0];      // 20
+			[[maybe_unused]] std::uint32_t _pad04;        // 04
+			TypeInfo                       _elementType;  // 08
+			std::uint32_t                  _size;         // 10
+			[[maybe_unused]] std::uint32_t _pad14;        // 14
+			mutable BSSpinLock             _lock;         // 18
+			Variable                       _data[0];      // 20
 		};
 		static_assert(sizeof(Array) == 0x20);
 	}

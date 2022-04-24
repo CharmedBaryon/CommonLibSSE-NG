@@ -207,7 +207,7 @@ namespace RE
 		[[nodiscard]] static TESForm* LookupByID(FormID a_formID)
 		{
 			const auto& [map, lock] = GetAllForms();
-			const BSReadWriteLock l{ lock };
+			[[maybe_unused]] const BSReadWriteLock l{ lock };
 			if (map) {
 				const auto it = map->find(a_formID);
 				return it != map->end() ? it->second : nullptr;
@@ -226,7 +226,7 @@ namespace RE
 		[[nodiscard]] static TESForm* LookupByEditorID(const std::string_view& a_editorID)
 		{
 			const auto& [map, lock] = GetAllFormsByEditorID();
-			const BSReadWriteLock l{ lock };
+			[[maybe_unused]] const BSReadWriteLock l{ lock };
 			if (map) {
 				const auto it = map->find(a_editorID);
 				return it != map->end() ? it->second : nullptr;
