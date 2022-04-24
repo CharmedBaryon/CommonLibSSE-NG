@@ -1558,7 +1558,6 @@ set(SOURCES
 	src/RE/M/MagicItem.cpp
 	src/RE/M/MagicTarget.cpp
 	src/RE/M/Main.cpp
-	src/RE/M/MapMenu.cpp
 	src/RE/M/MemoryPage.cpp
 	src/RE/M/MenuControls.cpp
 	src/RE/M/MenuEventHandler.cpp
