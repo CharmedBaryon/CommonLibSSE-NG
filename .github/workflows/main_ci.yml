@@ -19,8 +19,25 @@ env:
   VCPKG_COMMIT_ID: d72783cb3aeddfd667861caef1060e54ca6fa7a9
 
 jobs:
-  all-runtimes:
+  build:
     runs-on: windows-latest
+    strategy:
+      matrix:
+        preset:
+          - Debug-All-MSVC
+          - Debug-All-ClangCL
+          - Debug-Flatrim-MSVC
+          - Debug-Flatrim-ClangCL
+          - Debug-Current-MSVC
+          - Debug-Current-ClangCL
+          - Debug-PreAE-MSVC
+          - Debug-PreAE-ClangCL
+          - Debug-AE-MSVC
+          - Debug-AE-ClangCL
+          - Debug-SE-MSVC
+          - Debug-SE-ClangCL
+          - Debug-VR-MSVC
+          - Debug-VR-ClangCL
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -39,137 +56,5 @@ jobs:
         uses: lukka/run-cmake@v10.0
         with:
           cmakeListsTxtPath: ${{ github.workspace }}/main/CMakeLists.txt
-          configurePreset: Debug-All-MSVC
-          buildPreset: Debug-All-MSVC
-  flatrim-only:
-    runs-on: windows-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-        with:
-          path: main
-
-      - name: Setup MSVC Environment
-        uses: ilammy/msvc-dev-cmd@v1.10.0
-
-      - name: Setup vcpkg
-        uses: lukka/run-vcpkg@v10.0
-        with:
-          vcpkgGitCommitId: ${{ env.VCPKG_COMMIT_ID }}
-
-      - name: Build
-        uses: lukka/run-cmake@v10.0
-        with:
-          cmakeListsTxtPath: ${{ github.workspace }}/main/CMakeLists.txt
-          configurePreset: Debug-Flatrim-MSVC
-          buildPreset: Debug-Flatrim-MSVC
-  pre-ae-runtimes:
-    runs-on: windows-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-        with:
-          path: main
-
-      - name: Setup MSVC Environment
-        uses: ilammy/msvc-dev-cmd@v1.10.0
-
-      - name: Setup vcpkg
-        uses: lukka/run-vcpkg@v10.0
-        with:
-          vcpkgGitCommitId: ${{ env.VCPKG_COMMIT_ID }}
-
-      - name: Build
-        uses: lukka/run-cmake@v10.0
-        with:
-          cmakeListsTxtPath: ${{ github.workspace }}/main/CMakeLists.txt
-          configurePreset: Debug-Pre-AE-MSVC
-          buildPreset: Debug-Pre-AE-MSVC
-  current-runtimes:
-    runs-on: windows-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-        with:
-          path: main
-
-      - name: Setup MSVC Environment
-        uses: ilammy/msvc-dev-cmd@v1.10.0
-
-      - name: Setup vcpkg
-        uses: lukka/run-vcpkg@v10.0
-        with:
-          vcpkgGitCommitId: ${{ env.VCPKG_COMMIT_ID }}
-
-      - name: Build
-        uses: lukka/run-cmake@v10.0
-        with:
-          cmakeListsTxtPath: ${{ github.workspace }}/main/CMakeLists.txt
-          configurePreset: Debug-Current-MSVC
-          buildPreset: Debug-Current-MSVC
-  se-only:
-    runs-on: windows-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-        with:
-          path: main
-
-      - name: Setup MSVC Environment
-        uses: ilammy/msvc-dev-cmd@v1.10.0
-
-      - name: Setup vcpkg
-        uses: lukka/run-vcpkg@v10.0
-        with:
-          vcpkgGitCommitId: ${{ env.VCPKG_COMMIT_ID }}
-
-      - name: Build
-        uses: lukka/run-cmake@v10.0
-        with:
-          cmakeListsTxtPath: ${{ github.workspace }}/main/CMakeLists.txt
-          configurePreset: Debug-SE-MSVC
-          buildPreset: Debug-SE-MSVC
-  ae-only:
-    runs-on: windows-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-        with:
-          path: main
-
-      - name: Setup MSVC Environment
-        uses: ilammy/msvc-dev-cmd@v1.10.0
-
-      - name: Setup vcpkg
-        uses: lukka/run-vcpkg@v10.0
-        with:
-          vcpkgGitCommitId: ${{ env.VCPKG_COMMIT_ID }}
-
-      - name: Build
-        uses: lukka/run-cmake@v10.0
-        with:
-          cmakeListsTxtPath: ${{ github.workspace }}/main/CMakeLists.txt
-          configurePreset: Debug-AE-MSVC
-          buildPreset: Debug-AE-MSVC
-  vr-only:
-    runs-on: windows-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-        with:
-          path: main
-
-      - name: Setup MSVC Environment
-        uses: ilammy/msvc-dev-cmd@v1.10.0
-
-      - name: Setup vcpkg
-        uses: lukka/run-vcpkg@v10.0
-        with:
-          vcpkgGitCommitId: ${{ env.VCPKG_COMMIT_ID }}
-
-      - name: Build
-        uses: lukka/run-cmake@v10.0
-        with:
-          cmakeListsTxtPath: ${{ github.workspace }}/main/CMakeLists.txt
-          configurePreset: Debug-VR-MSVC
-          buildPreset: Debug-VR-MSVC
+          configurePreset: ${{ matrix.preset }}
+          buildPreset: ${{ matrix.preset }}

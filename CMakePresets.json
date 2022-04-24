@@ -47,17 +47,31 @@
                 "CMAKE_CXX_FLAGS": "/EHsc /MP /W4 /WX $penv{CXXFLAGS}"
             },
             "generator": "Ninja",
+            "vendor": {
+                "microsoft.com/VisualStudioSettings/CMake/1.0": {
+                    "intelliSenseMode": "windows-msvc-x64",
+                    "enableMicrosoftCodeAnalysis": true,
+                    "enableClangTidyCodeAnalysis": true
+                }
+            },
             "hidden": true,
             "name": "msvc"
         },
         {
             "cacheVariables": {
-                "CMAKE_CXX_FLAGS": "/EHsc /MP /W4 /WX $penv{CXXFLAGS}"
+                "CMAKE_CXX_FLAGS": "/EHsc /W4 /WX $penv{CXXFLAGS}",
+                "CMAKE_C_COMPILER": "clang-cl",
+                "CMAKE_CXX_COMPILER": "clang-cl"
             },
             "generator": "Ninja",
             "vendor": {
                 "jetbrains.com/clion": {
                     "toolchain": "Visual Studio (Clang)"
+                },
+                "microsoft.com/VisualStudioSettings/CMake/1.0": {
+                    "intelliSenseMode": "windows-clang-x64",
+                    "enableMicrosoftCodeAnalysis": true,
+                    "enableClangTidyCodeAnalysis": true
                 }
             },
             "hidden": true,
@@ -239,8 +253,8 @@
                 "Debug-All-MSVC",
                 "pre-ae-only"
             ],
-            "name": "Debug-Pre-AE-MSVC",
-            "displayName": "Debug (Pre-AE, MSVC)",
+            "name": "Debug-PreAE-MSVC",
+            "displayName": "Debug (PreAE, MSVC)",
             "binaryDir": "${sourceDir}/build/pre-ae-msvc"
         },
         {
@@ -248,8 +262,8 @@
                 "Debug-All-ClangCL",
                 "pre-ae-only"
             ],
-            "name": "Debug-Pre-AE-ClangCL",
-            "displayName": "Debug (Pre-AE, ClangCL)",
+            "name": "Debug-PreAE-ClangCL",
+            "displayName": "Debug (PreAE, ClangCL)",
             "binaryDir": "${sourceDir}/build/pre-ae-clangcl"
         },
         {
@@ -323,14 +337,14 @@
             "configurePreset": "Debug-SE-ClangCL"
         },
         {
-            "name": "Debug-Pre-AE-MSVC",
-            "displayName": "Debug (Pre-AE, MSVC)",
-            "configurePreset": "Debug-Pre-AE-MSVC"
+            "name": "Debug-PreAE-MSVC",
+            "displayName": "Debug (PreAE, MSVC)",
+            "configurePreset": "Debug-PreAE-MSVC"
         },
         {
-            "name": "Debug-Pre-AE-ClangCL",
-            "displayName": "Debug (Pre-AE, ClangCL)",
-            "configurePreset": "Debug-Pre-AE-ClangCL"
+            "name": "Debug-PreAE-ClangCL",
+            "displayName": "Debug (PreAE, ClangCL)",
+            "configurePreset": "Debug-PreAE-ClangCL"
         },
         {
             "name": "Debug-Current-MSVC",
