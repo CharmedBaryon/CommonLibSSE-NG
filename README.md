@@ -13,21 +13,15 @@ CommonLibSSE NG is a fork of CommonLibSSE which tracks upstream updates but adds
 * Ability to build locked to a single runtime, where access to non-portable features is needed.
 * Ability to define offsets and address IDs for objects which can exist in only a subset of runtimes, while being able
   dynamically test for feature support before using those offsets.
-* Completely regenerated RTTI and vtable offsets, now with consistent naming across all runtimes, unified offsets/IDs,
-  and a new human-readable naming scheme using UTF-8 identifiers.
-* New reverse engineering on core components needed to support next-generation advanced SKSE plugins, and VR functions.
+* Completely regenerated RTTI and vtable offsets, now with consistent naming and access across all runtimes.
 * Updated GitHub Actions CI workflows to build for all likely target runtime combinations.
 * Fully extensible native function binding traits (enables custom script object bindings in
   [Fully Dynamic Game Engine](https://gitlab.com/colorglass/fully-dynamic-game-engine)).
 * Unit testing support (can be run without being hosted in a Skyrim executable).
-* Better support for the CLion IDE, including a completed CMakePresets.json file that works in non-Visual Studio IDEs.
-* Fixes to support the current versions of  dependencies on Vcpkg.
+* Better support for the CLion IDE.
 * Uses modern Vcpkg manifest version feature and assigns semantic versions to specific CommonLibSSE NG releases.
 * Upgrades the build system to Ninja for faster builds.
 * Provides distribution through Vcpkg rather than requiring import as a Git submodule.
-* A related [new example plugin](https://gitlab.com/colorglass/commonlibsse-sample-plugin) that demonstrates not only a
-  project structure but a full-featured dev environment and implementation of a number of features using the library,
-  including support for AE, SE, and VR with a single DLL.
 
 ## Use
 CommonLibSSE NG is available as a Vcpkg port. To add it to your project, create a `vcpkg-configuration.json` file in the
