@@ -171,7 +171,7 @@ namespace RE
 		if (HasKeywordString(a_editorID)) {
 			return true;
 		}
-		if (auto npcRace = GetRace(); npcRace && npcRace->HasKeywordString(a_editorID)) {
+		if (const auto npcRace = GetRace(); npcRace && npcRace->HasKeywordString(a_editorID)) {
 			return true;
 		}
 		return false;

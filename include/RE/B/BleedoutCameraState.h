@@ -13,6 +13,7 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_BleedoutCameraState;
+		inline static constexpr auto VTABLE = VTABLE_BleedoutCameraState;
 
 		~BleedoutCameraState() override;  // 00
 

@@ -30,22 +30,22 @@ namespace RE
 		return true;
 	}
 
-	bool PlayerCamera::QIsInBleedoutMode() const
+	bool PlayerCamera::IsInBleedoutMode() const
 	{
 		return QCameraEquals(CameraState::kBleedout);
 	}
 
-	bool PlayerCamera::QIsInFirstPerson() const
+	bool PlayerCamera::IsInFirstPerson() const
 	{
 		return QCameraEquals(CameraState::kFirstPerson);
 	}
 
-	bool PlayerCamera::QIsInFreeCameraMode() const
+	bool PlayerCamera::IsInFreeCameraMode() const
 	{
 		return QCameraEquals(CameraState::kFree);
 	}
 
-	bool PlayerCamera::QIsInThirdPerson() const
+	bool PlayerCamera::IsInThirdPerson() const
 	{
 		return QCameraEquals(CameraState::kThirdPerson);
 	}

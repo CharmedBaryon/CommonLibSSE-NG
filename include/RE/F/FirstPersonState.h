@@ -14,6 +14,7 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_FirstPersonState;
+		inline static constexpr auto VTABLE = VTABLE_FirstPersonState;
 
 		~FirstPersonState() override;  // 00
 

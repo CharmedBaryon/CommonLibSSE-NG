@@ -61,10 +61,10 @@ namespace RE
 
 		bool ForceFirstPerson();
 		bool ForceThirdPerson();
-		bool QIsInBleedoutMode() const;
-		bool QIsInFirstPerson() const;
-		bool QIsInFreeCameraMode() const;
-		bool QIsInThirdPerson() const;
+		bool IsInBleedoutMode() const;
+		bool IsInFirstPerson() const;
+		bool IsInFreeCameraMode() const;
+		bool IsInThirdPerson() const;
 		void ToggleFreeCameraMode(bool a_freezeTime);
 		void UpdateThirdPerson(bool a_weaponDrawn);
 

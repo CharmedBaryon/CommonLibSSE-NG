@@ -476,7 +476,7 @@ namespace RE
 	bool Actor::HasKeywordString(std::string_view a_formEditorID)
 	{
 		const auto base = GetActorBase();
-		return base && base->HasKeywordString(a_formEditorID);
+		return base && base->HasApplicableKeywordString(a_formEditorID);
 	}
 
 	bool Actor::HasLineOfSight(TESObjectREFR* a_ref, bool& a_arg2)

@@ -15,6 +15,7 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_PlayerCameraTransitionState;
+		inline static constexpr auto VTABLE = VTABLE_PlayerCameraTransitionState;
 
 		virtual ~PlayerCameraTransitionState();  // 00
 
