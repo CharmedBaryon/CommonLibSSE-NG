@@ -16,7 +16,7 @@ on:
   workflow_dispatch:
 
 env:
-  VCPKG_COMMIT_ID: d72783cb3aeddfd667861caef1060e54ca6fa7a9
+  VCPKG_COMMIT_ID: b98afc9f1192becb2f447cee485ce36ba111f9f6
 
 jobs:
   build:
@@ -24,35 +24,20 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        preset:
-          - Debug-All-MSVC
-          - Debug-All-ClangCL
-          - Debug-Flatrim-MSVC
-          - Debug-Flatrim-ClangCL
-          - Debug-Current-MSVC
-          - Debug-Current-ClangCL
-          - Debug-PreAE-MSVC
-          - Debug-PreAE-ClangCL
-          - Debug-AE-MSVC
-          - Debug-AE-ClangCL
-          - Debug-SE-MSVC
-          - Debug-SE-ClangCL
-          - Debug-VR-MSVC
-          - Debug-VR-ClangCL
-          - Release-All-MSVC
-          - Release-All-ClangCL
-          - Release-Flatrim-MSVC
-          - Release-Flatrim-ClangCL
-          - Release-Current-MSVC
-          - Release-Current-ClangCL
-          - Release-PreAE-MSVC
-          - Release-PreAE-ClangCL
-          - Release-AE-MSVC
-          - Release-AE-ClangCL
-          - Release-SE-MSVC
-          - Release-SE-ClangCL
-          - Release-VR-MSVC
-          - Release-VR-ClangCL
+        build-type:
+          - Debug
+          - Release
+        runtime:
+          - All
+          - Flatrim
+          - Current
+          - PreAE
+          - AE
+          - SE
+          - VR
+        compiler:
+          - MSVC
+          - ClangCL
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -66,10 +51,11 @@ jobs:
         uses: lukka/run-vcpkg@v10.0
         with:
           vcpkgGitCommitId: ${{ env.VCPKG_COMMIT_ID }}
+          doNotCache: true
 
       - name: Build
         uses: lukka/run-cmake@v10.0
         with:
           cmakeListsTxtPath: ${{ github.workspace }}/main/CMakeLists.txt
-          configurePreset: ${{ matrix.preset }}
-          buildPreset: ${{ matrix.preset }}
+          configurePreset: ${{ matrix.build-type }}-${{ matrix.runtime }}-${{ matrix.compiler }}
+          buildPreset: ${{ matrix.build-type }}-${{ matrix.runtime }}-${{ matrix.compiler }}

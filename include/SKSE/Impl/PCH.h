@@ -57,6 +57,7 @@ static_assert(
 	"wrap std::time_t instead");
 
 #pragma warning(push)
+#include <binary_io/file_stream.hpp>
 #include <boost/stl_interfaces/iterator_interface.hpp>
 #include <fmt/format.h>
 #include <spdlog/spdlog.h>
