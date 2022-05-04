@@ -27,8 +27,7 @@ namespace RE
 				do {
 					std::uint32_t y = 0;
 					do {
-						const auto cell = gridCells->GetCell(x, y);
-						if (cell && cell->IsAttached()) {
+						if (const auto cell = gridCells->GetCell(x, y); cell && cell->IsAttached()) {
 							cell->ForEachReference([&](TESObjectREFR& a_ref) {
 								return a_callback(a_ref);
 							});
@@ -50,10 +49,9 @@ namespace RE
 	{
 		if (a_origin && a_radius > 0.0f) {
 			const auto originPos = a_origin->GetPosition();
-			const auto radiusSquared = a_radius * a_radius;
 
 			if (interiorCell) {
-				interiorCell->ForEachReferenceInRange(originPos, radiusSquared, [&](TESObjectREFR& a_ref) {
+				interiorCell->ForEachReferenceInRange(originPos, a_radius, [&](TESObjectREFR& a_ref) {
 					return a_callback(a_ref);
 				});
 			} else {
@@ -67,13 +65,11 @@ namespace RE
 					do {
 						std::uint32_t y = 0;
 						do {
-							auto cell = gridCells->GetCell(x, y);
-							if (cell && cell->IsAttached()) {
-								const auto cellCoords = cell->GetCoordinates();
-								if (cellCoords) {
+							if (const auto cell = gridCells->GetCell(x, y); cell && cell->IsAttached()) {
+								if (const auto cellCoords = cell->GetCoordinates(); cellCoords) {
 									const NiPoint2 worldPos{ cellCoords->worldX, cellCoords->worldY };
 									if (worldPos.x < xPlus && (worldPos.x + 4096.0f) > xMinus && worldPos.y < yPlus && (worldPos.y + 4096.0f) > yMinus) {
-										cell->ForEachReferenceInRange(originPos, radiusSquared, [&](TESObjectREFR& a_ref) {
+										cell->ForEachReferenceInRange(originPos, a_radius, [&](TESObjectREFR& a_ref) {
 											return a_callback(a_ref);
 										});
 									}
@@ -87,7 +83,7 @@ namespace RE
 			}
 
 			if (const auto skyCell = worldSpace ? worldSpace->GetSkyCell() : nullptr; skyCell) {
-				skyCell->ForEachReferenceInRange(originPos, radiusSquared, [&](TESObjectREFR& a_ref) {
+				skyCell->ForEachReferenceInRange(originPos, a_radius, [&](TESObjectREFR& a_ref) {
 					return a_callback(a_ref);
 				});
 			}
