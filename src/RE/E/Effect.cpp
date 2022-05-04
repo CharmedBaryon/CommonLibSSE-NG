@@ -19,27 +19,27 @@ namespace RE
 		conditions()
 	{}
 
-    float Effect::GetMagnitude() const
-    {
+	float Effect::GetMagnitude() const
+	{
 		if (baseEffect->data.flags.any(EffectSetting::EffectSettingData::Flag::kNoMagnitude)) {
 			return 0.0f;
 		}
 		return effectItem.magnitude;
-    }
+	}
 
-    std::uint32_t Effect::GetArea() const
-    {
+	std::uint32_t Effect::GetArea() const
+	{
 		if (baseEffect->data.flags.any(EffectSetting::EffectSettingData::Flag::kNoArea)) {
 			return 0;
 		}
 		return effectItem.area;
-    }
+	}
 
-    std::uint32_t Effect::GetDuration() const
-    {
+	std::uint32_t Effect::GetDuration() const
+	{
 		if (baseEffect->data.flags.any(EffectSetting::EffectSettingData::Flag::kNoDuration)) {
 			return 0;
 		}
 		return effectItem.duration;
-    }
+	}
 }

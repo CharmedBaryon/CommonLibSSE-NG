@@ -46,7 +46,7 @@ namespace RE
 			return func(a_combatController, a_target, a_inventoryItem);
 		}
 
-	    // members
+		// members
 		CombatInventoryItemMagic* inventoryItem;  // 10
 		MagicItem*                magicItem;      // 18
 	};
