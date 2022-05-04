@@ -155,6 +155,7 @@ namespace RE
 		ObjectRefHandle         GetOccupiedFurniture() const;
 		TESPackage*             GetRunningPackage() const;
 		Actor*                  GetUserData() const;
+		float                   GetVoiceRecoveryTime() const;
 		bool                    InHighProcess() const;
 		bool                    InMiddleHighProcess() const;
 		bool                    InMiddleLowProcess() const;

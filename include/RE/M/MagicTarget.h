@@ -71,17 +71,17 @@ namespace RE
 		virtual ~MagicTarget();  // 00
 
 		// add
-		virtual bool                         AddTarget(AddTargetData& a_targetData);                                                   // 01
-		virtual TESObjectREFR*               GetTargetStatsObject();                                                                   // 02 - { return false; }
-		[[nodiscard]] virtual bool           MagicTargetIsActor() const;                                                               // 03 - { return false; }
-		virtual bool                         IsInvulnerable();                                                                         // 04 - { return false; }
-		virtual void                         InvalidateCommandedActorEffect(ActiveEffect* a_effect);                                   // 05 - { return; }
-		virtual bool                         CanAddActiveEffect() = 0;                                                                 // 06
-		virtual BSSimpleList<ActiveEffect*>* GetActiveEffectList() = 0;                                                                // 07
-		virtual void                         EffectAdded(ActiveEffect* a_effect);                                                      // 08 - { return; }
-		virtual void                         EffectRemoved(ActiveEffect* a_effect);                                                    // 09 - { return; }
-		virtual void                         CheckResistance(MagicItem* a_magicItem, EffectItem* a_effect, TESBoundObject* a_object);  // 0A - { return 1.0; }
-		virtual void                         CheckAbsorb(Actor* a_actor, MagicItem* a_magicItem, const EffectItem* a_effect);          // 0B - { return false; }
+		virtual bool                         AddTarget(AddTargetData& a_targetData);                                               // 01
+		virtual TESObjectREFR*               GetTargetStatsObject();                                                               // 02 - { return false; }
+		[[nodiscard]] virtual bool           MagicTargetIsActor() const;                                                           // 03 - { return false; }
+		virtual bool                         IsInvulnerable();                                                                     // 04 - { return false; }
+		virtual void                         InvalidateCommandedActorEffect(ActiveEffect* a_effect);                               // 05 - { return; }
+		virtual bool                         CanAddActiveEffect() = 0;                                                             // 06
+		virtual BSSimpleList<ActiveEffect*>* GetActiveEffectList() = 0;                                                            // 07
+		virtual void                         EffectAdded(ActiveEffect* a_effect);                                                  // 08 - { return; }
+		virtual void                         EffectRemoved(ActiveEffect* a_effect);                                                // 09 - { return; }
+		virtual float                        CheckResistance(MagicItem* a_magicItem, Effect* a_effect, TESBoundObject* a_object);  // 0A - { return 1.0; }
+		virtual bool                         CheckAbsorb(Actor* a_actor, MagicItem* a_magicItem, const Effect* a_effect);          // 0B - { return false; }
 
 		bool DispelEffect(MagicItem* a_spell, BSPointerHandle<Actor>& a_caster, ActiveEffect* a_effect = nullptr);
 		void DispelEffectsWithArchetype(Archetype a_type, bool a_force);

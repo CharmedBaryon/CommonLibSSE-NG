@@ -3,6 +3,7 @@
 #include "RE/A/AITimer.h"
 #include "RE/B/BSPointerHandle.h"
 #include "RE/B/BSTArray.h"
+#include "RE/C/CombatState.h"
 #include "RE/N/NiSmartPointer.h"
 
 namespace RE
@@ -20,6 +21,11 @@ namespace RE
 	class CombatController
 	{
 	public:
+		bool IsFleeing() const
+		{
+			return state->isFleeing;
+		}
+
 		// members
 		CombatGroup*                            combatGroup;             // 00
 		CombatState*                            state;                   // 08

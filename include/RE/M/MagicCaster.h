@@ -25,7 +25,7 @@ namespace RE
 		virtual ~MagicCaster();  // 00
 
 		// add
-		virtual void                       CastSpellImmediate(SpellItem* a_spell, bool a_noHitEffectArt, TESObjectREFR* a_target, float a_effectiveness, bool a_hostileEffectivenessOnly, float a_magnitudeOverride, Actor* a_blameActor);  // 01
+		virtual void                       CastSpellImmediate(MagicItem* a_spell, bool a_noHitEffectArt, TESObjectREFR* a_target, float a_effectiveness, bool a_hostileEffectivenessOnly, float a_magnitudeOverride, Actor* a_blameActor);  // 01
 		virtual void                       FindTouchTarget();                                                                                                                                                                               // 02
 		virtual void                       RequestCastImpl();                                                                                                                                                                               // 03
 		virtual bool                       StartChargeImpl();                                                                                                                                                                               // 04

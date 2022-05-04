@@ -9,6 +9,7 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_CombatMagicCasterOffensive;
+		inline static constexpr auto VTABLE = VTABLE_CombatMagicCasterOffensive;
 
 		~CombatMagicCasterOffensive() override;  // 00
 

@@ -81,7 +81,12 @@ namespace RE
 		return userData ? userData->As<Actor>() : nullptr;
 	}
 
-	bool AIProcess::InHighProcess() const
+    float AIProcess::GetVoiceRecoveryTime() const
+    {
+		return high ? high->voiceRecoveryTime : 0.0f;
+    }
+
+    bool AIProcess::InHighProcess() const
 	{
 		switch (*processLevel) {
 		case PROCESS_TYPE::kHigh:

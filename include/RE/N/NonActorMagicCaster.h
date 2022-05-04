@@ -17,7 +17,7 @@ namespace RE
 		~NonActorMagicCaster() override;  // 00
 
 		// override (MagicCaster)
-		void           CastSpellImmediate(SpellItem* a_spell, bool a_noHitEffectArt, TESObjectREFR* a_target, float a_effectiveness, bool a_hostileEffectivenessOnly, float a_magnitudeOverride, Actor* a_blameActor) override;  // 01
+		void           CastSpellImmediate(MagicItem* a_spell, bool a_noHitEffectArt, TESObjectREFR* a_target, float a_effectiveness, bool a_hostileEffectivenessOnly, float a_magnitudeOverride, Actor* a_blameActor) override;  // 01
 		void           FinishCastImpl() override;                                                                                                                                                                                // 07 - { return; }
 		TESObjectREFR* GetCasterStatsObject() const override;                                                                                                                                                                    // 0B - { return 0; }
 		Actor*         GetCasterAsActor() const override;                                                                                                                                                                        // 0C - { return 0; }
