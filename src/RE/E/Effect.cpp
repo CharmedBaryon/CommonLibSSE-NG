@@ -42,4 +42,9 @@ namespace RE
 		}
 		return effectItem.duration;
 	}
+
+    bool Effect::IsHostile() const
+    {
+		return baseEffect->IsHostile();
+    }
 }
