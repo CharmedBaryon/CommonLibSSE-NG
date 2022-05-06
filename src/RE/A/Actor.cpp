@@ -289,11 +289,7 @@ namespace RE
 		}
 
 		auto proc = currentProcess->middleHigh;
-		if (proc->bothHands) {
-			return proc->bothHands;
-		} else {
-			return a_leftHand ? proc->leftHand : proc->rightHand;
-		}
+		return a_leftHand ? proc->leftHand : proc->rightHand;
 	}
 
 	TESForm* Actor::GetEquippedObject(bool a_leftHand) const
