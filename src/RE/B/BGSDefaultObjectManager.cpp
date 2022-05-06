@@ -6,7 +6,7 @@ namespace RE
 {
 	namespace
 	{
-		constexpr auto kInvalid = std::numeric_limits<std::size_t>::max();
+		constexpr auto kInvalid = (std::numeric_limits<std::size_t>::max)();
 
 		inline std::size_t MapIndex(std::underlying_type_t<DefaultObjectID> a_idx) noexcept
 		{

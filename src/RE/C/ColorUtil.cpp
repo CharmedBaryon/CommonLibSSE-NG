@@ -78,7 +78,7 @@ namespace RE
 			}
 			color = detail::clamp(color, 0.0, 1.0);
 
-			return detail::mix(a_src, color, std::max(0.0f, a_alpha));
+			return detail::mix(a_src, color, (std::max)(0.0f, a_alpha));
 		}
 
 		float CalcLuminance(const NiColor& a_src)

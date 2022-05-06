@@ -38,7 +38,7 @@ namespace RE
 		};
 		static_assert(sizeof(FreeTreeNode) == 0x30);
 
-		~ScrapHeap() override { WinAPI::VirtualFree(baseAddress, 0, WinAPI::MEM_RELEASE); }  // 00
+		~ScrapHeap() override { WinAPI::VirtualFree(baseAddress, 0, MEM_RELEASE); }  // 00
 
 		// override (IMemoryStore)
 		std::size_t Size(void const* a_mem) const override { return *static_cast<const std::size_t*>(a_mem) & ~(std::size_t{ 3 } << 62); }  // 01

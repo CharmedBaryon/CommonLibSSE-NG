@@ -103,7 +103,7 @@ namespace RE
 			return nullptr;
 		}
 
-		assert(extraDataSize < std::numeric_limits<std::int16_t>::max());
+		assert(extraDataSize < (std::numeric_limits<std::int16_t>::max)());
 
 		std::int16_t bottom = 0;
 		std::int16_t top = static_cast<std::int16_t>(extraDataSize - 1);
@@ -225,7 +225,7 @@ namespace RE
 			return false;
 		}
 
-		assert(extraDataSize < std::numeric_limits<std::int16_t>::max());
+		assert(extraDataSize < (std::numeric_limits<std::int16_t>::max)());
 
 		std::int16_t bottom = 0;
 		std::int16_t top = static_cast<std::int16_t>(extraDataSize - 1);

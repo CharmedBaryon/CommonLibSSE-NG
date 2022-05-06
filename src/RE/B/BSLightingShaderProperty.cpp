@@ -6,7 +6,7 @@ namespace RE
 	{
 		flags = a_other->flags;
 		alpha = a_other->alpha;
-		lastRenderPassState = std::numeric_limits<std::int32_t>::max();
+		lastRenderPassState = (std::numeric_limits<std::int32_t>::max)();
 		if (flags.all(EShaderPropertyFlag::kOwnEmit) && a_other->emissiveColor) {
 			if (!emissiveColor) {
 				emissiveColor = new NiColor();

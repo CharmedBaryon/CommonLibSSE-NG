@@ -843,7 +843,7 @@ namespace RE
 			kTotal
 		};
 
-		char addonString[WinAPI::MAX_PATH]{ '\0' };
+		char addonString[MAX_PATH]{ '\0' };
 		a_arma->GetNodeName(addonString, this, a_armor, -1);
 		std::array<NiAVObject*, kTotal> skeletonRoot = { Get3D(k3rd), Get3D(k1st) };
 		if (skeletonRoot[k1st] == skeletonRoot[k3rd]) {

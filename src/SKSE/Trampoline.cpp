@@ -67,7 +67,7 @@ namespace SKSE
 	{
 		constexpr std::size_t    gigabyte = static_cast<std::size_t>(1) << 30;
 		constexpr std::size_t    minRange = gigabyte * 2;
-		constexpr std::uintptr_t maxAddr = std::numeric_limits<std::uintptr_t>::max();
+		constexpr std::uintptr_t maxAddr = (std::numeric_limits<std::uintptr_t>::max)();
 
 		::DWORD       granularity;
 		::SYSTEM_INFO si;

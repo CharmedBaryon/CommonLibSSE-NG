@@ -57,40 +57,40 @@ namespace RE
 		virtual bool          LoadObjectSizeTable();                                    // 17
 
 		// members
-		BSStreamHeader                                header;                              // 008
-		BSTSmallArray<NiObjectGroup>                  groups;                              // 0D0
-		std::uint32_t                                 nifMaxVersion;                       // 100
-		std::uint32_t                                 nifMaxUserDefinedVersion;            // 104
-		char                                          inputFilePath[WinAPI::MAX_PATH];     // 108
-		std::uint16_t                                 unk20C;                              // 20C
-		std::uint16_t                                 unk20E;                              // 20E
-		std::uint64_t                                 unk210;                              // 210
-		NiTLargeObjectArray<NiPointer<NiObject>>      objects;                             // 218
-		NiTLargePrimitiveArray<std::uint32_t>         objectSizes;                         // 238
-		NiTLargeObjectArray<NiPointer<NiObject>>      topObjects;                          // 258
-		NiTLargeObjectArray<BSFixedString>            fixedStrings;                        // 278
-		NiBinaryStream*                               iStr;                                // 298
-		NiBinaryStream*                               oStr;                                // 2A0
-		std::uint32_t                                 linkIndex;                           // 2A8
-		std::uint32_t                                 linkBlockIndex;                      // 2AC
-		NiTPointerMap<NiObject const*, std::uint32_t> registerMap;                         // 2B0
-		std::uint16_t                                 niAVObjectFlags;                     // 2D0
-		std::uint16_t                                 niTimeControllerFlags;               // 2D2
-		std::uint16_t                                 niPropertyFlags;                     // 2D4
-		std::uint32_t                                 unk2D8;                              // 2D8
-		bool                                          unk2DC;                              // 2DC
-		std::uint32_t                                 load;                                // 2E0
-		std::uint32_t                                 link;                                // 2E4
-		std::uint32_t                                 postLink;                            // 2E8
-		std::uint64_t                                 unk2F0;                              // 2F0
-		std::uint64_t                                 unk2F8;                              // 2F8
-		std::uint32_t                                 unk300;                              // 300
-		std::uint32_t                                 unk304;                              // 304
-		std::int32_t                                  unk308;                              // 308
-		char                                          lastLoadedRTTI[WinAPI::MAX_PATH];    // 30C
-		std::uint32_t                                 lastError;                           // 410
-		char                                          lastErrorMessage[WinAPI::MAX_PATH];  // 414
-		char                                          filePath[WinAPI::MAX_PATH];          // 518
+		BSStreamHeader                                header;                      // 008
+		BSTSmallArray<NiObjectGroup>                  groups;                      // 0D0
+		std::uint32_t                                 nifMaxVersion;               // 100
+		std::uint32_t                                 nifMaxUserDefinedVersion;    // 104
+		char                                          inputFilePath[MAX_PATH];     // 108
+		std::uint16_t                                 unk20C;                      // 20C
+		std::uint16_t                                 unk20E;                      // 20E
+		std::uint64_t                                 unk210;                      // 210
+		NiTLargeObjectArray<NiPointer<NiObject>>      objects;                     // 218
+		NiTLargePrimitiveArray<std::uint32_t>         objectSizes;                 // 238
+		NiTLargeObjectArray<NiPointer<NiObject>>      topObjects;                  // 258
+		NiTLargeObjectArray<BSFixedString>            fixedStrings;                // 278
+		NiBinaryStream*                               iStr;                        // 298
+		NiBinaryStream*                               oStr;                        // 2A0
+		std::uint32_t                                 linkIndex;                   // 2A8
+		std::uint32_t                                 linkBlockIndex;              // 2AC
+		NiTPointerMap<NiObject const*, std::uint32_t> registerMap;                 // 2B0
+		std::uint16_t                                 niAVObjectFlags;             // 2D0
+		std::uint16_t                                 niTimeControllerFlags;       // 2D2
+		std::uint16_t                                 niPropertyFlags;             // 2D4
+		std::uint32_t                                 unk2D8;                      // 2D8
+		bool                                          unk2DC;                      // 2DC
+		std::uint32_t                                 load;                        // 2E0
+		std::uint32_t                                 link;                        // 2E4
+		std::uint32_t                                 postLink;                    // 2E8
+		std::uint64_t                                 unk2F0;                      // 2F0
+		std::uint64_t                                 unk2F8;                      // 2F8
+		std::uint32_t                                 unk300;                      // 300
+		std::uint32_t                                 unk304;                      // 304
+		std::int32_t                                  unk308;                      // 308
+		char                                          lastLoadedRTTI[MAX_PATH];    // 30C
+		std::uint32_t                                 lastError;                   // 410
+		char                                          lastErrorMessage[MAX_PATH];  // 414
+		char                                          filePath[MAX_PATH];          // 518
 	};
 	static_assert(sizeof(NiStream) == 0x620);
 }

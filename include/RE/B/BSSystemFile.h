@@ -21,9 +21,9 @@ namespace RE
 			BSSystemFile();
 
 			// members
-			std::uint32_t flags{ 1 };                            // 00
-			std::uint32_t pad04{ 0 };                            // 04
-			void*         file{ WinAPI::INVALID_HANDLE_VALUE };  // 08
+			std::uint32_t flags{ 1 };                    // 00
+			std::uint32_t pad04{ 0 };                    // 04
+			void*         file{ INVALID_HANDLE_VALUE };  // 08
 		};
 		static_assert(sizeof(BSSystemFile) == 0x10);
 	}

@@ -348,7 +348,7 @@ namespace REL
 			WinAPI::VirtualProtect(
 				reinterpret_cast<void*>(a_dst),
 				a_count,
-				(WinAPI::PAGE_EXECUTE_READWRITE),
+				(PAGE_EXECUTE_READWRITE),
 				std::addressof(old));
 		if (success != 0) {
 			std::memcpy(reinterpret_cast<void*>(a_dst), a_src, a_count);
@@ -382,7 +382,7 @@ namespace REL
 			WinAPI::VirtualProtect(
 				reinterpret_cast<void*>(a_dst),
 				a_count,
-				(WinAPI::PAGE_EXECUTE_READWRITE),
+				(PAGE_EXECUTE_READWRITE),
 				std::addressof(old));
 		if (success != 0) {
 			std::fill_n(reinterpret_cast<std::uint8_t*>(a_dst), a_count, a_value);
@@ -503,18 +503,18 @@ namespace REL
 	[[nodiscard]] inline std::optional<Version> get_file_version(stl::zwstring a_filename)
 	{
 		std::uint32_t     dummy;
-		std::vector<char> buf(WinAPI::GetFileVersionInfoSize(a_filename.data(), std::addressof(dummy)));
+		std::vector<char> buf(GetFileVersionInfoSize(a_filename.data(), std::addressof(dummy)));
 		if (buf.empty()) {
 			return std::nullopt;
 		}
 
-		if (!WinAPI::GetFileVersionInfo(a_filename.data(), 0, static_cast<std::uint32_t>(buf.size()), buf.data())) {
+		if (!GetFileVersionInfo(a_filename.data(), 0, static_cast<std::uint32_t>(buf.size()), buf.data())) {
 			return std::nullopt;
 		}
 
 		void*         verBuf{ nullptr };
 		std::uint32_t verLen{ 0 };
-		if (!WinAPI::VerQueryValue(buf.data(), L"\\StringFileInfo\\040904B0\\ProductVersion", std::addressof(verBuf), std::addressof(verLen))) {
+		if (!VerQueryValue(buf.data(), L"\\StringFileInfo\\040904B0\\ProductVersion", std::addressof(verBuf), std::addressof(verLen))) {
 			return std::nullopt;
 		}
 
@@ -723,7 +723,7 @@ namespace REL
 		bool init()
 		{
 			const auto getFilename = [&]() {
-				return WinAPI::GetEnvironmentVariable(
+				return GetEnvironmentVariable(
 					ENVIRONMENT.data(),
 					_filename.data(),
 					static_cast<std::uint32_t>(_filename.size()));
@@ -736,7 +736,7 @@ namespace REL
 				result == 0) {
 				for (auto runtime : RUNTIMES) {
 					_filename = runtime;
-					moduleHandle = WinAPI::GetModuleHandle(_filename.c_str());
+					moduleHandle = GetModuleHandle(_filename.c_str());
 					if (moduleHandle) {
 						break;
 					}
@@ -807,13 +807,13 @@ namespace REL
 		void clear();
 
 		static constexpr std::array SEGMENTS{
-			std::make_pair(".text"sv, WinAPI::IMAGE_SCN_MEM_EXECUTE),
+			std::make_pair(".text"sv, IMAGE_SCN_MEM_EXECUTE),
 			std::make_pair(".idata"sv, static_cast<std::uint32_t>(0)),
 			std::make_pair(".rdata"sv, static_cast<std::uint32_t>(0)),
 			std::make_pair(".data"sv, static_cast<std::uint32_t>(0)),
 			std::make_pair(".pdata"sv, static_cast<std::uint32_t>(0)),
 			std::make_pair(".tls"sv, static_cast<std::uint32_t>(0)),
-			std::make_pair(".text"sv, WinAPI::IMAGE_SCN_MEM_WRITE),
+			std::make_pair(".text"sv, IMAGE_SCN_MEM_WRITE),
 			std::make_pair(".gfids"sv, static_cast<std::uint32_t>(0))
 		};
 
@@ -1693,7 +1693,7 @@ namespace REL
 				[[nodiscard]] constexpr std::byte hexacharacters_to_hexadecimal(char a_hi, char a_lo) noexcept
 				{
 					constexpr auto lut = []() noexcept {
-						std::array<std::uint8_t, std::numeric_limits<unsigned char>::max() + 1> a = {};
+						std::array<std::uint8_t, (std::numeric_limits<unsigned char>::max)() + 1> a = {};
 
 						const auto iterate = [&](std::uint8_t a_iFirst, unsigned char a_cFirst, unsigned char a_cLast) noexcept {
 							for (; a_cFirst <= a_cLast; ++a_cFirst, ++a_iFirst) {

@@ -546,7 +546,7 @@ namespace SKSE
 		{
 			const auto cvt = [&](wchar_t* a_dst, std::size_t a_length) {
 				return WinAPI::MultiByteToWideChar(
-					WinAPI::CP_UTF8,
+					CP_UTF8,
 					0,
 					a_in.data(),
 					static_cast<int>(a_in.length()),
@@ -572,7 +572,7 @@ namespace SKSE
 		{
 			const auto cvt = [&](char* a_dst, std::size_t a_length) {
 				return WinAPI::WideCharToMultiByte(
-					WinAPI::CP_UTF8,
+					CP_UTF8,
 					0,
 					a_in.data(),
 					static_cast<int>(a_in.length()),
@@ -683,11 +683,11 @@ namespace SKSE
 				std::uint32_t result = 0;
 				do {
 					buf.resize(buf.size() * 2);
-					result = WinAPI::GetModuleFileName(
+					result = GetModuleFileName(
 						WinAPI::GetCurrentModule(),
 						buf.data(),
 						static_cast<std::uint32_t>(buf.size()));
-				} while (result && result == buf.size() && buf.size() <= std::numeric_limits<std::uint32_t>::max());
+				} while (result && result == buf.size() && buf.size() <= (std::numeric_limits<std::uint32_t>::max)());
 
 				if (result && result != buf.size()) {
 					std::filesystem::path p(buf.begin(), buf.begin() + result);
@@ -704,7 +704,7 @@ namespace SKSE
 					a_loc.function_name() },
 				spdlog::level::critical,
 				a_msg);
-			WinAPI::MessageBox(nullptr, body.c_str(), (caption.empty() ? nullptr : caption.c_str()), 0);
+			MessageBox(nullptr, body.c_str(), (caption.empty() ? nullptr : caption.c_str()), 0);
 			WinAPI::TerminateProcess(WinAPI::GetCurrentProcess(), EXIT_FAILURE);
 		}
 

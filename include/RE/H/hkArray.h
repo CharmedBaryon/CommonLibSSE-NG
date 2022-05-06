@@ -151,7 +151,7 @@ namespace RE
 			T*        newMem = static_cast<T*>(allocator->BufAlloc(newSize));
 			if (_data) {
 				size_type oldSize = size() * sizeof(T);
-				std::memcpy(newMem, _data, std::min(oldSize, newSize));
+				std::memcpy(newMem, _data, (std::min)(oldSize, newSize));
 				if ((_capacityAndFlags & kDontDeallocFlag) == 0) {
 					allocator->BufFree(_data, oldSize);
 				}

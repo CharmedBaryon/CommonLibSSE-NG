@@ -338,7 +338,7 @@ namespace RE
 			const auto [newCap, newEntries] = [&]() {
 				constexpr std::uint64_t min = allocator_type::min_size();
 				static_assert(min > 0 && std::has_single_bit(min));
-				const auto cap = std::max(std::bit_ceil<std::uint64_t>(a_count), min);
+				const auto cap = (std::max)(std::bit_ceil<std::uint64_t>(a_count), min);
 				assert(cap >= min);
 				if (cap > 1u << 31) {
 					stl::report_and_fail("a buffer grew too large"sv);

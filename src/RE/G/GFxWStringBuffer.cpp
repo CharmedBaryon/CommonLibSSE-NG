@@ -246,7 +246,7 @@ namespace RE
 		if (a_count <= _reserved.size) {
 			if (_text != _reserved.buffer) {
 				if (_text && _reserved.buffer) {
-					auto toCopy = std::min(_length, a_count);
+					auto toCopy = (std::min)(_length, a_count);
 					std::wmemcpy(_reserved.buffer, _text, toCopy);
 					GFREE(_text);
 				}
@@ -255,7 +255,7 @@ namespace RE
 		} else {
 			auto newText = alloc(a_count);
 			if (_text) {
-				auto toCopy = std::min(_length, a_count);
+				auto toCopy = (std::min)(_length, a_count);
 				std::wmemcpy(newText, _text, toCopy);
 				release();
 			}

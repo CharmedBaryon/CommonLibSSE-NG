@@ -50,7 +50,7 @@ namespace RE
 		using super = FxResponseArgsBase;
 		using container_type = std::array<GFxValue, N + O>;
 
-		static_assert(N + O <= static_cast<std::size_t>(std::numeric_limits<std::uint32_t>::max()));
+		static_assert(N + O <= static_cast<std::size_t>((std::numeric_limits<std::uint32_t>::max)()));
 
 	public:
 		using value_type = typename container_type::value_type;

@@ -600,7 +600,7 @@ namespace RE
 			if (oldData) {
 				const auto oldCapacity = capacity();
 				if (newData) {
-					const auto bytesToCopy = std::min(oldCapacity, a_newCapacity) * sizeof(value_type);
+					const auto bytesToCopy = (std::min)(oldCapacity, a_newCapacity) * sizeof(value_type);
 					std::memcpy(newData, oldData, bytesToCopy);
 				}
 				deallocate(oldData);

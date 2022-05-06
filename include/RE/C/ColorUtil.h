@@ -60,27 +60,27 @@ namespace RE
 					std::floor(a_rhs.blue));
 			}
 
-			inline NiColor min(const NiColor& a_lhs, const NiColor& a_rhs)
+			inline NiColor (min)(const NiColor& a_lhs, const NiColor& a_rhs)
 			{
 				return NiColor(
-					std::min(a_lhs.red, a_rhs.red),
-					std::min(a_lhs.green, a_rhs.green),
-					std::min(a_lhs.blue, a_rhs.blue));
+					(std::min)(a_lhs.red, a_rhs.red),
+					(std::min)(a_lhs.green, a_rhs.green),
+					(std::min)(a_lhs.blue, a_rhs.blue));
 			}
 
-			inline NiColor max(const NiColor& a_lhs, const NiColor& a_rhs)
+			inline NiColor (max)(const NiColor& a_lhs, const NiColor& a_rhs)
 			{
 				return NiColor(
-					std::max(a_lhs.red, a_rhs.red),
-					std::max(a_lhs.green, a_rhs.green),
-					std::max(a_lhs.blue, a_rhs.blue));
+					(std::max)(a_lhs.red, a_rhs.red),
+					(std::max)(a_lhs.green, a_rhs.green),
+					(std::max)(a_lhs.blue, a_rhs.blue));
 			}
 
 			// BLEND MODES
 
 			inline NiColor darken(const NiColor& a_src, const NiColor& a_dest)
 			{
-				return min(a_src, a_dest);
+				return (min)(a_src, a_dest);
 			}
 
 			inline NiColor multiply(const NiColor& a_src, const NiColor& a_dest)
@@ -105,7 +105,7 @@ namespace RE
 
 			inline NiColor lighten(const NiColor& a_src, const NiColor& a_dest)
 			{
-				return max(a_src, a_dest);
+				return (max)(a_src, a_dest);
 			}
 
 			inline NiColor screen(const NiColor& a_src, const NiColor& a_dest)

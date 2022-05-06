@@ -1,5 +1,23 @@
 #pragma once
 
+#undef CP_UTF8
+#undef IMAGE_SCN_MEM_EXECUTE
+#undef IMAGE_SCN_MEM_WRITE
+#undef INVALID_HANDLE_VALUE
+#undef MAX_PATH
+#undef MEM_COMMIT
+#undef MEM_RESERVE
+#undef MEM_RELEASE
+#undef PAGE_EXECUTE_READWRITE
+
+#undef GetEnvironmentVariable
+#undef GetFileVersionInfoSize
+#undef GetModuleFileName
+#undef VerQueryValue
+#undef GetFileVersionInfo
+#undef GetModuleHandle
+#undef MessageBox
+
 namespace SKSE::WinAPI
 {
 	inline constexpr auto CP_UTF8{ static_cast<unsigned int>(65001) };
@@ -7,6 +25,8 @@ namespace SKSE::WinAPI
 	inline constexpr auto IMAGE_SCN_MEM_WRITE{ static_cast<std::uint32_t>(0x80000000) };
 	inline const auto     INVALID_HANDLE_VALUE{ reinterpret_cast<void*>(static_cast<std::intptr_t>(-1)) };
 	inline constexpr auto MAX_PATH{ static_cast<std::uint32_t>(260) };
+	inline constexpr auto MEM_COMMIT{ static_cast<std::uint32_t>(0x00001000) };
+	inline constexpr auto MEM_RESERVE{ static_cast<std::uint32_t>(0x00002000) };
 	inline constexpr auto MEM_RELEASE{ static_cast<std::uint32_t>(0x00008000) };
 	inline constexpr auto PAGE_EXECUTE_READWRITE{ static_cast<std::uint32_t>(0x40) };
 
@@ -202,3 +222,21 @@ namespace RE::DirectX
 	};
 	static_assert(sizeof(XMFLOAT4X4) == 0x40);
 }
+
+#define CP_UTF8 ::SKSE::WinAPI::CP_UTF8
+#define IMAGE_SCN_MEM_EXECUTE ::SKSE::WinAPI::IMAGE_SCN_MEM_EXECUTE
+#define IMAGE_SCN_MEM_WRITE ::SKSE::WinAPI::IMAGE_SCN_MEM_WRITE
+#define INVALID_HANDLE_VALUE ::SKSE::WinAPI::INVALID_HANDLE_VALUE
+#define MAX_PATH ::SKSE::WinAPI::MAX_PATH
+#define MEM_COMMIT ::SKSE::WinAPI::MEM_COMMIT
+#define MEM_RESERVE ::SKSE::WinAPI::MEM_RESERVE
+#define MEM_RELEASE ::SKSE::WinAPI::MEM_RELEASE
+#define PAGE_EXECUTE_READWRITE ::SKSE::WinAPI::PAGE_EXECUTE_READWRITE
+
+#define GetEnvironmentVariable ::SKSE::WinAPI::GetEnvironmentVariable
+#define GetFileVersionInfoSize ::SKSE::WinAPI::GetFileVersionInfoSize
+#define GetModuleFileName ::SKSE::WinAPI::GetModuleFileName
+#define VerQueryValue ::SKSE::WinAPI::VerQueryValue
+#define GetFileVersionInfo ::SKSE::WinAPI::GetFileVersionInfo
+#define GetModuleHandle ::SKSE::WinAPI::GetModuleHandle
+#define MessageBox ::SKSE::WinAPI::MessageBox

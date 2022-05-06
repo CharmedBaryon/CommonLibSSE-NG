@@ -162,7 +162,7 @@ namespace REL
 				 SEGMENTS.end(),
 				 [&](auto&& a_elem) {
                     constexpr auto size = std::extent_v<decltype(section.Name)>;
-                    const auto     len = std::min(a_elem.first.size(), size);
+                    const auto     len = (std::min)(a_elem.first.size(), size);
                     return std::memcmp(a_elem.first.data(), section.Name, len) == 0 &&
                            (section.Characteristics & a_elem.second) == a_elem.second;
                 });
