@@ -119,25 +119,14 @@ namespace RE
 		};
 
 		template <class U>
-		class iterator_base :
-			public boost::stl_interfaces::iterator_interface<
-				iterator_base<U>,
-				std::forward_iterator_tag,
-				U>
+		class iterator_base
 		{
-		private:
-			using super =
-				boost::stl_interfaces::iterator_interface<
-					iterator_base<U>,
-					std::forward_iterator_tag,
-					U>;
-
 		public:
-			using difference_type = typename super::difference_type;
-			using value_type = typename super::value_type;
-			using pointer = typename super::pointer;
-			using reference = typename super::reference;
-			using iterator_category = typename super::iterator_category;
+			using difference_type = std::ptrdiff_t;
+			using value_type = std::remove_const_t<U>;
+			using pointer = value_type*;
+			using reference = value_type&;
+			using iterator_category = std::forward_iterator_tag;
 
 			iterator_base() = default;
 			~iterator_base() = default;
@@ -182,7 +171,17 @@ namespace RE
 				return *this;
 			}
 
-			using super::operator++;
+			iterator_base operator++(int) noexcept
+			{
+				iterator_base result = *this;
+				++result;
+				return result;
+			}
+
+			[[nodiscard]] pointer operator->() const noexcept
+			{
+				return &**this;
+			}
 
 		protected:
 			friend class BSTScatterTable;
@@ -746,7 +745,7 @@ namespace RE
 	namespace detail
 	{
 		using _dummy_bsthashmap = BSTHashMap<int, int>;
-		BOOST_STL_INTERFACES_STATIC_ASSERT_CONCEPT(_dummy_bsthashmap::iterator, std::forward_iterator);
+		static_assert(std::forward_iterator<_dummy_bsthashmap::iterator>);
 	}
 
 	template <

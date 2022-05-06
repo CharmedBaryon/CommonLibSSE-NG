@@ -58,7 +58,6 @@ static_assert(
 
 #pragma warning(push)
 #include <binary_io/file_stream.hpp>
-#include <boost/stl_interfaces/iterator_interface.hpp>
 #include <fmt/format.h>
 #include <spdlog/spdlog.h>
 #pragma warning(pop)
@@ -153,8 +152,8 @@ namespace SKSE
 		}
 
 		template <class EF>                                    //
-		requires(std::invocable<std::remove_reference_t<EF>>)  //
-			class scope_exit
+			requires(std::invocable<std::remove_reference_t<EF>>)  //
+		class scope_exit
 		{
 		public:
 			// 1)

@@ -12,7 +12,6 @@
             "name": "vcpkg-cmake-config",
             "host": true
         },
-        "boost-stl-interfaces",
         "fast-cpp-csv-parser",
         "fmt",
         "rsm-binary-io",
