@@ -34,7 +34,7 @@ namespace RE
 			kPredictDamage = 1 << 13,
 			//kPredictBaseDamage = 1 << 14,
 			kBash = 1 << 14,
-			kTimedBash = 1 << 16,
+			kTimedBash = 1 << 15,
 			kPowerAttack = 1 << 16,
 			kMeleeAttack = 1 << 18,
 			kRicochet = 1 << 19,
