@@ -29,11 +29,14 @@ namespace SKSE
 			RegistrationSetUniqueBase& operator=(const RegistrationSetUniqueBase& a_rhs);
 			RegistrationSetUniqueBase& operator=(RegistrationSetUniqueBase&& a_rhs);
 
+			bool Register(RE::TESForm* a_form);
 			bool Register(RE::BGSRefAlias* a_alias);
 			bool Register(RE::ActiveEffect* a_activeEffect);
+			bool Unregister(RE::TESForm* a_form);
 			bool Unregister(RE::BGSRefAlias* a_alias);
 			bool Unregister(RE::ActiveEffect* a_activeEffect);
 			bool Unregister(RE::VMHandle a_handle);
+			bool Unregister(RE::FormID a_uniqueID);
 			void Clear();
 			bool Save(SerializationInterface* a_intfc, std::uint32_t a_type, std::uint32_t a_version);
 			bool Save(SerializationInterface* a_intfc);

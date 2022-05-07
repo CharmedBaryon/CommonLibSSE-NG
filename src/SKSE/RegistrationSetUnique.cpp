@@ -99,6 +99,20 @@ namespace SKSE
 			return *this;
 		}
 
+		bool RegistrationSetUniqueBase::Register(RE::TESForm* a_form)
+		{
+			assert(a_form);
+
+			const auto reference = a_form->AsReference();
+			const auto formID = reference ? reference->GetFormID() : 0;
+
+			if (formID != 0) {
+				return Register(a_form, formID, static_cast<RE::VMTypeID>(a_form->GetFormType()));
+			}
+
+			return false;
+		}
+
 		bool RegistrationSetUniqueBase::Register(RE::BGSRefAlias* a_alias)
 		{
 			assert(a_alias);
@@ -122,6 +136,20 @@ namespace SKSE
 
 			if (formID != 0) {
 				return Register(a_activeEffect, formID, RE::ActiveEffect::VMTYPEID);
+			}
+
+			return false;
+		}
+
+		bool RegistrationSetUniqueBase::Unregister(RE::TESForm* a_form)
+		{
+			assert(a_form);
+
+			const auto reference = a_form->AsReference();
+			const auto formID = reference ? reference->GetFormID() : 0;
+
+			if (formID != 0) {
+				return Unregister(a_form, formID, static_cast<RE::VMTypeID>(a_form->GetFormType()));
 			}
 
 			return false;
@@ -320,6 +348,28 @@ namespace SKSE
 					policy->ReleaseHandle(a_handle);
 					return true;
 				}
+			}
+
+			return false;
+		}
+
+		bool RegistrationSetUniqueBase::Unregister(RE::FormID a_uniqueID)
+		{
+			auto vm = RE::BSScript::Internal::VirtualMachine::GetSingleton();
+			auto policy = vm ? vm->GetObjectHandlePolicy() : nullptr;
+			if (!policy) {
+				log::error("Failed to get handle policy!");
+				return false;
+			}
+
+			Locker locker(_lock);
+			auto   it = _regs.find(a_uniqueID);
+			if (it != _regs.end()) {
+				for (auto& handle : it->second) {
+					policy->ReleaseHandle(handle);
+				}
+				_regs.erase(it);
+				return true;
 			}
 
 			return false;

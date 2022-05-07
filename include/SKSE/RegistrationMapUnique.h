@@ -40,13 +40,17 @@ namespace SKSE
 				RegistrationMapUniqueBase& operator=(const RegistrationMapUniqueBase& a_rhs);
 				RegistrationMapUniqueBase& operator=(RegistrationMapUniqueBase&& a_rhs) noexcept;
 
+				bool Register(RE::TESForm* a_form, const Filter& a_filter, bool a_matchFilter);
 				bool Register(RE::ActiveEffect* a_activeEffect, const Filter& a_filter, bool a_matchFilter);
 				bool Register(RE::BGSRefAlias* a_alias, const Filter& a_filter, bool a_matchFilter);
+				bool Unregister(RE::TESForm* a_form, const Filter& a_filter, bool a_matchFilter);
 				bool Unregister(RE::ActiveEffect* a_activeEffect, const Filter& a_filter, bool a_matchFilter);
 				bool Unregister(RE::BGSRefAlias* a_alias, const Filter& a_filter, bool a_matchFilter);
+				void UnregisterAll(const RE::TESForm* a_form);
 				void UnregisterAll(RE::ActiveEffect* a_activeEffect);
 				void UnregisterAll(RE::BGSRefAlias* a_alias);
 				void UnregisterAll(RE::VMHandle a_handle);
+				void UnregisterAll(RE::FormID a_uniqueID);
 				void Clear();
 				bool Save(SerializationInterface* a_intfc, std::uint32_t a_type, std::uint32_t a_version);
 				bool Save(SerializationInterface* a_intfc);
@@ -289,6 +293,21 @@ namespace SKSE
 		}
 
 		template <class Filter>
+		bool EventFilterUnique<Filter>::RegistrationMapUniqueBase::Register(RE::TESForm* a_form, const Filter& a_filter, bool a_matchFilter)
+		{
+			assert(a_form);
+
+			const auto reference = a_form->AsReference();
+			const auto formID = reference ? reference->GetFormID() : 0;
+
+			if (formID != 0) {
+				return Register(a_form, formID, { a_filter, a_matchFilter }, static_cast<RE::VMTypeID>(a_form->GetFormType()));
+			}
+
+			return false;
+		}
+
+		template <class Filter>
 		bool EventFilterUnique<Filter>::RegistrationMapUniqueBase::Register(RE::ActiveEffect* a_activeEffect, const Filter& a_filter, bool a_matchFilter)
 		{
 			assert(a_activeEffect);
@@ -313,6 +332,21 @@ namespace SKSE
 
 			if (formID != 0) {
 				return Register(a_alias, formID, { a_filter, a_matchFilter }, RE::BGSRefAlias::VMTYPEID);
+			}
+
+			return false;
+		}
+
+		template <class Filter>
+		bool EventFilterUnique<Filter>::RegistrationMapUniqueBase::Unregister(RE::TESForm* a_form, const Filter& a_filter, bool a_matchFilter)
+		{
+			assert(a_form);
+
+			const auto reference = a_form->AsReference();
+			const auto formID = reference ? reference->GetFormID() : 0;
+
+			if (formID != 0) {
+				return Unregister(a_form, formID, { a_filter, a_matchFilter }, static_cast<RE::VMTypeID>(a_form->GetFormType()));
 			}
 
 			return false;
@@ -346,6 +380,19 @@ namespace SKSE
 			}
 
 			return false;
+		}
+
+		template <class Filter>
+		void EventFilterUnique<Filter>::RegistrationMapUniqueBase::UnregisterAll(const RE::TESForm* a_form)
+		{
+			assert(a_form);
+
+			const auto reference = a_form->AsReference();
+			const auto formID = reference ? reference->GetFormID() : 0;
+
+			if (formID != 0) {
+				UnregisterAll(a_form, formID, static_cast<RE::VMTypeID>(a_form->GetFormType()));
+			}
 		}
 
 		template <class Filter>
@@ -391,6 +438,28 @@ namespace SKSE
 						policy->ReleaseHandle(a_handle);
 					}
 				}
+			}
+		}
+
+		template <class Filter>
+		void EventFilterUnique<Filter>::RegistrationMapUniqueBase::UnregisterAll(RE::FormID a_uniqueID)
+		{
+			auto vm = RE::BSScript::Internal::VirtualMachine::GetSingleton();
+			auto policy = vm ? vm->GetObjectHandlePolicy() : nullptr;
+			if (!policy) {
+				log::error("Failed to get handle policy!");
+				return;
+			}
+
+			Locker locker(_lock);
+			auto   it = _regs.find(a_uniqueID);
+			if (it != _regs.end()) {
+				for (auto& keyHandles : it->second) {
+					for (auto& handle : keyHandles.second) {
+						policy->ReleaseHandle(handle);
+					}
+				}
+				_regs.erase(it);
 			}
 		}
 
