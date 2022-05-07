@@ -107,4 +107,11 @@ namespace RE
 		REL::Relocation<func_t> func{ RELOCATION_ID(15779, 16017) };
 		return func(a_armorEntryData, a_armorPerks, a_skillMultiplier);
 	}
+	
+	std::int32_t GetActorValueIdFromName(const char* a_name)
+	{
+		using func_t = decltype(&GetActorValueIdFromName);
+		REL::Relocation<func_t> func{ Offset::GetActorValueIdFromName };
+		return func(a_name);
+	}
 }

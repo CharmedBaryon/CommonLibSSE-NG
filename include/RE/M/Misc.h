@@ -21,4 +21,5 @@ namespace RE
 	bool     LookupReferenceByHandle(const RefHandle& a_handle, NiPointer<Actor>& a_refrOut);
 	bool     LookupReferenceByHandle(const RefHandle& a_handle, NiPointer<TESObjectREFR>& a_refrOut);
 	void     PlaySound(const char* a_editorID);
+	int32_t  GetActorValueIdFromName(const char* a_name);
 }

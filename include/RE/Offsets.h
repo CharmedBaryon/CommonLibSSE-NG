@@ -487,6 +487,7 @@ namespace RE
 
 		inline REL::ID CreateRefHandle(RELOCATION_ID(12193, 12326));
 		inline REL::ID DebugNotification(RELOCATION_ID(52050, 52933));
+		inline REL::ID GetActorValueIdFromName(RELOCATION_ID(26570, 27203));
 		inline REL::ID LookupReferenceByHandle(RELOCATION_ID(12204, 12332));
 		inline REL::ID PlaySound(RELOCATION_ID(52054, 52939));
 		inline REL::ID TlsIndex(RELOCATION_ID(528600, 415542));
