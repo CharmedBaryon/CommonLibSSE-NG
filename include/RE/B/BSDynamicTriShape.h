@@ -10,7 +10,7 @@ namespace RE
 		struct DYNAMIC_TRISHAPE_RUNTIME_DATA
 		{
 #define RUNTIME_DATA_CONTENT             \
-	void*         pDynamicData; /* 00 */ \
+	void*         dynamicData; /* 00 */ \
 	BSSpinLock    lock;         /* 08 */ \
 	std::uint32_t dataSize;     /* 10 */ \
 	std::uint32_t frameCount;   /* 14 */ \
@@ -21,9 +21,15 @@ namespace RE
 		};
 		static_assert(sizeof(DYNAMIC_TRISHAPE_RUNTIME_DATA) == 0x20);
 
-#ifndef SKYRIM_CROSS_VR
-		RUNTIME_DATA_CONTENT;  // 160, 1A8
-#endif
+		// override (BSTriShape)
+		const NiRTTI*      GetRTTI() const override;                          // 02
+		BSDynamicTriShape* AsDynamicTriShape() override;                      // 0C
+		NiObject*          CreateClone(NiCloningProcess& a_cloning) override; // 17
+		void               LoadBinary(NiStream& a_stream) override;           // 18
+		void               LinkObject(NiStream& a_stream) override;           // 19 - { BSTriShape::LinkObject(a_stream); }
+		bool               RegisterStreamables(NiStream& a_stream) override;  // 1A - { return BSTriShape::RegisterStreamables(a_stream); }
+		void               SaveBinary(NiStream& a_stream) override;           // 1B
+		bool               IsEqual(NiObject* a_object) override;              // 1C
 
 		[[nodiscard]] inline DYNAMIC_TRISHAPE_RUNTIME_DATA& GetDynamicTrishapeRuntimeData() noexcept
 		{
@@ -41,7 +47,10 @@ namespace RE
 			REL::Relocation<func_t> func{ RELOCATION_ID(69564, 70948) };
 			return func(this);
 		}
-		//DEFINE_MEMBER_FN_0(ctor, BSDynamicTriShape*, 0x00C71E50);
+
+#ifndef SKYRIM_CROSS_VR
+		RUNTIME_DATA_CONTENT;  // 160, 1A8
+#endif
 	};
 #ifndef ENABLE_SKYRIM_VR
 	static_assert(sizeof(BSDynamicTriShape) == 0x180);
