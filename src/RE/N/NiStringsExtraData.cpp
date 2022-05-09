@@ -4,18 +4,18 @@
 
 namespace RE
 {
-	void copy_string(char*& a_value, const BSFixedString& a_string)
+	void NiStringsExtraData::copy_string(char*& a_value, const BSFixedString& a_string)
 	{
-		size_t strLength = a_string.length() + 1;
-		a_value = NiAlloc<char>(strLength);
-		std::memcpy(a_value, a_string.c_str(), sizeof(char) * strLength);
+		std::size_t strLen = a_string.length() + 1;
+		a_value = NiAlloc<char>(strLen);
+		std::memcpy(a_value, a_string.c_str(), sizeof(char) * strLen);
 	}
 
-	void copy_string(char*& a_value, char*& a_copyValue)
+	void NiStringsExtraData::copy_string(char*& a_value, char* a_copyValue)
 	{
-		size_t strLength = std::strlen(a_copyValue) + 1;
-		a_value = NiAlloc<char>(strLength);
-		std::memcpy(a_value, a_copyValue, sizeof(char) * strLength);
+		std::size_t strLen = std::strlen(a_copyValue) + 1;
+		a_value = NiAlloc<char>(strLen);
+		std::memcpy(a_value, a_copyValue, sizeof(char) * strLen);
 	}
 
 	NiStringsExtraData* NiStringsExtraData::Create(const BSFixedString& a_name, const std::vector<BSFixedString>& a_strings)
@@ -23,12 +23,10 @@ namespace RE
 		auto data = NiExtraData::Create<NiStringsExtraData>();
 		if (data) {
 			data->name = a_name;
+			data->size = static_cast<std::uint32_t>(a_strings.size());
+			data->value = NiAlloc<char*>(data->size);
 
-			auto size = static_cast<std::uint32_t>(a_strings.size());
-			data->size = size;
-			data->value = NiAlloc<char*>(size);
-
-			for (std::uint32_t i = 0; i < size; i++) {
+			for (std::uint32_t i = 0; i < data->size; ++i) {
 				if (const auto string = a_strings[i]; !string.empty()) {
 					copy_string(data->value[i], string);
 				}
@@ -41,7 +39,7 @@ namespace RE
 	std::optional<std::uint32_t> NiStringsExtraData::GetIndex(const BSFixedString& a_element) const
 	{
 		if (value) {
-			for (std::uint32_t i = 0; i < size; i++) {
+			for (std::uint32_t i = 0; i < size; ++i) {
 				if (a_element == value[i]) {
 					return i;
 				}
@@ -58,7 +56,7 @@ namespace RE
 			value = NiAlloc<char*>(++size);
 
 			if (oldValue) {
-				for (std::uint32_t i = 0; i < size - 1; i++) {
+				for (std::uint32_t i = 0; i < size - 1; ++i) {
 					copy_string(value[i], oldValue[i]);
 
 					NiFree(oldValue[i]);
@@ -81,7 +79,7 @@ namespace RE
 
 			value = NiAlloc<char*>(--size);
 
-			for (std::uint32_t i = 0; i < size + 1; i++) {
+			for (std::uint32_t i = 0; i < size + 1; ++i) {
 				if (i != *index) {
 					copy_string(value[i], oldValue[i]);
 				}
@@ -99,7 +97,6 @@ namespace RE
 	{
 		if (auto index = GetIndex(a_from); index && !a_to.empty()) {
 			NiFree(value[*index]);
-
 			copy_string(value[*index], a_to);
 
 			return true;

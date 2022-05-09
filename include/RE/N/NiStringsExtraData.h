@@ -32,6 +32,10 @@ namespace RE
 		std::uint32_t size;   // 18
 		std::uint32_t pad1C;  // 1C
 		char**        value;  // 20
+
+	private:
+		static void copy_string(char*& a_value, const BSFixedString& a_string);
+		static void copy_string(char*& a_value, char* a_copyValue);
 	};
 	static_assert(sizeof(NiStringsExtraData) == 0x28);
 }
