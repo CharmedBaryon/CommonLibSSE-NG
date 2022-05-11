@@ -47,12 +47,12 @@ namespace RE
 	TESObjectARMO* InventoryChanges::GetArmorInSlot(std::int32_t a_slot)
 	{
 		if SKYRIM_REL_VR_CONSTEXPR (REL::Module::IsVR()) {
-			auto armorowner = this->owner;
-			auto actor = armorowner ? armorowner->As<RE::Actor>() : nullptr;
-			if (actor) {
-				return actor->GetWornArmor(a_slot);
+			auto actor = this->owner ? this->owner->As<RE::Actor>() : nullptr;
+			if (!actor) {
+				return nullptr;
 			}
-			return nullptr;
+            auto bipedSlot = (a_slot - 30) >= 0 ? 1 << (a_slot - 30) : 0;
+            return actor->GetWornArmor(static_cast<BGSBipedObjectForm::BipedObjectSlot>(bipedSlot));
 		} else {
 			using func_t = decltype(&InventoryChanges::GetArmorInSlot);
 			REL::Relocation<func_t> func{ RELOCATION_ID(15873, 16113) };
