@@ -9,34 +9,35 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_ValueModifierEffect;
+		inline static constexpr auto VTABLE = VTABLE_ValueModifierEffect;
 
 		// override (ActiveEffect)
-		void Unk_01(void) override;  // 01
-		void Unk_04(void) override;  // 04
-		void Unk_06(void) override;  // 06
-		void Unk_11(void) override;  // 11 - { return  1; };
-		void Unk_12(void) override;  // 12
+		void OnAdd(MagicTarget* a_target) override;             // 01
+		void Update(float a_delta) override;                    // 04
+		bool IsCausingHealthDamage() override;                  // 06
+		bool GetAllowMultipleCastingSourceStacking() override;  // 11 - { return  1; };
+		void ClearTargetImpl() override;                        // 12
 
 		~ValueModifierEffect() override;  // 13
 
-		void Start() override;       // 14
-		void Finish() override;      // 15
-		void Unk_17(void) override;  // 17
-		void Unk_18(void) override;  // 18
+		void  Start() override;                                                   // 14
+		void  Finish() override;                                                  // 15
+		bool  CheckCustomSkillUseConditions() const override;                     // 17
+		float GetCustomSkillUseMagnitudeMultiplier(float a_mult) const override;  // 18
 
 		// add
-		virtual void Unk_19(void);  // 19
-		virtual void Unk_1A(void);  // 1A
-		virtual void Unk_1B(void);  // 1B
-		virtual void Unk_1C(void);  // 1C
-		virtual void Unk_1D(void);  // 1D
-		virtual void Unk_1E(void);  // 1E
-		virtual void Unk_1F(void);  // 1F
-		virtual void Unk_20(void);  // 20
+		virtual void SetActorValue(ActorValue a_actorValue);                                    // 19 - { actorValue = a_actorValue; }
+		virtual bool ShouldModifyOnStart();                                                     // 1A
+		virtual void ModifyOnStart();                                                           // 1B
+		virtual bool ShouldModifyOnUpdate() const;                                              // 1C
+		virtual void ModifyOnUpdate(float a_delta);                                             // 1D
+		virtual bool ShouldModifyOnFinish() const;                                              // 1E
+		virtual void ModifyOnFinish(Actor* a_caster, Actor* a_target, float a_value);           // 1F
+		virtual void ModifyActorValue(Actor* a_actor, float a_value, ActorValue a_actorValue);  // 20
 
 		// members
-		ActorValue    actorValue;  // 90
-		std::uint32_t pad94;       // 94
+		ActorValue actorValue;  // 90
+		float      value;       // 94
 	};
 	static_assert(sizeof(ValueModifierEffect) == 0x98);
 }

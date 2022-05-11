@@ -11,15 +11,13 @@ namespace RE
 		inline static constexpr auto VTABLE = VTABLE_CommandEffect;
 
 		// override (ActiveEffect)
-		void           Unk_01(void) override;                        // 01
-		TESObjectREFR* GetVisualsTarget() override;                  // 03
-		void           Unk_04(void) override;                        // 04
-		void           Unk_05(void) override;                        // 05
-		void           Unk_06(void) override;                        // 06
-		void           LoadGame(BGSSaveFormBuffer* a_buf) override;  // 08
-		void           SaveGame(BGSLoadFormBuffer* a_buf) override;  // 09
-		void           Unk_0A(void) override;                        // 0A
-		void           Unk_12(void) override;                        // 12
+		void           OnAdd(MagicTarget* a_target) override;              // 01
+		TESObjectREFR* GetVisualsTarget() override;                        // 03
+		void           Update(float a_delta) override;                     // 04
+		void           LoadGame(BGSSaveFormBuffer* a_buf) override;        // 08
+		void           SaveGame(BGSLoadFormBuffer* a_buf) override;        // 09
+		void           FinishLoadGame(BGSLoadFormBuffer* a_buf) override;  // 0A
+		void           ClearTargetImpl() override;                         // 12
 
 		~CommandEffect() override;  // 13
 

@@ -13,9 +13,10 @@ namespace RE
 		inline static constexpr auto VTABLE = VTABLE_LightEffect;
 
 		// override (ActiveEffect)
-		void Unk_04(void) override;  // 04
-		void Unk_10(void) override;  // 0A
-		void Unk_11(void) override;  // 0B
+		void Update(float a_delta) override;                                           // 04
+		void FinishLoadGame(BGSLoadFormBuffer* a_buf) override;                        // 0A
+		void Revert(BGSLoadFormBuffer* a_buf) override;                                // 0B
+		void SwitchAttachedRoot(std::uint64_t a_arg2, NiNode* a_attachRoot) override;  // 0E
 
 		~LightEffect() override;  // 13
 

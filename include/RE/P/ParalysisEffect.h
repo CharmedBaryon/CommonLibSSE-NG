@@ -11,7 +11,7 @@ namespace RE
 		inline static constexpr auto VTABLE = VTABLE_ParalysisEffect;
 
 		// override (ValueModifierEffect)
-		void Unk_04(void) override;  // 04
+		void Update(float a_delta) override;  // 04
 
 		~ParalysisEffect() override;  // 13
 

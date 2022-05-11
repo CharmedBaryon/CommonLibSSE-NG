@@ -19,7 +19,7 @@ namespace RE
 			std::uint32_t Accept(ReferenceEffect* a_hitEffect) override;  // 01
 
 			// members
-			NiAVObject*   actorRoot;        // 08
+			NiAVObject*   attachRoot;       // 08
 			NiAVObject*   attachLightNode;  // 10
 			bool          unk18;            // 18
 			std::uint8_t  pad19;            // 19

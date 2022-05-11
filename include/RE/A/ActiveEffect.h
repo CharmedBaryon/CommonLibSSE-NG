@@ -1,6 +1,7 @@
 #pragma once
 
 #include "RE/A/ActiveEffectReferenceEffectController.h"
+#include "RE/B/BSFixedString.h"
 #include "RE/B/BSPointerHandle.h"
 #include "RE/B/BSSoundHandle.h"
 #include "RE/B/BSTList.h"
@@ -16,6 +17,7 @@ namespace RE
 	class MagicItem;
 	class MagicTarget;
 	class NiNode;
+	class NiPoint3;
 	class ReferenceEffect;
 	class TESBoundObject;
 	struct Effect;
@@ -53,33 +55,33 @@ namespace RE
 		};
 
 		// add
-		virtual void           Unk_00(void);                        // 00
-		virtual void           Unk_01(void);                        // 01
-		virtual void           Unk_02(void);                        // 02 - { return; }
-		virtual TESObjectREFR* GetVisualsTarget();                  // 03 - { return target ? target->GetTargetStatsObject() : 0; }
-		virtual void           Unk_04(void);                        // 04 - { return; }
-		virtual void           Unk_05(void);                        // 05
-		virtual void           Unk_06(void);                        // 06 - { return 0; }
-		virtual void           Unk_07(void);                        // 07 - { return; }
-		virtual void           LoadGame(BGSSaveFormBuffer* a_buf);  // 08
-		virtual void           SaveGame(BGSLoadFormBuffer* a_buf);  // 09
-		virtual void           Unk_0A(void);                        // 0A
-		virtual void           Unk_0B(void);                        // 0B - { unk88 = 4; }
-		virtual void           Unk_0C(void);                        // 0C
-		virtual void           Unk_0D(void);                        // 0D - { return; }
-		virtual void           Unk_0E(void);                        // 0E - { return; }
-		virtual void           Unk_0F(void);                        // 0F - { return; }
-		virtual void           Unk_10(void);                        // 10
-		virtual void           Unk_11(void);                        // 11 - { return 0; }
-		virtual void           Unk_12(void);                        // 12 - { return; }
+		virtual void           AdjustForPerks(Actor* a_caster, MagicTarget* a_target);          // 00
+		virtual void           OnAdd(MagicTarget* a_target);                                    // 01
+		virtual void           Unk_02(void);                                                    // 02 - { return; }
+		virtual TESObjectREFR* GetVisualsTarget();                                              // 03 - { return target ? target->GetTargetStatsObject() : 0; }
+		virtual void           Update(float a_delta);                                           // 04 - { return; }
+		virtual void           EvaluateConditions(float a_delta, bool a_forceUpdate);           // 05
+		virtual bool           IsCausingHealthDamage();                                         // 06 - { return 0; }
+		virtual void           SetLocation(const NiPoint3& a_location);                         // 07 - { return; }
+		virtual void           LoadGame(BGSSaveFormBuffer* a_buf);                              // 08
+		virtual void           SaveGame(BGSLoadFormBuffer* a_buf);                              // 09
+		virtual void           FinishLoadGame(BGSLoadFormBuffer* a_buf);                        // 0A
+		virtual void           Revert(BGSLoadFormBuffer* a_buf);                                // 0B - { castingSource = 4; }
+		virtual void           Unk_0C(void);                                                    // 0C
+		virtual void           HandleEvent(const BSFixedString& a_eventName);                   // 0D - { return; }
+		virtual void           SwitchAttachedRoot(std::uint64_t a_arg2, NiNode* a_attachRoot);  // 0E - { return; }
+		virtual void           Unk_0F(void);                                                    // 0F - { return; }
+		virtual bool           ShouldDispelOnDeath() const;                                     // 10 - { return effect->baseEffect->data.flags.any(EffectSetting::EffectSettingData::Flag::kNoDeathDispel); }
+		virtual bool           GetAllowMultipleCastingSourceStacking();                         // 11 - { return 0; }
+		virtual void           ClearTargetImpl();                                               // 12 - { return; }
 
 		virtual ~ActiveEffect();  // 13
 
-		virtual void Start();       // 14 - { return; }
-		virtual void Finish();      // 15 - { return; }
-		virtual void Unk_16(void);  // 16
-		virtual void Unk_17(void);  // 17 - { return 1; }
-		virtual void Unk_18(void);  // 18 - { return 1.0; }
+		virtual void  Start();                                                   // 14 - { return; }
+		virtual void  Finish();                                                  // 15 - { return; }
+		virtual void  Unk_16(void);                                              // 16
+		virtual bool  CheckCustomSkillUseConditions() const;                     // 17 - { return 1; }
+		virtual float GetCustomSkillUseMagnitudeMultiplier(float a_mult) const;  // 18 - { return 1.0; }
 
 		void                               Dispel(bool a_force);
 		[[nodiscard]] EffectSetting*       GetBaseObject() noexcept;
