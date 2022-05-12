@@ -461,25 +461,25 @@ namespace REL
 			return _impl[3];
 		}
 
-		[[nodiscard]] std::string string() const
+		[[nodiscard]] std::string string(std::string_view a_separator = "-"sv) const
 		{
 			std::string result;
 			for (auto&& ver : _impl) {
 				result += std::to_string(ver);
-				result += '-';
+				result.append(a_separator.data(), a_separator.size());
 			}
-			result.pop_back();
+			result.erase(result.size() - a_separator.size(), a_separator.size());
 			return result;
 		}
 
-		[[nodiscard]] std::wstring wstring() const
+		[[nodiscard]] std::wstring wstring(std::wstring_view a_separator = L"-"sv) const
 		{
 			std::wstring result;
 			for (auto&& ver : _impl) {
 				result += std::to_wstring(ver);
-				result += L'-';
+				result.append(a_separator.data(), a_separator.size());
 			}
-			result.pop_back();
+			result.erase(result.size() - a_separator.size(), a_separator.size());
 			return result;
 		}
 
@@ -497,7 +497,7 @@ namespace REL
 		std::array<value_type, 4> _impl{ 0, 0, 0, 0 };
 	};
 
-	[[nodiscard]] constexpr bool                 operator==(const Version& a_lhs, const Version& a_rhs) noexcept { return a_lhs.compare(a_rhs) == 0; }
+	[[nodiscard]] constexpr bool                 operator==(const Version& a_lhs, const Version& a_rhs) noexcept { return a_lhs.compare(a_rhs) == std::strong_ordering::equal; }
 	[[nodiscard]] constexpr std::strong_ordering operator<=>(const Version& a_lhs, const Version& a_rhs) noexcept { return a_lhs.compare(a_rhs); }
 
 	[[nodiscard]] inline std::optional<Version> get_file_version(stl::zwstring a_filename)
@@ -2065,6 +2065,39 @@ namespace REL
 	{
 		return *reinterpret_cast<T*>(reinterpret_cast<uintptr_t>(a_self) + Relocate(a_seAndAE, a_seAndAE, a_vr));
 	}
+}
+
+namespace std
+{
+	[[nodiscard]] inline std::string to_string(REL::Version a_version)
+	{
+		return a_version.string("."sv);
+	}
+
+#ifdef __cpp_lib_format
+	template <class CharT>
+	struct formatter<REL::Version, CharT> : formatter<std::string, CharT>
+	{
+		template <class FormatContext>
+		auto format(const REL::Version& a_version, FormatContext& a_ctx)
+		{
+			return formatter<std::string, CharT>::format(to_string(a_version), a_ctx);
+		}
+	};
+#endif
+}
+
+namespace fmt
+{
+	template <class CharT>
+	struct formatter<REL::Version, CharT> : formatter<std::string, CharT>
+	{
+		template <class FormatContext>
+		auto format(const REL::Version& a_version, FormatContext& a_ctx)
+		{
+			return formatter<std::string, CharT>::format(std::to_string(a_version), a_ctx);
+		}
+	};
 }
 
 #undef REL_MAKE_MEMBER_FUNCTION_NON_POD_TYPE
