@@ -391,6 +391,7 @@ set(SOURCES
 	include/RE/C/CFilter.h
 	include/RE/C/CRC.h
 	include/RE/C/Calendar.h
+	include/RE/C/CalmEffect.h
 	include/RE/C/Character.h
 	include/RE/C/ChestsLooted.h
 	include/RE/C/Clouds.h
@@ -444,6 +445,7 @@ set(SOURCES
 	include/RE/D/DecalData.h
 	include/RE/D/DefaultObjectsReadyEvent.h
 	include/RE/D/DelayFunctor.h
+	include/RE/D/DemoralizeEffect.h
 	include/RE/D/DepthStencilDepthModes.h
 	include/RE/D/DetectionListener.h
 	include/RE/D/DetectionPriorities.h
@@ -646,6 +648,7 @@ set(SOURCES
 	include/RE/F/FormTraits.h
 	include/RE/F/FormTypes.h
 	include/RE/F/FragmentSystem.h
+	include/RE/F/FrenzyEffect.h
 	include/RE/F/FunctionArguments.h
 	include/RE/F/FunctionMessage.h
 	include/RE/F/FxDelegate.h
@@ -1328,6 +1331,7 @@ set(SOURCES
 	include/RE/T/TESWeightForm.h
 	include/RE/T/TESWordOfPower.h
 	include/RE/T/TESWorldSpace.h
+	include/RE/T/TargetValueModifierEffect.h
 	include/RE/T/TaskQueueInterface.h
 	include/RE/T/TempEffectTraits.h
 	include/RE/T/TextureAddressModes.h

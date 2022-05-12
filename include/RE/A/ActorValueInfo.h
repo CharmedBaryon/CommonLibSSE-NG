@@ -53,7 +53,7 @@ namespace RE
 		// members
 		const char*           enumName;      // 050
 		BSFixedString         abbreviation;  // 058 - ANAM
-		std::uint32_t         unk060;        // 060
+		std::uint32_t         flags;         // 060
 		std::uint32_t         unk064;        // 064
 		std::uint64_t         unk068;        // 068
 		std::uint32_t         unk070;        // 070

@@ -67,7 +67,7 @@ namespace RE
 		virtual void           SaveGame(BGSLoadFormBuffer* a_buf);                              // 09
 		virtual void           FinishLoadGame(BGSLoadFormBuffer* a_buf);                        // 0A
 		virtual void           Revert(BGSLoadFormBuffer* a_buf);                                // 0B - { castingSource = 4; }
-		virtual void           Unk_0C(void);                                                    // 0C
+		virtual std::int32_t   Compare(ActiveEffect* a_otherEffect);                            // 0C
 		virtual void           HandleEvent(const BSFixedString& a_eventName);                   // 0D - { return; }
 		virtual void           SwitchAttachedRoot(std::uint64_t a_arg2, NiNode* a_attachRoot);  // 0E - { return; }
 		virtual void           Unk_0F(void);                                                    // 0F - { return; }
