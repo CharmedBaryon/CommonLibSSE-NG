@@ -566,6 +566,8 @@ namespace REL
 		}
 
 	private:
+		friend class Module;
+
 		std::uintptr_t _proxyBase{ 0 };
 		std::uintptr_t _address{ 0 };
 		std::size_t    _size{ 0 };
@@ -642,6 +644,10 @@ namespace REL
 		 * @param a_runtime The type of Skyrim runtime to inject.
 		 */
 		static bool inject(Runtime a_runtime);
+
+		static bool mock(REL::Version a_version, Runtime a_runtime = Runtime::Unknown,
+			std::wstring_view a_filename = L"SkyrimSE.exe"sv, std::uintptr_t a_base = 0,
+			std::array<std::uintptr_t, Segment::total> a_segmentSizes = { 0x1603000, 0, 0x8ee000, 0x1887000, 0x15c000, 0x3000, 0x2000, 0x1000 });
 
 		static void reset()
 		{
@@ -759,7 +765,7 @@ namespace REL
 			std::filesystem::path exePath(a_filePath);
 			_filename = exePath.filename().wstring();
 			_filePath = exePath.wstring();
-			_injectedModule = WinAPI::LoadLibrary(_filePath.c_str());
+			_injectedModule = LoadLibrary(_filePath.c_str());
 			if (_injectedModule) {
 				return load(_injectedModule, false);
 			}
@@ -787,11 +793,11 @@ namespace REL
 				case 4:
 					_runtime = Runtime::VR;
 					break;
-				case 5:
-					_runtime = Runtime::SE;
+				case 6:
+					_runtime = Runtime::AE;
 					break;
 				default:
-					_runtime = Runtime::AE;
+					_runtime = Runtime::SE;
 				}
 				return true;
 			} else if (a_failOnError) {
@@ -988,6 +994,7 @@ namespace REL
 		}
 
 	private:
+		friend class Module;
 		friend Offset2ID;
 
 		class header_t
@@ -1555,6 +1562,14 @@ namespace REL
 			_impl{ a_id.address() + a_offset }
 		{}
 
+		explicit Relocation(ID a_id, Offset a_offset) :
+			_impl{ a_id.address() + a_offset.offset() }
+		{}
+
+		explicit Relocation(ID a_id, VariantOffset a_offset) :
+			_impl{ a_id.address() + a_offset.offset() }
+		{}
+
 		explicit Relocation(RelocationID a_id) :
 			_impl{ a_id.address() }
 		{}
@@ -1563,12 +1578,28 @@ namespace REL
 			_impl{ a_id.address() + a_offset }
 		{}
 
+		explicit Relocation(RelocationID a_id, Offset a_offset) :
+			_impl{ a_id.address() + a_offset.offset() }
+		{}
+
+		explicit Relocation(RelocationID a_id, VariantOffset a_offset) :
+			_impl{ a_id.address() + a_offset.offset() }
+		{}
+
 		explicit Relocation(VariantID a_id) :
 			_impl{ a_id.address() }
 		{}
 
 		explicit Relocation(VariantID a_id, std::ptrdiff_t a_offset) :
-			_impl{ a_id.address() }
+			_impl{ a_id.address() + a_offset }
+		{}
+
+		explicit Relocation(VariantID a_id, Offset a_offset) :
+			_impl{ a_id.address() + a_offset.offset() }
+		{}
+
+		explicit Relocation(VariantID a_id, VariantOffset a_offset) :
+			_impl{ a_id.address() + a_offset.offset() }
 		{}
 
 		constexpr Relocation& operator=(std::uintptr_t a_address) noexcept
@@ -2061,7 +2092,7 @@ namespace REL
 	 * @return A reference to the member.
      */
 	template <class T, class This>
-	[[nodiscard]] inline T& RelocateMember(This* a_self, ptrdiff_t a_seAndAE, ptrdiff_t a_vr)
+	[[nodiscard]] inline T& RelocateMember(This* a_self, std::ptrdiff_t a_seAndAE, std::ptrdiff_t a_vr)
 	{
 		return *reinterpret_cast<T*>(reinterpret_cast<uintptr_t>(a_self) + Relocate(a_seAndAE, a_seAndAE, a_vr));
 	}

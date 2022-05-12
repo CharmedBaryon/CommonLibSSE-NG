@@ -24,6 +24,28 @@ namespace RE
 	};
 }
 
+namespace std
+{
+	[[nodiscard]] inline std::string to_string(RE::ActorValue a_actorValue)
+	{
+		auto* info = RE::ActorValueList::GetSingleton()->GetActorValue(a_actorValue);
+		return info ? info->enumName : "None";
+	}
+
+#ifdef __cpp_lib_format
+	template <class CharT>
+	struct formatter<RE::ActorValue, CharT> : formatter<std::string_view, CharT>
+	{
+		template <class FormatContext>
+		auto format(RE::ActorValue a_actorValue, FormatContext& a_ctx)
+		{
+			auto* info = RE::ActorValueList::GetSingleton()->GetActorValue(a_actorValue);
+			return formatter<std::string_view, CharT>::format(info ? info->enumName : "None", a_ctx);
+		}
+	};
+#endif
+}
+
 namespace fmt
 {
 	template <>
@@ -43,19 +65,3 @@ namespace fmt
 		}
 	};
 }
-
-#ifdef __cpp_lib_format
-namespace std
-{
-	template <class CharT>
-	struct formatter<RE::ActorValue, CharT> : formatter<std::string_view, CharT>
-	{
-		template <class FormatContext>
-		auto format(RE::ActorValue a_actorValue, FormatContext& a_ctx)
-		{
-			auto* info = RE::ActorValueList::GetSingleton()->GetActorValue(a_actorValue);
-			return formatter<std::string_view, CharT>::format(info ? info->enumName : "None", a_ctx);
-		}
-	};
-}
-#endif

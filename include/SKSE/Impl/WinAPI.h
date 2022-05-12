@@ -16,6 +16,7 @@
 #undef VerQueryValue
 #undef GetFileVersionInfo
 #undef GetModuleHandle
+#undef LoadLibrary
 #undef MessageBox
 
 namespace SKSE::WinAPI
@@ -239,4 +240,5 @@ namespace RE::DirectX
 #define VerQueryValue ::SKSE::WinAPI::VerQueryValue
 #define GetFileVersionInfo ::SKSE::WinAPI::GetFileVersionInfo
 #define GetModuleHandle ::SKSE::WinAPI::GetModuleHandle
+#define LoadLibrary ::SKSE::WinAPI::LoadLibrary
 #define MessageBox ::SKSE::WinAPI::MessageBox

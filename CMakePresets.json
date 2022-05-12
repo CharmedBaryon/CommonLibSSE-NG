@@ -1,579 +1,623 @@
 {
-    "configurePresets": [
-        {
-            "name": "common",
-            "hidden": true,
-            "errors": {
-                "deprecated": true
-            },
-            "warnings": {
-                "deprecated": true,
-                "dev": true
-            }
-        },
-
-        {
-            "name": "debug",
-            "hidden": true,
-            "inherits": [
-                "common"
-            ],
-            "cacheVariables": {
-                "CMAKE_BUILD_TYPE": {
-                    "type": "STRING",
-                    "value": "Debug"
-                }
-            }
-        },
-        {
-            "name": "release",
-            "hidden": true,
-            "inherits": [
-                "common"
-            ],
-            "cacheVariables": {
-                "CMAKE_BUILD_TYPE": {
-                    "type": "STRING",
-                    "value": "Release"
-                }
-            }
-        },
-
-        {
-            "name": "vcpkg",
-            "hidden": true,
-            "cacheVariables": {
-                "CMAKE_TOOLCHAIN_FILE": {
-                    "type": "STRING",
-                    "value": "$env{VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake"
-                }
-            }
-        },
-
-        {
-            "name": "windows",
-            "hidden": true,
-            "cacheVariables": {
-                "CMAKE_MSVC_RUNTIME_LIBRARY": {
-                    "type": "STRING",
-                    "value": "MultiThreaded$<$<CONFIG:Debug>:Debug>DLL"
-                },
-                "VCPKG_TARGET_TRIPLET": {
-                    "type": "STRING",
-                    "value": "x64-windows-static-md"
-                }
-            }
-        },
-
-        {
-            "name": "msvc",
-            "hidden": true,
-            "cacheVariables": {
-                "CMAKE_CXX_FLAGS": "/EHsc /MP /W4 /WX $penv{CXXFLAGS}"
-            },
-            "generator": "Ninja",
-            "vendor": {
-                "microsoft.com/VisualStudioSettings/CMake/1.0": {
-                    "intelliSenseMode": "windows-msvc-x64",
-                    "enableMicrosoftCodeAnalysis": true,
-                    "enableClangTidyCodeAnalysis": true
-                }
-            }
-        },
-        {
-            "name": "clangcl",
-            "hidden": true,
-            "cacheVariables": {
-                "CMAKE_CXX_FLAGS": "/EHsc /W4 /WX $penv{CXXFLAGS}",
-                "CMAKE_CXX_COMPILER": "clang-cl"
-            },
-            "generator": "Ninja",
-            "vendor": {
-                "microsoft.com/VisualStudioSettings/CMake/1.0": {
-                    "intelliSenseMode": "windows-clang-x64",
-                    "enableMicrosoftCodeAnalysis": true,
-                    "enableClangTidyCodeAnalysis": true
-                }
-            }
-        },
-
-        {
-            "cacheVariables": {
-                "ENABLE_SKYRIM_AE": {
-                    "type": "STRING",
-                    "value": "OFF"
-                },
-                "ENABLE_SKYRIM_SE": {
-                    "type": "STRING",
-                    "value": "OFF"
-                }
-            },
-            "hidden": true,
-            "name": "vr-only"
-        },
-        {
-            "cacheVariables": {
-                "ENABLE_SKYRIM_VR": {
-                    "type": "STRING",
-                    "value": "OFF"
-                }
-            },
-            "hidden": true,
-            "name": "flatrim-only"
-        },
-        {
-            "cacheVariables": {
-                "ENABLE_SKYRIM_AE": {
-                    "type": "STRING",
-                    "value": "OFF"
-                },
-                "ENABLE_SKYRIM_VR": {
-                    "type": "STRING",
-                    "value": "OFF"
-                }
-            },
-            "hidden": true,
-            "name": "se-only"
-        },
-        {
-            "cacheVariables": {
-                "ENABLE_SKYRIM_SE": {
-                    "type": "STRING",
-                    "value": "OFF"
-                },
-                "ENABLE_SKYRIM_VR": {
-                    "type": "STRING",
-                    "value": "OFF"
-                }
-            },
-            "hidden": true,
-            "name": "ae-only"
-        },
-        {
-            "cacheVariables": {
-                "ENABLE_SKYRIM_AE": {
-                    "type": "STRING",
-                    "value": "OFF"
-                }
-            },
-            "hidden": true,
-            "name": "pre-ae-only"
-        },
-        {
-            "cacheVariables": {
-                "ENABLE_SKYRIM_SE": {
-                    "type": "STRING",
-                    "value": "OFF"
-                }
-            },
-            "hidden": true,
-            "name": "current"
-        },
-        
-        {
-            "inherits": [
-                "debug",
-                "vcpkg",
-                "windows",
-                "msvc"
-            ],
-            "name": "Debug-All-MSVC",
-            "displayName": "Debug (All, MSVC)",
-            "binaryDir": "${sourceDir}/build/debug-all-msvc"
-        },
-        {
-            "inherits": [
-                "debug",
-                "vcpkg",
-                "windows",
-                "clangcl"
-            ],
-            "name": "Debug-All-ClangCL",
-            "displayName": "Debug (All, ClangCL)",
-            "binaryDir": "${sourceDir}/build/debug-all-clangcl"
-        },
-        {
-            "inherits": [
-                "Debug-All-MSVC",
-                "flatrim-only"
-            ],
-            "name": "Debug-Flatrim-MSVC",
-            "displayName": "Debug (Flatrim, MSVC)",
-            "binaryDir": "${sourceDir}/build/debug-flatrim-msvc"
-        },
-        {
-            "inherits": [
-                "Debug-All-ClangCL",
-                "flatrim-only"
-            ],
-            "name": "Debug-Flatrim-ClangCL",
-            "displayName": "Debug (Flatrim, ClangCL)",
-            "binaryDir": "${sourceDir}/build/debug-flatrim-clangcl"
-        },
-        {
-            "inherits": [
-                "Debug-All-MSVC",
-                "vr-only"
-            ],
-            "name": "Debug-VR-MSVC",
-            "displayName": "Debug (VR, MSVC)",
-            "binaryDir": "${sourceDir}/build/debug-vr-msvc"
-        },
-        {
-            "inherits": [
-                "Debug-All-ClangCL",
-                "vr-only"
-            ],
-            "name": "Debug-VR-ClangCL",
-            "displayName": "Debug (VR, ClangCL)",
-            "binaryDir": "${sourceDir}/build/debug-vr-clangcl"
-        },
-        {
-            "inherits": [
-                "Debug-All-MSVC",
-                "ae-only"
-            ],
-            "name": "Debug-AE-MSVC",
-            "displayName": "Debug (AE, MSVC)",
-            "binaryDir": "${sourceDir}/build/debug-ae-msvc"
-        },
-        {
-            "inherits": [
-                "Debug-All-ClangCL",
-                "ae-only"
-            ],
-            "name": "Debug-AE-ClangCL",
-            "displayName": "Debug (AE, ClangCL)",
-            "binaryDir": "${sourceDir}/build/debug-ae-clangcl"
-        },
-        {
-            "inherits": [
-                "Debug-All-MSVC",
-                "se-only"
-            ],
-            "name": "Debug-SE-MSVC",
-            "displayName": "Debug (SE, MSVC)",
-            "binaryDir": "${sourceDir}/build/debug-se-msvc"
-        },
-        {
-            "inherits": [
-                "Debug-All-ClangCL",
-                "se-only"
-            ],
-            "name": "Debug-SE-ClangCL",
-            "displayName": "Debug (SE, ClangCL)",
-            "binaryDir": "${sourceDir}/build/debug-se-clangcl"
-        },
-        {
-            "inherits": [
-                "Debug-All-MSVC",
-                "pre-ae-only"
-            ],
-            "name": "Debug-PreAE-MSVC",
-            "displayName": "Debug (PreAE, MSVC)",
-            "binaryDir": "${sourceDir}/build/debug-pre-ae-msvc"
-        },
-        {
-            "inherits": [
-                "Debug-All-ClangCL",
-                "pre-ae-only"
-            ],
-            "name": "Debug-PreAE-ClangCL",
-            "displayName": "Debug (PreAE, ClangCL)",
-            "binaryDir": "${sourceDir}/build/debug-pre-ae-clangcl"
-        },
-        {
-            "inherits": [
-                "Debug-All-MSVC",
-                "current"
-            ],
-            "name": "Debug-Current-MSVC",
-            "displayName": "Debug (Current, MSVC)",
-            "binaryDir": "${sourceDir}/build/debug-current-msvc"
-        },
-        {
-            "inherits": [
-                "Debug-All-ClangCL",
-                "current"
-            ],
-            "name": "Debug-Current-ClangCL",
-            "displayName": "Debug (Current, ClangCL)",
-            "binaryDir": "${sourceDir}/build/debug-current-clangcl"
-        },
-
-        {
-            "inherits": [
-                "release",
-                "vcpkg",
-                "windows",
-                "msvc"
-            ],
-            "name": "Release-All-MSVC",
-            "displayName": "Release (All, MSVC)",
-            "binaryDir": "${sourceDir}/build/release-all-msvc"
-        },
-        {
-            "inherits": [
-                "release",
-                "vcpkg",
-                "windows",
-                "clangcl"
-            ],
-            "name": "Release-All-ClangCL",
-            "displayName": "Release (All, ClangCL)",
-            "binaryDir": "${sourceDir}/build/release-all-clangcl"
-        },
-        {
-            "inherits": [
-                "Release-All-MSVC",
-                "flatrim-only"
-            ],
-            "name": "Release-Flatrim-MSVC",
-            "displayName": "Release (Flatrim, MSVC)",
-            "binaryDir": "${sourceDir}/build/release-flatrim-msvc"
-        },
-        {
-            "inherits": [
-                "Release-All-ClangCL",
-                "flatrim-only"
-            ],
-            "name": "Release-Flatrim-ClangCL",
-            "displayName": "Release (Flatrim, ClangCL)",
-            "binaryDir": "${sourceDir}/build/release-flatrim-clangcl"
-        },
-        {
-            "inherits": [
-                "Release-All-MSVC",
-                "vr-only"
-            ],
-            "name": "Release-VR-MSVC",
-            "displayName": "Release (VR, MSVC)",
-            "binaryDir": "${sourceDir}/build/release-vr-msvc"
-        },
-        {
-            "inherits": [
-                "Release-All-ClangCL",
-                "vr-only"
-            ],
-            "name": "Release-VR-ClangCL",
-            "displayName": "Release (VR, ClangCL)",
-            "binaryDir": "${sourceDir}/build/release-vr-clangcl"
-        },
-        {
-            "inherits": [
-                "Release-All-MSVC",
-                "ae-only"
-            ],
-            "name": "Release-AE-MSVC",
-            "displayName": "Release (AE, MSVC)",
-            "binaryDir": "${sourceDir}/build/release-ae-msvc"
-        },
-        {
-            "inherits": [
-                "Release-All-ClangCL",
-                "ae-only"
-            ],
-            "name": "Release-AE-ClangCL",
-            "displayName": "Release (AE, ClangCL)",
-            "binaryDir": "${sourceDir}/build/release-ae-clangcl"
-        },
-        {
-            "inherits": [
-                "Release-All-MSVC",
-                "se-only"
-            ],
-            "name": "Release-SE-MSVC",
-            "displayName": "Release (SE, MSVC)",
-            "binaryDir": "${sourceDir}/build/release-se-msvc"
-        },
-        {
-            "inherits": [
-                "Release-All-ClangCL",
-                "se-only"
-            ],
-            "name": "Release-SE-ClangCL",
-            "displayName": "Release (SE, ClangCL)",
-            "binaryDir": "${sourceDir}/build/release-se-clangcl"
-        },
-        {
-            "inherits": [
-                "Release-All-MSVC",
-                "pre-ae-only"
-            ],
-            "name": "Release-PreAE-MSVC",
-            "displayName": "Release (PreAE, MSVC)",
-            "binaryDir": "${sourceDir}/build/release-pre-ae-msvc"
-        },
-        {
-            "inherits": [
-                "Release-All-ClangCL",
-                "pre-ae-only"
-            ],
-            "name": "Release-PreAE-ClangCL",
-            "displayName": "Release (PreAE, ClangCL)",
-            "binaryDir": "${sourceDir}/build/release-pre-ae-clangcl"
-        },
-        {
-            "inherits": [
-                "Release-All-MSVC",
-                "current"
-            ],
-            "name": "Release-Current-MSVC",
-            "displayName": "Release (Current, MSVC)",
-            "binaryDir": "${sourceDir}/build/release-current-msvc"
-        },
-        {
-            "inherits": [
-                "Release-All-ClangCL",
-                "current"
-            ],
-            "name": "Release-Current-ClangCL",
-            "displayName": "Release (Current, ClangCL)",
-            "binaryDir": "${sourceDir}/build/release-current-clangcl"
+  "version": 3,
+  "cmakeMinimumRequired": {
+    "major": 3,
+    "minor": 21,
+    "patch": 0
+  },
+  "configurePresets": [
+    {
+      "name": "common",
+      "hidden": true,
+      "errors": {
+        "deprecated": true
+      },
+      "warnings": {
+        "deprecated": true,
+        "dev": true
+      }
+    },
+    {
+      "name": "debug",
+      "hidden": true,
+      "inherits": [
+        "common"
+      ],
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": {
+          "type": "STRING",
+          "value": "Debug"
         }
-    ],
-    "buildPresets": [
-        {
-            "name": "Debug-All-MSVC",
-            "displayName": "Debug (All, MSVC)",
-            "configurePreset": "Debug-All-MSVC"
-        },
-        {
-            "name": "Debug-All-ClangCL",
-            "displayName": "Debug (All, ClangCL)",
-            "configurePreset": "Debug-All-ClangCL"
-        },
-        {
-            "name": "Debug-Flatrim-MSVC",
-            "displayName": "Debug (Flatrim)",
-            "configurePreset": "Debug-Flatrim-MSVC"
-        },
-        {
-            "name": "Debug-Flatrim-ClangCL",
-            "displayName": "Debug (Flatrim, ClangCL)",
-            "configurePreset": "Debug-Flatrim-ClangCL"
-        },
-        {
-            "name": "Debug-VR-MSVC",
-            "displayName": "Debug (VR, MSVC)",
-            "configurePreset": "Debug-VR-MSVC"
-        },
-        {
-            "name": "Debug-VR-ClangCL",
-            "displayName": "Debug (VR, ClangCL)",
-            "configurePreset": "Debug-VR-ClangCL"
-        },
-        {
-            "name": "Debug-AE-MSVC",
-            "displayName": "Debug (AE, MSVC)",
-            "configurePreset": "Debug-AE-MSVC"
-        },
-        {
-            "name": "Debug-AE-ClangCL",
-            "displayName": "Debug (AE, ClangCL)",
-            "configurePreset": "Debug-AE-ClangCL"
-        },
-        {
-            "name": "Debug-SE-MSVC",
-            "displayName": "Debug (SE, MSVC)",
-            "configurePreset": "Debug-SE-MSVC"
-        },
-        {
-            "name": "Debug-SE-ClangCL",
-            "displayName": "Debug (SE, ClangCL)",
-            "configurePreset": "Debug-SE-ClangCL"
-        },
-        {
-            "name": "Debug-PreAE-MSVC",
-            "displayName": "Debug (PreAE, MSVC)",
-            "configurePreset": "Debug-PreAE-MSVC"
-        },
-        {
-            "name": "Debug-PreAE-ClangCL",
-            "displayName": "Debug (PreAE, ClangCL)",
-            "configurePreset": "Debug-PreAE-ClangCL"
-        },
-        {
-            "name": "Debug-Current-MSVC",
-            "displayName": "Debug (Current, MSVC)",
-            "configurePreset": "Debug-Current-MSVC"
-        },
-        {
-            "name": "Debug-Current-ClangCL",
-            "displayName": "Debug (Current, ClangCL)",
-            "configurePreset": "Debug-Current-ClangCL"
-        },
-
-        {
-            "name": "Release-All-MSVC",
-            "displayName": "Release (All, MSVC)",
-            "configurePreset": "Release-All-MSVC"
-        },
-        {
-            "name": "Release-All-ClangCL",
-            "displayName": "Release (All, ClangCL)",
-            "configurePreset": "Release-All-ClangCL"
-        },
-        {
-            "name": "Release-Flatrim-MSVC",
-            "displayName": "Release (Flatrim)",
-            "configurePreset": "Release-Flatrim-MSVC"
-        },
-        {
-            "name": "Release-Flatrim-ClangCL",
-            "displayName": "Release (Flatrim, ClangCL)",
-            "configurePreset": "Release-Flatrim-ClangCL"
-        },
-        {
-            "name": "Release-VR-MSVC",
-            "displayName": "Release (VR, MSVC)",
-            "configurePreset": "Release-VR-MSVC"
-        },
-        {
-            "name": "Release-VR-ClangCL",
-            "displayName": "Release (VR, ClangCL)",
-            "configurePreset": "Release-VR-ClangCL"
-        },
-        {
-            "name": "Release-AE-MSVC",
-            "displayName": "Release (AE, MSVC)",
-            "configurePreset": "Release-AE-MSVC"
-        },
-        {
-            "name": "Release-AE-ClangCL",
-            "displayName": "Release (AE, ClangCL)",
-            "configurePreset": "Release-AE-ClangCL"
-        },
-        {
-            "name": "Release-SE-MSVC",
-            "displayName": "Release (SE, MSVC)",
-            "configurePreset": "Release-SE-MSVC"
-        },
-        {
-            "name": "Release-SE-ClangCL",
-            "displayName": "Release (SE, ClangCL)",
-            "configurePreset": "Release-SE-ClangCL"
-        },
-        {
-            "name": "Release-PreAE-MSVC",
-            "displayName": "Release (PreAE, MSVC)",
-            "configurePreset": "Release-PreAE-MSVC"
-        },
-        {
-            "name": "Release-PreAE-ClangCL",
-            "displayName": "Release (PreAE, ClangCL)",
-            "configurePreset": "Release-PreAE-ClangCL"
-        },
-        {
-            "name": "Release-Current-MSVC",
-            "displayName": "Release (Current, MSVC)",
-            "configurePreset": "Release-Current-MSVC"
-        },
-        {
-            "name": "Release-Current-ClangCL",
-            "displayName": "Release (Current, ClangCL)",
-            "configurePreset": "Release-Current-ClangCL"
+      }
+    },
+    {
+      "name": "release",
+      "hidden": true,
+      "inherits": [
+        "common"
+      ],
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": {
+          "type": "STRING",
+          "value": "Release"
         }
-    ],
-    "version": 2
+      }
+    },
+    {
+      "name": "vcpkg",
+      "hidden": true,
+      "cacheVariables": {
+        "CMAKE_TOOLCHAIN_FILE": {
+          "type": "STRING",
+          "value": "$env{VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake"
+        }
+      }
+    },
+    {
+      "name": "windows",
+      "hidden": true,
+      "cacheVariables": {
+        "CMAKE_MSVC_RUNTIME_LIBRARY": {
+          "type": "STRING",
+          "value": "MultiThreaded$<$<CONFIG:Debug>:Debug>DLL"
+        },
+        "VCPKG_TARGET_TRIPLET": {
+          "type": "STRING",
+          "value": "x64-windows-static-md"
+        }
+      }
+    },
+    {
+      "name": "msvc",
+      "hidden": true,
+      "cacheVariables": {
+        "CMAKE_CXX_FLAGS": "/EHsc /MP /W4 /WX $penv{CXXFLAGS}"
+      },
+      "generator": "Ninja",
+      "vendor": {
+        "microsoft.com/VisualStudioSettings/CMake/1.0": {
+          "intelliSenseMode": "windows-msvc-x64",
+          "enableMicrosoftCodeAnalysis": true,
+          "enableClangTidyCodeAnalysis": true
+        }
+      }
+    },
+    {
+      "name": "clangcl",
+      "hidden": true,
+      "cacheVariables": {
+        "CMAKE_CXX_FLAGS": "/EHsc /W4 /WX $penv{CXXFLAGS}",
+        "CMAKE_CXX_COMPILER": "clang-cl"
+      },
+      "generator": "Ninja",
+      "vendor": {
+        "microsoft.com/VisualStudioSettings/CMake/1.0": {
+          "intelliSenseMode": "windows-clang-x64",
+          "enableMicrosoftCodeAnalysis": true,
+          "enableClangTidyCodeAnalysis": true
+        }
+      }
+    },
+    {
+      "cacheVariables": {
+        "ENABLE_SKYRIM_AE": {
+          "type": "STRING",
+          "value": "OFF"
+        },
+        "ENABLE_SKYRIM_SE": {
+          "type": "STRING",
+          "value": "OFF"
+        }
+      },
+      "hidden": true,
+      "name": "vr-only"
+    },
+    {
+      "cacheVariables": {
+        "ENABLE_SKYRIM_VR": {
+          "type": "STRING",
+          "value": "OFF"
+        }
+      },
+      "hidden": true,
+      "name": "flatrim-only"
+    },
+    {
+      "cacheVariables": {
+        "ENABLE_SKYRIM_AE": {
+          "type": "STRING",
+          "value": "OFF"
+        },
+        "ENABLE_SKYRIM_VR": {
+          "type": "STRING",
+          "value": "OFF"
+        }
+      },
+      "hidden": true,
+      "name": "se-only"
+    },
+    {
+      "cacheVariables": {
+        "ENABLE_SKYRIM_SE": {
+          "type": "STRING",
+          "value": "OFF"
+        },
+        "ENABLE_SKYRIM_VR": {
+          "type": "STRING",
+          "value": "OFF"
+        }
+      },
+      "hidden": true,
+      "name": "ae-only"
+    },
+    {
+      "cacheVariables": {
+        "ENABLE_SKYRIM_AE": {
+          "type": "STRING",
+          "value": "OFF"
+        }
+      },
+      "hidden": true,
+      "name": "pre-ae-only"
+    },
+    {
+      "cacheVariables": {
+        "ENABLE_SKYRIM_SE": {
+          "type": "STRING",
+          "value": "OFF"
+        }
+      },
+      "hidden": true,
+      "name": "current"
+    },
+    {
+      "inherits": [
+        "debug",
+        "vcpkg",
+        "windows",
+        "msvc"
+      ],
+      "name": "Debug-All-MSVC",
+      "displayName": "Debug (All, MSVC)",
+      "binaryDir": "${sourceDir}/build/debug-all-msvc"
+    },
+    {
+      "inherits": [
+        "debug",
+        "vcpkg",
+        "windows",
+        "clangcl"
+      ],
+      "name": "Debug-All-ClangCL",
+      "displayName": "Debug (All, ClangCL)",
+      "binaryDir": "${sourceDir}/build/debug-all-clangcl"
+    },
+    {
+      "inherits": [
+        "Debug-All-MSVC",
+        "flatrim-only"
+      ],
+      "name": "Debug-Flatrim-MSVC",
+      "displayName": "Debug (Flatrim, MSVC)",
+      "binaryDir": "${sourceDir}/build/debug-flatrim-msvc"
+    },
+    {
+      "inherits": [
+        "Debug-All-ClangCL",
+        "flatrim-only"
+      ],
+      "name": "Debug-Flatrim-ClangCL",
+      "displayName": "Debug (Flatrim, ClangCL)",
+      "binaryDir": "${sourceDir}/build/debug-flatrim-clangcl"
+    },
+    {
+      "inherits": [
+        "Debug-All-MSVC",
+        "vr-only"
+      ],
+      "name": "Debug-VR-MSVC",
+      "displayName": "Debug (VR, MSVC)",
+      "binaryDir": "${sourceDir}/build/debug-vr-msvc"
+    },
+    {
+      "inherits": [
+        "Debug-All-ClangCL",
+        "vr-only"
+      ],
+      "name": "Debug-VR-ClangCL",
+      "displayName": "Debug (VR, ClangCL)",
+      "binaryDir": "${sourceDir}/build/debug-vr-clangcl"
+    },
+    {
+      "inherits": [
+        "Debug-All-MSVC",
+        "ae-only"
+      ],
+      "name": "Debug-AE-MSVC",
+      "displayName": "Debug (AE, MSVC)",
+      "binaryDir": "${sourceDir}/build/debug-ae-msvc"
+    },
+    {
+      "inherits": [
+        "Debug-All-ClangCL",
+        "ae-only"
+      ],
+      "name": "Debug-AE-ClangCL",
+      "displayName": "Debug (AE, ClangCL)",
+      "binaryDir": "${sourceDir}/build/debug-ae-clangcl"
+    },
+    {
+      "inherits": [
+        "Debug-All-MSVC",
+        "se-only"
+      ],
+      "name": "Debug-SE-MSVC",
+      "displayName": "Debug (SE, MSVC)",
+      "binaryDir": "${sourceDir}/build/debug-se-msvc"
+    },
+    {
+      "inherits": [
+        "Debug-All-ClangCL",
+        "se-only"
+      ],
+      "name": "Debug-SE-ClangCL",
+      "displayName": "Debug (SE, ClangCL)",
+      "binaryDir": "${sourceDir}/build/debug-se-clangcl"
+    },
+    {
+      "inherits": [
+        "Debug-All-MSVC",
+        "pre-ae-only"
+      ],
+      "name": "Debug-PreAE-MSVC",
+      "displayName": "Debug (PreAE, MSVC)",
+      "binaryDir": "${sourceDir}/build/debug-pre-ae-msvc"
+    },
+    {
+      "inherits": [
+        "Debug-All-ClangCL",
+        "pre-ae-only"
+      ],
+      "name": "Debug-PreAE-ClangCL",
+      "displayName": "Debug (PreAE, ClangCL)",
+      "binaryDir": "${sourceDir}/build/debug-pre-ae-clangcl"
+    },
+    {
+      "inherits": [
+        "Debug-All-MSVC",
+        "current"
+      ],
+      "name": "Debug-Current-MSVC",
+      "displayName": "Debug (Current, MSVC)",
+      "binaryDir": "${sourceDir}/build/debug-current-msvc"
+    },
+    {
+      "inherits": [
+        "Debug-All-ClangCL",
+        "current"
+      ],
+      "name": "Debug-Current-ClangCL",
+      "displayName": "Debug (Current, ClangCL)",
+      "binaryDir": "${sourceDir}/build/debug-current-clangcl"
+    },
+    {
+      "inherits": [
+        "release",
+        "vcpkg",
+        "windows",
+        "msvc"
+      ],
+      "name": "Release-All-MSVC",
+      "displayName": "Release (All, MSVC)",
+      "binaryDir": "${sourceDir}/build/release-all-msvc"
+    },
+    {
+      "inherits": [
+        "release",
+        "vcpkg",
+        "windows",
+        "clangcl"
+      ],
+      "name": "Release-All-ClangCL",
+      "displayName": "Release (All, ClangCL)",
+      "binaryDir": "${sourceDir}/build/release-all-clangcl"
+    },
+    {
+      "inherits": [
+        "Release-All-MSVC",
+        "flatrim-only"
+      ],
+      "name": "Release-Flatrim-MSVC",
+      "displayName": "Release (Flatrim, MSVC)",
+      "binaryDir": "${sourceDir}/build/release-flatrim-msvc"
+    },
+    {
+      "inherits": [
+        "Release-All-ClangCL",
+        "flatrim-only"
+      ],
+      "name": "Release-Flatrim-ClangCL",
+      "displayName": "Release (Flatrim, ClangCL)",
+      "binaryDir": "${sourceDir}/build/release-flatrim-clangcl"
+    },
+    {
+      "inherits": [
+        "Release-All-MSVC",
+        "vr-only"
+      ],
+      "name": "Release-VR-MSVC",
+      "displayName": "Release (VR, MSVC)",
+      "binaryDir": "${sourceDir}/build/release-vr-msvc"
+    },
+    {
+      "inherits": [
+        "Release-All-ClangCL",
+        "vr-only"
+      ],
+      "name": "Release-VR-ClangCL",
+      "displayName": "Release (VR, ClangCL)",
+      "binaryDir": "${sourceDir}/build/release-vr-clangcl"
+    },
+    {
+      "inherits": [
+        "Release-All-MSVC",
+        "ae-only"
+      ],
+      "name": "Release-AE-MSVC",
+      "displayName": "Release (AE, MSVC)",
+      "binaryDir": "${sourceDir}/build/release-ae-msvc"
+    },
+    {
+      "inherits": [
+        "Release-All-ClangCL",
+        "ae-only"
+      ],
+      "name": "Release-AE-ClangCL",
+      "displayName": "Release (AE, ClangCL)",
+      "binaryDir": "${sourceDir}/build/release-ae-clangcl"
+    },
+    {
+      "inherits": [
+        "Release-All-MSVC",
+        "se-only"
+      ],
+      "name": "Release-SE-MSVC",
+      "displayName": "Release (SE, MSVC)",
+      "binaryDir": "${sourceDir}/build/release-se-msvc"
+    },
+    {
+      "inherits": [
+        "Release-All-ClangCL",
+        "se-only"
+      ],
+      "name": "Release-SE-ClangCL",
+      "displayName": "Release (SE, ClangCL)",
+      "binaryDir": "${sourceDir}/build/release-se-clangcl"
+    },
+    {
+      "inherits": [
+        "Release-All-MSVC",
+        "pre-ae-only"
+      ],
+      "name": "Release-PreAE-MSVC",
+      "displayName": "Release (PreAE, MSVC)",
+      "binaryDir": "${sourceDir}/build/release-pre-ae-msvc"
+    },
+    {
+      "inherits": [
+        "Release-All-ClangCL",
+        "pre-ae-only"
+      ],
+      "name": "Release-PreAE-ClangCL",
+      "displayName": "Release (PreAE, ClangCL)",
+      "binaryDir": "${sourceDir}/build/release-pre-ae-clangcl"
+    },
+    {
+      "inherits": [
+        "Release-All-MSVC",
+        "current"
+      ],
+      "name": "Release-Current-MSVC",
+      "displayName": "Release (Current, MSVC)",
+      "binaryDir": "${sourceDir}/build/release-current-msvc"
+    },
+    {
+      "inherits": [
+        "Release-All-ClangCL",
+        "current"
+      ],
+      "name": "Release-Current-ClangCL",
+      "displayName": "Release (Current, ClangCL)",
+      "binaryDir": "${sourceDir}/build/release-current-clangcl"
+    }
+  ],
+  "buildPresets": [
+    {
+      "name": "Debug-All-MSVC",
+      "displayName": "Debug (All, MSVC)",
+      "configurePreset": "Debug-All-MSVC"
+    },
+    {
+      "name": "Debug-All-ClangCL",
+      "displayName": "Debug (All, ClangCL)",
+      "configurePreset": "Debug-All-ClangCL"
+    },
+    {
+      "name": "Debug-Flatrim-MSVC",
+      "displayName": "Debug (Flatrim)",
+      "configurePreset": "Debug-Flatrim-MSVC"
+    },
+    {
+      "name": "Debug-Flatrim-ClangCL",
+      "displayName": "Debug (Flatrim, ClangCL)",
+      "configurePreset": "Debug-Flatrim-ClangCL"
+    },
+    {
+      "name": "Debug-VR-MSVC",
+      "displayName": "Debug (VR, MSVC)",
+      "configurePreset": "Debug-VR-MSVC"
+    },
+    {
+      "name": "Debug-VR-ClangCL",
+      "displayName": "Debug (VR, ClangCL)",
+      "configurePreset": "Debug-VR-ClangCL"
+    },
+    {
+      "name": "Debug-AE-MSVC",
+      "displayName": "Debug (AE, MSVC)",
+      "configurePreset": "Debug-AE-MSVC"
+    },
+    {
+      "name": "Debug-AE-ClangCL",
+      "displayName": "Debug (AE, ClangCL)",
+      "configurePreset": "Debug-AE-ClangCL"
+    },
+    {
+      "name": "Debug-SE-MSVC",
+      "displayName": "Debug (SE, MSVC)",
+      "configurePreset": "Debug-SE-MSVC"
+    },
+    {
+      "name": "Debug-SE-ClangCL",
+      "displayName": "Debug (SE, ClangCL)",
+      "configurePreset": "Debug-SE-ClangCL"
+    },
+    {
+      "name": "Debug-PreAE-MSVC",
+      "displayName": "Debug (PreAE, MSVC)",
+      "configurePreset": "Debug-PreAE-MSVC"
+    },
+    {
+      "name": "Debug-PreAE-ClangCL",
+      "displayName": "Debug (PreAE, ClangCL)",
+      "configurePreset": "Debug-PreAE-ClangCL"
+    },
+    {
+      "name": "Debug-Current-MSVC",
+      "displayName": "Debug (Current, MSVC)",
+      "configurePreset": "Debug-Current-MSVC"
+    },
+    {
+      "name": "Debug-Current-ClangCL",
+      "displayName": "Debug (Current, ClangCL)",
+      "configurePreset": "Debug-Current-ClangCL"
+    },
+    {
+      "name": "Release-All-MSVC",
+      "displayName": "Release (All, MSVC)",
+      "configurePreset": "Release-All-MSVC"
+    },
+    {
+      "name": "Release-All-ClangCL",
+      "displayName": "Release (All, ClangCL)",
+      "configurePreset": "Release-All-ClangCL"
+    },
+    {
+      "name": "Release-Flatrim-MSVC",
+      "displayName": "Release (Flatrim)",
+      "configurePreset": "Release-Flatrim-MSVC"
+    },
+    {
+      "name": "Release-Flatrim-ClangCL",
+      "displayName": "Release (Flatrim, ClangCL)",
+      "configurePreset": "Release-Flatrim-ClangCL"
+    },
+    {
+      "name": "Release-VR-MSVC",
+      "displayName": "Release (VR, MSVC)",
+      "configurePreset": "Release-VR-MSVC"
+    },
+    {
+      "name": "Release-VR-ClangCL",
+      "displayName": "Release (VR, ClangCL)",
+      "configurePreset": "Release-VR-ClangCL"
+    },
+    {
+      "name": "Release-AE-MSVC",
+      "displayName": "Release (AE, MSVC)",
+      "configurePreset": "Release-AE-MSVC"
+    },
+    {
+      "name": "Release-AE-ClangCL",
+      "displayName": "Release (AE, ClangCL)",
+      "configurePreset": "Release-AE-ClangCL"
+    },
+    {
+      "name": "Release-SE-MSVC",
+      "displayName": "Release (SE, MSVC)",
+      "configurePreset": "Release-SE-MSVC"
+    },
+    {
+      "name": "Release-SE-ClangCL",
+      "displayName": "Release (SE, ClangCL)",
+      "configurePreset": "Release-SE-ClangCL"
+    },
+    {
+      "name": "Release-PreAE-MSVC",
+      "displayName": "Release (PreAE, MSVC)",
+      "configurePreset": "Release-PreAE-MSVC"
+    },
+    {
+      "name": "Release-PreAE-ClangCL",
+      "displayName": "Release (PreAE, ClangCL)",
+      "configurePreset": "Release-PreAE-ClangCL"
+    },
+    {
+      "name": "Release-Current-MSVC",
+      "displayName": "Release (Current, MSVC)",
+      "configurePreset": "Release-Current-MSVC"
+    },
+    {
+      "name": "Release-Current-ClangCL",
+      "displayName": "Release (Current, ClangCL)",
+      "configurePreset": "Release-Current-ClangCL"
+    }
+  ],
+  "testPresets": [
+    {
+      "name": "All-Tests",
+      "displayName": "All Tests",
+      "configurePreset": "Debug-All-MSVC",
+      "output": {
+        "outputOnFailure": true
+      },
+      "execution": {
+        "noTestsAction": "error",
+        "stopOnFailure": false
+      }
+    },
+    {
+      "name": "Unit-Tests",
+      "displayName": "Unit Tests",
+      "description": "Runs tests that do not require any Skyrim module loaded into the process.",
+      "inherits": "All-Tests",
+      "filter": {
+        "exclude": {
+          "label": "[integration],[e2e]"
+        }
+      }
+    },
+    {
+      "name": "Integration-Tests",
+      "displayName": "Integration Tests",
+      "description": "Runs tests that interact with a Skyrim module at rest (do not require the Skyrim module to have run any main function).",
+      "inherits": "All-Tests",
+      "filter": {
+        "include": {
+          "label": "[integration]"
+        }
+      }
+    },
+    {
+      "name": "E2E-Tests",
+      "displayName": "End-to-End Tests",
+      "description": "Runs test that depend on a fully running Skyrim engine in the process.",
+      "inherits": "All-Tests",
+      "filter": {
+        "include": {
+          "label": "[e2e]"
+        }
+      }
+    }
+  ]
 }

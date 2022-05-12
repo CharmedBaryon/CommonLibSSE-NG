@@ -59,3 +59,25 @@ jobs:
           cmakeListsTxtPath: ${{ github.workspace }}/main/CMakeLists.txt
           configurePreset: ${{ matrix.build-type }}-${{ matrix.runtime }}-${{ matrix.compiler }}
           buildPreset: ${{ matrix.build-type }}-${{ matrix.runtime }}-${{ matrix.compiler }}
+
+      - name: Cache
+        uses: actions/cache@v2
+        with:
+          path: main
+          key: ${{ matrix.build-type }}-${{ matrix.runtime }}-${{ matrix.compiler }}-${{ env.GITHUB_SHA }}
+        if: ${{ matrix.build-type == 'Debug' && matrix.runtime == 'All' && matrix.compiler == 'MSVC' }}
+
+  unit-tests:
+    runs-on: windows-latest
+    needs:
+      - build
+    steps:
+      - name: Restore cache
+        uses: actions/cache@v2
+        with:
+          path: main
+          key: Debug-All-MSVC-${{ env.GITHUB_SHA }}
+
+      - name: Run unit tests
+        working-directory: ${{ github.workspace }}/main
+        run: ctest --preset Unit-Tests
