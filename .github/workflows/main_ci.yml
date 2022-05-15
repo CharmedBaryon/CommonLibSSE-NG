@@ -62,7 +62,7 @@ jobs:
         uses: actions/cache@v2
         with:
           path: main
-          key: ${{ matrix.build-type }}-${{ matrix.runtime }}-${{ matrix.compiler }}-${{ env.GITHUB_SHA }}
+          key: ${{ matrix.build-type }}-${{ matrix.runtime }}-${{ matrix.compiler }}-${{ github.sha }}
         if: ${{ matrix.build-type == 'Debug' && matrix.runtime == 'All' && matrix.compiler == 'MSVC' }}
 
   unit-tests:
@@ -74,7 +74,7 @@ jobs:
         uses: actions/cache@v2
         with:
           path: main
-          key: Debug-All-MSVC-${{ env.GITHUB_SHA }}
+          key: Debug-All-MSVC-${{ github.sha }}
 
       - name: Run unit tests
         working-directory: ${{ github.workspace }}/main

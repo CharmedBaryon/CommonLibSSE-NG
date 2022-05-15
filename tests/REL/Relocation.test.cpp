@@ -128,7 +128,7 @@ TEST_CASE("Module/SupportsSkyrimSE")
 	SECTION("Address Library format can be loaded")
 	{
 		CHECK(REL::IDDatabase::inject(
-			L"version-1-5-97-0.bin", REL::IDDatabase::Format::SSEv1, SKSE::RUNTIME_SSE_1_5_97));
+			L"Data\\SKSE\\Plugins\\version-1-5-97-0.bin", REL::IDDatabase::Format::SSEv1, SKSE::RUNTIME_SSE_1_5_97));
 	}
 	SECTION("Lookup by ID returns the correct offset")
 	{
@@ -173,7 +173,7 @@ TEST_CASE("Module/SupportsSkyrimAE")
 	SECTION("Address Library format can be loaded")
 	{
 		CHECK(REL::IDDatabase::inject(
-			L"versionlib-1-6-353-0.bin", REL::IDDatabase::Format::SSEv2, SKSE::RUNTIME_SSE_1_6_353));
+			L"Data\\SKSE\\Plugins\\versionlib-1-6-353-0.bin", REL::IDDatabase::Format::SSEv2, SKSE::RUNTIME_SSE_1_6_353));
 	}
 	SECTION("Lookup by ID returns the correct offset")
 	{
@@ -218,7 +218,7 @@ TEST_CASE("Module/SupportsSkyrimVR")
 	SECTION("Address Library format can be loaded")
 	{
 		CHECK(REL::IDDatabase::inject(
-			L"version-1-4-15-0.csv", REL::IDDatabase::Format::VR, SKSE::RUNTIME_VR_1_4_15));
+			L"Data\\SKSE\\Plugins\\version-1-4-15-0.csv", REL::IDDatabase::Format::VR, SKSE::RUNTIME_VR_1_4_15));
 	}
 	SECTION("Lookup by ID returns the correct offset")
 	{
