@@ -257,3 +257,9 @@ TEST_CASE("Module/SupportsSkyrimVR")
 		REL::Module::reset();
 	}
 }
+
+TEST_CASE("IDDatabase/FailedIDLookup")
+{
+	REQUIRE(REL::Module::mock(SKSE::RUNTIME_SSE_1_6_353, REL::Module::Runtime::AE, L"SkyrimSE.exe", 0x1000));
+	REQUIRE_THROWS(REL::IDDatabase::get().id2offset(0xFFFFFFFF));
+}

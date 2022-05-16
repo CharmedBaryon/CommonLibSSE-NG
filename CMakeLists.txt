@@ -198,6 +198,12 @@ if(BUILD_TESTS)
 			cxx_std_23
 	)
 
+	target_compile_definitions(
+		"${PROJECT_NAME}Tests"
+		PUBLIC
+			ENABLE_COMMONLIBSSE_TESTING=1
+	)
+
 	if(CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
 		target_compile_definitions(
 			"${PROJECT_NAME}Tests"
