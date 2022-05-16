@@ -63,10 +63,16 @@ jobs:
         with:
           path: main
           key: ${{ matrix.build-type }}-${{ matrix.runtime }}-${{ matrix.compiler }}-${{ github.sha }}
-        if: ${{ matrix.build-type == 'Debug' && matrix.runtime == 'All' && matrix.compiler == 'MSVC' }}
+        if: ${{ matrix.build-type == 'Debug' && matrix.runtime == 'All' }}
 
   unit-tests:
     runs-on: windows-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        compiler:
+          - MSVC
+          - ClangCL
     needs:
       - build
     steps:
@@ -74,9 +80,9 @@ jobs:
         uses: actions/cache@v2
         with:
           path: main
-          key: Debug-All-MSVC-${{ github.sha }}
+          key: Debug-All-${{ matrix.compiler }}-${{ github.sha }}
 
       - name: Run unit tests
         timeout-minutes: 5
-        working-directory: ${{ github.workspace }}/main
-        run: ctest --preset Unit-Tests
+        working-directory: ${{ github.workspace }}/main/build/debug-all-${{ matrix.compiler }}
+        run: .\CommonLibSSETests.exe

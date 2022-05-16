@@ -218,7 +218,6 @@ if(BUILD_TESTS)
 		PRIVATE
 			${PROJECT_NAME}
 			Catch2::Catch2
-			Catch2::Catch2WithMain
 	)
 
 	target_precompile_headers(
