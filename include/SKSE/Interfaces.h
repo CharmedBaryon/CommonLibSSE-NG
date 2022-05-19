@@ -639,3 +639,5 @@ namespace SKSE
 		pluginInfo->version = static_cast<std::uint32_t>(SKSEPlugin_Version.GetVersion().pack());                                                                   \
 		return true;                                                                                                                                                \
 	}
+
+#define SKSEPluginLoad(...) extern "C" [[maybe_unused]] __declspec(dllexport) bool SKSEPlugin_Load(__VA_ARGS__)
