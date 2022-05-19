@@ -530,14 +530,6 @@ namespace REL
 	{
 		namespace detail
 		{
-			struct version_literal
-			{
-				version_literal(const char* str, std::size_t len)
-				{
-
-				}
-			};
-
 			template <std::size_t Index, char C>
 			constexpr uint8_t read_version(std::array<typename REL::Version::value_type, 4>& result) {
 				static_assert(C >= '0' && C <= '9', "Invalid character in semantic version literal.");

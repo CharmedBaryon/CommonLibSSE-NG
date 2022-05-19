@@ -410,4 +410,232 @@ namespace SKSE
 	static_assert(offsetof(PluginVersionData, compatibleVersions) == 0x30C);
 	static_assert(offsetof(PluginVersionData, xseMinimum) == 0x34C);
 	static_assert(sizeof(PluginVersionData) == 0x350);
+
+	enum class VersionIndependence
+	{
+		AddressLibrary,
+		SignatureScanning
+	};
+
+	struct PluginDeclaration
+	{
+	public:
+		template <std::size_t N>
+		class String
+		{
+		public:
+			constexpr String() = default;
+
+			constexpr String(std::string_view a_string) noexcept
+			{
+				std::span<char> buffer(_buffer, N);
+				std::fill(buffer.begin(), buffer.end(), '\0');
+				std::copy(a_string.begin(), a_string.end(), buffer.begin());
+			}
+
+			constexpr String(const char* a_string) noexcept
+			{
+				std::string_view string(a_string);
+				std::span<char>  buffer(_buffer, N);
+				std::fill(buffer.begin(), buffer.end(), '\0');
+				std::copy(string.begin(), string.end(), buffer.begin());
+			}
+
+			[[nodiscard]] constexpr operator const char*() const noexcept
+			{
+				return _buffer;
+			}
+
+			[[nodiscard]] constexpr operator std::string_view() const noexcept
+			{
+				return _buffer;
+			}
+
+		private:
+			char _buffer[N]{};
+		};
+
+		class VersionNumber
+		{
+		public:
+			using value_type = typename REL::Version::value_type;
+
+			constexpr VersionNumber(value_type a_major = 1, value_type a_minor = 0, value_type a_patch = 0,
+				value_type a_build = 0) noexcept :
+				_packed(REL::Version{ a_major, a_minor, a_patch, a_build }.pack())
+			{}
+
+			constexpr VersionNumber(REL::Version a_version) noexcept :
+				_packed(a_version.pack()) {}
+
+			constexpr VersionNumber& operator=(REL::Version a_version) noexcept
+			{
+				_packed = a_version.pack();
+				return *this;
+			}
+
+			[[nodiscard]] constexpr operator REL::Version() const noexcept
+			{
+				return REL::Version::unpack(_packed);
+			}
+
+			[[nodiscard]] constexpr explicit operator std::uint32_t() const noexcept
+			{
+				return _packed;
+			}
+
+		private:
+			std::uint32_t _packed{};
+		};
+
+		class RuntimeCompatibility
+		{
+		public:
+			static constexpr std::size_t MaxCompatibleVersions = 16;
+
+			constexpr RuntimeCompatibility() = default;
+
+			template <class... Args>
+				requires(sizeof...(Args) <= MaxCompatibleVersions && (std::convertible_to<Args, VersionNumber> && ...))
+			constexpr RuntimeCompatibility(Args... a_compatibleVersions) noexcept :
+				_addressLibrary(false), _compatibleVersions({ VersionNumber(a_compatibleVersions)... })
+			{
+				//				std::array<REL::Version, sizeof...(Args)> versions{ static_cast<REL::Version>(a_compatibleVersions)... };
+				//				for (std::size_t i = 0; i < sizeof...(Args); ++i) {
+				//					_compatibleVersions[i] = VersionNumber(versions[i]);
+				//				}
+			}
+
+			constexpr RuntimeCompatibility(VersionIndependence a_versionIndependence) noexcept :
+				_addressLibrary(a_versionIndependence == VersionIndependence::AddressLibrary),
+				_signatureScanning(a_versionIndependence == VersionIndependence::SignatureScanning) {}
+
+			[[nodiscard]] constexpr bool UsesAddressLibrary() const noexcept
+			{
+				return _addressLibrary;
+			}
+
+			[[nodiscard]] constexpr bool UsesSignatureScanning() const noexcept
+			{
+				return _signatureScanning;
+			}
+
+			[[nodiscard]] constexpr bool IsVersionIndependent() const noexcept
+			{
+				return UsesAddressLibrary() || UsesSignatureScanning();
+			}
+
+			[[nodiscard]] constexpr std::array<VersionNumber, 16> GetCompatibleRuntimeVersions() const noexcept
+			{
+				return _compatibleVersions;
+			}
+
+		private:
+			const bool                           _addressLibrary: 1 = true;
+			const bool                           _signatureScanning: 1 = false;
+			[[maybe_unused]] const std::uint8_t  _pad0: 6 = 0;
+			[[maybe_unused]] const std::uint8_t  _pad1{ 0 };
+			[[maybe_unused]] const std::uint16_t _pad2{ 0 };
+			std::array<VersionNumber, 16>        _compatibleVersions{};
+		};
+		static_assert(sizeof(RuntimeCompatibility) == 0x44);
+
+		struct PluginDeclarationInfo
+		{
+			/**
+		     * The version number of the plugin.
+		     */
+			const VersionNumber Version{ 1, 0, 0, 0 };
+
+			/**
+		     * The plugin's name (maximum of 256 characters).
+		     */
+			const String<256> Name{};
+
+			/**
+		     * The name of the plugin's author (maximum of 256 characters).
+		     */
+			const String<256> Author{};
+
+			/**
+		     * A support email address for the plugin (maximum of 256 characters).
+		     */
+			const String<256> SupportEmail{};
+
+			/**
+		     * A definition of the runtime compatibility for the plugin.
+		     *
+		     * <p>
+		     * This can be either an indicator of how version-independence is achieved (either through using Address Library
+		     * or signature scanning, indicated with a value from <code>SKSE::VersionIndependence</code>, or a list of up to
+		     * 16 version numbers of Skyrim runtimes that are supported by this plugin.
+		     * </p>
+		     */
+			const RuntimeCompatibility RuntimeCompatibility{};
+
+			/**
+		     * The minimum SKSE version required for the plugin; this should almost always be left <code>0</code>.
+		     */
+			const std::uint32_t MinimumSKSEVersion{ 0 };
+		};
+		static_assert(offsetof(PluginDeclarationInfo, Version) == 0x000);
+		static_assert(offsetof(PluginDeclarationInfo, Name) == 0x004);
+		static_assert(offsetof(PluginDeclarationInfo, Author) == 0x104);
+		static_assert(offsetof(PluginDeclarationInfo, SupportEmail) == 0x204);
+		static_assert(offsetof(PluginDeclarationInfo, RuntimeCompatibility) == 0x304);
+		static_assert(offsetof(PluginDeclarationInfo, MinimumSKSEVersion) == 0x348);
+
+		constexpr PluginDeclaration(PluginDeclarationInfo info) noexcept :
+			_data(std::move(info)) {}
+
+		[[nodiscard]] constexpr REL::Version GetVersion() const noexcept
+		{
+			return _data.Version;
+		}
+
+		[[nodiscard]] constexpr std::string_view GetName() const noexcept
+		{
+			return _data.Name;
+		}
+
+		[[nodiscard]] constexpr std::string_view GetAuthor() const noexcept
+		{
+			return _data.Author;
+		}
+
+		[[nodiscard]] constexpr std::string_view GetSupportEmail() const noexcept
+		{
+			return _data.SupportEmail;
+		}
+
+		[[nodiscard]] constexpr const RuntimeCompatibility& GetRuntimeCompatibility() const noexcept
+		{
+			return _data.RuntimeCompatibility;
+		}
+
+		[[nodiscard]] constexpr std::uint32_t GetMinimumSKSEVersion() const noexcept
+		{
+			return _data.MinimumSKSEVersion;
+		}
+
+	private:
+		enum
+		{
+			kVersion = 1,
+		};
+
+		[[maybe_unused]] const std::uint32_t         _dataVersion{ kVersion };
+		[[maybe_unused]] const PluginDeclarationInfo _data;
+	};
+	static_assert(sizeof(PluginDeclaration) == 0x350);
 }
+
+#define SKSEPluginInfo(...)                                                                                                                                         \
+	extern "C" [[maybe_unused]] __declspec(dllexport) constinit ::SKSE::PluginDeclaration SKSEPlugin_Version({ __VA_ARGS__ });                                      \
+	extern "C" [[maybe_unused]] __declspec(dllexport) bool                                SKSEPlugin_Query(::SKSE::QueryInterface*, ::SKSE::PluginInfo* pluginInfo) \
+	{                                                                                                                                                               \
+		pluginInfo->infoVersion = ::SKSE::PluginInfo::kVersion;                                                                                                     \
+		pluginInfo->name = SKSEPlugin_Version.GetName().data();                                                                                                     \
+		pluginInfo->version = static_cast<std::uint32_t>(SKSEPlugin_Version.GetVersion().pack());                                                                   \
+		return true;                                                                                                                                                \
+	}
