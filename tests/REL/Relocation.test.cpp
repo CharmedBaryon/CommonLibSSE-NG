@@ -168,6 +168,7 @@ TEST_CASE("Version/Compare")
 	CHECK(REL::Version(1, 3, 0, 0).compare(REL::Version(0, 2, 0, 0)) == std::strong_ordering::greater);
 }
 
+#ifdef ENABLE_SKYRIM_SE
 TEST_CASE("Module/SupportsSkyrimSE")
 {
 	SECTION("Runtime is mockable")
@@ -212,7 +213,9 @@ TEST_CASE("Module/SupportsSkyrimSE")
 		REL::Module::reset();
 	}
 }
+#endif
 
+#ifdef ENABLE_SKYRIM_AE
 TEST_CASE("Module/SupportsSkyrimAE")
 {
 	SECTION("Runtime is mockable")
@@ -257,7 +260,9 @@ TEST_CASE("Module/SupportsSkyrimAE")
 		REL::Module::reset();
 	}
 }
+#endif
 
+#ifdef ENABLE_SKYRIM_VR
 TEST_CASE("Module/SupportsSkyrimVR")
 {
 	SECTION("Runtime is mockable")
@@ -306,6 +311,7 @@ TEST_CASE("Module/SupportsSkyrimVR")
 		REL::Module::reset();
 	}
 }
+#endif
 
 TEST_CASE("IDDatabase/FailedIDLookup")
 {

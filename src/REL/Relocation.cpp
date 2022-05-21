@@ -134,6 +134,10 @@ namespace REL
 
 	bool Module::inject(Runtime a_runtime)
 	{
+		if (a_runtime == Runtime::Unknown) {
+			return inject(Runtime::SE) || inject(Runtime::VR);
+		}
+
 		constexpr std::size_t bufferSize = 4096;  // Max NTFS path length.
 		const wchar_t*        subKey =
             a_runtime == Runtime::VR ?

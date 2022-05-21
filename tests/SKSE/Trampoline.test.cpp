@@ -13,11 +13,7 @@ namespace
 		TrampolineFixture()
 		{
 			_successPtr = &_success;
-#ifdef ENABLE_SKYRIM_VR
-			REQUIRE(REL::Module::inject(REL::Module::Runtime::VR));
-#else
-			REQUIRE(REL::Module::inject(REL::Module::Runtime::SE));
-#endif
+            REQUIRE(REL::Module::inject(REL::Module::Runtime::Unknown));
 		}
 
 		~TrampolineFixture()
@@ -29,7 +25,8 @@ namespace
 	protected:
 		void TestTrampoline(SKSE::Trampoline& trampoline)
 		{
-			REL::ID FunctionID(110073);
+			// Not necessarily the same function in each runtime, but bit-for-bit identical.
+			REL::VariantID FunctionID(102625, 110073, 0x0);
 			REL::Relocation<std::uint64_t(void*)> Function(FunctionID);
 			REL::Relocation<void(void*)> Call(FunctionID, 0x4);
 			trampoline.write_call<6>(Call.address(), &TestHook);

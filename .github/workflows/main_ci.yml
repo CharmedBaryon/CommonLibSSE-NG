@@ -19,7 +19,7 @@ env:
   VCPKG_COMMIT_ID: b98afc9f1192becb2f447cee485ce36ba111f9f6
 
 jobs:
-  build:
+  build-and-test:
     runs-on: windows-latest
     strategy:
       fail-fast: false
@@ -58,31 +58,7 @@ jobs:
           configurePreset: ${{ matrix.build-type }}-${{ matrix.runtime }}-${{ matrix.compiler }}
           buildPreset: ${{ matrix.build-type }}-${{ matrix.runtime }}-${{ matrix.compiler }}
 
-      - name: Cache
-        uses: actions/cache@v2
-        with:
-          path: main
-          key: ${{ matrix.build-type }}-${{ matrix.runtime }}-${{ matrix.compiler }}-${{ github.sha }}
-        if: ${{ matrix.build-type == 'Debug' && matrix.runtime == 'All' }}
-
-  unit-tests:
-    runs-on: windows-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        compiler:
-          - MSVC
-          - ClangCL
-    needs:
-      - build
-    steps:
-      - name: Restore cache
-        uses: actions/cache@v2
-        with:
-          path: main
-          key: Debug-All-${{ matrix.compiler }}-${{ github.sha }}
-
-      - name: Run unit tests
+      - name: Unit tests
         timeout-minutes: 5
-        working-directory: ${{ github.workspace }}/main/build/debug-all-${{ matrix.compiler }}
+        working-directory: ${{ github.workspace }}/main/build/${{ matrix.build-type }}-${{ matrix.runtime }}-${{ matrix.compiler }}
         run: .\CommonLibSSETests.exe

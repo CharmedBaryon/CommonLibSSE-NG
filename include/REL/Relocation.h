@@ -699,7 +699,9 @@ namespace REL
 		 *
 		 * <p>
 		 * This overload accepts only a <code>Runtime</code> value, and based on that value attempts to find the
-		 * executable, using the Windows registry to find an installed copy of Skyrim of the given runtime.
+		 * executable, using the Windows registry to find an installed copy of Skyrim of the given runtime. Using
+		 * <code>Runtime::Unknown</code> causes an attempt to discover Skyrim Special Edition first, and if that fails,
+		 * attempts to discover Skyrim VR.
 		 * </p>
 		 *
 		 * <p>
@@ -709,7 +711,7 @@ namespace REL
 		 *
 		 * @param a_runtime The type of Skyrim runtime to inject.
 		 */
-		static bool inject(Runtime a_runtime);
+		static bool inject(Runtime a_runtime = Runtime::Unknown);
 
 		static bool mock(REL::Version a_version, Runtime a_runtime = Runtime::Unknown,
 			std::wstring_view a_filename = L"SkyrimSE.exe"sv, std::uintptr_t a_base = 0,

@@ -4,7 +4,7 @@
 
 TEST_CASE("ActorValue/std::to_string", "[.][e2e]")
 {
-	REQUIRE(REL::Module::inject(REL::Module::Runtime::SE));
+	REQUIRE(REL::Module::inject());
 	SECTION("Sample types")
 	{
 		CHECK(std::to_string(RE::ActorValue::kAlchemyModifier) == "AlchemyModifier");
@@ -23,7 +23,7 @@ TEST_CASE("ActorValue/std::to_string", "[.][e2e]")
 
 TEST_CASE("ActorValue/fmt::format", "[.][e2e]")
 {
-	REQUIRE(REL::Module::inject(REL::Module::Runtime::SE));
+	REQUIRE(REL::Module::inject());
 	SECTION("Sample types")
 	{
 		CHECK(fmt::format("{}", RE::ActorValue::kAlchemyModifier) == "AlchemyModifier");
@@ -42,7 +42,7 @@ TEST_CASE("ActorValue/fmt::format", "[.][e2e]")
 
 TEST_CASE("ActorValue/std::format", "[.][e2e]")
 {
-	REQUIRE(REL::Module::inject(REL::Module::Runtime::SE));
+	REQUIRE(REL::Module::inject());
 	SECTION("Sample types")
 	{
 		CHECK(std::format("{}", RE::ActorValue::kAlchemyModifier) == "AlchemyModifier");
