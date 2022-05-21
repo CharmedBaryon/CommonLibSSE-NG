@@ -89,10 +89,14 @@ namespace RE
 				bool BindNativeMethod(IFunction* a_fn) override;                                                                                                     // 18
 				void SetCallableFromTasklets1(const char* a_className, const char* a_stateName, const char* a_fnName, bool a_callable) override;                     // 19
 				void SetCallableFromTasklets2(const char* a_className, const char* a_fnName, bool a_callable) override;                                              // 1A - { SetCallableFromTasklets1(a_className, 0, a_fnName, a_callable); }
-				void ForEachBoundObject(VMHandle a_handle, IForEachScriptObjectFunctor* a_functor) override;                                                         // 1B
 				// This is where the vtable differs between AE/SE and VR.
 #if !defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE)
-				void New_1C(void) override;
+				void New_1B(void) override;
+#endif
+#ifndef SKYRIM_CROSS_VR
+				void ForEachBoundObject(VMHandle a_handle, IForEachScriptObjectFunctor* a_functor) override;                                                         // 1B, 1C
+#endif
+#if !defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE)
 				void New_1D(void) override;
 #endif
 #ifndef SKYRIM_CROSS_VR

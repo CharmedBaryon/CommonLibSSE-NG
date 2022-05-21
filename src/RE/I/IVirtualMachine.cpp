@@ -144,6 +144,11 @@ namespace RE
 		}
 
 #ifdef SKYRIM_CROSS_VR
+		void IVirtualMachine::ForEachBoundObject(VMHandle a_handle, IForEachScriptObjectFunctor* a_functor)
+		{
+			return REL::RelocateVirtual<decltype(&IVirtualMachine::ForEachBoundObject)>(0x1B, 0x1C, this, a_handle, a_functor);
+		}
+
 		bool IVirtualMachine::FindBoundObject(VMHandle a_handle, const char* a_className, BSTSmartPointer<Object>& a_result) const
 		{
 			return REL::RelocateVirtual<decltype(&IVirtualMachine::FindBoundObject)>(0x1C, 0x1E, this, a_handle, a_className, a_result);

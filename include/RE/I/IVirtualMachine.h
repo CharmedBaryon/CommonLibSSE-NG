@@ -70,37 +70,39 @@ namespace RE
 			virtual bool BindNativeMethod(IFunction* a_fn) = 0;                                                                                                     // 18
 			virtual void SetCallableFromTasklets1(const char* a_className, const char* a_stateName, const char* a_fnName, bool a_callable) = 0;                     // 19
 			virtual void SetCallableFromTasklets2(const char* a_className, const char* a_fnName, bool a_callable) = 0;                                              // 1A
-			virtual void ForEachBoundObject(VMHandle a_handle, IForEachScriptObjectFunctor* a_functor) = 0;                                                         // 1B
 #if !defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE)
-			virtual void New_1C(void) = 0;
+			virtual void New_1B(void) = 0;
+#endif
+			SKYRIM_REL_VR_VIRTUAL void ForEachBoundObject(VMHandle a_handle, IForEachScriptObjectFunctor* a_functor);  // 1B, 1C
+#if !defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE)
 			virtual void New_1D(void) = 0;
 #endif
-			SKYRIM_REL_VR_VIRTUAL bool FindBoundObject(VMHandle a_handle, const char* a_className, BSTSmartPointer<Object>& a_result) const;                                                                                   // 1C
-			SKYRIM_REL_VR_VIRTUAL void MoveBoundObjects(VMHandle a_from, VMHandle a_to);                                                                                                                                       // 1D
-			SKYRIM_REL_VR_VIRTUAL void ResetAllBoundObjects(VMHandle a_handle);                                                                                                                                                // 1E
-			SKYRIM_REL_VR_VIRTUAL bool CastObject(const BSTSmartPointer<Object>& a_fromObjPtr, const BSTSmartPointer<ObjectTypeInfo>& a_toTypeInfoPtr, BSTSmartPointer<Object>& a_toObjPtr);                                   // 1F
-			SKYRIM_REL_VR_VIRTUAL bool SetPropertyValue(BSTSmartPointer<Object>& a_obj, const char* a_propertyName, Variable& a_setVal);                                                                                       // 20
-			SKYRIM_REL_VR_VIRTUAL bool GetPropertyValue(BSTSmartPointer<Object>& a_obj, const char* a_propertyName, Variable& a_getVal);                                                                                       // 21
-			SKYRIM_REL_VR_VIRTUAL bool GetVariableValue1(const BSTSmartPointer<Object>& a_objPtr, std::uint32_t a_index, Variable& a_out) const;                                                                               // 22
-			SKYRIM_REL_VR_VIRTUAL bool GetVariableValue2(VMHandle a_handle, const BSFixedString& a_className, std::int32_t a_variableIndex, Variable& a_out) const;                                                            // 23
-			SKYRIM_REL_VR_VIRTUAL void SendEvent(VMHandle a_handle, const BSFixedString& a_eventName, IFunctionArguments* a_args);                                                                                             // 24
-			SKYRIM_REL_VR_VIRTUAL void SendEventAll(const BSFixedString& a_eventName, IFunctionArguments* a_args);                                                                                                             // 25
-			SKYRIM_REL_VR_VIRTUAL bool DispatchStaticCall(const BSFixedString& a_className, const BSFixedString& a_fnName, IFunctionArguments* a_args, BSTSmartPointer<IStackCallbackFunctor>& a_result);                      // 26
-			SKYRIM_REL_VR_VIRTUAL bool DispatchMethodCall1(BSTSmartPointer<Object>& a_obj, const BSFixedString& a_fnName, IFunctionArguments* a_args, BSTSmartPointer<IStackCallbackFunctor>& a_result);                       // 27
-			SKYRIM_REL_VR_VIRTUAL bool DispatchMethodCall2(VMHandle a_handle, const BSFixedString& a_className, const BSFixedString& a_fnName, IFunctionArguments* a_args, BSTSmartPointer<IStackCallbackFunctor>& a_result);  // 28
-			SKYRIM_REL_VR_VIRTUAL bool DispatchUnboundMethodCall(void);                                                                                                                                                        // 29
-			SKYRIM_REL_VR_VIRTUAL bool IsWaitingOnLatent(VMStackID a_stackID) const;                                                                                                                                           // 2A
-			SKYRIM_REL_VR_VIRTUAL void ReturnFromLatent(VMStackID a_stackID, const Variable& a_val);                                                                                                                           // 2B
-			SKYRIM_REL_VR_VIRTUAL ErrorLogger* GetErrorLogger();                                                                                                                                                               // 2C
-			SKYRIM_REL_VR_VIRTUAL IObjectHandlePolicy* GetObjectHandlePolicy1();                                                                                                                                               // 2D
-			SKYRIM_REL_VR_VIRTUAL const IObjectHandlePolicy* GetObjectHandlePolicy2() const;                                                                                                                                   // 2E
-			SKYRIM_REL_VR_VIRTUAL ObjectBindPolicy* GetObjectBindPolicy1();                                                                                                                                                    // 2F
-			SKYRIM_REL_VR_VIRTUAL const ObjectBindPolicy* GetObjectBindPolicy2() const;                                                                                                                                        // 30
-			SKYRIM_REL_VR_VIRTUAL ISavePatcherInterface* GetSavePatcherInterface();                                                                                                                                            // 31
-			SKYRIM_REL_VR_VIRTUAL void                   RegisterForLogEvent(BSTEventSink<LogEvent>* a_sink);                                                                                                                  // 32
-			SKYRIM_REL_VR_VIRTUAL void                   UnregisterForLogEvent(BSTEventSink<LogEvent>* a_sink);                                                                                                                // 33
-			SKYRIM_REL_VR_VIRTUAL void                   RegisterForStatsEvent(BSTEventSink<StatsEvent>* a_sink);                                                                                                              // 34
-			SKYRIM_REL_VR_VIRTUAL void                   UnregisterForStatsEvent(BSTEventSink<StatsEvent>* a_sink);                                                                                                            // 35
+			SKYRIM_REL_VR_VIRTUAL bool                       FindBoundObject(VMHandle a_handle, const char* a_className, BSTSmartPointer<Object>& a_result) const;                                                                                   // 1C
+			SKYRIM_REL_VR_VIRTUAL void                       MoveBoundObjects(VMHandle a_from, VMHandle a_to);                                                                                                                                       // 1D
+			SKYRIM_REL_VR_VIRTUAL void                       ResetAllBoundObjects(VMHandle a_handle);                                                                                                                                                // 1E
+			SKYRIM_REL_VR_VIRTUAL bool                       CastObject(const BSTSmartPointer<Object>& a_fromObjPtr, const BSTSmartPointer<ObjectTypeInfo>& a_toTypeInfoPtr, BSTSmartPointer<Object>& a_toObjPtr);                                   // 1F
+			SKYRIM_REL_VR_VIRTUAL bool                       SetPropertyValue(BSTSmartPointer<Object>& a_obj, const char* a_propertyName, Variable& a_setVal);                                                                                       // 20
+			SKYRIM_REL_VR_VIRTUAL bool                       GetPropertyValue(BSTSmartPointer<Object>& a_obj, const char* a_propertyName, Variable& a_getVal);                                                                                       // 21
+			SKYRIM_REL_VR_VIRTUAL bool                       GetVariableValue1(const BSTSmartPointer<Object>& a_objPtr, std::uint32_t a_index, Variable& a_out) const;                                                                               // 22
+			SKYRIM_REL_VR_VIRTUAL bool                       GetVariableValue2(VMHandle a_handle, const BSFixedString& a_className, std::int32_t a_variableIndex, Variable& a_out) const;                                                            // 23
+			SKYRIM_REL_VR_VIRTUAL void                       SendEvent(VMHandle a_handle, const BSFixedString& a_eventName, IFunctionArguments* a_args);                                                                                             // 24
+			SKYRIM_REL_VR_VIRTUAL void                       SendEventAll(const BSFixedString& a_eventName, IFunctionArguments* a_args);                                                                                                             // 25
+			SKYRIM_REL_VR_VIRTUAL bool                       DispatchStaticCall(const BSFixedString& a_className, const BSFixedString& a_fnName, IFunctionArguments* a_args, BSTSmartPointer<IStackCallbackFunctor>& a_result);                      // 26
+			SKYRIM_REL_VR_VIRTUAL bool                       DispatchMethodCall1(BSTSmartPointer<Object>& a_obj, const BSFixedString& a_fnName, IFunctionArguments* a_args, BSTSmartPointer<IStackCallbackFunctor>& a_result);                       // 27
+			SKYRIM_REL_VR_VIRTUAL bool                       DispatchMethodCall2(VMHandle a_handle, const BSFixedString& a_className, const BSFixedString& a_fnName, IFunctionArguments* a_args, BSTSmartPointer<IStackCallbackFunctor>& a_result);  // 28
+			SKYRIM_REL_VR_VIRTUAL bool                       DispatchUnboundMethodCall(void);                                                                                                                                                        // 29
+			SKYRIM_REL_VR_VIRTUAL bool                       IsWaitingOnLatent(VMStackID a_stackID) const;                                                                                                                                           // 2A
+			SKYRIM_REL_VR_VIRTUAL void                       ReturnFromLatent(VMStackID a_stackID, const Variable& a_val);                                                                                                                           // 2B
+			SKYRIM_REL_VR_VIRTUAL ErrorLogger*               GetErrorLogger();                                                                                                                                                                       // 2C
+			SKYRIM_REL_VR_VIRTUAL IObjectHandlePolicy*       GetObjectHandlePolicy1();                                                                                                                                                               // 2D
+			SKYRIM_REL_VR_VIRTUAL const IObjectHandlePolicy* GetObjectHandlePolicy2() const;                                                                                                                                                         // 2E
+			SKYRIM_REL_VR_VIRTUAL ObjectBindPolicy*          GetObjectBindPolicy1();                                                                                                                                                                 // 2F
+			SKYRIM_REL_VR_VIRTUAL const ObjectBindPolicy*    GetObjectBindPolicy2() const;                                                                                                                                                           // 30
+			SKYRIM_REL_VR_VIRTUAL ISavePatcherInterface*     GetSavePatcherInterface();                                                                                                                                                              // 31
+			SKYRIM_REL_VR_VIRTUAL void                       RegisterForLogEvent(BSTEventSink<LogEvent>* a_sink);                                                                                                                                    // 32
+			SKYRIM_REL_VR_VIRTUAL void                       UnregisterForLogEvent(BSTEventSink<LogEvent>* a_sink);                                                                                                                                  // 33
+			SKYRIM_REL_VR_VIRTUAL void                       RegisterForStatsEvent(BSTEventSink<StatsEvent>* a_sink);                                                                                                                                // 34
+			SKYRIM_REL_VR_VIRTUAL void                       UnregisterForStatsEvent(BSTEventSink<StatsEvent>* a_sink);                                                                                                                              // 35
 
 			bool                       CreateArray(const TypeInfo& a_typeInfo, std::uint32_t a_size, BSTSmartPointer<Array>& a_arrayPtr);
 			bool                       CreateArray(TypeInfo::RawType a_typeID, const BSFixedString& a_className, std::uint32_t a_size, BSTSmartPointer<Array>& a_arrayPtr);
