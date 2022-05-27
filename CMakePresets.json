@@ -71,7 +71,7 @@
       "name": "msvc",
       "hidden": true,
       "cacheVariables": {
-        "CMAKE_CXX_FLAGS": "/EHsc /MP /W4 /WX $penv{CXXFLAGS}"
+        "CMAKE_CXX_FLAGS": "/permissive- /Zc:preprocessor /EHsc /MP /W4 /WX $penv{CXXFLAGS}"
       },
       "generator": "Ninja",
       "vendor": {
@@ -86,7 +86,7 @@
       "name": "clangcl",
       "hidden": true,
       "cacheVariables": {
-        "CMAKE_CXX_FLAGS": "/EHsc /W4 /WX $penv{CXXFLAGS}",
+        "CMAKE_CXX_FLAGS": "/permissive- /EHsc /W4 /WX $penv{CXXFLAGS}",
         "CMAKE_CXX_COMPILER": "clang-cl"
       },
       "generator": "Ninja",

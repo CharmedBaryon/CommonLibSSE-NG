@@ -172,7 +172,7 @@ namespace RE
 			SetCapacity(this, a_sizeHint);
 		}
 
-		explicit GHashSetBase(void* a_memAddr) :
+		explicit GHashSetBase([[maybe_unused]] void* a_memAddr) :
 			table(0)
 		{}
 
