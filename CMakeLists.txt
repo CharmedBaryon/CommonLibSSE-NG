@@ -217,7 +217,7 @@ if(BUILD_TESTS)
 		"${PROJECT_NAME}Tests"
 		PRIVATE
 			${PROJECT_NAME}
-			Catch2::Catch2
+			Catch2::Catch2WithMain
 	)
 
 	target_precompile_headers(

@@ -9,6 +9,10 @@
 #include "SKSE/Impl/Stubs.h"
 #include "SKSE/Version.h"
 
+#include <Windows.h>
+
+EXTERN_C IMAGE_DOS_HEADER __ImageBase;
+
 namespace SKSE
 {
 	struct PluginInfo;
@@ -414,7 +418,8 @@ namespace SKSE
 	enum class VersionIndependence
 	{
 		AddressLibrary,
-		SignatureScanning
+		SignatureScanning,
+		AddressLibraryAndSignatureScanning
 	};
 
 	struct PluginDeclaration
@@ -500,15 +505,13 @@ namespace SKSE
 			constexpr RuntimeCompatibility(Args... a_compatibleVersions) noexcept :
 				_addressLibrary(false), _compatibleVersions({ VersionNumber(a_compatibleVersions)... })
 			{
-				//				std::array<REL::Version, sizeof...(Args)> versions{ static_cast<REL::Version>(a_compatibleVersions)... };
-				//				for (std::size_t i = 0; i < sizeof...(Args); ++i) {
-				//					_compatibleVersions[i] = VersionNumber(versions[i]);
-				//				}
 			}
 
 			constexpr RuntimeCompatibility(VersionIndependence a_versionIndependence) noexcept :
-				_addressLibrary(a_versionIndependence == VersionIndependence::AddressLibrary),
-				_signatureScanning(a_versionIndependence == VersionIndependence::SignatureScanning) {}
+				_addressLibrary(a_versionIndependence == VersionIndependence::AddressLibrary ||
+								a_versionIndependence == VersionIndependence::AddressLibraryAndSignatureScanning),
+				_signatureScanning(a_versionIndependence == VersionIndependence::SignatureScanning ||
+								   a_versionIndependence == VersionIndependence::AddressLibraryAndSignatureScanning) {}
 
 			[[nodiscard]] constexpr bool UsesAddressLibrary() const noexcept
 			{
@@ -576,7 +579,7 @@ namespace SKSE
 			/**
 		     * The minimum SKSE version required for the plugin; this should almost always be left <code>0</code>.
 		     */
-			const std::uint32_t MinimumSKSEVersion{ 0 };
+			const VersionNumber MinimumSKSEVersion{ 0 };
 		};
 		static_assert(offsetof(PluginDeclarationInfo, Version) == 0x000);
 		static_assert(offsetof(PluginDeclarationInfo, Name) == 0x004);
@@ -613,9 +616,14 @@ namespace SKSE
 			return _data.RuntimeCompatibility;
 		}
 
-		[[nodiscard]] constexpr std::uint32_t GetMinimumSKSEVersion() const noexcept
+		[[nodiscard]] constexpr REL::Version GetMinimumSKSEVersion() const noexcept
 		{
 			return _data.MinimumSKSEVersion;
+		}
+
+		[[nodiscard]] static inline const PluginDeclaration* GetSingleton() noexcept
+		{
+			return reinterpret_cast<const PluginDeclaration*>(GetProcAddress(reinterpret_cast<HMODULE>(&__ImageBase), "SKSEPlugin_Version"));
 		}
 
 	private:

@@ -26,6 +26,22 @@ features) when that runtime is present.
 [Read about multi-targeting, and how you can take advantage in your project.](
 https://github.com/CharmedBaryon/CommonLibSSE-NG/wiki/Runtime-Targeting)
 
+### Simplified Plugin Declaration
+![stability](https://img.shields.io/static/v1?label=stability&message=stable&color=dimgreen&style=flat)
+
+Historically, plugins needed to define `SKSEPlugin_Version` or `SKSEPlugin_Query` to be detected as SKSE plugins. To
+simplify code and ensure both functions are generated for correct cross-runtime compatibility, this is made code-free in
+CommonLibSSE NG. Just replace `add_library` with `add_commonlibsse_plugin` in `CMakeLists.txt` and CMake will create
+your shared library target, configure CommonLibSSE linkage, and auto-generate this content and inject it into the
+plugin.
+
+```cmake
+find_package(CommonLibSSE REQUIRED)
+
+add_commonlibsse_project(${PROJECT_NAME}
+    SOURCES ${headers} ${sources})
+```
+
 ### Clang Support
 ![stability-beta](https://img.shields.io/static/v1?label=stability&message=beta&color=yellow&style=flat)
 

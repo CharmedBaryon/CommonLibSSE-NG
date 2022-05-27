@@ -24,7 +24,7 @@ TEST_CASE("PluginDeclaration/ConstinitDeclaration")
 {
 	SECTION("With address library")
 	{
-		CHECK(WithAddressLibrary.GetName() == "Plugin");
+		CHECK(std::string(WithAddressLibrary.GetName()) == "Plugin");
 		CHECK(WithAddressLibrary.GetVersion() == "1.2.3.4"_v);
 		CHECK(WithAddressLibrary.GetRuntimeCompatibility().IsVersionIndependent());
 		CHECK(WithAddressLibrary.GetRuntimeCompatibility().UsesAddressLibrary());
@@ -32,7 +32,7 @@ TEST_CASE("PluginDeclaration/ConstinitDeclaration")
 	}
 	SECTION("With specific runtime compatibility")
 	{
-		CHECK(ForSpecificRuntimes.GetName() == "Plugin");
+		CHECK(std::string(ForSpecificRuntimes.GetName()) == "Plugin");
 		CHECK(ForSpecificRuntimes.GetVersion() == "1.2.3.4"_v);
 		CHECK(!ForSpecificRuntimes.GetRuntimeCompatibility().IsVersionIndependent());
 		CHECK(!ForSpecificRuntimes.GetRuntimeCompatibility().UsesAddressLibrary());
@@ -42,7 +42,12 @@ TEST_CASE("PluginDeclaration/ConstinitDeclaration")
 	}
 	SECTION("Declared with SKSEPluginInfo")
 	{
-		CHECK(SKSEPlugin_Version.GetName() == "Plugin");
+		CHECK(std::string(SKSEPlugin_Version.GetName()) == "Plugin");
 		CHECK(SKSEPlugin_Version.GetVersion() == "1.2.3.4"_v);
 	}
+}
+
+TEST_CASE("PluginDeclaration/GetSingleton")
+{
+	CHECK(PluginDeclaration::GetSingleton() == &SKSEPlugin_Version);
 }
