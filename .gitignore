@@ -1,5 +1,12 @@
 /build*
 CMakeUserPresets.json
+CMakeFiles
+CMakeCache.txt
+*.cmake
 /out*
 /.vs*
 /.idea
+conan.lock
+conanbuildinfo.*
+conaninfo.txt
+graph_info.json

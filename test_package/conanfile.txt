@@ -1,0 +1,5 @@
+[requires]
+commonlibsse-ng/[>=3.5.0]
+
+[generators]
+cmake_find_package

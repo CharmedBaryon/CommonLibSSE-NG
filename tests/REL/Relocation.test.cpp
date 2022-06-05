@@ -1,4 +1,5 @@
-#include "catch.hpp"
+#define CATCH2_CONFIG_MAIN
+#include "catch2/catch.hpp"
 
 #include "REL/Relocation.h"
 #include "SKSE/SKSE.h"
@@ -148,14 +149,14 @@ TEST_CASE("Version/Pack")
 {
 	CHECK(SKSE::RUNTIME_SSE_1_5_97.pack() == 0x01050610);
 	CHECK(SKSE::RUNTIME_SSE_1_6_353.pack() == 0x01061610);
-	CHECK(REL::Version() == 0);
+	CHECK(REL::Version().pack() == 0);
 }
 
 TEST_CASE("Version/Unpack")
 {
 	CHECK(REL::Version::unpack(0x01050610) == SKSE::RUNTIME_SSE_1_5_97);
 	CHECK(REL::Version::unpack(0x01061610) == SKSE::RUNTIME_SSE_1_6_353);
-	CHECK(0 == REL::Version());
+	CHECK(REL::Version::unpack(0) == REL::Version());
 }
 
 TEST_CASE("Version/Compare")

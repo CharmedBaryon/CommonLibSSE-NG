@@ -68,7 +68,7 @@ example, tests to be run within a single test suite that vary between SE, AE, an
 [Read more on
 the project wiki.](https://github.com/CharmedBaryon/CommonLibSSE-NG/wiki/Unit-Testing)
 
-### Packaged, Versioned Releases
+### Versioned Releases via Vcpkg and Conan
 ![stability-stable](https://img.shields.io/static/v1?label=stability&message=stable&color=dimgreen&style=flat)
 
 Traditionally CommonLibSSE is consumed via a Git submodule; this practice generally requires the project using it to add
@@ -77,6 +77,10 @@ plugin project. CommonLibSSE NG instead uses specific releases with semantic ver
 own Vcpkg ports, through the [Color-Glass Studios Vcpkg repository](https://gitlab.com/colorglass/vcpkg-colorglass).
 As a result, it is simpler to use, does not require absorbing transitive requirements into your own project, and needs
 only be built once (cleaning will not require rebuilding CommonLibSSE, only your own code).
+
+In addition, starting with version 3.5.0, CommonLibSSE NG can now be both built and consumed via the Conan package
+manager, both as a source build or prebuilt packages targeting Windows on x86_64 with Visual Studio compiler versions 16
+and 17 (2019 and 2022).
 
 [See how to use CommonLibSSE NG in your project.](#use)
 
@@ -95,6 +99,7 @@ CommonLibSSE NG migrates the build system to Ninja, resulting in faster parallel
 * Better support for the CLion IDE.
 
 ## Use
+### Via Vcpkg
 CommonLibSSE NG is available as a Vcpkg port. To add it to your project, create a `vcpkg-configuration.json` file in the
 project root (next to `vcpkg.json`) with the following contents:
 
@@ -128,6 +133,38 @@ The runtime-specific ports will not attempt to dynamically lookup the version of
 access to reverse engineered content that is specific to that version of Skyrim and non-portable (i.e. it does not exist
 in all versions of Skyrim, or has not been reverse engineered on all versions of Skyrim).
 
+### Via Conan
+CommonLibSSE NG is now available via Conan. Add it as a requirement to your project's `conanfile.txt` or `conanfile.py`:
+
+```ini
+[requires]
+commonlibsse-ng/3.5.0
+```
+
+Update the version number to the version constraints you want. Conan support was added in version 3.5.0, making that the
+earliest version available. Currently Conan binaries are available for the following
+`build_type`/`arch`/`os`/`compiler`/`compiler.version` combinations:
+
+* Debug/x86_64/Windows/Visual Studio/16
+* Debug/x86_64/Windows/Visual Studio/17
+* Release/x86_64/Windows/Visual Studio/16
+* Release/x86_64/Windows/Visual Studio/17
+
+Selective runtime support is handled via package options:
+
+```ini
+[requires]
+commonlibsse-ng/3.5.0
+
+[options]
+commonlibsse-ng:ae=True
+commonlibsse-ng:se=True
+commonlibsse-ng:vr=True
+```
+
+The above shows the default values (which includes support for all runtimes). Disable any runtimes you do not want.
+
+### Linking in CMake
 You should have the following in `CMakeLists.txt` to compile and link successfully:
 ```cmake
 find_package(CommonLibSSE REQUIRED)
@@ -138,11 +175,10 @@ For more information on how to use CommonLibSSE NG, you can look at the
 [example plugin](https://gitlab.com/colorglass/commonlibsse-sample-plugin).
 
 ## Build Dependencies
-* [binary_io](https://github.com/Ryan-rsm-McKenzie/binary_io)
-* [fast-cpp-csv-parser](https://github.com/ben-strasser/fast-cpp-csv-parser)
 * [fmt](https://fmt.dev/latest/index.html)
+* [rapidcsv](https://github.com/d99kris/rapidcsv)
 * [spdlog](https://github.com/gabime/spdlog)
-* [Visual Studio Community 2019 16.10.0 Preview 3.0](https://visualstudio.microsoft.com/vs/preview/)
+* [Visual Studio 2022](https://visualstudio.microsoft.com/vs/)
   * Desktop development with C++
 
 ## End User Dependencies

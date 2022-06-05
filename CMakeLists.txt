@@ -29,9 +29,9 @@ if("${PROJECT_SOURCE_DIR}" STREQUAL "${PROJECT_BINARY_DIR}")
 	message(FATAL_ERROR "in-source builds are not allowed")
 endif()
 
-find_package(binary_io CONFIG REQUIRED)
-find_package(spdlog REQUIRED CONFIG)
-find_path(FAST_CPP_CSV_PARSER_INCLUDE_DIRS "csv.h")
+find_package(fmt CONFIG REQUIRED)
+find_package(spdlog CONFIG REQUIRED)
+find_path(RAPIDCSV_INCLUDE_DIRS "rapidcsv.h")
 
 include(cmake/sourcelist.cmake)
 include(cmake/testlist.cmake)
@@ -78,9 +78,6 @@ if (MSVC)
 	target_compile_options(
 		"${PROJECT_NAME}"
 		PUBLIC
-			/bigobj # support large object file format
-			/utf-8  # assume UTF-8 sources even without a BOM
-
 			# warnings -> errors
 			/we4715	# 'function' : not all control paths return a value
 
@@ -109,14 +106,6 @@ if (MSVC)
 			/wd5220 # 'member': a non-static data member with a volatile qualified type no longer implies that compiler generated copy / move constructors and copy / move assignment operators are not trivial
 	)
 endif()
-if(CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
-	target_compile_options(
-			"${PROJECT_NAME}"
-			PUBLIC
-				-Wno-overloaded-virtual                   # function matches parent virtual function but is not an override (Clang gives false positives on this warning)
-				-Wno-delete-non-abstract-non-virtual-dtor # deletion of polymorphic type which has a non-virtual destructor (necessary for SKSE proxy types, as SKSE does this)
-	)
-endif()
 
 target_include_directories(
 	"${PROJECT_NAME}"
@@ -128,14 +117,22 @@ target_include_directories(
 target_include_directories(
 	"${PROJECT_NAME}"
 	PRIVATE
-		${FAST_CPP_CSV_PARSER_INCLUDE_DIRS}
+		${fmt_INCLUDE_DIRS}
+		${spdlog_INCLUDE_DIRS}
+		${RAPIDCSV_INCLUDE_DIRS}
+)
+
+target_compile_definitions(
+	"${PROJECT_NAME}"
+	PUBLIC
+		FMT_HEADER_ONLY
+		SPDLOG_HEADER_ONLY
+		SPDLOG_FMT_EXTERNAL
 )
 
 target_link_libraries(
 	"${PROJECT_NAME}"
 	PUBLIC
-		binary_io::binary_io
-		spdlog::spdlog
 		Version.lib
 )
 
@@ -192,10 +189,13 @@ if(BUILD_TESTS)
 			"$<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>"
 	)
 
-	target_compile_features(
+	target_include_directories(
 		"${PROJECT_NAME}Tests"
-		PUBLIC
-			cxx_std_23
+		PRIVATE
+			${Catch2_INCLUDE_DIRS}
+			${fmt_INCLUDE_DIRS}
+			${spdlog_INCLUDE_DIRS}
+			${RAPIDCSV_INCLUDE_DIRS}
 	)
 
 	target_compile_definitions(
@@ -204,20 +204,11 @@ if(BUILD_TESTS)
 			ENABLE_COMMONLIBSSE_TESTING=1
 	)
 
-	if(CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
-		target_compile_definitions(
-			"${PROJECT_NAME}Tests"
-			PRIVATE
-				__cpp_consteval
-				__cpp_lib_format
-		)
-	endif()
-
 	target_link_libraries(
 		"${PROJECT_NAME}Tests"
 		PRIVATE
 			${PROJECT_NAME}
-			Catch2::Catch2WithMain
+			Catch2::Catch2
 	)
 
 	target_precompile_headers(

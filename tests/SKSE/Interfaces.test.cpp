@@ -1,4 +1,4 @@
-#include "catch.hpp"
+#include "catch2/catch.hpp"
 
 #include "REL/Relocation.h"
 #include "SKSE/SKSE.h"

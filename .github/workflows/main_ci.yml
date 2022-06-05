@@ -8,34 +8,36 @@ on:
       - 'cmake/**'
       - 'include/**'
       - 'src/**'
+      - 'tests/**'
       - 'CMakeLists.txt'
       - 'CMakePresets.json'
+      - 'conanfile.py'
       - 'vcpkg.json'
   pull_request:
     branches: [ main, feature/* ]
   workflow_dispatch:
 
 env:
-  VCPKG_COMMIT_ID: b98afc9f1192becb2f447cee485ce36ba111f9f6
+  VCPKG_COMMIT_ID: faed44dfa013088fe1910908a8a65887622f412f
 
 jobs:
-  build-and-test:
+  build-and-test-vcpkg:
     runs-on: windows-latest
     strategy:
       fail-fast: false
       matrix:
         build-type:
-          - Debug
-          - Release
+          - debug
+          - release
         runtime:
-          - All
-          - Flatrim
-          - AE
-          - SE
-          - VR
+          - all
+          - flatrim
+          - ae
+          - se
+          - vr
         compiler:
-          - MSVC
-          - ClangCL
+          - msvc
+          - clang-cl
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -55,10 +57,64 @@ jobs:
         uses: lukka/run-cmake@v10.0
         with:
           cmakeListsTxtPath: ${{ github.workspace }}/main/CMakeLists.txt
-          configurePreset: ${{ matrix.build-type }}-${{ matrix.runtime }}-${{ matrix.compiler }}
-          buildPreset: ${{ matrix.build-type }}-${{ matrix.runtime }}-${{ matrix.compiler }}
+          configurePreset: build-${{ matrix.build-type }}-${{ matrix.compiler }}-vcpkg-${{ matrix.runtime }}
+          buildPreset: ${{ matrix.build-type }}-${{ matrix.compiler }}-vcpkg-${{ matrix.runtime }}
 
       - name: Unit tests
         timeout-minutes: 5
-        working-directory: ${{ github.workspace }}/main/build/${{ matrix.build-type }}-${{ matrix.runtime }}-${{ matrix.compiler }}
+        working-directory: ${{ github.workspace }}/main/build/${{ matrix.build-type }}-${{ matrix.compiler }}-vcpkg-${{ matrix.runtime }}
         run: .\CommonLibSSETests.exe
+  build-and-test-conan:
+    runs-on: windows-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        build-type:
+          - debug
+          - release
+        runtime:
+          - all
+          - flatrim
+          - ae
+          - se
+          - vr
+        compiler:
+          - msvc
+          - clang-cl
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          path: main
+
+      - name: Setup MSVC Environment
+        uses: ilammy/msvc-dev-cmd@v1.10.0
+
+      - name: Install Conan
+        uses: turtlebrowser/get-conan@main
+
+      - name: Run Conan
+        working-directory: ${{ github.workspace }}/main
+        run: conan install --build=missing -o commonlibsse-ng:testing=True .
+
+      - name: Build with CMake
+        uses: lukka/run-cmake@v10.0
+        with:
+          cmakeListsTxtPath: ${{ github.workspace }}/main/CMakeLists.txt
+          configurePreset: build-${{ matrix.build-type }}-${{ matrix.compiler }}-conan-${{ matrix.runtime }}
+          buildPreset: ${{ matrix.build-type }}-${{ matrix.compiler }}-conan-${{ matrix.runtime }}
+
+      - name: Build with Conan
+        if: matrix.compiler == 'msvc' && matrix.runtime == 'all'
+        working-directory: ${{ github.workspace }}/main
+        run: conan build .
+
+      - name: Unit tests
+        timeout-minutes: 5
+        working-directory: ${{ github.workspace }}/main/build/${{ matrix.build-type }}-${{ matrix.compiler }}-conan-${{ matrix.runtime }}
+        run: .\CommonLibSSETests.exe
+
+      - name: Create Conan Package
+        if: matrix.compiler == 'msvc' && matrix.runtime == 'all'
+        working-directory: ${{ github.workspace }}/main
+        run: conan create .

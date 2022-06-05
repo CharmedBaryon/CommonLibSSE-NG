@@ -1,9 +1,6 @@
 #pragma once
 
-#pragma warning(push)
-#pragma warning(disable: 4996 4458 4267 4244)
-#include <csv.h>
-#pragma warning(pop)
+#include "rapidcsv.h"
 
 #define REL_MAKE_MEMBER_FUNCTION_POD_TYPE_HELPER_IMPL(a_nopropQual, a_propQual, ...)              \
 	template <                                                                                    \
@@ -1063,12 +1060,56 @@ namespace REL
 		friend class Module;
 		friend Offset2ID;
 
+		class istream_t
+		{
+		public:
+			using stream_type = std::ifstream;
+			using pointer = stream_type*;
+			using const_pointer = const stream_type*;
+			using reference = stream_type&;
+			using const_reference = const stream_type&;
+
+			inline istream_t(stl::zwstring a_filename, std::ios_base::openmode a_mode) :
+				_stream(a_filename.data(), a_mode)
+			{
+				if (!_stream.is_open()) {
+					stl::report_and_fail("failed to open address library file");
+				}
+
+				_stream.exceptions(std::ios::badbit | std::ios::failbit | std::ios::eofbit);
+			}
+
+			inline void ignore(std::streamsize a_count) { _stream.ignore(a_count); }
+
+			template <class T>
+			inline void readin(T& a_val)
+			{
+				_stream.read(reinterpret_cast<char*>(std::addressof(a_val)), sizeof(T));
+			}
+
+			template <
+				class T,
+				std::enable_if_t<
+					std::is_arithmetic_v<T>,
+					int> = 0>
+			inline T readout()
+			{
+				T val{};
+				readin(val);
+				return val;
+			}
+
+		private:
+			stream_type _stream;
+		};
+
 		class header_t
 		{
 		public:
-			void read(binary_io::file_istream& a_in, std::uint8_t a_formatVersion)
+			void read(istream_t& a_in, std::uint8_t a_formatVersion)
 			{
-				const auto [format] = a_in.read<std::int32_t>();
+				std::int32_t format{};
+				a_in.readin(format);
 				if (format != a_formatVersion) {
 					stl::report_and_fail(
 						fmt::format(
@@ -1079,17 +1120,18 @@ namespace REL
 							format));
 				}
 
-				const auto [major, minor, patch, revision] =
-					a_in.read<std::int32_t, std::int32_t, std::int32_t, std::int32_t>();
-				_version[0] = static_cast<std::uint16_t>(major);
-				_version[1] = static_cast<std::uint16_t>(minor);
-				_version[2] = static_cast<std::uint16_t>(patch);
-				_version[3] = static_cast<std::uint16_t>(revision);
+				std::int32_t version[4]{};
+				std::int32_t nameLen{};
+				a_in.readin(version);
+				a_in.readin(nameLen);
+				a_in.ignore(nameLen);
 
-				const auto [nameLen] = a_in.read<std::int32_t>();
-				a_in.seek_relative(nameLen);
+				a_in.readin(_pointerSize);
+				a_in.readin(_addressCount);
 
-				a_in.read(_pointerSize, _addressCount);
+				for (std::size_t i = 0; i < std::extent_v<decltype(version)>; ++i) {
+					_version[i] = static_cast<std::uint16_t>(version[i]);
+				}
 			}
 
 			[[nodiscard]] std::size_t   address_count() const noexcept { return static_cast<std::size_t>(_addressCount); }
@@ -1139,8 +1181,8 @@ namespace REL
 		bool load_file(stl::zwstring a_filename, Version a_version, std::uint8_t a_formatVersion, bool a_failOnError)
 		{
 			try {
-				binary_io::file_istream in(a_filename);
-				header_t                header;
+				istream_t in(a_filename.data(), std::ios::in | std::ios::binary);
+				header_t  header;
 				header.read(in, a_formatVersion);
 				if (header.version() != a_version) {
 					return stl::report_and_error("version mismatch"sv, a_failOnError);
@@ -1178,46 +1220,40 @@ namespace REL
 			return true;
 		}
 
-		// Ported from alandtse's CommonLibVR branch with CSV support.
 		bool load_csv(stl::zwstring a_filename, Version a_version, bool a_failOnError)
 		{
-			// conversion code from https://docs.microsoft.com/en-us/cpp/text/how-to-convert-between-various-string-types?view=msvc-170
-			const wchar_t*    orig = a_filename.data();
-			std::size_t       origsize = wcslen(orig) + 1;
-			std::size_t       convertedChars = 0;
-			const std::size_t newsize = origsize * 2;
-			char*             nstring = new char[newsize];
-			wcstombs_s(&convertedChars, nstring, newsize, orig, _TRUNCATE);
+			auto nstring = SKSE::stl::utf16_to_utf8(a_filename).value_or(""s);
 			if (!std::filesystem::exists(nstring)) {
 				return stl::report_and_error(fmt::format("Required VR Address Library file {} does not exist"sv, nstring),
 					a_failOnError);
 			}
-			io::CSVReader<2, io::trim_chars<>, io::no_quote_escape<','>> in(nstring);
-			in.read_header(io::ignore_missing_column, "id", "offset");
+			rapidcsv::Document in(nstring);
 			std::size_t id, address_count;
 			std::string version, offset;
 			auto        mapname = L"CommonLibSSEOffsets-v2-"s;
 			mapname += a_version.wstring();
-			in.read_row(address_count, version);
+			address_count = in.GetCell<std::size_t>(0, 0);
+			version = in.GetCell<std::string>(1, 0);
 			const auto byteSize = static_cast<std::size_t>(address_count * sizeof(mapping_t));
 			if (!_mmap.open(mapname, byteSize) &&
 				!_mmap.create(mapname, byteSize)) {
 				return stl::report_and_error("failed to create shared mapping"sv, a_failOnError);
 			}
 			_id2offset = { static_cast<mapping_t*>(_mmap.data()), static_cast<std::size_t>(address_count) };
-			int index = 0;
-			while (in.read_row(id, offset)) {
-				if (index >= address_count) {
-					return stl::report_and_error(fmt::format("VR Address Library {} tried to exceed {} allocated entries."sv,
-													 version, address_count), a_failOnError);
-				}
-				_id2offset[index++] = { static_cast<std::uint64_t>(id),
-					static_cast<std::uint64_t>(std::stoul(offset, nullptr, 16)) };
-			}
-			if (index != address_count) {
+			if (in.GetRowCount() > address_count + 1) {
+				return stl::report_and_error(fmt::format("VR Address Library {} tried to exceed {} allocated entries."sv,
+												 version, address_count), a_failOnError);
+			} else if (in.GetRowCount() < address_count + 1) {
 				return stl::report_and_error(
 					fmt::format("VR Address Library {} loaded only {} entries but expected {}. Please redownload."sv,
-						version, index, address_count), a_failOnError);
+						version, in.GetRowCount() - 1, address_count), a_failOnError);
+			}
+			std::size_t index = 1;
+			for (; index < in.GetRowCount(); ++index) {
+				id = in.GetCell<std::size_t>(0, index);
+				offset = in.GetCell<std::string>(1, index);
+				_id2offset[index - 1] = { static_cast<std::uint64_t>(id),
+					static_cast<std::uint64_t>(std::stoul(offset, nullptr, 16)) };
 			}
 			std::sort(
 				_id2offset.begin(),
@@ -1225,11 +1261,10 @@ namespace REL
 				[](auto&& a_lhs, auto&& a_rhs) {
 					return a_lhs.id < a_rhs.id;
 				});
-			//			_natvis = _id2offset.data();
 			return true;
 		}
 
-		bool unpack_file(binary_io::file_istream& a_in, header_t a_header, bool a_failOnError)
+		bool unpack_file(istream_t& a_in, header_t a_header, bool a_failOnError)
 		{
 			std::uint8_t  type = 0;
 			std::uint64_t id = 0;
@@ -1237,34 +1272,34 @@ namespace REL
 			std::uint64_t prevID = 0;
 			std::uint64_t prevOffset = 0;
 			for (auto& mapping : _id2offset) {
-				a_in.read(type);
+				a_in.readin(type);
 				const auto lo = static_cast<std::uint8_t>(type & 0xF);
 				const auto hi = static_cast<std::uint8_t>(type >> 4);
 
 				switch (lo) {
 				case 0:
-					a_in.read(id);
+					a_in.readin(id);
 					break;
 				case 1:
 					id = prevID + 1;
 					break;
 				case 2:
-					id = prevID + std::get<0>(a_in.read<std::uint8_t>());
+					id = prevID + a_in.readout<std::uint8_t>();
 					break;
 				case 3:
-					id = prevID - std::get<0>(a_in.read<std::uint8_t>());
+					id = prevID - a_in.readout<std::uint8_t>();
 					break;
 				case 4:
-					id = prevID + std::get<0>(a_in.read<std::uint16_t>());
+					id = prevID + a_in.readout<std::uint16_t>();
 					break;
 				case 5:
-					id = prevID - std::get<0>(a_in.read<std::uint16_t>());
+					id = prevID - a_in.readout<std::uint16_t>();
 					break;
 				case 6:
-					std::tie(id) = a_in.read<std::uint16_t>();
+					id = a_in.readout<std::uint16_t>();
 					break;
 				case 7:
-					std::tie(id) = a_in.read<std::uint32_t>();
+					id = a_in.readout<std::uint32_t>();
 					break;
 				default:
 					return stl::report_and_error("unhandled type"sv, a_failOnError);
@@ -1274,28 +1309,28 @@ namespace REL
 
 				switch (hi & 7) {
 				case 0:
-					a_in.read(offset);
+					a_in.readin(offset);
 					break;
 				case 1:
 					offset = tmp + 1;
 					break;
 				case 2:
-					offset = tmp + std::get<0>(a_in.read<std::uint8_t>());
+					offset = tmp + a_in.readout<std::uint8_t>();
 					break;
 				case 3:
-					offset = tmp - std::get<0>(a_in.read<std::uint8_t>());
+					offset = tmp - a_in.readout<std::uint8_t>();
 					break;
 				case 4:
-					offset = tmp + std::get<0>(a_in.read<std::uint16_t>());
+					offset = tmp + a_in.readout<std::uint16_t>();
 					break;
 				case 5:
-					offset = tmp - std::get<0>(a_in.read<std::uint16_t>());
+					offset = tmp - a_in.readout<std::uint16_t>();
 					break;
 				case 6:
-					std::tie(offset) = a_in.read<std::uint16_t>();
+					offset = a_in.readout<std::uint16_t>();
 					break;
 				case 7:
-					std::tie(offset) = a_in.read<std::uint32_t>();
+					offset = a_in.readout<std::uint32_t>();
 					break;
 				default:
 					return stl::report_and_error("unhandled type"sv, a_failOnError);
