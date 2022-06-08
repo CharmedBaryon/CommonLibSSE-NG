@@ -132,67 +132,6 @@ namespace REL
 
 	Module Module::_instance;
 
-	bool Module::inject(Runtime a_runtime)
-	{
-		if (a_runtime == Runtime::Unknown) {
-			return inject(Runtime::SE) || inject(Runtime::VR);
-		}
-
-		constexpr std::size_t bufferSize = 4096;  // Max NTFS path length.
-		const wchar_t*        subKey =
-            a_runtime == Runtime::VR ?
-					   LR"(SOFTWARE\Bethesda Softworks\Skyrim VR)" :
-					   LR"(SOFTWARE\Bethesda Softworks\Skyrim Special Edition)";
-		unsigned long length = bufferSize * sizeof(wchar_t);
-		std::uint8_t  value[bufferSize];
-		if (RegGetValueW(HKEY_LOCAL_MACHINE, subKey, L"Installed Path", 0x20002, nullptr, value, &length) != ERROR_SUCCESS) {
-			return false;
-		}
-		std::filesystem::path installPath(reinterpret_cast<wchar_t*>(value));
-		installPath /= a_runtime == Runtime::VR ? L"SkyrimVR.exe" : L"SkyrimSE.exe";
-		return inject(installPath.c_str());
-	}
-
-	bool Module::mock(REL::Version a_version, Runtime a_runtime, std::wstring_view a_filename, std::uintptr_t a_base,
-		    std::array<std::uintptr_t, Segment::total> a_segmentSizes) {
-		_instance.clear();
-		_initialized = true;
-
-		if (a_filename.empty() || !a_segmentSizes[0]) {
-			return false;
-		}
-
-		_instance._filename = _instance._filePath = a_filename.data();
-		_instance._version = a_version;
-		if (a_runtime == Runtime::Unknown) {
-			switch (a_version[1]) {
-			case 4:
-				_instance._runtime = Runtime::VR;
-				break;
-			case 6:
-				_instance._runtime = Runtime::AE;
-				break;
-			default:
-				_instance._runtime = Runtime::SE;
-			}
-		} else {
-			_instance._runtime = a_runtime;
-		}
-		_instance._base = a_base;
-
-		auto currentAddress = a_base + 0x1000;
-		for (std::size_t i = 0; i < a_segmentSizes.size(); ++i) {
-			auto& segment = _instance._segments[i];
-			segment._size = a_segmentSizes[i];
-			if (segment._size) {
-				segment._proxyBase = a_base;
-				segment._address = (currentAddress += segment._size);
-			}
-		}
-
-		return true;
-	}
-
 	void Module::load_segments()
 	{
 		auto        dosHeader = reinterpret_cast<const IMAGE_DOS_HEADER*>(_base);
@@ -231,7 +170,8 @@ namespace REL
 		for (auto& segment : _segments) {
 			segment = {};
 		}
-		IDDatabase::reset();
+        IDDatabase::_instance.clear();
+        IDDatabase::_initialized = false;
 	}
 
 	IDDatabase IDDatabase::_instance;
