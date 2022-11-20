@@ -47,7 +47,7 @@ function(target_commonlibsse_properties TARGET)
     # Setup version number of the plugin.
     set(commonlibsse_plugin_version "${PROJECT_VERSION}")
     if (DEFINED ADD_COMMONLIBSSE_PLUGIN_VERSION)
-        set(commonlibsse_plugin_version "ADD_COMMONLIBSSE_PLUGIN_NAME")
+        set(commonlibsse_plugin_version "${ADD_COMMONLIBSSE_PLUGIN_VERSION}")
     endif ()
     commonlibsse_parse_version("${commonlibsse_plugin_version}")
     if (NOT DEFINED COMMONLIBSSE_VERSION_MAJOR)
