@@ -284,4 +284,4 @@ namespace RE
 	static_assert(sizeof(TESObjectCELL) == 0x140);
 #endif
 }
-#undef RUNTIME_DATA
+#undef RUNTIME_DATA_CONTENT

@@ -194,6 +194,7 @@ namespace RE
 		InventoryChanges*     merchantInventory;  // 1588
 #endif
 	};
+#undef RUNTIME_DATA_CONTENT
 
 	template <class T>
 	T* TESDataHandler::LookupForm(FormID a_localFormID, std::string_view a_modName)

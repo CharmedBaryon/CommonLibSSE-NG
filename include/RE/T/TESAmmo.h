@@ -162,3 +162,4 @@ namespace RE
 	static_assert(sizeof(TESAmmo) == 0x118);
 #endif
 }
+#undef RUNTIME_DATA_CONTENT

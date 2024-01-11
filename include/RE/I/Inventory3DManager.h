@@ -88,4 +88,4 @@ namespace RE
 	static_assert(sizeof(Inventory3DManager) == 0x160);
 #endif
 }
-#undef RUNTIME_DATA
+#undef RUNTIME_DATA_CONTENT
