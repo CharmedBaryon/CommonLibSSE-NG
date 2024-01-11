@@ -28,40 +28,39 @@ namespace std
 {
 	[[nodiscard]] inline std::string to_string(RE::ActorValue a_actorValue)
 	{
-		auto* info = RE::ActorValueList::GetSingleton()->GetActorValue(a_actorValue);
+		const auto info = RE::ActorValueList::GetSingleton()->GetActorValue(a_actorValue);
 		return info ? info->enumName : "None";
 	}
+}
 
 #ifdef __cpp_lib_format
-	template <class CharT>
-	struct formatter<RE::ActorValue, CharT> : formatter<std::string_view, CharT>
-	{
-		template <class FormatContext>
-		auto format(RE::ActorValue a_actorValue, FormatContext& a_ctx)
-		{
-			auto* info = RE::ActorValueList::GetSingleton()->GetActorValue(a_actorValue);
-			return formatter<std::string_view, CharT>::format(info ? info->enumName : "None", a_ctx);
-		}
-	};
-#endif
-}
-
-namespace fmt
+template <class CharT>
+struct std::formatter<RE::ActorValue, CharT> : formatter<std::string_view, CharT>
 {
-	template <>
-	struct formatter<RE::ActorValue>
+	template <class FormatContext>
+	auto format(RE::ActorValue a_actorValue, FormatContext& a_ctx) const
 	{
-		template <class ParseContext>
-		constexpr auto parse(ParseContext& a_ctx)
-		{
-			return a_ctx.begin();
-		}
+		const auto info = RE::ActorValueList::GetSingleton()->GetActorValue(a_actorValue);
+		return formatter<std::string_view, CharT>::format(info ? info->enumName : "None", a_ctx);
+	}
+};
+#endif
 
-		template <class FormatContext>
-		auto format(const RE::ActorValue& a_actorValue, FormatContext& a_ctx)
-		{
-			auto* info = RE::ActorValueList::GetSingleton()->GetActorValue(a_actorValue);
-			return fmt::format_to(a_ctx.out(), "{}", info ? info->enumName : "None");
-		}
-	};
-}
+#ifdef FMT_VERSION
+template <>
+struct fmt::formatter<RE::ActorValue>
+{
+	template <class ParseContext>
+	constexpr auto parse(ParseContext& a_ctx)
+	{
+		return a_ctx.begin();
+	}
+
+	template <class FormatContext>
+	auto format(const RE::ActorValue& a_actorValue, FormatContext& a_ctx)
+	{
+		const auto info = RE::ActorValueList::GetSingleton()->GetActorValue(a_actorValue);
+		return fmt::format_to(a_ctx.out(), "{}", info ? info->enumName : "None");
+	}
+};
+#endif

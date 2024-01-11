@@ -2167,33 +2167,37 @@ namespace REL {
 	}
 }
 
-namespace std {
-    [[nodiscard]] inline std::string to_string(REL::Version a_version) {
-        return a_version.string("."sv);
-    }
+namespace std
+{
+	[[nodiscard]] inline std::string to_string(REL::Version a_version)
+	{
+		return a_version.string("."sv);
+	}
+}
 
 #ifdef __cpp_lib_format
-
-    template<class CharT>
-    struct formatter<REL::Version, CharT> : formatter<std::string, CharT> {
-        template<class FormatContext>
-        auto format(const REL::Version &a_version, FormatContext &a_ctx) {
-            return formatter<std::string, CharT>::format(to_string(a_version), a_ctx);
-        }
-    };
-
+template<class CharT>
+struct std::formatter<REL::Version, CharT> : formatter<std::string, CharT>
+{
+    template<class FormatContext>
+    auto format(const REL::Version& a_version, FormatContext& a_ctx) const
+	{
+		return formatter<std::string, CharT>::format(a_version.string("."), a_ctx);
+    }
+};
 #endif
-}
 
-namespace fmt {
-    template<class CharT>
-    struct formatter<REL::Version, CharT> : formatter<std::string, CharT> {
-        template<class FormatContext>
-        auto format(const REL::Version &a_version, FormatContext &a_ctx) {
-            return formatter<std::string, CharT>::format(std::to_string(a_version), a_ctx);
-        }
-    };
-}
+#ifdef FMT_VERSION
+template<class CharT>
+struct fmt::formatter<REL::Version, CharT> : formatter<std::string, CharT>
+{
+    template<class FormatContext>
+    auto format(const REL::Version& a_version, FormatContext& a_ctx)
+	{
+		return formatter<std::string, CharT>::format(a_version.string("."), a_ctx);
+    }
+};
+#endif
 
 #undef REL_MAKE_MEMBER_FUNCTION_NON_POD_TYPE
 #undef REL_MAKE_MEMBER_FUNCTION_NON_POD_TYPE_HELPER

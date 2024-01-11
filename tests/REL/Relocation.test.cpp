@@ -68,16 +68,17 @@ TEST_CASE("Version/std::to_string")
 	CHECK(std::to_string(SKSE::RUNTIME_SSE_1_5_97) == "1.5.97.0");
 }
 
+#ifdef FMT_VERSION
 TEST_CASE("Version/fmt::format")
 {
 	CHECK(fmt::format("Hello {}", SKSE::RUNTIME_SSE_1_5_97) == "Hello 1.5.97.0");
 }
+#endif
 
-// TODO: Microsoft's latest STL broke support for custom formatters. Restore when fixed.
-// TEST_CASE("Version/std::format")
-// {
-// 	CHECK(std::format("Hello {}", SKSE::RUNTIME_SSE_1_5_97) == "Hello 1.5.97.0");
-// }
+TEST_CASE("Version/std::format")
+{
+	CHECK(std::format("Hello {}", SKSE::RUNTIME_SSE_1_5_97) == "Hello 1.5.97.0");
+}
 
 TEST_CASE("Version/StringConstructor")
 {

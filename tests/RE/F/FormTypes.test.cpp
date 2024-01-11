@@ -19,6 +19,7 @@ TEST_CASE("FormType/std::to_string")
 	}
 }
 
+#ifdef FMT_VERSION
 TEST_CASE("FormType/fmt::format")
 {
 	SECTION("Sample types")
@@ -35,21 +36,21 @@ TEST_CASE("FormType/fmt::format")
 		CHECK(fmt::format("{}", RE::FormType::Max) == "NONE");
 	}
 }
+#endif
 
-// TODO: Microsoft's latest STL broke support for custom formatters. Restore when fixed.
-// TEST_CASE("FormType/std::format")
-// {
-// 	SECTION("Sample types")
-// 	{
-// 		CHECK(std::format("{}", RE::FormType::ActorCharacter) == "ACHR");
-// 		CHECK(std::format("{}", RE::FormType::Ammo) == "AMMO");
-// 	}
-// 	SECTION("Less than valid types")
-// 	{
-// 		CHECK(std::format("{}", RE::FormType::None) == "NONE");
-// 	}
-// 	SECTION("Greater than valid types")
-// 	{
-// 		CHECK(std::format("{}", RE::FormType::Max) == "NONE");
-// 	}
-// }
+TEST_CASE("FormType/std::format")
+{
+	SECTION("Sample types")
+	{
+		CHECK(std::format("{}", RE::FormType::ActorCharacter) == "ACHR");
+ 		CHECK(std::format("{}", RE::FormType::Ammo) == "AMMO");
+ 	}
+ 	SECTION("Less than valid types")
+ 	{
+ 		CHECK(std::format("{}", RE::FormType::None) == "NONE");
+ 	}
+ 	SECTION("Greater than valid types")
+ 	{
+ 		CHECK(std::format("{}", RE::FormType::Max) == "NONE");
+	}
+ }
