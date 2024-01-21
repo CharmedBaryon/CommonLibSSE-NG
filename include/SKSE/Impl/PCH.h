@@ -549,7 +549,7 @@ namespace SKSE
 		{
 			const auto cvt = [&](wchar_t* a_dst, std::size_t a_length) {
 				return WinAPI::MultiByteToWideChar(
-					CP_UTF8,
+					WinAPI::CP_UTF8,
 					0,
 					a_in.data(),
 					static_cast<int>(a_in.length()),
@@ -575,7 +575,7 @@ namespace SKSE
 		{
 			const auto cvt = [&](char* a_dst, std::size_t a_length) {
 				return WinAPI::WideCharToMultiByte(
-					CP_UTF8,
+					WinAPI::CP_UTF8,
 					0,
 					a_in.data(),
 					static_cast<int>(a_in.length()),
@@ -687,7 +687,7 @@ namespace SKSE
 				std::uint32_t result = 0;
 				do {
 					buf.resize(buf.size() * 2);
-					result = GetModuleFileName(
+					result = WinAPI::GetModuleFileName(
 						WinAPI::GetCurrentModule(),
 						buf.data(),
 						static_cast<std::uint32_t>(buf.size()));
@@ -713,7 +713,7 @@ namespace SKSE
 #ifdef ENABLE_COMMONLIBSSE_TESTING
 				throw std::runtime_error(utf16_to_utf8(caption.empty() ? body.c_str() : caption.c_str())->c_str());
 #else
-				MessageBox(nullptr, body.c_str(), (caption.empty() ? nullptr : caption.c_str()), 0);
+				WinAPI::MessageBox(nullptr, body.c_str(), (caption.empty() ? nullptr : caption.c_str()), 0);
 				WinAPI::TerminateProcess(WinAPI::GetCurrentProcess(), EXIT_FAILURE);
 #endif
 			}

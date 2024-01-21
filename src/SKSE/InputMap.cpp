@@ -258,8 +258,8 @@ namespace SKSE
 			lParam |= (0x1 << 24);
 		}
 
-		wchar_t      buffer[MAX_PATH];
-		auto         length = WinAPI::GetKeyNameText(lParam, buffer, MAX_PATH);
+		wchar_t      buffer[WinAPI::MAX_PATH];
+		auto         length = WinAPI::GetKeyNameText(lParam, buffer, WinAPI::MAX_PATH);
 		std::wstring keyNameW{ buffer, static_cast<std::size_t>(length) };
 
 		return stl::utf16_to_utf8(keyNameW).value_or(""s);

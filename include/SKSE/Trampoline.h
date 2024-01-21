@@ -80,10 +80,9 @@ namespace SKSE
 				stl::report_and_fail("failed to create trampoline"sv);
 			}
 
-			set_trampoline(mem, a_size,
-				[](void* a_mem, std::size_t) {
-					WinAPI::VirtualFree(a_mem, 0, MEM_RELEASE);
-				});
+			set_trampoline(mem, a_size, [](void* a_mem, std::size_t) {
+				WinAPI::VirtualFree(a_mem, 0, WinAPI::MEM_RELEASE);
+			});
 		}
 
 		void set_trampoline(void* a_trampoline, std::size_t a_size) { set_trampoline(a_trampoline, a_size, {}); }

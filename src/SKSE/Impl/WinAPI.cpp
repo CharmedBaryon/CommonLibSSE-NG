@@ -1,7 +1,17 @@
 #include "SKSE/Impl/WinAPI.h"
 
-#include <Windows.h>
+#define WIN32_LEAN_AND_MEAN
 
+// clang-format off
+#include <Windows.h>
+#include <DbgHelp.h>
+#include <objbase.h>
+#include <ShlObj.h>
+// clang-format on
+
+#undef CreateFileMapping
+#undef CreateProcess
+#undef ExpandEnvironmentStrings
 #undef FindFirstFile
 #undef FindNextFile
 #undef GetEnvironmentVariable
@@ -11,259 +21,493 @@
 #undef GetModuleFileName
 #undef GetModuleHandle
 #undef GetPrivateProfileString
+#undef IMAGE_FIRST_SECTION
+#undef IMAGE_SNAP_BY_ORDINAL64
 #undef LoadLibrary
 #undef MessageBox
+#undef OpenFileMapping
 #undef OutputDebugString
+#undef RegGetValue
 #undef RegQueryValueEx
+#undef SetEnvironmentVariable
 #undef VerQueryValue
 
 extern "C" IMAGE_DOS_HEADER __ImageBase;
 
 namespace SKSE::WinAPI
 {
-	bool FreeLibrary(HMODULE a_module) noexcept
-	{
-		return ::FreeLibrary(reinterpret_cast<::HMODULE>(a_module));
-	}
-
-	[[nodiscard]] bool FindClose(void* a_findFile) noexcept
+	bool CloseHandle(
+		void* a_handle) noexcept
 	{
 		return static_cast<bool>(
-			::FindClose(static_cast<::HMODULE>(a_findFile)));
+			::CloseHandle(
+				a_handle));
 	}
 
-	[[nodiscard]] void* FindFirstFile(
-		const char*       a_fileName,
-		WIN32_FIND_DATAA* a_findFileData) noexcept
+	void CoTaskMemFree(
+		void* a_block) noexcept
 	{
-		return static_cast<void*>(
-			::FindFirstFileA(
-				static_cast<::LPCSTR>(a_fileName),
-				reinterpret_cast<::LPWIN32_FIND_DATAA>(a_findFileData)));
+		::CoTaskMemFree(
+			a_block);
 	}
 
-	[[nodiscard]] void* FindFirstFile(
-		const wchar_t*    a_fileName,
-		WIN32_FIND_DATAW* a_findFileData) noexcept
+	void* CreateFileMapping(
+		void*                a_file,
+		SECURITY_ATTRIBUTES* a_attributes,
+		std::uint32_t        a_protect,
+		std::uint32_t        a_maxSizeHigh,
+		std::uint32_t        a_maxSizeLow,
+		const char*          a_name) noexcept
 	{
-		return static_cast<void*>(
-			::FindFirstFileW(
-				static_cast<::LPCWSTR>(a_fileName),
-				reinterpret_cast<::LPWIN32_FIND_DATAW>(a_findFileData)));
+		return CreateFileMappingA(
+			a_file,
+			reinterpret_cast<LPSECURITY_ATTRIBUTES>(a_attributes),
+			a_protect,
+			a_maxSizeHigh,
+			a_maxSizeLow,
+			a_name);
 	}
 
-	[[nodiscard]] bool FindNextFile(
-		void*             a_findFile,
-		WIN32_FIND_DATAA* a_findFileData) noexcept
+	void* CreateFileMapping(
+		void*                a_file,
+		SECURITY_ATTRIBUTES* a_attributes,
+		std::uint32_t        a_protect,
+		std::uint32_t        a_maxSizeHigh,
+		std::uint32_t        a_maxSizeLow,
+		const wchar_t*       a_name) noexcept
+	{
+		return CreateFileMappingW(
+			a_file,
+			reinterpret_cast<LPSECURITY_ATTRIBUTES>(a_attributes),
+			a_protect,
+			a_maxSizeHigh,
+			a_maxSizeLow,
+			a_name);
+	}
+
+	bool CreateProcess(
+		const char*          a_name,
+		char*                a_cmd,
+		SECURITY_ATTRIBUTES* a_procAttr,
+		SECURITY_ATTRIBUTES* a_threadAttr,
+		bool                 a_inherit,
+		std::uint32_t        a_flags,
+		void*                a_env,
+		const char*          a_curDir,
+		STARTUPINFOA*        a_startInfo,
+		PROCESS_INFORMATION* a_procInfo) noexcept
 	{
 		return static_cast<bool>(
-			::FindNextFileA(
-				static_cast<::HANDLE>(a_findFile),
-				reinterpret_cast<::LPWIN32_FIND_DATAA>(a_findFileData)));
+			CreateProcessA(
+				a_name,
+				a_cmd,
+				reinterpret_cast<LPSECURITY_ATTRIBUTES>(a_procAttr),
+				reinterpret_cast<LPSECURITY_ATTRIBUTES>(a_threadAttr),
+				a_inherit,
+				a_flags,
+				a_env,
+				a_curDir,
+				reinterpret_cast<LPSTARTUPINFOA>(a_startInfo),
+				reinterpret_cast<LPPROCESS_INFORMATION>(a_procInfo)));
 	}
 
-	[[nodiscard]] bool FindNextFile(
-		void*             a_findFile,
-		WIN32_FIND_DATAW* a_findFileData) noexcept
+	bool CreateProcess(
+		const wchar_t*       a_name,
+		wchar_t*             a_cmd,
+		SECURITY_ATTRIBUTES* a_procAttr,
+		SECURITY_ATTRIBUTES* a_threadAttr,
+		bool                 a_inherit,
+		std::uint32_t        a_flags,
+		void*                a_env,
+		const wchar_t*       a_curDir,
+		STARTUPINFOW*        a_startInfo,
+		PROCESS_INFORMATION* a_procInfo) noexcept
 	{
 		return static_cast<bool>(
-			::FindNextFileW(
-				static_cast<::HANDLE>(a_findFile),
-				reinterpret_cast<::LPWIN32_FIND_DATAW>(a_findFileData)));
+			CreateProcessW(
+				a_name,
+				a_cmd,
+				reinterpret_cast<LPSECURITY_ATTRIBUTES>(a_procAttr),
+				reinterpret_cast<LPSECURITY_ATTRIBUTES>(a_threadAttr),
+				a_inherit,
+				a_flags,
+				a_env,
+				a_curDir,
+				reinterpret_cast<LPSTARTUPINFOW>(a_startInfo),
+				reinterpret_cast<LPPROCESS_INFORMATION>(a_procInfo)));
+	}
+
+	void* CreateRemoteThread(
+		void*                 a_process,
+		SECURITY_ATTRIBUTES*  a_threadAttr,
+		std::size_t           a_stackSize,
+		THREAD_START_ROUTINE* a_startAddr,
+		void*                 a_param,
+		std::uint32_t         a_flags,
+		std::uint32_t*        a_threadID) noexcept
+	{
+		return ::CreateRemoteThread(
+			a_process,
+			reinterpret_cast<LPSECURITY_ATTRIBUTES>(a_threadAttr),
+			a_stackSize,
+			reinterpret_cast<LPTHREAD_START_ROUTINE>(a_startAddr),
+			a_param,
+			a_flags,
+			reinterpret_cast<LPDWORD>(a_threadID));
+	}
+
+	void* CreateThread(
+		SECURITY_ATTRIBUTES*  a_threadAttr,
+		std::size_t           a_stackSize,
+		THREAD_START_ROUTINE* a_startAddr,
+		void*                 a_param,
+		std::uint32_t         a_flags,
+		std::uint32_t*        a_threadID) noexcept
+	{
+		return ::CreateThread(
+			reinterpret_cast<LPSECURITY_ATTRIBUTES>(a_threadAttr),
+			a_stackSize,
+			reinterpret_cast<LPTHREAD_START_ROUTINE>(a_startAddr),
+			a_param,
+			a_flags,
+			reinterpret_cast<LPDWORD>(a_threadID));
+	}
+
+	std::uint32_t ExpandEnvironmentStrings(
+		const char*   a_src,
+		char*         a_dst,
+		std::uint32_t a_dstLen) noexcept
+	{
+		return static_cast<std::uint32_t>(
+			ExpandEnvironmentStringsA(
+				a_src,
+				a_dst,
+				a_dstLen));
+	}
+
+	std::uint32_t ExpandEnvironmentStrings(
+		const wchar_t* a_src,
+		wchar_t*       a_dst,
+		std::uint32_t  a_dstLen) noexcept
+	{
+		return static_cast<std::uint32_t>(
+			ExpandEnvironmentStringsW(
+				a_src,
+				a_dst,
+				a_dstLen));
+	}
+
+	bool FindClose(
+		void* a_file) noexcept
+	{
+		return static_cast<bool>(
+			::FindClose(
+				a_file));
+	}
+
+	void* FindFirstFile(
+		const char*       a_name,
+		WIN32_FIND_DATAA* a_data) noexcept
+	{
+		return FindFirstFileA(
+			a_name,
+			reinterpret_cast<LPWIN32_FIND_DATAA>(a_data));
+	}
+
+	void* FindFirstFile(
+		const wchar_t*    a_name,
+		WIN32_FIND_DATAW* a_data) noexcept
+	{
+		return FindFirstFileW(
+			a_name,
+			reinterpret_cast<LPWIN32_FIND_DATAW>(a_data));
+	}
+
+	bool FindNextFile(
+		void*             a_file,
+		WIN32_FIND_DATAA* a_data) noexcept
+	{
+		return static_cast<bool>(
+			FindNextFileA(
+				a_file,
+				reinterpret_cast<LPWIN32_FIND_DATAA>(a_data)));
+	}
+
+	bool FindNextFile(
+		void*             a_file,
+		WIN32_FIND_DATAW* a_data) noexcept
+	{
+		return static_cast<bool>(
+			FindNextFileW(
+				a_file,
+				reinterpret_cast<LPWIN32_FIND_DATAW>(a_data)));
+	}
+
+	bool FlushInstructionCache(
+		void*       a_process,
+		const void* a_baseAddr,
+		std::size_t a_size) noexcept
+	{
+		return static_cast<bool>(
+			::FlushInstructionCache(
+				a_process,
+				a_baseAddr,
+				a_size));
+	}
+
+	bool FreeLibrary(
+		HMODULE a_module) noexcept
+	{
+		return static_cast<bool>(
+			::FreeLibrary(
+				reinterpret_cast<::HMODULE>(a_module)));
 	}
 
 	void* GetCurrentModule() noexcept
 	{
-		return static_cast<void*>(
-			std::addressof(__ImageBase));
+		return std::addressof(__ImageBase);
 	}
 
 	void* GetCurrentProcess() noexcept
 	{
-		return static_cast<void*>(
-			::GetCurrentProcess());
+		return ::GetCurrentProcess();
 	}
 
 	std::uint32_t GetCurrentThreadID() noexcept
 	{
 		return static_cast<std::uint32_t>(
-			::GetCurrentThreadId());
+			GetCurrentThreadId());
 	}
 
-	[[nodiscard]] std::uint32_t GetEnvironmentVariable(
+	std::uint32_t GetEnvironmentVariable(
 		const char*   a_name,
 		char*         a_buffer,
-		std::uint32_t a_size) noexcept
+		std::uint32_t a_bufferLen) noexcept
 	{
 		return static_cast<std::uint32_t>(
-			::GetEnvironmentVariableA(
-				static_cast<::LPCSTR>(a_name),
-				static_cast<::LPSTR>(a_buffer),
-				static_cast<::DWORD>(a_size)));
+			GetEnvironmentVariableA(
+				a_name,
+				a_buffer,
+				a_bufferLen));
 	}
 
-	[[nodiscard]] std::uint32_t GetEnvironmentVariable(
+	std::uint32_t GetEnvironmentVariable(
 		const wchar_t* a_name,
 		wchar_t*       a_buffer,
-		std::uint32_t  a_size) noexcept
+		std::uint32_t  a_bufferLen) noexcept
 	{
 		return static_cast<std::uint32_t>(
-			::GetEnvironmentVariableW(
-				static_cast<::LPCWSTR>(a_name),
-				static_cast<::LPWSTR>(a_buffer),
-				static_cast<::DWORD>(a_size)));
+			GetEnvironmentVariableW(
+				a_name,
+				a_buffer,
+				a_bufferLen));
 	}
 
 	bool GetFileVersionInfo(
-		const char*   a_filename,
+		const char*   a_name,
 		std::uint32_t a_handle,
-		std::uint32_t a_len,
+		std::uint32_t a_dataLen,
 		void*         a_data) noexcept
 	{
 		return static_cast<bool>(
-			::GetFileVersionInfoA(
-				static_cast<::LPCSTR>(a_filename),
-				static_cast<::DWORD>(a_handle),
-				static_cast<::DWORD>(a_len),
-				static_cast<::LPVOID>(a_data)));
+			GetFileVersionInfoA(
+				a_name,
+				a_handle,
+				a_dataLen,
+				a_data));
 	}
 
 	bool GetFileVersionInfo(
-		const wchar_t* a_filename,
+		const wchar_t* a_name,
 		std::uint32_t  a_handle,
-		std::uint32_t  a_len,
+		std::uint32_t  a_dataLen,
 		void*          a_data) noexcept
 	{
 		return static_cast<bool>(
-			::GetFileVersionInfoW(
-				static_cast<::LPCWSTR>(a_filename),
-				static_cast<::DWORD>(a_handle),
-				static_cast<::DWORD>(a_len),
-				static_cast<::LPVOID>(a_data)));
+			GetFileVersionInfoW(
+				a_name,
+				a_handle,
+				a_dataLen,
+				a_data));
 	}
 
 	std::uint32_t GetFileVersionInfoSize(
-		const char*    a_filename,
+		const char*    a_name,
 		std::uint32_t* a_handle) noexcept
 	{
 		return static_cast<std::uint32_t>(
-			::GetFileVersionInfoSizeA(
-				static_cast<::LPCSTR>(a_filename),
-				reinterpret_cast<::LPDWORD>(a_handle)));
+			GetFileVersionInfoSizeA(
+				a_name,
+				reinterpret_cast<LPDWORD>(a_handle)));
 	}
 
 	std::uint32_t GetFileVersionInfoSize(
-		const wchar_t* a_filename,
+		const wchar_t* a_name,
 		std::uint32_t* a_handle) noexcept
 	{
 		return static_cast<std::uint32_t>(
-			::GetFileVersionInfoSizeW(
-				static_cast<::LPCWSTR>(a_filename),
-				reinterpret_cast<::LPDWORD>(a_handle)));
+			GetFileVersionInfoSizeW(
+				a_name,
+				reinterpret_cast<LPDWORD>(a_handle)));
 	}
 
-	int GetKeyNameText(std::int32_t a_lParam, wchar_t* a_buffer, int a_size) noexcept
+	std::int32_t GetKeyNameText(
+		std::int32_t a_param,
+		wchar_t*     a_buffer,
+		std::int32_t a_bufferLen) noexcept
 	{
-		return ::GetKeyNameTextW(static_cast<::LONG>(a_lParam), static_cast<::LPWSTR>(a_buffer), a_size);
+		return GetKeyNameTextW(
+			a_param,
+			a_buffer,
+			a_bufferLen);
 	}
 
-	int GetKeyNameText(std::int32_t a_lParam, char* a_buffer, int a_size) noexcept
+	std::int32_t GetKeyNameText(
+		std::int32_t a_param,
+		char*        a_buffer,
+		std::int32_t a_bufferLen) noexcept
 	{
-		return ::GetKeyNameTextA(static_cast<::LONG>(a_lParam), static_cast<::LPSTR>(a_buffer), a_size);
+		return GetKeyNameTextA(
+			a_param,
+			a_buffer,
+			a_bufferLen);
 	}
 
-	std::int16_t GetKeyState(int nVirtKey) noexcept
+	std::int16_t GetKeyState(
+		std::int32_t a_key) noexcept
 	{
-		return ::GetKeyState(nVirtKey);
+		return ::GetKeyState(a_key);
+	}
+
+	std::uint32_t GetLastError() noexcept
+	{
+		return static_cast<std::uint32_t>(
+			::GetLastError());
 	}
 
 	std::size_t GetMaxPath() noexcept
 	{
-		return static_cast<std::size_t>(MAX_PATH);
+		return MAX_PATH;
 	}
 
 	std::uint32_t GetModuleFileName(
 		void*         a_module,
-		char*         a_filename,
-		std::uint32_t a_size) noexcept
+		char*         a_name,
+		std::uint32_t a_nameLen) noexcept
 	{
 		return static_cast<std::uint32_t>(
-			::GetModuleFileNameA(
+			GetModuleFileNameA(
 				static_cast<::HMODULE>(a_module),
-				static_cast<::LPSTR>(a_filename),
-				static_cast<::DWORD>(a_size)));
+				a_name,
+				a_nameLen));
 	}
 
 	std::uint32_t GetModuleFileName(
 		void*         a_module,
-		wchar_t*      a_filename,
-		std::uint32_t a_size) noexcept
+		wchar_t*      a_name,
+		std::uint32_t a_nameLen) noexcept
 	{
 		return static_cast<std::uint32_t>(
-			::GetModuleFileNameW(
+			GetModuleFileNameW(
 				static_cast<::HMODULE>(a_module),
-				static_cast<::LPWSTR>(a_filename),
-				static_cast<::DWORD>(a_size)));
+				a_name,
+				a_nameLen));
 	}
 
-	HMODULE GetModuleHandle(const char* a_moduleName) noexcept
+	HMODULE GetModuleHandle(
+		const char* a_name) noexcept
 	{
 		return reinterpret_cast<HMODULE>(
-			::GetModuleHandleA(
-				static_cast<::LPCSTR>(a_moduleName)));
+			GetModuleHandleA(
+				a_name));
 	}
 
-	HMODULE GetModuleHandle(const wchar_t* a_moduleName) noexcept
+	HMODULE GetModuleHandle(
+		const wchar_t* a_name) noexcept
 	{
 		return reinterpret_cast<HMODULE>(
-			::GetModuleHandleW(
-				static_cast<::LPCWSTR>(a_moduleName)));
+			GetModuleHandleW(a_name));
 	}
 
 	std::uint32_t GetPrivateProfileString(
-		const char*   a_appName,
-		const char*   a_keyName,
+		const char*   a_app,
+		const char*   a_key,
 		const char*   a_default,
-		char*         a_outString,
-		std::uint32_t a_size,
-		const char*   a_fileName) noexcept
+		char*         a_out,
+		std::uint32_t a_outLen,
+		const char*   a_name) noexcept
 	{
 		return static_cast<std::uint32_t>(
-			::GetPrivateProfileStringA(
-				static_cast<::LPCSTR>(a_appName),
-				static_cast<::LPCSTR>(a_keyName),
-				static_cast<::LPCSTR>(a_default),
-				static_cast<::LPSTR>(a_outString),
-				static_cast<::DWORD>(a_size),
-				static_cast<::LPCSTR>(a_fileName)));
+			GetPrivateProfileStringA(
+				a_app,
+				a_key,
+				a_default,
+				a_out,
+				a_outLen,
+				a_name));
 	}
 
 	std::uint32_t GetPrivateProfileString(
-		const wchar_t* a_appName,
-		const wchar_t* a_keyName,
+		const wchar_t* a_app,
+		const wchar_t* a_key,
 		const wchar_t* a_default,
-		wchar_t*       a_outString,
-		std::uint32_t  a_size,
-		const wchar_t* a_fileName) noexcept
+		wchar_t*       a_out,
+		std::uint32_t  a_outLen,
+		const wchar_t* a_name) noexcept
 	{
 		return static_cast<std::uint32_t>(
-			::GetPrivateProfileStringW(
-				static_cast<::LPCWSTR>(a_appName),
-				static_cast<::LPCWSTR>(a_keyName),
-				static_cast<::LPCWSTR>(a_default),
-				static_cast<::LPWSTR>(a_outString),
-				static_cast<::DWORD>(a_size),
-				static_cast<::LPCWSTR>(a_fileName)));
+			GetPrivateProfileStringW(
+				a_app,
+				a_key,
+				a_default,
+				a_out,
+				a_outLen,
+				a_name));
 	}
 
 	void* GetProcAddress(
 		void*       a_module,
-		const char* a_procName) noexcept
+		const char* a_name) noexcept
 	{
 		return reinterpret_cast<void*>(
 			::GetProcAddress(
 				static_cast<::HMODULE>(a_module),
-				static_cast<::LPCSTR>(a_procName)));
+				a_name));
+	}
+
+	std::string_view GetProcPath(
+		HMODULE a_handle) noexcept
+	{
+		static std::string fileName(MAX_PATH + 1, ' ');
+		auto               res = GetModuleFileName(a_handle, fileName.data(), MAX_PATH + 1);
+		if (res == 0) {
+			fileName = "[ProcessHost]";
+			res = 13;
+		}
+
+		return { fileName.c_str(), res };
+	}
+
+	void GetSystemInfo(
+		SYSTEM_INFO* a_info) noexcept
+	{
+		::GetSystemInfo(
+			reinterpret_cast<LPSYSTEM_INFO>(a_info));
+	}
+
+	bool IMAGE_SNAP_BY_ORDINAL64(
+		std::uint64_t a_ordinal) noexcept
+	{
+		return (a_ordinal & IMAGE_ORDINAL_FLAG64) != 0;
+	}
+
+	IMAGE_SECTION_HEADER* IMAGE_FIRST_SECTION(
+		const IMAGE_NT_HEADERS64* a_header) noexcept
+	{
+		constexpr auto opt = __builtin_offsetof(IMAGE_NT_HEADERS64, optionalHeader);
+		const auto     optSize = a_header->fileHeader.optionalHeaderSize;
+		const auto     section = reinterpret_cast<std::uintptr_t>(a_header) + opt + optSize;
+		return reinterpret_cast<IMAGE_SECTION_HEADER*>(section);
 	}
 
 	bool IsDebuggerPresent() noexcept
@@ -272,161 +516,405 @@ namespace SKSE::WinAPI
 			::IsDebuggerPresent());
 	}
 
-	HMODULE LoadLibrary(const char* a_libFileName) noexcept
+	std::int32_t LCMapStringEx(
+		const wchar_t*  a_locale,
+		std::uint32_t   a_flags,
+		const wchar_t*  a_src,
+		std::int32_t    a_srcLen,
+		wchar_t*        a_dest,
+		std::int32_t    a_destLen,
+		NLSVERSIONINFO* a_info,
+		void*           a_reserved,
+		std::intptr_t   a_sortHandle) noexcept
 	{
-		return reinterpret_cast<HMODULE>(::LoadLibraryA(static_cast<::LPCSTR>(a_libFileName)));
+		return ::LCMapStringEx(
+			a_locale,
+			a_flags,
+			a_src,
+			a_srcLen,
+			a_dest,
+			a_destLen,
+			reinterpret_cast<LPNLSVERSIONINFO>(a_info),
+			a_reserved,
+			a_sortHandle);
 	}
 
-	HMODULE LoadLibrary(const wchar_t* a_libFileName) noexcept
+	HMODULE LoadLibrary(
+		const char* a_name) noexcept
 	{
-		return reinterpret_cast<HMODULE>(::LoadLibraryW(static_cast<::LPCWSTR>(a_libFileName)));
+		return reinterpret_cast<HMODULE>(
+			LoadLibraryA(
+				a_name));
+	}
+
+	HMODULE LoadLibrary(
+		const wchar_t* a_name) noexcept
+	{
+		return reinterpret_cast<HMODULE>(
+			LoadLibraryW(a_name));
+	}
+
+	void* MapViewOfFile(
+		void*         a_object,
+		std::uint32_t a_desiredAccess,
+		std::uint32_t a_fileOffsetHigh,
+		std::uint32_t a_fileOffsetLow,
+		std::size_t   a_numBytesToMap) noexcept
+	{
+		return ::MapViewOfFile(
+			a_object,
+			a_desiredAccess,
+			a_fileOffsetHigh,
+			a_fileOffsetLow,
+			a_numBytesToMap);
+	}
+
+	void* MapViewOfFileEx(
+		void*         a_object,
+		std::uint32_t a_desiredAccess,
+		std::uint32_t a_fileOffsetHigh,
+		std::uint32_t a_fileOffsetLow,
+		std::size_t   a_numBytesToMap,
+		void*         a_baseAddress) noexcept
+	{
+		return ::MapViewOfFileEx(
+			a_object,
+			a_desiredAccess,
+			a_fileOffsetHigh,
+			a_fileOffsetLow,
+			a_numBytesToMap,
+			a_baseAddress);
 	}
 
 	std::int32_t MessageBox(
-		void*        a_wnd,
-		const char*  a_text,
-		const char*  a_caption,
-		unsigned int a_type) noexcept
+		void*         a_wnd,
+		const char*   a_text,
+		const char*   a_caption,
+		std::uint32_t a_type) noexcept
 	{
-		return static_cast<std::int32_t>(
-			::MessageBoxA(
-				static_cast<::HWND>(a_wnd),
-				static_cast<::LPCSTR>(a_text),
-				static_cast<::LPCSTR>(a_caption),
-				static_cast<::UINT>(a_type)));
+		return MessageBoxA(
+			static_cast<::HWND>(a_wnd),
+			a_text,
+			a_caption,
+			a_type);
 	}
 
 	std::int32_t MessageBox(
 		void*          a_wnd,
 		const wchar_t* a_text,
 		const wchar_t* a_caption,
-		unsigned int   a_type) noexcept
+		std::uint32_t  a_type) noexcept
 	{
-		return static_cast<std::int32_t>(
-			::MessageBoxW(
-				static_cast<::HWND>(a_wnd),
-				static_cast<::LPCWSTR>(a_text),
-				static_cast<::LPCWSTR>(a_caption),
-				static_cast<::UINT>(a_type)));
+		return MessageBoxW(
+			static_cast<::HWND>(a_wnd),
+			a_text,
+			a_caption,
+			a_type);
 	}
 
-	int MultiByteToWideChar(
-		unsigned int  a_codePage,
+	std::int32_t MultiByteToWideChar(
+		std::uint32_t a_codePage,
 		std::uint32_t a_flags,
-		const char*   a_multiByteStr,
-		int           a_multiByte,
-		wchar_t*      a_wideCharStr,
-		int           a_wideChar)
+		const char*   a_str,
+		std::int32_t  a_strLen,
+		wchar_t*      a_wstr,
+		std::int32_t  a_wstrLen)
 	{
 		return ::MultiByteToWideChar(
-			static_cast<::UINT>(a_codePage),
-			static_cast<::DWORD>(a_flags),
-			static_cast<::LPCCH>(a_multiByteStr),
-			a_multiByte,
-			static_cast<::LPWSTR>(a_wideCharStr),
-			a_wideChar);
+			a_codePage,
+			a_flags,
+			a_str,
+			a_strLen,
+			a_wstr,
+			a_wstrLen);
+	}
+
+	std::int32_t NormalizeString(
+		std::int32_t   a_normForm,
+		const wchar_t* a_src,
+		std::int32_t   a_srcLen,
+		wchar_t*       a_dest,
+		std::int32_t   a_destLen)
+	{
+		return ::NormalizeString(
+			static_cast<NORM_FORM>(a_normForm),
+			a_src,
+			a_srcLen,
+			a_dest,
+			a_destLen);
+	}
+
+	void* OpenFileMapping(
+		std::uint32_t a_desiredAccess,
+		bool          a_inheritHandle,
+		const char*   a_name) noexcept
+	{
+		return OpenFileMappingA(
+			a_desiredAccess,
+			a_inheritHandle,
+			a_name);
+	}
+
+	void* OpenFileMapping(
+		std::uint32_t  a_desiredAccess,
+		bool           a_inheritHandle,
+		const wchar_t* a_name) noexcept
+	{
+		return OpenFileMappingW(
+			a_desiredAccess,
+			a_inheritHandle,
+			a_name);
 	}
 
 	void OutputDebugString(
-		const char* a_outputString) noexcept
+		const char* a_out) noexcept
 	{
-		::OutputDebugStringA(
-			static_cast<::LPCSTR>(a_outputString));
+		OutputDebugStringA(
+			a_out);
 	}
 
 	void OutputDebugString(
-		const wchar_t* a_outputString) noexcept
+		const wchar_t* a_out) noexcept
 	{
-		::OutputDebugStringW(
-			static_cast<::LPCWSTR>(a_outputString));
+		OutputDebugStringW(
+			a_out);
 	}
 
-    long RegGetValueW(HKEY hkey, const char* subKey, const char* value, unsigned long flags, unsigned long* type,
-                      void* data, unsigned long* length)
-    {
-        return ::RegGetValueA(reinterpret_cast<::HKEY>(hkey), subKey, value, flags, type, data, length);
-    }
-
-    long RegGetValueW(HKEY hkey, const wchar_t* subKey, const wchar_t* value, unsigned long flags, unsigned long* type,
-                      void* data, unsigned long* length)
-    {
-        return ::RegGetValueW(reinterpret_cast<::HKEY>(hkey), subKey, value, flags, type, data, length);
-    }
-
-	int ShowCursor(bool bShow) noexcept
+	std::int32_t RegGetValue(
+		HKEY           a_key,
+		const char*    a_subKey,
+		const char*    a_value,
+		std::uint32_t  a_flags,
+		std::uint32_t* a_type,
+		void*          a_data,
+		std::uint32_t* a_dataLen)
 	{
-		return ::ShowCursor(static_cast<::BOOL>(bShow));
+		return RegGetValueA(
+			reinterpret_cast<::HKEY>(a_key),
+			a_subKey,
+			a_value,
+			a_flags,
+			reinterpret_cast<LPDWORD>(a_type),
+			a_data,
+			reinterpret_cast<LPDWORD>(a_dataLen));
 	}
 
-	void TerminateProcess(
-		void*        a_process,
-		unsigned int a_exitCode) noexcept
+	std::int32_t RegGetValue(
+		HKEY           a_key,
+		const wchar_t* a_subKey,
+		const wchar_t* a_value,
+		std::uint32_t  a_flags,
+		std::uint32_t* a_type,
+		void*          a_data,
+		std::uint32_t* a_dataLen)
 	{
-		::TerminateProcess(
-			static_cast<::HANDLE>(a_process),
-			static_cast<::UINT>(a_exitCode));
-#if defined(__clang__) || defined(__GNUC__)
-		__builtin_unreachable();
-#elif defined(_MSC_VER)
-		__assume(false);
-#endif
+		return RegGetValueW(
+			reinterpret_cast<::HKEY>(a_key),
+			a_subKey,
+			a_value,
+			a_flags,
+			reinterpret_cast<LPDWORD>(a_type),
+			a_data,
+			reinterpret_cast<LPDWORD>(a_dataLen));
 	}
 
-	void* TlsGetValue(std::uint32_t a_tlsIndex) noexcept
+	std::uint32_t ResumeThread(
+		void* a_handle) noexcept
 	{
-		return static_cast<void*>(
-			::TlsGetValue(
-				static_cast<::DWORD>(a_tlsIndex)));
+		return static_cast<std::uint32_t>(
+			::ResumeThread(
+				a_handle));
+	}
+
+	bool SetEnvironmentVariable(
+		const char* a_name,
+		const char* a_value) noexcept
+	{
+		return static_cast<bool>(
+			SetEnvironmentVariableA(
+				a_name,
+				a_value));
+	}
+
+	bool SetEnvironmentVariable(
+		const wchar_t* a_name,
+		const wchar_t* a_value) noexcept
+	{
+		return static_cast<bool>(
+			SetEnvironmentVariableW(
+				a_name,
+				a_value));
+	}
+
+	std::int32_t SHGetKnownFolderPath(
+		const GUID&   a_id,
+		std::uint32_t a_flags,
+		void*         a_token,
+		wchar_t**     a_path) noexcept
+	{
+		return static_cast<std::int32_t>(
+			::SHGetKnownFolderPath(
+				reinterpret_cast<const KNOWNFOLDERID&>(a_id),
+				a_flags,
+				a_token,
+				a_path));
+	}
+
+	std::int32_t ShowCursor(
+		bool a_show) noexcept
+	{
+		return ::ShowCursor(
+			a_show);
+	}
+
+	void Sleep(
+		std::uint32_t a_milliseconds) noexcept
+	{
+		::Sleep(a_milliseconds);
+	}
+
+	bool TerminateProcess(
+		void*         a_process,
+		std::uint32_t a_exitCode) noexcept
+	{
+		return static_cast<bool>(
+			::TerminateProcess(
+				a_process,
+				a_exitCode));
+	}
+
+	void* TlsGetValue(
+		std::uint32_t a_index) noexcept
+	{
+		return ::TlsGetValue(
+			a_index);
 	}
 
 	bool TlsSetValue(
-		std::uint32_t a_tlsIndex,
-		void*         a_tlsValue) noexcept
+		std::uint32_t a_index,
+		void*         a_value) noexcept
 	{
 		return static_cast<bool>(
 			::TlsSetValue(
-				static_cast<::DWORD>(a_tlsIndex),
-				static_cast<::LPVOID>(a_tlsValue)));
+				a_index,
+				a_value));
 	}
 
-	bool VirtualFree(
-		void*         a_address,
-		std::size_t   a_size,
-		std::uint32_t a_freeType) noexcept
+	std::uint32_t UnDecorateSymbolName(
+		const char*   a_name,
+		char*         a_out,
+		std::uint32_t a_outLenMax,
+		std::uint32_t a_flags) noexcept
+	{
+		return static_cast<std::uint32_t>(
+			::UnDecorateSymbolName(
+				a_name,
+				a_out,
+				a_outLenMax,
+				a_flags));
+	}
+
+	std::uint32_t UnDecorateSymbolName(
+		const wchar_t* a_name,
+		wchar_t*       a_out,
+		std::uint32_t  a_outLenMax,
+		std::uint32_t  a_flags) noexcept
+	{
+		return static_cast<std::uint32_t>(
+			UnDecorateSymbolNameW(
+				a_name,
+				a_out,
+				a_outLenMax,
+				a_flags));
+	}
+
+	bool UnmapViewOfFile(
+		const void* a_baseAddress) noexcept
 	{
 		return static_cast<bool>(
-			::VirtualFree(
-				static_cast<::LPVOID>(a_address),
-				static_cast<::SIZE_T>(a_size),
-				static_cast<::DWORD>(a_freeType)));
+			::UnmapViewOfFile(
+				a_baseAddress));
 	}
 
 	bool VerQueryValue(
-		const void*   a_block,
-		const char*   a_subBlock,
-		void**        a_buffer,
-		unsigned int* a_len) noexcept
+		const void*    a_block,
+		const char*    a_subBlock,
+		void**         a_buffer,
+		std::uint32_t* a_bufferLen) noexcept
 	{
 		return static_cast<bool>(
-			::VerQueryValueA(
-				static_cast<::LPCVOID>(a_block),
-				static_cast<::LPCSTR>(a_subBlock),
-				static_cast<::LPVOID*>(a_buffer),
-				static_cast<::PUINT>(a_len)));
+			VerQueryValueA(a_block,
+				a_subBlock,
+				a_buffer,
+				a_bufferLen));
 	}
 
 	bool VerQueryValue(
 		const void*    a_block,
 		const wchar_t* a_subBlock,
 		void**         a_buffer,
-		unsigned int*  a_len) noexcept
+		std::uint32_t* a_bufferLen) noexcept
 	{
 		return static_cast<bool>(
-			::VerQueryValueW(
-				static_cast<::LPCVOID>(a_block),
-				static_cast<::LPCWSTR>(a_subBlock),
-				static_cast<::LPVOID*>(a_buffer),
-				static_cast<::PUINT>(a_len)));
+			VerQueryValueW(
+				a_block,
+				a_subBlock,
+				a_buffer,
+				a_bufferLen));
+	}
+
+	void* VirtualAlloc(
+		void*         a_address,
+		std::size_t   a_size,
+		std::uint32_t a_type,
+		std::uint32_t a_protect) noexcept
+	{
+		return ::VirtualAlloc(
+			a_address,
+			a_size,
+			a_type,
+			a_protect);
+	}
+
+	void* VirtualAllocEx(
+		void*         a_process,
+		void*         a_address,
+		std::size_t   a_size,
+		std::uint32_t a_type,
+		std::uint32_t a_protect) noexcept
+	{
+		return ::VirtualAllocEx(
+			a_process,
+			a_address,
+			a_size,
+			a_type,
+			a_protect);
+	}
+
+	bool VirtualFree(
+		void*         a_address,
+		std::size_t   a_size,
+		std::uint32_t a_type) noexcept
+	{
+		return static_cast<bool>(
+			::VirtualFree(
+				a_address,
+				a_size,
+				a_type));
+	}
+
+	bool VirtualFreeEx(
+		void*         a_process,
+		void*         a_address,
+		std::size_t   a_size,
+		std::uint32_t a_type) noexcept
+	{
+		return static_cast<bool>(
+			::VirtualFreeEx(
+				a_process,
+				a_address,
+				a_size,
+				a_type));
 	}
 
 	bool VirtualProtect(
@@ -437,31 +925,108 @@ namespace SKSE::WinAPI
 	{
 		return static_cast<bool>(
 			::VirtualProtect(
-				static_cast<::LPVOID>(a_address),
-				static_cast<::SIZE_T>(a_size),
-				static_cast<::DWORD>(a_newProtect),
-				reinterpret_cast<::PDWORD>(a_oldProtect)));
+				a_address,
+				a_size,
+				a_newProtect,
+				reinterpret_cast<PDWORD>(a_oldProtect)));
 	}
 
-	int WideCharToMultiByte(
-		unsigned int   a_codePage,
+	bool VirtualProtectEx(
+		void*          a_process,
+		void*          a_address,
+		std::size_t    a_size,
+		std::uint32_t  a_newProtect,
+		std::uint32_t* a_oldProtect) noexcept
+	{
+		return static_cast<bool>(
+			::VirtualProtectEx(
+				a_process,
+				a_address,
+				a_size,
+				a_newProtect,
+				reinterpret_cast<PDWORD>(a_oldProtect)));
+	}
+
+	std::size_t VirtualQuery(
+		const void*               a_address,
+		MEMORY_BASIC_INFORMATION* a_buffer,
+		std::size_t               a_bufferLen) noexcept
+	{
+		return ::VirtualQuery(
+			a_address,
+			reinterpret_cast<PMEMORY_BASIC_INFORMATION>(a_buffer),
+			a_bufferLen);
+	}
+
+	std::size_t VirtualQueryEx(
+		void*                     a_process,
+		const void*               a_address,
+		MEMORY_BASIC_INFORMATION* a_buffer,
+		std::size_t               a_bufferLen) noexcept
+	{
+		return ::VirtualQueryEx(
+			a_process,
+			a_address,
+			reinterpret_cast<PMEMORY_BASIC_INFORMATION>(a_buffer),
+			a_bufferLen);
+	}
+
+	std::uint32_t WaitForSingleObject(
+		void*         a_handle,
+		std::uint32_t a_milliseconds) noexcept
+	{
+		return static_cast<std::uint32_t>(
+			::WaitForSingleObject(
+				a_handle,
+				a_milliseconds));
+	}
+
+	std::uint32_t WaitForSingleObjectEx(
+		void*         a_handle,
+		std::uint32_t a_milliseconds,
+		bool          a_alertable) noexcept
+	{
+		return static_cast<std::uint32_t>(
+			::WaitForSingleObjectEx(
+				a_handle,
+				a_milliseconds,
+				a_alertable));
+	}
+
+	std::int32_t WideCharToMultiByte(
+		std::uint32_t  a_codePage,
 		std::uint32_t  a_flags,
-		const wchar_t* a_wideCharStr,
-		int            a_wideChar,
-		char*          a_multiByteStr,
-		int            a_multiByte,
-		const char*    a_defaultChar,
-		int*           a_usedDefaultChar)
+		const wchar_t* a_wstr,
+		std::int32_t   a_wstrLen,
+		char*          a_str,
+		std::int32_t   a_strLen,
+		const char*    a_default,
+		std::int32_t*  a_defaultLen)
 	{
 		return ::WideCharToMultiByte(
-			static_cast<::UINT>(a_codePage),
-			static_cast<::DWORD>(a_flags),
-			static_cast<::LPCWCH>(a_wideCharStr),
-			a_wideChar,
-			static_cast<::LPSTR>(a_multiByteStr),
-			a_multiByte,
-			static_cast<::LPCCH>(a_defaultChar),
-			static_cast<::LPBOOL>(a_usedDefaultChar));
+			a_codePage,
+			a_flags,
+			a_wstr,
+			a_wstrLen,
+			a_str,
+			a_strLen,
+			a_default,
+			a_defaultLen);
 	}
 
+	bool WriteProcessMemory(
+		void*        a_process,
+		void*        a_address,
+		const void*  a_buffer,
+		std::size_t  a_bufferLen,
+		std::size_t* a_bufferWritten) noexcept
+	{
+		return static_cast<bool>(
+			::WriteProcessMemory(
+				a_process,
+				a_address,
+				a_buffer,
+				a_bufferLen,
+				a_bufferWritten));
+	}
 }

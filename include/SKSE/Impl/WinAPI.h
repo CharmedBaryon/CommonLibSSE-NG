@@ -1,146 +1,543 @@
 #pragma once
 
-#undef CP_UTF8
-#undef IMAGE_SCN_MEM_EXECUTE
-#undef IMAGE_SCN_MEM_WRITE
-#undef INVALID_HANDLE_VALUE
-#undef MAX_PATH
-#undef MEM_COMMIT
-#undef MEM_RESERVE
-#undef MEM_RELEASE
-#undef PAGE_EXECUTE_READWRITE
-#undef HKEY_LOCAL_MACHINE
-
-#undef GetEnvironmentVariable
-#undef GetFileVersionInfoSize
-#undef GetModuleFileName
-#undef VerQueryValue
-#undef GetFileVersionInfo
-#undef GetModuleHandle
-#undef LoadLibrary
-#undef MessageBox
-#undef OutputDebugString
+#ifdef _INC_WINAPIFAMILY
+#	error Windows API detected. Please move any Windows API includes after CommonLibSSE, or remove them.
+#else
 
 namespace SKSE::WinAPI
 {
+	// general constants
+	inline const auto     INVALID_HANDLE_VALUE{ reinterpret_cast<void*>(static_cast<std::intptr_t>(-1)) };
+	inline constexpr auto MAX_PATH{ 260u };
+
+	// standard access
+	inline constexpr auto STANDARD_RIGHTS_REQUIRED{ 0x000F0000 };
+	inline constexpr auto STANDARD_RIGHTS_ALL{ 0x001F0000 };
+
+	// code page identifiers
 	inline constexpr auto CP_UTF8{ 65001u };
+
+	// pe image header
+	inline constexpr auto IMAGE_DOS_SIGNATURE{ 0x5A4Du };
+	inline constexpr auto IMAGE_NT_SIGNATURE{ 0x00004550u };
+	inline constexpr auto IMAGE_NT_OPTIONAL_HDR32_MAGIC{ 0x10Bu };
+	inline constexpr auto IMAGE_NT_OPTIONAL_HDR64_MAGIC{ 0x20Bu };
+
+	// pe image directory entries
+	inline constexpr auto IMAGE_DIRECTORY_ENTRY_EXPORT{ 0u };
+	inline constexpr auto IMAGE_DIRECTORY_ENTRY_IMPORT{ 1u };
+	inline constexpr auto IMAGE_DIRECTORY_ENTRY_RESOURCE{ 2u };
+	inline constexpr auto IMAGE_DIRECTORY_ENTRY_EXCEPTION{ 3u };
+	inline constexpr auto IMAGE_DIRECTORY_ENTRY_SECURITY{ 4u };
+	inline constexpr auto IMAGE_DIRECTORY_ENTRY_BASERELOC{ 5u };
+	inline constexpr auto IMAGE_DIRECTORY_ENTRY_DEBUG{ 6u };
+	inline constexpr auto IMAGE_DIRECTORY_ENTRY_ARCHITECTURE{ 7u };
+	inline constexpr auto IMAGE_DIRECTORY_ENTRY_GLOBALPTR{ 8u };
+	inline constexpr auto IMAGE_DIRECTORY_ENTRY_TLS{ 9u };
+	inline constexpr auto IMAGE_DIRECTORY_ENTRY_LOAD_CONFIG{ 10u };
+	inline constexpr auto IMAGE_DIRECTORY_ENTRY_BOUND_IMPORT{ 11u };
+	inline constexpr auto IMAGE_DIRECTORY_ENTRY_IAT{ 12u };
+	inline constexpr auto IMAGE_DIRECTORY_ENTRY_DELAY_IMPORT{ 13u };
+	inline constexpr auto IMAGE_DIRECTORY_ENTRY_COM_DESCRIPTOR{ 14u };
+	inline constexpr auto IMAGE_NUMBEROF_DIRECTORY_ENTRIES{ 16u };
+
+	// pe image ordinal
+	inline constexpr auto IMAGE_ORDINAL_FLAG32{ 0x80000000u };
+	inline constexpr auto IMAGE_ORDINAL_FLAG64{ 0x8000000000000000ull };
+
+	// pe image section header characteristics
+	inline constexpr auto IMAGE_SCN_MEM_SHARED{ 0x10000000u };
+	inline constexpr auto IMAGE_SCN_MEM_EXECUTE{ 0x20000000u };
+	inline constexpr auto IMAGE_SCN_MEM_READ{ 0x40000000u };
+	inline constexpr auto IMAGE_SCN_MEM_WRITE{ 0x80000000u };
+	inline constexpr auto IMAGE_SIZEOF_SECTION_HEADER{ 40u };
+	inline constexpr auto IMAGE_SIZEOF_SHORT_NAME{ 8u };
+
+	// memory allocation types
+	inline constexpr auto MEM_COMMIT{ 0x00001000u };
+	inline constexpr auto MEM_RESERVE{ 0x00002000u };
+	inline constexpr auto MEM_DECOMMIT{ 0x00004000u };
+	inline constexpr auto MEM_RELEASE{ 0x00008000u };
+	inline constexpr auto MEM_FREE{ 0x00010000u };
+	inline constexpr auto MEM_RESET{ 0x00080000u };
+	inline constexpr auto MEM_RESET_UNDO{ 0x01000000u };
+
+	// memory page protection attributes
+	inline constexpr auto PAGE_NOACCESS{ 0x00000001u };
+	inline constexpr auto PAGE_READONLY{ 0x00000002u };
+	inline constexpr auto PAGE_READWRITE{ 0x00000004u };
+	inline constexpr auto PAGE_WRITECOPY{ 0x00000008u };
+	inline constexpr auto PAGE_EXECUTE{ 0x00000010u };
+	inline constexpr auto PAGE_EXECUTE_READ{ 0x00000020u };
+	inline constexpr auto PAGE_EXECUTE_READWRITE{ 0x00000040u };
+
+	// memory section
+	inline constexpr auto SECTION_QUERY{ 0x00000001 };
+	inline constexpr auto SECTION_MAP_WRITE{ 0x00000002 };
+	inline constexpr auto SECTION_MAP_READ{ 0x00000004 };
+	inline constexpr auto SECTION_MAP_EXECUTE{ 0x00000008 };
+	inline constexpr auto SECTION_EXTEND_SIZE{ 0x00000010 };
+	inline constexpr auto SECTION_MAP_EXECUTE_EXPLICIT{ 0x00000020 };
+	inline constexpr auto SECTION_ALL_ACCESS{
+		STANDARD_RIGHTS_REQUIRED | SECTION_QUERY | SECTION_MAP_WRITE | SECTION_MAP_READ | SECTION_MAP_EXECUTE | SECTION_EXTEND_SIZE
+	};
+
+	// file attributes
 	inline constexpr auto FILE_ATTRIBUTE_READONLY{ 0x00000001u };
 	inline constexpr auto FILE_ATTRIBUTE_HIDDEN{ 0x00000002u };
 	inline constexpr auto FILE_ATTRIBUTE_SYSTEM{ 0x00000004u };
 	inline constexpr auto FILE_ATTRIBUTE_DIRECTORY{ 0x00000010u };
 	inline constexpr auto FILE_ATTRIBUTE_ARCHIVE{ 0x00000020u };
-	inline constexpr auto IMAGE_SCN_MEM_EXECUTE{ 0x20000000u };
-	inline constexpr auto IMAGE_SCN_MEM_WRITE{ 0x80000000u };
-	inline const auto     INVALID_HANDLE_VALUE{ reinterpret_cast<void*>(static_cast<std::intptr_t>(-1)) };
-	inline constexpr auto MAX_PATH{ 260u };
-	inline constexpr auto MEM_COMMIT{ 0x00001000u };
-	inline constexpr auto MEM_RESERVE{ 0x00002000u };
-	inline constexpr auto MEM_RELEASE{ 0x00008000u };
-	inline constexpr auto PAGE_EXECUTE_READWRITE{ 0x40u };
+
+	// file mapping flags
+	inline constexpr auto FILE_MAP_ALL_ACCESS{ SECTION_ALL_ACCESS };
+	inline constexpr auto FILE_MAP_COPY{ 0x00000001u };
+	inline constexpr auto FILE_MAP_WRITE{ 0x00000002u };
+	inline constexpr auto FILE_MAP_READ{ 0x00000004u };
+	inline constexpr auto FILE_MAP_EXECUTE{ 0x00000020u };
+	inline constexpr auto FILE_MAP_LARGE_PAGES{ 0x20000000u };
+	inline constexpr auto FILE_MAP_TARGETS_INVALID{ 0x40000000u };
+	inline constexpr auto FILE_MAP_RESERVE{ 0x80000000u };
+
+	// file open mode flags
+	inline constexpr auto GENERIC_READ{ 0x80000000L };
+	inline constexpr auto GENERIC_WRITE{ 0x40000000L };
+	inline constexpr auto GENERIC_EXECUTE{ 0x20000000L };
+	inline constexpr auto GENERIC_ALL{ 0x10000000L };
+
+	// known folder flags
+	inline constexpr auto KF_FLAG_DEFAULT{ 0x00000000u };
+	inline constexpr auto KF_FLAG_FORCE_APP_DATA_REDIRECTION{ 0x00080000u };
+	inline constexpr auto KF_FLAG_RETURN_FILTER_REDIRECTION_TARGET{ 0x00040000u };
+	inline constexpr auto KF_FLAG_FORCE_PACKAGE_REDIRECTION{ 0x00020000u };
+	inline constexpr auto KF_FLAG_NO_PACKAGE_REDIRECTION{ 0x00010000u };
+	inline constexpr auto KF_FLAG_FORCE_APPCONTAINER_REDIRECTION{ 0x00020000u };
+	inline constexpr auto KF_FLAG_NO_APPCONTAINER_REDIRECTION{ 0x00010000u };
+	inline constexpr auto KF_FLAG_CREATE{ 0x00008000u };
+	inline constexpr auto KF_FLAG_DONT_VERIFY{ 0x00004000u };
+	inline constexpr auto KF_FLAG_DONT_UNEXPAND{ 0x00002000u };
+	inline constexpr auto KF_FLAG_NO_ALIAS{ 0x00001000u };
+	inline constexpr auto KF_FLAG_INIT{ 0x00000800u };
+	inline constexpr auto KF_FLAG_DEFAULT_PATH{ 0x00000400u };
+	inline constexpr auto KF_FLAG_NOT_PARENT_RELATIVE{ 0x00000200u };
+	inline constexpr auto KF_FLAG_SIMPLE_IDLIST{ 0x00000100u };
+	inline constexpr auto KF_FLAG_ALIAS_ONLY{ 0x80000000u };
+
+	// string normalization forms
+	inline constexpr auto NORM_FORM_OTHER{ 0x0 };
+	inline constexpr auto NORM_FORM_C{ 0x1 };
+	inline constexpr auto NORM_FORM_D{ 0x2 };
+	inline constexpr auto NORM_FORM_KC{ 0x5 };
+	inline constexpr auto NORM_FORM_KD{ 0x6 };
+
+	// locale map flags
+	inline constexpr auto LCMAP_LOWERCASE{ 0x00000100u };
+	inline constexpr auto LCMAP_UPPERCASE{ 0x00000200u };
+	inline constexpr auto LCMAP_TITLECASE{ 0x00000300u };
+	inline constexpr auto LCMAP_SORTKEY{ 0x00000400u };
+	inline constexpr auto LCMAP_BYTEREV{ 0x00000800u };
+	inline constexpr auto LCMAP_HIRAGANA{ 0x00100000u };
+	inline constexpr auto LCMAP_KATAKANA{ 0x00200000u };
+	inline constexpr auto LCMAP_HALFWIDTH{ 0x00400000u };
+	inline constexpr auto LCMAP_FULLWIDTH{ 0x00800000u };
+	inline constexpr auto LCMAP_LINGUISTIC_CASING{ 0x01000000u };
+	inline constexpr auto LCMAP_SIMPLIFIED_CHINESE{ 0x02000000u };
+	inline constexpr auto LCMAP_TRADITIONAL_CHINESE{ 0x04000000u };
+
+	// locale names
+	inline constexpr auto LOCALE_NAME_USER_DEFAULT{ nullptr };
+	inline constexpr auto LOCALE_NAME_INVARIANT{ L"" };
+	inline constexpr auto LOCALE_NAME_SYSTEM_DEFAULT{ L"!x-sys-default-locale" };
+
+	// process creation flags
+	inline constexpr auto DEBUG_PROCESS{ 0x00000001u };
+	inline constexpr auto DEBUG_ONLY_THIS_PROCESS{ 0x00000002u };
+	inline constexpr auto CREATE_SUSPENDED{ 0x00000004u };
+	inline constexpr auto DETACHED_PROCESS{ 0x00000008u };
+	inline constexpr auto CREATE_NEW_CONSOLE{ 0x00000010u };
+	inline constexpr auto NORMAL_PRIORITY_CLASS{ 0x00000020u };
+	inline constexpr auto IDLE_PRIORITY_CLASS{ 0x00000040u };
+	inline constexpr auto HIGH_PRIORITY_CLASS{ 0x00000080u };
+	inline constexpr auto REALTIME_PRIORITY_CLASS{ 0x00000100u };
+	inline constexpr auto CREATE_NEW_PROCESS_GROUP{ 0x00000200u };
+	inline constexpr auto CREATE_UNICODE_ENVIRONMENT{ 0x00000400u };
+	inline constexpr auto CREATE_FORCEDOS{ 0x00002000u };
+	inline constexpr auto BELOW_NORMAL_PRIORITY_CLASS{ 0x00004000u };
+	inline constexpr auto ABOVE_NORMAL_PRIORITY_CLASS{ 0x00008000u };
+	inline constexpr auto INHERIT_PARENT_AFFINITY{ 0x00010000u };
+	inline constexpr auto CREATE_PROTECTED_PROCESS{ 0x00040000u };
+	inline constexpr auto EXTENDED_STARTUPINFO_PRESENT{ 0x00080000u };
+	inline constexpr auto PROCESS_MODE_BACKGROUND_BEGIN{ 0x00100000u };
+	inline constexpr auto PROCESS_MODE_BACKGROUND_END{ 0x00200000u };
+	inline constexpr auto CREATE_SECURE_PROCESS{ 0x00400000 };
+	inline constexpr auto CREATE_BREAKAWAY_FROM_JOB{ 0x01000000u };
+	inline constexpr auto CREATE_PRESERVE_CODE_AUTHZ_LEVEL{ 0x02000000u };
+	inline constexpr auto CREATE_DEFAULT_ERROR_MODE{ 0x04000000u };
+	inline constexpr auto CREATE_NO_WINDOW{ 0x08000000u };
+
+	// symbol name undecoration flags
+	inline constexpr auto UNDNAME_NO_MS_KEYWORDS{ 0x00000002u };
+	inline constexpr auto UNDNAME_NO_FUNCTION_RETURNS{ 0x00000004u };
+	inline constexpr auto UNDNAME_NO_ALLOCATION_MODEL{ 0x00000008u };
+	inline constexpr auto UNDNAME_NO_ALLOCATION_LANGUAGE{ 0x00000010u };
+	inline constexpr auto UNDNAME_NO_THISTYPE{ 0x00000060u };
+	inline constexpr auto UNDNAME_NO_ACCESS_SPECIFIERS{ 0x00000080u };
+	inline constexpr auto UNDNAME_NO_THROW_SIGNATURES{ 0x00000100u };
+	inline constexpr auto UNDNAME_NO_RETURN_UDT_MODEL{ 0x00000400u };
+	inline constexpr auto UNDNAME_NAME_ONLY{ 0x00001000u };
+	inline constexpr auto UNDNAME_NO_ARGUMENTS{ 0x00002000u };
+
+	using THREAD_START_ROUTINE = std::uint32_t(void* a_param);
 
 	struct CRITICAL_SECTION
 	{
 	public:
-		// members
-		void*          DebugInfo;       // 00
-		std::int32_t   LockCount;       // 08
-		std::int32_t   RecursionCount;  // 0C
-		void*          OwningThread;    // 10
-		void*          LockSemaphore;   // 18
-		std::uint64_t* SpinCount;       // 20
+		void*          debugInfo;       // 00
+		std::int32_t   lockCount;       // 08
+		std::int32_t   recursionCount;  // 0C
+		void*          owningThread;    // 10
+		void*          lockSemaphore;   // 18
+		std::uint64_t* spinCount;       // 20
 	};
 	static_assert(sizeof(CRITICAL_SECTION) == 0x28);
 
-	struct _FILETIME
+	struct FILETIME
 	{
-	public:
-		// members
-		std::uint32_t dwLowDateTime;   // 00
-		std::uint32_t dwHighDateTime;  // 04
+		std::uint32_t lo;  // 00
+		std::uint32_t hi;  // 04
 	};
-	static_assert(sizeof(_FILETIME) == 0x8);
-	using FILETIME = _FILETIME;
+	static_assert(sizeof(FILETIME) == 0x8);
 
-	struct _GUID
+	struct GUID
 	{
-		std::uint32_t Data1;
-		std::uint16_t Data2;
-		std::uint16_t Data3;
-		std::uint8_t  Data4[8];
+		std::uint32_t data1;
+		std::uint16_t data2;
+		std::uint16_t data3;
+		std::uint8_t  data4[8];
 	};
-	static_assert(sizeof(_GUID) == 0x10);
-	using GUID = _GUID;
+	static_assert(sizeof(GUID) == 0x10);
+
+	// known folder ids
+	inline constexpr GUID FOLDERID_DOCUMENTS{ 0xFDD39AD0u, 0x238Fu, 0x46AFu, 0xADu, 0xB4u, 0x6Cu, 0x85u, 0x48u, 0x03u, 0x69u, 0xC7u };
+	inline constexpr GUID FOLDERID_PICTURES{ 0x33E28130u, 0x4E1Eu, 0x4676u, 0x83u, 0x5Au, 0x98u, 0x39u, 0x5Cu, 0x3Bu, 0xC3u, 0xBBu };
+	inline constexpr GUID FOLDERID_PROGRAMDATA{ 0x62AB5D82u, 0xFDC1u, 0x4DC3u, 0xA9u, 0xDDu, 0x07u, 0x0Du, 0x1Du, 0x49u, 0x5Du, 0x97u };
+
+	using HRESULT = std::uint32_t;
 
 	struct HWND__;
 	using HWND = HWND__*;
+
+	using WNDPROC = std::int32_t(__stdcall*)(HWND, std::uint32_t, std::uint64_t, std::int64_t);
+
+	struct HICON__;
+	using HICON = HICON__*;
 
 	struct HINSTANCE__;
 	using HINSTANCE = HINSTANCE__*;
 	using HMODULE = HINSTANCE;
 
-    struct HKEY__;
-    using HKEY = HKEY__*;
+	struct HKEY__;
+	using HKEY = HKEY__*;
 
-    inline auto HKEY_LOCAL_MACHINE = reinterpret_cast<HKEY>(static_cast<uintptr_t>(0x80000002));
+	inline auto HKEY_CLASSES_ROOT{ reinterpret_cast<HKEY>(0x80000000ull) };
+	inline auto HKEY_CURRENT_USER{ reinterpret_cast<HKEY>(0x80000001ull) };
+	inline auto HKEY_LOCAL_MACHINE{ reinterpret_cast<HKEY>(0x80000002ull) };
 
-	struct HICON__;
-	using HICON = HICON__*;
-
-	using WNDPROC = std::int32_t(__stdcall*)(HWND, std::uint32_t, std::uint64_t, std::int64_t);
-
-	struct _WIN32_FIND_DATAA
+	struct IMAGE_DATA_DIRECTORY
 	{
-	public:
-		// members
-		std::uint32_t dwFileAttributes;
-		FILETIME      ftCreationTime;
-		FILETIME      ftLastAccessTime;
-		FILETIME      ftLastWriteTime;
-		std::uint32_t nFileSizeHigh;
-		std::uint32_t nFileSizeLow;
-		std::uint32_t dwReserved0;
-		std::uint32_t dwReserved1;
-		char          cFileName[MAX_PATH];
-		char          cAlternateFileName[14];
+		std::uint32_t virtualAddress;
+		std::uint32_t size;
 	};
-	static_assert(sizeof(_WIN32_FIND_DATAA) == 0x140);
-	using WIN32_FIND_DATAA = _WIN32_FIND_DATAA;
+	static_assert(sizeof(IMAGE_DATA_DIRECTORY) == 0x8);
 
-	struct _WIN32_FIND_DATAW
+	struct IMAGE_DOS_HEADER
 	{
-	public:
-		// members
-		std::uint32_t dwFileAttributes;
-		FILETIME      ftCreationTime;
-		FILETIME      ftLastAccessTime;
-		FILETIME      ftLastWriteTime;
-		std::uint32_t nFileSizeHigh;
-		std::uint32_t nFileSizeLow;
-		std::uint32_t dwReserved0;
-		std::uint32_t dwReserved1;
-		wchar_t       cFileName[MAX_PATH];
-		wchar_t       cAlternateFileName[14];
+		std::uint16_t magic;
+		std::uint16_t cblp;
+		std::uint16_t cp;
+		std::uint16_t crlc;
+		std::uint16_t cparhdr;
+		std::uint16_t minalloc;
+		std::uint16_t maxalloc;
+		std::uint16_t ss;
+		std::uint16_t sp;
+		std::uint16_t csum;
+		std::uint16_t ip;
+		std::uint16_t cs;
+		std::uint16_t lfarlc;
+		std::uint16_t ovno;
+		std::uint16_t res[4];
+		std::uint16_t oemid;
+		std::uint16_t oeminfo;
+		std::uint16_t res2[10];
+		std::int32_t  lfanew;
 	};
-	static_assert(sizeof(_WIN32_FIND_DATAW) == 0x250);
-	using WIN32_FIND_DATAW = _WIN32_FIND_DATAW;
+	static_assert(sizeof(IMAGE_DOS_HEADER) == 0x40);
 
-	struct tagRECT
+	struct IMAGE_FILE_HEADER
+	{
+		std::uint16_t machine;
+		std::uint16_t sectionCount;
+		std::uint32_t timeDateStamp;
+		std::uint32_t symbolTablePtr;
+		std::uint32_t symbolCount;
+		std::uint16_t optionalHeaderSize;
+		std::uint16_t characteristics;
+	};
+	static_assert(sizeof(IMAGE_FILE_HEADER) == 0x14);
+
+	struct IMAGE_IMPORT_BY_NAME
+	{
+		std::uint16_t hint;
+		char          name[1];
+	};
+	static_assert(sizeof(IMAGE_IMPORT_BY_NAME) == 0x4);
+
+	struct IMAGE_IMPORT_DESCRIPTOR
+	{
+		union
+		{
+			std::uint32_t characteristics;
+			std::uint32_t firstThunkOriginal;
+		};
+
+		std::uint32_t timeDateStamp;
+		std::uint32_t forwarderChain;
+		std::uint32_t name;
+		std::uint32_t firstThunk;
+	};
+	static_assert(sizeof(IMAGE_IMPORT_DESCRIPTOR) == 0x14);
+
+	struct IMAGE_OPTIONAL_HEADER64
+	{
+		std::uint16_t        magic;
+		std::uint8_t         linkerVersionMajor;
+		std::uint8_t         linkerVersionMinor;
+		std::uint32_t        codeSize;
+		std::uint32_t        initializedDataSize;
+		std::uint32_t        uninitializedDataSize;
+		std::uint32_t        entryPointAddress;
+		std::uint32_t        codeBase;
+		std::uint64_t        imageBase;
+		std::uint32_t        sectionAlignment;
+		std::uint32_t        fileAlignment;
+		std::uint16_t        osVersionMajor;
+		std::uint16_t        osVersionMinor;
+		std::uint16_t        imageVersionMajor;
+		std::uint16_t        imageVersionMinor;
+		std::uint16_t        subsystemVersionMajor;
+		std::uint16_t        subsystemVersionMinor;
+		std::uint32_t        win32Version;
+		std::uint32_t        imageSize;
+		std::uint32_t        headersSize;
+		std::uint32_t        checksum;
+		std::uint16_t        subsystem;
+		std::uint16_t        dllCharacteristics;
+		std::uint64_t        stackReserveSize;
+		std::uint64_t        stackCommitSize;
+		std::uint64_t        heapReserveSize;
+		std::uint64_t        heapCommitSize;
+		std::uint32_t        loaderFlags;
+		std::uint32_t        rvaAndSizesCount;
+		IMAGE_DATA_DIRECTORY dataDirectory[IMAGE_NUMBEROF_DIRECTORY_ENTRIES];
+	};
+	static_assert(sizeof(IMAGE_OPTIONAL_HEADER64) == 0xF0);
+
+	struct IMAGE_NT_HEADERS64
+	{
+		std::uint32_t           signature;
+		IMAGE_FILE_HEADER       fileHeader;
+		IMAGE_OPTIONAL_HEADER64 optionalHeader;
+	};
+	static_assert(sizeof(IMAGE_NT_HEADERS64) == 0x108);
+
+	struct IMAGE_SECTION_HEADER
+	{
+		std::uint8_t name[IMAGE_SIZEOF_SHORT_NAME];
+		union
+		{
+			std::uint32_t physicalAddress;
+			std::uint32_t virtualSize;
+		};
+		std::uint32_t virtualAddress;
+		std::uint32_t rawDataSize;
+		std::uint32_t rawDataPtr;
+		std::uint32_t relocationsPtr;
+		std::uint32_t lineNumbersPtr;
+		std::uint16_t relocationsCount;
+		std::uint16_t lineNumbersCount;
+		std::uint32_t characteristics;
+	};
+	static_assert(sizeof(IMAGE_SECTION_HEADER) == 0x28);
+
+	struct IMAGE_THUNK_DATA64
+	{
+		union
+		{
+			std::uint64_t forwarderString;  // PBYTE
+			std::uint64_t function;         // PDWORD
+			std::uint64_t ordinal;
+			std::uint64_t address;  // PIMAGE_IMPORT_BY_NAME
+		};
+	};
+	static_assert(sizeof(IMAGE_THUNK_DATA64) == 0x8);
+
+	struct MEMORY_BASIC_INFORMATION
+	{
+		void*         baseAddress;
+		void*         allocationBase;
+		std::uint32_t allocationProtect;
+		std::uint16_t partitionID;
+		std::size_t   regionSize;
+		std::uint32_t state;
+		std::uint32_t protect;
+		std::uint32_t type;
+	};
+	static_assert(sizeof(MEMORY_BASIC_INFORMATION) == 0x30);
+
+	struct NLSVERSIONINFO;
+
+	struct POINT
+	{
+		std::int32_t x;
+		std::int32_t y;
+	};
+
+	struct PROCESS_INFORMATION
+	{
+		void*         process;
+		void*         thread;
+		std::uint32_t processID;
+		std::uint32_t threadID;
+	};
+	static_assert(sizeof(PROCESS_INFORMATION) == 0x18);
+
+	struct RECT
 	{
 		std::int32_t left;
 		std::int32_t top;
 		std::int32_t right;
 		std::int32_t bottom;
 	};
-	using RECT = tagRECT;
 
-	struct tagPOINT
+	struct SECURITY_ATTRIBUTES
 	{
-		std::int32_t x;
-		std::int32_t y;
+		std::uint32_t length;
+		void*         securityDescriptor;
+		bool          inheritHandle;
 	};
-	using POINT = tagPOINT;
+	static_assert(sizeof(SECURITY_ATTRIBUTES) == 0x18);
 
-	using HRESULT = std::int32_t;
+	struct STARTUPINFOA
+	{
+		std::uint32_t size;
+		char*         reserved0;
+		char*         desktop;
+		char*         title;
+		std::uint32_t x;
+		std::uint32_t y;
+		std::uint32_t xSize;
+		std::uint32_t ySize;
+		std::uint32_t xCountChars;
+		std::uint32_t yCountChars;
+		std::uint32_t fillAttribute;
+		std::uint32_t flags;
+		std::uint16_t showWindow;
+		std::uint16_t reserved1;
+		std::uint8_t* reserved2;
+		void*         stdIn;
+		void*         stdOut;
+		void*         stdErr;
+	};
+	static_assert(sizeof(STARTUPINFOA) == 0x68);
+
+	struct STARTUPINFOW
+	{
+		std::uint32_t size;
+		wchar_t*      reserved0;
+		wchar_t*      desktop;
+		wchar_t*      title;
+		std::uint32_t x;
+		std::uint32_t y;
+		std::uint32_t xSize;
+		std::uint32_t ySize;
+		std::uint32_t xCountChars;
+		std::uint32_t yCountChars;
+		std::uint32_t fillAttribute;
+		std::uint32_t flags;
+		std::uint16_t showWindow;
+		std::uint16_t reserved1;
+		std::uint8_t* reserved2;
+		void*         stdIn;
+		void*         stdOut;
+		void*         stdErr;
+	};
+	static_assert(sizeof(STARTUPINFOW) == 0x68);
+
+	struct SYSTEM_INFO
+	{
+		union
+		{
+			std::uint32_t oemID;
+			struct
+			{
+				std::uint16_t processorArch;
+				std::uint16_t reserved;
+			};
+		};
+		std::uint32_t  pageSize;
+		void*          appAddressMin;
+		void*          appAddressMax;
+		std::uintptr_t processorActiveMask;
+		std::uint32_t  processorCount;
+		std::uint32_t  processorType;
+		std::uint32_t  allocationGranularity;
+		std::uint16_t  processorLevel;
+		std::uint16_t  processorRevision;
+	};
+	static_assert(sizeof(SYSTEM_INFO) == 0x30);
+
+	union ULARGE_INTEGER
+	{
+		struct
+		{
+			std::uint32_t lo;
+			std::uint32_t hi;
+		};
+		std::uint64_t value;
+	};
+
+	struct WIN32_FIND_DATAA
+	{
+		// members
+		std::uint32_t fileAttributes;
+		FILETIME      creationTime;
+		FILETIME      lastAccessTime;
+		FILETIME      lastWriteTime;
+		std::uint32_t fileSizeHi;
+		std::uint32_t fileSizeLo;
+		std::uint32_t reserved0;
+		std::uint32_t reserved1;
+		char          fileName[MAX_PATH];
+		char          fileNameAlt[14];
+	};
+	static_assert(sizeof(WIN32_FIND_DATAA) == 0x140);
+
+	struct WIN32_FIND_DATAW
+	{
+		// members
+		std::uint32_t fileAttributes;
+		FILETIME      creationTime;
+		FILETIME      lastAccessTime;
+		FILETIME      lastWriteTime;
+		std::uint32_t fileSizeHi;
+		std::uint32_t fileSizeLo;
+		std::uint32_t reserved0;
+		std::uint32_t reserved1;
+		wchar_t       fileName[MAX_PATH];
+		wchar_t       fileNameAlt[14];
+	};
+	static_assert(sizeof(WIN32_FIND_DATAW) == 0x250);
 
 	enum VKEnum : std::uint32_t
 	{
@@ -373,25 +770,105 @@ namespace SKSE::WinAPI
 		VK_RESERVED_FF = 0xFF
 	};
 
-	[[nodiscard]] bool FindClose(void* a_findFile) noexcept;
+	bool CloseHandle(
+		void* a_handle) noexcept;
+
+	void CoTaskMemFree(
+		void* a_block) noexcept;
+
+	void* CreateFileMapping(
+		void*                a_file,
+		SECURITY_ATTRIBUTES* a_attributes,
+		std::uint32_t        a_protect,
+		std::uint32_t        a_maxSizeHigh,
+		std::uint32_t        a_maxSizeLow,
+		const char*          a_name) noexcept;
+
+	void* CreateFileMapping(
+		void*                a_file,
+		SECURITY_ATTRIBUTES* a_attributes,
+		std::uint32_t        a_protect,
+		std::uint32_t        a_maxSizeHigh,
+		std::uint32_t        a_maxSizeLow,
+		const wchar_t*       a_name) noexcept;
+
+	bool CreateProcess(
+		const char*          a_name,
+		char*                a_cmd,
+		SECURITY_ATTRIBUTES* a_procAttr,
+		SECURITY_ATTRIBUTES* a_threadAttr,
+		bool                 a_inherit,
+		std::uint32_t        a_flags,
+		void*                a_env,
+		const char*          a_curDir,
+		STARTUPINFOA*        a_startInfo,
+		PROCESS_INFORMATION* a_procInfo) noexcept;
+
+	bool CreateProcess(
+		const wchar_t*       a_name,
+		wchar_t*             a_cmd,
+		SECURITY_ATTRIBUTES* a_procAttr,
+		SECURITY_ATTRIBUTES* a_threadAttr,
+		bool                 a_inherit,
+		std::uint32_t        a_flags,
+		void*                a_env,
+		const wchar_t*       a_curDir,
+		STARTUPINFOW*        a_startInfo,
+		PROCESS_INFORMATION* a_procInfo) noexcept;
+
+	void* CreateRemoteThread(
+		void*                 a_process,
+		SECURITY_ATTRIBUTES*  a_threadAttr,
+		std::size_t           a_stackSize,
+		THREAD_START_ROUTINE* a_startAddr,
+		void*                 a_param,
+		std::uint32_t         a_flags,
+		std::uint32_t*        a_threadID) noexcept;
+
+	void* CreateThread(
+		SECURITY_ATTRIBUTES*  a_threadAttr,
+		std::size_t           a_stackSize,
+		THREAD_START_ROUTINE* a_startAddr,
+		void*                 a_param,
+		std::uint32_t         a_flags,
+		std::uint32_t*        a_threadID) noexcept;
+
+	std::uint32_t ExpandEnvironmentStrings(
+		const char*   a_src,
+		char*         a_dst,
+		std::uint32_t a_dstLen) noexcept;
+
+	std::uint32_t ExpandEnvironmentStrings(
+		const wchar_t* a_src,
+		wchar_t*       a_dst,
+		std::uint32_t  a_dstLen) noexcept;
+
+	[[nodiscard]] bool FindClose(
+		void* a_file) noexcept;
 
 	[[nodiscard]] void* FindFirstFile(
-		const char*       a_fileName,
-		WIN32_FIND_DATAA* a_findFileData) noexcept;
+		const char*       a_name,
+		WIN32_FIND_DATAA* a_data) noexcept;
 
 	[[nodiscard]] void* FindFirstFile(
-		const wchar_t*    a_fileName,
-		WIN32_FIND_DATAW* a_findFileData) noexcept;
+		const wchar_t*    a_name,
+		WIN32_FIND_DATAW* a_data) noexcept;
 
 	[[nodiscard]] bool FindNextFile(
-		void*             a_findFile,
-		WIN32_FIND_DATAA* a_findFileData) noexcept;
+		void*             a_file,
+		WIN32_FIND_DATAA* a_data) noexcept;
 
 	[[nodiscard]] bool FindNextFile(
-		void*             a_findFile,
-		WIN32_FIND_DATAW* a_findFileData) noexcept;
+		void*             a_file,
+		WIN32_FIND_DATAW* a_data) noexcept;
 
-	bool FreeLibrary(HMODULE a_module) noexcept;
+	bool FlushInstructionCache(
+		void*       a_process,
+		const void* a_baseAddr,
+		std::size_t a_size) noexcept;
+
+	bool FreeLibrary(
+		HMODULE a_module) noexcept;
 
 	[[nodiscard]] void* GetCurrentModule() noexcept;
 
@@ -410,139 +887,269 @@ namespace SKSE::WinAPI
 		std::uint32_t  a_size) noexcept;
 
 	[[nodiscard]] bool GetFileVersionInfo(
-		const char*   a_filename,
+		const char*   a_name,
 		std::uint32_t a_handle,
-		std::uint32_t a_len,
+		std::uint32_t a_dataLen,
 		void*         a_data) noexcept;
 
 	[[nodiscard]] bool GetFileVersionInfo(
-		const wchar_t* a_filename,
+		const wchar_t* a_name,
 		std::uint32_t  a_handle,
-		std::uint32_t  a_len,
+		std::uint32_t  a_dataLen,
 		void*          a_data) noexcept;
 
 	[[nodiscard]] std::uint32_t GetFileVersionInfoSize(
-		const char*    a_filename,
+		const char*    a_name,
 		std::uint32_t* a_handle) noexcept;
 
 	[[nodiscard]] std::uint32_t GetFileVersionInfoSize(
-		const wchar_t* a_filename,
+		const wchar_t* a_name,
 		std::uint32_t* a_handle) noexcept;
 
-	[[nodiscard]] int GetKeyNameText(
-		std::int32_t a_lParam,
+	[[nodiscard]] std::int32_t GetKeyNameText(
+		std::int32_t a_param,
 		char*        a_buffer,
-		int          a_size) noexcept;
+		std::int32_t a_bufferLen) noexcept;
 
-	[[nodiscard]] int GetKeyNameText(
-		std::int32_t a_lParam,
+	[[nodiscard]] std::int32_t GetKeyNameText(
+		std::int32_t a_param,
 		wchar_t*     a_buffer,
-		int          a_size) noexcept;
+		std::int32_t a_bufferLen) noexcept;
 
-	[[nodiscard]] std::int16_t GetKeyState(int nVirtKey) noexcept;
+	[[nodiscard]] std::int16_t GetKeyState(
+		std::int32_t a_key) noexcept;
+
+	[[nodiscard]] std::uint32_t GetLastError() noexcept;
 
 	[[nodiscard]] std::size_t GetMaxPath() noexcept;
 
 	[[nodiscard]] std::uint32_t GetModuleFileName(
 		void*         a_module,
-		char*         a_filename,
-		std::uint32_t a_size) noexcept;
+		char*         a_name,
+		std::uint32_t a_nameLen) noexcept;
 
 	[[nodiscard]] std::uint32_t GetModuleFileName(
 		void*         a_module,
-		wchar_t*      a_filename,
-		std::uint32_t a_size) noexcept;
+		wchar_t*      a_name,
+		std::uint32_t a_nameLen) noexcept;
 
-	[[nodiscard]] HMODULE GetModuleHandle(const char* a_moduleName) noexcept;
+	[[nodiscard]] HMODULE GetModuleHandle(
+		const char* a_name) noexcept;
 
-	[[nodiscard]] HMODULE GetModuleHandle(const wchar_t* a_moduleName) noexcept;
+	[[nodiscard]] HMODULE GetModuleHandle(
+		const wchar_t* a_name) noexcept;
 
 	[[nodiscard]] std::uint32_t GetPrivateProfileString(
-		const char*   a_appName,
-		const char*   a_keyName,
+		const char*   a_app,
+		const char*   a_key,
 		const char*   a_default,
-		char*         a_outString,
-		std::uint32_t a_size,
-		const char*   a_fileName) noexcept;
+		char*         a_out,
+		std::uint32_t a_outLen,
+		const char*   a_name) noexcept;
 
 	[[nodiscard]] std::uint32_t GetPrivateProfileString(
-		const wchar_t* a_appName,
-		const wchar_t* a_keyName,
+		const wchar_t* a_app,
+		const wchar_t* a_key,
 		const wchar_t* a_default,
-		wchar_t*       a_outString,
-		std::uint32_t  a_size,
-		const wchar_t* a_fileName) noexcept;
+		wchar_t*       a_out,
+		std::uint32_t  a_outLen,
+		const wchar_t* a_name) noexcept;
 
 	[[nodiscard]] void* GetProcAddress(
 		void*       a_module,
-		const char* a_procName) noexcept;
+		const char* a_name) noexcept;
+
+	[[nodiscard]] std::string_view GetProcPath(
+		HMODULE a_handle) noexcept;
+
+	void GetSystemInfo(
+		SYSTEM_INFO* a_info) noexcept;
+
+	[[nodiscard]] bool IMAGE_SNAP_BY_ORDINAL64(
+		std::uint64_t a_ordinal) noexcept;
+
+	[[nodiscard]] IMAGE_SECTION_HEADER* IMAGE_FIRST_SECTION(
+		const IMAGE_NT_HEADERS64* a_header) noexcept;
 
 	[[nodiscard]] bool IsDebuggerPresent() noexcept;
 
-	[[nodiscard]] HMODULE LoadLibrary(const char* a_libFileName) noexcept;
+	std::int32_t LCMapStringEx(
+		const wchar_t*  a_locale,
+		std::uint32_t   a_flags,
+		const wchar_t*  a_src,
+		std::int32_t    a_srcLen,
+		wchar_t*        a_dest,
+		std::int32_t    a_destLen,
+		NLSVERSIONINFO* a_info,
+		void*           a_reserved,
+		std::intptr_t   a_sortHandle) noexcept;
 
-	[[nodiscard]] HMODULE LoadLibrary(const wchar_t* a_libFileName) noexcept;
+	[[nodiscard]] HMODULE LoadLibrary(
+		const char* a_name) noexcept;
+
+	[[nodiscard]] HMODULE LoadLibrary(
+		const wchar_t* a_name) noexcept;
+
+	[[nodiscard]] void* MapViewOfFile(
+		void*         a_object,
+		std::uint32_t a_desiredAccess,
+		std::uint32_t a_fileOffsetHigh,
+		std::uint32_t a_fileOffsetLow,
+		std::size_t   a_numBytesToMap) noexcept;
+
+	[[nodiscard]] void* MapViewOfFileEx(
+		void*         a_object,
+		std::uint32_t a_desiredAccess,
+		std::uint32_t a_fileOffsetHigh,
+		std::uint32_t a_fileOffsetLow,
+		std::size_t   a_numBytesToMap,
+		void*         a_baseAddress) noexcept;
 
 	std::int32_t MessageBox(
-		void*        a_wnd,
-		const char*  a_text,
-		const char*  a_caption,
-		unsigned int a_type) noexcept;
+		void*         a_wnd,
+		const char*   a_text,
+		const char*   a_caption,
+		std::uint32_t a_type) noexcept;
 
 	std::int32_t MessageBox(
 		void*          a_wnd,
 		const wchar_t* a_text,
 		const wchar_t* a_caption,
-		unsigned int   a_type) noexcept;
+		std::uint32_t  a_type) noexcept;
 
-	[[nodiscard]] int MultiByteToWideChar(
-		unsigned int  a_codePage,
+	[[nodiscard]] std::int32_t MultiByteToWideChar(
+		std::uint32_t a_codePage,
 		std::uint32_t a_flags,
-		const char*   a_multiByteStr,
-		int           a_multiByte,
-		wchar_t*      a_wideCharStr,
-		int           a_wideChar);
+		const char*   a_str,
+		std::int32_t  a_strLen,
+		wchar_t*      a_wstr,
+		std::int32_t  a_wstrLen);
+
+	[[nodiscard]] std::int32_t NormalizeString(
+		std::int32_t   a_normForm,
+		const wchar_t* a_src,
+		std::int32_t   a_srcLen,
+		wchar_t*       a_dest,
+		std::int32_t   a_destLen);
+
+	[[nodiscard]] void* OpenFileMapping(
+		std::uint32_t a_desiredAccess,
+		bool          a_inheritHandle,
+		const char*   a_name) noexcept;
+
+	[[nodiscard]] void* OpenFileMapping(
+		std::uint32_t  a_desiredAccess,
+		bool           a_inheritHandle,
+		const wchar_t* a_name) noexcept;
 
 	void OutputDebugString(
-		const char* a_outputString) noexcept;
+		const char* a_outStr) noexcept;
 
 	void OutputDebugString(
-		const wchar_t* a_outputString) noexcept;
+		const wchar_t* a_outStr) noexcept;
 
-    long RegGetValueW(HKEY hkey, const char* subKey, const char* value, unsigned long flags, unsigned long* type,
-                         void* data, unsigned long* length);
+	std::int32_t RegGetValue(
+		HKEY           a_key,
+		const char*    a_subKey,
+		const char*    a_value,
+		std::uint32_t  a_flags,
+		std::uint32_t* a_type,
+		void*          a_data,
+		std::uint32_t* a_dataLen);
 
-    long RegGetValueW(HKEY hkey, const wchar_t* subKey, const wchar_t* value, unsigned long flags, unsigned long* type,
-                         void* data, unsigned long* length);
+	std::int32_t RegGetValue(
+		HKEY           a_key,
+		const wchar_t* a_subKey,
+		const wchar_t* a_value,
+		std::uint32_t  a_flags,
+		std::uint32_t* a_type,
+		void*          a_data,
+		std::uint32_t* a_dataLen);
 
-	[[nodiscard]] int ShowCursor(bool bShow) noexcept;
+	std::uint32_t ResumeThread(
+		void* a_handle) noexcept;
 
-	[[noreturn]] void TerminateProcess(
-		void*        a_process,
-		unsigned int a_exitCode) noexcept;
+	bool SetEnvironmentVariable(
+		const char* a_name,
+		const char* a_value) noexcept;
 
-	[[nodiscard]] void* TlsGetValue(std::uint32_t a_tlsIndex) noexcept;
+	bool SetEnvironmentVariable(
+		const wchar_t* a_name,
+		const wchar_t* a_value) noexcept;
+
+	[[nodiscard]] std::int32_t SHGetKnownFolderPath(
+		const GUID&   a_id,
+		std::uint32_t a_flags,
+		void*         a_token,
+		wchar_t**     a_path) noexcept;
+
+	[[nodiscard]] std::int32_t ShowCursor(
+		bool a_show) noexcept;
+
+	void Sleep(
+		std::uint32_t a_milliseconds) noexcept;
+
+	bool TerminateProcess(
+		void*         a_process,
+		std::uint32_t a_exitCode) noexcept;
+
+	[[nodiscard]] void* TlsGetValue(
+		std::uint32_t a_index) noexcept;
 
 	bool TlsSetValue(
-		std::uint32_t a_tlsIndex,
-		void*         a_tlsValue) noexcept;
+		std::uint32_t a_index,
+		void*         a_value) noexcept;
 
-	bool VirtualFree(
-		void*         a_address,
-		std::size_t   a_size,
-		std::uint32_t a_freeType) noexcept;
+	[[nodiscard]] std::uint32_t UnDecorateSymbolName(
+		const char*   a_name,
+		char*         a_out,
+		std::uint32_t a_outLenMax,
+		std::uint32_t a_flags) noexcept;
+
+	[[nodiscard]] std::uint32_t UnDecorateSymbolName(
+		const wchar_t* a_name,
+		wchar_t*       a_out,
+		std::uint32_t  a_outLenMax,
+		std::uint32_t  a_flags) noexcept;
+
+	[[nodiscard]] bool UnmapViewOfFile(
+		const void* a_baseAddress) noexcept;
 
 	[[nodiscard]] bool VerQueryValue(
-		const void*   a_block,
-		const char*   a_subBlock,
-		void**        a_buffer,
-		unsigned int* a_len) noexcept;
+		const void*    a_block,
+		const char*    a_subBlock,
+		void**         a_buffer,
+		std::uint32_t* a_bufferLen) noexcept;
 
 	[[nodiscard]] bool VerQueryValue(
 		const void*    a_block,
 		const wchar_t* a_subBlock,
 		void**         a_buffer,
-		unsigned int*  a_len) noexcept;
+		std::uint32_t* a_bufferLen) noexcept;
+
+	void* VirtualAlloc(
+		void*         a_address,
+		std::size_t   a_size,
+		std::uint32_t a_type,
+		std::uint32_t a_protect) noexcept;
+
+	void* VirtualAllocEx(
+		void*         a_process,
+		void*         a_address,
+		std::size_t   a_size,
+		std::uint32_t a_type,
+		std::uint32_t a_protect) noexcept;
+
+	bool VirtualFree(
+		void*         a_address,
+		std::size_t   a_size,
+		std::uint32_t a_type) noexcept;
+
+	bool VirtualFreeEx(
+		void*         a_process,
+		void*         a_address,
+		std::size_t   a_size,
+		std::uint32_t a_type) noexcept;
 
 	[[nodiscard]] bool VirtualProtect(
 		void*          a_address,
@@ -550,22 +1157,57 @@ namespace SKSE::WinAPI
 		std::uint32_t  a_newProtect,
 		std::uint32_t* a_oldProtect) noexcept;
 
-	[[nodiscard]] int WideCharToMultiByte(
-		unsigned int   a_codePage,
+	[[nodiscard]] bool VirtualProtectEx(
+		void*          a_process,
+		void*          a_address,
+		std::size_t    a_size,
+		std::uint32_t  a_newProtect,
+		std::uint32_t* a_oldProtect) noexcept;
+
+	[[nodiscard]] std::size_t VirtualQuery(
+		const void*               a_address,
+		MEMORY_BASIC_INFORMATION* a_buffer,
+		std::size_t               a_bufferLen) noexcept;
+
+	[[nodiscard]] std::size_t VirtualQueryEx(
+		void*                     a_process,
+		const void*               a_address,
+		MEMORY_BASIC_INFORMATION* a_buffer,
+		std::size_t               a_bufferLen) noexcept;
+
+	[[nodiscard]] std::uint32_t WaitForSingleObject(
+		void*         a_handle,
+		std::uint32_t a_milliseconds) noexcept;
+
+	[[nodiscard]] std::uint32_t WaitForSingleObjectEx(
+		void*         a_handle,
+		std::uint32_t a_milliseconds,
+		bool          a_alertable) noexcept;
+
+	[[nodiscard]] std::int32_t WideCharToMultiByte(
+		std::uint32_t  a_codePage,
 		std::uint32_t  a_flags,
-		const wchar_t* a_wideCharStr,
-		int            a_wideChar,
-		char*          a_multiByteStr,
-		int            a_multiByte,
-		const char*    a_defaultChar,
-		int*           a_usedDefaultChar);
+		const wchar_t* a_wstr,
+		std::int32_t   a_wstrLen,
+		char*          a_str,
+		std::int32_t   a_strLen,
+		const char*    a_default,
+		std::int32_t*  a_defaultLen);
+
+	[[nodiscard]] bool WriteProcessMemory(
+		void*        a_process,
+		void*        a_address,
+		const void*  a_buffer,
+		std::size_t  a_bufferLen,
+		std::size_t* a_bufferWritten) noexcept;
 }
+
+#endif  // _INC_WINAPIFAMILY
 
 namespace RE::DirectX
 {
 	struct XMFLOAT4X4
 	{
-	public:
 		// members
 		float m[4][4];
 	};
@@ -573,7 +1215,6 @@ namespace RE::DirectX
 
 	struct DXGI_RATIONAL
 	{
-	public:
 		// members
 		std::uint32_t numerator;    // 00
 		std::uint32_t denominator;  // 04
@@ -595,23 +1236,3 @@ namespace RE::DirectX
 		DXGI_MODE_SCANLINE_ORDER_LOWER_FIELD_FIRST = 3
 	};
 }
-
-#define CP_UTF8 ::SKSE::WinAPI::CP_UTF8
-#define IMAGE_SCN_MEM_EXECUTE ::SKSE::WinAPI::IMAGE_SCN_MEM_EXECUTE
-#define IMAGE_SCN_MEM_WRITE ::SKSE::WinAPI::IMAGE_SCN_MEM_WRITE
-#define INVALID_HANDLE_VALUE ::SKSE::WinAPI::INVALID_HANDLE_VALUE
-#define MAX_PATH ::SKSE::WinAPI::MAX_PATH
-#define MEM_COMMIT ::SKSE::WinAPI::MEM_COMMIT
-#define MEM_RESERVE ::SKSE::WinAPI::MEM_RESERVE
-#define MEM_RELEASE ::SKSE::WinAPI::MEM_RELEASE
-#define PAGE_EXECUTE_READWRITE ::SKSE::WinAPI::PAGE_EXECUTE_READWRITE
-
-#define GetEnvironmentVariable ::SKSE::WinAPI::GetEnvironmentVariable
-#define GetFileVersionInfoSize ::SKSE::WinAPI::GetFileVersionInfoSize
-#define GetModuleFileName ::SKSE::WinAPI::GetModuleFileName
-#define VerQueryValue ::SKSE::WinAPI::VerQueryValue
-#define GetFileVersionInfo ::SKSE::WinAPI::GetFileVersionInfo
-#define GetModuleHandle ::SKSE::WinAPI::GetModuleHandle
-#define LoadLibrary ::SKSE::WinAPI::LoadLibrary
-#define MessageBox ::SKSE::WinAPI::MessageBox
-#define OutputDebugString ::SKSE::WinAPI::OutputDebugString

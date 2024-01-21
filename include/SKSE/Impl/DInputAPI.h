@@ -1,11 +1,12 @@
 #pragma once
 
 #include "WinAPI.h"
-#include <cstdint>
 
 // TODO: This should probably be behind some sort of pragma that allows linking with dinput and dinput8
 namespace RE::DirectInput8
 {
+	namespace WinAPI = SKSE::WinAPI;
+
 	using DWORD = std::uint32_t;
 	using LONG = std::int32_t;
 	using WORD = std::uint16_t;
@@ -232,8 +233,8 @@ namespace RE::DirectInput8
 		GUID  guidInstance;
 		GUID  guidProduct;
 		DWORD dwDevType;
-		CHAR  tszInstanceName[MAX_PATH];
-		CHAR  tszProductName[MAX_PATH];
+		CHAR  tszInstanceName[WinAPI::MAX_PATH];
+		CHAR  tszProductName[WinAPI::MAX_PATH];
 		GUID  guidFFDriver;  // DIRECTINPUT_VERSION >= 0x0500
 		WORD  wUsagePage;
 		WORD  wUsage;
@@ -249,7 +250,7 @@ namespace RE::DirectInput8
 		DWORD dwOfs;
 		DWORD dwType;
 		DWORD dwFlags;
-		CHAR  tszName[MAX_PATH];
+		CHAR  tszName[WinAPI::MAX_PATH];
 		//#if(DIRECTINPUT_VERSION >= 0x0500)
 		DWORD dwFFMaxForce;
 		DWORD dwFFForceResolution;
@@ -300,7 +301,7 @@ namespace RE::DirectInput8
 	using LPCDIDEVCAPS = const DIDEVCAPS*;
 	struct _DIDEVICEIMAGEINFOA
 	{
-		CHAR  tszImagePath[MAX_PATH];
+		CHAR  tszImagePath[WinAPI::MAX_PATH];
 		DWORD dwFlags;
 		DWORD dwViewID;
 		RECT  rcOverlay;
@@ -357,7 +358,7 @@ namespace RE::DirectInput8
 		DWORD dwEffType;
 		DWORD dwStaticParams;
 		DWORD dwDynamicParams;
-		CHAR  tszName[MAX_PATH];
+		CHAR  tszName[WinAPI::MAX_PATH];
 	};
 	using DIEFFECTINFOA = DIEFFECTINFOA__;
 	using LPDIEFFECTINFOA = DIEFFECTINFOA*;
@@ -403,7 +404,7 @@ namespace RE::DirectInput8
 		DWORD       dwSize;
 		GUID        GuidEffect;
 		LPCDIEFFECT lpDiEffect;
-		CHAR        szFriendlyName[MAX_PATH];
+		CHAR        szFriendlyName[WinAPI::MAX_PATH];
 	};
 	using DIFILEEFFECT = DIFILEEFFECT__;
 	using LPDIFILEEFFECT = DIFILEEFFECT*;
@@ -440,7 +441,7 @@ namespace RE::DirectInput8
 		HINSTANCE   hInstString;
 		FILETIME    ftTimeStamp;
 		DWORD       dwCRC;
-		CHAR        tszActionMap[MAX_PATH];
+		CHAR        tszActionMap[WinAPI::MAX_PATH];
 	};
 	using DIACTIONFORMATA = _DIACTIONFORMATA;
 	using LPDIACTIONFORMATA = DIACTIONFORMATA*;

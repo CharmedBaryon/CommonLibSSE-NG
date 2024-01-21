@@ -135,6 +135,7 @@ target_link_libraries(
 		fmt::fmt
 		spdlog::spdlog
 		Version.lib
+		Dbghelp.lib
 )
 
 target_precompile_headers(
