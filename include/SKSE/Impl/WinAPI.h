@@ -1112,16 +1112,16 @@ namespace SKSE::WinAPI
 		std::uint32_t  a_outLenMax,
 		std::uint32_t  a_flags) noexcept;
 
-	[[nodiscard]] bool UnmapViewOfFile(
+	bool UnmapViewOfFile(
 		const void* a_baseAddress) noexcept;
 
-	[[nodiscard]] bool VerQueryValue(
+	bool VerQueryValue(
 		const void*    a_block,
 		const char*    a_subBlock,
 		void**         a_buffer,
 		std::uint32_t* a_bufferLen) noexcept;
 
-	[[nodiscard]] bool VerQueryValue(
+	bool VerQueryValue(
 		const void*    a_block,
 		const wchar_t* a_subBlock,
 		void**         a_buffer,
@@ -1151,13 +1151,13 @@ namespace SKSE::WinAPI
 		std::size_t   a_size,
 		std::uint32_t a_type) noexcept;
 
-	[[nodiscard]] bool VirtualProtect(
+	bool VirtualProtect(
 		void*          a_address,
 		std::size_t    a_size,
 		std::uint32_t  a_newProtect,
 		std::uint32_t* a_oldProtect) noexcept;
 
-	[[nodiscard]] bool VirtualProtectEx(
+	bool VirtualProtectEx(
 		void*          a_process,
 		void*          a_address,
 		std::size_t    a_size,
@@ -1194,7 +1194,7 @@ namespace SKSE::WinAPI
 		const char*    a_default,
 		std::int32_t*  a_defaultLen);
 
-	[[nodiscard]] bool WriteProcessMemory(
+	bool WriteProcessMemory(
 		void*        a_process,
 		void*        a_address,
 		const void*  a_buffer,
