@@ -294,7 +294,7 @@ namespace REL
             _filePath = _filename;
             if (!moduleHandle) {
                 stl::report_and_fail(
-                        fmt::format(
+                        std::format(
                                 "Failed to obtain module handle for: \"{0}\".\n"
                                 "You have likely renamed the executable to something unexpected. "
                                 "Renaming the executable back to \"{0}\" may resolve the issue."sv,
@@ -345,7 +345,7 @@ namespace REL
                 return true;
             }
             return stl::report_and_error(
-                    fmt::format(
+                    std::format(
                             "Failed to obtain file version info for: {}\n"
                             "Please contact the author of this script extender plugin for further assistance."sv,
                             stl::utf16_to_utf8(_filename).value_or("<unicode conversion error>"s)), a_failOnError);

@@ -117,7 +117,7 @@ namespace REL
 			}
 		} catch (const std::system_error &) {
 			return stl::report_and_error(
-					fmt::format(
+					std::format(
 							"Failed to locate an appropriate address library with the path: {}\n"
 							"This means you are missing the address library for this specific version of "
 							"the game. Please continue to the mod page for address library to download "
@@ -136,7 +136,7 @@ namespace REL
 		auto nstring = SKSE::stl::utf16_to_utf8(a_filename).value_or(""s);
 		if (!std::filesystem::exists(nstring)) {
 			return stl::report_and_error(
-					fmt::format("Required VR Address Library file {} does not exist"sv, nstring),
+					std::format("Required VR Address Library file {} does not exist"sv, nstring),
 					a_failOnError);
 		}
 
@@ -156,11 +156,11 @@ namespace REL
 		_id2offset = {static_cast<mapping_t *>(_mmap.data()), static_cast<std::size_t>(address_count)};
 		if (in.GetRowCount() > address_count + 1) {
 			return stl::report_and_error(
-					fmt::format("VR Address Library {} tried to exceed {} allocated entries."sv,
+					std::format("VR Address Library {} tried to exceed {} allocated entries."sv,
 								version, address_count), a_failOnError);
 		} else if (in.GetRowCount() < address_count + 1) {
 			return stl::report_and_error(
-					fmt::format("VR Address Library {} loaded only {} entries but expected {}. Please redownload."sv,
+					std::format("VR Address Library {} loaded only {} entries but expected {}. Please redownload."sv,
 								version, in.GetRowCount() - 1, address_count), a_failOnError);
 		}
 

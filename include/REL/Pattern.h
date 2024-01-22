@@ -124,7 +124,7 @@ namespace REL
                 if (!this->match(a_address)) {
                     const auto version = Module::get().version();
                     stl::report_and_fail(
-                            fmt::format(
+                            std::format(
                                     "A pattern has failed to match.\n"
                                     "This means the plugin is incompatible with the current version of the game ({}.{}.{}). "
                                     "Head to the mod page of this plugin to see if an update is available."sv,
