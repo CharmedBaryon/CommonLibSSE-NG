@@ -134,9 +134,9 @@ namespace REL
                     a_runtime == Runtime::VR ?
                     LR"(SOFTWARE\Bethesda Softworks\Skyrim VR)" :
                     LR"(SOFTWARE\Bethesda Softworks\Skyrim Special Edition)";
-            unsigned long length = bufferSize * sizeof(wchar_t);
+            std::uint32_t length = bufferSize * sizeof(wchar_t);
             std::uint8_t value[bufferSize];
-            if (WinAPI::RegGetValueW(WinAPI::HKEY_LOCAL_MACHINE, subKey, L"Installed Path", 0x20002, nullptr, value, &length) != 0) {
+            if (WinAPI::RegGetValue(WinAPI::HKEY_LOCAL_MACHINE, subKey, L"Installed Path", 0x20002u, nullptr, value, &length) != 0) {
                 return false;
             }
             std::filesystem::path installPath(reinterpret_cast<wchar_t *>(value));
