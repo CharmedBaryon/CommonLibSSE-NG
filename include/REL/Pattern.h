@@ -119,7 +119,7 @@ namespace REL
             }
 
             void match_or_fail(std::uintptr_t a_address,
-                               SKSE::stl::source_location a_loc = SKSE::stl::source_location::current()) const noexcept
+                               std::source_location a_loc = std::source_location::current()) const noexcept
             {
                 if (!this->match(a_address)) {
                     const auto version = Module::get().version();

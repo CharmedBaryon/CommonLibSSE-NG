@@ -597,67 +597,8 @@ namespace SKSE
 			return out;
 		}
 
-#ifndef __clang__
-		using source_location = std::source_location;
-#else
-		/**
-		 * A polyfill for source location support for Clang.
-		 *
-		 * <p>
-		 * Clang-CL can use <code>source_location</code>, but not in the context of a default argument due to
-		 * a bug in its support for <code>consteval</code>. This bug does not affect <code>constexpr</code> so
-		 * this class uses a <code>constexpr</code> version of the typical constructor.
-		 * </p>
-		 */
-		struct source_location
-		{
-		public:
-			static constexpr source_location current(
-				const uint_least32_t a_line = __builtin_LINE(),
-				const uint_least32_t a_column = __builtin_COLUMN(),
-				const char* const    a_file = __builtin_FILE(),
-				const char* const    a_function = __builtin_FUNCTION()) noexcept
-			{
-				source_location result;
-				result._line = a_line;
-				result._column = a_column;
-				result._file = a_file;
-				result._function = a_function;
-				return result;
-			}
-
-			[[nodiscard]] constexpr const char* file_name() const noexcept
-			{
-				return _file;
-			}
-
-			[[nodiscard]] constexpr const char* function_name() const noexcept
-			{
-				return _function;
-			}
-
-			[[nodiscard]] constexpr uint_least32_t line() const noexcept
-			{
-				return _line;
-			}
-
-			[[nodiscard]] constexpr uint_least32_t column() const noexcept
-			{
-				return _column;
-			}
-
-		private:
-			source_location() = default;
-
-			uint_least32_t _line{};
-			uint_least32_t _column{};
-			const char*    _file = "";
-			const char*    _function = "";
-		};
-#endif
-
 		inline bool report_and_error(std::string_view a_msg, bool a_fail = true,
-			SKSE::stl::source_location a_loc = SKSE::stl::source_location::current())
+			std::source_location a_loc = std::source_location::current())
 		{
 			const auto body = [&]() -> std::wstring {
 				const std::filesystem::path p = a_loc.file_name();
@@ -720,7 +661,7 @@ namespace SKSE
 		}
 
 		[[noreturn]] inline void report_and_fail(std::string_view a_msg,
-			SKSE::stl::source_location a_loc = SKSE::stl::source_location::current())
+			std::source_location a_loc = std::source_location::current())
 		{
 			report_and_error(a_msg, true, a_loc);
 		}
