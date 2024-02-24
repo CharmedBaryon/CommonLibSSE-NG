@@ -2,6 +2,8 @@
 
 #include "RE/B/BSKeyboardDevice.h"
 
+#include "REX/W32/DINPUT.h"
+
 namespace RE
 {
 	class BSWin32KeyboardDevice : public BSKeyboardDevice
@@ -21,14 +23,14 @@ namespace RE
 		void Unk_0A(void) override;           // 0A - { return; }
 
 		[[nodiscard]] bool IsPressed(std::uint32_t a_keyCode) const;
-		[[nodiscard]] Key  RemapNumpadKey(DirectInput8::DIKey a_key);
+		[[nodiscard]] Key  RemapNumpadKey(REX::W32::DIK a_key);
 
 		// members
-		DirectInput8::IDirectInput8A*    dInputDevice;      // 070
-		DirectInput8::DIDEVICEOBJECTDATA diObjData[10];     // 078
-		std::uint8_t                     prevState[0x100];  // 168
-		std::uint8_t                     curState[0x100];   // 268
-		bool                             capsLockOn;        // 368
+		REX::W32::IDirectInput8A*    dInputDevice;      // 070
+		REX::W32::DIDEVICEOBJECTDATA diObjData[10];     // 078
+		std::uint8_t                 prevState[0x100];  // 168
+		std::uint8_t                 curState[0x100];   // 268
+		bool                         capsLockOn;        // 368
 
 	protected:
 		BSWin32KeyboardDevice();

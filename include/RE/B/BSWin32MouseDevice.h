@@ -3,6 +3,8 @@
 #include "RE/B/BSAtomic.h"
 #include "RE/B/BSMouseDevice.h"
 
+#include "REX/W32/DINPUT.h"
+
 namespace RE
 {
 	class BSWin32MouseDevice : public BSMouseDevice
@@ -39,11 +41,11 @@ namespace RE
 		void Reinitialize(void) override;     // 09
 
 		// members
-		DirectInput8::IDirectInputDevice8A* dInputDevice;       // 78
-		DirectInput8::DIMOUSESTATE2         dInputPrevState{};  // 80
-		DirectInput8::DIMOUSESTATE2         dInputNextState{};  // 94
-		bool                                notInitialized;     // A8
-		mutable BSSpinLock                  reinitializeLock;   // AC
+		REX::W32::IDirectInputDevice8A* dInputDevice;       // 78
+		REX::W32::DIMOUSESTATE2         dInputPrevState{};  // 80
+		REX::W32::DIMOUSESTATE2         dInputNextState{};  // 94
+		bool                            notInitialized;     // A8
+		mutable BSSpinLock              reinitializeLock;   // AC
 
 	protected:
 		BSWin32MouseDevice();

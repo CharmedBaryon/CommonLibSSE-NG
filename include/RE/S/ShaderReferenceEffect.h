@@ -88,10 +88,10 @@ namespace RE
 		TESEffectShader*                      effectData;              // 108
 		BSEffectShaderData*                   effectShaderData;        // 110
 		NiPointer<NiAVObject>                 targetRoot;              // 118 - smart ptr
-		float                                 unk120;                  // 120
-		float                                 unk124;                  // 124 - 1.0f
-		float                                 addonModelsScaleStart;   // 128 - 1.0f
-		std::uint32_t                         unk12C;                  // 12C
+		float                                 alphaTimer;              // 120
+		float                                 addonAlpha;              // 124 - 1.0f
+		float                                 addonScale;              // 128 - 1.0f
+		float                                 effectShaderAge;         // 12C
 		stl::enumeration<Flag, std::uint32_t> flags;                   // 130
 		std::uint32_t                         pushCount;               // 134
 	};

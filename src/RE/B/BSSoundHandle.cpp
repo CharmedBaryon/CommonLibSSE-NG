@@ -81,4 +81,11 @@ namespace RE
 		REL::Relocation<func_t> func{ Offset::BSSoundHandle::Play };
 		return func(this);
 	}
+
+	bool BSSoundHandle::Pause()
+	{
+		using func_t = decltype(&BSSoundHandle::Pause);
+		REL::Relocation<func_t> func{ Offset::BSSoundHandle::Pause };
+		return func(this);
+	}
 }

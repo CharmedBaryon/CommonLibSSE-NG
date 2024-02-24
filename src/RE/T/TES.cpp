@@ -15,10 +15,10 @@ namespace RE
 		return *singleton;
 	}
 
-	void TES::ForEachReference(std::function<BSContainer::ForEachResult(TESObjectREFR& a_ref)> a_callback)
+	void TES::ForEachReference(std::function<BSContainer::ForEachResult(TESObjectREFR* a_ref)> a_callback)
 	{
 		if (interiorCell) {
-			interiorCell->ForEachReference([&](TESObjectREFR& a_ref) {
+			interiorCell->ForEachReference([&](TESObjectREFR* a_ref) {
 				return a_callback(a_ref);
 			});
 		} else {
@@ -28,7 +28,7 @@ namespace RE
 					std::uint32_t y = 0;
 					do {
 						if (const auto cell = gridCells->GetCell(x, y); cell && cell->IsAttached()) {
-							cell->ForEachReference([&](TESObjectREFR& a_ref) {
+							cell->ForEachReference([&](TESObjectREFR* a_ref) {
 								return a_callback(a_ref);
 							});
 						}
@@ -39,19 +39,19 @@ namespace RE
 			}
 		}
 		if (const auto skyCell = worldSpace ? worldSpace->GetSkyCell() : nullptr; skyCell) {
-			skyCell->ForEachReference([&](TESObjectREFR& a_ref) {
+			skyCell->ForEachReference([&](TESObjectREFR* a_ref) {
 				return a_callback(a_ref);
 			});
 		}
 	}
 
-	void TES::ForEachReferenceInRange(TESObjectREFR* a_origin, float a_radius, std::function<BSContainer::ForEachResult(TESObjectREFR& a_ref)> a_callback)
+	void TES::ForEachReferenceInRange(TESObjectREFR* a_origin, float a_radius, std::function<BSContainer::ForEachResult(TESObjectREFR* a_ref)> a_callback)
 	{
 		if (a_origin && a_radius > 0.0f) {
 			const auto originPos = a_origin->GetPosition();
 
 			if (interiorCell) {
-				interiorCell->ForEachReferenceInRange(originPos, a_radius, [&](TESObjectREFR& a_ref) {
+				interiorCell->ForEachReferenceInRange(originPos, a_radius, [&](TESObjectREFR* a_ref) {
 					return a_callback(a_ref);
 				});
 			} else {
@@ -69,7 +69,7 @@ namespace RE
 								if (const auto cellCoords = cell->GetCoordinates(); cellCoords) {
 									const NiPoint2 worldPos{ cellCoords->worldX, cellCoords->worldY };
 									if (worldPos.x < xPlus && (worldPos.x + 4096.0f) > xMinus && worldPos.y < yPlus && (worldPos.y + 4096.0f) > yMinus) {
-										cell->ForEachReferenceInRange(originPos, a_radius, [&](TESObjectREFR& a_ref) {
+										cell->ForEachReferenceInRange(originPos, a_radius, [&](TESObjectREFR* a_ref) {
 											return a_callback(a_ref);
 										});
 									}
@@ -83,12 +83,12 @@ namespace RE
 			}
 
 			if (const auto skyCell = worldSpace ? worldSpace->GetSkyCell() : nullptr; skyCell) {
-				skyCell->ForEachReferenceInRange(originPos, a_radius, [&](TESObjectREFR& a_ref) {
+				skyCell->ForEachReferenceInRange(originPos, a_radius, [&](TESObjectREFR* a_ref) {
 					return a_callback(a_ref);
 				});
 			}
 		} else {
-			ForEachReference([&](TESObjectREFR& a_ref) {
+			ForEachReference([&](TESObjectREFR* a_ref) {
 				return a_callback(a_ref);
 			});
 		}

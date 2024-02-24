@@ -6,6 +6,8 @@
 #include "RE/T/TESObjectREFR.h"
 #include "RE/T/TESRace.h"
 
+#include "REX/W32/BASE.h"
+
 namespace RE
 {
 	bool HasArmorRace(const TESRace* a_sourceRace, const TESRace* a_targetRace)
@@ -63,6 +65,6 @@ namespace RE
 		}
 
 		std::uint32_t sex = npc ? static_cast<std::uint32_t>(npc->GetSex()) : 0;
-		sprintf_s(a_dstBuff, MAX_PATH, " (%08X)[%d]/ (%08X) [%2.0f%%]", GetFormID(), sex, a_armor->GetFormID(), weight);
+		sprintf_s(a_dstBuff, REX::W32::MAX_PATH, " (%08X)[%d]/ (%08X) [%2.0f%%]", GetFormID(), sex, a_armor->GetFormID(), weight);
 	}
 }

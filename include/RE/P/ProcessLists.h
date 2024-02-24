@@ -36,11 +36,11 @@ namespace RE
 		static ProcessLists* GetSingleton();
 
 		void         ClearCachedFactionFightReactions() const;
-		void         ForAllActors(std::function<BSContainer::ForEachResult(Actor&)> a_callback);
-		void         ForEachHighActor(std::function<BSContainer::ForEachResult(Actor&)> a_callback);
-		void         ForEachMagicTempEffect(std::function<BSContainer::ForEachResult(BSTempEffect&)> a_callback);
-		void         ForEachModelEffect(std::function<BSContainer::ForEachResult(ModelReferenceEffect&)> a_callback);
-		void         ForEachShaderEffect(std::function<BSContainer::ForEachResult(ShaderReferenceEffect&)> a_callback);
+		void         ForAllActors(std::function<BSContainer::ForEachResult(Actor*)> a_callback);
+		void         ForEachHighActor(std::function<BSContainer::ForEachResult(Actor*)> a_callback);
+		void         ForEachMagicTempEffect(std::function<BSContainer::ForEachResult(BSTempEffect*)> a_callback);
+		void         ForEachModelEffect(std::function<BSContainer::ForEachResult(ModelReferenceEffect*)> a_callback);
+		void         ForEachShaderEffect(std::function<BSContainer::ForEachResult(ShaderReferenceEffect*)> a_callback);
 		float        GetSystemTimeClock();
 		std::int16_t RequestHighestDetectionLevelAgainstActor(Actor* a_actor, std::uint32_t& a_LOSCount);
 		void         StopAllMagicEffects(TESObjectREFR& a_ref);

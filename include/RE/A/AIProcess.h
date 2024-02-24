@@ -13,7 +13,6 @@ namespace RE
 	class Actor;
 	class bhkCharacterController;
 	class BipedAnim;
-	class HighProcess;
 	class NiAVObject;
 	class NiPoint3;
 	class TESForm;
@@ -135,6 +134,13 @@ namespace RE
 		};
 		using Hand = Hands::Hand;
 
+		struct EquippedObject
+		{
+			TESForm*      object;  // 00
+			BGSEquipSlot* slot;    // 08
+		};
+		static_assert(sizeof(EquippedObject) == 0x10);
+
 		struct Data0B8
 		{
 		public:
@@ -203,7 +209,7 @@ namespace RE
 		float                                           deathTime;                      // 094
 		float                                           trackedDamage;                  // 098
 		std::uint32_t                                   pad09C;                         // 09C
-		BSTArray<TESForm*>                              forms;                          // 0A0
+		BSTArray<EquippedObject>                        equippedForms;                  // 0A0
 		Data0B8                                         unk0B8;                         // 0B8
 		TESForm*                                        equippedObjects[Hand::kTotal];  // 0F0
 		std::uint64_t                                   unk100;                         // 100

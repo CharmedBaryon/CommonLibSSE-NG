@@ -1,5 +1,7 @@
 #pragma once
 
+#include "REX/W32/BASE.h"
+
 namespace RE
 {
 	class GLock
@@ -25,7 +27,7 @@ namespace RE
 		void Unlock();
 
 		// members
-		WinAPI::CRITICAL_SECTION cs;  // 00
+		REX::W32::CRITICAL_SECTION cs;  // 00
 	};
 	static_assert(sizeof(GLock) == 0x28);
 

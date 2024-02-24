@@ -268,6 +268,13 @@ namespace RE
 		           ObjectRefHandle();
 	}
 
+	bool ExtraDataList::HasQuestObjectAlias()
+	{
+		using func_t = decltype(&ExtraDataList::HasQuestObjectAlias);
+		REL::Relocation<func_t> func{ RELOCATION_ID(11913, 12052) };
+		return func(this);
+	}
+
 	void ExtraDataList::SetCount(std::uint16_t a_count)
 	{
 		using func_t = decltype(&ExtraDataList::SetCount);

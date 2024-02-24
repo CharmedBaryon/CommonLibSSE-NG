@@ -1,7 +1,7 @@
 #define CATCH2_CONFIG_MAIN
 #include "catch2/catch_all.hpp"
 
-#include "REL/Relocation.h"
+#include "REL/REL.h"
 #include "SKSE/SKSE.h"
 
 using namespace REL::literals;

@@ -1,48 +1,6 @@
 #include "RE/B/BSAtomic.h"
 
-#define WIN32_LEAN_AND_MEAN
-
-#define NOGDICAPMASKS
-#define NOVIRTUALKEYCODES
-//#define NOWINMESSAGES
-#define NOWINSTYLES
-#define NOSYSMETRICS
-#define NOMENUS
-#define NOICONS
-#define NOKEYSTATES
-#define NOSYSCOMMANDS
-#define NORASTEROPS
-#define NOSHOWWINDOW
-#define OEMRESOURCE
-#define NOATOM
-#define NOCLIPBOARD
-#define NOCOLOR
-//#define NOCTLMGR
-#define NODRAWTEXT
-#define NOGDI
-#define NOKERNEL
-//#define NOUSER
-#define NONLS
-//#define NOMB
-#define NOMEMMGR
-#define NOMETAFILE
-#define NOMINMAX
-//#define NOMSG
-#define NOOPENFILE
-#define NOSCROLL
-#define NOSERVICE
-#define NOSOUND
-#define NOTEXTMETRIC
-#define NOWH
-#define NOWINOFFSETS
-#define NOCOMM
-#define NOKANJI
-#define NOHELP
-#define NOPROFILER
-#define NODEFERWINDOWPOS
-#define NOMCX
-
-#include <Windows.h>
+#include "REX/W32/KERNEL32.h"
 
 namespace RE
 {
@@ -50,12 +8,12 @@ namespace RE
 		semaphore()
 	{
 		stl::memzero(&semaphore);
-		semaphore = ::CreateSemaphoreA(nullptr, 0, 40, nullptr);
+		semaphore = REX::W32::CreateSemaphoreA(nullptr, 0, 40, nullptr);
 	}
 
 	BSSemaphoreBase::~BSSemaphoreBase()
 	{
-		::CloseHandle(semaphore);
+		REX::W32::CloseHandle(semaphore);
 		stl::memzero(&semaphore);
 	}
 
@@ -66,25 +24,25 @@ namespace RE
 
 	void BSSpinLock::Lock(std::uint32_t a_pauseAttempts)
 	{
-		std::uint32_t myThreadID = ::GetCurrentThreadId();
+		std::uint32_t myThreadID = REX::W32::GetCurrentThreadId();
 
 		_mm_lfence();
 		if (_owningThread == myThreadID) {
-			::_InterlockedIncrement(&_lockCount);
+			REX::W32::InterlockedIncrement(&_lockCount);
 		} else {
 			std::uint32_t attempts = 0;
-			if (::_InterlockedCompareExchange(&_lockCount, 1, 0)) {
+			if (REX::W32::InterlockedCompareExchange(&_lockCount, 1, 0)) {
 				do {
 					++attempts;
 					_mm_pause();
 					if (attempts >= a_pauseAttempts) {
 						std::uint32_t spinCount = 0;
-						while (::_InterlockedCompareExchange(&_lockCount, 1, 0)) {
-							Sleep(++spinCount < kFastSpinThreshold ? 0 : 1);
+						while (REX::W32::InterlockedCompareExchange(&_lockCount, 1, 0)) {
+							REX::W32::Sleep(++spinCount < kFastSpinThreshold ? 0 : 1);
 						}
 						break;
 					}
-				} while (::_InterlockedCompareExchange(&_lockCount, 1, 0));
+				} while (REX::W32::InterlockedCompareExchange(&_lockCount, 1, 0));
 				_mm_lfence();
 			}
 
@@ -95,16 +53,16 @@ namespace RE
 
 	void BSSpinLock::Unlock()
 	{
-		std::uint32_t myThreadID = GetCurrentThreadId();
+		std::uint32_t myThreadID = REX::W32::GetCurrentThreadId();
 
 		_mm_lfence();
 		if (_owningThread == myThreadID) {
 			if (_lockCount == 1) {
 				_owningThread = 0;
 				_mm_mfence();
-				::_InterlockedCompareExchange(&_lockCount, 0, 1);
+				REX::W32::InterlockedCompareExchange(&_lockCount, 0, 1);
 			} else {
-				::_InterlockedDecrement(&_lockCount);
+				REX::W32::InterlockedDecrement(&_lockCount);
 			}
 		}
 	}

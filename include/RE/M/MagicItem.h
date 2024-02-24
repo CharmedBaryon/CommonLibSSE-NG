@@ -119,6 +119,7 @@ namespace RE
 		[[nodiscard]] std::int32_t           GetLargestArea() const;
 		[[nodiscard]] std::uint32_t          GetLongestDuration() const;
 		[[nodiscard]] bool                   HasEffect(EffectArchetype a_archetype);
+		[[nodiscard]] bool                   IsHostile() const;
 		[[nodiscard]] bool                   IsPermanent() const;
 		void                                 Traverse(MagicItemTraversalFunctor& a_visitor) const;
 

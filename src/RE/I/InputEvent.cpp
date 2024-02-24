@@ -3,6 +3,7 @@
 #include "RE/B/ButtonEvent.h"
 #include "RE/C/CharEvent.h"
 #include "RE/I/IDEvent.h"
+#include "RE/M/MouseMoveEvent.h"
 
 namespace RE
 {
@@ -34,5 +35,15 @@ namespace RE
 	const IDEvent* InputEvent::AsIDEvent() const
 	{
 		return HasIDCode() ? static_cast<const IDEvent*>(this) : nullptr;
+	}
+
+	MouseMoveEvent* InputEvent::AsMouseMoveEvent()
+	{
+		return GetEventType() == INPUT_EVENT_TYPE::kMouseMove ? static_cast<MouseMoveEvent*>(this) : nullptr;
+	}
+
+	const MouseMoveEvent* InputEvent::AsMouseMoveEvent() const
+	{
+		return GetEventType() == INPUT_EVENT_TYPE::kMouseMove ? static_cast<const MouseMoveEvent*>(this) : nullptr;
 	}
 }

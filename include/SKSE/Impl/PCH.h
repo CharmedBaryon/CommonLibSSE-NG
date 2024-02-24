@@ -63,10 +63,8 @@ static_assert(
 #include <spdlog/spdlog.h>
 #pragma warning(pop)
 
-#include "SKSE/Impl/DInputAPI.h"
-#include "SKSE/Impl/ScePadAPI.h"
-#include "SKSE/Impl/WinAPI.h"
-#include "SKSE/Impl/XInputAPI.h"
+#include "REX/W32/KERNEL32.h"
+#include "REX/W32/USER32.h"
 
 namespace SKSE
 {
@@ -548,8 +546,8 @@ namespace SKSE
 			-> std::optional<std::wstring>
 		{
 			const auto cvt = [&](wchar_t* a_dst, std::size_t a_length) {
-				return WinAPI::MultiByteToWideChar(
-					CP_UTF8,
+				return REX::W32::MultiByteToWideChar(
+					REX::W32::CP_UTF8,
 					0,
 					a_in.data(),
 					static_cast<int>(a_in.length()),
@@ -574,8 +572,8 @@ namespace SKSE
 			-> std::optional<std::string>
 		{
 			const auto cvt = [&](char* a_dst, std::size_t a_length) {
-				return WinAPI::WideCharToMultiByte(
-					CP_UTF8,
+				return REX::W32::WideCharToMultiByte(
+					REX::W32::CP_UTF8,
 					0,
 					a_in.data(),
 					static_cast<int>(a_in.length()),
@@ -680,15 +678,14 @@ namespace SKSE
 			}();
 
 			const auto caption = []() {
-				const auto           maxPath = WinAPI::GetMaxPath();
 				std::vector<wchar_t> buf;
-				buf.reserve(maxPath);
-				buf.resize(maxPath / 2);
+				buf.reserve(REX::W32::MAX_PATH);
+				buf.resize(REX::W32::MAX_PATH / 2);
 				std::uint32_t result = 0;
 				do {
 					buf.resize(buf.size() * 2);
-					result = GetModuleFileName(
-						WinAPI::GetCurrentModule(),
+					result = REX::W32::GetModuleFileNameW(
+						REX::W32::GetCurrentModule(),
 						buf.data(),
 						static_cast<std::uint32_t>(buf.size()));
 				} while (result && result == buf.size() && buf.size() <= (std::numeric_limits<std::uint32_t>::max)());
@@ -713,8 +710,8 @@ namespace SKSE
 #ifdef ENABLE_COMMONLIBSSE_TESTING
 				throw std::runtime_error(utf16_to_utf8(caption.empty() ? body.c_str() : caption.c_str())->c_str());
 #else
-				MessageBox(nullptr, body.c_str(), (caption.empty() ? nullptr : caption.c_str()), 0);
-				WinAPI::TerminateProcess(WinAPI::GetCurrentProcess(), EXIT_FAILURE);
+				REX::W32::MessageBoxW(nullptr, body.c_str(), (caption.empty() ? nullptr : caption.c_str()), 0);
+				REX::W32::TerminateProcess(REX::W32::GetCurrentProcess(), EXIT_FAILURE);
 #endif
 			}
 			return true;
@@ -783,19 +780,17 @@ namespace RE
 {
 	using namespace std::literals;
 	namespace stl = SKSE::stl;
-	namespace WinAPI = SKSE::WinAPI;
 }
 
 namespace REL
 {
 	using namespace std::literals;
 	namespace stl = SKSE::stl;
-	namespace WinAPI = SKSE::WinAPI;
 }
 
 #define RELOCATION_ID(a_se, a_ae) REL::RelocationID(a_se, a_ae)
 
-#include "REL/Relocation.h"
+#include "REL/REL.h"
 
 #include "RE/Offsets.h"
 #include "RE/Offsets_NiRTTI.h"

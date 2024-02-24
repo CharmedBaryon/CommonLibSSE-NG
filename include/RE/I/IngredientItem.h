@@ -99,7 +99,6 @@ namespace RE
 		// override (BGSKeywordForm)
 		[[nodiscard]] BGSKeyword* GetDefaultKeyword() const override;  // 05
 
-		[[nodiscard]] bool           IsHostile() const;
 		bool                         LearnEffect(std::uint32_t a_index);
 		bool                         LearnEffect(EffectSetting* a_effect);
 		std::optional<std::uint32_t> LearnNextEffect();

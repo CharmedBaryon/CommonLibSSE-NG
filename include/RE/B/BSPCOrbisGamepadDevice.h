@@ -2,6 +2,8 @@
 
 #include "RE/B/BSPCGamepadDeviceDelegate.h"
 
+#include "REX/PS4/SCEPAD.h"
+
 namespace RE
 {
 	// PS4 controller used via HID polling
@@ -17,26 +19,26 @@ namespace RE
 			{
 				// Masks for buttonState
 				// Key hardware value
-				kUp = ScePad::ScePadButton::SCE_PAD_BUTTON_UP,
-				kDown = ScePad::ScePadButton::SCE_PAD_BUTTON_DOWN,
-				kLeft = ScePad::ScePadButton::SCE_PAD_BUTTON_LEFT,
-				kRight = ScePad::ScePadButton::SCE_PAD_BUTTON_RIGHT,
-				kPS3_Start = ScePad::ScePadButton::SCE_PAD_BUTTON_OPTIONS,
-				kPS3_Back = ScePad::ScePadButton::SCE_PAD_BUTTON_TOUCH_PAD,  // This is mapped to the touchpad on the PS4 controller
-				kPS3_L3 = ScePad::ScePadButton::SCE_PAD_BUTTON_L3,
-				kPS3_R3 = ScePad::ScePadButton::SCE_PAD_BUTTON_R3,
-				kPS3_LB = ScePad::ScePadButton::SCE_PAD_BUTTON_L1,
-				kPS3_RB = ScePad::ScePadButton::SCE_PAD_BUTTON_R1,
-				kPS3_A = ScePad::ScePadButton::SCE_PAD_BUTTON_CROSS,
-				kPS3_B = ScePad::ScePadButton::SCE_PAD_BUTTON_CIRCLE,
-				kPS3_X = ScePad::ScePadButton::SCE_PAD_BUTTON_SQUARE,
-				kPS3_Y = ScePad::ScePadButton::SCE_PAD_BUTTON_TRIANGLE,
+				kUp = REX::PS4::SCE_PAD_BUTTON::SCE_PAD_BUTTON_UP,
+				kDown = REX::PS4::SCE_PAD_BUTTON::SCE_PAD_BUTTON_DOWN,
+				kLeft = REX::PS4::SCE_PAD_BUTTON::SCE_PAD_BUTTON_LEFT,
+				kRight = REX::PS4::SCE_PAD_BUTTON::SCE_PAD_BUTTON_RIGHT,
+				kPS3_Start = REX::PS4::SCE_PAD_BUTTON::SCE_PAD_BUTTON_OPTIONS,
+				kPS3_Back = REX::PS4::SCE_PAD_BUTTON::SCE_PAD_BUTTON_TOUCH_PAD,  // This is mapped to the touchpad on the PS4 controller
+				kPS3_L3 = REX::PS4::SCE_PAD_BUTTON::SCE_PAD_BUTTON_L3,
+				kPS3_R3 = REX::PS4::SCE_PAD_BUTTON::SCE_PAD_BUTTON_R3,
+				kPS3_LB = REX::PS4::SCE_PAD_BUTTON::SCE_PAD_BUTTON_L1,
+				kPS3_RB = REX::PS4::SCE_PAD_BUTTON::SCE_PAD_BUTTON_R1,
+				kPS3_A = REX::PS4::SCE_PAD_BUTTON::SCE_PAD_BUTTON_CROSS,
+				kPS3_B = REX::PS4::SCE_PAD_BUTTON::SCE_PAD_BUTTON_CIRCLE,
+				kPS3_X = REX::PS4::SCE_PAD_BUTTON::SCE_PAD_BUTTON_SQUARE,
+				kPS3_Y = REX::PS4::SCE_PAD_BUTTON::SCE_PAD_BUTTON_TRIANGLE,
 
 				// Unused by Skyrim
-				kPS4_Share = ScePad::ScePadButton::SCE_PAD_BUTTON_SHARE,        // Skyrim uses the touchpad for Back and leaves the Share button unused
-				kPS4_L2 = ScePad::ScePadButton::SCE_PAD_BUTTON_L2,              // Skyrim uses trigger axis read instead of button press
-				kPS4_R2 = ScePad::ScePadButton::SCE_PAD_BUTTON_R2,              // Skyrim uses trigger axis read instead of button press
-				kPS4_PSBtn = ScePad::ScePadButton::SCE_PAD_BUTTON_PLAYSTATION,  // Playstation button
+				kPS4_Share = REX::PS4::SCE_PAD_BUTTON::SCE_PAD_BUTTON_SHARE,        // Skyrim uses the touchpad for Back and leaves the Share button unused
+				kPS4_L2 = REX::PS4::SCE_PAD_BUTTON::SCE_PAD_BUTTON_L2,              // Skyrim uses trigger axis read instead of button press
+				kPS4_R2 = REX::PS4::SCE_PAD_BUTTON::SCE_PAD_BUTTON_R2,              // Skyrim uses trigger axis read instead of button press
+				kPS4_PSBtn = REX::PS4::SCE_PAD_BUTTON::SCE_PAD_BUTTON_PLAYSTATION,  // Playstation button
 
 				// arbitrary values
 				// IDs meant to be used with ButtonEvent

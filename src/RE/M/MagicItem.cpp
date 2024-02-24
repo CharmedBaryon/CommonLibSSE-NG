@@ -80,6 +80,11 @@ namespace RE
 		return func(this, a_archetype);
 	}
 
+	bool MagicItem::IsHostile() const
+	{
+		return hostileCount > 0;
+	}
+
 	bool MagicItem::IsPermanent() const
 	{
 		using func_t = decltype(&MagicItem::IsPermanent);

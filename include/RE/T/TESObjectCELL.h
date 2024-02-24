@@ -193,28 +193,14 @@ namespace RE
 		[[nodiscard]] bool IsParentForm() override;                                                              // 34 - { return true; }
 		[[nodiscard]] bool IsFormTypeChild(FormType a_type) override;                                            // 36
 
-		TESNPC* GetActorOwner();
-
-		inline bhkWorld* GetbhkWorld() const
-		{
-			using func_t = decltype(&TESObjectCELL::GetbhkWorld);
-			REL::Relocation<func_t> func{ RELOCATION_ID(18536, 18995) };
-			return func(this);
-		}
-
-		void                         ForEachReference(std::function<BSContainer::ForEachResult(TESObjectREFR&)> a_callback) const;
-		void                         ForEachReferenceInRange(const NiPoint3& a_origin, float a_radius, std::function<BSContainer::ForEachResult(TESObjectREFR&)> a_callback) const;
+		TESNPC*                      GetActorOwner();
+		bhkWorld*                    GetbhkWorld() const;
+		void                         ForEachReference(std::function<BSContainer::ForEachResult(TESObjectREFR*)> a_callback) const;
+		void                         ForEachReferenceInRange(const NiPoint3& a_origin, float a_radius, std::function<BSContainer::ForEachResult(TESObjectREFR*)> a_callback) const;
 		[[nodiscard]] EXTERIOR_DATA* GetCoordinates();
 		[[nodiscard]] TESFaction*    GetFactionOwner();
 		[[nodiscard]] INTERIOR_DATA* GetLighting();
-
-		[[nodiscard]] inline BGSLocation* GetLocation() const
-		{
-			using func_t = decltype(&TESObjectCELL::GetLocation);
-			REL::Relocation<func_t> func{ RELOCATION_ID(18474, 18905) };
-			return func(this);
-		}
-
+		[[nodiscard]] BGSLocation*   GetLocation() const;
 		[[nodiscard]] float          GetNorthRotation();
 		[[nodiscard]] TESForm*       GetOwner();
 		[[nodiscard]] float          GetExteriorWaterHeight() const;

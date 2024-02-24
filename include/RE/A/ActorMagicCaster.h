@@ -40,31 +40,31 @@ namespace RE
 		~ActorMagicCaster() override;  // 00
 
 		// override (MagicCaster)
-		void                       RequestCastImpl() override;                                                                                                                           // 03
-		bool                       StartChargeImpl() override;                                                                                                                           // 04
-		void                       StartReadyImpl() override;                                                                                                                            // 05
-		void                       StartCastImpl() override;                                                                                                                             // 06
-		void                       FinishCastImpl() override;                                                                                                                            // 07 - { return; }
-		void                       InterruptCastImpl(bool a_depleteEnergy) override;                                                                                                     // 08 - { return; }
-		void                       SpellCast(bool a_doCast, std::uint32_t a_arg2, MagicItem* a_spell) override;                                                                          // 09 - { return; }
-		bool                       CheckCast(MagicItem* a_spell, bool a_dualCast, float* a_alchStrength, MagicSystem::CannotCastReason* a_reason, bool a_useBaseValueForCost) override;  // 0A
-		TESObjectREFR*             GetCasterStatsObject() const override;                                                                                                                // 0B - { return actor; }
-		Actor*                     GetCasterAsActor() const override;                                                                                                                    // 0C - { return actor; }
-		NiNode*                    GetMagicNode() override;                                                                                                                              // 0E - { return magicNode; }
-		void                       ClearMagicNode() override;                                                                                                                            // 0F - { magicNode = 0; }
-		void                       SetCurrentSpellImpl(MagicItem* a_spell) override;                                                                                                     // 10 - { return; }
-		void                       SelectSpellImpl() override;                                                                                                                           // 11 - { return; }
-		void                       DeselectSpellImpl() override;                                                                                                                         // 12 - { return; }
-		void                       SetSkipCheckCast() override;                                                                                                                          // 13 - { return; }
-		void                       SetCastingTimerForCharge() override;                                                                                                                  // 14
-		MagicSystem::CastingSource GetCastingSource() const override;                                                                                                                    // 15 - { return castingSource; }
-		bool                       GetIsDualCasting() const override;                                                                                                                    // 16 - { return flags & 1; }
-		void                       SetDualCasting(bool a_set) override;                                                                                                                  // 17
-		void                       SaveGame(BGSSaveGameBuffer* a_buf) override;                                                                                                          // 18
-		void                       LoadGame(BGSLoadGameBuffer* a_buf) override;                                                                                                          // 19
-		void                       FinishLoadGame(BGSLoadGameBuffer* a_buf) override;                                                                                                    // 1A
-		void                       PrepareSound(MagicSystem::SoundID a_sound, MagicItem* a_spell) override;                                                                              // 1B
-		void                       AdjustActiveEffect(ActiveEffect* a_activeEffect, float a_power, bool a_arg3) override;                                                                // 1C
+		void                       RequestCastImpl() override;                                                                                                                             // 03
+		bool                       StartChargeImpl() override;                                                                                                                             // 04
+		void                       StartReadyImpl() override;                                                                                                                              // 05
+		void                       StartCastImpl() override;                                                                                                                               // 06
+		void                       FinishCastImpl() override;                                                                                                                              // 07 - { return; }
+		void                       InterruptCastImpl(bool a_depleteEnergy) override;                                                                                                       // 08 - { return; }
+		void                       SpellCast(bool a_doCast, std::uint32_t a_arg2, MagicItem* a_spell) override;                                                                            // 09 - { return; }
+		bool                       CheckCast(MagicItem* a_spell, bool a_dualCast, float* a_effectStrength, MagicSystem::CannotCastReason* a_reason, bool a_useBaseValueForCost) override;  // 0A
+		TESObjectREFR*             GetCasterStatsObject() const override;                                                                                                                  // 0B - { return actor; }
+		Actor*                     GetCasterAsActor() const override;                                                                                                                      // 0C - { return actor; }
+		NiNode*                    GetMagicNode() override;                                                                                                                                // 0E - { return magicNode; }
+		void                       ClearMagicNode() override;                                                                                                                              // 0F - { magicNode = 0; }
+		void                       SetCurrentSpellImpl(MagicItem* a_spell) override;                                                                                                       // 10 - { return; }
+		void                       SelectSpellImpl() override;                                                                                                                             // 11 - { return; }
+		void                       DeselectSpellImpl() override;                                                                                                                           // 12 - { return; }
+		void                       SetSkipCheckCast() override;                                                                                                                            // 13 - { return; }
+		void                       SetCastingTimerForCharge() override;                                                                                                                    // 14
+		MagicSystem::CastingSource GetCastingSource() const override;                                                                                                                      // 15 - { return castingSource; }
+		bool                       GetIsDualCasting() const override;                                                                                                                      // 16 - { return flags & 1; }
+		void                       SetDualCasting(bool a_set) override;                                                                                                                    // 17
+		void                       SaveGame(BGSSaveGameBuffer* a_buf) override;                                                                                                            // 18
+		void                       LoadGame(BGSLoadGameBuffer* a_buf) override;                                                                                                            // 19
+		void                       FinishLoadGame(BGSLoadGameBuffer* a_buf) override;                                                                                                      // 1A
+		void                       PrepareSound(MagicSystem::SoundID a_sound, MagicItem* a_spell) override;                                                                                // 1B
+		void                       AdjustActiveEffect(ActiveEffect* a_activeEffect, float a_power, bool a_arg3) override;                                                                  // 1C
 
 		// add
 		virtual void Update(float a_delta);  // 1D

@@ -2,6 +2,8 @@
 
 #include "RE/I/IMemoryStore.h"
 
+#include "REX/W32/KERNEL32.h"
+
 namespace RE
 {
 	class ScrapHeap : public IMemoryStore
@@ -38,7 +40,7 @@ namespace RE
 		};
 		static_assert(sizeof(FreeTreeNode) == 0x30);
 
-		~ScrapHeap() override { WinAPI::VirtualFree(baseAddress, 0, MEM_RELEASE); }  // 00
+		~ScrapHeap() override { REX::W32::VirtualFree(baseAddress, 0, REX::W32::MEM_RELEASE); }  // 00
 
 		// override (IMemoryStore)
 		std::size_t Size(void const* a_mem) const override { return *static_cast<const std::size_t*>(a_mem) & ~(std::size_t{ 3 } << 62); }  // 01

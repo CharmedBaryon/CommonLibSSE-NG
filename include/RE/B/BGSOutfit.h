@@ -30,10 +30,10 @@ namespace RE
 		bool Load(TESFile* a_mod) override;  // 06
 		void InitItemImpl() override;        // 13
 
-		void ForEachItem(std::function<BSContainer::ForEachResult(TESForm&)> a_callback) const
+		void ForEachItem(std::function<BSContainer::ForEachResult(TESForm*)> a_callback) const
 		{
 			for (auto& item : outfitItems) {
-				if (item && a_callback(*item) == BSContainer::ForEachResult::kStop) {
+				if (item && a_callback(item) == BSContainer::ForEachResult::kStop) {
 					return;
 				}
 			}

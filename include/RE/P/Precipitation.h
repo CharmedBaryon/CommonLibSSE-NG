@@ -3,6 +3,8 @@
 #include "RE/N/NiPoint3.h"
 #include "RE/N/NiSmartPointer.h"
 
+#include "REX/W32/D3D.h"
+
 namespace RE
 {
 	class BSCullingProcess;
@@ -19,7 +21,7 @@ namespace RE
 		{
 		public:
 			// members
-			alignas(0x10) DirectX::XMFLOAT4X4 projection;   // 00
+			alignas(0x10) REX::W32::XMFLOAT4X4 projection;  // 00
 			NiPointer<NiCamera>            camera;          // 40
 			NiPointer<BSShaderAccumulator> accumulator;     // 48
 			BSCullingProcess*              cullingProcess;  // 50

@@ -7,35 +7,35 @@ namespace RE
 		return (a_keyCode < sizeof(curState)) && ((curState[a_keyCode] & 0x80) != 0);
 	}
 
-	BSKeyboardDevice::Key BSWin32KeyboardDevice::RemapNumpadKey(DirectInput8::DIKey a_key)
+	BSKeyboardDevice::Key BSWin32KeyboardDevice::RemapNumpadKey(REX::W32::DIK a_key)
 	{
-		if (WinAPI::GetKeyState(WinAPI::VKEnum::VK_NUMLOCK) != 1) {
+		if (REX::W32::GetKeyState(REX::W32::VK::VK_NUMLOCK) != 1) {
 			return Key::kNone;
 		}
 		switch (a_key) {
-		case DirectInput8::DIKey::DIK_NUMPAD7:
+		case REX::W32::DIK::DIK_NUMPAD7:
 			return Key::kKP_Multiply;
-		case DirectInput8::DIKey::DIK_NUMPAD8:
+		case REX::W32::DIK::DIK_NUMPAD8:
 			return Key::kLeftAlt;
-		case DirectInput8::DIKey::DIK_NUMPAD9:
+		case REX::W32::DIK::DIK_NUMPAD9:
 			return Key::kSpacebar;
-		case DirectInput8::DIKey::DIK_NUMPAD4:
+		case REX::W32::DIK::DIK_NUMPAD4:
 			return Key::kPeriod;
-		case DirectInput8::DIKey::DIK_NUMPAD5:
+		case REX::W32::DIK::DIK_NUMPAD5:
 			return Key::kSlash;
-		case DirectInput8::DIKey::DIK_NUMPAD6:
+		case REX::W32::DIK::DIK_NUMPAD6:
 			return Key::kRightShift;
-		case DirectInput8::DIKey::DIK_NUMPAD1:
+		case REX::W32::DIK::DIK_NUMPAD1:
 			return Key::kN;
-		case DirectInput8::DIKey::DIK_NUMPAD2:
+		case REX::W32::DIK::DIK_NUMPAD2:
 			return Key::kM;
-		case DirectInput8::DIKey::DIK_NUMPAD3:
+		case REX::W32::DIK::DIK_NUMPAD3:
 			return Key::kComma;
-		case DirectInput8::DIKey::DIK_NUMPAD0:
+		case REX::W32::DIK::DIK_NUMPAD0:
 			return Key::kB;
-		case DirectInput8::DIKey::DIK_DECIMAL:
+		case REX::W32::DIK::DIK_DECIMAL:
 			return Key::kC;
-		case DirectInput8::DIKey::DIK_DIVIDE:
+		case REX::W32::DIK::DIK_DIVIDE:
 			return Key::kV;
 		default:
 			break;

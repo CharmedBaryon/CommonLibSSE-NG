@@ -1,4 +1,5 @@
 #include "RE/G/GMemoryHeap.h"
+#include "REX/W32/KERNEL32.h"
 
 namespace RE
 {
@@ -102,8 +103,8 @@ namespace RE
 
 	void GMemoryHeap::AssignToCurrentThread()
 	{
-		assert(_ownerThreadID == 0 || _ownerThreadID == WinAPI::GetCurrentThreadID());
-		_ownerThreadID = WinAPI::GetCurrentThreadID();
+		assert(_ownerThreadID == 0 || _ownerThreadID == REX::W32::GetCurrentThreadId());
+		_ownerThreadID = REX::W32::GetCurrentThreadId();
 	}
 
 	bool GMemoryHeap::DumpMemoryLeaks()

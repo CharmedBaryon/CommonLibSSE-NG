@@ -42,6 +42,7 @@ namespace RE
 		bool               SetVolume(float a_volume);
 		bool               Stop();
 		bool               Play();
+		bool               Pause();
 
 		// members
 		std::uint32_t                                 soundID;        // 00

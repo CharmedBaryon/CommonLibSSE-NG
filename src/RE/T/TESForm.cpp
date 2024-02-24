@@ -52,23 +52,27 @@ namespace RE
 		}
 
 		// Iterate through the keywords
-		for (std::uint32_t i = 0; i < keywordForm->GetNumKeywords(); ++i) {
-			auto keywordOpt = keywordForm->GetKeywordAt(i);
-			if (keywordOpt) {
-				auto keyword = *keywordOpt;
-				if (keyword) {
-					const char* keywordEditorID = keyword->GetFormEditorID();
-					if (keywordEditorID) {
-						// Check if the keywordEditorID is in the given editorIDs vector
-						if (std::find(editorIDs.begin(), editorIDs.end(), keywordEditorID) != editorIDs.end()) {
-							return true;
-						}
-					}
-				}
+		bool hasKeyword = false;
+
+		keywordForm->ForEachKeyword([&](const BGSKeyword* a_keyword) {
+			if (std::ranges::find(editorIDs, a_keyword->GetFormEditorID()) != editorIDs.end()) {
+				hasKeyword = true;
+				return BSContainer::ForEachResult::kStop;
 			}
+			return BSContainer::ForEachResult::kContinue;
+		});
+
+		return hasKeyword;
+	}
+
+	bool TESForm::HasKeywordByEditorID(std::string_view a_editorID)
+	{
+		const auto keywordForm = As<BGSKeywordForm>();
+		if (!keywordForm) {
+			return false;
 		}
 
-		return false;
+		return keywordForm->HasKeywordString(a_editorID);
 	}
 
 	bool TESForm::HasKeywordInArray(const std::vector<BGSKeyword*>& a_keywords, bool a_matchAll) const
@@ -103,8 +107,8 @@ namespace RE
 
 		bool hasKeyword = false;
 
-		a_keywordList->ForEachForm([&](const TESForm& a_form) {
-			const auto keyword = a_form.As<BGSKeyword>();
+		a_keywordList->ForEachForm([&](const TESForm* a_form) {
+			const auto keyword = a_form->As<BGSKeyword>();
 			hasKeyword = keyword && keywordForm->HasKeyword(keyword);
 			if ((a_matchAll && !hasKeyword) || hasKeyword) {
 				return BSContainer::ForEachResult::kStop;

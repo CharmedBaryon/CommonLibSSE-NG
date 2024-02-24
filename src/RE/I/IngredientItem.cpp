@@ -4,11 +4,6 @@
 
 namespace RE
 {
-	bool IngredientItem::IsHostile() const
-	{
-		return hostileCount > 0;
-	}
-
 	bool IngredientItem::LearnEffect(std::uint32_t a_index)
 	{
 		if (a_index < 4) {

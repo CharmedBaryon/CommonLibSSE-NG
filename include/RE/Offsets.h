@@ -143,6 +143,7 @@ namespace RE::Offset
 		constexpr auto Play = RELOCATION_ID(66355, 67616);
 		constexpr auto SetObjectToFollow = RELOCATION_ID(66375, 67636);
 		constexpr auto SetPosition = RELOCATION_ID(66370, 67631);
+		constexpr auto Pause = RELOCATION_ID(66357, 67618);
 		constexpr auto Stop = RELOCATION_ID(66358, 67619);
 	}
 

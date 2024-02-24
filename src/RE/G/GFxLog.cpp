@@ -1,6 +1,6 @@
 #include "RE/G/GFxLog.h"
 
-#undef OutputDebugString
+#include "REX/W32/KERNEL32.h"
 
 namespace RE
 {
@@ -15,7 +15,7 @@ namespace RE
 		std::vector<char> buf(std::vsnprintf(nullptr, 0, a_fmt, a_argList) + 1);
 		std::vsnprintf(buf.data(), buf.size(), a_fmt, args);
 		va_end(args);
-		WinAPI::OutputDebugString(buf.data());
+		REX::W32::OutputDebugStringA(buf.data());
 	}
 
 	void GFxLog::LogMessageByType(LogMessageType a_messageType, const char* a_fmt, ...)

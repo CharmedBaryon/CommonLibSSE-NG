@@ -21,6 +21,7 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto      RTTI = RTTI_DialogueMenu;
+		inline static constexpr auto      VTABLE = VTABLE_DialogueMenu;
 		constexpr static std::string_view MENU_NAME = "Dialogue Menu";
 
 		struct Data

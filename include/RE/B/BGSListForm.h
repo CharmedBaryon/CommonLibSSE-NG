@@ -43,7 +43,7 @@ namespace RE
 
 		void               AddForm(TESForm* a_form);
 		[[nodiscard]] bool ContainsOnlyType(FormType a_formType) const;
-		void               ForEachForm(std::function<BSContainer::ForEachResult(TESForm&)> a_callback) const;
+		void               ForEachForm(std::function<BSContainer::ForEachResult(TESForm*)> a_callback) const;
 		[[nodiscard]] bool HasForm(const TESForm* a_form) const;
 		[[nodiscard]] bool HasForm(FormID a_formID) const;
 

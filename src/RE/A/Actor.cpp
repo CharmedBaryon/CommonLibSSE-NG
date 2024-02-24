@@ -265,11 +265,6 @@ namespace RE
 		return obj ? obj->As<TESNPC>() : nullptr;
 	}
 
-	bool Actor::IsLeveled() const
-	{
-		return extraList.GetByType<ExtraLeveledCreature>();
-	}
-
 	float Actor::GetActorValueModifier(ACTOR_VALUE_MODIFIER a_modifier, ActorValue a_value) const
 	{
 		using func_t = decltype(&Actor::GetActorValueModifier);
@@ -412,6 +407,20 @@ namespace RE
 		} else {
 			return nullptr;
 		}
+	}
+
+	TESForm* Actor::GetEquippedObjectInSlot(const BGSEquipSlot* slot) const
+	{
+		auto _currentProcess = GetActorRuntimeData().currentProcess;
+		if (_currentProcess) {
+			for (const auto& equippedObject : _currentProcess->equippedForms) {
+				if (equippedObject.slot == slot) {
+					return equippedObject.object;
+				}
+			}
+		}
+
+		return nullptr;
 	}
 
 	float Actor::GetEquippedWeight()
@@ -775,11 +784,22 @@ namespace RE
 		return GetActorRuntimeData().boolFlags.all(BOOL_FLAGS::kIsCommandedActor);
 	}
 
-	bool Actor::IsCurrentShout(SpellItem* a_spell)
+	bool Actor::IsCurrentShout(SpellItem* a_power)
 	{
 		using func_t = decltype(&Actor::IsCurrentShout);
 		REL::Relocation<func_t> func{ RELOCATION_ID(37858, 38812) };
-		return func(this, a_spell);
+		return func(this, a_power);
+	}
+
+	bool Actor::IsDualCasting() const
+	{
+		auto _currentProcess = GetActorRuntimeData().currentProcess;
+		if (!_currentProcess) {
+			return false;
+		}
+
+		const auto highProcess = _currentProcess->high;
+		return highProcess && highProcess->isDualCasting;
 	}
 
 	bool Actor::IsEssential() const
@@ -839,6 +859,11 @@ namespace RE
 		using func_t = decltype(&Actor::IsInRagdollState);
 		REL::Relocation<func_t> func{ RELOCATION_ID(36492, 37491) };
 		return func(this);
+	}
+
+	bool Actor::IsLeveled() const
+	{
+		return extraList.GetByType<ExtraLeveledCreature>();
 	}
 
 	bool Actor::IsLimbGone(std::uint32_t a_limb)
@@ -1170,7 +1195,7 @@ namespace RE
 			kTotal
 		};
 
-		char addonString[MAX_PATH]{ '\0' };
+		char addonString[REX::W32::MAX_PATH]{ '\0' };
 		a_arma->GetNodeName(addonString, this, a_armor, -1);
 		std::array<NiAVObject*, kTotal> skeletonRoot = { Get3D(k3rd), Get3D(k1st) };
 		if (skeletonRoot[k1st] == skeletonRoot[k3rd]) {

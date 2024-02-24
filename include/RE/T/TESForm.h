@@ -303,6 +303,7 @@ namespace RE
 		[[nodiscard]] float       GetWeight() const;
 		[[nodiscard]] bool        HasKeywordInArray(const std::vector<BGSKeyword*>& a_keywords, bool a_matchAll) const;
 		[[nodiscard]] bool        HasAnyKeywordByEditorID(const std::vector<std::string>& editorIDs) const;
+		[[nodiscard]] bool        HasKeywordByEditorID(std::string_view a_editorID);
 		[[nodiscard]] bool        HasKeywordInList(BGSListForm* a_keywordList, bool a_matchAll) const;
 		[[nodiscard]] bool        HasVMAD() const;
 		[[nodiscard]] bool        HasWorldModel() const noexcept;
@@ -328,15 +329,6 @@ namespace RE
 		[[nodiscard]] bool IsInitialized() const noexcept { return (GetFormFlags() & RecordFlags::kInitialized) != 0; }
 		[[nodiscard]] bool IsKey() const noexcept { return Is(FormType::KeyMaster); }
 		[[nodiscard]] bool IsLockpick() const noexcept { return GetFormID() == 0x0000000A; }
-		/**
-		 * @brief Checks if the Form represents Skooma.
-		 *
-		 * Determines whether the FormID matches one of the known form IDs for Skooma.
-		 *
-		 * @return True if the FormID is either 0x00057A7A or 0x0201391D, indicating that it is Skooma or RedWater Skooma.
-		 *
-		 */
-		[[nodiscard]] bool IsSkooma() const noexcept { return (GetFormID() == 0x00057A7A || GetFormID() == 0x0201391D); }
 		[[nodiscard]] bool IsNot(FormType a_type) const noexcept { return !Is(a_type); }
 
 		template <class... Args>
@@ -349,6 +341,7 @@ namespace RE
 		[[nodiscard]] bool IsNote() const noexcept { return Is(FormType::Note); }
 		[[nodiscard]] bool IsPlayer() const noexcept { return GetFormID() == 0x00000007; }
 		[[nodiscard]] bool IsPlayerRef() const noexcept { return GetFormID() == 0x00000014; }
+		[[nodiscard]] bool IsSkooma() const noexcept { return (GetFormID() == 0x00057A7A || GetFormID() == 0x0201391D); }
 		[[nodiscard]] bool IsSoulGem() const noexcept { return Is(FormType::SoulGem); }
 		[[nodiscard]] bool IsWeapon() const noexcept { return Is(FormType::Weapon); }
 

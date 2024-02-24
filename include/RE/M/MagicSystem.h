@@ -16,7 +16,8 @@ namespace RE
 			kItemCharge = 5,
 			kCastWhileShouting = 6,
 			kShoutWhileCasting = 7,
-			kShoutWhileRecovering = 8
+			kShoutWhileRecovering = 8,
+			kCustomReasonNoStart = 100,
 		};
 
 		enum class CastingSource

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "RE/B/BSFixedString.h"
+#include "RE/B/BGSLoadGameSubBuffer.h"
 #include "RE/B/BSTEvent.h"
 #include "RE/N/NiSmartPointer.h"
 #include "RE/R/RefAttachTechniqueInput.h"
@@ -9,9 +9,9 @@
 
 namespace RE
 {
+	class BGSArtObjectCloneTask;
 	class NiAVObject;
 	struct BSAnimationGraphEvent;
-	class BGSArtObjectCloneTask;
 
 	class ModelReferenceEffect :
 		public ReferenceEffect,                     // 00
@@ -55,13 +55,13 @@ namespace RE
 		BSEventNotifyControl ProcessEvent(const BSAnimationGraphEvent* a_event, BSTEventSource<BSAnimationGraphEvent>* a_eventSource) override;  // 01
 
 		// members
-		RefAttachTechniqueInput                hitEffectArtData;  // 68
-		std::uint64_t                          unkB0;             // B0
-		BGSArtObject*                          artObject;         // B8
-		BSTSmartPointer<BGSArtObjectCloneTask> cloneTask;         // C0
-		NiPointer<NiAVObject>                  artObject3D;       // C8
-		stl::enumeration<Flags, std::uint32_t> flags;             // D0
-		std::uint32_t                          padD4;             // D4
+		RefAttachTechniqueInput                hitEffectArtData;   // 68
+		BGSLoadGameSubBuffer                   loadGameSubBuffer;  // B0
+		BGSArtObject*                          artObject;          // B8
+		BSTSmartPointer<BGSArtObjectCloneTask> cloneTask;          // C0
+		NiPointer<NiAVObject>                  artObject3D;        // C8
+		stl::enumeration<Flags, std::uint32_t> flags;              // D0
+		std::uint32_t                          padD4;              // D4
 	};
 	static_assert(sizeof(ModelReferenceEffect) == 0xD8);
 }

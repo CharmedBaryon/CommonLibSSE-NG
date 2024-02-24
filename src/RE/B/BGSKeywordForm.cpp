@@ -42,8 +42,8 @@ namespace RE
 	bool BGSKeywordForm::ContainsKeywordString(std::string_view a_editorID) const
 	{
 		bool result = false;
-		ForEachKeyword([&](const BGSKeyword& a_keyword) {
-			if (a_keyword.formEditorID.contains(a_editorID)) {
+		ForEachKeyword([&](const BGSKeyword* a_keyword) {
+			if (a_keyword->formEditorID.contains(a_editorID)) {
 				result = true;
 				return BSContainer::ForEachResult::kStop;
 			}
@@ -52,11 +52,11 @@ namespace RE
 		return result;
 	}
 
-	void BGSKeywordForm::ForEachKeyword(std::function<BSContainer::ForEachResult(BGSKeyword&)> a_callback) const
+	void BGSKeywordForm::ForEachKeyword(std::function<BSContainer::ForEachResult(BGSKeyword*)> a_callback) const
 	{
 		if (keywords) {
 			for (std::uint32_t idx = 0; idx < numKeywords; ++idx) {
-				if (keywords[idx] && a_callback(*keywords[idx]) == BSContainer::ForEachResult::kStop) {
+				if (keywords[idx] && a_callback(keywords[idx]) == BSContainer::ForEachResult::kStop) {
 					return;
 				}
 			}
@@ -92,8 +92,8 @@ namespace RE
 	bool BGSKeywordForm::HasKeywordID(FormID a_formID) const
 	{
 		bool result = false;
-		ForEachKeyword([&](const BGSKeyword& a_keyword) {
-			if (a_keyword.GetFormID() == a_formID) {
+		ForEachKeyword([&](const BGSKeyword* a_keyword) {
+			if (a_keyword->GetFormID() == a_formID) {
 				result = true;
 				return BSContainer::ForEachResult::kStop;
 			}
@@ -105,8 +105,8 @@ namespace RE
 	bool BGSKeywordForm::HasKeywordString(std::string_view a_editorID) const
 	{
 		bool result = false;
-		ForEachKeyword([&](const BGSKeyword& a_keyword) {
-			if (a_keyword.formEditorID == a_editorID) {
+		ForEachKeyword([&](const BGSKeyword* a_keyword) {
+			if (a_keyword->formEditorID == a_editorID) {
 				result = true;
 				return BSContainer::ForEachResult::kStop;
 			}
@@ -129,7 +129,7 @@ namespace RE
 		return index ? RemoveKeyword(*index) : false;
 	}
 
-	bool BGSKeywordForm::RemoveKeywords(const std::vector<RE::BGSKeyword*>& a_keywords)
+	bool BGSKeywordForm::RemoveKeywords(const std::vector<BGSKeyword*>& a_keywords)
 	{
 		std::vector<BGSKeyword*> copiedData{ keywords, keywords + numKeywords };
 		if (std::erase_if(copiedData, [&](auto& keyword) { return std::ranges::find(a_keywords, keyword) != a_keywords.end(); }) > 0) {

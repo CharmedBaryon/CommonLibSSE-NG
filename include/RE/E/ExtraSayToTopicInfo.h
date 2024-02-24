@@ -23,12 +23,12 @@ namespace RE
 
 		// members
 		TESTopic*          topic;                // 10
-		std::uint8_t       unk18;                // 18
+		bool               voicePaused;          // 18
 		std::uint8_t       pad19;                // 19
 		std::uint16_t      pad1A;                // 1A
 		float              subtitleSpeechDelay;  // 1C
 		BGSDialogueBranch* exclusiveBranch;      // 20
-		BSSoundHandle      unk28;                // 28
+		BSSoundHandle      sound;                // 28
 		std::uint32_t      pad34;                // 34
 		DialogueItem*      item;                 // 38
 	};

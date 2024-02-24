@@ -66,8 +66,8 @@ namespace RE
 
 		static TES* GetSingleton();
 
-		void ForEachReference(std::function<BSContainer::ForEachResult(TESObjectREFR& a_ref)> a_callback);
-		void ForEachReferenceInRange(TESObjectREFR* a_origin, float a_radius, std::function<BSContainer::ForEachResult(TESObjectREFR& a_ref)> a_callback);
+		void ForEachReference(std::function<BSContainer::ForEachResult(TESObjectREFR*)> a_callback);
+		void ForEachReferenceInRange(TESObjectREFR* a_origin, float a_radius, std::function<BSContainer::ForEachResult(TESObjectREFR*)> a_callback);
 
 		TESObjectCELL*  GetCell(const NiPoint3& a_position) const;
 		MATERIAL_ID     GetLandMaterialType(const NiPoint3& a_position) const;

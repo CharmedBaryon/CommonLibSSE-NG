@@ -24,6 +24,8 @@
 #include "RE/T/TESNPC.h"
 #include "RE/T/TESObjectREFR.h"
 
+#include "REX/W32/BASE.h"
+
 namespace RE
 {
 	class ActorMagicCaster;
@@ -118,17 +120,17 @@ namespace RE
 
 	NiSmartPointer(Actor);
 
-    class Actor :
+	class Actor :
 #ifndef ENABLE_SKYRIM_AE
-            public TESObjectREFR,                              // 000
-            public MagicTarget,                                // 098, 0A0
-            public ActorValueOwner,                            // 0B0, 0B8
-            public ActorState,                                 // 0B8, 0C0
-            public BSTEventSink<BSTransformDeltaEvent>,        // 0C8, 0D0
-            public BSTEventSink<bhkCharacterMoveFinishEvent>,  // 0D0, 0D8
-            public IPostAnimationChannelUpdateFunctor          // 0D8, 0E0
+			public TESObjectREFR,                              // 000
+			public MagicTarget,                                // 098, 0A0
+			public ActorValueOwner,                            // 0B0, 0B8
+			public ActorState,                                 // 0B8, 0C0
+			public BSTEventSink<BSTransformDeltaEvent>,        // 0C8, 0D0
+			public BSTEventSink<bhkCharacterMoveFinishEvent>,  // 0D0, 0D8
+			public IPostAnimationChannelUpdateFunctor          // 0D8, 0E0
 #else
-            public TESObjectREFR  // 000
+			public TESObjectREFR  // 000
 #endif
 	{
 	private:
@@ -521,14 +523,13 @@ namespace RE
 		void                                    EvaluatePackage(bool a_immediate = false, bool a_resetAI = false);
 		[[nodiscard]] TESNPC*                   GetActorBase();
 		[[nodiscard]] const TESNPC*             GetActorBase() const;
-		[[nodiscard]] bool                      IsLeveled() const;
 		[[nodiscard]] float                     GetActorValueModifier(ACTOR_VALUE_MODIFIER a_modifier, ActorValue a_value) const;
 		[[nodiscard]] float                     GetAimAngle() const;
 		[[nodiscard]] float                     GetAimHeading() const;
 		[[nodiscard]] InventoryEntryData*       GetAttackingWeapon();
 		[[nodiscard]] const InventoryEntryData* GetAttackingWeapon() const;
 		[[nodiscard]] bhkCharacterController*   GetCharController() const;
-		std::uint32_t                                GetCollisionFilterInfo(std::uint32_t& a_outCollisionFilterInfo);
+		std::uint32_t                           GetCollisionFilterInfo(std::uint32_t& a_outCollisionFilterInfo);
 		[[nodiscard]] NiPointer<Actor>          GetCommandingActor() const;
 		[[nodiscard]] TESFaction*               GetCrimeFaction();
 		[[nodiscard]] const TESFaction*         GetCrimeFaction() const;
@@ -538,31 +539,32 @@ namespace RE
 		[[nodiscard]] const TESShout*           GetCurrentShout() const;
 		[[nodiscard]] InventoryEntryData*       GetEquippedEntryData(bool a_leftHand) const;
 		[[nodiscard]] TESForm*                  GetEquippedObject(bool a_leftHand) const;
+		[[nodiscard]] TESForm*                  GetEquippedObjectInSlot(const BGSEquipSlot* slot) const;
 		[[nodiscard]] float                     GetEquippedWeight();
 		[[nodiscard]] std::int32_t              GetFactionRank(TESFaction* a_faction, bool a_isPlayer);
 		[[nodiscard]] std::int32_t              GetGoldAmount(bool a_noInit = false);
 		[[nodiscard]] ActorHandle               GetHandle();
 		[[nodiscard]] NiAVObject*               GetHeadPartObject(BGSHeadPart::HeadPartType a_type);
 		[[nodiscard]] float                     GetHeight();
-    	[[nodiscard]] HighProcessData*             GetHighProcess() const;
+		[[nodiscard]] HighProcessData*          GetHighProcess() const;
 		[[nodiscard]] Actor*                    GetKiller() const;
 		[[nodiscard]] std::uint16_t             GetLevel() const;
-    	[[nodiscard]] MiddleHighProcessData*       GetMiddleHighProcess() const;
+		[[nodiscard]] MiddleHighProcessData*    GetMiddleHighProcess() const;
 		[[nodiscard]] bool                      GetMount(NiPointer<Actor>& a_outMount);
 		[[nodiscard]] bool                      GetMountedBy(NiPointer<Actor>& a_outRider);
 		[[nodiscard]] double                    GetMoveDirectionRelativeToFacing();
 		[[nodiscard]] ObjectRefHandle           GetOccupiedFurniture() const;
 		[[nodiscard]] TESRace*                  GetRace() const;
-    	[[nodiscard]] float                        GetRegenDelay(ActorValue a_actorValue) const;
+		[[nodiscard]] float                     GetRegenDelay(ActorValue a_actorValue) const;
 		[[nodiscard]] bool                      GetRider(NiPointer<Actor>& a_outRider);
 		[[nodiscard]] TESObjectARMO*            GetSkin() const;
 		[[nodiscard]] TESObjectARMO*            GetSkin(BGSBipedObjectForm::BipedObjectSlot a_slot, bool a_noInit = false);
 		[[nodiscard]] SOUL_LEVEL                GetSoulSize() const;
-    	[[nodiscard]] float                        GetTotalCarryWeight();
+		[[nodiscard]] float                     GetTotalCarryWeight();
 		[[nodiscard]] TESFaction*               GetVendorFaction();
 		[[nodiscard]] const TESFaction*         GetVendorFaction() const;
 		[[nodiscard]] float                     GetVoiceRecoveryTime();
-        [[nodiscard]] float                     GetWarmthRating() const;
+		[[nodiscard]] float                     GetWarmthRating() const;
 		[[nodiscard]] TESObjectARMO*            GetWornArmor(BGSBipedObjectForm::BipedObjectSlot a_slot, bool a_noInit = false);
 		[[nodiscard]] TESObjectARMO*            GetWornArmor(FormID a_formID, bool a_noInit = false);
 		[[nodiscard]] bool                      HasKeywordString(std::string_view a_formEditorID);
@@ -571,9 +573,9 @@ namespace RE
 		[[nodiscard]] bool                      HasPerk(BGSPerk* a_perk) const;
 		[[nodiscard]] bool                      HasShout(TESShout* a_shout) const;
 		[[nodiscard]] bool                      HasSpell(SpellItem* a_spell) const;
-    	void                         InitiateDoNothingPackage();
+		void                                    InitiateDoNothingPackage();
 		void                                    InterruptCast(bool a_restoreMagicka) const;
-        [[nodiscard]] bool                      IsAttacking() const;
+		[[nodiscard]] bool                      IsAttacking() const;
 		[[nodiscard]] bool                      IsAIEnabled() const;
 		[[nodiscard]] bool                      IsAlarmed() const;
 		[[nodiscard]] bool                      IsAMount() const;
@@ -583,6 +585,7 @@ namespace RE
 		[[nodiscard]] bool                      IsCasting(MagicItem* a_spell) const;
 		[[nodiscard]] bool                      IsCommandedActor() const;
 		[[nodiscard]] bool                      IsCurrentShout(SpellItem* a_power);
+		[[nodiscard]] bool                      IsDualCasting() const;
 		[[nodiscard]] bool                      IsEssential() const;
 		[[nodiscard]] bool                      IsFactionInCrimeGroup(const TESFaction* a_faction) const;
 		[[nodiscard]] bool                      IsGhost() const;
@@ -592,6 +595,7 @@ namespace RE
 		[[nodiscard]] constexpr bool            IsInKillMove() const noexcept { return GetActorRuntimeData().boolFlags.all(BOOL_FLAGS::kIsInKillMove); }
 		[[nodiscard]] bool                      IsInMidair() const;
 		[[nodiscard]] bool                      IsInRagdollState() const;
+		[[nodiscard]] bool                      IsLeveled() const;
 		[[nodiscard]] bool                      IsLimbGone(std::uint32_t a_limb);
 		[[nodiscard]] bool                      IsMoving() const;
 		[[nodiscard]] bool                      IsOnMount() const;
@@ -609,7 +613,7 @@ namespace RE
 		void                                    RemoveAnimationGraphEventSink(BSTEventSink<BSAnimationGraphEvent>* a_sink) const;
 		void                                    RemoveCastScroll(SpellItem* a_spell, MagicSystem::CastingSource a_source);
 		void                                    RemoveExtraArrows3D();
-    	void                         RemoveFromFaction(TESFaction* a_faction);
+		void                                    RemoveFromFaction(TESFaction* a_faction);
 		void                                    RemoveOutfitItems(BGSOutfit* a_outfit);
 		bool                                    RemoveSpell(SpellItem* a_spell);
 		[[nodiscard]] std::int32_t              RequestDetectionLevel(Actor* a_target, DETECTION_PRIORITY a_priority = DETECTION_PRIORITY::kNormal);
@@ -628,7 +632,7 @@ namespace RE
 		void                                    UpdateAwakeSound(NiAVObject* a_obj3D);
 		void                                    Update3DModel();
 		void                                    UpdateHairColor();
-    	void                         UpdateRegenDelay(ActorValue a_actorValue, float a_regenDelay);
+		void                                    UpdateRegenDelay(ActorValue a_actorValue, float a_regenDelay);
 		void                                    UpdateSkinColor();
 		void                                    UpdateWeaponAbility(TESForm* a_weapon, ExtraDataList* a_extraData, bool a_leftHand);
 		void                                    VisitArmorAddon(TESObjectARMO* a_armor, TESObjectARMA* a_arma, std::function<void(bool a_firstPerson, NiAVObject& a_obj)> a_visitor);
@@ -698,7 +702,7 @@ namespace RE
 			std::uint32_t                                         unk274;                             /* 274 */ \
 			std::uint64_t                                         unk278;                             /* 278 */ \
 			std::uint64_t                                         unk280;                             /* 280 */ \
-			WinAPI::CRITICAL_SECTION                              unk288;                             /* 288 - havok related */
+			REX::W32::CRITICAL_SECTION                            unk288;                             /* 288 - havok related */
 
 			RUNTIME_DATA_CONTENT
 		};
@@ -713,53 +717,53 @@ namespace RE
 			return REL::RelocateMemberIfNewer<ACTOR_RUNTIME_DATA>(SKSE::RUNTIME_SSE_1_6_629, this, 0xE0, 0xE8);
 		}
 
-        [[nodiscard]] inline MagicTarget* AsMagicTarget() noexcept {
-            return &REL::RelocateMemberIfNewer<MagicTarget>(SKSE::RUNTIME_SSE_1_6_629, this, 0x98, 0xA0);
-        }
+		[[nodiscard]] inline MagicTarget* AsMagicTarget() noexcept {
+			return &REL::RelocateMemberIfNewer<MagicTarget>(SKSE::RUNTIME_SSE_1_6_629, this, 0x98, 0xA0);
+		}
 
-        [[nodiscard]] inline const MagicTarget* AsMagicTarget() const noexcept {
-            return &REL::RelocateMemberIfNewer<MagicTarget>(SKSE::RUNTIME_SSE_1_6_629, this, 0x98, 0xA0);
-        }
+		[[nodiscard]] inline const MagicTarget* AsMagicTarget() const noexcept {
+			return &REL::RelocateMemberIfNewer<MagicTarget>(SKSE::RUNTIME_SSE_1_6_629, this, 0x98, 0xA0);
+		}
 
-        [[nodiscard]] inline ActorValueOwner* AsActorValueOwner() noexcept {
-            return &REL::RelocateMemberIfNewer<ActorValueOwner>(SKSE::RUNTIME_SSE_1_6_629, this, 0xB0, 0xB8);
-        }
+		[[nodiscard]] inline ActorValueOwner* AsActorValueOwner() noexcept {
+			return &REL::RelocateMemberIfNewer<ActorValueOwner>(SKSE::RUNTIME_SSE_1_6_629, this, 0xB0, 0xB8);
+		}
 
-        [[nodiscard]] inline const ActorValueOwner* AsActorValueOwner() const noexcept {
-            return &REL::RelocateMemberIfNewer<ActorValueOwner>(SKSE::RUNTIME_SSE_1_6_629, this, 0xB0, 0xB8);
-        }
+		[[nodiscard]] inline const ActorValueOwner* AsActorValueOwner() const noexcept {
+			return &REL::RelocateMemberIfNewer<ActorValueOwner>(SKSE::RUNTIME_SSE_1_6_629, this, 0xB0, 0xB8);
+		}
 
-        [[nodiscard]] inline ActorState* AsActorState() noexcept {
-            return &REL::RelocateMemberIfNewer<ActorState>(SKSE::RUNTIME_SSE_1_6_629, this, 0xB8, 0xC0);
-        }
+		[[nodiscard]] inline ActorState* AsActorState() noexcept {
+			return &REL::RelocateMemberIfNewer<ActorState>(SKSE::RUNTIME_SSE_1_6_629, this, 0xB8, 0xC0);
+		}
 
-        [[nodiscard]] inline const ActorState* AsActorState() const noexcept {
-            return &REL::RelocateMemberIfNewer<ActorState>(SKSE::RUNTIME_SSE_1_6_629, this, 0xB8, 0xC0);
-        }
+		[[nodiscard]] inline const ActorState* AsActorState() const noexcept {
+			return &REL::RelocateMemberIfNewer<ActorState>(SKSE::RUNTIME_SSE_1_6_629, this, 0xB8, 0xC0);
+		}
 
-        [[nodiscard]] inline BSTEventSink<BSTransformDeltaEvent>* AsBSTransformDeltaEventSink() noexcept {
-            return &REL::RelocateMemberIfNewer<BSTEventSink<BSTransformDeltaEvent>>(SKSE::RUNTIME_SSE_1_6_629, this, 0xC8, 0xD0);
-        }
+		[[nodiscard]] inline BSTEventSink<BSTransformDeltaEvent>* AsBSTransformDeltaEventSink() noexcept {
+			return &REL::RelocateMemberIfNewer<BSTEventSink<BSTransformDeltaEvent>>(SKSE::RUNTIME_SSE_1_6_629, this, 0xC8, 0xD0);
+		}
 
-        [[nodiscard]] inline const BSTEventSink<BSTransformDeltaEvent>* AsBSTransformDeltaEventSink() const noexcept {
-            return &REL::RelocateMemberIfNewer<BSTEventSink<BSTransformDeltaEvent>>(SKSE::RUNTIME_SSE_1_6_629, this, 0xC8, 0xD0);
-        }
+		[[nodiscard]] inline const BSTEventSink<BSTransformDeltaEvent>* AsBSTransformDeltaEventSink() const noexcept {
+			return &REL::RelocateMemberIfNewer<BSTEventSink<BSTransformDeltaEvent>>(SKSE::RUNTIME_SSE_1_6_629, this, 0xC8, 0xD0);
+		}
 
-        [[nodiscard]] inline BSTEventSink<bhkCharacterMoveFinishEvent>* AsCharacterMoveFinishEventSink() noexcept {
-            return &REL::RelocateMemberIfNewer<BSTEventSink<bhkCharacterMoveFinishEvent>>(SKSE::RUNTIME_SSE_1_6_629, this, 0xD0, 0xD8);
-        }
+		[[nodiscard]] inline BSTEventSink<bhkCharacterMoveFinishEvent>* AsCharacterMoveFinishEventSink() noexcept {
+			return &REL::RelocateMemberIfNewer<BSTEventSink<bhkCharacterMoveFinishEvent>>(SKSE::RUNTIME_SSE_1_6_629, this, 0xD0, 0xD8);
+		}
 
-        [[nodiscard]] inline const BSTEventSink<bhkCharacterMoveFinishEvent>* AsCharacterMoveFinishEventSink() const noexcept {
-            return &REL::RelocateMemberIfNewer<BSTEventSink<bhkCharacterMoveFinishEvent>>(SKSE::RUNTIME_SSE_1_6_629, this, 0xD0, 0xD8);
-        }
+		[[nodiscard]] inline const BSTEventSink<bhkCharacterMoveFinishEvent>* AsCharacterMoveFinishEventSink() const noexcept {
+			return &REL::RelocateMemberIfNewer<BSTEventSink<bhkCharacterMoveFinishEvent>>(SKSE::RUNTIME_SSE_1_6_629, this, 0xD0, 0xD8);
+		}
 
-        [[nodiscard]] inline IPostAnimationChannelUpdateFunctor* AsIPostAnimationChannelUpdateFunctor() noexcept {
-            return &REL::RelocateMemberIfNewer<IPostAnimationChannelUpdateFunctor>(SKSE::RUNTIME_SSE_1_6_629, this, 0xD8, 0xE0);
-        }
+		[[nodiscard]] inline IPostAnimationChannelUpdateFunctor* AsIPostAnimationChannelUpdateFunctor() noexcept {
+			return &REL::RelocateMemberIfNewer<IPostAnimationChannelUpdateFunctor>(SKSE::RUNTIME_SSE_1_6_629, this, 0xD8, 0xE0);
+		}
 
-        [[nodiscard]] inline const IPostAnimationChannelUpdateFunctor* AsIPostAnimationChannelUpdateFunctor() const noexcept {
-            return &REL::RelocateMemberIfNewer<IPostAnimationChannelUpdateFunctor>(SKSE::RUNTIME_SSE_1_6_629, this, 0xD8, 0xE0);
-        }
+		[[nodiscard]] inline const IPostAnimationChannelUpdateFunctor* AsIPostAnimationChannelUpdateFunctor() const noexcept {
+			return &REL::RelocateMemberIfNewer<IPostAnimationChannelUpdateFunctor>(SKSE::RUNTIME_SSE_1_6_629, this, 0xD8, 0xE0);
+		}
 
 		// members
 #ifndef ENABLE_SKYRIM_AE

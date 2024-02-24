@@ -7,9 +7,12 @@
 #include "RE/B/BSTList.h"
 #include "RE/B/BSTSingleton.h"
 
+#include "REX/W32/BASE.h"
+
 namespace RE
 {
 	class BGSDialogueBranch;
+	class DialogueResponse;
 	class MenuOpenCloseEvent;
 	class TESQuest;
 	class TESTopic;
@@ -67,7 +70,7 @@ namespace RE
 		std::uint64_t                unk28;                 // 28
 		TESTopicInfo*                rootTopicInfo;         // 30
 		Dialogue*                    lastSelectedDialogue;  // 38
-		WinAPI::CRITICAL_SECTION     criticalSection;       // 40
+		REX::W32::CRITICAL_SECTION   criticalSection;       // 40
 		ObjectRefHandle              speaker;               // 68
 		ObjectRefHandle              lastSpeaker;           // 6C - used if the dialogue menu was closed but the NPC is still talking
 		TESTopicInfo*                currentTopicInfo;      // 70 - only valid when the NPC is talking

@@ -134,6 +134,11 @@ target_link_libraries(
 	PUBLIC
 		fmt::fmt
 		spdlog::spdlog
+ 		Advapi32.lib
+		D3D11.lib
+		Dbghelp.lib
+		DXGI.lib
+		Ole32.lib
 		Version.lib
 )
 

@@ -1,5 +1,7 @@
 #include "RE/T/TESObjectWEAP.h"
 
+#include "REX/W32/BASE.h"
+
 namespace RE
 {
 	float TESObjectWEAP::GetSpeed() const
@@ -41,7 +43,7 @@ namespace RE
 
 	void TESObjectWEAP::GetNodeName(char* a_dstBuff) const
 	{
-		sprintf_s(a_dstBuff, MAX_PATH, "%s  (%08X)", "Weapon", formID);
+		sprintf_s(a_dstBuff, REX::W32::MAX_PATH, "%s  (%08X)", "Weapon", formID);
 	}
 
 	WEAPON_TYPE TESObjectWEAP::GetWeaponType() const
