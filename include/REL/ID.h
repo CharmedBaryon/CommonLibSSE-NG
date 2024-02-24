@@ -105,7 +105,7 @@ namespace REL
                         });
                 if (it == _offset2id.end()) {
                     stl::report_and_fail(
-                            fmt::format(
+                            std::format(
                                     "Failed to find the offset within the database: 0x{:08X}"sv,
                                     a_offset));
                 }
@@ -190,11 +190,11 @@ namespace REL
             }
             if (failed) {
                 stl::report_and_fail(
-                        fmt::format(
-                                "Failed to find the id within the address library: {}\n"
-                                "This means this script extender plugin is incompatible with the address "
-                                "library for this version of the game, and thus does not support it."sv,
-                                a_id));
+                    std::format(
+                        "Failed to find the id within the address library: {}\n"
+                        "This means this script extender plugin is incompatible with the address "
+                        "library for this version of the game, and thus does not support it."sv,
+                        a_id));
             }
 
             return static_cast<std::size_t>(it->offset);
@@ -255,7 +255,7 @@ namespace REL
                 a_in.readin(format);
                 if (format != a_formatVersion) {
                     stl::report_and_fail(
-                            fmt::format(
+                            std::format(
                                     "Unsupported address library format: {}\n"
                                     "This means this script extender plugin is incompatible with the address "
                                     "library available for this version of the game, and thus does not "
@@ -305,7 +305,7 @@ namespace REL
             if SKYRIM_REL_CONSTEXPR (Module::IsVR()) {
                 const auto filename =
                         stl::utf8_to_utf16(
-                                fmt::format("Data/SKSE/Plugins/version-{}.csv"sv, version.string()))
+                                std::format("Data/SKSE/Plugins/version-{}.csv"sv, version.string()))
                                 .value_or(L"<unknown filename>"s);
                 load_csv(filename, version, true);
             } else {
@@ -313,8 +313,8 @@ namespace REL
                 const auto filename =
                         stl::utf8_to_utf16(
                             Module::IsAE() ?
-                                fmt::format("Data/SKSE/Plugins/versionlib-{}.bin"sv, version.string()) :
-                                fmt::format("Data/SKSE/Plugins/version-{}.bin"sv, version.string()))
+                                std::format("Data/SKSE/Plugins/versionlib-{}.bin"sv, version.string()) :
+                                std::format("Data/SKSE/Plugins/version-{}.bin"sv, version.string()))
                                 .value_or(L"<unknown filename>"s);
                 load_file(filename, version, Module::IsAE() ? 2 : 1, true);
 #ifdef ENABLE_SKYRIM_VR

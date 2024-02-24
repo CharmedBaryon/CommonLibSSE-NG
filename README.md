@@ -196,7 +196,6 @@ For more information on how to use CommonLibSSE NG, you can look at the
 [example plugin](https://gitlab.com/colorglass/commonlibsse-sample-plugin).
 
 ## Build Dependencies
-* [fmt](https://fmt.dev/latest/index.html)
 * [rapidcsv](https://github.com/d99kris/rapidcsv)
 * [spdlog](https://github.com/gabime/spdlog)
 * [Visual Studio 2022](https://visualstudio.microsoft.com/vs/)

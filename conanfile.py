@@ -30,7 +30,6 @@ class CommonLibSSE(ConanFile):
         "se": True,
         "vr": True,
         "xbyak": False,
-        "fmt:header_only": True,
         "spdlog:header_only": True
     }
     exports_sources = "CMakeLists.txt", "CMakePresets.json", "cmake/**", "include/**", "src/**", "tests/**", \
@@ -39,7 +38,6 @@ class CommonLibSSE(ConanFile):
     def requirements(self):
         if self.options.testing:
             self.requires("catch2/3.1.0")
-        self.requires("fmt/8.1.1")
         self.requires("rapidcsv/8.62")
         self.requires("spdlog/1.10.0")
         self.requires("xbyak/6.61.2")
