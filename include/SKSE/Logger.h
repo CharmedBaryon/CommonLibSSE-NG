@@ -13,7 +13,7 @@
 		explicit a_func(                                                              \
 			spdlog::format_string_t<Args...> a_fmt,                                   \
 			Args&&... a_args,                                                         \
-			SKSE::stl::source_location a_loc = SKSE::stl::source_location::current()) \
+			std::source_location a_loc = std::source_location::current())             \
 		{                                                                             \
 			spdlog::log(                                                              \
 				spdlog::source_loc{                                                   \
