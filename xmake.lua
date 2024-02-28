@@ -76,7 +76,7 @@ target("commonlibsse-ng")
     add_options("skyrim_se", "skyrim_ae", "skyrim_vr", "skse_xbyak", "tests", { public = true })
 
     -- add system links
-    add_syslinks("advapi32", "d3d11", "dbghelp", "dxgi", "ole32", "shell32", "user32", "version")
+    add_syslinks("advapi32", "d3d11", "d3dcompiler", "dbghelp", "dxgi", "ole32", "shell32", "user32", "version")
 
     -- add source files
     add_files("src/**.cpp")
@@ -93,7 +93,7 @@ target("commonlibsse-ng")
     set_pcxxheader("include/SKSE/Impl/PCH.h")
 
     -- add flags
-    add_cxxflags("/permissive-")
+    add_cxxflags("/EHsc", "/permissive-", { public = true })
 
     -- add flags (cl)
     add_cxxflags(
