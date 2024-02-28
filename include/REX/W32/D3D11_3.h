@@ -1,6 +1,6 @@
 #pragma once
 
-#include "D3D11_2.h"
+#include "REX/W32/D3D11_2.h"
 
 namespace REX::W32
 {

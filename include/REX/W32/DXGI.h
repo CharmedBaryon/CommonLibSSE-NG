@@ -1,6 +1,6 @@
 #pragma once
 
-#include "COM.h"
+#include "REX/W32/COM.h"
 
 namespace REX::W32
 {

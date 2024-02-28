@@ -1,4 +1,4 @@
-#include "DXGI.h"
+#include "REX/W32/DXGI.h"
 
 REX_W32_IMPORT(std::int32_t, CreateDXGIFactory, const IID&, void**);
 REX_W32_IMPORT(std::int32_t, CreateDXGIFactory1, const IID&, void**);

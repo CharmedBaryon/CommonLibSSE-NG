@@ -1,6 +1,6 @@
 #pragma once
 
-#include "BASE.h"
+#include "REX/W32/BASE.h"
 
 namespace REX::W32
 {
@@ -14,7 +14,7 @@ namespace REX::W32
 		template <class T>
 		HRESULT QueryInterface(T** a_object)
 		{
-			return QueryInterface(__uuidof(T), static_cast<void**>(a_object));
+			return QueryInterface(*reinterpret_cast<const IID*>(&__uuidof(T)), static_cast<void**>(a_object));
 		}
 	};
 }

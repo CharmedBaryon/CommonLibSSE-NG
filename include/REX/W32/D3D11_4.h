@@ -1,7 +1,7 @@
 #pragma once
 
-#include "D3D11_3.h"
-#include "DXGI_5.h"
+#include "REX/W32/D3D11_3.h"
+#include "REX/W32/DXGI_5.h"
 
 namespace REX::W32
 {

@@ -133,6 +133,7 @@ target_link_libraries(
 		spdlog::spdlog
  		Advapi32.lib
 		D3D11.lib
+		d3dcompiler.lib
 		Dbghelp.lib
 		DXGI.lib
 		Ole32.lib
