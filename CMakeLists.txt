@@ -31,7 +31,7 @@ endif()
 
 find_package(fmt CONFIG REQUIRED)
 find_package(spdlog CONFIG REQUIRED)
-find_path(RAPIDCSV_INCLUDE_DIRS "rapidcsv.h")
+find_package(rapidcsv CONFIG REQUIRED)
 
 include(cmake/sourcelist.cmake)
 include(cmake/testlist.cmake)
@@ -116,14 +116,6 @@ target_include_directories(
 		"$<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>"
 )
 
-target_include_directories(
-	"${PROJECT_NAME}"
-	PUBLIC
-		${fmt_INCLUDE_DIRS}
-		${spdlog_INCLUDE_DIRS}
-		${RAPIDCSV_INCLUDE_DIRS}
-)
-
 target_compile_definitions(
 	"${PROJECT_NAME}"
 	PUBLIC
@@ -134,6 +126,7 @@ target_link_libraries(
 	PUBLIC
 		fmt::fmt
 		spdlog::spdlog
+		rapidcsv
 		Version.lib
 )
 
@@ -188,15 +181,6 @@ if(BUILD_TESTS)
 		PUBLIC
 			"$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>"
 			"$<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>"
-	)
-
-	target_include_directories(
-		"${PROJECT_NAME}Tests"
-		PRIVATE
-			${Catch2_INCLUDE_DIRS}
-			${fmt_INCLUDE_DIRS}
-			${spdlog_INCLUDE_DIRS}
-			${RAPIDCSV_INCLUDE_DIRS}
 	)
 
 	target_compile_definitions(
