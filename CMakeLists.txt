@@ -4,6 +4,7 @@ option(SKSE_SUPPORT_XBYAK "Enables trampoline support for Xbyak." OFF)
 option(ENABLE_SKYRIM_SE "Enable support for Skyrim SE in the dynamic runtime feature." ON)
 option(ENABLE_SKYRIM_AE "Enable support for Skyrim AE in the dynamic runtime feature." ON)
 option(ENABLE_SKYRIM_VR "Enable support for Skyrim VR in the dynamic runtime feature." ON)
+option(COMMONLIBSSE_INSTALL "Enable installing the library." OFF)
 option(BUILD_TESTS "Enable building of the unit tests." ON)
 message("Options:")
 message("\tEnable Xbyak: ${SKSE_SUPPORT_XBYAK}")
@@ -136,35 +137,37 @@ target_precompile_headers(
 		include/SKSE/Impl/PCH.h
 )
 
-install(
-	TARGETS "${PROJECT_NAME}"
-	EXPORT "${PROJECT_NAME}-targets"
-)
+if(COMMONLIBSSE_INSTALL)
+	install(
+		TARGETS "${PROJECT_NAME}"
+		EXPORT "${PROJECT_NAME}-targets"
+	)
 
-install(
-	EXPORT "${PROJECT_NAME}-targets"
-	NAMESPACE "${PROJECT_NAME}::"
-	DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/${PROJECT_NAME}"
-)
+	install(
+		EXPORT "${PROJECT_NAME}-targets"
+		NAMESPACE "${PROJECT_NAME}::"
+		DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/${PROJECT_NAME}"
+	)
 
-configure_file(
-	cmake/config.cmake.in
-	"${PROJECT_NAME}Config.cmake"
-	@ONLY
-)
+	configure_file(
+		cmake/config.cmake.in
+		"${PROJECT_NAME}Config.cmake"
+		@ONLY
+	)
 
-install(
-	FILES "${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}Config.cmake"
-	DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/${PROJECT_NAME}"
-)
+	install(
+		FILES "${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}Config.cmake"
+		DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/${PROJECT_NAME}"
+	)
 
-install(
-	DIRECTORY
-		"include/RE"
-		"include/REL"
-		"include/SKSE"
-	DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}"
-)
+	install(
+		DIRECTORY
+			"include/RE"
+			"include/REL"
+			"include/SKSE"
+		DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}"
+	)
+endif()
 
 if(BUILD_TESTS)
 	find_package(Catch2 CONFIG REQUIRED)
