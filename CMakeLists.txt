@@ -118,7 +118,7 @@ target_include_directories(
 
 target_include_directories(
 	"${PROJECT_NAME}"
-	PRIVATE
+	PUBLIC
 		${fmt_INCLUDE_DIRS}
 		${spdlog_INCLUDE_DIRS}
 		${RAPIDCSV_INCLUDE_DIRS}
