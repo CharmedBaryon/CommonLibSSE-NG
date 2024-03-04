@@ -45,7 +45,7 @@ namespace RE
 		if SKYRIM_REL_VR_CONSTEXPR (!REL::Module::IsVR()) {
 			return nullptr;
 		}
-		return static_cast<BSTrackedControllerDevice*>(devices[stl::to_underlying(INPUT_DEVICE::kVRRight)]);
+		return static_cast<BSTrackedControllerDevice*>(devices[std::to_underlying(INPUT_DEVICE::kVRRight)]);
 #endif
 	}
 
@@ -57,7 +57,7 @@ namespace RE
 		if SKYRIM_REL_VR_CONSTEXPR (!REL::Module::IsVR()) {
 			return nullptr;
 		}
-		return static_cast<BSTrackedControllerDevice*>(devices[stl::to_underlying(INPUT_DEVICE::kVRLeft)]);
+		return static_cast<BSTrackedControllerDevice*>(devices[std::to_underlying(INPUT_DEVICE::kVRLeft)]);
 #endif
 	}
 
