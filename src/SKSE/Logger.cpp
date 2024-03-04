@@ -1,11 +1,13 @@
 #include "SKSE/Logger.h"
 
+#include "RE/B/BSTEvent.h"
+#include "RE/L/LogEvent.h"
 #include "RE/V/VirtualMachine.h"
-
-#include "SKSE/API.h"
 
 #include "REX/W32/OLE32.h"
 #include "REX/W32/SHELL32.h"
+
+#include "SKSE/API.h"
 
 namespace SKSE
 {

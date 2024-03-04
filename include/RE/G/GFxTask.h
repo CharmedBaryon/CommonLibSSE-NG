@@ -51,7 +51,7 @@ namespace RE
 
 		inline TaskId GetTaskType() const
 		{
-			return static_cast<TaskId>(stl::to_underlying(thisTaskId) & stl::to_underlying(TaskId::kType_Mask));
+			return static_cast<TaskId>(std::to_underlying(thisTaskId) & std::to_underlying(TaskId::kType_Mask));
 		}
 
 		inline TaskState GetTaskState() const

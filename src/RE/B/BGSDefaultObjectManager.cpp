@@ -10,7 +10,7 @@ namespace RE
 
 		inline std::size_t MapIndex(std::underlying_type_t<DefaultObjectID> a_idx) noexcept
 		{
-			if (a_idx <= stl::to_underlying(DefaultObjectID::kKeywordActivatorFurnitureNoPlayer)) {
+			if (a_idx <= std::to_underlying(DefaultObjectID::kKeywordActivatorFurnitureNoPlayer)) {
 				return a_idx;
 			}
 			std::size_t result;
@@ -25,8 +25,8 @@ namespace RE
 
 	TESForm** BGSDefaultObjectManager::GetObject(DefaultObjectID a_object) noexcept
 	{
-		assert(stl::to_underlying(a_object) < Relocate(364, 364, 369));
-		auto idx = MapIndex(stl::to_underlying(a_object));
+		assert(std::to_underlying(a_object) < Relocate(364, 364, 369));
+		auto idx = MapIndex(std::to_underlying(a_object));
 		if (idx == kInvalid) {
 			return nullptr;
 		}
@@ -37,22 +37,22 @@ namespace RE
 
 	bool BGSDefaultObjectManager::IsObjectInitialized(DefaultObjectID a_object) const noexcept
 	{
-		return IsObjectInitialized(MapIndex(stl::to_underlying(a_object)));
+		return IsObjectInitialized(MapIndex(std::to_underlying(a_object)));
 	}
 
 	bool BGSDefaultObjectManager::SupportsVR(DefaultObjectID a_object) noexcept
 	{
-		auto idx = stl::to_underlying(a_object);
-		return idx <= stl::to_underlying(DefaultObjectID::kKeywordActivatorFurnitureNoPlayer) || idx & 0xFFFF0000;
+		auto idx = std::to_underlying(a_object);
+		return idx <= std::to_underlying(DefaultObjectID::kKeywordActivatorFurnitureNoPlayer) || idx & 0xFFFF0000;
 	}
 
 	bool BGSDefaultObjectManager::SupportsSE(DefaultObjectID a_object) noexcept
 	{
-		return (stl::to_underlying(a_object) & 0x0000FFFF) || a_object != DefaultObjectID::kWerewolfSpell;
+		return (std::to_underlying(a_object) & 0x0000FFFF) || a_object != DefaultObjectID::kWerewolfSpell;
 	}
 
 	bool BGSDefaultObjectManager::SupportsCurrentRuntime(DefaultObjectID a_object) noexcept
 	{
-		return MapIndex(stl::to_underlying(a_object)) != kInvalid;
+		return MapIndex(std::to_underlying(a_object)) != kInvalid;
 	}
 }

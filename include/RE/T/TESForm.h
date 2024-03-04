@@ -1,6 +1,7 @@
 #pragma once
 
 #include "RE/B/BSAtomic.h"
+#include "RE/B/BSCoreTypes.h"
 #include "RE/B/BSFixedString.h"
 #include "RE/B/BSTArray.h"
 #include "RE/B/BSTHashMap.h"
@@ -183,7 +184,7 @@ namespace RE
 		{
 			using func_t = decltype(&TESForm::AddCompileIndex);
 			REL::Relocation<func_t> func{ RELOCATION_ID(14509, 14667) };
-			return func(a_id, a_file);
+			func(a_id, a_file);
 		}
 
 		[[nodiscard]] static auto GetAllForms()

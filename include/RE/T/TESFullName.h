@@ -25,7 +25,7 @@ namespace RE
 		{
 			using func_t = decltype(&TESFullName::SetFullName);
 			REL::Relocation<func_t> func{ RELOCATION_ID(22318, 22791) };
-			return func(this, a_name);
+			func(this, a_name);
 		}
 
 		// members

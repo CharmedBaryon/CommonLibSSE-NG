@@ -70,7 +70,7 @@ target_compile_definitions(
 target_compile_features(
 	"${PROJECT_NAME}"
 	PUBLIC
-		cxx_std_20
+		cxx_std_23
 )
 
 if (MSVC)
@@ -133,6 +133,7 @@ target_link_libraries(
 		spdlog::spdlog
  		Advapi32.lib
 		D3D11.lib
+		d3dcompiler.lib
 		Dbghelp.lib
 		DXGI.lib
 		Ole32.lib
@@ -171,6 +172,7 @@ install(
 	DIRECTORY
 		"include/RE"
 		"include/REL"
+		"include/REX"
 		"include/SKSE"
 	DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}"
 )

@@ -218,12 +218,6 @@ namespace SKSE
 		return detail::APIStorage::get().persistentObjectStorage;
 	}
 
-	Trampoline& GetTrampoline()
-	{
-		static Trampoline trampoline;
-		return trampoline;
-	}
-
 	void AllocTrampoline(std::size_t a_size, bool a_trySKSEReserve)
 	{
 		auto& trampoline = GetTrampoline();

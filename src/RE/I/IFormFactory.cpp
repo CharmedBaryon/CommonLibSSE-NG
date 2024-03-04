@@ -6,7 +6,7 @@ namespace RE
 	{
 		struct Factories
 		{
-			IFormFactory* data[stl::to_underlying(FormType::Max)];
+			IFormFactory* data[std::to_underlying(FormType::Max)];
 		};
 
 		REL::Relocation<Factories*> formFactories{ RELOCATION_ID(514355, 400508) };

@@ -82,9 +82,9 @@ namespace RE
 		{
 			assert(IsObject() || IsObjectArray());
 			if (IsObject()) {
-				return reinterpret_cast<ObjectTypeInfo*>(stl::to_underlying(GetRawType()) & ~stl::to_underlying(RawType::kObject));
+				return reinterpret_cast<ObjectTypeInfo*>(std::to_underlying(GetRawType()) & ~std::to_underlying(RawType::kObject));
 			} else {
-				return reinterpret_cast<ObjectTypeInfo*>(stl::to_underlying(GetRawType()) & ~stl::to_underlying(RawType::kObjectArray));
+				return reinterpret_cast<ObjectTypeInfo*>(std::to_underlying(GetRawType()) & ~std::to_underlying(RawType::kObjectArray));
 			}
 		}
 

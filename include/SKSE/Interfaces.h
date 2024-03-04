@@ -1,13 +1,24 @@
 #pragma once
 
-#include "RE/G/GFxMovieView.h"
-#include "RE/G/GFxValue.h"
-#include "RE/I/IVirtualMachine.h"
-#include "RE/I/InventoryEntryData.h"
-#include "RE/V/VirtualMachine.h"
-
 #include "SKSE/Impl/Stubs.h"
 #include "SKSE/Version.h"
+
+namespace RE
+{
+	class GFxMovieView;
+	class GFxValue;
+	class InventoryEntryData;
+
+	namespace BSScript
+	{
+		namespace Internal
+		{
+			class VirtualMachine;
+		}
+
+		class IVirtualMachine;
+	}
+}
 
 namespace SKSE
 {
@@ -95,7 +106,7 @@ namespace SKSE
 				std::negation_v<
 					std::is_pointer<T>>,
 				int> = 0>
-		inline std::uint32_t WriteRecord(std::uint32_t a_type, std::uint32_t a_version, const T& a_buf) const
+		inline bool WriteRecord(std::uint32_t a_type, std::uint32_t a_version, const T& a_buf) const
 		{
 			return WriteRecord(a_type, a_version, std::addressof(a_buf), sizeof(T));
 		}
@@ -106,7 +117,7 @@ namespace SKSE
 			std::enable_if_t<
 				std::is_array_v<T>,
 				int> = 0>
-		inline std::uint32_t WriteRecord(std::uint32_t a_type, std::uint32_t a_version, const T (&a_buf)[N]) const
+		inline bool WriteRecord(std::uint32_t a_type, std::uint32_t a_version, const T (&a_buf)[N]) const
 		{
 			return WriteRecord(a_type, a_version, std::addressof(a_buf), sizeof(T) * N);
 		}
@@ -121,7 +132,7 @@ namespace SKSE
 				std::negation_v<
 					std::is_pointer<T>>,
 				int> = 0>
-		inline std::uint32_t WriteRecordData(const T& a_buf) const
+		inline bool WriteRecordData(const T& a_buf) const
 		{
 			return WriteRecordData(std::addressof(a_buf), sizeof(T));
 		}
@@ -132,7 +143,7 @@ namespace SKSE
 			std::enable_if_t<
 				std::is_array_v<T>,
 				int> = 0>
-		inline std::uint32_t WriteRecordData(const T (&a_buf)[N]) const
+		inline bool WriteRecordData(const T (&a_buf)[N]) const
 		{
 			return WriteRecordData(std::addressof(a_buf), sizeof(T) * N);
 		}

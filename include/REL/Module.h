@@ -332,7 +332,7 @@ namespace REL
 
 		bool load_version(bool a_failOnError)
 		{
-			const auto version = get_file_version(_filePath);
+			const auto version = GetFileVersion(_filePath);
 			if (version) {
 				_version = *version;
 				switch (_version[1]) {

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "REL/Relocation.h"
+#include "REL/ID.h"
 
 namespace RE
 {

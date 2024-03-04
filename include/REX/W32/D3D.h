@@ -1,6 +1,6 @@
 #pragma once
 
-#include "DXGI.h"
+#include "REX/W32/DXGI.h"
 
 namespace REX::W32
 {

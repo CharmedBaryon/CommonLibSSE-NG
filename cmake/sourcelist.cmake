@@ -2010,6 +2010,8 @@ set(SOURCES
 	src/RE/Z/ZeroFunctionArguments.cpp
 	src/REL/ID.cpp
 	src/REL/Module.cpp
+	src/REL/Relocation.cpp
+	src/REL/Version.cpp
 	src/REX/W32/ADVAPI32.cpp
 	src/REX/W32/D3D11.cpp
 	src/REX/W32/D3DCOMPILER.cpp

@@ -10,6 +10,6 @@ namespace RE
 
 	void BSXFlags::SetFlags(Flag a_flags)
 	{
-		value = stl::to_underlying(a_flags);
+		value = std::to_underlying(a_flags);
 	}
 }

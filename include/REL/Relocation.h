@@ -2,9 +2,8 @@
 
 #include "REL/ID.h"
 #include "REL/Module.h"
-#include "REL/Offset.h"
 
-#include "REX/W32/KERNEL32.h"
+#include "SKSE/Trampoline.h"
 
 #define REL_MAKE_MEMBER_FUNCTION_POD_TYPE_HELPER_IMPL(a_nopropQual, a_propQual, ...)              \
 	template <                                                                                    \
@@ -184,19 +183,7 @@ namespace REL
 		}
 	}
 
-	inline void safe_write(std::uintptr_t a_dst, const void* a_src, std::size_t a_count)
-	{
-		std::uint32_t old{0};
-		bool success = REX::W32::VirtualProtect(
-			reinterpret_cast<void*>(a_dst), a_count, REX::W32::PAGE_EXECUTE_READWRITE, std::addressof(old));
-		if (success) {
-			std::memcpy(reinterpret_cast<void*>(a_dst), a_src, a_count);
-			success = REX::W32::VirtualProtect(
-				reinterpret_cast<void*>(a_dst), a_count, old, std::addressof(old));
-		}
-
-		assert(success);
-	}
+	void safe_write(std::uintptr_t a_dst, const void* a_src, std::size_t a_count);
 
 	template<std::integral T>
 	void safe_write(std::uintptr_t a_dst, const T& a_data)
@@ -210,21 +197,9 @@ namespace REL
 		safe_write(a_dst, a_data.data(), a_data.size_bytes());
 	}
 
-	inline void safe_fill(std::uintptr_t a_dst, std::uint8_t a_value, std::size_t a_count)
-	{
-		std::uint32_t old{0};
-		bool success = REX::W32::VirtualProtect(
-			reinterpret_cast<void*>(a_dst), a_count, REX::W32::PAGE_EXECUTE_READWRITE, std::addressof(old));
-		if (success) {
-			std::fill_n(reinterpret_cast<std::uint8_t*>(a_dst), a_count, a_value);
-			success = REX::W32::VirtualProtect(
-				reinterpret_cast<void*>(a_dst), a_count, old, std::addressof(old));
-		}
+	void safe_fill(std::uintptr_t a_dst, std::uint8_t a_value, std::size_t a_count);
 
-		assert(success);
-	}
-
-	template<class T>
+	template <class T = std::uintptr_t>
 	class Relocation
 	{
 	public:
@@ -365,8 +340,56 @@ namespace REL
 			return stl::unrestricted_cast<value_type>(_impl);
 		}
 
-		template<class U = value_type>
-		std::uintptr_t write_vfunc(std::size_t a_idx, std::uintptr_t a_newFunc)
+		template <std::integral U>
+		void write(const U& a_data)
+		requires(std::same_as<value_type, std::uintptr_t>)
+		{
+			safe_write(address(), std::addressof(a_data), sizeof(T));
+		}
+
+		template <class U>
+		void write(const std::span<U> a_data)
+		requires(std::same_as<value_type, std::uintptr_t>)
+		{
+			safe_write(address(), a_data.data(), a_data.size_bytes());
+		}
+
+		template <std::size_t N>
+		std::uintptr_t write_branch(const std::uintptr_t a_dst)
+		requires(std::same_as<value_type, std::uintptr_t>)
+		{
+			return SKSE::GetTrampoline().write_branch<N>(address(), a_dst);
+		}
+
+		template <std::size_t N, class F>
+		std::uintptr_t write_branch(const F a_dst)
+		requires(std::same_as<value_type, std::uintptr_t>)
+		{
+			return SKSE::GetTrampoline().write_branch<N>(address(), stl::unrestricted_cast<std::uintptr_t>(a_dst));
+		}
+
+		template <std::size_t N>
+		std::uintptr_t write_call(const std::uintptr_t a_dst)
+		requires(std::same_as<value_type, std::uintptr_t>)
+		{
+			return SKSE::GetTrampoline().write_call<N>(address(), a_dst);
+		}
+
+		template <std::size_t N, class F>
+		std::uintptr_t write_call(const F a_dst)
+		requires(std::same_as<value_type, std::uintptr_t>)
+		{
+			return SKSE::GetTrampoline().write_call<N>(address(), stl::unrestricted_cast<std::uintptr_t>(a_dst));
+		}
+
+		void write_fill(const std::uint8_t a_value, const std::size_t a_count)
+		requires(std::same_as<value_type, std::uintptr_t>)
+		{
+			safe_fill(address(), a_value, a_count);
+		}
+
+		template <class U = value_type>
+		std::uintptr_t write_vfunc(const std::size_t a_idx, const std::uintptr_t a_newFunc)
 		requires(std::same_as<U, std::uintptr_t>)
 		{
 			const auto addr = address() + (sizeof(void *) * a_idx);

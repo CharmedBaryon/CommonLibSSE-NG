@@ -25,6 +25,7 @@ namespace REX::W32
 	using HMONITOR = struct HMONITOR__*;
 	using HPALETTE = struct HPALETTE__*;
 	using HPEN = struct HPEN__*;
+	using HRESULT = std::int32_t;
 	using HSTRING = struct HSTRING__*;
 	using HWND = struct HWND__*;
 
@@ -84,31 +85,6 @@ namespace REX::W32
 
 	using UUID = GUID;
 	using IID = GUID;
-}
-
-namespace REX::W32
-{
-	struct HRESULT
-	{
-		constexpr HRESULT() noexcept = default;
-
-		constexpr HRESULT(const std::int32_t a_hr) noexcept :
-			value(a_hr)
-		{}
-
-		constexpr operator bool() const noexcept
-		{
-			return value >= 0;
-		}
-
-		constexpr operator std::int32_t() const noexcept
-		{
-			return value;
-		}
-
-		std::int32_t value;
-	};
-	static_assert(sizeof(HRESULT) == 0x4);
 }
 
 namespace REX::W32

@@ -1,4 +1,4 @@
-#include "D3DCOMPILER.h"
+#include "REX/W32/D3DCOMPILER.h"
 
 REX_W32_IMPORT(std::int32_t, D3DCompile, const void*, std::size_t, const char*, const REX::W32::D3D_SHADER_MACRO*, REX::W32::ID3DInclude*, const char*, const char*, std::uint32_t, std::uint32_t, REX::W32::ID3DBlob**, REX::W32::ID3DBlob**);
 REX_W32_IMPORT(std::int32_t, D3DCompile2, const void*, std::size_t, const char*, const REX::W32::D3D_SHADER_MACRO*, REX::W32::ID3DInclude*, const char*, const char*, std::uint32_t, std::uint32_t, std::uint32_t, const void*, std::size_t, REX::W32::ID3DBlob**, REX::W32::ID3DBlob**);

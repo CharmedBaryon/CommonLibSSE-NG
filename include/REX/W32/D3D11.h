@@ -1,6 +1,6 @@
 #pragma once
 
-#include "D3D.h"
+#include "REX/W32/D3D.h"
 
 namespace REX::W32
 {
@@ -45,6 +45,532 @@ namespace REX::W32
 	struct ID3D11VideoProcessorInputView;
 	struct ID3D11VideoProcessorOutputView;
 	struct ID3D11View;
+}
+
+namespace REX::W32
+{
+	inline constexpr auto D3D11_16BIT_INDEX_STRIP_CUT_VALUE{ 0xffff };
+
+	inline constexpr auto D3D11_32BIT_INDEX_STRIP_CUT_VALUE{ 0xffffffff };
+
+	inline constexpr auto D3D11_8BIT_INDEX_STRIP_CUT_VALUE{ 0xff };
+
+	inline constexpr auto D3D11_ARRAY_AXIS_ADDRESS_RANGE_BIT_COUNT{ 9 };
+
+	inline constexpr auto D3D11_CLIP_OR_CULL_DISTANCE_COUNT{ 8 };
+	inline constexpr auto D3D11_CLIP_OR_CULL_DISTANCE_ELEMENT_COUNT{ 2 };
+
+	inline constexpr auto D3D11_COMMONSHADER_CONSTANT_BUFFER_API_SLOT_COUNT{ 14 };
+	inline constexpr auto D3D11_COMMONSHADER_CONSTANT_BUFFER_COMPONENTS{ 4 };
+	inline constexpr auto D3D11_COMMONSHADER_CONSTANT_BUFFER_COMPONENT_BIT_COUNT{ 32 };
+	inline constexpr auto D3D11_COMMONSHADER_CONSTANT_BUFFER_HW_SLOT_COUNT{ 15 };
+	inline constexpr auto D3D11_COMMONSHADER_CONSTANT_BUFFER_PARTIAL_UPDATE_EXTENTS_BYTE_ALIGNMENT{ 16 };
+	inline constexpr auto D3D11_COMMONSHADER_CONSTANT_BUFFER_REGISTER_COMPONENTS{ 4 };
+	inline constexpr auto D3D11_COMMONSHADER_CONSTANT_BUFFER_REGISTER_COUNT{ 15 };
+	inline constexpr auto D3D11_COMMONSHADER_CONSTANT_BUFFER_REGISTER_READS_PER_INST{ 1 };
+	inline constexpr auto D3D11_COMMONSHADER_CONSTANT_BUFFER_REGISTER_READ_PORTS{ 1 };
+
+	inline constexpr auto D3D11_COMMONSHADER_FLOWCONTROL_NESTING_LIMIT{ 64 };
+
+	inline constexpr auto D3D11_COMMONSHADER_IMMEDIATE_CONSTANT_BUFFER_REGISTER_COMPONENTS{ 4 };
+	inline constexpr auto D3D11_COMMONSHADER_IMMEDIATE_CONSTANT_BUFFER_REGISTER_COUNT{ 1 };
+	inline constexpr auto D3D11_COMMONSHADER_IMMEDIATE_CONSTANT_BUFFER_REGISTER_READS_PER_INST{ 1 };
+	inline constexpr auto D3D11_COMMONSHADER_IMMEDIATE_CONSTANT_BUFFER_REGISTER_READ_PORTS{ 1 };
+
+	inline constexpr auto D3D11_COMMONSHADER_IMMEDIATE_VALUE_COMPONENT_BIT_COUNT{ 32 };
+
+	inline constexpr auto D3D11_COMMONSHADER_INPUT_RESOURCE_REGISTER_COMPONENTS{ 1 };
+	inline constexpr auto D3D11_COMMONSHADER_INPUT_RESOURCE_REGISTER_COUNT{ 128 };
+	inline constexpr auto D3D11_COMMONSHADER_INPUT_RESOURCE_REGISTER_READS_PER_INST{ 1 };
+	inline constexpr auto D3D11_COMMONSHADER_INPUT_RESOURCE_REGISTER_READ_PORTS{ 1 };
+
+	inline constexpr auto D3D11_COMMONSHADER_INPUT_RESOURCE_SLOT_COUNT{ 128 };
+
+	inline constexpr auto D3D11_COMMONSHADER_SAMPLER_REGISTER_COMPONENTS{ 1 };
+	inline constexpr auto D3D11_COMMONSHADER_SAMPLER_REGISTER_COUNT{ 16 };
+	inline constexpr auto D3D11_COMMONSHADER_SAMPLER_REGISTER_READS_PER_INST{ 1 };
+	inline constexpr auto D3D11_COMMONSHADER_SAMPLER_REGISTER_READ_PORTS{ 1 };
+
+	inline constexpr auto D3D11_COMMONSHADER_SAMPLER_SLOT_COUNT{ 16 };
+
+	inline constexpr auto D3D11_COMMONSHADER_SUBROUTINE_NESTING_LIMIT{ 32 };
+
+	inline constexpr auto D3D11_COMMONSHADER_TEMP_REGISTER_COMPONENTS{ 4 };
+	inline constexpr auto D3D11_COMMONSHADER_TEMP_REGISTER_COMPONENT_BIT_COUNT{ 32 };
+	inline constexpr auto D3D11_COMMONSHADER_TEMP_REGISTER_COUNT{ 4096 };
+	inline constexpr auto D3D11_COMMONSHADER_TEMP_REGISTER_READS_PER_INST{ 3 };
+	inline constexpr auto D3D11_COMMONSHADER_TEMP_REGISTER_READ_PORTS{ 3 };
+
+	inline constexpr auto D3D11_COMMONSHADER_TEXCOORD_RANGE_REDUCTION_MAX{ 10 };
+	inline constexpr auto D3D11_COMMONSHADER_TEXCOORD_RANGE_REDUCTION_MIN{ -10 };
+
+	inline constexpr auto D3D11_COMMONSHADER_TEXEL_OFFSET_MAX_NEGATIVE{ -8 };
+	inline constexpr auto D3D11_COMMONSHADER_TEXEL_OFFSET_MAX_POSITIVE{ 7 };
+
+	inline constexpr auto D3D11_CS_4_X_BUCKET00_MAX_BYTES_TGSM_WRITABLE_PER_THREAD{ 256 };
+	inline constexpr auto D3D11_CS_4_X_BUCKET00_MAX_NUM_THREADS_PER_GROUP{ 64 };
+
+	inline constexpr auto D3D11_CS_4_X_BUCKET01_MAX_BYTES_TGSM_WRITABLE_PER_THREAD{ 240 };
+	inline constexpr auto D3D11_CS_4_X_BUCKET01_MAX_NUM_THREADS_PER_GROUP{ 68 };
+
+	inline constexpr auto D3D11_CS_4_X_BUCKET02_MAX_BYTES_TGSM_WRITABLE_PER_THREAD{ 224 };
+	inline constexpr auto D3D11_CS_4_X_BUCKET02_MAX_NUM_THREADS_PER_GROUP{ 72 };
+
+	inline constexpr auto D3D11_CS_4_X_BUCKET03_MAX_BYTES_TGSM_WRITABLE_PER_THREAD{ 208 };
+	inline constexpr auto D3D11_CS_4_X_BUCKET03_MAX_NUM_THREADS_PER_GROUP{ 76 };
+
+	inline constexpr auto D3D11_CS_4_X_BUCKET04_MAX_BYTES_TGSM_WRITABLE_PER_THREAD{ 192 };
+	inline constexpr auto D3D11_CS_4_X_BUCKET04_MAX_NUM_THREADS_PER_GROUP{ 84 };
+
+	inline constexpr auto D3D11_CS_4_X_BUCKET05_MAX_BYTES_TGSM_WRITABLE_PER_THREAD{ 176 };
+	inline constexpr auto D3D11_CS_4_X_BUCKET05_MAX_NUM_THREADS_PER_GROUP{ 92 };
+
+	inline constexpr auto D3D11_CS_4_X_BUCKET06_MAX_BYTES_TGSM_WRITABLE_PER_THREAD{ 160 };
+	inline constexpr auto D3D11_CS_4_X_BUCKET06_MAX_NUM_THREADS_PER_GROUP{ 100 };
+
+	inline constexpr auto D3D11_CS_4_X_BUCKET07_MAX_BYTES_TGSM_WRITABLE_PER_THREAD{ 144 };
+	inline constexpr auto D3D11_CS_4_X_BUCKET07_MAX_NUM_THREADS_PER_GROUP{ 112 };
+
+	inline constexpr auto D3D11_CS_4_X_BUCKET08_MAX_BYTES_TGSM_WRITABLE_PER_THREAD{ 128 };
+	inline constexpr auto D3D11_CS_4_X_BUCKET08_MAX_NUM_THREADS_PER_GROUP{ 128 };
+
+	inline constexpr auto D3D11_CS_4_X_BUCKET09_MAX_BYTES_TGSM_WRITABLE_PER_THREAD{ 112 };
+	inline constexpr auto D3D11_CS_4_X_BUCKET09_MAX_NUM_THREADS_PER_GROUP{ 144 };
+
+	inline constexpr auto D3D11_CS_4_X_BUCKET10_MAX_BYTES_TGSM_WRITABLE_PER_THREAD{ 96 };
+	inline constexpr auto D3D11_CS_4_X_BUCKET10_MAX_NUM_THREADS_PER_GROUP{ 168 };
+
+	inline constexpr auto D3D11_CS_4_X_BUCKET11_MAX_BYTES_TGSM_WRITABLE_PER_THREAD{ 80 };
+	inline constexpr auto D3D11_CS_4_X_BUCKET11_MAX_NUM_THREADS_PER_GROUP{ 204 };
+
+	inline constexpr auto D3D11_CS_4_X_BUCKET12_MAX_BYTES_TGSM_WRITABLE_PER_THREAD{ 64 };
+	inline constexpr auto D3D11_CS_4_X_BUCKET12_MAX_NUM_THREADS_PER_GROUP{ 256 };
+
+	inline constexpr auto D3D11_CS_4_X_BUCKET13_MAX_BYTES_TGSM_WRITABLE_PER_THREAD{ 48 };
+	inline constexpr auto D3D11_CS_4_X_BUCKET13_MAX_NUM_THREADS_PER_GROUP{ 340 };
+
+	inline constexpr auto D3D11_CS_4_X_BUCKET14_MAX_BYTES_TGSM_WRITABLE_PER_THREAD{ 32 };
+	inline constexpr auto D3D11_CS_4_X_BUCKET14_MAX_NUM_THREADS_PER_GROUP{ 512 };
+
+	inline constexpr auto D3D11_CS_4_X_BUCKET15_MAX_BYTES_TGSM_WRITABLE_PER_THREAD{ 16 };
+	inline constexpr auto D3D11_CS_4_X_BUCKET15_MAX_NUM_THREADS_PER_GROUP{ 768 };
+
+	inline constexpr auto D3D11_CS_4_X_DISPATCH_MAX_THREAD_GROUPS_IN_Z_DIMENSION{ 1 };
+
+	inline constexpr auto D3D11_CS_4_X_RAW_UAV_BYTE_ALIGNMENT{ 256 };
+
+	inline constexpr auto D3D11_CS_4_X_THREAD_GROUP_MAX_THREADS_PER_GROUP{ 768 };
+	inline constexpr auto D3D11_CS_4_X_THREAD_GROUP_MAX_X{ 768 };
+	inline constexpr auto D3D11_CS_4_X_THREAD_GROUP_MAX_Y{ 768 };
+
+	inline constexpr auto D3D11_CS_4_X_UAV_REGISTER_COUNT{ 1 };
+
+	inline constexpr auto D3D11_CS_DISPATCH_MAX_THREAD_GROUPS_PER_DIMENSION{ 65535 };
+
+	inline constexpr auto D3D11_CS_TGSM_REGISTER_COUNT{ 8192 };
+	inline constexpr auto D3D11_CS_TGSM_REGISTER_READS_PER_INST{ 1 };
+
+	inline constexpr auto D3D11_CS_TGSM_RESOURCE_REGISTER_COMPONENTS{ 1 };
+	inline constexpr auto D3D11_CS_TGSM_RESOURCE_REGISTER_READ_PORTS{ 1 };
+
+	inline constexpr auto D3D11_CS_THREADGROUPID_REGISTER_COMPONENTS{ 3 };
+	inline constexpr auto D3D11_CS_THREADGROUPID_REGISTER_COUNT{ 1 };
+
+	inline constexpr auto D3D11_CS_THREADIDINGROUPFLATTENED_REGISTER_COMPONENTS{ 1 };
+	inline constexpr auto D3D11_CS_THREADIDINGROUPFLATTENED_REGISTER_COUNT{ 1 };
+
+	inline constexpr auto D3D11_CS_THREADIDINGROUP_REGISTER_COMPONENTS{ 3 };
+	inline constexpr auto D3D11_CS_THREADIDINGROUP_REGISTER_COUNT{ 1 };
+
+	inline constexpr auto D3D11_CS_THREADID_REGISTER_COMPONENTS{ 3 };
+	inline constexpr auto D3D11_CS_THREADID_REGISTER_COUNT{ 1 };
+
+	inline constexpr auto D3D11_CS_THREAD_GROUP_MAX_THREADS_PER_GROUP{ 1024 };
+
+	inline constexpr auto D3D11_CS_THREAD_GROUP_MAX_X{ 1024 };
+	inline constexpr auto D3D11_CS_THREAD_GROUP_MAX_Y{ 1024 };
+	inline constexpr auto D3D11_CS_THREAD_GROUP_MAX_Z{ 64 };
+	inline constexpr auto D3D11_CS_THREAD_GROUP_MIN_X{ 1 };
+	inline constexpr auto D3D11_CS_THREAD_GROUP_MIN_Y{ 1 };
+	inline constexpr auto D3D11_CS_THREAD_GROUP_MIN_Z{ 1 };
+
+	inline constexpr auto D3D11_CS_THREAD_LOCAL_TEMP_REGISTER_POOL{ 16384 };
+
+	inline constexpr auto D3D11_DEFAULT_BLEND_FACTOR_ALPHA{ 1.0f };
+	inline constexpr auto D3D11_DEFAULT_BLEND_FACTOR_BLUE{ 1.0f };
+	inline constexpr auto D3D11_DEFAULT_BLEND_FACTOR_GREEN{ 1.0f };
+	inline constexpr auto D3D11_DEFAULT_BLEND_FACTOR_RED{ 1.0f };
+
+	inline constexpr auto D3D11_DEFAULT_BORDER_COLOR_COMPONENT{ 0.0f };
+
+	inline constexpr auto D3D11_DEFAULT_DEPTH_BIAS{ 0 };
+	inline constexpr auto D3D11_DEFAULT_DEPTH_BIAS_CLAMP{ 0.0f };
+
+	inline constexpr auto D3D11_DEFAULT_MAX_ANISOTROPY{ 16 };
+
+	inline constexpr auto D3D11_DEFAULT_MIP_LOD_BIAS{ 0.0f };
+
+	inline constexpr auto D3D11_DEFAULT_RENDER_TARGET_ARRAY_INDEX{ 0 };
+
+	inline constexpr auto D3D11_DEFAULT_SAMPLE_MASK{ 0xffffffff };
+
+	inline constexpr auto D3D11_DEFAULT_SCISSOR_ENDX{ 0 };
+	inline constexpr auto D3D11_DEFAULT_SCISSOR_ENDY{ 0 };
+	inline constexpr auto D3D11_DEFAULT_SCISSOR_STARTX{ 0 };
+	inline constexpr auto D3D11_DEFAULT_SCISSOR_STARTY{ 0 };
+
+	inline constexpr auto D3D11_DEFAULT_SLOPE_SCALED_DEPTH_BIAS{ 0.0f };
+
+	inline constexpr auto D3D11_DEFAULT_STENCIL_READ_MASK{ 0xff };
+	inline constexpr auto D3D11_DEFAULT_STENCIL_REFERENCE{ 0 };
+	inline constexpr auto D3D11_DEFAULT_STENCIL_WRITE_MASK{ 0xff };
+
+	inline constexpr auto D3D11_DEFAULT_VIEWPORT_AND_SCISSORRECT_INDEX{ 0 };
+	inline constexpr auto D3D11_DEFAULT_VIEWPORT_HEIGHT{ 0 };
+	inline constexpr auto D3D11_DEFAULT_VIEWPORT_MAX_DEPTH{ 0.0f };
+	inline constexpr auto D3D11_DEFAULT_VIEWPORT_MIN_DEPTH{ 0.0f };
+	inline constexpr auto D3D11_DEFAULT_VIEWPORT_TOPLEFTX{ 0 };
+	inline constexpr auto D3D11_DEFAULT_VIEWPORT_TOPLEFTY{ 0 };
+	inline constexpr auto D3D11_DEFAULT_VIEWPORT_WIDTH{ 0 };
+
+	inline constexpr auto D3D11_DS_INPUT_CONTROL_POINTS_MAX_TOTAL_SCALARS{ 3968 };
+
+	inline constexpr auto D3D11_DS_INPUT_CONTROL_POINT_REGISTER_COMPONENTS{ 4 };
+	inline constexpr auto D3D11_DS_INPUT_CONTROL_POINT_REGISTER_COMPONENT_BIT_COUNT{ 32 };
+	inline constexpr auto D3D11_DS_INPUT_CONTROL_POINT_REGISTER_COUNT{ 32 };
+	inline constexpr auto D3D11_DS_INPUT_CONTROL_POINT_REGISTER_READS_PER_INST{ 2 };
+	inline constexpr auto D3D11_DS_INPUT_CONTROL_POINT_REGISTER_READ_PORTS{ 1 };
+
+	inline constexpr auto D3D11_DS_INPUT_DOMAIN_POINT_REGISTER_COMPONENTS{ 3 };
+	inline constexpr auto D3D11_DS_INPUT_DOMAIN_POINT_REGISTER_COMPONENT_BIT_COUNT{ 32 };
+	inline constexpr auto D3D11_DS_INPUT_DOMAIN_POINT_REGISTER_COUNT{ 1 };
+	inline constexpr auto D3D11_DS_INPUT_DOMAIN_POINT_REGISTER_READS_PER_INST{ 2 };
+	inline constexpr auto D3D11_DS_INPUT_DOMAIN_POINT_REGISTER_READ_PORTS{ 1 };
+
+	inline constexpr auto D3D11_DS_INPUT_PATCH_CONSTANT_REGISTER_COMPONENTS{ 4 };
+	inline constexpr auto D3D11_DS_INPUT_PATCH_CONSTANT_REGISTER_COMPONENT_BIT_COUNT{ 32 };
+	inline constexpr auto D3D11_DS_INPUT_PATCH_CONSTANT_REGISTER_COUNT{ 32 };
+	inline constexpr auto D3D11_DS_INPUT_PATCH_CONSTANT_REGISTER_READS_PER_INST{ 2 };
+	inline constexpr auto D3D11_DS_INPUT_PATCH_CONSTANT_REGISTER_READ_PORTS{ 1 };
+
+	inline constexpr auto D3D11_DS_INPUT_PRIMITIVE_ID_REGISTER_COMPONENTS{ 1 };
+	inline constexpr auto D3D11_DS_INPUT_PRIMITIVE_ID_REGISTER_COMPONENT_BIT_COUNT{ 32 };
+	inline constexpr auto D3D11_DS_INPUT_PRIMITIVE_ID_REGISTER_COUNT{ 1 };
+	inline constexpr auto D3D11_DS_INPUT_PRIMITIVE_ID_REGISTER_READS_PER_INST{ 2 };
+	inline constexpr auto D3D11_DS_INPUT_PRIMITIVE_ID_REGISTER_READ_PORTS{ 1 };
+
+	inline constexpr auto D3D11_DS_OUTPUT_REGISTER_COMPONENTS{ 4 };
+	inline constexpr auto D3D11_DS_OUTPUT_REGISTER_COMPONENT_BIT_COUNT{ 32 };
+	inline constexpr auto D3D11_DS_OUTPUT_REGISTER_COUNT{ 32 };
+
+	inline constexpr auto D3D11_FLOAT16_FUSED_TOLERANCE_IN_ULP{ 0.6 };
+
+	inline constexpr auto D3D11_FLOAT32_MAX{ 3.402823466e+38f };
+	inline constexpr auto D3D11_FLOAT32_TO_INTEGER_TOLERANCE_IN_ULP{ 0.6f };
+
+	inline constexpr auto D3D11_FLOAT_TO_SRGB_EXPONENT_DENOMINATOR{ 2.4f };
+	inline constexpr auto D3D11_FLOAT_TO_SRGB_EXPONENT_NUMERATOR{ 1.0f };
+	inline constexpr auto D3D11_FLOAT_TO_SRGB_OFFSET{ 0.055f };
+	inline constexpr auto D3D11_FLOAT_TO_SRGB_SCALE_1{ 12.92f };
+	inline constexpr auto D3D11_FLOAT_TO_SRGB_SCALE_2{ 1.055f };
+	inline constexpr auto D3D11_FLOAT_TO_SRGB_THRESHOLD{ 0.0031308f };
+
+	inline constexpr auto D3D11_FTOI_INSTRUCTION_MAX_INPUT{ 2147483647.999f };
+	inline constexpr auto D3D11_FTOI_INSTRUCTION_MIN_INPUT{ -2147483648.999f };
+
+	inline constexpr auto D3D11_FTOU_INSTRUCTION_MAX_INPUT{ 4294967295.999f };
+	inline constexpr auto D3D11_FTOU_INSTRUCTION_MIN_INPUT{ 0.0f };
+
+	inline constexpr auto D3D11_GS_INPUT_INSTANCE_ID_READS_PER_INST{ 2 };
+	inline constexpr auto D3D11_GS_INPUT_INSTANCE_ID_READ_PORTS{ 1 };
+
+	inline constexpr auto D3D11_GS_INPUT_INSTANCE_ID_REGISTER_COMPONENTS{ 1 };
+	inline constexpr auto D3D11_GS_INPUT_INSTANCE_ID_REGISTER_COMPONENT_BIT_COUNT{ 32 };
+	inline constexpr auto D3D11_GS_INPUT_INSTANCE_ID_REGISTER_COUNT{ 1 };
+
+	inline constexpr auto D3D11_GS_INPUT_PRIM_CONST_REGISTER_COMPONENTS{ 1 };
+	inline constexpr auto D3D11_GS_INPUT_PRIM_CONST_REGISTER_COMPONENT_BIT_COUNT{ 32 };
+	inline constexpr auto D3D11_GS_INPUT_PRIM_CONST_REGISTER_COUNT{ 1 };
+	inline constexpr auto D3D11_GS_INPUT_PRIM_CONST_REGISTER_READS_PER_INST{ 2 };
+	inline constexpr auto D3D11_GS_INPUT_PRIM_CONST_REGISTER_READ_PORTS{ 1 };
+
+	inline constexpr auto D3D11_GS_INPUT_REGISTER_COMPONENTS{ 4 };
+	inline constexpr auto D3D11_GS_INPUT_REGISTER_COMPONENT_BIT_COUNT{ 32 };
+	inline constexpr auto D3D11_GS_INPUT_REGISTER_COUNT{ 32 };
+	inline constexpr auto D3D11_GS_INPUT_REGISTER_READS_PER_INST{ 2 };
+	inline constexpr auto D3D11_GS_INPUT_REGISTER_READ_PORTS{ 1 };
+	inline constexpr auto D3D11_GS_INPUT_REGISTER_VERTICES{ 32 };
+
+	inline constexpr auto D3D11_GS_MAX_INSTANCE_COUNT{ 32 };
+
+	inline constexpr auto D3D11_GS_MAX_OUTPUT_VERTEX_COUNT_ACROSS_INSTANCES{ 1024 };
+
+	inline constexpr auto D3D11_GS_OUTPUT_ELEMENTS{ 32 };
+
+	inline constexpr auto D3D11_GS_OUTPUT_REGISTER_COMPONENTS{ 4 };
+	inline constexpr auto D3D11_GS_OUTPUT_REGISTER_COMPONENT_BIT_COUNT{ 32 };
+	inline constexpr auto D3D11_GS_OUTPUT_REGISTER_COUNT{ 32 };
+
+	inline constexpr auto D3D11_HS_CONTROL_POINT_PHASE_INPUT_REGISTER_COUNT{ 32 };
+	inline constexpr auto D3D11_HS_CONTROL_POINT_PHASE_OUTPUT_REGISTER_COUNT{ 32 };
+
+	inline constexpr auto D3D11_HS_CONTROL_POINT_REGISTER_COMPONENTS{ 4 };
+	inline constexpr auto D3D11_HS_CONTROL_POINT_REGISTER_COMPONENT_BIT_COUNT{ 32 };
+	inline constexpr auto D3D11_HS_CONTROL_POINT_REGISTER_READS_PER_INST{ 2 };
+	inline constexpr auto D3D11_HS_CONTROL_POINT_REGISTER_READ_PORTS{ 1 };
+
+	inline constexpr auto D3D11_HS_FORK_PHASE_INSTANCE_COUNT_UPPER_BOUND{ 0xffffffff };
+
+	inline constexpr auto D3D11_HS_INPUT_FORK_INSTANCE_ID_REGISTER_COMPONENTS{ 1 };
+	inline constexpr auto D3D11_HS_INPUT_FORK_INSTANCE_ID_REGISTER_COMPONENT_BIT_COUNT{ 32 };
+	inline constexpr auto D3D11_HS_INPUT_FORK_INSTANCE_ID_REGISTER_COUNT{ 1 };
+	inline constexpr auto D3D11_HS_INPUT_FORK_INSTANCE_ID_REGISTER_READS_PER_INST{ 2 };
+	inline constexpr auto D3D11_HS_INPUT_FORK_INSTANCE_ID_REGISTER_READ_PORTS{ 1 };
+	inline constexpr auto D3D11_HS_INPUT_JOIN_INSTANCE_ID_REGISTER_COMPONENTS{ 1 };
+	inline constexpr auto D3D11_HS_INPUT_JOIN_INSTANCE_ID_REGISTER_COMPONENT_BIT_COUNT{ 32 };
+	inline constexpr auto D3D11_HS_INPUT_JOIN_INSTANCE_ID_REGISTER_COUNT{ 1 };
+	inline constexpr auto D3D11_HS_INPUT_JOIN_INSTANCE_ID_REGISTER_READS_PER_INST{ 2 };
+	inline constexpr auto D3D11_HS_INPUT_JOIN_INSTANCE_ID_REGISTER_READ_PORTS{ 1 };
+
+	inline constexpr auto D3D11_HS_INPUT_PRIMITIVE_ID_REGISTER_COMPONENTS{ 1 };
+	inline constexpr auto D3D11_HS_INPUT_PRIMITIVE_ID_REGISTER_COMPONENT_BIT_COUNT{ 32 };
+	inline constexpr auto D3D11_HS_INPUT_PRIMITIVE_ID_REGISTER_COUNT{ 1 };
+	inline constexpr auto D3D11_HS_INPUT_PRIMITIVE_ID_REGISTER_READS_PER_INST{ 2 };
+	inline constexpr auto D3D11_HS_INPUT_PRIMITIVE_ID_REGISTER_READ_PORTS{ 1 };
+
+	inline constexpr auto D3D11_HS_JOIN_PHASE_INSTANCE_COUNT_UPPER_BOUND{ 0xffffffff };
+
+	inline constexpr auto D3D11_HS_MAXTESSFACTOR_LOWER_BOUND{ 1.0f };
+	inline constexpr auto D3D11_HS_MAXTESSFACTOR_UPPER_BOUND{ 64.0f };
+	inline constexpr auto D3D11_HS_OUTPUT_CONTROL_POINTS_MAX_TOTAL_SCALARS{ 3968 };
+
+	inline constexpr auto D3D11_HS_OUTPUT_CONTROL_POINT_ID_REGISTER_COMPONENTS{ 1 };
+	inline constexpr auto D3D11_HS_OUTPUT_CONTROL_POINT_ID_REGISTER_COMPONENT_BIT_COUNT{ 32 };
+	inline constexpr auto D3D11_HS_OUTPUT_CONTROL_POINT_ID_REGISTER_COUNT{ 1 };
+	inline constexpr auto D3D11_HS_OUTPUT_CONTROL_POINT_ID_REGISTER_READS_PER_INST{ 2 };
+	inline constexpr auto D3D11_HS_OUTPUT_CONTROL_POINT_ID_REGISTER_READ_PORTS{ 1 };
+
+	inline constexpr auto D3D11_HS_OUTPUT_PATCH_CONSTANT_REGISTER_COMPONENTS{ 4 };
+	inline constexpr auto D3D11_HS_OUTPUT_PATCH_CONSTANT_REGISTER_COMPONENT_BIT_COUNT{ 32 };
+	inline constexpr auto D3D11_HS_OUTPUT_PATCH_CONSTANT_REGISTER_COUNT{ 32 };
+	inline constexpr auto D3D11_HS_OUTPUT_PATCH_CONSTANT_REGISTER_READS_PER_INST{ 2 };
+	inline constexpr auto D3D11_HS_OUTPUT_PATCH_CONSTANT_REGISTER_READ_PORTS{ 1 };
+	inline constexpr auto D3D11_HS_OUTPUT_PATCH_CONSTANT_REGISTER_SCALAR_COMPONENTS{ 128 };
+
+	inline constexpr auto D3D11_IA_DEFAULT_INDEX_BUFFER_OFFSET_IN_BYTES{ 0 };
+
+	inline constexpr auto D3D11_IA_DEFAULT_PRIMITIVE_TOPOLOGY{ 0 };
+
+	inline constexpr auto D3D11_IA_DEFAULT_VERTEX_BUFFER_OFFSET_IN_BYTES{ 0 };
+
+	inline constexpr auto D3D11_IA_INDEX_INPUT_RESOURCE_SLOT_COUNT{ 1 };
+
+	inline constexpr auto D3D11_IA_INSTANCE_ID_BIT_COUNT{ 32 };
+
+	inline constexpr auto D3D11_IA_INTEGER_ARITHMETIC_BIT_COUNT{ 32 };
+
+	inline constexpr auto D3D11_IA_PATCH_MAX_CONTROL_POINT_COUNT{ 32 };
+
+	inline constexpr auto D3D11_IA_PRIMITIVE_ID_BIT_COUNT{ 32 };
+
+	inline constexpr auto D3D11_IA_VERTEX_ID_BIT_COUNT{ 32 };
+
+	inline constexpr auto D3D11_IA_VERTEX_INPUT_RESOURCE_SLOT_COUNT{ 32 };
+
+	inline constexpr auto D3D11_IA_VERTEX_INPUT_STRUCTURE_ELEMENTS_COMPONENTS{ 128 };
+	inline constexpr auto D3D11_IA_VERTEX_INPUT_STRUCTURE_ELEMENT_COUNT{ 32 };
+
+	inline constexpr auto D3D11_INTEGER_DIVIDE_BY_ZERO_QUOTIENT{ 0xffffffff };
+	inline constexpr auto D3D11_INTEGER_DIVIDE_BY_ZERO_REMAINDER{ 0xffffffff };
+
+	inline constexpr auto D3D11_KEEP_RENDER_TARGETS_AND_DEPTH_STENCIL{ 0xffffffff };
+
+	inline constexpr auto D3D11_KEEP_UNORDERED_ACCESS_VIEWS{ 0xffffffff };
+
+	inline constexpr auto D3D11_LINEAR_GAMMA{ 1.0f };
+
+	inline constexpr auto D3D11_MAJOR_VERSION{ 11 };
+
+	inline constexpr auto D3D11_MAX_BORDER_COLOR_COMPONENT{ 1.0f };
+	inline constexpr auto D3D11_MAX_DEPTH{ 1.0f };
+	inline constexpr auto D3D11_MAX_MAXANISOTROPY{ 16 };
+	inline constexpr auto D3D11_MAX_MULTISAMPLE_SAMPLE_COUNT{ 32 };
+	inline constexpr auto D3D11_MAX_POSITION_VALUE{ 3.402823466e+34f };
+	inline constexpr auto D3D11_MAX_TEXTURE_DIMENSION_2_TO_EXP{ 17 };
+
+	inline constexpr auto D3D11_MINOR_VERSION{ 0 };
+
+	inline constexpr auto D3D11_MIN_BORDER_COLOR_COMPONENT{ 0.0f };
+	inline constexpr auto D3D11_MIN_DEPTH{ 0.0f };
+	inline constexpr auto D3D11_MIN_MAXANISOTROPY{ 0 };
+
+	inline constexpr auto D3D11_MIP_LOD_BIAS_MAX{ 15.99f };
+	inline constexpr auto D3D11_MIP_LOD_BIAS_MIN{ -16.0f };
+	inline constexpr auto D3D11_MIP_LOD_FRACTIONAL_BIT_COUNT{ 8 };
+
+	inline constexpr auto D3D11_MIP_LOD_RANGE_BIT_COUNT{ 8 };
+
+	inline constexpr auto D3D11_MULTISAMPLE_ANTIALIAS_LINE_WIDTH{ 1.4f };
+	inline constexpr auto D3D11_NONSAMPLE_FETCH_OUT_OF_RANGE_ACCESS_RESULT{ 0 };
+
+	inline constexpr auto D3D11_PIXEL_ADDRESS_RANGE_BIT_COUNT{ 15 };
+
+	inline constexpr auto D3D11_PRE_SCISSOR_PIXEL_ADDRESS_RANGE_BIT_COUNT{ 16 };
+
+	inline constexpr auto D3D11_PS_CS_UAV_REGISTER_COMPONENTS{ 1 };
+	inline constexpr auto D3D11_PS_CS_UAV_REGISTER_COUNT{ 8 };
+	inline constexpr auto D3D11_PS_CS_UAV_REGISTER_READS_PER_INST{ 1 };
+	inline constexpr auto D3D11_PS_CS_UAV_REGISTER_READ_PORTS{ 1 };
+
+	inline constexpr auto D3D11_PS_FRONTFACING_DEFAULT_VALUE{ 0xffffffff };
+	inline constexpr auto D3D11_PS_FRONTFACING_FALSE_VALUE{ 0 };
+	inline constexpr auto D3D11_PS_FRONTFACING_TRUE_VALUE{ 0xffffffff };
+
+	inline constexpr auto D3D11_PS_INPUT_REGISTER_COMPONENTS{ 4 };
+	inline constexpr auto D3D11_PS_INPUT_REGISTER_COMPONENT_BIT_COUNT{ 32 };
+	inline constexpr auto D3D11_PS_INPUT_REGISTER_COUNT{ 32 };
+	inline constexpr auto D3D11_PS_INPUT_REGISTER_READS_PER_INST{ 2 };
+	inline constexpr auto D3D11_PS_INPUT_REGISTER_READ_PORTS{ 1 };
+
+	inline constexpr auto D3D11_PS_LEGACY_PIXEL_CENTER_FRACTIONAL_COMPONENT{ 0.0f };
+
+	inline constexpr auto D3D11_PS_OUTPUT_DEPTH_REGISTER_COMPONENTS{ 1 };
+	inline constexpr auto D3D11_PS_OUTPUT_DEPTH_REGISTER_COMPONENT_BIT_COUNT{ 32 };
+	inline constexpr auto D3D11_PS_OUTPUT_DEPTH_REGISTER_COUNT{ 1 };
+	inline constexpr auto D3D11_PS_OUTPUT_MASK_REGISTER_COMPONENTS{ 1 };
+	inline constexpr auto D3D11_PS_OUTPUT_MASK_REGISTER_COMPONENT_BIT_COUNT{ 32 };
+	inline constexpr auto D3D11_PS_OUTPUT_MASK_REGISTER_COUNT{ 1 };
+	inline constexpr auto D3D11_PS_OUTPUT_REGISTER_COMPONENTS{ 4 };
+	inline constexpr auto D3D11_PS_OUTPUT_REGISTER_COMPONENT_BIT_COUNT{ 32 };
+	inline constexpr auto D3D11_PS_OUTPUT_REGISTER_COUNT{ 8 };
+
+	inline constexpr auto D3D11_PS_PIXEL_CENTER_FRACTIONAL_COMPONENT{ 0.5f };
+	inline constexpr auto D3D11_RAW_UAV_SRV_BYTE_ALIGNMENT{ 16 };
+
+	inline constexpr auto D3D11_REQ_BLEND_OBJECT_COUNT_PER_DEVICE{ 4096 };
+
+	inline constexpr auto D3D11_REQ_BUFFER_RESOURCE_TEXEL_COUNT_2_TO_EXP{ 27 };
+
+	inline constexpr auto D3D11_REQ_CONSTANT_BUFFER_ELEMENT_COUNT{ 4096 };
+
+	inline constexpr auto D3D11_REQ_DEPTH_STENCIL_OBJECT_COUNT_PER_DEVICE{ 4096 };
+
+	inline constexpr auto D3D11_REQ_DRAWINDEXED_INDEX_COUNT_2_TO_EXP{ 32 };
+
+	inline constexpr auto D3D11_REQ_DRAW_VERTEX_COUNT_2_TO_EXP{ 32 };
+
+	inline constexpr auto D3D11_REQ_FILTERING_HW_ADDRESSABLE_RESOURCE_DIMENSION{ 16384 };
+
+	inline constexpr auto D3D11_REQ_GS_INVOCATION_32BIT_OUTPUT_COMPONENT_LIMIT{ 1024 };
+
+	inline constexpr auto D3D11_REQ_IMMEDIATE_CONSTANT_BUFFER_ELEMENT_COUNT{ 4096 };
+
+	inline constexpr auto D3D11_REQ_MAXANISOTROPY{ 16 };
+
+	inline constexpr auto D3D11_REQ_MIP_LEVELS{ 15 };
+
+	inline constexpr auto D3D11_REQ_MULTI_ELEMENT_STRUCTURE_SIZE_IN_BYTES{ 2048 };
+
+	inline constexpr auto D3D11_REQ_RASTERIZER_OBJECT_COUNT_PER_DEVICE{ 4096 };
+
+	inline constexpr auto D3D11_REQ_RENDER_TO_BUFFER_WINDOW_WIDTH{ 16384 };
+
+	inline constexpr auto D3D11_REQ_RESOURCE_SIZE_IN_MEGABYTES_EXPRESSION_A_TERM{ 128 };
+	inline constexpr auto D3D11_REQ_RESOURCE_SIZE_IN_MEGABYTES_EXPRESSION_B_TERM{ 0.25f };
+	inline constexpr auto D3D11_REQ_RESOURCE_SIZE_IN_MEGABYTES_EXPRESSION_C_TERM{ 2048 };
+
+	inline constexpr auto D3D11_REQ_RESOURCE_VIEW_COUNT_PER_DEVICE_2_TO_EXP{ 20 };
+
+	inline constexpr auto D3D11_REQ_SAMPLER_OBJECT_COUNT_PER_DEVICE{ 4096 };
+
+	inline constexpr auto D3D11_REQ_TEXTURE1D_ARRAY_AXIS_DIMENSION{ 2048 };
+	inline constexpr auto D3D11_REQ_TEXTURE1D_U_DIMENSION{ 16384 };
+	inline constexpr auto D3D11_REQ_TEXTURE2D_ARRAY_AXIS_DIMENSION{ 2048 };
+	inline constexpr auto D3D11_REQ_TEXTURE2D_U_OR_V_DIMENSION{ 16384 };
+	inline constexpr auto D3D11_REQ_TEXTURE3D_U_V_OR_W_DIMENSION{ 2048 };
+
+	inline constexpr auto D3D11_REQ_TEXTURECUBE_DIMENSION{ 16384 };
+
+	inline constexpr auto D3D11_RESINFO_INSTRUCTION_MISSING_COMPONENT_RETVAL{ 0 };
+
+	inline constexpr auto D3D11_SHADER_MAJOR_VERSION{ 5 };
+
+	inline constexpr auto D3D11_SHADER_MAX_INSTANCES{ 65535 };
+	inline constexpr auto D3D11_SHADER_MAX_INTERFACES{ 253 };
+	inline constexpr auto D3D11_SHADER_MAX_INTERFACE_CALL_SITES{ 4096 };
+	inline constexpr auto D3D11_SHADER_MAX_TYPES{ 65535 };
+
+	inline constexpr auto D3D11_SHADER_MINOR_VERSION{ 0 };
+
+	inline constexpr auto D3D11_SHIFT_INSTRUCTION_PAD_VALUE{ 0 };
+	inline constexpr auto D3D11_SHIFT_INSTRUCTION_SHIFT_VALUE_BIT_COUNT{ 5 };
+
+	inline constexpr auto D3D11_SIMULTANEOUS_RENDER_TARGET_COUNT{ 8 };
+
+	inline constexpr auto D3D11_SO_BUFFER_MAX_STRIDE_IN_BYTES{ 2048 };
+	inline constexpr auto D3D11_SO_BUFFER_MAX_WRITE_WINDOW_IN_BYTES{ 512 };
+	inline constexpr auto D3D11_SO_BUFFER_SLOT_COUNT{ 4 };
+	inline constexpr auto D3D11_SO_DDI_REGISTER_INDEX_DENOTING_GAP{ 0xffffffff };
+	inline constexpr auto D3D11_SO_NO_RASTERIZED_STREAM{ 0xffffffff };
+	inline constexpr auto D3D11_SO_OUTPUT_COMPONENT_COUNT{ 128 };
+	inline constexpr auto D3D11_SO_STREAM_COUNT{ 4 };
+
+	inline constexpr auto D3D11_SPEC_DATE_DAY{ 16 };
+	inline constexpr auto D3D11_SPEC_DATE_MONTH{ 05 };
+	inline constexpr auto D3D11_SPEC_DATE_YEAR{ 2011 };
+	inline constexpr auto D3D11_SPEC_VERSION{ 1.07 };
+
+	inline constexpr auto D3D11_SRGB_GAMMA{ 2.2f };
+	inline constexpr auto D3D11_SRGB_TO_FLOAT_DENOMINATOR_1{ 12.92f };
+	inline constexpr auto D3D11_SRGB_TO_FLOAT_DENOMINATOR_2{ 1.055f };
+	inline constexpr auto D3D11_SRGB_TO_FLOAT_EXPONENT{ 2.4f };
+	inline constexpr auto D3D11_SRGB_TO_FLOAT_OFFSET{ 0.055f };
+	inline constexpr auto D3D11_SRGB_TO_FLOAT_THRESHOLD{ 0.04045f };
+	inline constexpr auto D3D11_SRGB_TO_FLOAT_TOLERANCE_IN_ULP{ 0.5f };
+
+	inline constexpr auto D3D11_STANDARD_COMPONENT_BIT_COUNT{ 32 };
+	inline constexpr auto D3D11_STANDARD_COMPONENT_BIT_COUNT_DOUBLED{ 64 };
+	inline constexpr auto D3D11_STANDARD_MAXIMUM_ELEMENT_ALIGNMENT_BYTE_MULTIPLE{ 4 };
+	inline constexpr auto D3D11_STANDARD_PIXEL_COMPONENT_COUNT{ 128 };
+	inline constexpr auto D3D11_STANDARD_PIXEL_ELEMENT_COUNT{ 32 };
+	inline constexpr auto D3D11_STANDARD_VECTOR_SIZE{ 4 };
+	inline constexpr auto D3D11_STANDARD_VERTEX_ELEMENT_COUNT{ 32 };
+	inline constexpr auto D3D11_STANDARD_VERTEX_TOTAL_COMPONENT_COUNT{ 64 };
+
+	inline constexpr auto D3D11_SUBPIXEL_FRACTIONAL_BIT_COUNT{ 8 };
+	inline constexpr auto D3D11_SUBTEXEL_FRACTIONAL_BIT_COUNT{ 8 };
+
+	inline constexpr auto D3D11_TESSELLATOR_MAX_EVEN_TESSELLATION_FACTOR{ 64 };
+	inline constexpr auto D3D11_TESSELLATOR_MAX_ISOLINE_DENSITY_TESSELLATION_FACTOR{ 64 };
+	inline constexpr auto D3D11_TESSELLATOR_MAX_ODD_TESSELLATION_FACTOR{ 63 };
+	inline constexpr auto D3D11_TESSELLATOR_MAX_TESSELLATION_FACTOR{ 64 };
+	inline constexpr auto D3D11_TESSELLATOR_MIN_EVEN_TESSELLATION_FACTOR{ 2 };
+	inline constexpr auto D3D11_TESSELLATOR_MIN_ISOLINE_DENSITY_TESSELLATION_FACTOR{ 1 };
+	inline constexpr auto D3D11_TESSELLATOR_MIN_ODD_TESSELLATION_FACTOR{ 1 };
+
+	inline constexpr auto D3D11_TEXEL_ADDRESS_RANGE_BIT_COUNT{ 16 };
+
+	inline constexpr auto D3D11_UNBOUND_MEMORY_ACCESS_RESULT{ 0 };
+
+	inline constexpr auto D3D11_VIEWPORT_AND_SCISSORRECT_MAX_INDEX{ 15 };
+	inline constexpr auto D3D11_VIEWPORT_AND_SCISSORRECT_OBJECT_COUNT_PER_PIPELINE{ 16 };
+
+	inline constexpr auto D3D11_VIEWPORT_BOUNDS_MAX{ 32767 };
+	inline constexpr auto D3D11_VIEWPORT_BOUNDS_MIN{ -32768 };
+
+	inline constexpr auto D3D11_VS_INPUT_REGISTER_COMPONENTS{ 4 };
+	inline constexpr auto D3D11_VS_INPUT_REGISTER_COMPONENT_BIT_COUNT{ 32 };
+	inline constexpr auto D3D11_VS_INPUT_REGISTER_COUNT{ 32 };
+	inline constexpr auto D3D11_VS_INPUT_REGISTER_READS_PER_INST{ 2 };
+	inline constexpr auto D3D11_VS_INPUT_REGISTER_READ_PORTS{ 1 };
+
+	inline constexpr auto D3D11_VS_OUTPUT_REGISTER_COMPONENTS{ 4 };
+	inline constexpr auto D3D11_VS_OUTPUT_REGISTER_COMPONENT_BIT_COUNT{ 32 };
+	inline constexpr auto D3D11_VS_OUTPUT_REGISTER_COUNT{ 32 };
+
+	inline constexpr auto D3D11_WHQL_CONTEXT_COUNT_FOR_RESOURCE_LIMIT{ 10 };
+	inline constexpr auto D3D11_WHQL_DRAWINDEXED_INDEX_COUNT_2_TO_EXP{ 25 };
+	inline constexpr auto D3D11_WHQL_DRAW_VERTEX_COUNT_2_TO_EXP{ 25 };
 }
 
 namespace REX::W32

@@ -27,14 +27,14 @@ namespace RE
 			{
 				using func_t = decltype(&Entry::release8);
 				REL::Relocation<func_t> func{ RELOCATION_ID(67847, 69192) };
-				return func(a_entry);
+				func(a_entry);
 			}
 
 			static inline void release16(const wchar_t*& a_entry)
 			{
 				using func_t = decltype(&Entry::release16);
 				REL::Relocation<func_t> func{ RELOCATION_ID(67848, 69193) };
-				return func(a_entry);
+				func(a_entry);
 			}
 
 			inline void acquire()

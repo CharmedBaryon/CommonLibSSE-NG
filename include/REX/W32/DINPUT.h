@@ -1,7 +1,7 @@
 #pragma once
 
-#include "COM.h"
-#include "D3D.h"
+#include "REX/W32/COM.h"
+#include "REX/W32/D3D.h"
 
 namespace REX::W32
 {

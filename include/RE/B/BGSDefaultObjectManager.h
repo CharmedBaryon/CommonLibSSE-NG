@@ -1013,17 +1013,20 @@ namespace RE
 			return func();
 		}
 
-		[[nodiscard]] TESForm* GetObject(DefaultObject a_object) const noexcept { return GetObject(stl::to_underlying(a_object)); }
+		[[nodiscard]] TESForm* GetObject(DefaultObject a_object) const noexcept
+		{
+			return GetObject(std::to_underlying(a_object));
+		}
 
 		template <class T>
 		[[nodiscard]] T* GetObject(DefaultObject a_object) const noexcept
 		{
-			return GetObject<T>(stl::to_underlying(a_object));
+			return GetObject<T>(std::to_underlying(a_object));
 		}
 
 		[[nodiscard]] TESForm* GetObject(std::size_t a_idx) const noexcept
 		{
-			assert(a_idx < stl::to_underlying(DefaultObject::kTotal));
+			assert(a_idx < std::to_underlying(DefaultObject::kTotal));
 			return IsObjectInitialized(a_idx) ? objects[a_idx] : nullptr;
 		}
 
@@ -1045,7 +1048,7 @@ namespace RE
 
 		[[nodiscard]] bool IsObjectInitialized(DEFAULT_OBJECT a_object) const noexcept
 		{
-			return IsObjectInitialized(stl::to_underlying(a_object));
+			return IsObjectInitialized(std::to_underlying(a_object));
 		}
 
 		[[nodiscard]] bool IsObjectInitialized(DefaultObjectID a_object) const noexcept;

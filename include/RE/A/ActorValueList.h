@@ -20,7 +20,7 @@ namespace RE
 		// members
 		std::uint32_t   unk00;                                                // 00
 		std::uint32_t   pad04;                                                // 04
-		ActorValueInfo* actorValues[stl::to_underlying(ActorValue::kTotal)];  // 08
+		ActorValueInfo* actorValues[std::to_underlying(ActorValue::kTotal)];  // 08
 	};
 }
 

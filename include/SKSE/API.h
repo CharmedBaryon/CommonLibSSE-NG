@@ -36,6 +36,5 @@ namespace SKSE
 	const SKSEObjectRegistry*          GetObjectRegistry() noexcept;
 	const SKSEPersistentObjectStorage* GetPersistentObjectStorage() noexcept;
 
-	Trampoline& GetTrampoline();
-	void        AllocTrampoline(std::size_t a_size, bool a_trySKSEReserve = true);
+	void AllocTrampoline(std::size_t a_size, bool a_trySKSEReserve = true);
 }
