@@ -287,9 +287,9 @@ namespace RE
 		float                                                 breathTimer;                               // 324
 		float                                                 voiceTimer;                                // 328
 		float                                                 dyingTimer;                                // 32C
-		std::uint64_t                                         unk330;                                    // 330
+		TESTopicInfo*                                         lastGreeting;                              // 330
 		std::uint64_t                                         unk338;                                    // 338
-		float                                                 closeDialogueTimer;                        // 340
+		float                                                 awarePlayerTimer;                          // 340
 		std::uint32_t                                         unk344;                                    // 344
 		TESIdleForm*                                          currentProcessIdle;                        // 348
 		RefHandle                                             unk350;                                    // 350

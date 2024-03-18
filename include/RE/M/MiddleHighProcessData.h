@@ -171,7 +171,7 @@ namespace RE
 		float                                          headHeightOffset;            // 204
 		ObjectRefHandle                                occupiedFurniture;           // 208
 		std::uint32_t                                  unk20C;                      // 20C
-		std::uint64_t                                  unk210;                      // 210
+		TESIdleForm*                                   unk210;                      // 210
 		ActorHandle                                    commandingActor;             // 218
 		std::uint32_t                                  pad21C;                      // 21C
 		InventoryEntryData*                            leftHand;                    // 220

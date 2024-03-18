@@ -1,9 +1,9 @@
 #pragma once
 
+#include "RE/B/BSScaleformExternalTexture.h"
 #include "RE/B/BSTEvent.h"
 #include "RE/G/GFxFunctionHandler.h"
 #include "RE/I/IMenu.h"
-#include "RE/I/ImageData.h"
 
 namespace RE
 {
@@ -29,13 +29,13 @@ namespace RE
 
 		struct RUNTIME_DATA
 		{
-#define RUNTIME_DATA_CONTENT      \
-	ImageData     unk50; /* 00 */ \
-	std::uint32_t unk68; /* 18 */ \
-	std::uint8_t  unk6C; /* 1C */ \
-	std::uint8_t  unk6D; /* 1D */ \
-	std::uint8_t  unk6E; /* 1E */ \
-	std::uint8_t  pad6F; /* 1F */
+#define RUNTIME_DATA_CONTENT                              \
+	BSScaleformExternalTexture gamerIconTexture; /* 00 */ \
+	std::uint32_t              unk68;            /* 18 */ \
+	std::uint8_t               unk6C;            /* 1C */ \
+	std::uint8_t               unk6D;            /* 1D */ \
+	std::uint8_t               unk6E;            /* 1E */ \
+	std::uint8_t               pad6F;            /* 1F */
 
 			RUNTIME_DATA_CONTENT
 		};

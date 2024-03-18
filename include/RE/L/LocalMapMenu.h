@@ -1,10 +1,10 @@
 #pragma once
 
 #include "RE/B/BSCullingProcess.h"
+#include "RE/B/BSScaleformExternalTexture.h"
 #include "RE/B/BSTArray.h"
 #include "RE/B/BSTSmartPointer.h"
 #include "RE/G/GFxValue.h"
-#include "RE/I/ImageData.h"
 #include "RE/I/ImageSpaceShaderParam.h"
 #include "RE/L/LocalMapCamera.h"
 #include "RE/M/MenuEventHandler.h"
@@ -111,7 +111,7 @@ namespace RE
 
 		struct RUNTIME_DATA
 		{
-			ImageData                     unk303A0;  // 00
+			BSScaleformExternalTexture    unk303A0;  // 00
 			GFxValue                      unk303B8;  // 18
 			GFxValue                      unk303D0;  // 30
 			void*                         unk303E8;  // 48

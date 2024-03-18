@@ -1,9 +1,9 @@
 #pragma once
 
+#include "RE/B/BSScaleformExternalTexture.h"
 #include "RE/B/BSTEvent.h"
 #include "RE/G/GFxFunctionHandler.h"
 #include "RE/I/IMenu.h"
-#include "RE/I/ImageData.h"
 #include "RE/M/MenuEventHandler.h"
 
 namespace RE
@@ -29,9 +29,9 @@ namespace RE
 
 		struct RUNTIME_DATA
 		{
-#define RUNTIME_DATA_CONTENT       \
-	ImageData background; /* 00 */ \
-	ImageData details;    /* 18 */
+#define RUNTIME_DATA_CONTENT                        \
+	BSScaleformExternalTexture background; /* 00 */ \
+	BSScaleformExternalTexture details;    /* 18 */
 
 			RUNTIME_DATA_CONTENT
 		};

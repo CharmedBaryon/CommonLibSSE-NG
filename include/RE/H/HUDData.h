@@ -19,6 +19,8 @@ namespace RE
 			kActivateNoLabel = 3,
 			kCenter = 4,
 			kSubtitle = 5,
+			kSubtitleHide = 6,
+			kShowArrowCount = 7,
 			kSetBlinking = 11,
 			kSetFadeOut = 12,
 			kSetPct = 13,

@@ -1,6 +1,7 @@
 #pragma once
 
 #include "RE/B/BSFixedString.h"
+#include "RE/B/BSScaleformExternalTexture.h"
 #include "RE/B/BSTEvent.h"
 #include "RE/B/BSTSingleton.h"
 #include "RE/G/GFxValue.h"
@@ -27,14 +28,12 @@ namespace RE
 		BSEventNotifyControl ProcessEvent(const BGSSaveLoadManagerEvent* a_event, BSTEventSource<BGSSaveLoadManagerEvent>* a_eventSource) override;  // 01
 
 		// members
-		void*         unk18;  // 18
-		std::uint64_t unk20;  // 20
-		BSFixedString unk28;  // 28
-		GFxValue      unk30;  // 30
-		BSFixedString unk48;  // 48
-		std::uint64_t unk50;  // 50
-		std::uint64_t unk58;  // 58
-		std::uint64_t unk60;  // 60
+		BSScaleformExternalTexture screenshotTexture;  // 18
+		GFxValue                   unk30;              // 30
+		BSFixedString              unk48;              // 48
+		std::uint64_t              unk50;              // 50
+		std::uint64_t              unk58;              // 58
+		std::uint64_t              unk60;              // 60
 	};
 	static_assert(sizeof(UISaveLoadManager) == 0x68);
 }

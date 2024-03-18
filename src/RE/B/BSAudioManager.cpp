@@ -39,4 +39,11 @@ namespace RE
 		REL::Relocation<func_t> func{ RELOCATION_ID(66403, 67665) };
 		return func(this, a_soundHandle, a_editorID, a_flags);
 	}
+
+	void BSAudioManager::BuildSoundDataFromFile(BSSoundHandle& a_soundHandle, const BSResource::ID& a_file, std::uint32_t a_flags, std::uint32_t a_priority)
+	{
+		using func_t = decltype(&BSAudioManager::BuildSoundDataFromFile);
+		REL::Relocation<func_t> func{ RELOCATION_ID(66402, 67664) };
+		return func(this, a_soundHandle, a_file, a_flags, a_priority);
+	}
 }

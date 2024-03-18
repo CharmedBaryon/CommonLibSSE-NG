@@ -1,10 +1,10 @@
 #pragma once
 
+#include "RE/B/BSScaleformExternalTexture.h"
 #include "RE/B/BSString.h"
 #include "RE/B/BSTEvent.h"
 #include "RE/G/GPtr.h"
 #include "RE/I/IMenu.h"
-#include "RE/I/ImageData.h"
 #include "RE/N/NiMatrix3.h"
 #include "RE/N/NiSmartPointer.h"
 #include "RE/S/SimpleAnimationGraphManagerHolder.h"
@@ -37,20 +37,20 @@ namespace RE
 
 		struct RUNTIME_DATA
 		{
-#define RUNTIME_DATA_CONTENT                              \
-	BSTArray<ImageData>   unk50;     /* 00 */             \
-	GPtr<GFxMovieView>    book;      /* 18 */             \
-	NiPointer<NiAVObject> book3D;    /* 20 */             \
-	std::uint32_t         unk78;     /* 28 */             \
-	std::uint32_t         pad7C;     /* 2C */             \
-	std::uint64_t         unk80;     /* 30 */             \
-	void*                 unk88;     /* 38 - smart ptr */ \
-	std::uint16_t         unk90;     /* 40 */             \
-	std::uint16_t         unk92;     /* 42 */             \
-	bool                  closeMenu; /* 44 */             \
-	bool                  isNote;    /* 45 */             \
-	std::uint8_t          unk96;     /* 46 */             \
-	std::uint8_t          pad97;     /* 47 */
+#define RUNTIME_DATA_CONTENT                                                \
+	BSTArray<BSScaleformExternalTexture> bookTextures; /* 00 */             \
+	GPtr<GFxMovieView>                   book;         /* 18 */             \
+	NiPointer<NiAVObject>                book3D;       /* 20 */             \
+	std::uint32_t                        unk78;        /* 28 */             \
+	std::uint32_t                        pad7C;        /* 2C */             \
+	std::uint64_t                        unk80;        /* 30 */             \
+	void*                                unk88;        /* 38 - smart ptr */ \
+	std::uint16_t                        unk90;        /* 40 */             \
+	std::uint16_t                        unk92;        /* 42 */             \
+	bool                                 closeMenu;    /* 44 */             \
+	bool                                 isNote;       /* 45 */             \
+	std::uint8_t                         unk96;        /* 46 */             \
+	std::uint8_t                         pad97;        /* 47 */
 
 			RUNTIME_DATA_CONTENT
 		};

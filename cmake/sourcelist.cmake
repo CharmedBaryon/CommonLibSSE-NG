@@ -313,6 +313,8 @@ set(SOURCES
 	include/RE/B/BSResourceNiBinaryStream.h
 	include/RE/B/BSResponse.h
 	include/RE/B/BSSaveDataSystemUtility.h
+	include/RE/B/BSScaleformExternalTexture.h
+	include/RE/B/BSScaleformImageLoader.h
 	include/RE/B/BSScaleformManager.h
 	include/RE/B/BSScaleformTranslator.h
 	include/RE/B/BSSceneGraph.h
@@ -773,6 +775,8 @@ set(SOURCES
 	include/RE/G/GFxExternalInterface.h
 	include/RE/G/GFxFileConstants.h
 	include/RE/G/GFxFunctionHandler.h
+	include/RE/G/GFxImageLoader.h
+	include/RE/G/GFxImageResource.h
 	include/RE/G/GFxInitImportActions.h
 	include/RE/G/GFxKey.h
 	include/RE/G/GFxKeyboardState.h
@@ -844,6 +848,9 @@ set(SOURCES
 	include/RE/G/GHashsetNodeEntry.h
 	include/RE/G/GImage.h
 	include/RE/G/GImageBase.h
+	include/RE/G/GImageInfo.h
+	include/RE/G/GImageInfoBase.h
+	include/RE/G/GImageInfoBaseImpl.h
 	include/RE/G/GList.h
 	include/RE/G/GMath.h
 	include/RE/G/GMatrix2D.h
@@ -902,6 +909,7 @@ set(SOURCES
 	include/RE/H/HighProcessData.h
 	include/RE/H/HitData.h
 	include/RE/H/HorseCameraState.h
+	include/RE/H/SendHUDMessage.h
 	include/RE/H/hkAabb.h
 	include/RE/H/hkArray.h
 	include/RE/H/hkBaseObject.h
@@ -1096,7 +1104,6 @@ set(SOURCES
 	include/RE/I/IVMSaveLoadInterface.h
 	include/RE/I/IVirtualMachine.h
 	include/RE/I/IXAudio2VoiceCallback.h
-	include/RE/I/ImageData.h
 	include/RE/I/ImageSpaceData.h
 	include/RE/I/ImageSpaceEffect.h
 	include/RE/I/ImageSpaceEffectDepthOfField.h

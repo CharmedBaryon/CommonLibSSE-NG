@@ -86,10 +86,15 @@ namespace RE
 		return GetDaysPassed() * 24.0F;
 	}
 
-	float Calendar::GetHoursPerDay() const
+	float Calendar::GetHoursPerDay()
 	{
 		REL::Relocation<float*> hours{ RELOCATION_ID(241610, 195681) };
 		return *hours;
+	}
+
+	std::uint32_t Calendar::GetMinutes() const
+	{
+		return static_cast<std::uint32_t>(60 * GetHour()) % 60;
 	}
 
 	std::uint32_t Calendar::GetMonth() const
@@ -147,12 +152,32 @@ namespace RE
 		return setting ? setting->GetString() : "Bad Month";
 	}
 
+	std::string Calendar::GetOrdinalSuffix() const
+	{
+		auto gmst = RE::GameSettingCollection::GetSingleton();
+
+		switch (static_cast<int>(GetDay())) {
+		case 1:
+		case 21:
+		case 31:
+			return gmst->GetSetting("sFirstOrdSuffix")->GetString();
+		case 2:
+		case 22:
+			return gmst->GetSetting("sSecondOrdSuffix")->GetString();
+		case 3:
+		case 23:
+			return gmst->GetSetting("sThirdOrdSuffix")->GetString();
+		default:
+			return gmst->GetSetting("sDefaultOrdSuffix")->GetString();
+		}
+	}
+
 	std::tm Calendar::GetTime() const
 	{
 		std::tm time;
 
 		time.tm_sec = 0;
-		time.tm_min = 0;
+		time.tm_min = static_cast<int>(GetMinutes());
 		time.tm_hour = static_cast<int>(GetHour());
 		time.tm_mday = static_cast<int>(GetDay());
 		time.tm_mon = static_cast<int>(GetMonth());

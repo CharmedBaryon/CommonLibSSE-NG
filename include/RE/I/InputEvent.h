@@ -19,6 +19,7 @@ namespace RE
 	class CharEvent;
 	class IDEvent;
 	class MouseMoveEvent;
+	class ThumbstickEvent;
 
 	class InputEvent
 	{
@@ -44,6 +45,9 @@ namespace RE
 
 		[[nodiscard]] MouseMoveEvent*       AsMouseMoveEvent();
 		[[nodiscard]] const MouseMoveEvent* AsMouseMoveEvent() const;
+
+		[[nodiscard]] ThumbstickEvent*       AsThumbstickEvent();
+		[[nodiscard]] const ThumbstickEvent* AsThumbstickEvent() const;
 
 		// members
 		stl::enumeration<INPUT_DEVICE, std::uint32_t>     device;     // 08
