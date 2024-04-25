@@ -294,6 +294,10 @@ namespace REL
 					}
 				}
 			}
+			else {
+				moduleHandle = REX::W32::GetModuleHandleW(_filename.c_str());
+			}
+			
 			_filePath = _filename;
 			if (!moduleHandle) {
 				stl::report_and_fail(
