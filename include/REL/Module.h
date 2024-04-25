@@ -295,6 +295,7 @@ namespace REL
 				}
 			}
 			else {
+				_filename.resize(_filename.size() - 1);
 				moduleHandle = REX::W32::GetModuleHandleW(_filename.c_str());
 			}
 			
