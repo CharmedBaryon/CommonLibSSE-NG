@@ -21,6 +21,8 @@ namespace RE
 		const BSFixedString channelName;  // 10
 		std::uint32_t       value;        // 18
 		std::uint32_t       pad1C;        // 1C
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(BSAnimationGraphChannel) == 0x20);
 }

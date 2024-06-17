@@ -12,6 +12,7 @@ namespace RE
 		{
 		public:
 			inline static constexpr auto RTTI = RTTI_CraftingSubMenus__ConstructibleObjectMenu;
+			inline static constexpr auto VTABLE = VTABLE_CraftingSubMenus__ConstructibleObjectMenu;
 
 			class CreationConfirmCallback : public IMessageBoxCallback
 			{

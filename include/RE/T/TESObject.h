@@ -41,6 +41,8 @@ namespace RE
 		virtual std::uint32_t               IncRef();                                    // 45 - { return 0; }
 		virtual std::uint32_t               DecRef();                                    // 46 - { return 0; }
 		virtual NiAVObject*                 LoadGraphics(TESObjectREFR* a_ref);          // 47
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(TESObject) == 0x20);
 }

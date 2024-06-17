@@ -11,14 +11,14 @@ namespace RE
 
 	void MenuCursor::SetCursorVisibility(bool a_visible)
 	{
-		if (a_visible && showCursorCount < 0) {
+		if (a_visible && cursorDisplayCount < 0) {
 			do {
-				showCursorCount = REX::W32::ShowCursor(true);
-			} while (showCursorCount < 0);
-		} else if (!a_visible && showCursorCount >= 0) {
+				cursorDisplayCount = REX::W32::ShowCursor(true);
+			} while (cursorDisplayCount < 0);
+		} else if (!a_visible && cursorDisplayCount >= 0) {
 			do {
-				showCursorCount = REX::W32::ShowCursor(false);
-			} while (showCursorCount >= 0);
+				cursorDisplayCount = REX::W32::ShowCursor(false);
+			} while (cursorDisplayCount >= 0);
 		}
 	}
 }

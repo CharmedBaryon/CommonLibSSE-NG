@@ -13,6 +13,8 @@ namespace RE
 		const BSFixedString  tag;      // 00
 		const TESObjectREFR* holder;   // 08
 		const BSFixedString  payload;  // 10
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(BSAnimationGraphEvent) == 0x18);
 }

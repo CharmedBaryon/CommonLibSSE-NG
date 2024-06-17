@@ -38,6 +38,8 @@ namespace RE
 		float               unkC0;                   // C0
 		std::uint32_t       unkC4;                   // C4
 		std::uint64_t       unkC8;                   // C8
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(hkbRagdollDriver) == 0xD0);
 }

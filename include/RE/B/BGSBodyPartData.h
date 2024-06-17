@@ -73,6 +73,8 @@ namespace RE
 		TESModel      explosionSpecialDebris;     // 28 - NAM1
 		TESModelPSA   poseMatching;               // 50 - PNAM
 		PART_DATA     data;                       // 78 - BPND
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(BGSBodyPart) == 0xF0);
 
@@ -106,6 +108,8 @@ namespace RE
 		// members
 		BGSBodyPart* parts[BGSBodyPartDefs::LIMB_ENUM::kTotal];  // 50
 		BGSRagdoll*  ragdoll;                                    // 80
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(BGSBodyPartData) == 0x88);
 }

@@ -31,6 +31,8 @@ namespace RE
 		ActorValueInfo*                 associatedSkill;     // 58 - SNAM
 		float                           horizontalPosition;  // 60 - HNAM
 		float                           verticalPosition;    // 64 - VNAM
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(BGSSkillPerkTreeNode) == 0x68);
 }

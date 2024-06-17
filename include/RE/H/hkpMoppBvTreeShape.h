@@ -27,6 +27,8 @@ namespace RE
 		mutable std::int32_t    childSize;  // 60
 		std::uint32_t           pad64;      // 64
 		std::uint64_t           pad68;      // 68
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(hkpMoppBvTreeShape) == 0x70);
 }

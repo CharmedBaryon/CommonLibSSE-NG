@@ -50,6 +50,8 @@ namespace RE
 		std::uint16_t                        pad0A;    // 0A
 		std::uint32_t                        rad;      // 0C
 		Data                                 data;     // 10
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(PackageLocation) == 0x18);
 }

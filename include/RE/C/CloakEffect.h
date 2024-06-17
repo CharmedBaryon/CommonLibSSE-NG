@@ -17,6 +17,8 @@ namespace RE
 
 		// members
 		std::uint64_t nextTargetCheck;  // 90
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(CloakEffect) == 0x98);
 }

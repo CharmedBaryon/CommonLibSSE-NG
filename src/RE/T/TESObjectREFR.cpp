@@ -596,9 +596,8 @@ namespace RE
 		if (!dobj) {
 			return false;
 		}
-
-		auto keyword = *dobj->GetObject<BGSKeyword>(keywordType);
-		return keyword ? HasKeyword(keyword) : false;
+		auto keyword = dobj->GetObject<BGSKeyword>(keywordType);
+		return keyword && *keyword ? HasKeyword(*keyword) : false;
 	}
 
 	bool TESObjectREFR::HasQuestObject() const

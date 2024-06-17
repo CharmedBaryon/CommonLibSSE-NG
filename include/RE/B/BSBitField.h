@@ -7,6 +7,8 @@ namespace RE
 	public:
 		// members
 		std::uint32_t* data;  // 0
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(BSBitFieldHeapAllocator) == 0x8);
 

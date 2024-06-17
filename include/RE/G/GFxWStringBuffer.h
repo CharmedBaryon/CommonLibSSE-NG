@@ -91,6 +91,8 @@ namespace RE
 		wchar_t*      _text;      // 00
 		UPInt         _length;    // 08
 		ReserveHeader _reserved;  // 10
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(GFxWStringBuffer) == 0x20);
 }

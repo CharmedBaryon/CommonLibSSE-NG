@@ -73,6 +73,8 @@ namespace RE
 		bool                                   alwaysRecheckConditions;  // 3A
 		std::uint8_t                           pad3B;                    // 3B
 		std::uint32_t                          pad3C;                    // 3C
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(TESCustomPackageData) == 0x40);
 }

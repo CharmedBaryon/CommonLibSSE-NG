@@ -23,6 +23,8 @@ namespace RE
 		std::uint8_t     deactivationClass;   // AC
 		std::uint8_t     padAD;               // AD
 		std::uint16_t    padAE;               // AE
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(hkMotionState) == 0xB0);
 }

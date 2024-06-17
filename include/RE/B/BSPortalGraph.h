@@ -33,6 +33,8 @@ namespace RE
 		BSTArray<void*>                 unkA8;             // A8
 		FormID                          cellID;            // C0
 		std::uint32_t                   padC4;             // C4
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(BSPortalGraph) == 0xC8);
 }

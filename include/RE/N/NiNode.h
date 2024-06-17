@@ -78,8 +78,11 @@ namespace RE
 
 	protected:
 		NiNode* Ctor(std::uint16_t a_arrBufLen);
+
+	private:
+		KEEP_FOR_RE()
 	};
-#ifndef ENABLE_SKYRIM_VR
+#if !defined(ENABLE_SKYRIM_VR)
 	static_assert(sizeof(NiNode) == 0x128);
 #elif !defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE)
 	static_assert(sizeof(NiNode) == 0x150);

@@ -51,6 +51,8 @@ namespace RE
 
 		// members
 		DataHeader dataHeader;  // 08 - RDAT
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(TESRegionData) == 0x10);
 }

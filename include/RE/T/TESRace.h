@@ -4,6 +4,7 @@
 #include "RE/B/BGSAttackDataForm.h"
 #include "RE/B/BGSBehaviorGraphModel.h"
 #include "RE/B/BGSBipedObjectForm.h"
+#include "RE/B/BGSHeadPart.h"
 #include "RE/B/BGSKeywordForm.h"
 #include "RE/B/BGSSkinForm.h"
 #include "RE/B/BGSTextureModel.h"
@@ -23,6 +24,8 @@
 namespace RE
 {
 	class AttackAnimationArrayMap;
+
+	using HeadPartType = BGSHeadPart::HeadPartType;
 
 	namespace BSResource
 	{
@@ -307,6 +310,7 @@ namespace RE
 
 		[[nodiscard]] bool AllowsPCDialogue() const;
 		[[nodiscard]] bool AllowsPickpocket() const;
+		BGSHeadPart*       GetHeadPartByType(HeadPartType a_type, SEX a_sex) const;
 		[[nodiscard]] bool IsChildRace() const;
 
 		// members
@@ -346,6 +350,8 @@ namespace RE
 		BSTArray<BSFixedString>                        phonemeTargets;                                 // 460 - PHTN
 		BGSMovementType*                               baseMoveTypes[MovementTypes::kTotal];           // 478 - WKMV / RNMV / WMMV / FLMV / SNMV / SPMV
 		FaceRelatedData*                               faceRelatedData[SEXES::kTotal];                 // 4A8
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(TESRace) == 0x4B8);
 }

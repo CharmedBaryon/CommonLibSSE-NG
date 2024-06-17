@@ -32,6 +32,8 @@ namespace RE
 
 		// members
 		ActorValue secondaryActorValue;  // A8
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(EnhanceWeaponEffect) == 0xB0);
 }

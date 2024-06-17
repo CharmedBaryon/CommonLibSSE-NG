@@ -19,7 +19,7 @@ namespace RE
 
 		struct SCENE_GRAPH_RUNTIME_DATA
 		{
-#define RUNTIME_DATA_CONTENT        \
+#define RUNTIME_DATA_CONTENT                    \
 	float         customNearDistance; /* 140 */ \
 	float         customFarDistance;  /* 144 */ \
 	bool          useCustomNear;      /* 148 */ \
@@ -41,8 +41,10 @@ namespace RE
 		}
 
 #ifndef SKYRIM_CROSS_VR
-		RUNTIME_DATA_CONTENT
+		RUNTIME_DATA_CONTENT;
 #endif
+	private:
+		KEEP_FOR_RE()
 	};
 }
 #undef RUNTIME_DATA_CONTENT

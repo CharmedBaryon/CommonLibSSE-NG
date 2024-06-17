@@ -34,6 +34,8 @@ namespace RE
 		bhkCharacterProxy proxy;   // 340
 		void*             unk5A0;  // 5A0 - smart ptr
 		std::uint64_t     unk5A8;  // 5A8
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(bhkCharProxyController) == 0x5B0);
 }

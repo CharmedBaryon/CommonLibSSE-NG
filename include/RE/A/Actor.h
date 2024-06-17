@@ -122,15 +122,15 @@ namespace RE
 
 	class Actor :
 #ifndef ENABLE_SKYRIM_AE
-			public TESObjectREFR,                              // 000
-			public MagicTarget,                                // 098, 0A0
-			public ActorValueOwner,                            // 0B0, 0B8
-			public ActorState,                                 // 0B8, 0C0
-			public BSTEventSink<BSTransformDeltaEvent>,        // 0C8, 0D0
-			public BSTEventSink<bhkCharacterMoveFinishEvent>,  // 0D0, 0D8
-			public IPostAnimationChannelUpdateFunctor          // 0D8, 0E0
+		public TESObjectREFR,                              // 000
+		public MagicTarget,                                // 098, 0A0
+		public ActorValueOwner,                            // 0B0, 0B8
+		public ActorState,                                 // 0B8, 0C0
+		public BSTEventSink<BSTransformDeltaEvent>,        // 0C8, 0D0
+		public BSTEventSink<bhkCharacterMoveFinishEvent>,  // 0D0, 0D8
+		public IPostAnimationChannelUpdateFunctor          // 0D8, 0E0
 #else
-			public TESObjectREFR  // 000
+		public TESObjectREFR  // 000
 #endif
 	{
 	private:
@@ -324,22 +324,22 @@ namespace RE
 		bool                                 ShouldSaveAnimationOnSaving() const override;                                                                                                                                                                         // 07B
 		bool                                 ShouldPerformRevert() const override;                                                                                                                                                                                 // 07C
 		void                                 UpdateAnimation(float a_delta) override;                                                                                                                                                                              // 07D
-		void                                 RemoveWeapon(BIPED_OBJECT equipIndex) override;                                                                                                                                                                                                // 082
 #ifndef SKYRIM_CROSS_VR
 		// Override functions past where Skyrim VR breaks compatibility.
+		void                   RemoveWeapon(BIPED_OBJECT equipIndex) override;                                                // 082
 		void                   SetObjectReference(TESBoundObject* a_object) override;                                         // 084
 		void                   MoveHavok(bool a_forceRec) override;                                                           // 085
 		void                   GetLinearVelocity(NiPoint3& a_velocity) const override;                                        // 086
 		void                   SetActionComplete(bool a_set) override;                                                        // 087
 		void                   Disable() override;                                                                            // 089
 		void                   ResetInventory(bool a_leveledOnly) override;                                                   // 08A
-		NiNode*                 GetFireNode() override;                                                                         // 08B
-		void                    SetFireNode(NiNode* a_fireNode) override;                                                                         // 08C
+		NiNode*                GetFireNode() override;                                                                        // 08B
+		void                   SetFireNode(NiNode* a_fireNode) override;                                                      // 08C
 		bool                   OnAddCellPerformQueueReference(TESObjectCELL& a_cell) const override;                          // 090
 		void                   DoMoveToHigh() override;                                                                       // 091
 		void                   TryMoveToMiddleLow() override;                                                                 // 092
 		bool                   TryChangeSkyCellActorsProcessLevel() override;                                                 // 093
-		void                    TryUpdateActorLastSeenTime() override;                                                                         // 095
+		void                   TryUpdateActorLastSeenTime() override;                                                         // 095
 		void                   Unk_96(void) override;                                                                         // 096
 		void                   SetParentCell(TESObjectCELL* a_cell) override;                                                 // 098
 		[[nodiscard]] bool     IsDead(bool a_notEssential = true) const override;                                             // 099
@@ -357,140 +357,140 @@ namespace RE
 #endif
 
 		// add
-		SKYRIM_REL_VR_VIRTUAL void                Unk_A2(void);                                                                                                                                                                          // 0A2
-		SKYRIM_REL_VR_VIRTUAL void                PlayPickUpSound(TESBoundObject* a_object, bool a_pickup, bool a_use);                                                                                                                  // 0A3
-		[[nodiscard]] SKYRIM_REL_VR_VIRTUAL float GetHeading(bool a_ignoreRaceSettings) const;                                                                                                                                           // 0A4
-		SKYRIM_REL_VR_VIRTUAL void                SetAvoidanceDisabled(bool a_set);                                                                                                                                                      // 0A5 - { return; }
-		SKYRIM_REL_VR_VIRTUAL void                DrawWeaponMagicHands(bool a_draw);                                                                                                                                                     // 0A6
-		SKYRIM_REL_VR_VIRTUAL void                DetachCharController();                                                                                                                                                                // 0A7
-		SKYRIM_REL_VR_VIRTUAL void                RemoveCharController();                                                                                                                                                                // 0A8
-		SKYRIM_REL_VR_VIRTUAL void                SetPosition(const NiPoint3& a_pos, bool a_updateCharController);                                                                                                                       // 0A9
-		SKYRIM_REL_VR_VIRTUAL void                KillDying();                                                                                                                                                                           // 0AA
-		SKYRIM_REL_VR_VIRTUAL void                Resurrect(bool a_resetInventory, bool a_attach3D);                                                                                                                                     // 0AB
-		SKYRIM_REL_VR_VIRTUAL bool                PutActorOnMountQuick();                                                                                                                                                                // 0AC
-		SKYRIM_REL_VR_VIRTUAL void                Update(float a_delta);                                                                                                                                                                 // 0AD
-		SKYRIM_REL_VR_VIRTUAL void                UpdateNoAI(float a_delta);                                                                                                                                                             // 0AE - { return UpdateActor3DPosition(); }
-		SKYRIM_REL_VR_VIRTUAL void                UpdateCharacterControllerSimulationSettings(bhkCharacterController& a_controller);                                                                                                     // 0AF
-		SKYRIM_REL_VR_VIRTUAL void                PotentiallyFixRagdollState();                                                                                                                                                          // 0B0
-		SKYRIM_REL_VR_VIRTUAL void                UpdateNonRenderSafe(float a_delta);                                                                                                                                                    // 0B1
-		SKYRIM_REL_VR_VIRTUAL void                OnItemEquipped(bool a_playAnim);                                                                                                                                                       // 0B2
-		SKYRIM_REL_VR_VIRTUAL void                Unk_B3(void);                                                                                                                                                                          // 0B3 - { return 1; }
-		SKYRIM_REL_VR_VIRTUAL void                Unk_B4(void);                                                                                                                                                                          // 0B4
-		SKYRIM_REL_VR_VIRTUAL void                SetCrimeGoldValue(TESFaction* a_faction, bool a_violent, std::uint32_t a_amount);                                                                                                      // 0B5
-		SKYRIM_REL_VR_VIRTUAL void                ModCrimeGoldValue(TESFaction* a_faction, bool a_violent, std::int32_t a_amount);                                                                                                       // 0B6
-		SKYRIM_REL_VR_VIRTUAL void                RemoveCrimeGoldValue(TESFaction* a_faction, bool a_violent, std::int32_t a_amount);                                                                                                    // 0B7
-		[[nodiscard]] SKYRIM_REL_VR_VIRTUAL std::uint32_t GetCrimeGoldValue(const TESFaction* a_faction) const;                                                                                                                          // 0B8
-		SKYRIM_REL_VR_VIRTUAL void                        GoToPrison(TESFaction* a_faction, bool a_removeInventory, bool a_realJail);                                                                                                    // 0B9 - { return; }
-		SKYRIM_REL_VR_VIRTUAL void                        ServePrisonTime();                                                                                                                                                             // 0BA - { return; }
-		SKYRIM_REL_VR_VIRTUAL void                        PayFine(TESFaction* a_faction, bool a_goToJail, bool a_removeStolenItems);                                                                                                     // 0BB - { return; }
-		SKYRIM_REL_VR_VIRTUAL bool                        GetCannibal();                                                                                                                                                                 // 0BC - { return false; }
-		SKYRIM_REL_VR_VIRTUAL void                        SetCannibal(bool a_set);                                                                                                                                                       // 0BD - { return; }
-		[[nodiscard]] SKYRIM_REL_VR_VIRTUAL bool          GetVampireFeed();                                                                                                                                                              // 0BE - { return false; }
-		SKYRIM_REL_VR_VIRTUAL void                        SetVampireFeed(bool a_set);                                                                                                                                                    // 0BF - { return; }
-		SKYRIM_REL_VR_VIRTUAL void                        InitiateVampireFeedPackage(Actor* a_target, TESObjectREFR* a_furniture);                                                                                                       // 0C0 - { return; }
-		SKYRIM_REL_VR_VIRTUAL void                        InitiateCannibalPackage(Actor* a_target);                                                                                                                                      // 0C1 - { return; }
-		SKYRIM_REL_VR_VIRTUAL void                        GetEyeVector(NiPoint3& a_origin, NiPoint3& a_direction, bool a_includeCameraOffset);                                                                                           // 0C2
-		SKYRIM_REL_VR_VIRTUAL void                        SetRefraction(bool a_enable, float a_refraction);                                                                                                                              // 0C3
-		SKYRIM_REL_VR_VIRTUAL void                        Unk_C4(void);                                                                                                                                                                  // 0C4 - { return; }
-		SKYRIM_REL_VR_VIRTUAL void                        Unk_C5(void);                                                                                                                                                                  // 0C5 - { return 1; }
-		SKYRIM_REL_VR_VIRTUAL void                        Unk_C6(void);                                                                                                                                                                  // 0C6
-		[[nodiscard]] SKYRIM_REL_VR_VIRTUAL float         GetAcrobatics() const;                                                                                                                                                         // 0C7 - { return 1.0; }
-		SKYRIM_REL_VR_VIRTUAL bhkCharacterController* Move(float a_arg2, const NiPoint3& a_position);                                                                                                                                    // 0C8
-		SKYRIM_REL_VR_VIRTUAL void                    Unk_C9(void);                                                                                                                                                                      // 0C9
-		SKYRIM_REL_VR_VIRTUAL void                    OnArmorActorValueChanged();                                                                                                                                                        // 0CA - { return; }
-		SKYRIM_REL_VR_VIRTUAL ObjectRefHandle         DropObject(const TESBoundObject* a_object, ExtraDataList* a_extraList, std::int32_t a_count, const NiPoint3* a_dropLoc = 0, const NiPoint3* a_rotate = 0);                         // 0CB
-		SKYRIM_REL_VR_VIRTUAL void                    PickUpObject(TESObjectREFR* a_object, std::int32_t a_count, bool a_arg3 = false, bool a_playSound = true);                                                                         // 0CC
-		SKYRIM_REL_VR_VIRTUAL void                    AttachArrow(const BSTSmartPointer<BipedAnim>& a_biped);                                                                                                                            // 0CD
-		SKYRIM_REL_VR_VIRTUAL void                    DetachArrow(const BSTSmartPointer<BipedAnim>& a_biped);                                                                                                                            // 0CE
-		SKYRIM_REL_VR_VIRTUAL bool                    AddShout(TESShout* a_shout);                                                                                                                                                       // 0CF
-		SKYRIM_REL_VR_VIRTUAL void                    UnlockWord(TESWordOfPower* a_power);                                                                                                                                               // 0D0 - { return; }
-		SKYRIM_REL_VR_VIRTUAL void                    Unk_D1(void);                                                                                                                                                                      // 0D1
-		SKYRIM_REL_VR_VIRTUAL std::uint32_t      UseAmmo(std::uint32_t a_shotCount);                                                                                                                                                     // 0D2
-		[[nodiscard]] SKYRIM_REL_VR_VIRTUAL bool CalculateCachedOwnerIsInCombatantFaction() const;                                                                                                                                       // 0D3
-		[[nodiscard]] SKYRIM_REL_VR_VIRTUAL CombatGroup* GetCombatGroup() const;                                                                                                                                                         // 0D4
-		SKYRIM_REL_VR_VIRTUAL void                       SetCombatGroup(CombatGroup* a_group);                                                                                                                                           // 0D5
-		[[nodiscard]] SKYRIM_REL_VR_VIRTUAL bool         CheckValidTarget(TESObjectREFR& a_target);                                                                                                                                      // 0D6
-		SKYRIM_REL_VR_VIRTUAL bool                       InitiateTresPassPackage(TrespassPackage* a_trespassPackage);                                                                                                                    // 0D7 - { return 0; }
-		SKYRIM_REL_VR_VIRTUAL void                       InitiateDialogue(Actor* a_target, PackageLocation* a_loc1, PackageLocation* a_loc2);                                                                                            // 0D8
-		SKYRIM_REL_VR_VIRTUAL void                       SetSize(float a_size);                                                                                                                                                          // 0D9
-		SKYRIM_REL_VR_VIRTUAL void                       EndDialogue();                                                                                                                                                                  // 0DA
-		SKYRIM_REL_VR_VIRTUAL Actor*                    SetUpTalkingActivatorActor(Actor* a_target, Actor*& a_activator);                                                                                                                // 0DB
-		SKYRIM_REL_VR_VIRTUAL void                      InitiateSpectator(Actor* a_target);                                                                                                                                              // 0DC - { return; }
-		SKYRIM_REL_VR_VIRTUAL void                      InitiateFlee(TESObjectREFR* a_fleeRef, bool a_runOnce, bool a_knows, bool a_combatMode, TESObjectCELL* a_cell, TESObjectREFR* a_ref, float a_fleeFromDist, float a_fleeToDist);  // 0DD
-		SKYRIM_REL_VR_VIRTUAL void                      InitiateGetUpPackage();                                                                                                                                                          // 0DE
-		SKYRIM_REL_VR_VIRTUAL void                      PutCreatedPackage(TESPackage* a_package, bool a_tempPackage, bool a_createdPackage, bool a_allowFromFurniture);                                                                  // 0DF
-		SKYRIM_REL_VR_VIRTUAL void                      UpdateAlpha();                                                                                                                                                                   // 0E0
-		SKYRIM_REL_VR_VIRTUAL void                      SetAlpha(float a_alpha = 1.0);                                                                                                                                                   // 0E1
-		[[nodiscard]] SKYRIM_REL_VR_VIRTUAL float       GetAlpha();                                                                                                                                                                      // 0E2
-		[[nodiscard]] SKYRIM_REL_VR_VIRTUAL bool        IsInCombat() const;                                                                                                                                                              // 0E3
-		SKYRIM_REL_VR_VIRTUAL void                      UpdateCombat();                                                                                                                                                                  // 0E4
-		SKYRIM_REL_VR_VIRTUAL void                      StopCombat();                                                                                                                                                                    // 0E5
-		[[nodiscard]] SKYRIM_REL_VR_VIRTUAL float       CalcArmorRating();                                                                                                                                                               // 0E6 - { return 0.0; }
-		[[nodiscard]] SKYRIM_REL_VR_VIRTUAL float       GetArmorBaseFactorSum();                                                                                                                                                         // 0E7 - { return 0.0; }
-		[[nodiscard]] SKYRIM_REL_VR_VIRTUAL float       CalcUnarmedDamage();                                                                                                                                                             // 0E8 - { return 0; }
-		SKYRIM_REL_VR_VIRTUAL void                      Unk_E9(void);                                                                                                                                                                    // 0E9 - { return 0; }
-		SKYRIM_REL_VR_VIRTUAL void                      Unk_EA(void);                                                                                                                                                                    // 0EA - { return 0; }
-		[[nodiscard]] SKYRIM_REL_VR_VIRTUAL float       GetRunSpeed();                                                                                                                                                                   // 0EB
-		[[nodiscard]] SKYRIM_REL_VR_VIRTUAL float       GetJogSpeed();                                                                                                                                                                   // 0EC
-		[[nodiscard]] SKYRIM_REL_VR_VIRTUAL float       GetFastWalkSpeed();                                                                                                                                                              // 0ED
-		[[nodiscard]] SKYRIM_REL_VR_VIRTUAL float       GetWalkSpeed();                                                                                                                                                                  // 0EE
-		SKYRIM_REL_VR_VIRTUAL void                      WeaponSwingCallBack();                                                                                                                                                           // 0EF
-		SKYRIM_REL_VR_VIRTUAL void                      SetActorStartingPosition();                                                                                                                                                      // 0F0
-		SKYRIM_REL_VR_VIRTUAL bool                      MoveToHigh();                                                                                                                                                                    // 0F1
-		SKYRIM_REL_VR_VIRTUAL bool                      MovetoLow();                                                                                                                                                                     // 0F2
-		SKYRIM_REL_VR_VIRTUAL bool                      MovetoMiddleLow();                                                                                                                                                               // 0F3
-		SKYRIM_REL_VR_VIRTUAL bool                      MoveToMiddleHigh();                                                                                                                                                              // 0F4
-		[[nodiscard]] SKYRIM_REL_VR_VIRTUAL bool        HasBeenAttacked() const;                                                                                                                                                         // 0F5
-		SKYRIM_REL_VR_VIRTUAL void                      SetBeenAttacked(bool a_set);                                                                                                                                                     // 0F6
-		SKYRIM_REL_VR_VIRTUAL void                      UseSkill(ActorValue a_av, float a_points, TESForm* a_arg3);                                                                                                                      // 0F7 - { return; }
-		[[nodiscard]] SKYRIM_REL_VR_VIRTUAL bool        IsAtPoint(const NiPoint3& a_point, float a_radius, bool a_expandRadius, bool a_alwaysTestHeight);                                                                                // 0F8
-		[[nodiscard]] SKYRIM_REL_VR_VIRTUAL bool        IsInFaction(const TESFaction* faction) const;                                                                                                                                    // 0F9
-		SKYRIM_REL_VR_VIRTUAL void                      ForEachPerk(PerkEntryVisitor& a_visitor) const;                                                                                                                                  // 0FA
-		SKYRIM_REL_VR_VIRTUAL void                      AddPerk(BGSPerk* a_perk, std::uint32_t a_rank = 0);                                                                                                                              // 0FB - { return; }
-		SKYRIM_REL_VR_VIRTUAL void                      RemovePerk(BGSPerk* a_perk);                                                                                                                                                     // 0FC - { return; }
-		SKYRIM_REL_VR_VIRTUAL void                      ApplyTemporaryPerk(BGSPerk* a_perk);                                                                                                                                             // 0FD - { return; }
-		SKYRIM_REL_VR_VIRTUAL void                      RemoveTemporaryPerk(BGSPerk* a_perk);                                                                                                                                            // 0FE - { return; }
-		[[nodiscard]] SKYRIM_REL_VR_VIRTUAL bool        HasPerkEntries(EntryPoint a_entryType) const;                                                                                                                                    // 0FF
-		SKYRIM_REL_VR_VIRTUAL void                      ForEachPerkEntry(EntryPoint a_entryType, PerkEntryVisitor& a_visitor) const;                                                                                                     // 100
-		SKYRIM_REL_VR_VIRTUAL void                      ApplyPerksFromBase();                                                                                                                                                            // 101
-		SKYRIM_REL_VR_VIRTUAL void                      StartPowerAttackCoolDown();                                                                                                                                                      // 102 - { return; }
-		[[nodiscard]] SKYRIM_REL_VR_VIRTUAL bool        IsPowerAttackCoolingDown() const;                                                                                                                                                // 103 - { return false; }
-		SKYRIM_REL_VR_VIRTUAL void                      HandleHealthDamage(Actor* a_attacker, float a_damage);                                                                                                                           // 104
-		SKYRIM_REL_VR_VIRTUAL void                      Unk_105(void);                                                                                                                                                                   // 105
-		SKYRIM_REL_VR_VIRTUAL void                      Unk_106(void);                                                                                                                                                                   // 106 - { return; }
-		[[nodiscard]] SKYRIM_REL_VR_VIRTUAL bool        QSpeakingDone() const;                                                                                                                                                           // 107 - { return ~(unk0E0 >> 5) & 1; }
-		SKYRIM_REL_VR_VIRTUAL void                      SetSpeakingDone(bool a_set);                                                                                                                                                     // 108
-		SKYRIM_REL_VR_VIRTUAL void                      CreateMovementController();                                                                                                                                                      // 109
-		[[nodiscard]] SKYRIM_REL_VR_VIRTUAL EmotionType GetEmotionType();                                                                                                                                                                // 10A - { return unk16C; }
-		SKYRIM_REL_VR_VIRTUAL void                      SetEmotionType(EmotionType a_emotionType);                                                                                                                                       // 10B - { unk16C = a_arg1; }
-		[[nodiscard]] SKYRIM_REL_VR_VIRTUAL std::uint32_t GetEmotionValue();                                                                                                                                                             // 10C - { return unk170; }
-		SKYRIM_REL_VR_VIRTUAL void                        SetEmotionValue(std::uint32_t a_emotionValue);                                                                                                                                 // 10D - { unk170 = a_arg1; }
-		SKYRIM_REL_VR_VIRTUAL void                        KillImpl(Actor* a_attacker, float a_damage, bool a_sendEvent, bool a_ragdollInstant);                                                                                          // 10E
-		SKYRIM_REL_VR_VIRTUAL bool                        DrinkPotion(AlchemyItem* a_potion, ExtraDataList* a_extralist);                                                                                                                // 10F
-		[[nodiscard]] SKYRIM_REL_VR_VIRTUAL bool          CheckCast(MagicItem* a_spell, bool a_dualCast, MagicSystem::CannotCastReason* a_reason);                                                                                       // 110
-		SKYRIM_REL_VR_VIRTUAL void                        CheckTempModifiers();                                                                                                                                                          // 111 - { return; }
-		[[nodiscard]] SKYRIM_REL_VR_VIRTUAL std::int32_t GetCurrentShoutLevel();                                                                                                                                                         // 112 - return -1 on error
-		SKYRIM_REL_VR_VIRTUAL void                       SetLastRiddenMount(ActorHandle a_mount);                                                                                                                                        // 113 - { return; }
-		[[nodiscard]] SKYRIM_REL_VR_VIRTUAL ActorHandle  QLastRiddenMount() const;                                                                                                                                                       // 114 - { return {}; }
-		[[nodiscard]] SKYRIM_REL_VR_VIRTUAL bool         CalculateCachedOwnerIsUndead() const;                                                                                                                                           // 115
-		[[nodiscard]] SKYRIM_REL_VR_VIRTUAL bool         CalculateCachedOwnerIsNPC() const;                                                                                                                                              // 116
-		SKYRIM_REL_VR_VIRTUAL void                       Unk_117(void);                                                                                                                                                                  // 117 - { return; }
-		SKYRIM_REL_VR_VIRTUAL void                       InitValues();                                                                                                                                                                   // 118
-		[[nodiscard]] SKYRIM_REL_VR_VIRTUAL const BSFixedString& GetResponseString() const;                                                                                                                                              // 119 - { return "ActorResponse"; }
-		SKYRIM_REL_VR_VIRTUAL void                               ModifyMovementData(float a_delta, NiPoint3& a_arg3, NiPoint3& a_arg4);                                                                                                  // 11A
-		SKYRIM_REL_VR_VIRTUAL void                               UpdateCombatControllerSettings();                                                                                                                                       // 11B
-		SKYRIM_REL_VR_VIRTUAL void                               UpdateFadeSettings(bhkCharacterController* a_controller);                                                                                                               // 11C
-		[[nodiscard]] SKYRIM_REL_VR_VIRTUAL bool                 ComputeMotionFeedbackSpeedAndDirection(const ActorMotionFeedbackData& a_data, float a_delta, ActorMotionFeedbackOutput& a_output);                                      // 11D
-		SKYRIM_REL_VR_VIRTUAL bool                               UpdateFeedbackGraphSpeedAndDirection(const ActorMotionFeedbackOutput& a_output);                                                                                        // 11E
-		SKYRIM_REL_VR_VIRTUAL void                               UpdateActor3DPosition();                                                                                                                                                // 11F
-		SKYRIM_REL_VR_VIRTUAL void                               PrecacheData();                                                                                                                                                         // 120
-		SKYRIM_REL_VR_VIRTUAL void                               WornArmorChanged(void);                                                                                                                                                 // 121
-		SKYRIM_REL_VR_VIRTUAL void                               ProcessTracking(float a_delta, NiAVObject* a_obj3D);                                                                                                                    // 122
-		SKYRIM_REL_VR_VIRTUAL void                               Unk_123(void);                                                                                                                                                          // 123
-		SKYRIM_REL_VR_VIRTUAL void                               CreateActorMover();                                                                                                                                                     // 124
-		SKYRIM_REL_VR_VIRTUAL void                               DestroyActorMover();                                                                                                                                                    // 125
-		SKYRIM_REL_VR_VIRTUAL bool                               ShouldRespondToActorCollision(const MovementMessageActorCollision& a_msg, const ActorHandlePtr& a_target);                                                              // 126
-		[[nodiscard]] SKYRIM_REL_VR_VIRTUAL float                CheckClampDamageModifier(ActorValue a_av, float a_delta);                                                                                                               // 127
+		SKYRIM_REL_VR_VIRTUAL void                Unk_A2(void);                                                                                                                                                                           // 0A2
+		SKYRIM_REL_VR_VIRTUAL void                PlayPickUpSound(TESBoundObject* a_object, bool a_pickup, bool a_use);                                                                                                                   // 0A3
+		[[nodiscard]] SKYRIM_REL_VR_VIRTUAL float GetHeading(bool a_ignoreRaceSettings) const;                                                                                                                                            // 0A4
+		SKYRIM_REL_VR_VIRTUAL void                SetAvoidanceDisabled(bool a_set);                                                                                                                                                       // 0A5 - { return; }
+		SKYRIM_REL_VR_VIRTUAL void                DrawWeaponMagicHands(bool a_draw);                                                                                                                                                      // 0A6
+		SKYRIM_REL_VR_VIRTUAL void                DetachCharController();                                                                                                                                                                 // 0A7
+		SKYRIM_REL_VR_VIRTUAL void                RemoveCharController();                                                                                                                                                                 // 0A8
+		SKYRIM_REL_VR_VIRTUAL void                SetPosition(const NiPoint3& a_pos, bool a_updateCharController);                                                                                                                        // 0A9
+		SKYRIM_REL_VR_VIRTUAL void                KillDying();                                                                                                                                                                            // 0AA
+		SKYRIM_REL_VR_VIRTUAL void                Resurrect(bool a_resetInventory, bool a_attach3D);                                                                                                                                      // 0AB
+		SKYRIM_REL_VR_VIRTUAL bool                PutActorOnMountQuick();                                                                                                                                                                 // 0AC
+		SKYRIM_REL_VR_VIRTUAL void                Update(float a_delta);                                                                                                                                                                  // 0AD
+		SKYRIM_REL_VR_VIRTUAL void                UpdateNoAI(float a_delta);                                                                                                                                                              // 0AE - { return UpdateActor3DPosition(); }
+		SKYRIM_REL_VR_VIRTUAL void                UpdateCharacterControllerSimulationSettings(bhkCharacterController& a_controller);                                                                                                      // 0AF
+		SKYRIM_REL_VR_VIRTUAL void                PotentiallyFixRagdollState();                                                                                                                                                           // 0B0
+		SKYRIM_REL_VR_VIRTUAL void                UpdateNonRenderSafe(float a_delta);                                                                                                                                                     // 0B1
+		SKYRIM_REL_VR_VIRTUAL void                OnItemEquipped(bool a_playAnim);                                                                                                                                                        // 0B2
+		SKYRIM_REL_VR_VIRTUAL void                Unk_B3(void);                                                                                                                                                                           // 0B3 - { return 1; }
+		SKYRIM_REL_VR_VIRTUAL void                Unk_B4(void);                                                                                                                                                                           // 0B4
+		SKYRIM_REL_VR_VIRTUAL void                SetCrimeGoldValue(TESFaction* a_faction, bool a_violent, std::uint32_t a_amount);                                                                                                       // 0B5
+		SKYRIM_REL_VR_VIRTUAL void                ModCrimeGoldValue(TESFaction* a_faction, bool a_violent, std::int32_t a_amount);                                                                                                        // 0B6
+		SKYRIM_REL_VR_VIRTUAL void                RemoveCrimeGoldValue(TESFaction* a_faction, bool a_violent, std::int32_t a_amount);                                                                                                     // 0B7
+		[[nodiscard]] SKYRIM_REL_VR_VIRTUAL std::uint32_t GetCrimeGoldValue(const TESFaction* a_faction) const;                                                                                                                           // 0B8
+		SKYRIM_REL_VR_VIRTUAL void                        GoToPrison(TESFaction* a_faction, bool a_removeInventory, bool a_realJail);                                                                                                     // 0B9 - { return; }
+		SKYRIM_REL_VR_VIRTUAL void                        ServePrisonTime();                                                                                                                                                              // 0BA - { return; }
+		SKYRIM_REL_VR_VIRTUAL void                        PayFine(TESFaction* a_faction, bool a_goToJail, bool a_removeStolenItems);                                                                                                      // 0BB - { return; }
+		SKYRIM_REL_VR_VIRTUAL bool                        GetCannibal();                                                                                                                                                                  // 0BC - { return false; }
+		SKYRIM_REL_VR_VIRTUAL void                        SetCannibal(bool a_set);                                                                                                                                                        // 0BD - { return; }
+		[[nodiscard]] SKYRIM_REL_VR_VIRTUAL bool          GetVampireFeed();                                                                                                                                                               // 0BE - { return false; }
+		SKYRIM_REL_VR_VIRTUAL void                        SetVampireFeed(bool a_set);                                                                                                                                                     // 0BF - { return; }
+		SKYRIM_REL_VR_VIRTUAL void                        InitiateVampireFeedPackage(Actor* a_target, TESObjectREFR* a_furniture);                                                                                                        // 0C0 - { return; }
+		SKYRIM_REL_VR_VIRTUAL void                        InitiateCannibalPackage(Actor* a_target);                                                                                                                                       // 0C1 - { return; }
+		SKYRIM_REL_VR_VIRTUAL void                        GetEyeVector(NiPoint3& a_origin, NiPoint3& a_direction, bool a_includeCameraOffset);                                                                                            // 0C2
+		SKYRIM_REL_VR_VIRTUAL void                        SetRefraction(bool a_enable, float a_refraction);                                                                                                                               // 0C3
+		SKYRIM_REL_VR_VIRTUAL void                        Unk_C4(void);                                                                                                                                                                   // 0C4 - { return; }
+		SKYRIM_REL_VR_VIRTUAL void                        Unk_C5(void);                                                                                                                                                                   // 0C5 - { return 1; }
+		SKYRIM_REL_VR_VIRTUAL void                        Unk_C6(void);                                                                                                                                                                   // 0C6
+		[[nodiscard]] SKYRIM_REL_VR_VIRTUAL float         GetAcrobatics() const;                                                                                                                                                          // 0C7 - { return 1.0; }
+		SKYRIM_REL_VR_VIRTUAL bhkCharacterController*     Move(float a_arg2, const NiPoint3& a_position);                                                                                                                                 // 0C8
+		SKYRIM_REL_VR_VIRTUAL void                        Unk_C9(void);                                                                                                                                                                   // 0C9
+		SKYRIM_REL_VR_VIRTUAL void                        OnArmorActorValueChanged();                                                                                                                                                     // 0CA - { return; }
+		SKYRIM_REL_VR_VIRTUAL ObjectRefHandle             DropObject(const TESBoundObject* a_object, ExtraDataList* a_extraList, std::int32_t a_count, const NiPoint3* a_dropLoc = 0, const NiPoint3* a_rotate = 0);                      // 0CB
+		SKYRIM_REL_VR_VIRTUAL void                        PickUpObject(TESObjectREFR* a_object, std::int32_t a_count, bool a_arg3 = false, bool a_playSound = true);                                                                      // 0CC
+		SKYRIM_REL_VR_VIRTUAL void                        AttachArrow(const BSTSmartPointer<BipedAnim>& a_biped);                                                                                                                         // 0CD
+		SKYRIM_REL_VR_VIRTUAL void                        DetachArrow(const BSTSmartPointer<BipedAnim>& a_biped);                                                                                                                         // 0CE
+		SKYRIM_REL_VR_VIRTUAL bool                        AddShout(TESShout* a_shout);                                                                                                                                                    // 0CF
+		SKYRIM_REL_VR_VIRTUAL void                        UnlockWord(TESWordOfPower* a_power);                                                                                                                                            // 0D0 - { return; }
+		SKYRIM_REL_VR_VIRTUAL void                        Unk_D1(void);                                                                                                                                                                   // 0D1
+		SKYRIM_REL_VR_VIRTUAL std::uint32_t              UseAmmo(std::uint32_t a_shotCount);                                                                                                                                              // 0D2
+		[[nodiscard]] SKYRIM_REL_VR_VIRTUAL bool         CalculateCachedOwnerIsInCombatantFaction() const;                                                                                                                                // 0D3
+		[[nodiscard]] SKYRIM_REL_VR_VIRTUAL CombatGroup* GetCombatGroup() const;                                                                                                                                                          // 0D4
+		SKYRIM_REL_VR_VIRTUAL void                       SetCombatGroup(CombatGroup* a_group);                                                                                                                                            // 0D5
+		[[nodiscard]] SKYRIM_REL_VR_VIRTUAL bool         CheckValidTarget(TESObjectREFR& a_target);                                                                                                                                       // 0D6
+		SKYRIM_REL_VR_VIRTUAL bool                       InitiateTresPassPackage(TrespassPackage* a_trespassPackage);                                                                                                                     // 0D7 - { return 0; }
+		SKYRIM_REL_VR_VIRTUAL void                       InitiateDialogue(Actor* a_target, PackageLocation* a_loc1, PackageLocation* a_loc2);                                                                                             // 0D8
+		SKYRIM_REL_VR_VIRTUAL void                       SetSize(float a_size);                                                                                                                                                           // 0D9
+		SKYRIM_REL_VR_VIRTUAL void                       EndDialogue();                                                                                                                                                                   // 0DA
+		SKYRIM_REL_VR_VIRTUAL Actor*                     SetUpTalkingActivatorActor(Actor* a_target, Actor*& a_activator);                                                                                                                // 0DB
+		SKYRIM_REL_VR_VIRTUAL void                       InitiateSpectator(Actor* a_target);                                                                                                                                              // 0DC - { return; }
+		SKYRIM_REL_VR_VIRTUAL void                       InitiateFlee(TESObjectREFR* a_fleeRef, bool a_runOnce, bool a_knows, bool a_combatMode, TESObjectCELL* a_cell, TESObjectREFR* a_ref, float a_fleeFromDist, float a_fleeToDist);  // 0DD
+		SKYRIM_REL_VR_VIRTUAL void                       InitiateGetUpPackage();                                                                                                                                                          // 0DE
+		SKYRIM_REL_VR_VIRTUAL void                       PutCreatedPackage(TESPackage* a_package, bool a_tempPackage, bool a_createdPackage, bool a_allowFromFurniture);                                                                  // 0DF
+		SKYRIM_REL_VR_VIRTUAL void                       UpdateAlpha();                                                                                                                                                                   // 0E0
+		SKYRIM_REL_VR_VIRTUAL void                       SetAlpha(float a_alpha = 1.0);                                                                                                                                                   // 0E1
+		[[nodiscard]] SKYRIM_REL_VR_VIRTUAL float        GetAlpha();                                                                                                                                                                      // 0E2
+		[[nodiscard]] SKYRIM_REL_VR_VIRTUAL bool         IsInCombat() const;                                                                                                                                                              // 0E3
+		SKYRIM_REL_VR_VIRTUAL void                       UpdateCombat();                                                                                                                                                                  // 0E4
+		SKYRIM_REL_VR_VIRTUAL void                       StopCombat();                                                                                                                                                                    // 0E5
+		[[nodiscard]] SKYRIM_REL_VR_VIRTUAL float        CalcArmorRating();                                                                                                                                                               // 0E6 - { return 0.0; }
+		[[nodiscard]] SKYRIM_REL_VR_VIRTUAL float        GetArmorBaseFactorSum();                                                                                                                                                         // 0E7 - { return 0.0; }
+		[[nodiscard]] SKYRIM_REL_VR_VIRTUAL float        CalcUnarmedDamage();                                                                                                                                                             // 0E8 - { return 0; }
+		SKYRIM_REL_VR_VIRTUAL void                       Unk_E9(void);                                                                                                                                                                    // 0E9 - { return 0; }
+		SKYRIM_REL_VR_VIRTUAL void                       Unk_EA(void);                                                                                                                                                                    // 0EA - { return 0; }
+		[[nodiscard]] SKYRIM_REL_VR_VIRTUAL float        GetRunSpeed();                                                                                                                                                                   // 0EB
+		[[nodiscard]] SKYRIM_REL_VR_VIRTUAL float        GetJogSpeed();                                                                                                                                                                   // 0EC
+		[[nodiscard]] SKYRIM_REL_VR_VIRTUAL float        GetFastWalkSpeed();                                                                                                                                                              // 0ED
+		[[nodiscard]] SKYRIM_REL_VR_VIRTUAL float        GetWalkSpeed();                                                                                                                                                                  // 0EE
+		SKYRIM_REL_VR_VIRTUAL void                       WeaponSwingCallBack();                                                                                                                                                           // 0EF
+		SKYRIM_REL_VR_VIRTUAL void                       SetActorStartingPosition();                                                                                                                                                      // 0F0
+		SKYRIM_REL_VR_VIRTUAL bool                       MoveToHigh();                                                                                                                                                                    // 0F1
+		SKYRIM_REL_VR_VIRTUAL bool                       MovetoLow();                                                                                                                                                                     // 0F2
+		SKYRIM_REL_VR_VIRTUAL bool                       MovetoMiddleLow();                                                                                                                                                               // 0F3
+		SKYRIM_REL_VR_VIRTUAL bool                       MoveToMiddleHigh();                                                                                                                                                              // 0F4
+		[[nodiscard]] SKYRIM_REL_VR_VIRTUAL bool         HasBeenAttacked() const;                                                                                                                                                         // 0F5
+		SKYRIM_REL_VR_VIRTUAL void                       SetBeenAttacked(bool a_set);                                                                                                                                                     // 0F6
+		SKYRIM_REL_VR_VIRTUAL void                       UseSkill(ActorValue a_av, float a_points, TESForm* a_arg3);                                                                                                                      // 0F7 - { return; }
+		[[nodiscard]] SKYRIM_REL_VR_VIRTUAL bool         IsAtPoint(const NiPoint3& a_point, float a_radius, bool a_expandRadius, bool a_alwaysTestHeight);                                                                                // 0F8
+		[[nodiscard]] SKYRIM_REL_VR_VIRTUAL bool         IsInFaction(const TESFaction* faction) const;                                                                                                                                    // 0F9
+		SKYRIM_REL_VR_VIRTUAL void                       ForEachPerk(PerkEntryVisitor& a_visitor) const;                                                                                                                                  // 0FA
+		SKYRIM_REL_VR_VIRTUAL void                       AddPerk(BGSPerk* a_perk, std::uint32_t a_rank = 0);                                                                                                                              // 0FB - { return; }
+		SKYRIM_REL_VR_VIRTUAL void                       RemovePerk(BGSPerk* a_perk);                                                                                                                                                     // 0FC - { return; }
+		SKYRIM_REL_VR_VIRTUAL void                       ApplyTemporaryPerk(BGSPerk* a_perk);                                                                                                                                             // 0FD - { return; }
+		SKYRIM_REL_VR_VIRTUAL void                       RemoveTemporaryPerk(BGSPerk* a_perk);                                                                                                                                            // 0FE - { return; }
+		[[nodiscard]] SKYRIM_REL_VR_VIRTUAL bool         HasPerkEntries(EntryPoint a_entryType) const;                                                                                                                                    // 0FF
+		SKYRIM_REL_VR_VIRTUAL void                       ForEachPerkEntry(EntryPoint a_entryType, PerkEntryVisitor& a_visitor) const;                                                                                                     // 100
+		SKYRIM_REL_VR_VIRTUAL void                       ApplyPerksFromBase();                                                                                                                                                            // 101
+		SKYRIM_REL_VR_VIRTUAL void                       StartPowerAttackCoolDown();                                                                                                                                                      // 102 - { return; }
+		[[nodiscard]] SKYRIM_REL_VR_VIRTUAL bool         IsPowerAttackCoolingDown() const;                                                                                                                                                // 103 - { return false; }
+		SKYRIM_REL_VR_VIRTUAL void                       HandleHealthDamage(Actor* a_attacker, float a_damage);                                                                                                                           // 104
+		SKYRIM_REL_VR_VIRTUAL void                       Unk_105(void);                                                                                                                                                                   // 105
+		SKYRIM_REL_VR_VIRTUAL void                       Unk_106(void);                                                                                                                                                                   // 106 - { return; }
+		[[nodiscard]] SKYRIM_REL_VR_VIRTUAL bool         QSpeakingDone() const;                                                                                                                                                           // 107 - { return ~(unk0E0 >> 5) & 1; }
+		SKYRIM_REL_VR_VIRTUAL void                       SetSpeakingDone(bool a_set);                                                                                                                                                     // 108
+		SKYRIM_REL_VR_VIRTUAL void                       CreateMovementController();                                                                                                                                                      // 109
+		[[nodiscard]] SKYRIM_REL_VR_VIRTUAL EmotionType  GetEmotionType();                                                                                                                                                                // 10A - { return unk16C; }
+		SKYRIM_REL_VR_VIRTUAL void                       SetEmotionType(EmotionType a_emotionType);                                                                                                                                       // 10B - { unk16C = a_arg1; }
+		[[nodiscard]] SKYRIM_REL_VR_VIRTUAL std::uint32_t GetEmotionValue();                                                                                                                                                              // 10C - { return unk170; }
+		SKYRIM_REL_VR_VIRTUAL void                        SetEmotionValue(std::uint32_t a_emotionValue);                                                                                                                                  // 10D - { unk170 = a_arg1; }
+		SKYRIM_REL_VR_VIRTUAL void                        KillImpl(Actor* a_attacker, float a_damage, bool a_sendEvent, bool a_ragdollInstant);                                                                                           // 10E
+		SKYRIM_REL_VR_VIRTUAL bool                        DrinkPotion(AlchemyItem* a_potion, ExtraDataList* a_extralist);                                                                                                                 // 10F
+		[[nodiscard]] SKYRIM_REL_VR_VIRTUAL bool          CheckCast(MagicItem* a_spell, bool a_dualCast, MagicSystem::CannotCastReason* a_reason);                                                                                        // 110
+		SKYRIM_REL_VR_VIRTUAL void                        CheckTempModifiers();                                                                                                                                                           // 111 - { return; }
+		[[nodiscard]] SKYRIM_REL_VR_VIRTUAL std::int32_t         GetCurrentShoutLevel();                                                                                                                                                  // 112 - return -1 on error
+		SKYRIM_REL_VR_VIRTUAL void                               SetLastRiddenMount(ActorHandle a_mount);                                                                                                                                 // 113 - { return; }
+		[[nodiscard]] SKYRIM_REL_VR_VIRTUAL ActorHandle          QLastRiddenMount() const;                                                                                                                                                // 114 - { return {}; }
+		[[nodiscard]] SKYRIM_REL_VR_VIRTUAL bool                 CalculateCachedOwnerIsUndead() const;                                                                                                                                    // 115
+		[[nodiscard]] SKYRIM_REL_VR_VIRTUAL bool                 CalculateCachedOwnerIsNPC() const;                                                                                                                                       // 116
+		SKYRIM_REL_VR_VIRTUAL void                               Unk_117(void);                                                                                                                                                           // 117 - { return; }
+		SKYRIM_REL_VR_VIRTUAL void                               InitValues();                                                                                                                                                            // 118
+		[[nodiscard]] SKYRIM_REL_VR_VIRTUAL const BSFixedString& GetResponseString() const;                                                                                                                                               // 119 - { return "ActorResponse"; }
+		SKYRIM_REL_VR_VIRTUAL void                               ModifyMovementData(float a_delta, NiPoint3& a_arg3, NiPoint3& a_arg4);                                                                                                   // 11A
+		SKYRIM_REL_VR_VIRTUAL void                               UpdateCombatControllerSettings();                                                                                                                                        // 11B
+		SKYRIM_REL_VR_VIRTUAL void                               UpdateFadeSettings(bhkCharacterController* a_controller);                                                                                                                // 11C
+		[[nodiscard]] SKYRIM_REL_VR_VIRTUAL bool                 ComputeMotionFeedbackSpeedAndDirection(const ActorMotionFeedbackData& a_data, float a_delta, ActorMotionFeedbackOutput& a_output);                                       // 11D
+		SKYRIM_REL_VR_VIRTUAL bool                               UpdateFeedbackGraphSpeedAndDirection(const ActorMotionFeedbackOutput& a_output);                                                                                         // 11E
+		SKYRIM_REL_VR_VIRTUAL void                               UpdateActor3DPosition();                                                                                                                                                 // 11F
+		SKYRIM_REL_VR_VIRTUAL void                               PrecacheData();                                                                                                                                                          // 120
+		SKYRIM_REL_VR_VIRTUAL void                               WornArmorChanged(void);                                                                                                                                                  // 121
+		SKYRIM_REL_VR_VIRTUAL void                               ProcessTracking(float a_delta, NiAVObject* a_obj3D);                                                                                                                     // 122
+		SKYRIM_REL_VR_VIRTUAL void                               Unk_123(void);                                                                                                                                                           // 123
+		SKYRIM_REL_VR_VIRTUAL void                               CreateActorMover();                                                                                                                                                      // 124
+		SKYRIM_REL_VR_VIRTUAL void                               DestroyActorMover();                                                                                                                                                     // 125
+		SKYRIM_REL_VR_VIRTUAL bool                               ShouldRespondToActorCollision(const MovementMessageActorCollision& a_msg, const ActorHandlePtr& a_target);                                                               // 126
+		[[nodiscard]] SKYRIM_REL_VR_VIRTUAL float                CheckClampDamageModifier(ActorValue a_av, float a_delta);                                                                                                                // 127
 
 		static NiPointer<Actor> LookupByHandle(RefHandle a_refHandle);
 		static bool             LookupByHandle(RefHandle a_refHandle, NiPointer<Actor>& a_refrOut);
@@ -567,6 +567,7 @@ namespace RE
 		[[nodiscard]] float                     GetWarmthRating() const;
 		[[nodiscard]] TESObjectARMO*            GetWornArmor(BGSBipedObjectForm::BipedObjectSlot a_slot, bool a_noInit = false);
 		[[nodiscard]] TESObjectARMO*            GetWornArmor(FormID a_formID, bool a_noInit = false);
+		[[nodiscard]] bool                      HasKeyword(const BGSKeyword* a_keyword) const;
 		[[nodiscard]] bool                      HasKeywordString(std::string_view a_formEditorID);
 		[[nodiscard]] bool                      HasLineOfSight(TESObjectREFR* a_ref, bool& a_arg2);
 		[[nodiscard]] bool                      HasOutfitItems(BGSOutfit* a_outfit);
@@ -643,66 +644,66 @@ namespace RE
 
 		struct ACTOR_RUNTIME_DATA
 		{
-#define RUNTIME_DATA_CONTENT \
-			stl::enumeration<BOOL_BITS, std::uint32_t>            boolBits;                           /* 0E0 */ \
-			float                                                 updateTargetTimer;                  /* 0E4 */ \
-			stl::enumeration<ACTOR_CRITICAL_STAGE, std::uint32_t> criticalStage;                      /* 0E8 */ \
-			std::uint32_t                                         pad0EC;                             /* 0EC */ \
-			AIProcess*                                            currentProcess;                     /* 0F0 */ \
-			ObjectRefHandle                                       dialogueItemTarget;                 /* 0F8 */ \
-			ActorHandle                                           currentCombatTarget;                /* 0FC */ \
-			ActorHandle                                           myKiller;                           /* 100 */ \
-			float                                                 checkMyDeadBodyTimer;               /* 104 */ \
-			float                                                 voiceTimer;                         /* 108 */ \
-			float                                                 underWaterTimer;                    /* 10C */ \
-			std::int32_t                                          thiefCrimeStamp;                    /* 110 */ \
-			std::int32_t                                          actionValue;                        /* 114 */ \
-			float                                                 timerOnAction;                      /* 118 */ \
-			std::uint32_t                                         unk11C;                             /* 11C */ \
-			NiPoint3                                              editorLocCoord;                     /* 120 */ \
-			float                                                 editorLocRot;                       /* 12C */ \
-			TESForm*                                              editorLocForm;                      /* 130 */ \
-			BGSLocation*                                          editorLocation;                     /* 138 */ \
-			ActorMover*                                           actorMover;                         /* 140 */ \
-			BSTSmartPointer<MovementControllerNPC>                movementController;                 /* 148 */ \
-			TESPackage*                                           unk150;                             /* 150 */ \
-			CombatController*                                     combatController;                   /* 158 */ \
-			TESFaction*                                           vendorFaction;                      /* 160 */ \
-			AITimeStamp                                           calculateVendorFactionTimer;        /* 168 */ \
-			EmotionType                                           emotionType;                        /* 16C */ \
-			std::uint32_t                                         emotionValue;                       /* 170 */ \
-			std::uint32_t                                         unk174;                             /* 174 */ \
-			std::uint32_t                                         unk178;                             /* 178 */ \
-			std::uint32_t                                         intimidateBribeDayStamp;            /* 17C */ \
-			std::uint64_t                                         unk180;                             /* 180 */ \
-			BSTSmallArray<SpellItem*>                             addedSpells;                        /* 188 */ \
-			ActorMagicCaster*                                     magicCasters[SlotTypes::kTotal];    /* 1A0 */ \
-			MagicItem*                                            selectedSpells[SlotTypes::kTotal];  /* 1C0 */ \
-			TESForm*                                              selectedPower;                      /* 1E0 */ \
-			std::uint32_t                                         unk1E8;                             /* 1E8 */ \
-			std::uint32_t                                         pad1EC;                             /* 1EC */ \
-			TESRace*                                              race;                               /* 1F0 */ \
-			float                                                 equippedWeight;                     /* 1F8 */ \
-			stl::enumeration<BOOL_FLAGS, std::uint32_t>           boolFlags;                          /* 1FC */ \
-			ActorValueStorage                                     avStorage;                          /* 200 */ \
-			BGSDialogueBranch*                                    exclusiveBranch;                    /* 220 */ \
-			Modifiers                                             healthModifiers;                    /* 228 */ \
-			Modifiers                                             magickaModifiers;                   /* 234 */ \
-			Modifiers                                             staminaModifiers;                   /* 240 */ \
-			Modifiers                                             voicePointsModifiers;               /* 24C */ \
-			float                                                 lastUpdate;                         /* 258 */ \
-			std::uint32_t                                         lastSeenTime;                       /* 25C */ \
-			BSTSmartPointer<BipedAnim>                            biped;                              /* 260 */ \
-			float                                                 armorRating;                        /* 268 */ \
-			float                                                 armorBaseFactorSum;                 /* 26C */ \
-			std::int8_t                                           soundCallBackSet;                   /* 271 */ \
-			std::uint8_t                                          unk271;                             /* 270 */ \
-			std::uint8_t                                          unk272;                             /* 272 */ \
-			std::uint8_t                                          unk273;                             /* 273 */ \
-			std::uint32_t                                         unk274;                             /* 274 */ \
-			std::uint64_t                                         unk278;                             /* 278 */ \
-			std::uint64_t                                         unk280;                             /* 280 */ \
-			REX::W32::CRITICAL_SECTION                            unk288;                             /* 288 - havok related */
+#define RUNTIME_DATA_CONTENT                                                                           \
+	stl::enumeration<BOOL_BITS, std::uint32_t>            boolBits;                          /* 0E0 */ \
+	float                                                 updateTargetTimer;                 /* 0E4 */ \
+	stl::enumeration<ACTOR_CRITICAL_STAGE, std::uint32_t> criticalStage;                     /* 0E8 */ \
+	std::uint32_t                                         pad0EC;                            /* 0EC */ \
+	AIProcess*                                            currentProcess;                    /* 0F0 */ \
+	ObjectRefHandle                                       dialogueItemTarget;                /* 0F8 */ \
+	ActorHandle                                           currentCombatTarget;               /* 0FC */ \
+	ActorHandle                                           myKiller;                          /* 100 */ \
+	float                                                 checkMyDeadBodyTimer;              /* 104 */ \
+	float                                                 voiceTimer;                        /* 108 */ \
+	float                                                 underWaterTimer;                   /* 10C */ \
+	std::int32_t                                          thiefCrimeStamp;                   /* 110 */ \
+	std::int32_t                                          actionValue;                       /* 114 */ \
+	float                                                 timerOnAction;                     /* 118 */ \
+	std::uint32_t                                         unk11C;                            /* 11C */ \
+	NiPoint3                                              editorLocCoord;                    /* 120 */ \
+	float                                                 editorLocRot;                      /* 12C */ \
+	TESForm*                                              editorLocForm;                     /* 130 */ \
+	BGSLocation*                                          editorLocation;                    /* 138 */ \
+	ActorMover*                                           actorMover;                        /* 140 */ \
+	BSTSmartPointer<MovementControllerNPC>                movementController;                /* 148 */ \
+	TESPackage*                                           unk150;                            /* 150 */ \
+	CombatController*                                     combatController;                  /* 158 */ \
+	TESFaction*                                           vendorFaction;                     /* 160 */ \
+	AITimeStamp                                           calculateVendorFactionTimer;       /* 168 */ \
+	EmotionType                                           emotionType;                       /* 16C */ \
+	std::uint32_t                                         emotionValue;                      /* 170 */ \
+	std::uint32_t                                         unk174;                            /* 174 */ \
+	std::uint32_t                                         unk178;                            /* 178 */ \
+	std::uint32_t                                         intimidateBribeDayStamp;           /* 17C */ \
+	std::uint64_t                                         unk180;                            /* 180 */ \
+	BSTSmallArray<SpellItem*>                             addedSpells;                       /* 188 */ \
+	ActorMagicCaster*                                     magicCasters[SlotTypes::kTotal];   /* 1A0 */ \
+	MagicItem*                                            selectedSpells[SlotTypes::kTotal]; /* 1C0 */ \
+	TESForm*                                              selectedPower;                     /* 1E0 */ \
+	std::uint32_t                                         unk1E8;                            /* 1E8 */ \
+	std::uint32_t                                         pad1EC;                            /* 1EC */ \
+	TESRace*                                              race;                              /* 1F0 */ \
+	float                                                 equippedWeight;                    /* 1F8 */ \
+	stl::enumeration<BOOL_FLAGS, std::uint32_t>           boolFlags;                         /* 1FC */ \
+	ActorValueStorage                                     avStorage;                         /* 200 */ \
+	BGSDialogueBranch*                                    exclusiveBranch;                   /* 220 */ \
+	Modifiers                                             healthModifiers;                   /* 228 */ \
+	Modifiers                                             magickaModifiers;                  /* 234 */ \
+	Modifiers                                             staminaModifiers;                  /* 240 */ \
+	Modifiers                                             voicePointsModifiers;              /* 24C */ \
+	float                                                 lastUpdate;                        /* 258 */ \
+	std::uint32_t                                         lastSeenTime;                      /* 25C */ \
+	BSTSmartPointer<BipedAnim>                            biped;                             /* 260 */ \
+	float                                                 armorRating;                       /* 268 */ \
+	float                                                 armorBaseFactorSum;                /* 26C */ \
+	std::int8_t                                           soundCallBackSet;                  /* 271 */ \
+	std::uint8_t                                          unk271;                            /* 270 */ \
+	std::uint8_t                                          unk272;                            /* 272 */ \
+	std::uint8_t                                          unk273;                            /* 273 */ \
+	std::uint32_t                                         unk274;                            /* 274 */ \
+	std::uint64_t                                         unk278;                            /* 278 */ \
+	std::uint64_t                                         unk280;                            /* 280 */ \
+	REX::W32::CRITICAL_SECTION                            unk288;                            /* 288 - havok related */
 
 			RUNTIME_DATA_CONTENT
 		};
@@ -717,51 +718,63 @@ namespace RE
 			return REL::RelocateMemberIfNewer<ACTOR_RUNTIME_DATA>(SKSE::RUNTIME_SSE_1_6_629, this, 0xE0, 0xE8);
 		}
 
-		[[nodiscard]] inline MagicTarget* AsMagicTarget() noexcept {
+		[[nodiscard]] inline MagicTarget* AsMagicTarget() noexcept
+		{
 			return &REL::RelocateMemberIfNewer<MagicTarget>(SKSE::RUNTIME_SSE_1_6_629, this, 0x98, 0xA0);
 		}
 
-		[[nodiscard]] inline const MagicTarget* AsMagicTarget() const noexcept {
+		[[nodiscard]] inline const MagicTarget* AsMagicTarget() const noexcept
+		{
 			return &REL::RelocateMemberIfNewer<MagicTarget>(SKSE::RUNTIME_SSE_1_6_629, this, 0x98, 0xA0);
 		}
 
-		[[nodiscard]] inline ActorValueOwner* AsActorValueOwner() noexcept {
+		[[nodiscard]] inline ActorValueOwner* AsActorValueOwner() noexcept
+		{
 			return &REL::RelocateMemberIfNewer<ActorValueOwner>(SKSE::RUNTIME_SSE_1_6_629, this, 0xB0, 0xB8);
 		}
 
-		[[nodiscard]] inline const ActorValueOwner* AsActorValueOwner() const noexcept {
+		[[nodiscard]] inline const ActorValueOwner* AsActorValueOwner() const noexcept
+		{
 			return &REL::RelocateMemberIfNewer<ActorValueOwner>(SKSE::RUNTIME_SSE_1_6_629, this, 0xB0, 0xB8);
 		}
 
-		[[nodiscard]] inline ActorState* AsActorState() noexcept {
+		[[nodiscard]] inline ActorState* AsActorState() noexcept
+		{
 			return &REL::RelocateMemberIfNewer<ActorState>(SKSE::RUNTIME_SSE_1_6_629, this, 0xB8, 0xC0);
 		}
 
-		[[nodiscard]] inline const ActorState* AsActorState() const noexcept {
+		[[nodiscard]] inline const ActorState* AsActorState() const noexcept
+		{
 			return &REL::RelocateMemberIfNewer<ActorState>(SKSE::RUNTIME_SSE_1_6_629, this, 0xB8, 0xC0);
 		}
 
-		[[nodiscard]] inline BSTEventSink<BSTransformDeltaEvent>* AsBSTransformDeltaEventSink() noexcept {
+		[[nodiscard]] inline BSTEventSink<BSTransformDeltaEvent>* AsBSTransformDeltaEventSink() noexcept
+		{
 			return &REL::RelocateMemberIfNewer<BSTEventSink<BSTransformDeltaEvent>>(SKSE::RUNTIME_SSE_1_6_629, this, 0xC8, 0xD0);
 		}
 
-		[[nodiscard]] inline const BSTEventSink<BSTransformDeltaEvent>* AsBSTransformDeltaEventSink() const noexcept {
+		[[nodiscard]] inline const BSTEventSink<BSTransformDeltaEvent>* AsBSTransformDeltaEventSink() const noexcept
+		{
 			return &REL::RelocateMemberIfNewer<BSTEventSink<BSTransformDeltaEvent>>(SKSE::RUNTIME_SSE_1_6_629, this, 0xC8, 0xD0);
 		}
 
-		[[nodiscard]] inline BSTEventSink<bhkCharacterMoveFinishEvent>* AsCharacterMoveFinishEventSink() noexcept {
+		[[nodiscard]] inline BSTEventSink<bhkCharacterMoveFinishEvent>* AsCharacterMoveFinishEventSink() noexcept
+		{
 			return &REL::RelocateMemberIfNewer<BSTEventSink<bhkCharacterMoveFinishEvent>>(SKSE::RUNTIME_SSE_1_6_629, this, 0xD0, 0xD8);
 		}
 
-		[[nodiscard]] inline const BSTEventSink<bhkCharacterMoveFinishEvent>* AsCharacterMoveFinishEventSink() const noexcept {
+		[[nodiscard]] inline const BSTEventSink<bhkCharacterMoveFinishEvent>* AsCharacterMoveFinishEventSink() const noexcept
+		{
 			return &REL::RelocateMemberIfNewer<BSTEventSink<bhkCharacterMoveFinishEvent>>(SKSE::RUNTIME_SSE_1_6_629, this, 0xD0, 0xD8);
 		}
 
-		[[nodiscard]] inline IPostAnimationChannelUpdateFunctor* AsIPostAnimationChannelUpdateFunctor() noexcept {
+		[[nodiscard]] inline IPostAnimationChannelUpdateFunctor* AsIPostAnimationChannelUpdateFunctor() noexcept
+		{
 			return &REL::RelocateMemberIfNewer<IPostAnimationChannelUpdateFunctor>(SKSE::RUNTIME_SSE_1_6_629, this, 0xD8, 0xE0);
 		}
 
-		[[nodiscard]] inline const IPostAnimationChannelUpdateFunctor* AsIPostAnimationChannelUpdateFunctor() const noexcept {
+		[[nodiscard]] inline const IPostAnimationChannelUpdateFunctor* AsIPostAnimationChannelUpdateFunctor() const noexcept
+		{
 			return &REL::RelocateMemberIfNewer<IPostAnimationChannelUpdateFunctor>(SKSE::RUNTIME_SSE_1_6_629, this, 0xD8, 0xE0);
 		}
 
@@ -774,6 +787,7 @@ namespace RE
 		void        CalculateCurrentVendorFaction() const;
 		float       CalcEquippedWeight();
 		TESFaction* GetCrimeFactionImpl() const;
+		KEEP_FOR_RE()
 	};
 #ifndef ENABLE_SKYRIM_AE
 	static_assert(sizeof(Actor) == 0x2B0);

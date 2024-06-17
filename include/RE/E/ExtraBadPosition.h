@@ -15,6 +15,8 @@ namespace RE
 
 		// override (BSExtraData)
 		[[nodiscard]] ExtraDataType GetType() const override;  // 01 - { return kBadPosition; }
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(ExtraBadPosition) == 0x10);
 }

@@ -15,6 +15,8 @@ namespace RE
 		// add
 		virtual void SetLoadingExecuteTagList(ExecuteTagList* a_data) = 0;  // 0E
 		virtual void AddFrameName(GString* a_name, GFxLog* a_log) = 0;      // 0F
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(GFxTimelineIODef) == 0x20);
 
@@ -63,6 +65,8 @@ namespace RE
 		std::uint8_t              pad59;         // 59
 		std::uint16_t             pad5A;         // 5A
 		std::uint32_t             pad5C;         // 5C
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(GFxSpriteDef) == 0x60);
 }

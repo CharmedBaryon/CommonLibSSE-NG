@@ -20,6 +20,8 @@ namespace RE
 		NiAVObject*      GetAttachRoot() override;                                // 0F
 		bool             EffectAttachesToCamera() override;                       // 1A - { return true; }
 		bool             EffectRotatesWithCamera() override;                      // 1B
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(SkyEffectController) == 0x8);
 }

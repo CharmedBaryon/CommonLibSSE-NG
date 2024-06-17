@@ -21,6 +21,8 @@ namespace RE
 
 		// members
 		BSTSmartPointer<BipedAnim> biped;  // 10
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(ExtraBiped) == 0x18);
 }

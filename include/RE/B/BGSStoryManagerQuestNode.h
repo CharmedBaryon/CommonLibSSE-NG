@@ -51,6 +51,8 @@ namespace RE
 		std::uint32_t                        numQuestsToStart;         // C0 - MNAM
 		std::uint32_t                        padC4;                    // C4
 		BSTArray<float>                      childrenLastRun;          // C8
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(BGSStoryManagerQuestNode) == 0xE0);
 }

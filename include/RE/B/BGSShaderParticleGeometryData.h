@@ -64,6 +64,8 @@ namespace RE
 
 		BSTArray<SETTING_VALUE> data;             // 20 - DATA - size == DataID::kTotal
 		TESTexture              particleTexture;  // 38 - ICON
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(BGSShaderParticleGeometryData) == 0x48);
 }

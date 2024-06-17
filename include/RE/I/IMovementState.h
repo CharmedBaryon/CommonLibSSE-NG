@@ -33,6 +33,8 @@ namespace RE
 		virtual void  Unk_11(void) = 0;                                 // 11
 		virtual void  Unk_12(void) = 0;                                 // 12
 		virtual void  Unk_13(void) = 0;                                 // 13
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(IMovementState) == 0x8);
 }

@@ -32,6 +32,8 @@ namespace RE
 		BSIMusicType*           current;     // 28
 		std::uint32_t           unk30;       // 30
 		std::uint32_t           pad34;       // 34
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(BSMusicManager) == 0x38);
 }

@@ -18,6 +18,8 @@ namespace RE
 		// members
 		float         duration;  // 28
 		std::uint32_t pad3C;     // 2C
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(ImageSpaceModifierInstanceTemp) == 0x30);
 }

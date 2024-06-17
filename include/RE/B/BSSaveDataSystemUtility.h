@@ -100,6 +100,8 @@ namespace RE
 		std::uint64_t unk210;       // 210
 		std::uint64_t unk218;       // 218
 		std::uint64_t unk220;       // 220
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(BSSaveDataSystemUtility) == 0x228);
 }

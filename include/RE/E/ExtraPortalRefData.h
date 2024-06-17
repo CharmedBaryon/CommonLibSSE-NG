@@ -26,6 +26,8 @@ namespace RE
 
 		// members
 		PortalLinkedRefData* data;  // 10
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(ExtraPortalRefData) == 0x18);
 }

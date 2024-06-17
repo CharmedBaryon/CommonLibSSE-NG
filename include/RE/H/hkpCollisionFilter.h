@@ -48,6 +48,8 @@ namespace RE
 		std::uint32_t                                  pad3C;  // 3C
 		std::uint32_t                                  pad40;  // 40
 		std::uint32_t                                  pad44;  // 44
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(hkpCollisionFilter) == 0x48);
 }

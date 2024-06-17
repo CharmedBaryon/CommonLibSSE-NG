@@ -18,6 +18,8 @@ namespace RE
 
 		// members
 		void* unk10;  // 10
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(ExtraResourcesPreload) == 0x18);
 }

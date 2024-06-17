@@ -31,6 +31,14 @@ namespace RE
 		ObjectRefHandle horseRefHandle;         // E8
 		float           horseCurrentDirection;  // EC
 		std::uint64_t   unkF0;                  // F0
+	private:
+		KEEP_FOR_RE()
 	};
+#if !defined(ENABLE_SKYRIM_VR)
 	static_assert(sizeof(HorseCameraState) == 0xF8);
+#elif !defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE)
+	static_assert(sizeof(HorseCameraState) == 0x110);
+#else
+	static_assert(sizeof(HorseCameraState) == 0xF8);
+#endif
 }

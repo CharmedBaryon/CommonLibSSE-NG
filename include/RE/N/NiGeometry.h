@@ -42,7 +42,9 @@ namespace RE
 			return REL::RelocateMember<RUNTIME_DATA>(this, 0x110, 0x138);
 		}
 
-		RUNTIME_DATA_CONTENT  // 110, 138
+		RUNTIME_DATA_CONTENT;  // 110, 138
+	private:
+		KEEP_FOR_RE()
 	};
 #if !defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE)
 	static_assert(sizeof(NiGeometry) == 0x160);

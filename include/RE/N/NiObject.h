@@ -79,6 +79,9 @@ namespace RE
 		virtual NiControllerManager*          AsNiControllerManager() { return nullptr; }                                 // 24
 
 		void CreateDeepCopy(NiPointer<NiObject>& a_object);
+
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(NiObject) == 0x10);
 }

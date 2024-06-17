@@ -10,6 +10,8 @@ namespace RE
 		hkVector4 col0;  // 00
 		hkVector4 col1;  // 10
 		hkVector4 col2;  // 20
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(hkMatrix3) == 0x30);
 }

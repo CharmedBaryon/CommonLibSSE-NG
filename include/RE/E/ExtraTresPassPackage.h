@@ -21,6 +21,8 @@ namespace RE
 		// members
 		TrespassPackage* pack;   // 10
 		std::uint64_t    unk18;  // 18
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(ExtraTresPassPackage) == 0x20);
 }

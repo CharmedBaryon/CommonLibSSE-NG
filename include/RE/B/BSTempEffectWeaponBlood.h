@@ -28,6 +28,8 @@ namespace RE
 		// members;
 		NiPointer<NiAVObject> weapon3D;        // 030
 		float                 alphaThreshold;  // 038
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(BSTempEffectWeaponBlood) == 0x40);
 }

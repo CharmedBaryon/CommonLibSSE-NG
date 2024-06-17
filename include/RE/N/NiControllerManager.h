@@ -54,6 +54,8 @@ namespace RE
 		std::uint32_t                                    padAC;            // AC
 		NiTObjectSet<NiPointer<NiControllerSequence>>    tempBlendSeqs;    // B0
 		NiPointer<NiAVObjectPalette>                     objectPalette;    // C0
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(NiControllerManager) == 0xC8);
 }

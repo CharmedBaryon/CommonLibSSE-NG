@@ -44,6 +44,8 @@ namespace RE
 			};
 			std::uint8_t data[3]{ 0 };
 		};  // 0
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(BGSNumericIDIndex) == 0x3);
 }

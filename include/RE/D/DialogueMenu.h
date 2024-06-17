@@ -3,6 +3,7 @@
 #include "RE/B/BSTArray.h"
 #include "RE/B/BSTEvent.h"
 #include "RE/I/IMenu.h"
+#include "RE/W/WorldSpaceMenu.h"
 
 namespace RE
 {
@@ -12,7 +13,10 @@ namespace RE
 	// flags = kUpdateUsesCursor | kDontHideCursorWhenTopmost
 	// context = kMenuMode
 	class DialogueMenu :
-#ifndef SKYRIM_CROSS_VR
+#if !defined(ENABLE_SKYRIM_VR)
+		public WorldSpaceMenu,                   // 00
+		public BSTEventSink<MenuOpenCloseEvent>  // 88
+#elif !defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE)
 		public IMenu,                            // 00
 		public BSTEventSink<MenuOpenCloseEvent>  // 30
 #else
@@ -50,12 +54,22 @@ namespace RE
 
 		[[nodiscard]] BSTEventSink<MenuOpenCloseEvent>* AsMenuOpenCloseEventSink() noexcept
 		{
-			return &REL::RelocateMember<BSTEventSink<MenuOpenCloseEvent>>(this, 0x30, 0x40);
+			return &REL::RelocateMember<BSTEventSink<MenuOpenCloseEvent>>(this, 0x30, 0x58);
 		}
 
 		[[nodiscard]] const BSTEventSink<MenuOpenCloseEvent>* AsMenuOpenCloseEventSink() const noexcept
 		{
 			return const_cast<DialogueMenu*>(this)->AsMenuOpenCloseEventSink();
+		}
+
+		[[nodiscard]] BSTEventSink<HudModeChangeEvent>* AsHudModeChangeEventSink() noexcept
+		{
+			return &REL::RelocateMember<BSTEventSink<HudModeChangeEvent>>(this, 0, 0x40);
+		}
+
+		[[nodiscard]] const BSTEventSink<HudModeChangeEvent>* AsHudModeChangeEventSink() const noexcept
+		{
+			return const_cast<DialogueMenu*>(this)->AsHudModeChangeEventSink();
 		}
 
 		[[nodiscard]] inline RUNTIME_DATA& GetRuntimeData() noexcept
@@ -70,11 +84,17 @@ namespace RE
 
 		// members
 #ifndef SKYRIM_CROSS_VR
-		RUNTIME_DATA_CONTENT  // 38, 48
+		RUNTIME_DATA_CONTENT;  // 38, 48
 #endif
+	private:
+		KEEP_FOR_RE()
 	};
-#ifndef ENABLE_SKYRIM_VR
+#if !defined(ENABLE_SKYRIM_VR)
+#	ifdef ENABLE_SKYRIM_AE
+	static_assert(sizeof(DialogueMenu) == 0x78);
+#	else
 	static_assert(sizeof(DialogueMenu) == 0x50);
+#	endif
 #elif !defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE)
 	static_assert(sizeof(DialogueMenu) == 0x60);
 #endif

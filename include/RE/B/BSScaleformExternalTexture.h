@@ -50,6 +50,8 @@ namespace RE
 		std::uint32_t        renderTarget;     // 08
 		std::uint32_t        pad0C;            // 0C
 		BSFixedString        filePath;         // 10
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(BSScaleformExternalTexture) == 0x18);
 }

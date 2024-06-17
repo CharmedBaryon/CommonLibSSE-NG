@@ -48,8 +48,10 @@ namespace RE
 		void*                      boneMatrices;                  // 48
 		void*                      prevBoneMatrices;              // 50
 		void*                      skinToWorldWorldToSkinMatrix;  // 58
-#ifndef ENABLE_SKYRIM_VR
+#if !defined(ENABLE_SKYRIM_VR)
 		REX::W32::CRITICAL_SECTION lock;  // 60
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(NiSkinInstance) == 0x88);
 #else

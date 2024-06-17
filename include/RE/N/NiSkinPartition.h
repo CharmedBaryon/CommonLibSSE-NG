@@ -70,6 +70,8 @@ namespace RE
 		SimpleArray<Partition> partitions;     // 18
 		std::uint32_t          vertexCount;    // 20
 		std::uint32_t          unk24;          // 24
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(NiSkinPartition) == 0x28);
 }

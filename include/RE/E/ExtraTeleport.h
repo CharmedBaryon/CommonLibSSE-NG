@@ -32,6 +32,8 @@ namespace RE
 
 		// members
 		DoorTeleportData* teleportData;  // 10
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(ExtraTeleport) == 0x18);
 }

@@ -25,6 +25,8 @@ namespace RE
 
 		// members
 		GRenderer* renderer;  // 18
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(GRendererEventHandler) == 0x20);
 }

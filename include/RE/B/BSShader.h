@@ -1,25 +1,34 @@
 #pragma once
 
 #include "RE/B/BSReloadShaderI.h"
+#include "RE/B/BSTHashMap.h"
 #include "RE/N/NiBoneMatrixSetterI.h"
 #include "RE/N/NiRefObject.h"
+#include <REX/W32/D3D11.h>
+
+struct ID3D11Buffer;
+struct ID3D11PixelShader;
+struct ID3D11VertexShader;
 
 namespace RE
 {
 	class BSRenderPass;
 	class BSShaderMaterial;
 
-	struct ID3D11Buffer;
-	struct ID3D11PixelShader;
-	struct ID3D11VertexShader;
-
 	namespace BSGraphics
 	{
+		enum class ConstantGroupLevel
+		{
+			PerTechnique,
+			PerMaterial,
+			PerGeometry,
+		};
+
 		class ConstantGroup
 		{
 		public:
 			// members
-			ID3D11Buffer* buffer;  // 00
+			REX::W32::ID3D11Buffer* buffer;  // 00
 			void*         data;    // 08
 		};
 		static_assert(sizeof(ConstantGroup) == 0x10);
@@ -28,10 +37,10 @@ namespace RE
 		{
 		public:
 			// members
-			std::uint32_t      id;                  // 00
-			ID3D11PixelShader* shader;              // 08
-			ConstantGroup      constantBuffers[3];  // 10
-			std::int8_t        constantTable[64];   // 58
+			std::uint32_t               id;                  // 00
+			REX::W32::ID3D11PixelShader* shader = nullptr;    // 08
+			ConstantGroup               constantBuffers[3];  // 10
+			std::array<std::int8_t, 64> constantTable;       // 58
 		};
 		static_assert(sizeof(PixelShader) == 0x80);
 
@@ -39,14 +48,14 @@ namespace RE
 		{
 		public:
 			// members
-			std::uint32_t       id;                  // 00
-			ID3D11VertexShader* shader;              // 08
-			std::uint32_t       byteCodeSize;        // 10
-			ConstantGroup       constantBuffers[3];  // 18
-			std::uint64_t       shaderDesc;          // 48
-			std::int8_t         constantTable[20];   // 50
-			std::uint32_t       pad64;               // 64
-			std::uint8_t        rawBytecode[0];      // 68
+			std::uint32_t               id;                  // 00
+			REX::W32::ID3D11VertexShader* shader = nullptr;    // 08
+			std::uint32_t               byteCodeSize;        // 10
+			ConstantGroup               constantBuffers[3];  // 18
+			std::uint64_t               shaderDesc;          // 48
+			std::array<std::int8_t, 20> constantTable;       // 50
+			std::uint32_t               pad64;               // 64
+			std::uint8_t                rawBytecode[0];      // 68
 		};
 		static_assert(sizeof(VertexShader) == 0x68);
 	}
@@ -84,6 +93,27 @@ namespace RE
 		public BSReloadShaderI       // 18
 	{
 	public:
+		struct Types
+		{
+			enum Type
+			{
+				None = 0,
+				Grass = 1,
+				Sky = 2,
+				Water = 3,
+				BloodSplatter = 4,
+				ImageSpace = 5,
+				Lighting = 6,
+				Effect = 7,
+				Utility = 8,
+				DistantTree = 9,
+				Particle = 10,
+				Total,
+			};
+		};
+
+		using Type = Types::Type;
+
 		inline static constexpr auto RTTI = RTTI_BSShader;
 		inline static constexpr auto VTABLE = VTABLE_BSShader;
 
@@ -100,10 +130,12 @@ namespace RE
 		virtual void ReloadShaders(bool a_clear);                                                                // 09
 
 		// members
-		std::int32_t                                               shaderType;     // 20
+		stl::enumeration<Type, std::int32_t>                       shaderType;     // 20
 		BSShaderTechniqueIDMap::MapType<BSGraphics::VertexShader*> vertexShaders;  // 28
 		BSShaderTechniqueIDMap::MapType<BSGraphics::PixelShader*>  pixelShaders;   // 58
 		const char*                                                fxpFilename;    // 88
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(BSShader) == 0x90);
 }

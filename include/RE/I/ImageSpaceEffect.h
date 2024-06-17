@@ -4,6 +4,7 @@
 
 namespace RE
 {
+	class BSTriShape;
 	class ImageSpaceManager;
 	class ImageSpaceEffectParam;
 	class ImageSpaceTexture;
@@ -42,6 +43,8 @@ namespace RE
 		std::uint8_t                                      pad89;           // 89
 		std::uint16_t                                     pad8A;           // 8A
 		std::uint32_t                                     pad8C;           // 8C
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(ImageSpaceEffect) == 0x90);
 }

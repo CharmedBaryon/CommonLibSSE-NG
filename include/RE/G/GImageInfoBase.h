@@ -31,6 +31,8 @@ namespace RE
 		virtual GImageInfoBase*     CreateSubImage(const GRect<std::int32_t>& a_rect, GMemoryHeap* a_heap = GMemory::GetGlobalHeap());  // 04
 		virtual GRect<std::int32_t> GetRect() const;                                                                                    // 05
 		virtual std::uint32_t       GetImageInfoType() const;                                                                           // 06
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(GImageInfoBase) == 0x18);
 }

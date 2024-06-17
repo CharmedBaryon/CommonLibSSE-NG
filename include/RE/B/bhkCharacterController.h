@@ -154,6 +154,8 @@ namespace RE
 		std::uint64_t                                    unk318;                     // 318
 		std::uint64_t                                    unk320;                     // 320
 		std::uint64_t                                    unk328;                     // 328
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(bhkCharacterController) == 0x330);
 }

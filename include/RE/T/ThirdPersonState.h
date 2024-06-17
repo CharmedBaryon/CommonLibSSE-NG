@@ -74,6 +74,14 @@ namespace RE
 		bool          applyOffsets;           // E1
 		std::uint16_t unkE2;                  // E2
 		std::uint32_t unkE4;                  // E4
+	private:
+		KEEP_FOR_RE()
 	};
+#if !defined(ENABLE_SKYRIM_VR)
 	static_assert(sizeof(ThirdPersonState) == 0xE8);
+#elif !defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE)
+	static_assert(sizeof(ThirdPersonState) == 0x100);
+#else
+	static_assert(sizeof(ThirdPersonState) == 0xE8);
+#endif
 }

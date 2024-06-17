@@ -24,6 +24,8 @@ namespace RE
 		float  armorPerks;        // 14
 		float  lightArmorRating;  // 18
 		float  heavyArmorRating;  // 1C
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(ArmorRatingVisitorBase) == 0x20);
 }

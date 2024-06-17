@@ -128,6 +128,8 @@ namespace RE
 		TESForm*               baseTemplateForm;  // 30 - TPLT
 		TESForm**              templateForms;     // 38
 		BSTArray<FACTION_RANK> factions;          // 40
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(TESActorBaseData) == 0x58);
 }

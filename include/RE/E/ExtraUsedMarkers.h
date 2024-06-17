@@ -20,6 +20,8 @@ namespace RE
 
 		// members
 		BSTArray<MarkerUsedData> usedMarkers;  // 10
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(ExtraUsedMarkers) == 0x28);
 }

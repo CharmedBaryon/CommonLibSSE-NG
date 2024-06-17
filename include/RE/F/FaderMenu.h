@@ -33,13 +33,19 @@ namespace RE
 
 		// members
 #ifndef SKYRIM_CROSS_VR
-		RUNTIME_DATA_CONTENT  // 30 - smart ptr
+		RUNTIME_DATA_CONTENT;  // 30 - smart ptr
 #endif
+	private:
+		KEEP_FOR_RE()
 	};
-#ifndef ENABLE_SKYRIM_VR
-	static_assert(sizeof(FaderMenu) == 0x40);
-#elif !defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE)
+#if !defined(ENABLE_SKYRIM_VR)
+#	ifdef ENABLE_SKYRIM_AE
 	static_assert(sizeof(FaderMenu) == 0x50);
+#	else
+	static_assert(sizeof(FaderMenu) == 0x40);
+#	endif
+#elif !defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE)
+static_assert(sizeof(FaderMenu) == 0x50);
 #endif
 }
 #undef RUNTIME_DATA_CONTENT

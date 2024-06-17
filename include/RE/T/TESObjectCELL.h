@@ -39,6 +39,8 @@ namespace RE
 	public:
 		// members
 		BSBitField<>* visData;  // 0
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(BGSTerrainVisibilityData) == 0x8);
 
@@ -73,6 +75,8 @@ namespace RE
 	public:
 		// members
 		BSTArray<BSTSmartPointer<NavMesh>> navMeshes;  // 00
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(NavMeshArray) == 0x18);
 
@@ -88,9 +92,9 @@ namespace RE
 		std::uint64_t                                        unk028;                  // 028
 		std::uint64_t                                        unk030;                  // 030
 		std::uint64_t                                        unk038;                  // 038
-		BSTArray<void*>                                      unk040;                  // 040
-		BSTArray<void*>                                      unk058;                  // 058
-		NiTMap<TESForm*, ObjectRefHandle>                    unk070;                  // 070
+		BSTArray<ObjectRefHandle>                            unk040;                  // 040
+		BSTArray<ObjectRefHandle>                            flickeringLights;        // 058
+		NiTMap<TESForm*, ObjectRefHandle>                    emittanceSourceRefMap;   // 070
 		NiTMap<ObjectRefHandle, NiNode*>                     emittanceLightRefMap;    // 090
 		NiTMap<ObjectRefHandle, NiPointer<BSMultiBoundNode>> multiboundRefMap;        // 0B0
 		NiTMap<BSMultiBoundNode*, ObjectRefHandle>           refMultiboundMap;        // 0D0
@@ -98,15 +102,15 @@ namespace RE
 		BSSimpleList<ObjectRefHandle>                        unk100;                  // 100
 		std::uint64_t                                        unk110;                  // 110
 		BSTArray<void*>                                      unk118;                  // 118
-		BSTArray<void*>                                      unk130;                  // 130
-		BSTArray<void*>                                      unk148;                  // 148
+		BSTArray<ObjectRefHandle>                            decalRefs;               // 130
+		BSTArray<ObjectRefHandle>                            skyActors;               // 148
 		BGSEncounterZone*                                    encounterZone;           // 160
-		std::uint32_t                                        unk168;                  // 168
+		bool                                                 decalsQueued;            // 168
 		volatile mutable std::int32_t                        criticalQueuedRefCount;  // 16C
 		volatile mutable std::int32_t                        queuedRefCount;          // 170
 		volatile mutable std::int32_t                        queuedDistantRefCount;   // 174
-		std::uint32_t                                        unk178;                  // 178
-		std::uint32_t                                        unk17C;                  // 17C
+		std::int32_t                                         unk178;                  // 178
+		bool                                                 refsFullyLoaded;         // 17C
 	};
 	static_assert(sizeof(LOADED_CELL_DATA) == 0x180);
 
@@ -252,19 +256,21 @@ namespace RE
 		}
 
 		// members
-		mutable BSSpinLock                                   grassCreateLock;   // 030
-		mutable BSSpinLock                                   grassTaskLock;     // 038
-		stl::enumeration<Flag, std::uint16_t>                cellFlags;         // 040
-		std::uint16_t                                        cellGameFlags;     // 042
-		stl::enumeration<CellState, std::uint8_t>            cellState;         // 044
-		bool                                                 autoWaterLoaded;   // 045
-		bool                                                 cellDetached;      // 046
-		std::uint8_t                                         pad047;            // 047
-		ExtraDataList                                        extraList;         // 048
+		mutable BSSpinLock                        grassCreateLock;  // 030
+		mutable BSSpinLock                        grassTaskLock;    // 038
+		stl::enumeration<Flag, std::uint16_t>     cellFlags;        // 040
+		std::uint16_t                             cellGameFlags;    // 042
+		stl::enumeration<CellState, std::uint8_t> cellState;        // 044
+		bool                                      autoWaterLoaded;  // 045
+		bool                                      cellDetached;     // 046
+		std::uint8_t                              pad047;           // 047
+		ExtraDataList                             extraList;        // 048
 
 #ifndef ENABLE_SKYRIM_AE
-		RUNTIME_DATA_CONTENT
+		RUNTIME_DATA_CONTENT;
 #endif
+	private:
+		KEEP_FOR_RE()
 	};
 #ifndef ENABLE_SKYRIM_AE
 	static_assert(sizeof(TESObjectCELL) == 0x140);

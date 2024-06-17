@@ -41,7 +41,7 @@ namespace RE
 		public TESModelTextureSwap,  // 040
 		public TESIcon,              // 078
 		public BGSMessageIcon,       // 088
-#ifndef ENABLE_SKYRIM_VR
+#if !defined(ENABLE_SKYRIM_VR)
 		public TESValueForm,               // 0A0
 		public TESWeightForm,              // 0B0
 		public BGSDestructibleObjectForm,  // 0C0
@@ -95,7 +95,7 @@ namespace RE
 		NiAVObject* Clone3D(TESObjectREFR* a_ref, bool a_arg3) override;                 // 40
 		void        HandleRemoveItemFromContainer(TESObjectREFR* a_container) override;  // 4E
 
-#ifndef ENABLE_SKYRIM_VR
+#if !defined(ENABLE_SKYRIM_VR)
 		// override (BGSKeywordForm)
 		[[nodiscard]] BGSKeyword* GetDefaultKeyword() const override;  // 05
 #endif
@@ -154,9 +154,11 @@ namespace RE
 		}
 
 		// members
-		RUNTIME_DATA_CONTENT  // 110, 100
+		RUNTIME_DATA_CONTENT;  // 110, 100
+	private:
+		KEEP_FOR_RE()
 	};
-#ifndef ENABLE_SKYRIM_VR
+#if !defined(ENABLE_SKYRIM_VR)
 	static_assert(sizeof(TESAmmo) == 0x128);
 #elif !defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE)
 	static_assert(sizeof(TESAmmo) == 0x118);

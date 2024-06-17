@@ -20,6 +20,8 @@ namespace RE
 		// members
 		BSSoundHandle handle;  // 10
 		std::uint32_t pad1C;   // 1C
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(ExtraCreatureMovementSound) == 0x20);
 }

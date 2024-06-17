@@ -42,6 +42,8 @@ namespace RE
 		std::uint8_t                               pad59;         // 59
 		std::uint16_t                              pad5A;         // 5A
 		std::uint32_t                              pad5C;         // 5C
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(NiPSysGravityModifier) == 0x60);
 }

@@ -24,6 +24,8 @@ namespace RE
 		hkpSimulationIsland* island;    // 18
 		std::uint64_t        userData;  // 20
 		hkStringPtr          name;      // 28
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(hkpAction) == 0x30);
 }

@@ -47,6 +47,8 @@ namespace RE
 		std::uint16_t                                                        padF2;           // F2
 		std::uint32_t                                                        padF4;           // F4
 		std::uint64_t                                                        padF8;           // F8
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(bhkCompressedMeshShapeData) == 0x100);
 }

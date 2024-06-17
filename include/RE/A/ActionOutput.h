@@ -18,6 +18,8 @@ namespace RE
 		TESIdleForm*       sequence;         // 18
 		const TESIdleForm* animObjIdle;      // 20
 		uint32_t           sequenceIndex;    // 28
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(ActionOutput) == 0x30);
 }

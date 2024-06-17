@@ -32,13 +32,15 @@ namespace RE
 		std::uint32_t                             bufferAllocSize;  // 20
 		std::uint32_t                             bufferReadSize;   // 24
 		std::uint32_t                             pos;              // 28
-		std::uint32_t                             pad2C;            // 2C
+		std::uint32_t                             total;            // 2C
 		char*                                     buffer;           // 30
 		std::FILE*                                file;             // 38
 		stl::enumeration<OpenMode, std::uint32_t> mode;             // 40
 		bool                                      isGood;           // 44
 		std::uint8_t                              pad45;            // 45
 		std::uint16_t                             pad46;            // 46
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(NiFile) == 0x48);
 }

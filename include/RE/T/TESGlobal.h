@@ -43,6 +43,8 @@ namespace RE
 		std::uint8_t                         pad31;         // 31
 		std::uint16_t                        pad32;         // 32
 		float                                value;         // 34 - FLTV
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(TESGlobal) == 0x38);
 }

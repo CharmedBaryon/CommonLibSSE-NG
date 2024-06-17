@@ -39,6 +39,8 @@ namespace RE
 		BSFixedString collisionLayerNames[64];   // 3E0
 		std::uint8_t  unk5E0[256];               // 5E0
 		BSFixedString collisionBoneNames[32];    // 6E0
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(bhkCollisionFilter) == 0x7E0);
 }

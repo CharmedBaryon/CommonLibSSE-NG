@@ -31,6 +31,8 @@ namespace RE
 		BSSoundHandle      sound;                // 28
 		std::uint32_t      pad34;                // 34
 		DialogueItem*      item;                 // 38
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(ExtraSayToTopicInfo) == 0x40);
 }

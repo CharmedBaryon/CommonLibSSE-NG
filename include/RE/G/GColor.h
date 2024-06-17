@@ -23,6 +23,8 @@ namespace RE
 
 		// members
 		ColorData colorData;  // 0
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(GColor) == 0x4);
 }

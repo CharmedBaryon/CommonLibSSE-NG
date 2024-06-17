@@ -36,6 +36,8 @@ namespace RE
 		// members
 		std::uint32_t unk10;  // 10
 		std::uint32_t pad14;  // 14
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(BSMultiBoundShape) == 0x18);
 }

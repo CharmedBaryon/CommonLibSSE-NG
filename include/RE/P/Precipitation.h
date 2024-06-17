@@ -45,6 +45,8 @@ namespace RE
 		float                 currentParticleDensity;  // 84
 		float                 lastParticleDensity;     // 88
 		std::uint32_t         pad8C;                   // 8C
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(Precipitation) == 0x90);
 }

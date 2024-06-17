@@ -31,6 +31,8 @@ namespace RE
 		// members
 		BSTArray<BGSProcedureTreeConditionalItem*> conditions;  // 10
 		std::uint64_t                              unk28;       // 28
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(BGSProcedureTreeBranch) == 0x30);
 }

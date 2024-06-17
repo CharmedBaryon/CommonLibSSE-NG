@@ -20,6 +20,8 @@ namespace RE
 		// members
 		float         scale;  // 10
 		std::uint32_t pad14;  // 14
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(ExtraScale) == 0x18);
 }

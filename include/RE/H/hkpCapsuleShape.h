@@ -30,6 +30,8 @@ namespace RE
 		std::uint32_t pad2C;    // 2C
 		hkVector4     vertexA;  // 30
 		hkVector4     vertexB;  // 40
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(hkpCapsuleShape) == 0x50);
 }

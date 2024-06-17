@@ -205,6 +205,8 @@ namespace RE
 		BSFixedString pickup;                                // 0x5D8 - "PickUp"
 		BSFixedString pathTweenerStart;                      // 0x5E0 - "PathTweenerStart"
 		BSFixedString pathTweenerEnd;                        // 0x5E8 - "PathTweenerEnd"
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(FixedStrings) == 0x5F0);
 }

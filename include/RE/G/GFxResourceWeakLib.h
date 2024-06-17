@@ -69,6 +69,8 @@ namespace RE
 		GLock                                        resourceLock;  // 18
 		GHashSet<ResourceNode, ResourceNode::HashOp> resources;     // 40
 		GPtr<GMemoryHeap>                            imageHeap;     // 48
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(GFxResourceWeakLib) == 0x50);
 }

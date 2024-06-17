@@ -36,6 +36,8 @@ namespace RE
 
 		// members
 		NAVMESH_PORTAL portal;  // 10
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(ExtraNavMeshPortal) == 0x20);
 }

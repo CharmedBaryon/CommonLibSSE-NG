@@ -70,6 +70,8 @@ namespace RE
 		hkStringPtr          name;              // B0
 		hkArray<hkpProperty> properties;        // B8
 		void*                treeData;          // C8
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(hkpWorldObject) == 0xD0);
 }

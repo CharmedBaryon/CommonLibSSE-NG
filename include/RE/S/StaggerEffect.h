@@ -14,6 +14,8 @@ namespace RE
 		// override (ActiveEffect)
 		virtual ~StaggerEffect();       // 13
 		virtual void Start() override;  // 14
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(StaggerEffect) == 0x90);
 }

@@ -7,6 +7,7 @@
 
 namespace RE
 {
+	class BSCullingProcess;
 	class BSPortalGraph;
 	class BSTriShape;
 	class NiAVObject;
@@ -42,21 +43,21 @@ namespace RE
 		virtual bool Unk_03();                  // 03
 
 		// members
-		std::uint32_t          unk010;          // 010
+		float                  luminance;       // 010
 		float                  lodDimmer;       // 014
 		Data                   unk018;          // 018
 		std::uint64_t          unk038;          // 038
 		std::uint32_t          unk040;          // 040
 		bool                   pointLight;      // 044
 		bool                   ambientLight;    // 045
-		bool                   unk046;          // 046
+		bool                   followsCamera;   // 046
 		bool                   portalStrict;    // 047
 		NiPointer<NiLight>     light;           // 048
 		NiPoint3               worldTranslate;  // 050
 		std::uint32_t          unk05C;          // 05C
 		std::uint8_t           unk060;          // 060
 		bool                   affectLand;      // 061
-		std::uint8_t           unk062;          // 062
+		bool                   affectWater;     // 062
 		bool                   neverFades;      // 063
 		std::uint32_t          unk064;          // 064
 		std::uint64_t          unk068;          // 068
@@ -69,9 +70,11 @@ namespace RE
 		BSTArray<void*>        unk0F0;          // 0F0
 		BSTArray<void*>        unk108;          // 108
 		BSPortalGraph*         portalGraph;     // 120
-		std::uint64_t          unk128;          // 128
+		BSCullingProcess*      cullingProcess;  // 128
 		NiPointer<NiAVObject>  objectNode;      // 130
 		BSLensFlareRenderData* lensFlareData;   // 138
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(BSLight) == 0x140);
 }

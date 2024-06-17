@@ -90,6 +90,8 @@ namespace RE
 		std::uint8_t          pad41;        // 41
 		std::uint16_t         pad42;        // 42
 		std::uint32_t         pad44;        // 44
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(QueuedItem) == 0x48);
 

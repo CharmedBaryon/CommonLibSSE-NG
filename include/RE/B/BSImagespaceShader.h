@@ -29,23 +29,23 @@ namespace RE
 		virtual void Unk_0E(void);  // 0E
 
 		// members
-		std::uint64_t unk120;  // 120
-		std::uint64_t unk128;  // 128
-		std::uint64_t unk130;  // 130
-		std::uint64_t unk138;  // 138
-		std::uint64_t unk140;  // 140
-		std::uint64_t unk148;  // 148
-		std::uint64_t unk150;  // 150
-		std::uint64_t unk158;  // 158
-		std::uint64_t unk160;  // 160
-		std::uint64_t unk168;  // 168
-		std::uint64_t unk170;  // 170
-		std::uint64_t unk178;  // 178
-		std::uint64_t unk180;  // 180
-		std::uint64_t unk188;  // 188
-		std::uint64_t unk190;  // 190
-		std::uint64_t unk198;  // 198
-		std::uint64_t unk1A0;  // 1A0
+		BSFixedString* name;    // 120 "BSImagespaceShaderISTemporalAA"
+		BSFixedString* type;    // 128 "ISTemporalAA"
+		std::uint64_t  unk130;  // 130
+		std::uint64_t  unk138;  // 138
+		std::uint64_t  unk140;  // 140
+		std::uint64_t  unk148;  // 148
+		std::uint64_t  unk150;  // 150
+		std::uint64_t  unk158;  // 158
+		std::uint64_t  unk160;  // 160
+		std::uint64_t  unk168;  // 168
+		std::uint64_t  unk170;  // 170
+		std::uint64_t  unk178;  // 178
+		std::uint64_t  unk180;  // 180
+		std::uint64_t  unk188;  // 188
+		std::uint64_t  unk190;  // 190
+		std::uint64_t  unk198;  // 198
+		std::uint64_t  unk1A0;  // 1A0
 	};
 	static_assert(sizeof(BSImagespaceShader) == 0x1A8);
 }

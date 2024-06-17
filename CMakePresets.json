@@ -219,98 +219,62 @@
     },
     {
       "name": "build-debug-msvc-vcpkg-flatrim",
-      "inherits": [
-        "build-debug-msvc-vcpkg-all",
-        "runtimes-flatrim"
-      ],
+      "inherits": ["build-debug-msvc-vcpkg-all", "runtimes-flatrim"],
       "binaryDir": "${sourceDir}/build/debug-msvc-vcpkg-flatrim"
     },
     {
       "name": "build-debug-clang-cl-vcpkg-flatrim",
-      "inherits": [
-        "build-debug-clang-cl-vcpkg-all",
-        "runtimes-flatrim"
-      ],
+      "inherits": ["build-debug-clang-cl-vcpkg-all", "runtimes-flatrim"],
       "binaryDir": "${sourceDir}/build/debug-clang-cl-vcpkg-flatrim"
     },
     {
       "name": "build-debug-msvc-vcpkg-vr",
-      "inherits": [
-        "build-debug-msvc-vcpkg-all",
-        "runtimes-vr"
-      ],
+      "inherits": ["build-debug-msvc-vcpkg-all", "runtimes-vr"],
       "binaryDir": "${sourceDir}/build/debug-msvc-vcpkg-vr"
     },
     {
       "name": "build-debug-clang-cl-vcpkg-vr",
-      "inherits": [
-        "build-debug-clang-cl-vcpkg-all",
-        "runtimes-vr"
-      ],
+      "inherits": ["build-debug-clang-cl-vcpkg-all", "runtimes-vr"],
       "binaryDir": "${sourceDir}/build/debug-clang-cl-vcpkg-vr"
     },
     {
       "name": "build-debug-msvc-vcpkg-ae",
-      "inherits": [
-        "build-debug-msvc-vcpkg-all",
-        "runtimes-ae"
-      ],
+      "inherits": ["build-debug-msvc-vcpkg-all", "runtimes-ae"],
       "binaryDir": "${sourceDir}/build/debug-msvc-vcpkg-ae"
     },
     {
       "name": "build-debug-clang-cl-vcpkg-ae",
-      "inherits": [
-        "build-debug-clang-cl-vcpkg-all",
-        "runtimes-ae"
-      ],
+      "inherits": ["build-debug-clang-cl-vcpkg-all", "runtimes-ae"],
       "binaryDir": "${sourceDir}/build/debug-clang-cl-vcpkg-ae"
     },
     {
       "name": "build-debug-msvc-vcpkg-se",
-      "inherits": [
-        "build-debug-msvc-vcpkg-all",
-        "runtimes-se"
-      ],
+      "inherits": ["build-debug-msvc-vcpkg-all", "runtimes-se"],
       "binaryDir": "${sourceDir}/build/debug-msvc-vcpkg-se"
     },
     {
       "name": "build-debug-clang-cl-vcpkg-se",
-      "inherits": [
-        "build-debug-clang-cl-vcpkg-all",
-        "runtimes-se"
-      ],
+      "inherits": ["build-debug-clang-cl-vcpkg-all", "runtimes-se"],
       "binaryDir": "${sourceDir}/build/debug-clang-cl-vcpkg-se"
     },
     {
       "name": "build-debug-msvc-vcpkg-pre-ae",
-      "inherits": [
-        "build-debug-msvc-vcpkg-all",
-        "runtimes-pre-ae"
-      ],
+      "inherits": ["build-debug-msvc-vcpkg-all", "runtimes-pre-ae"],
       "binaryDir": "${sourceDir}/build/debug-msvc-vcpkg-pre-ae"
     },
     {
       "name": "build-debug-clang-cl-vcpkg-pre-ae",
-      "inherits": [
-        "build-debug-clang-cl-vcpkg-all",
-        "runtimes-pre-ae"
-      ],
+      "inherits": ["build-debug-clang-cl-vcpkg-all", "runtimes-pre-ae"],
       "binaryDir": "${sourceDir}/build/debug-clang-cl-vcpkg-pre-ae"
     },
     {
       "name": "build-debug-msvc-vcpkg-current",
-      "inherits": [
-        "build-debug-msvc-vcpkg-all",
-        "runtimes-current"
-      ],
+      "inherits": ["build-debug-msvc-vcpkg-all", "runtimes-current"],
       "binaryDir": "${sourceDir}/build/debug-msvc-vcpkg-current"
     },
     {
       "name": "build-debug-clang-cl-vcpkg-current",
-      "inherits": [
-        "build-debug-clang-cl-vcpkg-all",
-        "runtimes-current"
-      ],
+      "inherits": ["build-debug-clang-cl-vcpkg-all", "runtimes-current"],
       "binaryDir": "${sourceDir}/build/debug-clang-cl-vcpkg-current"
     },
     {
@@ -343,98 +307,62 @@
     },
     {
       "name": "build-release-msvc-vcpkg-flatrim",
-      "inherits": [
-        "build-release-msvc-vcpkg-all",
-        "runtimes-flatrim"
-      ],
+      "inherits": ["build-release-msvc-vcpkg-all", "runtimes-flatrim"],
       "binaryDir": "${sourceDir}/build/release-msvc-vcpkg-flatrim"
     },
     {
       "name": "build-release-clang-cl-vcpkg-flatrim",
-      "inherits": [
-        "build-release-clang-cl-vcpkg-all",
-        "runtimes-flatrim"
-      ],
+      "inherits": ["build-release-clang-cl-vcpkg-all", "runtimes-flatrim"],
       "binaryDir": "${sourceDir}/build/release-clang-cl-vcpkg-flatrim"
     },
     {
       "name": "build-release-msvc-vcpkg-vr",
-      "inherits": [
-        "build-release-msvc-vcpkg-all",
-        "runtimes-vr"
-      ],
+      "inherits": ["build-release-msvc-vcpkg-all", "runtimes-vr"],
       "binaryDir": "${sourceDir}/build/release-msvc-vcpkg-vr"
     },
     {
       "name": "build-release-clang-cl-vcpkg-vr",
-      "inherits": [
-        "build-release-clang-cl-vcpkg-all",
-        "runtimes-vr"
-      ],
+      "inherits": ["build-release-clang-cl-vcpkg-all", "runtimes-vr"],
       "binaryDir": "${sourceDir}/build/release-clang-cl-vcpkg-vr"
     },
     {
       "name": "build-release-msvc-vcpkg-ae",
-      "inherits": [
-        "build-release-msvc-vcpkg-all",
-        "runtimes-ae"
-      ],
+      "inherits": ["build-release-msvc-vcpkg-all", "runtimes-ae"],
       "binaryDir": "${sourceDir}/build/release-msvc-vcpkg-ae"
     },
     {
       "name": "build-release-clang-cl-vcpkg-ae",
-      "inherits": [
-        "build-release-clang-cl-vcpkg-all",
-        "runtimes-ae"
-      ],
+      "inherits": ["build-release-clang-cl-vcpkg-all", "runtimes-ae"],
       "binaryDir": "${sourceDir}/build/release-clang-cl-vcpkg-ae"
     },
     {
       "name": "build-release-msvc-vcpkg-se",
-      "inherits": [
-        "build-release-msvc-vcpkg-all",
-        "runtimes-se"
-      ],
+      "inherits": ["build-release-msvc-vcpkg-all", "runtimes-se"],
       "binaryDir": "${sourceDir}/build/release-msvc-vcpkg-se"
     },
     {
       "name": "build-release-clang-cl-vcpkg-se",
-      "inherits": [
-        "build-release-clang-cl-vcpkg-all",
-        "runtimes-se"
-      ],
+      "inherits": ["build-release-clang-cl-vcpkg-all", "runtimes-se"],
       "binaryDir": "${sourceDir}/build/release-clang-cl-vcpkg-se"
     },
     {
       "name": "build-release-msvc-vcpkg-pre-ae",
-      "inherits": [
-        "build-release-msvc-vcpkg-all",
-        "runtimes-pre-ae"
-      ],
+      "inherits": ["build-release-msvc-vcpkg-all", "runtimes-pre-ae"],
       "binaryDir": "${sourceDir}/build/release-msvc-vcpkg-pre-ae"
     },
     {
       "name": "build-release-clang-cl-vcpkg-pre-ae",
-      "inherits": [
-        "build-release-clang-cl-vcpkg-all",
-        "runtimes-pre-ae"
-      ],
+      "inherits": ["build-release-clang-cl-vcpkg-all", "runtimes-pre-ae"],
       "binaryDir": "${sourceDir}/build/release-clang-cl-vcpkg-pre-ae"
     },
     {
       "name": "build-release-msvc-vcpkg-current",
-      "inherits": [
-        "build-release-msvc-vcpkg-all",
-        "runtimes-current"
-      ],
+      "inherits": ["build-release-msvc-vcpkg-all", "runtimes-current"],
       "binaryDir": "${sourceDir}/build/release-msvc-vcpkg-current"
     },
     {
       "name": "build-release-clang-cl-vcpkg-current",
-      "inherits": [
-        "build-release-clang-cl-vcpkg-all",
-        "runtimes-current"
-      ],
+      "inherits": ["build-release-clang-cl-vcpkg-all", "runtimes-current"],
       "binaryDir": "${sourceDir}/build/release-clang-cl-vcpkg-current"
     },
     {
@@ -467,98 +395,62 @@
     },
     {
       "name": "build-debug-msvc-conan-flatrim",
-      "inherits": [
-        "build-debug-msvc-conan-all",
-        "runtimes-flatrim"
-      ],
+      "inherits": ["build-debug-msvc-conan-all", "runtimes-flatrim"],
       "binaryDir": "${sourceDir}/build/debug-msvc-conan-flatrim"
     },
     {
       "name": "build-debug-clang-cl-conan-flatrim",
-      "inherits": [
-        "build-debug-clang-cl-conan-all",
-        "runtimes-flatrim"
-      ],
+      "inherits": ["build-debug-clang-cl-conan-all", "runtimes-flatrim"],
       "binaryDir": "${sourceDir}/build/debug-clang-cl-conan-flatrim"
     },
     {
       "name": "build-debug-msvc-conan-vr",
-      "inherits": [
-        "build-debug-msvc-conan-all",
-        "runtimes-vr"
-      ],
+      "inherits": ["build-debug-msvc-conan-all", "runtimes-vr"],
       "binaryDir": "${sourceDir}/build/debug-msvc-conan-vr"
     },
     {
       "name": "build-debug-clang-cl-conan-vr",
-      "inherits": [
-        "build-debug-clang-cl-conan-all",
-        "runtimes-vr"
-      ],
+      "inherits": ["build-debug-clang-cl-conan-all", "runtimes-vr"],
       "binaryDir": "${sourceDir}/build/debug-clang-cl-conan-vr"
     },
     {
       "name": "build-debug-msvc-conan-ae",
-      "inherits": [
-        "build-debug-msvc-conan-all",
-        "runtimes-ae"
-      ],
+      "inherits": ["build-debug-msvc-conan-all", "runtimes-ae"],
       "binaryDir": "${sourceDir}/build/debug-msvc-conan-ae"
     },
     {
       "name": "build-debug-clang-cl-conan-ae",
-      "inherits": [
-        "build-debug-clang-cl-conan-all",
-        "runtimes-ae"
-      ],
+      "inherits": ["build-debug-clang-cl-conan-all", "runtimes-ae"],
       "binaryDir": "${sourceDir}/build/debug-clang-cl-conan-ae"
     },
     {
       "name": "build-debug-msvc-conan-se",
-      "inherits": [
-        "build-debug-msvc-conan-all",
-        "runtimes-se"
-      ],
+      "inherits": ["build-debug-msvc-conan-all", "runtimes-se"],
       "binaryDir": "${sourceDir}/build/debug-msvc-conan-se"
     },
     {
       "name": "build-debug-clang-cl-conan-se",
-      "inherits": [
-        "build-debug-clang-cl-conan-all",
-        "runtimes-se"
-      ],
+      "inherits": ["build-debug-clang-cl-conan-all", "runtimes-se"],
       "binaryDir": "${sourceDir}/build/debug-clang-cl-conan-se"
     },
     {
       "name": "build-debug-msvc-conan-pre-ae",
-      "inherits": [
-        "build-debug-msvc-conan-all",
-        "runtimes-pre-ae"
-      ],
+      "inherits": ["build-debug-msvc-conan-all", "runtimes-pre-ae"],
       "binaryDir": "${sourceDir}/build/debug-msvc-conan-pre-ae"
     },
     {
       "name": "build-debug-clang-cl-conan-pre-ae",
-      "inherits": [
-        "build-debug-clang-cl-conan-all",
-        "runtimes-pre-ae"
-      ],
+      "inherits": ["build-debug-clang-cl-conan-all", "runtimes-pre-ae"],
       "binaryDir": "${sourceDir}/build/debug-clang-cl-conan-pre-ae"
     },
     {
       "name": "build-debug-msvc-conan-current",
-      "inherits": [
-        "build-debug-msvc-conan-all",
-        "runtimes-current"
-      ],
+      "inherits": ["build-debug-msvc-conan-all", "runtimes-current"],
       "binaryDir": "${sourceDir}/build/debug-msvc-conan-current"
     },
     {
       "name": "build-debug-clang-cl-conan-current",
-      "inherits": [
-        "build-debug-clang-cl-conan-all",
-        "runtimes-current"
-      ],
+      "inherits": ["build-debug-clang-cl-conan-all", "runtimes-current"],
       "binaryDir": "${sourceDir}/build/debug-clang-cl-conan-current"
     },
     {
@@ -591,98 +483,62 @@
     },
     {
       "name": "build-release-msvc-conan-flatrim",
-      "inherits": [
-        "build-release-msvc-conan-all",
-        "runtimes-flatrim"
-      ],
+      "inherits": ["build-release-msvc-conan-all", "runtimes-flatrim"],
       "binaryDir": "${sourceDir}/build/release-msvc-conan-flatrim"
     },
     {
       "name": "build-release-clang-cl-conan-flatrim",
-      "inherits": [
-        "build-release-clang-cl-conan-all",
-        "runtimes-flatrim"
-      ],
+      "inherits": ["build-release-clang-cl-conan-all", "runtimes-flatrim"],
       "binaryDir": "${sourceDir}/build/release-clang-cl-conan-flatrim"
     },
     {
       "name": "build-release-msvc-conan-vr",
-      "inherits": [
-        "build-release-msvc-conan-all",
-        "runtimes-vr"
-      ],
+      "inherits": ["build-release-msvc-conan-all", "runtimes-vr"],
       "binaryDir": "${sourceDir}/build/release-msvc-conan-vr"
     },
     {
       "name": "build-release-clang-cl-conan-vr",
-      "inherits": [
-        "build-release-clang-cl-conan-all",
-        "runtimes-vr"
-      ],
+      "inherits": ["build-release-clang-cl-conan-all", "runtimes-vr"],
       "binaryDir": "${sourceDir}/build/release-clang-cl-conan-vr"
     },
     {
       "name": "build-release-msvc-conan-ae",
-      "inherits": [
-        "build-release-msvc-conan-all",
-        "runtimes-ae"
-      ],
+      "inherits": ["build-release-msvc-conan-all", "runtimes-ae"],
       "binaryDir": "${sourceDir}/build/release-msvc-conan-ae"
     },
     {
       "name": "build-release-clang-cl-conan-ae",
-      "inherits": [
-        "build-release-clang-cl-conan-all",
-        "runtimes-ae"
-      ],
+      "inherits": ["build-release-clang-cl-conan-all", "runtimes-ae"],
       "binaryDir": "${sourceDir}/build/release-clang-cl-conan-ae"
     },
     {
       "name": "build-release-msvc-conan-se",
-      "inherits": [
-        "build-release-msvc-conan-all",
-        "runtimes-se"
-      ],
+      "inherits": ["build-release-msvc-conan-all", "runtimes-se"],
       "binaryDir": "${sourceDir}/build/release-msvc-conan-se"
     },
     {
       "name": "build-release-clang-cl-conan-se",
-      "inherits": [
-        "build-release-clang-cl-conan-all",
-        "runtimes-se"
-      ],
+      "inherits": ["build-release-clang-cl-conan-all", "runtimes-se"],
       "binaryDir": "${sourceDir}/build/release-clang-cl-conan-se"
     },
     {
       "name": "build-release-msvc-conan-pre-ae",
-      "inherits": [
-        "build-release-msvc-conan-all",
-        "runtimes-pre-ae"
-      ],
+      "inherits": ["build-release-msvc-conan-all", "runtimes-pre-ae"],
       "binaryDir": "${sourceDir}/build/release-msvc-conan-pre-ae"
     },
     {
       "name": "build-release-clang-cl-conan-pre-ae",
-      "inherits": [
-        "build-release-clang-cl-conan-all",
-        "runtimes-pre-ae"
-      ],
+      "inherits": ["build-release-clang-cl-conan-all", "runtimes-pre-ae"],
       "binaryDir": "${sourceDir}/build/release-clang-cl-conan-pre-ae"
     },
     {
       "name": "build-release-msvc-conan-current",
-      "inherits": [
-        "build-release-msvc-conan-all",
-        "runtimes-current"
-      ],
+      "inherits": ["build-release-msvc-conan-all", "runtimes-current"],
       "binaryDir": "${sourceDir}/build/release-msvc-conan-current"
     },
     {
       "name": "build-release-clang-cl-conan-current",
-      "inherits": [
-        "build-release-clang-cl-conan-all",
-        "runtimes-current"
-      ],
+      "inherits": ["build-release-clang-cl-conan-all", "runtimes-current"],
       "binaryDir": "${sourceDir}/build/release-clang-cl-conan-current"
     }
   ],

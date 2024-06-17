@@ -22,6 +22,8 @@ namespace RE
 
 		// members
 		NiTPrimitiveArray<BSAnimReceiverType*> receivers;  // 00
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(BSAnimNoteListener) == 0x18);
 }

@@ -67,6 +67,9 @@ namespace RE
 
 	private:
 		void CopyObjectList(const std::vector<ContainerObject*>& a_copiedData);
+
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(TESContainer) == 0x18);
 }

@@ -48,6 +48,8 @@ namespace RE
 		virtual void                        GetHeapStats(HeapStats* a_stats, bool a_fullBlockInfo) = 0;               // 0C
 		virtual bool                        ShouldTrySmallBlockPools(std::size_t a_size, MEM_CONTEXT a_context) = 0;  // 0D
 		[[nodiscard]] virtual std::uint32_t GetPageSize() const = 0;                                                  // 0E
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(IMemoryHeap) == 0x8);
 }

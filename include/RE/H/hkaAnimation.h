@@ -62,6 +62,8 @@ namespace RE
 		std::int32_t                                   numberOfFloatTracks;      // 1C
 		hkRefPtr<hkaAnimatedReferenceFrame>            extractedMotion;          // 20
 		hkArray<hkaAnnotationTrack>                    annotationTracks;         // 28
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(hkaAnimation) == 0x38);
 }

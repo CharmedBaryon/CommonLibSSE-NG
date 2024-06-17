@@ -26,6 +26,8 @@ namespace RE
 
 		// override (TESForm)
 		bool Load(TESFile* a_mod) override;  // 06 - { return true; }
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(BGSMenuIcon) == 0x30);
 }

@@ -28,6 +28,8 @@ namespace RE
 		virtual bool                               GetDataAsString(BSString* a_dst) const = 0;   // 0A
 		[[nodiscard]] virtual const BSFixedString& GetTypeName() const = 0;                      // 0B
 		virtual void                               Unk_0C(void);                                 // 0C - { return 0; }
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(IPackageData) == 0x8);
 }

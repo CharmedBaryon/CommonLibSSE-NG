@@ -39,6 +39,8 @@ namespace RE
 		NiPoint3      size;    // 2C
 		std::uint32_t pad38;   // 38
 		std::uint32_t pad3C;   // 3C
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(BSMultiBoundAABB) == 0x40);
 }

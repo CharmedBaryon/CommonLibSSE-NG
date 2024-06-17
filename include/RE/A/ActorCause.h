@@ -27,6 +27,8 @@ namespace RE
 		NiPoint3                      origin;        // 04
 		std::uint32_t                 actorCauseID;  // 10
 		volatile mutable std::int32_t refCount;      // 14
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(ActorCause) == 0x18);
 }

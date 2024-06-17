@@ -15,6 +15,8 @@ namespace RE
 		ObjectRefHandle reference;     // 10
 		std::uint16_t   uniqueID;      // 14
 		std::uint16_t   pad16;         // 16
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(TESContainerChangedEvent) == 0x18);
 }

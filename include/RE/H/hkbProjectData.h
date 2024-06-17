@@ -18,6 +18,8 @@ namespace RE
 		hkVector4                      worldUpWS;         // 10
 		hkRefPtr<hkbProjectStringData> stringData;        // 20
 		std::uint8_t                   defaultEventNode;  // 28 (hkEnum<hkbTransitionEffect::EventMode, hkInt8>)
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(hkbProjectData) == 0x30);
 }

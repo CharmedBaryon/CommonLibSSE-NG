@@ -25,6 +25,8 @@ namespace RE
 		// members
 		std::uint32_t        fileOffset;       // 08
 		BGSLocalizedStringDL descriptionText;  // 0C
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(TESDescription) == 0x10);
 }

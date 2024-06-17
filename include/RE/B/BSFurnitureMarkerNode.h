@@ -29,6 +29,8 @@ namespace RE
 		float                                            heading;          // 0C
 		stl::enumeration<AnimationType, std::uint16_t>   animationType;    // 10
 		stl::enumeration<EntryProperties, std::uint16_t> entryProperties;  // 12
+	private:
+		KEEP_FOR_RE()
 	};
 
 	class BSFurnitureMarkerNode : public NiExtraData
@@ -38,5 +40,7 @@ namespace RE
 		inline static auto           NiRTTI = NiRTTI_BSFurnitureMarkerNode;
 
 		BSTArray<BSFurnitureMarker> markers;  // 18
+	private:
+		KEEP_FOR_RE()
 	};
 }

@@ -27,6 +27,8 @@ namespace RE
 		uint64_t                             unk68;                   // 68
 		hkbVariableValueSet*                 variableInitialValues;   // 70
 		hkRefPtr<hkbBehaviorGraphStringData> stringData;              // 78
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(hkbBehaviorGraphData) == 0x80);
 }

@@ -60,6 +60,9 @@ namespace RE
 		virtual TESForm*           GetAsForm();                                    // 56 - { return this; }
 
 		[[nodiscard]] bool IsLeveled() const;
+
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(TESActorBase) == 0x150);
 }

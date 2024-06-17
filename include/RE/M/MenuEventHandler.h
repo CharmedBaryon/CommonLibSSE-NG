@@ -28,6 +28,8 @@ namespace RE
 		bool          registered;  // 0C
 		std::uint8_t  unk0D;       // 0D
 		std::uint16_t pad0E;       // 0E
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(MenuEventHandler) == 0x10);
 }

@@ -11,6 +11,8 @@ namespace RE
 	class GFxActionPriority
 	{
 	public:
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(GFxActionPriority) == 0x1);
 
@@ -149,6 +151,8 @@ namespace RE
 		std::uint8_t                          controllerGroups[16];             // 2B4C
 		std::uint32_t                         unk2B54;                          // 2B54
 		std::uint64_t                         unk2B58[(0x2BE8 - 0x2B58) >> 3];  // 2B58
+	private:
+		KEEP_FOR_RE()
 	};
 #ifndef __INTELLISENSE__
 	static_assert(sizeof(GFxMovieRoot) == 0x2BF0);

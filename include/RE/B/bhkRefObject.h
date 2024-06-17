@@ -24,6 +24,8 @@ namespace RE
 
 		// members
 		hkRefPtr<hkReferencedObject> referencedObject;  // 10
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(bhkRefObject) == 0x18);
 }

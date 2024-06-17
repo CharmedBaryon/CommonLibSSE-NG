@@ -72,6 +72,8 @@ namespace RE
 		std::uint32_t            pad204;         // 204
 		BSTArray<TESObjectARMA*> armorAddons;    // 208
 		TESObjectARMO*           templateArmor;  // 220 - TNAM
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(TESObjectARMO) == 0x228);
 }

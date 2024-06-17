@@ -35,6 +35,8 @@ namespace RE
 
 		// members
 		std::uint64_t unkB8;  // B8
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(BGSMoviePlayer) == 0xC0);
 }

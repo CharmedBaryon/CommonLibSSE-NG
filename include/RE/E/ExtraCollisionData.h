@@ -26,6 +26,8 @@ namespace RE
 
 		// members
 		CollisionData* collisionData;  // 10
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(ExtraCollisionData) == 0x18);
 }

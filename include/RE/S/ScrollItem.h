@@ -40,6 +40,8 @@ namespace RE
 		bool                                   GetSkillUsageData(SkillUsageData& a_data) const override;              // 60 - { return 0; }
 		[[nodiscard]] ActorValue               GetAssociatedSkill() const override;                                   // 66 - { return ActorValue::kNone; }
 		void                                   LoadMagicItemChunk(TESFile* a_mod, std::uint32_t a_chunkID) override;  // 6A
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(ScrollItem) == 0x168);
 }

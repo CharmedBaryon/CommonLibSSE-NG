@@ -47,6 +47,8 @@ namespace RE
 		bool                        deleteWorldFromModel;       // 9C
 		bool                        deletePoseLocal;            // 9D
 		std::uint16_t               pad9E;                      // 9E
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(hkbCharacter) == 0xA0);
 }

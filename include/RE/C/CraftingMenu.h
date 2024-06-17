@@ -12,10 +12,17 @@ namespace RE
 	// menuDepth = 0
 	// flags = kUsesMenuContext | kDisablePauseMenu | kUpdateUsesCursor | kInventoryItemMenu | kDontHideCursorWhenTopmost
 	// context = kItemMenu
-	class CraftingMenu : public IMenu
+	class CraftingMenu :
+#ifdef ENABLE_SKYRIM_VR
+		public IMenu,
+		public MenuEventHandler
+#else
+		public IMenu
+#endif
 	{
 	public:
 		inline static constexpr auto      RTTI = RTTI_CraftingMenu;
+		inline static constexpr auto      VTABLE = VTABLE_CraftingMenu;
 		constexpr static std::string_view MENU_NAME = "Crafting Menu";
 
 		~CraftingMenu() override;  // 00
@@ -39,10 +46,18 @@ namespace RE
 #ifndef SKYRIM_CROSS_VR
 		CraftingSubMenus::CraftingSubMenu* subMenu;  // 30, 40
 #endif
+	private:
+		KEEP_FOR_RE()
 	};
-#ifndef ENABLE_SKYRIM_VR
-	static_assert(sizeof(CraftingMenu) == 0x38);
-#elif !defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE)
+#if !defined(ENABLE_SKYRIM_VR)
+#	ifdef ENABLE_SKYRIM_AE
 	static_assert(sizeof(CraftingMenu) == 0x48);
+#	else
+	static_assert(sizeof(CraftingMenu) == 0x38);
+#	endif
+#elif !defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE)
+	static_assert(sizeof(CraftingMenu) == 0x58);
+#else
+	static_assert(sizeof(CraftingMenu) == 0x50);
 #endif
 }

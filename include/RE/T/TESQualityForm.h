@@ -28,6 +28,8 @@ namespace RE
 		// members
 		stl::enumeration<Quality, std::uint32_t> quality;  // 08 - QUAL
 		std::uint32_t                            pad0C;    // 0C
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(TESQualityForm) == 0x10);
 }

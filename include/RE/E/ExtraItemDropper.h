@@ -20,6 +20,8 @@ namespace RE
 		// members
 		ObjectRefHandle dropper;  // 10
 		std::uint32_t   pad14;    // 14
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(ExtraItemDropper) == 0x18);
 }

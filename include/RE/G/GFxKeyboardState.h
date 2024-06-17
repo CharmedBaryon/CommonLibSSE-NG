@@ -63,6 +63,8 @@ namespace RE
 		std::uint8_t pad685;                          // 685
 		std::uint8_t pad686;                          // 686
 		std::uint8_t pad687;                          // 687
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(GFxKeyboardState) == 0x688);
 }

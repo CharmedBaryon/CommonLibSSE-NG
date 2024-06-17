@@ -21,6 +21,8 @@ namespace RE
 
 		// members
 		NiPointer<QueuedFile> preloadedRaceData;  // 10
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(ExtraRaceData) == 0x18);
 }

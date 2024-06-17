@@ -36,6 +36,8 @@ namespace RE
 		std::uint8_t  flags{ 0 };             // 12
 		std::uint8_t  pad13{ 0 };             // 13
 		std::uint32_t pad14{ 0 };             // 14
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(PermanentMagicFunctor) == 0x18);
 }

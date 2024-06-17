@@ -47,6 +47,8 @@ namespace RE
 
 		// members
 		BSTArray<FILE_DATA> fileData;  // A0 - DNAM
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(BGSMaterialObject) == 0xB8);
 }

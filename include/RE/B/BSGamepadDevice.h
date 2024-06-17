@@ -28,12 +28,12 @@ namespace RE
 		bool IsEnabled() const override;  // 07 - { return connected && userIndex != -1; }
 
 		// add
-		virtual void SetRumble(float a_lValue, float a_rValue) = 0;                                  // 09
-		virtual void SetLEDColor(ColorParam* a_colorParam);                                          // 0A - { return; }
-		virtual void ResetLEDColor();                                                                // 0B - { return; }
-		virtual void Unk_0C(void);                                                                   // 0C - { return 0; }
-		virtual void ProcessRawInput(int32_t a_rawX, int32_t a_rawY, float& a_outX, float& a_outY);  // 0D
-		virtual void Unk_0E(void);                                                                   // 0E - { return; }
+		virtual void SetRumble(float a_lValue, float a_rValue) = 0;                                       // 09
+		virtual void SetLEDColor(ColorParam* a_colorParam);                                               // 0A - { return; }
+		virtual void ResetLEDColor();                                                                     // 0B - { return; }
+		virtual void IsRemoteController(void);                                                            // 0C - { return 0; }
+		virtual void NormalizeThumbstickValue(int a_thumbX, int a_thumbY, float& a_xOut, float& a_yOut);  // 0D
+		virtual void DoEnableListeningMode(void);                                                         // 0E - { return; }
 
 		// members
 		std::int32_t  userIndex;          // C8
@@ -43,6 +43,9 @@ namespace RE
 
 	protected:
 		BSGamepadDevice();
+
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(BSGamepadDevice) == 0xD0);
 }

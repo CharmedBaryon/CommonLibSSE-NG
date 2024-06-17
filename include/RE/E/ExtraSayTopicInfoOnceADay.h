@@ -29,6 +29,8 @@ namespace RE
 
 		// members
 		BSSimpleList<SayOnceTopicInfos*>* saidOnceTopicInfos;  // 10
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(ExtraSayTopicInfoOnceADay) == 0x18);
 }

@@ -26,6 +26,8 @@ namespace RE
 		virtual void Unk_0B(void) = 0;                                       // 0B
 		virtual void ToggleConstraints(bool a_disable) = 0;                  // 0C
 		virtual void Unk_0D(void) = 0;                                       // 0D
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(BSIRagdollDriver) == 0x8);
 }

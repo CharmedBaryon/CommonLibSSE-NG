@@ -48,6 +48,8 @@ namespace RE
 		// members
 		GPtr<GFxMovieView> view;  // 08
 		GFxValue           root;  // 10 - kDisplayObject - "_level0.HUDMovieBaseInstance"
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(HUDObject) == 0x28);
 }

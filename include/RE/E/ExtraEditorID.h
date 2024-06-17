@@ -19,6 +19,8 @@ namespace RE
 
 		// members
 		BSFixedString editorID;  // 10
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(ExtraEditorID) == 0x18);
 }

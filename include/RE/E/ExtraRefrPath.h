@@ -32,6 +32,8 @@ namespace RE
 		float                                      maxRotSpeed;       // 5C
 		float                                      currentParameter;  // 60
 		stl::enumeration<PATH_TYPE, std::uint32_t> type;              // 64
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(ExtraRefrPath) == 0x68);
 }

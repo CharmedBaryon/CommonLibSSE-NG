@@ -12,6 +12,8 @@ namespace RE
 		float         maxExtraPenetration;  // 10
 		float         startPointTolerance;  // 14
 		std::uint64_t pad18;                // 18
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(hkpLinearCastInput) == 0x20);
 }

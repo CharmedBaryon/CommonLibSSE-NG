@@ -18,6 +18,8 @@ namespace RE
 		std::uint64_t unk08;  // 08
 		std::uint64_t unk10;  // 10
 		std::uint64_t unk18;  // 18
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(ActorTargetCheck) == 0x20);
 }

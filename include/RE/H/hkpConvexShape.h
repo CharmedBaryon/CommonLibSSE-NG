@@ -27,6 +27,8 @@ namespace RE
 		// members
 		float         radius;  // 20
 		std::uint32_t pad1C;   // 24
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(hkpConvexShape) == 0x28);
 }

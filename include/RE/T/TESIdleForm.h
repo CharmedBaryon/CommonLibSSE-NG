@@ -77,6 +77,8 @@ namespace RE
 		BSFixedString animFileName;   // 48 - DNAM
 		BSFixedString animEventName;  // 50 - ENAM
 		BSString      formEditorID;   // 58 - EDID
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(TESIdleForm) == 0x68);
 }

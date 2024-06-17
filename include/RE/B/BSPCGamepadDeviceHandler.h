@@ -11,6 +11,13 @@ namespace RE
 	public:
 		inline static constexpr auto RTTI = RTTI_BSPCGamepadDeviceHandler;
 		inline static constexpr auto VTABLE = VTABLE_BSPCGamepadDeviceHandler;
+		struct RUNTIME_DATA
+		{
+#define RUNTIME_DATA_CONTENT \
+	BSPCGamepadDeviceDelegate* currentPCGamePadDelegate; /* 08, 10 in VR */
+			RUNTIME_DATA_CONTENT
+		};
+		static_assert(sizeof(RUNTIME_DATA) == 0x8);
 
 		~BSPCGamepadDeviceHandler() override;  // 00
 
@@ -26,12 +33,29 @@ namespace RE
 
 		void InitializeDelegate();  // called by Initialize() and Process() to initialize the delegate
 
+		[[nodiscard]] inline RUNTIME_DATA& GetRuntimeData() noexcept
+		{
+			return REL::RelocateMember<RUNTIME_DATA>(this, 0x8, 0x10);
+		}
+
+		[[nodiscard]] inline const RUNTIME_DATA& GetRuntimeData() const noexcept
+		{
+			return REL::RelocateMember<RUNTIME_DATA>(this, 0x8, 0x10);
+		}
 		// members
-		BSPCGamepadDeviceDelegate* currentPCGamePadDelegate;  // 08
+#ifndef SKYRIM_CROSS_VR
+		RUNTIME_DATA_CONTENT
+#endif
 	protected:
 		friend class BSInputDeviceFactory;
 		BSPCGamepadDeviceHandler();
 	};
-
+#if !defined(ENABLE_SKYRIM_VR)
 	static_assert(sizeof(BSPCGamepadDeviceHandler) == 0x10);
+#elif !defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE)
+	static_assert(sizeof(BSPCGamepadDeviceHandler) == 0x10);
+#else
+	static_assert(sizeof(BSPCGamepadDeviceHandler) == 0x8);
+#endif
 }
+#undef RUNTIME_DATA_CONTENT

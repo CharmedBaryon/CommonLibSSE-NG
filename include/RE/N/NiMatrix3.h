@@ -40,6 +40,8 @@ namespace RE
 
 		// members
 		float entry[3][3];  // 00
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(NiMatrix3) == 0x24);
 }

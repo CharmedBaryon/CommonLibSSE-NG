@@ -624,6 +624,8 @@ namespace RE
 
 		// members
 		TableType* table;  // 00
+	private:
+		KEEP_FOR_RE()
 	};
 	// size == 0x8
 }

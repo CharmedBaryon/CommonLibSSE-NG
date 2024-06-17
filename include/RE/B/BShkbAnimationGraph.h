@@ -147,6 +147,8 @@ namespace RE
 		std::uint8_t                   doFootIK;                     // 249
 		std::uint16_t                  unk24A;                       // 24A
 		std::uint32_t                  unk24C;                       // 24C
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(BShkbAnimationGraph) == 0x250);
 }

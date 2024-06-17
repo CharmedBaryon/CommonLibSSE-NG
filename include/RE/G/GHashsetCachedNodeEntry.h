@@ -65,6 +65,8 @@ namespace RE
 		SPInt nextInChain;  // 00
 		UPInt hashValue;    // 08
 		T     value;        // 10
+	private:
+		KEEP_FOR_RE()
 	};
 	// size == 0x10 + sizeof(T)
 }

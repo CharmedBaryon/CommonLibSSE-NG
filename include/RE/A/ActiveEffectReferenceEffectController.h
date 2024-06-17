@@ -43,6 +43,8 @@ namespace RE
 		ActiveEffect*   effect;     // 08
 		ObjectRefHandle target;     // 10
 		NiPoint3        windPoint;  // 14
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(ActiveEffectReferenceEffectController) == 0x20);
 }

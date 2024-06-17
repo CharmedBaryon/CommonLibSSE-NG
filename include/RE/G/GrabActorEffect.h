@@ -29,6 +29,8 @@ namespace RE
 		bool          grabbed;       // A9
 		std::uint16_t unkAA;         // AA
 		std::uint32_t unkAC;         // AC
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(GrabActorEffect) == 0xB0);
 }

@@ -36,6 +36,8 @@ namespace RE
 		// members
 		BSFixedString formEditorID;     // 58 - EDID
 		BSFixedString unloadEventName;  // 60 - BNAM
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(TESObjectANIO) == 0x68);
 }

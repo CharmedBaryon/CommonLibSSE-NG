@@ -10,6 +10,8 @@ namespace RE
 		inline static constexpr auto RTTI = RTTI_bhkBackfaceContactListener;
 
 		~bhkBackfaceContactListener() override;  // 04
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(bhkBackfaceContactListener) == 0x8);
 }

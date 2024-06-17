@@ -15,6 +15,8 @@ namespace RE
 
 		// members
 		MapMenu* mapMenu;  // 10
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(MapInputHandler) == 0x18);
 }

@@ -58,6 +58,8 @@ namespace RE
 		GPtr<GFxResourceLib> strongResourceLib;  // 10
 		std::uint32_t        defLoadFlags;       // 18
 		std::uint32_t        pad1C;              // 1C
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(GFxLoader) == 0x20);
 }

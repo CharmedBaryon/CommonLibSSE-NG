@@ -30,6 +30,8 @@ namespace RE
 
 		// add
 		virtual void Call(Params& a_params) = 0;  // 01
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(GFxFunctionHandler) == 0x10);
 }

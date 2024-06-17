@@ -62,6 +62,8 @@ namespace RE
 		float                                          maxLinearAcceleration;  // 2C
 		float                                          maxLinearVelocity;      // 30
 		float                                          gain;                   // 34
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(hkpCharacterContext) == 0x38);
 }

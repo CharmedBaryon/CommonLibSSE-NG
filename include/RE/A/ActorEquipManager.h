@@ -23,6 +23,10 @@ namespace RE
 
 		// members
 		bool unk01;  // 01
+	private:
+		KEEP_FOR_RE()
 	};
+#if !defined(ENABLE_SKYRIM_VR)
 	static_assert(sizeof(ActorEquipManager) == 0x2);
+#endif
 }

@@ -93,6 +93,8 @@ namespace RE
 		float                                  magnitudeOverride;  // 3C
 		float                                  nextTargetUpdate;   // 40
 		float                                  projectileTimer;    // 44
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(MagicCaster) == 0x48);
 }

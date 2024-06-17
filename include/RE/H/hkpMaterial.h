@@ -26,6 +26,8 @@ namespace RE
 		hkHalf                                       rollingFrictionMultiplier;  // 02
 		float                                        friction;                   // 04
 		float                                        restitution;                // 08
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(hkpMaterial) == 0xC);
 }

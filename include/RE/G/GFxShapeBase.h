@@ -38,6 +38,8 @@ namespace RE
 		std::uint64_t unk30;       // 30
 		std::uint32_t unk38;       // 38
 		std::uint32_t pad3C;       // 3C
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(GFxShapeBase) == 0x40);
 }

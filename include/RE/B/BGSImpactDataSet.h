@@ -34,6 +34,8 @@ namespace RE
 
 		// members
 		BSTHashMap<const BGSMaterialType*, BGSImpactData*> impactMap;  // 28 - PNAM
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(BGSImpactDataSet) == 0x58);
 }

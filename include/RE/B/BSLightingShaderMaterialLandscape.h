@@ -23,7 +23,7 @@ namespace RE
 		Feature           GetFeature() const override;                                                                                                       // 06 - { return Feature::kMultiTexLandLODBlend; }
 		void              ClearTextures() override;                                                                                                          // 09
 		void              ReceiveValuesFromRootMaterial(bool a_skinned, bool a_rimLighting, bool a_softLighting, bool a_backLighting, bool a_MSN) override;  // 0A
-		void              GetTextures(void) override;                                                                                                        // 0B
+		uint32_t          GetTextures(NiSourceTexture** textures) override;                                                                                  // 0B
 
 		// members
 		std::uint32_t              numLandscapeTextures;        // 0A0
@@ -48,6 +48,9 @@ namespace RE
 			return func(this);
 		}
 		friend class BSLightingShaderMaterialBase;
+
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(BSLightingShaderMaterialLandscape) == 0x158);
 }

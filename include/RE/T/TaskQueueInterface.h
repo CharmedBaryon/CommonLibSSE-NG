@@ -25,6 +25,8 @@ namespace RE
 		void QueueForceWeather(TESWeather* a_weather, bool a_forceOverride);                                             // 64
 		void QueueActorDisarm(ActorHandle& a_target, ActorHandle& a_caster);                                             // 91
 		void QueueRemoveSpell(ActorHandle& a_actor, SpellItem* a_spellItem);                                             // 93
+	private:
+		KEEP_FOR_RE()
 	};
 	//static_assert(sizeof(TaskQueueInterface) == 0x);
 }

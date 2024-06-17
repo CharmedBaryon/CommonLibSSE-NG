@@ -22,6 +22,8 @@ namespace RE
 
 		// members
 		BSSimpleList<TESObjectREFR*> refs;  // 10
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(ExtraWaterLightRefs) == 0x20);
 }

@@ -20,6 +20,8 @@ namespace RE
 
 		// members
 		BSTCaseInsensitiveStringMap<T*> settings;  // 118
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(SettingCollectionMap<Setting>) == 0x140);
 }

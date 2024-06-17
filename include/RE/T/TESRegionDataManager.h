@@ -34,6 +34,8 @@ namespace RE
 
 		// members
 		TESRegion* lastLoadedRegion;  // 08
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(TESRegionDataManager) == 0x10);
 }

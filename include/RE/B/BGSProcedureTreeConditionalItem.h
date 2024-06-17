@@ -20,6 +20,8 @@ namespace RE
 
 		// members
 		TESCondition conditions;  // 08
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(BGSProcedureTreeConditionalItem) == 0x10);
 }

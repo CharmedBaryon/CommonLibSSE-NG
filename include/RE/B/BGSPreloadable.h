@@ -18,6 +18,8 @@ namespace RE
 
 		// add
 		virtual void Unk_04(void) = 0;  // 04
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(BGSPreloadable) == 0x8);
 }

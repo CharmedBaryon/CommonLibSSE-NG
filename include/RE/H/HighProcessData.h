@@ -227,9 +227,7 @@ namespace RE
 		void*                                                 unk188;                                    // 188 - smart ptr
 		BSTSmartPointer<Data190>                              unk190;                                    // 190
 		BSTSmartPointer<Data190>                              unk198;                                    // 198
-		float                                                 unk1A0;                                    // 1A0
-		float                                                 unk1A4;                                    // 1A4
-		float                                                 unk1A8;                                    // 1A8
+		NiPoint3                                              unk1A0;                                    // 1A0
 		std::uint32_t                                         unk1AC;                                    // 1AC
 		std::uint64_t                                         unk1B0;                                    // 1B0
 		std::uint64_t                                         unk1B8;                                    // 1B8
@@ -367,6 +365,8 @@ namespace RE
 		bool                                                  aggroRadiusStarted;                        // 472
 		std::uint8_t                                          pad473;                                    // 473
 		std::uint32_t                                         pad474;                                    // 474
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(HighProcessData) == 0x478);
 }

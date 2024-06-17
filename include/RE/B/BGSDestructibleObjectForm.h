@@ -71,6 +71,8 @@ namespace RE
 
 		// members
 		DestructibleObjectData* data;  // 08
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(BGSDestructibleObjectForm) == 0x10);
 }

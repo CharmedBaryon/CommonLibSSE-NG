@@ -39,6 +39,8 @@ namespace RE
 		hkArray<hkaAnimationControlListener> listeners;              // 40
 		float                                motionTrackWeight;      // 50
 		std::uint32_t                        pad54;                  // 54
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(hkaAnimationControl) == 0x58);
 }

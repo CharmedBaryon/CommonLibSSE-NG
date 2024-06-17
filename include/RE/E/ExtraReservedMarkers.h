@@ -21,6 +21,8 @@ namespace RE
 		// members
 		BSTArray<MarkerUsedData> reservedMarkerArray;  // 10
 		std::uint64_t            unk28;                // 28
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(ExtraReservedMarkers) == 0x30);
 }

@@ -18,6 +18,8 @@ namespace RE
 		virtual void EntityShapeSetCallback(hkpEntity* a_entity);       // 03
 		virtual void EntitySetMotionTypeCallback(hkpEntity* a_entity);  // 04 - { return; }
 		virtual void EntityDeletedCallback(hkpEntity* a_entity);        // 05 - { return; }
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(hkpEntityListener) == 0x8);
 }

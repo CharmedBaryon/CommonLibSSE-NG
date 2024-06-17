@@ -50,6 +50,8 @@ namespace RE
 		std::uint64_t                          unk88;      // 88
 		BSTSmartPointer<BGSArtObjectCloneTask> cloneTask;  // 90
 		std::uint8_t                           unk98;      // 98
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(SummonPlacementEffect) == 0xA0);
 }

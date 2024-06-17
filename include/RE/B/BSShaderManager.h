@@ -81,5 +81,8 @@ namespace RE
 			REL::Relocation<func_t> func{ RELOCATION_ID(98986, 105640) };
 			return func(a_path, a_demand, a_textureOut, a_isHeightMap);
 		}
+
+	private:
+		KEEP_FOR_RE()
 	};
 }

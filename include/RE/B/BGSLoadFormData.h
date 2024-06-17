@@ -30,6 +30,8 @@ namespace RE
 		stl::enumeration<Flags, std::uint32_t> flags;             // 20
 		std::uint8_t                           pad22;             // 22
 		std::uint8_t                           version;           // 23
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(BGSLoadFormData) == 0x28);
 }

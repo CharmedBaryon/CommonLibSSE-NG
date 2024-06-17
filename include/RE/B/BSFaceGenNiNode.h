@@ -60,7 +60,7 @@ namespace RE
 		RUNTIME_DATA_CONTENT  // 128, 150
 #endif
 	};
-#ifndef ENABLE_SKYRIM_VR
+#if !defined(ENABLE_SKYRIM_VR)
 	static_assert(sizeof(BSFaceGenNiNode) == 0x168);
 #elif !defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE)
 	static_assert(sizeof(BSFaceGenNiNode) == 0x190);

@@ -61,6 +61,8 @@ namespace RE
 		std::uint64_t unkB0;  // B0
 		std::uint64_t unkB8;  // B8
 		std::uint64_t unkC0;  // C0
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(BSGameSound) == 0xC8);
 }

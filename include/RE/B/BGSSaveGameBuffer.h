@@ -30,6 +30,8 @@ namespace RE
 		void*         buffer;          // 08
 		std::uint32_t size;            // 10
 		std::uint32_t bufferPosition;  // 14
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(BGSSaveGameBuffer) == 0x18);
 }

@@ -29,6 +29,8 @@ namespace RE
 		ActorHandle     unk0EC;  // 0EC
 		std::uint64_t   unk0F0;  // 0F0
 		std::uint64_t   unk0F8;  // 0F8
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(DialoguePackage) == 0x100);
 }

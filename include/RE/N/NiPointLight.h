@@ -2,6 +2,8 @@
 
 #include "RE/N/NiLight.h"
 
+#include "RE/M/MemoryManager.h"
+
 namespace RE
 {
 	class NiPointLight : public NiLight
@@ -24,11 +26,27 @@ namespace RE
 		~NiPointLight() override;  // 00
 
 		// override (NiLight)
-		const NiRTTI* GetRTTI() const override;                           // 02
-		NiObject*     CreateClone(NiCloningProcess& a_cloning) override;  // 17
-		void          LoadBinary(NiStream& a_stream) override;            // 18
-		void          SaveBinary(NiStream& a_stream) override;            // 1B
-		bool          IsEqual(NiObject* a_object) override;               // 1C
+		const NiRTTI*        GetRTTI() const override;                           // 02
+		NiObject*            CreateClone(NiCloningProcess& a_cloning) override;  // 17
+		void                 LoadBinary(NiStream& a_stream) override;            // 18
+		void                 SaveBinary(NiStream& a_stream) override;            // 1B
+		bool                 IsEqual(NiObject* a_object) override;               // 1C
+		static NiPointLight* Create()
+		{
+			auto light = malloc<NiPointLight>();
+			std::memset(light, 0, sizeof(NiPointLight));
+			if (light) {
+				light->Ctor();
+			}
+			return light;
+		}
+
+		void SetLightAttenuation(float a_radius)
+		{
+			using func_t = decltype(&NiPointLight::SetLightAttenuation);
+			REL::Relocation<func_t> func{ RELOCATION_ID(17224, 17626) };
+			return func(this, a_radius);
+		}
 
 		[[nodiscard]] inline POINT_LIGHT_RUNTIME_DATA& GetPointLightRuntimeData() noexcept
 		{
@@ -42,10 +60,18 @@ namespace RE
 
 		// members
 #ifndef SKYRIM_CROSS_VR
-		RUNTIME_DATA_CONTENT  // 140, 168
+		RUNTIME_DATA_CONTENT;  // 140, 168
 #endif
+	private:
+		NiPointLight* Ctor()
+		{
+			using func_t = decltype(&NiPointLight::Ctor);
+			REL::Relocation<func_t> func{ RELOCATION_ID(69583, 70967) };
+			return func(this);
+		}
+		KEEP_FOR_RE()
 	};
-#ifndef ENABLE_SKYRIM_VR
+#if !defined(ENABLE_SKYRIM_VR)
 	static_assert(sizeof(NiPointLight) == 0x150);
 #elif !defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE)
 	static_assert(sizeof(NiPointLight) == 0x178);

@@ -10,6 +10,8 @@ namespace RE
 		float x;  // 04
 		float y;  // 08
 		float z;  // 0C
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(NiQuaternion) == 0x10);
 }

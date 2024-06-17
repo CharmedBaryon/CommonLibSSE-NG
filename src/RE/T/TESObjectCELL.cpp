@@ -12,7 +12,7 @@ namespace RE
 {
 	void TESObjectCELL::ForEachReference(std::function<BSContainer::ForEachResult(TESObjectREFR*)> a_callback) const
 	{
-		auto& runtimeData = GetRuntimeData();
+		auto&           runtimeData = GetRuntimeData();
 		BSSpinLockGuard locker(runtimeData.spinLock);
 		for (const auto& ref : runtimeData.references) {
 			if (ref && a_callback(ref.get()) == BSContainer::ForEachResult::kStop) {
@@ -81,7 +81,7 @@ namespace RE
 	TESForm* TESObjectCELL::GetOwner()
 	{
 		auto& runtimeData = GetRuntimeData();
-		auto owner = extraList.GetOwner();
+		auto  owner = extraList.GetOwner();
 		if (owner) {
 			return owner;
 		}

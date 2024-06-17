@@ -20,5 +20,8 @@ namespace RE
 
 		static BSTEventSource<SoulsTrapped::Event>* GetEventSource();
 		static void                                 SendEvent(Actor* a_trapper, Actor* a_target);
+
+	private:
+		KEEP_FOR_RE()
 	};
 }

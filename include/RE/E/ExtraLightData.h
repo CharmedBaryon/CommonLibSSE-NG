@@ -37,6 +37,8 @@ namespace RE
 		// members
 		ExtraLightDataStruct data;   // 10
 		std::uint32_t        pad24;  // 24
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(ExtraLightData) == 0x28);
 }

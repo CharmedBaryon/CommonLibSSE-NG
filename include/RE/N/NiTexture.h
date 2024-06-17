@@ -105,6 +105,8 @@ namespace RE
 		std::uint32_t unk2C;        // 2C
 		NiTexture*    prev;         // 30
 		NiTexture*    next;         // 38
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(NiTexture) == 0x40);
 }

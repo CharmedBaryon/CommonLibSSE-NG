@@ -27,6 +27,8 @@ namespace RE
 		float         timerSeconds;  // 20 - SNAM
 		std::uint32_t unk24;         // 24
 		std::uint64_t unk28;         // 28
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(BGSSceneActionTimer) == 0x30);
 }

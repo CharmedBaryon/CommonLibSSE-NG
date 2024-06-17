@@ -19,6 +19,8 @@ namespace RE
 
 		// add
 		virtual float GetTargetValue() const = 0;  // 21
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(TargetValueModifierEffect) == 0x98);
 }

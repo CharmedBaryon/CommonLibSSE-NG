@@ -1,5 +1,7 @@
 #include "RE/R/Renderer.h"
 
+#include "RE/S/ShadowState.h"
+
 namespace RE
 {
 	namespace BSGraphics
@@ -129,7 +131,7 @@ namespace RE
 			return func(this);
 		}
 
-		[[nodiscard]] RendererData* Renderer::GetRendererData()
+		[[nodiscard]] RendererData* Renderer::GetRendererDataSingleton()
 		{
 			// Location is a global pointer to the RendererData in the Renderer singleton
 			REL::Relocation<RendererData**> singleton{ RELOCATION_ID(524728, 411347) };
@@ -153,6 +155,72 @@ namespace RE
 			// Location is a global pointer to the current renderWindow (which is not necessarily at index 0 in the renderWindows array)
 			REL::Relocation<RendererWindow**> renderWindow{ RELOCATION_ID(524730, 411349) };
 			return *renderWindow;
+		}
+
+		void Renderer::PrepareVSConstantGroup(ConstantGroupLevel level)
+		{
+			auto* shadowState = RendererShadowState::GetSingleton();
+			auto* deviceContext = GetSingleton()->GetRuntimeData().context;
+
+			auto& group = shadowState->GetVSConstantGroup(level);
+			if (group.buffer != nullptr) {
+				REX::W32::D3D11_MAPPED_SUBRESOURCE resource;
+				deviceContext->Map(group.buffer, 0, REX::W32::D3D11_MAP_WRITE_DISCARD, 0, &resource);
+				group.data = resource.data;
+			}
+		}
+
+		void Renderer::PreparePSConstantGroup(ConstantGroupLevel level)
+		{
+			auto* shadowState = RendererShadowState::GetSingleton();
+			auto* deviceContext = GetSingleton()->GetRuntimeData().context;
+
+			auto& group = shadowState->GetPSConstantGroup(level);
+			if (group.buffer != nullptr) {
+				REX::W32::D3D11_MAPPED_SUBRESOURCE resource;
+				deviceContext->Map(group.buffer, 0, REX::W32::D3D11_MAP_WRITE_DISCARD, 0, &resource);
+				group.data = resource.data;
+			}
+		}
+
+		void Renderer::FlushVSConstantGroup(ConstantGroupLevel level)
+		{
+			auto* shadowState = RendererShadowState::GetSingleton();
+			auto* deviceContext = GetSingleton()->GetRuntimeData().context;
+
+			auto& group = shadowState->GetVSConstantGroup(level);
+			if (group.buffer != nullptr) {
+				deviceContext->Unmap(group.buffer, 0);
+			}
+		}
+
+		void Renderer::FlushPSConstantGroup(ConstantGroupLevel level)
+		{
+			auto* shadowState = RendererShadowState::GetSingleton();
+			auto* deviceContext = GetSingleton()->GetRuntimeData().context;
+
+			auto& group = shadowState->GetPSConstantGroup(level);
+			if (group.buffer != nullptr) {
+				deviceContext->Unmap(group.buffer, 0);
+			}
+		}
+
+		void Renderer::ApplyVSConstantGroup(ConstantGroupLevel level)
+		{
+			auto* shadowState = RendererShadowState::GetSingleton();
+			auto* deviceContext = GetSingleton()->GetRuntimeData().context;
+
+			auto& group = shadowState->GetVSConstantGroup(level);
+			deviceContext->VSSetConstantBuffers(static_cast<UINT>(level), 1, &group.buffer);
+		}
+
+		void Renderer::ApplyPSConstantGroup(ConstantGroupLevel level)
+		{
+			auto* shadowState = RendererShadowState::GetSingleton();
+			auto* deviceContext = GetSingleton()->GetRuntimeData().context;
+
+			auto& group = shadowState->GetPSConstantGroup(level);
+			deviceContext->PSSetConstantBuffers(static_cast<UINT>(level), 1, &group.buffer);
 		}
 	}
 }

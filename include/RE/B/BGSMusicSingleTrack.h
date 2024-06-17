@@ -44,6 +44,8 @@ namespace RE
 		LoopData*       loopData;                   // 60 - LNAM
 		BSSoundHandle   trackHandle;                // 68
 		BSSoundHandle   finaleHandle;               // 78
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(BGSMusicSingleTrack) == 0x80);
 }

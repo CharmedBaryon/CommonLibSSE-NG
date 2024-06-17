@@ -268,6 +268,11 @@ namespace RE
 		           ObjectRefHandle();
 	}
 
+	bool ExtraDataList::GetWorn() const
+	{
+		return HasType<ExtraWorn>() || HasType<ExtraWornLeft>();
+	}
+
 	bool ExtraDataList::HasQuestObjectAlias()
 	{
 		using func_t = decltype(&ExtraDataList::HasQuestObjectAlias);

@@ -75,6 +75,8 @@ namespace RE
 		std::uint8_t                                       unk3A;      // 3A
 		stl::enumeration<Flag, std::uint8_t>               flags;      // 3B
 		std::uint32_t                                      pad3C;      // 3C - ~DATA
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(BGSRelationship) == 0x40);
 }

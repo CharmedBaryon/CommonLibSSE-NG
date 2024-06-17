@@ -40,6 +40,9 @@ namespace RE
 			REL::Relocation<func_t> func{ RELOCATION_ID(31576, 32359) };
 			return func(this, a_index, a_event);
 		}
+
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(BGSStoryEventManager) == 0x68);
 }

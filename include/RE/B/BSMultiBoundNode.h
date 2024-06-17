@@ -67,7 +67,7 @@ namespace RE
 		RUNTIME_DATA_CONTENT  // 128, 150
 #endif
 	};
-#ifndef ENABLE_SKYRIM_VR
+#if !defined(ENABLE_SKYRIM_VR)
 	static_assert(sizeof(BSMultiBoundNode) == 0x138);
 #elif !defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE)
 	static_assert(sizeof(BSMultiBoundNode) == 0x160);

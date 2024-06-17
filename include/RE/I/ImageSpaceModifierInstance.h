@@ -27,6 +27,8 @@ namespace RE
 		NiPointer<NiAVObject> target;    // 18
 		float                 age;       // 20
 		std::uint32_t         flags;     // 24
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(ImageSpaceModifierInstance) == 0x28);
 }

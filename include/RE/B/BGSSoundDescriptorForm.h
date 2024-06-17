@@ -39,6 +39,8 @@ namespace RE
 
 		// members
 		BGSSoundDescriptor* soundDescriptor;  // 28
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(BGSSoundDescriptorForm) == 0x30);
 }

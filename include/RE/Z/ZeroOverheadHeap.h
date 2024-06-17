@@ -34,6 +34,8 @@ namespace RE
 		std::uint32_t      unk28;        // 28
 		mutable BSSpinLock unk2C;        // 2C
 		std::uint32_t      unk34;        // 34
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(ZeroOverheadHeap) == 0x38);
 }

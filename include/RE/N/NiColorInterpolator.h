@@ -47,6 +47,8 @@ namespace RE
 		NiPointer<NiColorData> colorData;   // 28
 		std::uint32_t          lastIndex;   // 30
 		std::uint32_t          pad34;       // 34
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(NiColorInterpolator) == 0x38);
 }

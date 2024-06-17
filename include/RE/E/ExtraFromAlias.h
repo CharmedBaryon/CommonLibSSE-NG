@@ -20,6 +20,8 @@ namespace RE
 		TESQuest*     quest;    // 10
 		std::uint32_t aliasID;  // 18
 		std::uint32_t pad1C;    // 1C
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(ExtraFromAlias) == 0x20);
 }

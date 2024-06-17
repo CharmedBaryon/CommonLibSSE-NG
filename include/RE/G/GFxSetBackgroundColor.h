@@ -12,6 +12,8 @@ namespace RE
 
 		// members
 		std::uint64_t unk08;  // 08
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(GFxSetBackgroundColor) == 0x10);
 }

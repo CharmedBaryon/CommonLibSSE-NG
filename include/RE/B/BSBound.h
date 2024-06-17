@@ -25,6 +25,8 @@ namespace RE
 		// members
 		NiPoint3 center;   // 18
 		NiPoint3 extents;  // 24
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(BSBound) == 0x30);
 }

@@ -92,6 +92,8 @@ namespace RE
 		std::uint16_t         padB2;  // B2
 		std::uint32_t         padB4;  // B4
 		void*                 unkB8;  // B8
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(BGSCameraShot) == 0xC0);
 }

@@ -30,6 +30,8 @@ namespace RE
 		std::uint8_t          pad42;           // 042
 		std::uint8_t          pad43;           // 043
 		std::uint32_t         pad44;           // 044
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(BSTempEffectDebris) == 0x48);
 }

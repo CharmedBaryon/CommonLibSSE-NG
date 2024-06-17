@@ -13,6 +13,8 @@ namespace RE
 
 		// override (BSImagespaceShader)
 		void Unk_0D(void) override;  // 0D
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(BSImagespaceShaderBlur3) == 0x1A8);
 }

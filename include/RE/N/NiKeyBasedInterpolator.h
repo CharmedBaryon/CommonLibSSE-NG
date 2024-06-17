@@ -33,6 +33,8 @@ namespace RE
 		[[nodiscard]] virtual void*         GetKeyArray(std::uint16_t a_channel) const = 0;      // 3D
 		[[nodiscard]] virtual std::uint8_t  GetKeyStride(std::uint16_t a_channel) const = 0;     // 3E
 		[[nodiscard]] virtual bool          GetChannelPosed(std::uint16_t a_channel) const = 0;  // 3F
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(NiKeyBasedInterpolator) == 0x18);
 }

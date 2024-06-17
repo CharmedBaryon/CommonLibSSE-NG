@@ -25,6 +25,8 @@ namespace RE
 		std::uint32_t pad24;      // 24
 		std::uint64_t playTime;   // 28
 		std::uint64_t pauseTime;  // 30
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(BGSMusicSilenceTrack) == 0x38);
 }

@@ -26,6 +26,8 @@ namespace RE
 		std::uint32_t      pad0C;    // 0C
 		BSTArray<TESForm*> spells;   // 10
 		BSTArray<TESForm*> hotkeys;  // 28
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(MagicFavorites) == 0x40);
 }

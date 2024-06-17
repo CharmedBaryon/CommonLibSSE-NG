@@ -31,6 +31,8 @@ namespace RE
 		// members
 		std::uint64_t         unk20;     // 20
 		BSTArray<TESPackage*> packages;  // 28 - PNAM
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(BGSSceneActionPackage) == 0x40);
 }

@@ -70,6 +70,8 @@ namespace RE
 		BGSSoundOutput*              outputModel;            // 48 - ONAM
 		LengthCharacteristics        lengthCharacteristics;  // 50 - LNAM
 		std::int32_t                 unk54;                  // 54
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(BGSStandardSoundDef) == 0x58);
 }

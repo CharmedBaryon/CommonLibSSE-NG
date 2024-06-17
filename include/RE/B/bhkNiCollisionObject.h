@@ -54,6 +54,8 @@ namespace RE
 		stl::enumeration<Flag, std::uint32_t> flags;  // 18
 		std::uint32_t                         pad1C;  // 1C
 		NiPointer<bhkWorldObject>             body;   // 20
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(bhkNiCollisionObject) == 0x28);
 }

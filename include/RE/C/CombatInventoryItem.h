@@ -26,6 +26,8 @@ namespace RE
 		// members
 		BGSEquipSlot* equipSlot;  // 08
 		std::uint32_t slot;       // 0C
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(CombatInventoryItemSlot) == 0x10);
 
@@ -83,6 +85,8 @@ namespace RE
 		float                   itemScore;  // 18
 		std::uint32_t           unk1C;      // 1C
 		CombatInventoryItemSlot itemSlot;   // 20
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(CombatInventoryItem) == 0x30);
 }

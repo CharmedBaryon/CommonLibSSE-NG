@@ -4,6 +4,7 @@
 #include "RE/F/FxDelegateHandler.h"
 #include "RE/G/GFxMovieView.h"
 #include "RE/G/GPtr.h"
+#include "RE/S/Setting.h"
 #include "RE/U/UserEvents.h"
 
 namespace RE
@@ -51,6 +52,12 @@ namespace RE
 		kPassOn = 2
 	};
 
+	enum class UI_MENU_Unk09
+	{
+		kNone = static_cast<std::underlying_type_t<UI_MENU_Unk09>>(-1),  // Entire enum needs more REing
+
+	};
+
 	class IMenu : public FxDelegateHandler
 	{
 	public:
@@ -72,8 +79,15 @@ namespace RE
 		virtual void               PostDisplay();                                                // 06
 		virtual void               PreDisplay();                                                 // 07 - { return; } - only available if kRendersOffscreenTargets is set
 		virtual void               RefreshPlatform();                                            // 08
+#ifdef ENABLE_SKYRIM_VR
+		virtual void Unk_09(UI_MENU_Unk09 a_unk);  // 09 - { unk30 = a_unk; }
+		virtual void Unk_0A();                     // 0A - Does something with _root.ResetOnShow swf function
+#endif
 
-		[[nodiscard]] constexpr bool AdvancesUnderPauseMenu() const noexcept { return menuFlags.all(Flag::kAdvancesUnderPauseMenu); }
+		[[nodiscard]] constexpr bool AdvancesUnderPauseMenu() const noexcept
+		{
+			return menuFlags.all(Flag::kAdvancesUnderPauseMenu);
+		}
 		[[nodiscard]] constexpr bool AllowSaving() const noexcept { return menuFlags.all(Flag::kAllowSaving); }
 		[[nodiscard]] constexpr bool AlwaysOpen() const noexcept { return menuFlags.all(Flag::kAlwaysOpen); }
 		[[nodiscard]] constexpr bool ApplicationMenu() const noexcept { return menuFlags.all(Flag::kApplicationMenu); }
@@ -111,15 +125,17 @@ namespace RE
 		stl::enumeration<Context, std::uint32_t>       inputContext{ Context::kNone };  // 20
 		std::uint32_t                                  pad24{ 0 };                      // 24
 		GPtr<FxDelegate>                               fxDelegate{ nullptr };           // 28
-#if !defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE)
-		std::int32_t  unk30{ -1 };
-		std::int32_t  unk34{ 1 };
-		std::uint64_t unk38{ 0 };
-#endif
+		stl::enumeration<UI_MENU_Unk09, std::uint32_t> unk30{ UI_MENU_Unk09::kNone };
+		std::byte                                      unk34{ 1 };
+		BSFixedString                                  menuName{ "N/A" };  // 38
+	private:
+		KEEP_FOR_RE();
 	};
-#ifndef ENABLE_SKYRIM_VR
-	static_assert(sizeof(IMenu) == 0x30);
+#if !defined(ENABLE_SKYRIM_VR)
+	static_assert(sizeof(IMenu) == 0x40);
 #elif !defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE)
+	static_assert(sizeof(IMenu) == 0x40);
+#else
 	static_assert(sizeof(IMenu) == 0x40);
 #endif
 }

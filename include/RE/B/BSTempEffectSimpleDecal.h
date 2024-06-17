@@ -87,6 +87,8 @@ namespace RE
 		std::uint8_t            unk1D7;           // 1D7
 		std::uint32_t           unk1D8;           // 1D8
 		std::uint32_t           unk1DC;           // 1DC
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(BSTempEffectSimpleDecal) == 0x1E0);
 };

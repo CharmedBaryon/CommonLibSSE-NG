@@ -3,6 +3,7 @@
 #include "RE/B/BSPointerHandle.h"
 #include "RE/I/IMenu.h"
 #include "RE/N/NiSmartPointer.h"
+#include <SKSE/Version.h>
 
 namespace RE
 {
@@ -109,6 +110,9 @@ public:                                                                \
 	protected:
 		void
 			SetSelectedRef_Impl(ObjectRefHandle& a_handle);
+
+	private:
+		KEEP_FOR_RE()
 	};
 }
 #undef RUNTIME_DATA_CONTENT

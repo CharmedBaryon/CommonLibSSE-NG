@@ -19,6 +19,8 @@ namespace RE
 
 		// members
 		TESIcon icon;  // 08
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(BGSMessageIcon) == 0x18);
 }

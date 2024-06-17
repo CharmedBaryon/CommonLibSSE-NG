@@ -19,6 +19,8 @@ namespace RE
 		void          Unk_2C(void) override;                              // 2C - { return 112; }
 		void          Unk_2E(void) override;                              // 2E
 		void          Unk_2F(void) override;                              // 2F
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(bhkCachingShapePhantom) == 0x30);
 }

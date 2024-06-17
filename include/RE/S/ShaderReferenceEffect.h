@@ -94,6 +94,8 @@ namespace RE
 		float                                 effectShaderAge;         // 12C
 		stl::enumeration<Flag, std::uint32_t> flags;                   // 130
 		std::uint32_t                         pushCount;               // 134
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(ShaderReferenceEffect) == 0x138);
 }

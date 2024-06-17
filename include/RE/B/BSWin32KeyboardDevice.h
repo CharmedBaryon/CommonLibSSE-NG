@@ -34,6 +34,9 @@ namespace RE
 
 	protected:
 		BSWin32KeyboardDevice();
+
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(offsetof(BSWin32KeyboardDevice, prevState) == 0x168);
 	static_assert(offsetof(BSWin32KeyboardDevice, curState) == 0x268);

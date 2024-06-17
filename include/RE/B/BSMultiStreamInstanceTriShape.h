@@ -60,7 +60,7 @@ namespace RE
 		RUNTIME_DATA_CONTENT  // 160, 1A8
 #endif
 	};
-#ifndef ENABLE_SKYRIM_VR
+#if !defined(ENABLE_SKYRIM_VR)
 	static_assert(sizeof(BSMultiStreamInstanceTriShape) == 0x1A0);
 #elif !defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE)
 	static_assert(sizeof(BSMultiStreamInstanceTriShape) == 0x1E8);

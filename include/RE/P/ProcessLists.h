@@ -96,6 +96,8 @@ namespace RE
 		bool                                    runAnimations;                                 // 1E6
 		bool                                    updateActorsInPlayerCell;                      // 1E7
 		std::uint64_t                           unk1E8;                                        // 1E8
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(ProcessLists) == 0x1F0);
 }

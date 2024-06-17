@@ -74,6 +74,9 @@ namespace RE
 		double                      GetVariableDouble(const char* a_pathToVar) const;
 		bool                        SetVariableArray(const char* a_pathToVar, std::uint32_t a_index, const GFxValue* a_data, std::uint32_t a_count, SetVarType a_setType = SetVarType::kSticky);
 		bool                        GetVariableArray(const char* a_pathToVar, std::uint32_t a_index, GFxValue* a_data, std::uint32_t a_count);
+
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(GFxMovie) == 0x10);
 }

@@ -50,6 +50,13 @@ namespace RE
 		bool          cameraPitchOverride;      // 85
 		std::uint16_t unk86;                    // 86
 		std::uint64_t unk88;                    // 88
+	private:
+		KEEP_FOR_RE()
 	};
+#if !defined(ENABLE_SKYRIM_VR)
 	static_assert(sizeof(FirstPersonState) == 0x90);
+#elif !defined(SKYRIM_AE) && !defined(SKYRIM_SE)
+#else
+	static_assert(sizeof(FirstPersonState) == 0x90);
+#endif
 }

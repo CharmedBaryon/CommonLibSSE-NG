@@ -136,6 +136,8 @@ namespace RE
 		bool                                           cleared;                 // EC
 		bool                                           everCleared;             // ED
 		std::uint16_t                                  padEE;                   // EE
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(BGSLocation) == 0xF0);
 }

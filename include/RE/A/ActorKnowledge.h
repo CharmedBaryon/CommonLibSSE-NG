@@ -32,6 +32,8 @@ namespace RE
 		BSTArray<NiPointer<DetectionListener>>          listeners;                    // 28
 		stl::enumeration<FLAGS, std::uint32_t>          flags;                        // 40
 		AITimeStamp                                     detectionQueuedTimeStamp;     // 44
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(ActorKnowledge) == 0x48);
 }

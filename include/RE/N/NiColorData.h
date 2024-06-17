@@ -33,6 +33,8 @@ namespace RE
 		std::uint8_t  keySize;  // 24
 		std::uint8_t  pad25;    // 25
 		std::uint16_t pad26;    // 26
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(NiColorData) == 0x28);
 }

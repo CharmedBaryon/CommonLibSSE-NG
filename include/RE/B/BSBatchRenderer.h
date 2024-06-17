@@ -28,6 +28,8 @@ namespace RE
 		std::uint64_t                unk0F0;      // 0F0
 		std::uint64_t                unk0F8;      // 0F8
 		std::uint64_t                unk100;      // 100
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(BSBatchRenderer) == 0x108);
 }

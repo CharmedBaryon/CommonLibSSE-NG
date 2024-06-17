@@ -34,6 +34,8 @@ namespace RE
 		std::uint16_t                                pad12;      // 12
 		std::uint32_t                                pad14;      // 14
 		TESObjectREFR*                               actionRef;  // 18
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(ExtraAction) == 0x20);
 }

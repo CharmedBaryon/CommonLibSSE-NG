@@ -22,5 +22,8 @@ namespace RE
 		{
 			return static_cast<Derived*>(CreateImpl());
 		}
+
+	private:
+		KEEP_FOR_RE()
 	};
 }

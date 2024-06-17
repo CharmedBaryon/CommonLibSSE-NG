@@ -20,6 +20,8 @@ namespace RE
 		std::uint64_t unk228;  // 228
 		std::uint64_t unk230;  // 230
 		std::uint64_t unk238;  // 238
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(bhkCharacterPointCollector) == 0x240);
 }

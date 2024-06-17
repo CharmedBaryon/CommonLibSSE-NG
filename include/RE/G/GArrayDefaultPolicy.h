@@ -22,6 +22,8 @@ namespace RE
 
 		// members
 		UPInt capacity;  // 0
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(GArrayDefaultPolicy) == 0x8);
 }

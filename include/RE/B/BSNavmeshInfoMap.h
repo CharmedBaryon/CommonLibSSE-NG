@@ -32,6 +32,8 @@ namespace RE
 		virtual void           GetAllNavMeshInfo(BSTArray<BSNavmeshInfo*>& a_results) = 0;                                       // 03
 		virtual void           BuildListOfConnectedInfos(const BSNavmeshInfo* a_info, BSTArray<BSNavmeshInfo*>& a_results) = 0;  // 04
 		virtual void           ForEach(IVisitor* a_visitor) = 0;                                                                 // 05
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(BSNavmeshInfoMap) == 0x8);
 }

@@ -18,6 +18,8 @@ namespace RE
 		void          SaveBinary(NiStream& a_stream) override;  // 1B
 		void          RemoveFromCurrentWorld() override;        // 2A
 		void          Unk_30(void) override;                    // 30
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(bhkEntity) == 0x28);
 }

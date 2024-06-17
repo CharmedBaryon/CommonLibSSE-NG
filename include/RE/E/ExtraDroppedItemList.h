@@ -20,6 +20,8 @@ namespace RE
 
 		// members
 		BSSimpleList<ObjectRefHandle> droppedItemList;  // 10
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(ExtraDroppedItemList) == 0x20);
 }

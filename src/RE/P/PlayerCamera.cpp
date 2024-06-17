@@ -32,7 +32,7 @@ namespace RE
 
 	bool PlayerCamera::IsInBleedoutMode() const
 	{
-		return QCameraEquals(CameraState::kBleedout);
+		return QCameraEquals((!REL::Module::IsVR() ? CameraState::kBleedout : CameraState::kVRBleedout));
 	}
 
 	bool PlayerCamera::IsInFirstPerson() const
@@ -47,12 +47,12 @@ namespace RE
 
 	bool PlayerCamera::IsInThirdPerson() const
 	{
-		return QCameraEquals(CameraState::kThirdPerson);
+		return QCameraEquals((!REL::Module::IsVR() ? CameraState::kThirdPerson : CameraState::kVRThirdPerson));
 	}
 
 	bool PlayerCamera::QCameraEquals(CameraState a_cameraState) const
 	{
-		return currentState && currentState == cameraStates[a_cameraState];
+		return currentState && currentState == (!REL::Module::IsVR() ? GetRuntimeData().cameraStates[a_cameraState] : GetVRRuntimeData().cameraStates[a_cameraState]);
 	}
 
 	void PlayerCamera::ToggleFreeCameraMode(bool a_freezeTime)

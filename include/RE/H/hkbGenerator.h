@@ -21,6 +21,8 @@ namespace RE
 		virtual void UpdateSync(const hkbContext& a_context);    // 19
 		virtual void Unk_1A(void);                               // 1A - { return; }
 		virtual void Unk_1B(void);                               // 1B - { return; }
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(hkbGenerator) == 0x48);
 }

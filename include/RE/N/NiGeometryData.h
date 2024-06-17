@@ -101,6 +101,8 @@ namespace RE
 		std::uint8_t                                 unk65;               // 65
 		bool                                         hasGeoData;          // 66
 		std::uint8_t                                 unk67;               // 67
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(NiGeometryData) == 0x68);
 }

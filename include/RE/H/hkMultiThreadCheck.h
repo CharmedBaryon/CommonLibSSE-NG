@@ -29,6 +29,8 @@ namespace RE
 		std::int32_t  stackTraceId;  // 4
 		std::uint16_t markCount;     // 8
 		std::uint16_t markBitStack;  // A
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(hkMultiThreadCheck) == 0xC);
 }

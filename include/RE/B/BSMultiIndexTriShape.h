@@ -3,6 +3,7 @@
 #include "RE/B/BSTriShape.h"
 #include "RE/N/NiColor.h"
 #include "RE/N/NiSmartPointer.h"
+#include <DirectXMath.h>
 
 #include "REX/W32/D3D.h"
 
@@ -66,7 +67,7 @@ namespace RE
 		RUNTIME_DATA_CONTENT  // 160, 1A8
 #endif
 	};
-#ifndef ENABLE_SKYRIM_VR
+#if !defined(ENABLE_SKYRIM_VR)
 	static_assert(sizeof(BSMultiIndexTriShape) == 0x1D8);
 #elif !defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE)
 	static_assert(sizeof(BSMultiIndexTriShape) == 0x220);

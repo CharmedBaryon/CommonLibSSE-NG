@@ -50,6 +50,8 @@ namespace RE
 		// members
 		NiPointer<CombatInventoryItemMagic> inventoryItem;  // 10
 		MagicItem*                          magicItem;      // 18
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(CombatMagicCaster) == 0x20);
 }

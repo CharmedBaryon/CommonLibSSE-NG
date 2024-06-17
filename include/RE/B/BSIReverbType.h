@@ -19,6 +19,8 @@ namespace RE
 		[[nodiscard]] virtual float        DoGetDiffusion() const = 0;        // 08
 		[[nodiscard]] virtual float        DoGetDensity() const = 0;          // 09
 		[[nodiscard]] virtual float        DoGetHFReference() const = 0;      // 0A
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(BSIReverbType) == 0x8);
 }

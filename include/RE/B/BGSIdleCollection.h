@@ -50,6 +50,9 @@ namespace RE
 			return func(this);
 		}
 		void CopyIdles(const std::vector<TESIdleForm*>& a_copiedData);
+
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(BGSIdleCollection) == 0x20);
 }

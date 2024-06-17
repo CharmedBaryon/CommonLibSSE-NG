@@ -30,6 +30,8 @@ namespace RE
 
 		// members
 		bhkCharacterPointCollector ignoredCollisionStartCollector;  // 020
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(bhkCharacterProxy) == 0x260);
 }

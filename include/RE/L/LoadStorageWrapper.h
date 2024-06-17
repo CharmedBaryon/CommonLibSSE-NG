@@ -18,6 +18,8 @@ namespace RE
 		BSStorageDefs::ErrorCode Seek(std::size_t a_offset, BSStorageDefs::SeekMode a_seekMode) const override;  // 03
 		BSStorageDefs::ErrorCode Read(std::size_t a_numBytes, std::byte* a_bytes) const override;                // 04
 		BSStorageDefs::ErrorCode Write(std::size_t a_numBytes, const std::byte* a_bytes) override;               // 05
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(LoadStorageWrapper) == 0x30);
 }

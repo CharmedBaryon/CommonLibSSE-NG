@@ -21,6 +21,8 @@ namespace RE
 		// members
 		ObjectRefHandle container;  // 10
 		std::uint32_t   pad14;      // 14
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(ExtraSpawnContainer) == 0x18);
 }

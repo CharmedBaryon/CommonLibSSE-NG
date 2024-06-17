@@ -16,7 +16,7 @@ namespace RE
 
 		struct RUNTIME_DATA
 		{
-#ifndef ENABLE_SKYRIM_VR
+#if !defined(ENABLE_SKYRIM_VR)
 #	define RUNTIME_DATA_CONTENT float worldToCam[4][4]; /* 0 */
 			RUNTIME_DATA_CONTENT
 		};
@@ -68,6 +68,8 @@ namespace RE
 		void UpdateWorldData(NiUpdateData* a_data) override;  // 30
 #endif
 
+		bool WorldPtToScreenPt3(const NiPoint3& a_point, float& a_xOut, float& a_yOut, float& a_zOut, float a_zeroTolerance);
+
 		static bool BoundInFrustum(const NiBound& a_bound, NiCamera* a_camera);
 		static bool NodeInFrustum(NiAVObject* a_node, NiCamera* a_camera);
 		static bool PointInFrustum(const NiPoint3& a_point, NiCamera* a_camera, float a_radius);
@@ -99,8 +101,10 @@ namespace RE
 		RUNTIME_DATA_CONTENT;   // 110, 138
 		RUNTIME_DATA2_CONTENT;  // 150, 1CC
 #endif
+	private:
+		KEEP_FOR_RE();
 	};
-#ifndef ENABLE_SKYRIM_VR
+#if !defined(ENABLE_SKYRIM_VR)
 	static_assert(sizeof(NiCamera) == 0x188);
 #elif !defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE)
 	static_assert(sizeof(NiCamera) == 0x208);

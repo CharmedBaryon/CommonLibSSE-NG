@@ -39,6 +39,8 @@ namespace RE
 		std::uint32_t unk34;             // 34
 		EmotionType   emotionType;       // 38 - DEMO
 		std::uint32_t emotionValue;      // 3C - DEMA
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(BGSSceneActionDialogue) == 0x40);
 }

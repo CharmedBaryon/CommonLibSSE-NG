@@ -114,6 +114,8 @@ namespace RE
 		std::uint16_t                                    pad86;                // 86
 		MagicSystem::CastingSource                       castingSource;        // 88
 		std::uint32_t                                    pad8C;                // 8C
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(ActiveEffect) == 0x90);
 }

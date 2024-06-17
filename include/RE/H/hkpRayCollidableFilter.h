@@ -16,6 +16,8 @@ namespace RE
 
 		// add
 		virtual bool IsCollisionEnabled(const hkpWorldRayCastInput& a_input, const hkpCollidable& a_collidable) const = 0;  // 01
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(hkpRayCollidableFilter) == 0x08);
 }

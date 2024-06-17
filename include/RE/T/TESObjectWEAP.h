@@ -270,6 +270,8 @@ namespace RE
 		BSFixedString                                embeddedNode;            // 210
 		stl::enumeration<SOUND_LEVEL, std::uint32_t> soundLevel;              // 218 - VNAM
 		std::uint32_t                                pad21C;                  // 21C
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(TESObjectWEAP) == 0x220);
 }

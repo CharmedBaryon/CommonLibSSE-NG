@@ -24,6 +24,8 @@ namespace RE
 		// members
 		GFxConstShapeNoStyles* unkF0;      // F0
 		std::uint64_t          unkF8[16];  // F8
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(GFxMorphCharacterDef) == 0x178);
 }

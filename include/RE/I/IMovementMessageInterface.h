@@ -15,6 +15,8 @@ namespace RE
 		virtual void Unk_01(void) = 0;  // 01
 		virtual void Unk_02(void) = 0;  // 02
 		virtual void Unk_03(void) = 0;  // 03
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(IMovementMessageInterface) == 0x8);
 }

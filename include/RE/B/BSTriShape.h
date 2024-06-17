@@ -35,12 +35,12 @@ namespace RE
 
 		[[nodiscard]] inline TRISHAPE_RUNTIME_DATA& GetTrishapeRuntimeData() noexcept
 		{
-			return REL::RelocateMember<TRISHAPE_RUNTIME_DATA>(this, 0x158, 0x1A0);
+			return REL::RelocateMember<TRISHAPE_RUNTIME_DATA>(this, 0x158, 0x198);
 		}
 
 		[[nodiscard]] inline const TRISHAPE_RUNTIME_DATA& GetTrishapeRuntimeData() const noexcept
 		{
-			return REL::RelocateMember<TRISHAPE_RUNTIME_DATA>(this, 0x158, 0x1A0);
+			return REL::RelocateMember<TRISHAPE_RUNTIME_DATA>(this, 0x158, 0x198);
 		}
 
 		// members
@@ -48,7 +48,7 @@ namespace RE
 		RUNTIME_DATA_CONTENT  // 158, 1A0
 #endif
 	};
-#ifndef ENABLE_SKYRIM_VR
+#if !defined(ENABLE_SKYRIM_VR)
 	static_assert(sizeof(BSTriShape) == 0x160);
 #elif !defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE)
 	static_assert(sizeof(BSTriShape) == 0x1A8);

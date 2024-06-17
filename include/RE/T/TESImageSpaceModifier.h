@@ -213,6 +213,8 @@ namespace RE
 		DOF                            dof;                   // 2B0
 		NiPointer<NiColorInterpolator> motionBlurStrength;    // 2C8 - NAM4
 		BSString                       formEditorID;          // 2D0 - EDID
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(TESImageSpaceModifier) == 0x2E0);
 }

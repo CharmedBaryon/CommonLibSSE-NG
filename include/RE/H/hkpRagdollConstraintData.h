@@ -57,6 +57,8 @@ namespace RE
 
 		// members
 		Atoms atoms;  // 18
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(hkpRagdollConstraintData) == 0x180);
 }

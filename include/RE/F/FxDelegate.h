@@ -48,6 +48,8 @@ namespace RE
 
 		// members
 		CallbackHash callbacks;  // 18
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(FxDelegate) == 0x20);
 }

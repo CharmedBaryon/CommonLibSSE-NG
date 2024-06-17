@@ -22,6 +22,8 @@ namespace RE
 		std::uint32_t      pad14;              // 14
 		BSTHashMap<Key, T> objectDefinitions;  // 18
 		mutable BSSpinLock definitionLock;     // 48
+	private:
+		KEEP_FOR_RE()
 	};
 	//static_assert(sizeof(BSTObjectDictionary) == 0x50);
 }

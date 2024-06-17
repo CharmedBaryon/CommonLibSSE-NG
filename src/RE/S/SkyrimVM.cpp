@@ -19,7 +19,7 @@ namespace RE
 	void SkyrimVM::RelayEvent(VMHandle a_handle, BSFixedString* a_event, BSScript::IFunctionArguments* a_args, SkyrimVM::ISendEventFilter* a_optionalFilter)
 	{
 		using func_t = decltype(&SkyrimVM::RelayEvent);
-		REL::Relocation<func_t> func{ Offset::SkyrimVM::RelayEvent };
+		REL::Relocation<func_t> func{ RELOCATION_ID(53221, 54033) };
 		return func(this, a_handle, a_event, a_args, a_optionalFilter);
 	}
 

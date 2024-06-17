@@ -33,6 +33,8 @@ namespace RE
 		// members
 		INTERIOR_DATA                       data;                              // 20 - DATA
 		BGSDirectionalAmbientLightingColors directionalAmbientLightingColors;  // 80 - DALC
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(BGSLightingTemplate) == 0xA0);
 }

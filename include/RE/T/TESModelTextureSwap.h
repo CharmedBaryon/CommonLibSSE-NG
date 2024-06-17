@@ -32,6 +32,8 @@ namespace RE
 		AlternateTexture* alternateTextures;     // 28 - MODS
 		std::uint32_t     numAlternateTextures;  // 30
 		std::uint32_t     pad34;                 // 34
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(TESModelTextureSwap) == 0x38);
 }

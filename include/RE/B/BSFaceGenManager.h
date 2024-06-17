@@ -59,6 +59,8 @@ namespace RE
 		std::uint32_t     unk5C;             // 5C
 		std::uint8_t      unk60;             // 60
 		std::uint8_t      pad61[7];          // 61
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(BSFaceGenManager) == 0x68);
 };

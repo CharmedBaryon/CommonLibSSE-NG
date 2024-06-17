@@ -26,6 +26,7 @@ namespace RE
 	template <class T, std::size_t SIZE>
 	class BSTStaticFreeList : public BSTFreeList<T>
 	{
+	public:
 		virtual ~BSTStaticFreeList();  // 00
 
 		// members

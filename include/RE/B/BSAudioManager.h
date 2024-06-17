@@ -57,6 +57,8 @@ namespace RE
 		std::uint64_t                                  unk178;  // 178
 		std::uint64_t                                  unk180;  // 180
 		std::uint64_t                                  unk188;  // 188
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(BSAudioManager) == 0x190);
 }

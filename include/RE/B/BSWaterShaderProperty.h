@@ -63,6 +63,8 @@ namespace RE
 		std::uint8_t                               padF9;                 // F9
 		std::uint16_t                              padFA;                 // FA
 		std::uint16_t                              padFC;                 // FC
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(BSWaterShaderProperty) == 0x100);
 }

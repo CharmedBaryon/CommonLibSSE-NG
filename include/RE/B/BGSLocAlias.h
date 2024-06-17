@@ -22,6 +22,8 @@ namespace RE
 		std::uint64_t unk48;       // 48
 		std::uint64_t unk50;       // 50
 		TESCondition* conditions;  // 58
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(BGSLocAlias) == 0x60);
 }

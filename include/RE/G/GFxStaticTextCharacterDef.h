@@ -20,6 +20,8 @@ namespace RE
 		// members
 		GRectF        bounds;    // 20
 		std::uint64_t unk30[7];  // 30
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(GFxStaticTextCharacterDef) == 0x68);
 }

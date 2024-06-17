@@ -20,6 +20,8 @@ namespace RE
 		virtual void Unk_06(void) = 0;  // 06
 		virtual void Unk_07(void) = 0;  // 07
 		virtual void Unk_08(void) = 0;  // 08
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(IMovementDirectControl) == 0x8);
 }

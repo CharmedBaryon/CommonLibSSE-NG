@@ -17,6 +17,8 @@ namespace RE
 		// members
 		BSTSmallArray<MagicSystem::CastingSource> data;        // 00
 		std::uint64_t                             nextUpdate;  // 18
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(ReticuleController) == 0x20);
 }

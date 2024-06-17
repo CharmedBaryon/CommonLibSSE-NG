@@ -50,6 +50,8 @@ namespace RE
 		bool                              lighting;                 // 82
 		bool                              alpha;                    // 83
 		std::uint32_t                     pad84;                    // 84
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(BSEffectShaderData) == 0x88);
 }

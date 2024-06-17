@@ -152,6 +152,8 @@ namespace RE
 		// members
 		GenericFillData fillData;    // 28
 		TESCondition*   conditions;  // 40
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(BGSRefAlias) == 0x48);
 }

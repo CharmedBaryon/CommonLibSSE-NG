@@ -76,6 +76,8 @@ namespace RE
 		std::uint32_t                         equipIndex;              // 84
 		ActorValue                            skill;                   // 88
 		std::uint32_t                         damageLimb;              // 8C
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(HitData) == 0x90);
 }

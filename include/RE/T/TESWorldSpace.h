@@ -108,6 +108,8 @@ namespace RE
 		// this filtered version of the full data removes all duplicate RNAM entries and also all entries where cell x,y doesn't match cell that contains refr x,y
 		// this is the one actually used for loading large references on cell attach
 		BSTHashMap<CellID, FormID*> cellFormIDMapFiltered;  // 60
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(BGSLargeRefData) == 0x90);
 
@@ -183,6 +185,15 @@ namespace RE
 		[[nodiscard]] TESObjectCELL* GetSkyCell();
 		[[nodiscard]] float          GetDefaultWaterHeight() const;
 
+		BGSTerrainManager* GetTerrainManager() const
+		{
+			auto world = this;
+			while (world->parentWorld != nullptr && world->parentUseFlags.any(RE::TESWorldSpace::ParentUseFlag::kUseLODData)) {
+				world = world->parentWorld;
+			}
+			return world->terrainManager;
+		}
+
 		// members
 		BSTHashMap<CellID, TESObjectCELL*>                            cellMap;                  // 058
 		TESObjectCELL*                                                persistentCell;           // 088
@@ -232,6 +243,8 @@ namespace RE
 		float                                                         northRotation;            // 348
 		std::uint32_t                                                 pad34C;                   // 34C
 		std::int8_t*                                                  maxHeightData;            // 350 - MHDT
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(TESWorldSpace) == 0x358);
 }

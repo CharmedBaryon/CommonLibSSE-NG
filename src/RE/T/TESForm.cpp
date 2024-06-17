@@ -148,9 +148,9 @@ namespace RE
 		}
 
 		const auto* expectedFile = (formID & 0xFF000000) == 0xFE000000 ?
-                                       TESDataHandler::GetSingleton()->LookupLoadedLightModByIndex(
+		                               TESDataHandler::GetSingleton()->LookupLoadedLightModByIndex(
 										   static_cast<uint16_t>((0x00FFF000 & formID) >> 12)) :
-                                       TESDataHandler::GetSingleton()->LookupLoadedModByIndex(
+		                               TESDataHandler::GetSingleton()->LookupLoadedModByIndex(
 										   static_cast<uint8_t>((0xFF000000 & formID) >> 24));
 
 		std::uint32_t fullMasters = 0;

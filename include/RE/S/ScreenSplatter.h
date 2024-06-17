@@ -39,6 +39,8 @@ namespace RE
 		std::uint16_t              pad22;                                            // 22
 		std::uint32_t              uiCount;                                          // 24
 		NiPointer<NiSourceTexture> textures[BSBloodSplatterShaderProperty::kTotal];  // 28
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(ScreenSplatter) == 0x40);
 }

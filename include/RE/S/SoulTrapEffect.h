@@ -15,6 +15,8 @@ namespace RE
 		virtual void Update(float a_delta) override;  // 04
 		virtual ~SoulTrapEffect();                    // 13
 		virtual void Finish() override;               // 15
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(SoulTrapEffect) == 0x90);
 }

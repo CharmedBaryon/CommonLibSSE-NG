@@ -23,6 +23,8 @@ namespace RE
 		bool                                unk2D;                           // 2D
 		bool                                unk2E;                           // 2E
 		bool                                unk2F;                           // 2F
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(BSAnimationUpdateData) == 0x30);
 }

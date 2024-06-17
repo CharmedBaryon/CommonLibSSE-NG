@@ -22,6 +22,8 @@ namespace RE
 		// members
 		TESModel* modelSwap;      // 10
 		TESForm*  modelSwapForm;  // 18
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(ExtraModelSwap) == 0x20);
 }

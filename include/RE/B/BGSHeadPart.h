@@ -89,6 +89,8 @@ namespace RE
 		BGSColorForm*                                 color;                         // 108 - CNAM
 		BGSListForm*                                  validRaces;                    // 110 - RNAM
 		BSFixedString                                 formEditorID;                  // 118 - EDID
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(BGSHeadPart) == 0x120);
 }

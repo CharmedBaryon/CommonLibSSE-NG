@@ -90,6 +90,8 @@ namespace RE
 		TESObjectCELL*                               unk118;                   // 118
 		mutable BSSpinLock                           lock;                     // 120
 		NiPointer<BSTriShape>                        autoWater;                // 128
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(TESWaterSystem) == 0x130);
 };

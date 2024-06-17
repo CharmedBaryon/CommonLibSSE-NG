@@ -52,6 +52,8 @@ namespace RE
 		bool                                     allVisible;   // 82
 		std::uint8_t                             pad83;        // 83
 		std::uint32_t                            pad84;        // 84
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(BGSDistantTreeBlock) == 0x88);
 }

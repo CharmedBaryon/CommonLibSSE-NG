@@ -68,6 +68,8 @@ namespace RE
 		BGSEntryPointFunctionData* functionData;  // 18
 		SimpleArray<TESCondition>  conditions;    // 20
 		BGSPerk*                   perk;          // 28
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(BGSEntryPointPerkEntry) == 0x30);
 }

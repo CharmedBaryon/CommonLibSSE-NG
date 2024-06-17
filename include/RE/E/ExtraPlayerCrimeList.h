@@ -21,6 +21,8 @@ namespace RE
 
 		// members
 		BSSimpleList<Crime*>* crimes;  // 10
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(ExtraPlayerCrimeList) == 0x18);
 }

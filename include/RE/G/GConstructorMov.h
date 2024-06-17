@@ -73,6 +73,9 @@ namespace RE
 		{
 			return true;
 		}
+
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(GConstructorMov<void*>) == 0x1);
 }

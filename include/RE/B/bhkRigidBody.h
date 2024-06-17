@@ -56,6 +56,8 @@ namespace RE
 
 		// members
 		BSTArray<void*> unk28;  // 28 - array of smart ptrs to bhkConstraints
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(bhkRigidBody) == 0x40);
 }

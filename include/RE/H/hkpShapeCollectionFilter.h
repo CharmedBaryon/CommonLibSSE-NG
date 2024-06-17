@@ -23,6 +23,8 @@ namespace RE
 		virtual std::int32_t NumShapeKeyHitsLimitBreached(const hkpCollisionInput& a_input, const hkpCdBody& a_bodyA, const hkpCdBody& a_bodyB, const hkpBvTreeShape* a_shapeB, hkAabb& a_AABB, hkpShapeKey* a_shapeKeysInOut, std::int32_t a_shapeKeysCapacity) const = 0;  // 02
 
 		virtual ~hkpShapeCollectionFilter();  // 03
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(hkpShapeCollectionFilter) == 0x08);
 }

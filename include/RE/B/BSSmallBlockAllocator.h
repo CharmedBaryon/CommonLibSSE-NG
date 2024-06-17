@@ -109,6 +109,8 @@ namespace RE
 		bool              allowDecommits;       // 1264
 		std::uint8_t      pad1265;              // 1265
 		std::uint16_t     pad1266;              // 1266
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(BSSmallBlockAllocator) == 0x1268);
 }

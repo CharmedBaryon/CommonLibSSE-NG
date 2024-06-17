@@ -92,6 +92,8 @@ namespace RE
 		TESGlobal*    timeScale;        // 30
 		std::uint32_t midnightsPassed;  // 38
 		float         rawDaysPassed;    // 3C
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(Calendar) == 0x40);
 }

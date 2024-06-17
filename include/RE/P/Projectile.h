@@ -208,8 +208,8 @@ namespace RE
 		SKYRIM_REL_VR_VIRTUAL bool                ProcessImpacts();                                                                                                                                                          // AC
 		SKYRIM_REL_VR_VIRTUAL void                Update3D();                                                                                                                                                                // AD
 		SKYRIM_REL_VR_VIRTUAL void                Unk_AE(void);                                                                                                                                                              // AE - { return 0; }
-		[[nodiscard]] SKYRIM_REL_VR_VIRTUAL float GetPowerSpeedMult() const;                                                                                                                                                       // AF - { if (unk158) return 1.0; else return unk188; } - "float GetSpeed()"?
-		[[nodiscard]] SKYRIM_REL_VR_VIRTUAL float GetWeaponSpeedMult() const;                                                                                                                                                      // B0 - { return 1.0; }
+		[[nodiscard]] SKYRIM_REL_VR_VIRTUAL float GetPowerSpeedMult() const;                                                                                                                                                 // AF - { if (unk158) return 1.0; else return unk188; } - "float GetSpeed()"?
+		[[nodiscard]] SKYRIM_REL_VR_VIRTUAL float GetWeaponSpeedMult() const;                                                                                                                                                // B0 - { return 1.0; }
 		[[nodiscard]] SKYRIM_REL_VR_VIRTUAL bool  GetStopMainSoundAfterImpact();                                                                                                                                             // B1 - { return 0; }
 		SKYRIM_REL_VR_VIRTUAL void                ReportHavokDeactivation();                                                                                                                                                 // B2 - { return; }
 		SKYRIM_REL_VR_VIRTUAL bool                TurnOff(Actor* a_owner, bool a_noDeactivateSound);                                                                                                                         // B3
@@ -272,7 +272,7 @@ namespace RE
 	float                      weaponDamage;      /* 198 */                               \
 	float                      transparency;      /* 19C - for beam disappearing */       \
 	float                      explosionTimer;    /* 1A0 */                               \
-    std::uint32_t              unk1A4;            /* 1A4 */                               \
+	std::uint32_t              unk1A4;            /* 1A4 */                               \
 	float                      unk1A8;            /* 1A8 */                               \
 	float                      unk1AC;            /* 1AC */                               \
 	TESObjectWEAP*             weaponSource;      /* 1B0 */                               \
@@ -282,8 +282,8 @@ namespace RE
 	float                      scale;             /* 1C8 - for double cast model scale */ \
 	std::uint32_t              flags;             /* 1CC */                               \
 	bool                       unk1D0;            /* 1D0 */                               \
-    bool                       unk1D1;            /* 1D1 */                               \
-    std::uint8_t               unk1D2[6];         /* 1D2 */
+	bool                       unk1D1;            /* 1D1 */                               \
+	std::uint8_t               unk1D2[6];         /* 1D2 */
 
 			PROJECTILE_RUNTIME_DATA_CONTENT
 		};
@@ -300,8 +300,10 @@ namespace RE
 
 		// members
 #ifndef ENABLE_SKYRIM_AE
-		PROJECTILE_RUNTIME_DATA_CONTENT
+		PROJECTILE_RUNTIME_DATA_CONTENT;
 #endif
+	private:
+		KEEP_FOR_RE()
 	};
 #ifndef ENABLE_SKYRIM_AE
 	static_assert(sizeof(Projectile) == 0x1D8);

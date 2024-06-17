@@ -26,6 +26,8 @@ namespace RE
 		// members
 		NiPointer<CombatProjectileAimController> aimController;    // 20
 		ActorHandle                              reanimateTarget;  // 28
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(CombatMagicCasterReanimate) == 0x30);
 }

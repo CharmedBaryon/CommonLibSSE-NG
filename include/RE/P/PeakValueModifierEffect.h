@@ -25,6 +25,8 @@ namespace RE
 
 		// members
 		BSTSmartPointer<ActiveEffect> next;  // 98
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(PeakValueModifierEffect) == 0xA0);
 }

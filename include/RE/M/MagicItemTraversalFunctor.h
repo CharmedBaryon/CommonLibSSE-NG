@@ -22,6 +22,8 @@ namespace RE
 		// members
 		std::uint32_t index{ 0 };  // 08
 		std::uint32_t pad0C{ 0 };  // 0C
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(MagicItemTraversalFunctor) == 0x10);
 }

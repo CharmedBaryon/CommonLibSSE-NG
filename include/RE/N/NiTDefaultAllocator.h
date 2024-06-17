@@ -19,5 +19,8 @@ namespace RE
 		{
 			return NiFree(a_ptr);
 		}
+
+	private:
+		KEEP_FOR_RE()
 	};
 }

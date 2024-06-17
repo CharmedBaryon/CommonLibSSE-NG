@@ -15,6 +15,8 @@ namespace RE
 		// override (CombatInventoryItemMagic)
 		TYPE       GetType() override;   // 09 - { return 6; }
 		MagicItem* GetMagic() override;  // 16
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(CombatInventoryItemStaff) == 0x50);
 }

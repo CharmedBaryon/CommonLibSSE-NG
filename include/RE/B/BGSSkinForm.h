@@ -20,6 +20,8 @@ namespace RE
 
 		// members
 		TESObjectARMO* skin;  // 08 - WNAM
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(BGSSkinForm) == 0x10);
 }

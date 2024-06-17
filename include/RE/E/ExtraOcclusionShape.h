@@ -21,6 +21,8 @@ namespace RE
 
 		// members
 		NiPointer<BSOcclusionShape> shape;  // 10
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(ExtraOcclusionShape) == 0x18);
 }

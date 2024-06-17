@@ -27,6 +27,8 @@ namespace RE
 		std::uint32_t unk1C;           // 1C
 		std::uint32_t unk20;           // 20
 		std::uint32_t bufferPosition;  // 24
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(BGSLoadGameBuffer) == 0x28);
 }

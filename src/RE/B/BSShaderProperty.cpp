@@ -2,6 +2,15 @@
 
 namespace RE
 {
+#ifdef ENABLE_SKYRIM_VR
+	bool BSShaderProperty::InvalidateMaterial()
+	{
+		using func_t = decltype(&BSShaderProperty::InvalidateMaterial);
+		REL::Relocation<func_t> func{ REL::ID(5370397616) };
+		return func(this);
+	}
+#endif
+
 	void BSShaderProperty::SetEffectShaderData(const BSTSmartPointer<BSEffectShaderData>& a_data)
 	{
 		lastRenderPassState = (std::numeric_limits<std::int32_t>::max)();
@@ -20,5 +29,19 @@ namespace RE
 		using func_t = decltype(&BSShaderProperty::SetFlags);
 		REL::Relocation<func_t> func{ RELOCATION_ID(98893, 105540) };
 		return func(this, a_flag, a_set);
+	}
+
+	void BSShaderProperty::LinkMaterial(BSShaderMaterial* inMaterial, bool a2)
+	{
+		using func_t = decltype(&BSShaderProperty::LinkMaterial);
+		REL::Relocation<func_t> func{ RELOCATION_ID(98897, 105544) };
+		return func(this, inMaterial, a2);
+	}
+
+	void BSShaderProperty::LoadBinary(NiStream& stream)
+	{
+		auto vtable = REL::Relocation<void***>(BSShaderProperty::VTABLE[0]);
+		auto baseMethod = reinterpret_cast<void (*)(BSShaderProperty*, NiStream&)>((vtable.get()[0x18]));
+		return baseMethod(this, stream);
 	}
 }

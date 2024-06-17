@@ -33,6 +33,8 @@ namespace RE
 
 		// members
 		BSTArray<BGSStoryManagerNodeBase*> children;  // 48
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(BGSStoryManagerBranchNode) == 0x60);
 }

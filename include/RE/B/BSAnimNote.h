@@ -30,6 +30,8 @@ namespace RE
 
 		// add
 		virtual void Unk_25(void);  // 25
+	private:
+		KEEP_FOR_RE()
 	};
 	//static_assert(sizeof(BSAnimNote) == 0x);
 }

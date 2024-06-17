@@ -37,6 +37,8 @@ namespace RE
 		std::uint16_t      nextStorage;    // 28
 		std::uint16_t      oldestStorage;  // 2A
 		std::uint32_t      pad2C;          // 2C
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(ExtraAttachedArrows3D) == 0x30);
 }

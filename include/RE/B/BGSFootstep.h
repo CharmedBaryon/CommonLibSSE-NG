@@ -32,6 +32,8 @@ namespace RE
 		// members
 		BSFixedString     tag;        // 20 - ANAM
 		BGSImpactDataSet* impactSet;  // 28 - DATA
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(BGSFootstep) == 0x30);
 }

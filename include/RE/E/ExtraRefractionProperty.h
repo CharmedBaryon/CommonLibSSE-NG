@@ -19,6 +19,8 @@ namespace RE
 		// members
 		float         refractionPower;  // 10
 		std::uint32_t unk14;            // 14
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(ExtraRefractionProperty) == 0x18);
 }

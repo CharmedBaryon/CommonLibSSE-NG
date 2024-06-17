@@ -26,6 +26,8 @@ namespace RE
 
 		// members
 		OcclusionPlaneLinkedRefData* data;  // 10
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(ExtraOcclusionPlaneRefData) == 0x18);
 }

@@ -52,6 +52,9 @@ namespace RE
 		bool SetGraphVariableFloat(const BSFixedString& a_variableName, float a_in);
 		bool SetGraphVariableNiPoint3(const BSFixedString& a_variableName, NiPoint3& a_in) const;
 		bool UpdateAnimationGraphManager(const BSAnimationUpdateData& a_updateData);
+
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(IAnimationGraphManagerHolder) == 0x8);
 }

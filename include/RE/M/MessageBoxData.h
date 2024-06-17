@@ -34,6 +34,8 @@ namespace RE
 		std::uint8_t                         unk4D;       // 4D
 		std::uint8_t                         unk4E;       // 4E
 		std::uint8_t                         unk4F;       // 4F
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(MessageBoxData) == 0x50);
 }

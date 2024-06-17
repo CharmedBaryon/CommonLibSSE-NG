@@ -55,7 +55,7 @@ namespace RE
 #endif
 
 		// add
-		SKYRIM_REL_VR_VIRTUAL BSTreeNode* AsTreeNode();          // 3E - { return 0; }
+		SKYRIM_REL_VR_VIRTUAL BSTreeNode*     AsTreeNode();      // 3E - { return 0; }
 		SKYRIM_REL_VR_VIRTUAL BSLeafAnimNode* AsLeafAnimNode();  // 3F - { return 0; }
 
 		[[nodiscard]] inline RUNTIME_DATA& GetRuntimeData() noexcept
@@ -73,7 +73,7 @@ namespace RE
 		RUNTIME_DATA_CONTENT  // 128, 150
 #endif
 	};
-#ifndef ENABLE_SKYRIM_VR
+#if !defined(ENABLE_SKYRIM_VR)
 	static_assert(sizeof(BSFadeNode) == 0x158);
 #elif !defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE)
 	static_assert(sizeof(BSFadeNode) == 0x180);

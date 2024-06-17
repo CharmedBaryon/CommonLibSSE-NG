@@ -79,6 +79,8 @@ namespace RE
 		float                                        explosionWindSpeed;               // 188
 		std::uint32_t                                unk18C;                           // 18C
 		BSParticleShaderEmitter*                     particleEmitter;                  // 190
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(BSParticleShaderProperty) == 0x198);
 }

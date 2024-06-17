@@ -16,6 +16,8 @@ namespace RE
 
 		// members
 		NiTPrimitiveArray<bool> options;  // 90
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(ImageSpaceEffectOption) == 0xA8);
 }

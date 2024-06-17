@@ -19,6 +19,8 @@ namespace RE
 
 		// members
 		BGSLoadGameSubBuffer animationBuffer;  // 10
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(ExtraSavedAnimation) == 0x18);
 }

@@ -27,6 +27,8 @@ namespace RE
 
 		// members
 		BSTArray<FollowerInfo> actorFollowers;  // 10
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(ExtraFollower) == 0x28);
 }

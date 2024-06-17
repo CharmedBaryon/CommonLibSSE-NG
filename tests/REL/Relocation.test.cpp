@@ -77,7 +77,7 @@ TEST_CASE("Version/fmt::format")
 
 TEST_CASE("Version/std::format")
 {
-	CHECK(std::format("Hello {}", SKSE::RUNTIME_SSE_1_5_97) == "Hello 1.5.97.0");
+	CHECK(std::format("Hello {}", std::to_string(SKSE::RUNTIME_SSE_1_5_97)) == "Hello 1.5.97.0");
 }
 
 TEST_CASE("Version/StringConstructor")

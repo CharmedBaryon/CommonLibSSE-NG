@@ -6,7 +6,7 @@
 
 namespace REL
 {
-    Module Module::_instance;
+	Module Module::_instance;
 
 	void Module::load_segments()
 	{
@@ -29,7 +29,6 @@ namespace REL
 		}
 	}
 
-
 	void Module::clear()
 	{
 		if (_injectedModule) {
@@ -44,7 +43,7 @@ namespace REL
 		for (auto& segment : _segments) {
 			segment = {};
 		}
-        IDDatabase::_instance.clear();
-        IDDatabase::_initialized = false;
+		IDDatabase::_instance.clear();
+		IDDatabase::_initialized = false;
 	}
 }

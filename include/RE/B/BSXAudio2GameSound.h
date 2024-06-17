@@ -82,6 +82,8 @@ namespace RE
 		std::uint64_t unk208;  // 208
 		std::uint64_t unk210;  // 210
 		std::uint64_t unk218;  // 218
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(BSXAudio2GameSound) == 0x220);
 }

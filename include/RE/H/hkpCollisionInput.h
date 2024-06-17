@@ -33,6 +33,8 @@ namespace RE
 		mutable std::int32_t       createPredictiveAgents;    // 28
 		std::uint32_t              pad2C;                     // 2C
 		Aabb32Info                 aabb32Info;                // 30
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(hkpCollisionInput) == 0x60);
 }

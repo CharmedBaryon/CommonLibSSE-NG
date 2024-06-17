@@ -10,6 +10,8 @@ namespace RE
 {
 	class hkbEventProperty : public hkbEventBase
 	{
+	private:
+		KEEP_FOR_RE()
 	};
 
 	class hkClipTrigger
@@ -20,6 +22,8 @@ namespace RE
 		bool             relativeToEndOfClip;  // 18
 		bool             acyclic;              // 19
 		bool             isAnnotation;         // 1A
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(hkClipTrigger) == 0x20);
 
@@ -33,6 +37,8 @@ namespace RE
 
 		// members
 		hkArray<hkClipTrigger> triggers;  // 10
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(hkbClipTriggerArray) == 0x20);
 
@@ -92,6 +98,8 @@ namespace RE
 		bool                                    ignoreStartTime;                     // 105
 		bool                                    pingPongBackward;                    // 106
 		std::uint8_t                            pad107[9];                           // 107
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(hkbClipGenerator) == 0x110);
 }

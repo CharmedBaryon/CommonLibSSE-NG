@@ -12,6 +12,8 @@ namespace RE
 		// members
 		std::uint32_t     pad24;        // 24
 		BSDirectoryEntry* directories;  // 28
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(BSArchive) == 0x30);
 }

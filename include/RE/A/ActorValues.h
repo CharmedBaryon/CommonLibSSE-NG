@@ -183,6 +183,9 @@ namespace RE
 
 			kTotal = 3
 		};
+
+	private:
+		KEEP_FOR_RE()
 	};
 	using ACTOR_VALUE_MODIFIER = ACTOR_VALUE_MODIFIERS::ACTOR_VALUE_MODIFIER;
 }

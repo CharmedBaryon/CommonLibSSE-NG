@@ -59,6 +59,8 @@ namespace RE
 
 		// members
 		REFR_LOCK* lock;  // 10
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(ExtraLock) == 0x18);
 }

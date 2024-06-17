@@ -50,6 +50,8 @@ namespace RE
 		std::uint32_t                         pad3C;         // 3C
 		BSFixedString                         name;          // 40 - MNAM
 		BSTArray<BGSCollisionLayer*>          collidesWith;  // 48 - CNAM
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(BGSCollisionLayer) == 0x60);
 }

@@ -22,6 +22,8 @@ namespace RE
 		virtual void Unk_0E(void);  // 0E
 		virtual void Unk_0F(void);  // 0F
 		virtual void Unk_10(void);  // 10 - pure
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(GASFunctionObject) == 0x68);
 }

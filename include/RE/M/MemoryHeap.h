@@ -28,6 +28,8 @@ namespace RE
 		std::uint8_t  pad2A9;        // 2A9
 		std::uint16_t pad2AA;        // 2AA
 		std::uint32_t pad2AC;        // 2AC
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(MemoryHeap) == 0x2B0);
 }

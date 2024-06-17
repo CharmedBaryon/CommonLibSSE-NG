@@ -65,6 +65,8 @@ namespace RE
 		BSTArray<void*>           unk68;             // 68
 		uint64_t                  unk80;             // 80
 		BSTArray<void*>           unk88;             // 88
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(AnimationFileManagerSingleton) == 0xA0);
 }

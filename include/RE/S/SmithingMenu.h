@@ -15,6 +15,7 @@ namespace RE
 		{
 		public:
 			inline static constexpr auto RTTI = RTTI_CraftingSubMenus__SmithingMenu;
+			inline static constexpr auto VTABLE = VTABLE_CraftingSubMenus__SmithingMenu;
 
 			class SmithingConfirmCallback : public IMessageBoxCallback
 			{

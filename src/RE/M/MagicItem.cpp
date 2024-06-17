@@ -1,4 +1,5 @@
 #include "RE/M/MagicItem.h"
+#include "RE/E/Effect.h"
 
 namespace RE
 {
@@ -90,6 +91,13 @@ namespace RE
 		using func_t = decltype(&MagicItem::IsPermanent);
 		REL::Relocation<func_t> func{ RELOCATION_ID(11183, 11290) };
 		return func(this);
+	}
+
+	Effect* MagicItem::GetEffectIsMatch(EffectSetting* a_base, float a_mag, ::uint32_t a_area, ::uint32_t a_dur, float a_cost)
+	{
+		auto it = std::find_if(effects.begin(), effects.end(),
+			[&](const auto& effect) { return effect && effect->IsMatch(a_base, a_mag, a_area, a_dur, a_cost); });
+		return it != effects.end() ? *it : nullptr;
 	}
 
 	void MagicItem::Traverse(MagicItemTraversalFunctor& a_visitor) const

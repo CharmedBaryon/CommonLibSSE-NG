@@ -2,6 +2,11 @@
 
 namespace RE
 {
+	bool NiCamera::WorldPtToScreenPt3(const NiPoint3& a_point, float& a_xOut, float& a_yOut, float& a_zOut, float a_zeroTolerance)
+	{
+		return WorldPtToScreenPt3(GetRuntimeData().worldToCam, GetRuntimeData2().port, a_point, a_xOut, a_yOut, a_zOut, a_zeroTolerance);
+	}
+
 	bool NiCamera::BoundInFrustum(const NiBound& a_bound, NiCamera* a_camera)
 	{
 		using func_t = decltype(&BoundInFrustum);
@@ -30,7 +35,7 @@ namespace RE
 
 	bool NiCamera::WorldPtToScreenPt3(const float a_matrix[4][4], const NiRect<float>& a_port, const NiPoint3& a_point, float& a_xOut, float& a_yOut, float& a_zOut, float a_zeroTolerance)
 	{
-		using func_t = decltype(&NiCamera::WorldPtToScreenPt3);
+		using func_t = bool (*)(const float[4][4], const NiRect<float>&, const NiPoint3&, float&, float&, float&, float);
 		REL::Relocation<func_t> func{ Offset::NiCamera::WorldPtToScreenPt3 };
 		return func(a_matrix, a_port, a_point, a_xOut, a_yOut, a_zOut, a_zeroTolerance);
 	}

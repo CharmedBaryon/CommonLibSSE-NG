@@ -37,6 +37,8 @@ namespace RE
 		std::uint16_t                            pad32;      // 32
 		std::uint32_t                            pad34;      // 34
 		std::uint64_t                            pad38;      // 38
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(hkpMoppCode) == 0x40);
 }

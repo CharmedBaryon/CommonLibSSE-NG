@@ -20,6 +20,8 @@ namespace RE
 
 		// add
 		virtual void Callback(GFxMovieView* a_movieView, const char* a_methodName, const GFxValue* a_args, std::uint32_t a_numArgs) = 0;  // 01
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(GFxExternalInterface) == 0x18);
 }

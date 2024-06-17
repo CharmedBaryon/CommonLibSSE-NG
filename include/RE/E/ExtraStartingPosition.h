@@ -30,6 +30,8 @@ namespace RE
 		// members
 		FILE_POS_ROT startPosition;  // 10
 		BGSLocation* location;       // 28
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(ExtraStartingPosition) == 0x30);
 }

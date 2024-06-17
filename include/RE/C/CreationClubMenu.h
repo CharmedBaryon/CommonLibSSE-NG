@@ -96,11 +96,17 @@ namespace RE
 
 		// members
 #ifndef SKYRIM_CROSS_VR
-		RUNTIME_DATA_CONTENT  // 58, 68
+		RUNTIME_DATA_CONTENT;  // 58, 68
 #endif
+	private:
+		KEEP_FOR_RE();
 	};
-#ifndef ENABLE_SKYRIM_VR
+#if !defined(ENABLE_SKYRIM_VR)
+#	ifdef ENABLE_SKYRIM_AE
+	static_assert(sizeof(CreationClubMenu) == 0x98);
+#	else
 	static_assert(sizeof(CreationClubMenu) == 0x88);
+#	endif
 #elif !defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE)
 	static_assert(sizeof(CreationClubMenu) == 0x98);
 #endif

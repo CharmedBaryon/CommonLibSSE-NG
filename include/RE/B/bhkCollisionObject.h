@@ -33,6 +33,9 @@ namespace RE
 			REL::Relocation<func_t> func{ RELOCATION_ID(12784, 20014) };
 			return func(this);
 		}
+
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(bhkCollisionObject) == 0x28);
 }

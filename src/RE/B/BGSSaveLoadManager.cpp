@@ -23,6 +23,15 @@ namespace RE
 		Load_Impl(a_fileName, -1, 0, a_checkForMods);
 	}
 
+#ifdef ENABLE_SKYRIM_VR
+	bool BGSSaveLoadManager::PopulateSaveList()
+	{
+		using func_t = decltype(&BGSSaveLoadManager::PopulateSaveList);
+		REL::Relocation<func_t> func{ REL::ID(5374512336) };
+		return func(this);
+	}
+#endif
+
 	bool BGSSaveLoadManager::LoadMostRecentSaveGame()
 	{
 		using func_t = decltype(&BGSSaveLoadManager::LoadMostRecentSaveGame);

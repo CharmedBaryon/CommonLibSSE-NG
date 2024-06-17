@@ -46,6 +46,8 @@ namespace RE
 
 		// members
 		BSTArray<BGSFootstep*> entries[ACTOR_MOVEMENT_TYPES::kTotal];  // 20
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(BGSFootstepSet) == 0x98);
 }

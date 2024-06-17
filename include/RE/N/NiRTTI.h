@@ -21,6 +21,8 @@ namespace RE
 		// members
 		const char*   name;      // 00
 		const NiRTTI* baseRTTI;  // 08
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(NiRTTI) == 0x10);
 

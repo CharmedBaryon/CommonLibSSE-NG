@@ -32,6 +32,8 @@ namespace RE
 		hkRefPtr<hkbHandIkDriverInfo>    handIkDriverInfo;              // 88
 		hkRefPtr<hkReferencedObject>     aiControlDriverInfo;           // 90
 		hkRefPtr<hkbCharacterStringData> stringData;                    // 98
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(hkbCharacterData) == 0xA0);  // B0?
 }

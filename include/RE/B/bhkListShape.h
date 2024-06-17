@@ -31,6 +31,8 @@ namespace RE
 
 		// members
 		std::uint64_t unk28;  // 28
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(bhkListShape) == 0x30);
 }

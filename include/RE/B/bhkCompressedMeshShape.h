@@ -34,6 +34,8 @@ namespace RE
 
 		// members
 		NiPointer<bhkCompressedMeshShapeData> data;  // 28
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(bhkCompressedMeshShape) == 0x30);
 }

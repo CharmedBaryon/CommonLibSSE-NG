@@ -17,6 +17,8 @@ namespace RE
 
 		// add
 		virtual void Unk_08(void) = 0;  // 08
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(bhkCharacterState) == 0x10);
 }

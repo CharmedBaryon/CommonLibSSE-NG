@@ -31,6 +31,8 @@ namespace RE
 		hkpShapeType                         typeA;                // 38
 		std::uint32_t                        pad3C;                // 3C
 		hkpLinearCastCollisionInput          shapeInput;           // 40
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(hkpWorldLinearCaster) == 0xC0);
 }

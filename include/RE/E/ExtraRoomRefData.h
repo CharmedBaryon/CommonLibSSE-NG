@@ -37,6 +37,8 @@ namespace RE
 
 		// members
 		RoomRefData* data;  // 10
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(ExtraRoomRefData) == 0x18);
 }

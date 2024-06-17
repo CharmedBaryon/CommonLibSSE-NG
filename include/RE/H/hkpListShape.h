@@ -61,6 +61,8 @@ namespace RE
 		hkVector4          aabbHalfExtents;      // 50
 		hkVector4          aabbCenter;           // 60
 		std::uint32_t      enabledChildren[8];   // 70
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(hkpListShape) == 0x90);
 }

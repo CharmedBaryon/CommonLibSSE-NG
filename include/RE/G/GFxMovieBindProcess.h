@@ -36,6 +36,8 @@ namespace RE
 		std::uint32_t    pad4C;           // 4C
 		GFxMovieDef*     importingMovie;  // 50
 		void*            unk58;           // 58
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(GFxMovieBindProcess) == 0x60);
 }

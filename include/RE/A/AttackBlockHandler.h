@@ -40,6 +40,13 @@ namespace RE
 		bool          heldLeft;                    // 42
 		bool          heldRight;                   // 43
 		std::uint32_t unk44;                       // 44
+	private:
+		KEEP_FOR_RE()
 	};
+#if !defined(ENABLE_SKYRIM_VR)
 	static_assert(sizeof(AttackBlockHandler) == 0x48);
+#elif !defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_AE)
+#else
+	static_assert(sizeof(AttackBlockHandler) == 0x48);
+#endif
 }

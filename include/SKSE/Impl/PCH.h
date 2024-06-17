@@ -7,6 +7,7 @@
 #include <cassert>
 #include <cmath>
 #include <concepts>
+#include <coroutine>
 #include <cstdarg>
 #include <cstddef>
 #include <cstdint>
@@ -60,6 +61,7 @@ static_assert(
 
 #pragma warning(push)
 #include <spdlog/spdlog.h>
+
 #pragma warning(pop)
 
 #include "REX/W32/KERNEL32.h"
@@ -241,7 +243,7 @@ namespace SKSE
 			template <class... Args>
 			constexpr enumeration(Args... a_values) noexcept  //
 				requires(std::same_as<Args, enum_type> && ...)
-			:
+				:
 				_impl((static_cast<underlying_type>(a_values) | ...))
 			{}
 
@@ -311,9 +313,9 @@ namespace SKSE
 
 		template <class... Args>
 		enumeration(Args...) -> enumeration<
-			std::common_type_t<Args...>,
-			std::underlying_type_t<
-				std::common_type_t<Args...>>>;
+								 std::common_type_t<Args...>,
+								 std::underlying_type_t<
+									 std::common_type_t<Args...>>>;
 	}
 }
 
@@ -658,7 +660,7 @@ namespace SKSE
 		}
 
 		[[noreturn]] inline void report_and_fail(std::string_view a_msg,
-			std::source_location a_loc = std::source_location::current())
+			std::source_location                                  a_loc = std::source_location::current())
 		{
 			report_and_error(a_msg, true, a_loc);
 		}
@@ -722,6 +724,7 @@ namespace REL
 }
 
 #define RELOCATION_ID(a_se, a_ae) REL::RelocationID(a_se, a_ae)
+#define AE_CHECK(a_version, a_older, a_newer) REL::Module::get().version().compare(a_version) == std::strong_ordering::less ? a_older : a_newer
 
 #include "REL/REL.h"
 
@@ -732,5 +735,14 @@ namespace REL
 
 #include "RE/B/BSCoreTypes.h"
 #include "RE/S/SFTypes.h"
+
+#ifdef _DEBUG
+// Generates a concrete function to force the class to be included in the PDB when loading types from PDB for IDA/Ghidra
+#	define KEEP_FOR_RE() \
+		void REdebug() {};
+#else
+// Generates a concrete function to help with RE, does nothing on release builds
+#	define KEEP_FOR_RE()
+#endif
 
 #undef cdecl  // Workaround for Clang.

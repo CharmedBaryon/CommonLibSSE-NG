@@ -37,6 +37,8 @@ namespace RE
 		std::uint64_t                unk10;         // 10
 		hkRefPtr<hkReferencedObject> unk18;         // 18
 		BSCurrent::ActionArray*      currentArray;  // 20
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(ExtraWaterData) == 0x28);
 }

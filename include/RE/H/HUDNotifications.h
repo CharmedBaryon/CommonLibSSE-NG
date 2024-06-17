@@ -48,6 +48,8 @@ namespace RE
 		GFxValue               objectives;   // 58 - "QuestNotification.ObjectivesA"
 		std::uint32_t          time;         // 70 - last meter update time
 		float                  levelPoints;  // 74 - cached meter progress
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(HUDNotifications) == 0x78);
 }

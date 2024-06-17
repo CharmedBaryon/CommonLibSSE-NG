@@ -148,6 +148,8 @@ namespace RE
 		TESImageSpace*                       imageSpace;               // 240 - INAM
 		NiPoint3                             linearVelocity;           // 248 - NAM0
 		NiPoint3                             angularVelocity;          // 254 - NAM1
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(TESWaterForm) == 0x260);
 }

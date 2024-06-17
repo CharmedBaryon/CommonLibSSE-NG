@@ -33,6 +33,8 @@ namespace RE
 		std::uint32_t                unk10;  // 10
 		std::uint32_t                pad14;  // 14
 		NiPointer<BSMultiBoundShape> data;   // 18
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(BSMultiBound) == 0x20);
 }

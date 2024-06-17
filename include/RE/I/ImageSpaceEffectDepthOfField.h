@@ -35,6 +35,8 @@ namespace RE
 		float             unk14C;     // 14C
 		float             unk150;     // 150
 		std::uint32_t     pad154;     // 154
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(ImageSpaceEffectDepthOfField) == 0x158);
 }

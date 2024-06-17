@@ -129,6 +129,8 @@ namespace RE
 		ImageSpaceModData  modData;     // 50
 		float              baseAmount;  // 98
 		float              modAmount;   // 9C
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(ImageSpaceData) == 0xA0);
 }

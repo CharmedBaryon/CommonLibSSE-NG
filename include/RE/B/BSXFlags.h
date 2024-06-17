@@ -42,6 +42,9 @@ namespace RE
 
 		[[nodiscard]] Flag GetFlags() const;
 		void               SetFlags(Flag a_flags);
+
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(BSXFlags) == 0x20);
 }

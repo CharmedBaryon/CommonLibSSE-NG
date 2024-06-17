@@ -60,6 +60,8 @@ namespace RE
 		std::uint16_t                         unk16;       // 16
 		std::uint32_t                         index;       // 18 - INAM
 		std::uint32_t                         unk1C;       // 1C
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(BGSSceneAction) == 0x20);
 }

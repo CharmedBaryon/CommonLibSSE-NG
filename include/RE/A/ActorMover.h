@@ -18,6 +18,8 @@ namespace RE
 
 		// members
 		Actor* actor;  // 08
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(ActorMover) == 0x10);
 }

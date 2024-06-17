@@ -21,6 +21,8 @@ namespace RE
 
 		// members
 		TESGlobal* global;  // 10
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(ExtraGlobal) == 0x18);
 }

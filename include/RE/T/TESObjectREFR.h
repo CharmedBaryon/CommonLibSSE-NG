@@ -322,12 +322,14 @@ namespace RE
 		[[nodiscard]] virtual const BSTSmartPointer<BipedAnim>& GetBiped1(bool a_firstPerson) const;                                                                                                                                                                         // 7E - { return GetBiped2(); }
 		[[nodiscard]] virtual const BSTSmartPointer<BipedAnim>& GetBiped2() const;                                                                                                                                                                                           // 7F
 		[[nodiscard]] virtual const BSTSmartPointer<BipedAnim>& GetCurrentBiped() const;                                                                                                                                                                                     // 80 - { return GetBiped2(); }
-		virtual void                                            SetBiped(const BSTSmartPointer<BipedAnim>& a_biped);                                                                                                                                                         // 81 - { return; }
-		virtual void                                            RemoveWeapon(BIPED_OBJECT equipIndex);                                                                                                                                                                                                // 82 - { return; }
-		virtual void                                            Unk_83(void);                                                                                                                                                                                                // 83 - { return; }
-																																																																			 // Virtual functions defined in TESObjectREFR after the vtable structure becomes different in VR.
+		virtual void                                            SetBiped(const BSTSmartPointer<BipedAnim>& a_biped);                                                                                                                                                         // 81 - { return; }																																																																			 // Virtual functions defined in TESObjectREFR after the vtable structure becomes different in VR.
 #if !defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE)
-		virtual void Unk_84(void);  // 84 - sets flag 24 if the object has destructibles
+		SKYRIM_REL_VR_VIRTUAL void AttachWeapon(RE::TESObjectWEAP* a_weapon, bool attachToShieldHand);  // 82 - Virtual in VR, non-virtual in SE/AE. Shield hand may be just left hand?
+#endif
+		SKYRIM_REL_VR_VIRTUAL void RemoveWeapon(BIPED_OBJECT equipIndex);  // 82 - { return; }
+		SKYRIM_REL_VR_VIRTUAL void Unk_83(void);                           // 83 - { return; }
+#if !defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE)
+		virtual void Unk_84(void);
 #endif
 		SKYRIM_REL_VR_VIRTUAL void                         SetObjectReference(TESBoundObject* a_object);                                         // 84 - sets flag 24 if the object has destructibles
 		SKYRIM_REL_VR_VIRTUAL void                         MoveHavok(bool a_forceRec);                                                           // 85
@@ -428,6 +430,7 @@ namespace RE
 		[[nodiscard]] bool                              HasKeyword(const BGSKeyword* a_keyword) const;
 		[[nodiscard]] bool                              HasKeywordInArray(const std::vector<BGSKeyword*>& a_keywords, bool a_matchAll) const;
 		[[nodiscard]] bool                              HasKeywordInList(BGSListForm* a_keywordList, bool a_matchAll) const;
+		bool                                            HasKeywordWithType(DEFAULT_OBJECT keywordType) const;
 		bool                                            HasKeywordWithType(DefaultObjectID keywordType) const;
 		[[nodiscard]] bool                              HasQuestObject() const;
 		void                                            InitChildActivates(TESObjectREFR* a_actionRef);
@@ -451,8 +454,8 @@ namespace RE
 		[[nodiscard]] bool                              IsMarkedForDeletion() const;
 		[[nodiscard]] bool                              IsOffLimits();
 		[[nodiscard]] bool                              IsPersistent() const;
-        [[nodiscard]] float                             IsPointDeepUnderWater(float a_zPos, TESObjectCELL* a_cell) const;
-        [[nodiscard]] bool                              IsPointSubmergedMoreThan(const NiPoint3& a_pos, TESObjectCELL* a_cell, float a_waterLevel) const;
+		[[nodiscard]] float                             IsPointDeepUnderWater(float a_zPos, TESObjectCELL* a_cell) const;
+		[[nodiscard]] bool                              IsPointSubmergedMoreThan(const NiPoint3& a_pos, TESObjectCELL* a_cell, float a_waterLevel) const;
 		void                                            MoveTo(TESObjectREFR* a_target);
 		bool                                            MoveToNode(TESObjectREFR* a_target, const BSFixedString& a_nodeName);
 		bool                                            MoveToNode(TESObjectREFR* a_target, NiAVObject* a_node);
@@ -492,10 +495,10 @@ namespace RE
 		}
 
 		// members
-		OBJ_REFR         data;          // 40
-		TESObjectCELL*   parentCell;    // 60
-		LOADED_REF_DATA* loadedData;    // 68
-		ExtraDataList    extraList;     // 70
+		OBJ_REFR         data;        // 40
+		TESObjectCELL*   parentCell;  // 60
+		LOADED_REF_DATA* loadedData;  // 68
+		ExtraDataList    extraList;   // 70
 
 #ifndef ENABLE_SKYRIM_AE
 		RUNTIME_DATA_CONTENT
@@ -506,6 +509,7 @@ namespace RE
 		InventoryChanges* MakeInventoryChanges();
 		void              MoveTo_Impl(const ObjectRefHandle& a_targetHandle, TESObjectCELL* a_targetCell, TESWorldSpace* a_selfWorldSpace, const NiPoint3& a_position, const NiPoint3& a_rotation);
 		void              PlayAnimation_Impl(NiControllerManager* a_manager, NiControllerSequence* a_toSeq, NiControllerSequence* a_fromSeq, bool a_arg4 = false);
+		KEEP_FOR_RE()
 	};
 #ifndef ENABLE_SKYRIM_AE
 	static_assert(sizeof(TESObjectREFR) == 0x98);

@@ -11,5 +11,7 @@ namespace RE
 	{
 	public:
 		virtual ~AutoRegisterCreator();  // 00
+	private:
+		KEEP_FOR_RE()
 	};
 }

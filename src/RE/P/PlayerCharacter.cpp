@@ -32,6 +32,13 @@ namespace RE
 		return func(this);
 	}
 
+	void PlayerCharacter::ActivatePickRefVR(VR_DEVICE a_device)
+	{
+		using func_t = decltype(&PlayerCharacter::ActivatePickRefVR);
+		REL::Relocation<func_t> func{ Offset::PlayerCharacter::ActivatePickRef };
+		return func(this, a_device);
+	}
+
 	void PlayerCharacter::AddPlayerAddItemEvent(TESObject* a_object, TESForm* a_owner, TESObjectREFR* a_container, AQUIRE_TYPE a_type)
 	{
 		using func_t = decltype(&PlayerCharacter::AddPlayerAddItemEvent);
@@ -70,22 +77,20 @@ namespace RE
 		return func(this);
 	}
 
-#ifndef ENABLE_SKYRIM_VR
 	void PlayerCharacter::EndGrabObject()
 	{
 		if (GetPlayerRuntimeData().grabType == GrabbingType::kNormal) {
 			DestroyMouseSprings();
 		}
 	}
-#endif
 
 	NiPointer<Actor> PlayerCharacter::GetActorDoingPlayerCommand() const
 	{
-        if SKYRIM_REL_CONSTEXPR (REL::Module::IsVR()) {
-            return REL::RelocateMember<ActorHandle>(this, 0, 0xE8C).get();
-        } else {
-            return REL::RelocateMemberIfNewer<ActorHandle>(SKSE::RUNTIME_SSE_1_6_629, this, 0x894, 0x89C).get();
-        }
+		if SKYRIM_REL_CONSTEXPR (REL::Module::IsVR()) {
+			return REL::RelocateMember<ActorHandle>(this, 0, 0xE8C).get();
+		} else {
+			return REL::RelocateMemberIfNewer<ActorHandle>(SKSE::RUNTIME_SSE_1_6_629, this, 0x894, 0x89C).get();
+		}
 	}
 
 	float PlayerCharacter::GetArmorValue(InventoryEntryData* a_form)
@@ -102,10 +107,10 @@ namespace RE
 		return func(this, a_form);
 	}
 
-	NiPointer<TESObjectREFR> PlayerCharacter::GetGrabbedRef()
+	NiPointer<TESObjectREFR> PlayerCharacter::GetGrabbedRef(VR_DEVICE a_device)
 	{
 		if SKYRIM_REL_CONSTEXPR (Module::IsVR()) {
-			return nullptr;
+			return GetVRPlayerRuntimeData().grabbedObjectData[a_device].grabbedObject.get();
 		} else {
 			return REL::RelocateMemberIfNewer<ObjectRefHandle>(SKSE::RUNTIME_SSE_1_6_629, this, 0x8C8, 0x8D0).get();
 		}
@@ -125,6 +130,8 @@ namespace RE
 		return func(this, a_tintType);
 	}
 
+	// TODO need to understand how this changed in VR
+#ifndef ENABLE_SKYRIM_VR
 	TintMask* PlayerCharacter::GetOverlayTintMask(TintMask* a_original)
 	{
 		if SKYRIM_REL_VR_CONSTEXPR (REL::Module::IsVR()) {
@@ -166,25 +173,37 @@ namespace RE
 			return func(this, a_tintType, a_index);
 		}
 	}
+#endif
 
 	bool PlayerCharacter::HasActorDoingCommand() const
 	{
-        if SKYRIM_REL_VR_CONSTEXPR (REL::Module::IsVR()) {
-            return static_cast<bool>(REL::RelocateMember<ActorHandle>(this, 0, 0xE8C));
-        }
-        else {
-            return static_cast<bool>(REL::RelocateMemberIfNewer<ActorHandle>(SKSE::RUNTIME_SSE_1_6_629, this, 0x894, 0x89C));
-        }
+		if SKYRIM_REL_VR_CONSTEXPR (REL::Module::IsVR()) {
+			return static_cast<bool>(REL::RelocateMember<ActorHandle>(this, 0, 0xE8C));
+		} else {
+			return static_cast<bool>(REL::RelocateMemberIfNewer<ActorHandle>(SKSE::RUNTIME_SSE_1_6_629, this, 0x894, 0x89C));
+		}
 	}
 
 	bool PlayerCharacter::IsGrabbing() const
 	{
 		if SKYRIM_REL_CONSTEXPR (Module::IsVR()) {
+			for (auto& VRgrabData : GetVRPlayerRuntimeData().grabbedObjectData) {
+				if (VRgrabData.grabbedObject) {
+					return true;
+				}
+			}
 			return false;
 		} else {
 			return static_cast<bool>(REL::RelocateMemberIfNewer<ObjectRefHandle>(SKSE::RUNTIME_SSE_1_6_629, this, 0x8C8, 0x8D0));
 		}
 	}
+
+#ifdef ENABLE_SKYRIM_VR
+	bool PlayerCharacter::IsGrabbingWithDevice(VR_DEVICE a_device) const
+	{
+		return static_cast<bool>(GetVRPlayerRuntimeData().grabbedObjectData[a_device].grabbedObject);
+	}
+#endif
 
 	void PlayerCharacter::PlayMagicFailureSound(MagicSystem::SpellType a_spellType)
 	{
@@ -214,11 +233,11 @@ namespace RE
 		return func(this, a_flag, a_escaped);
 	}
 
-	void PlayerCharacter::StartGrabObject()
+	void PlayerCharacter::StartGrabObject(VR_DEVICE a_device)
 	{
 		using func_t = decltype(&PlayerCharacter::StartGrabObject);
 		REL::Relocation<func_t> func{ Offset::PlayerCharacter::StartGrabObject };
-		return func(this);
+		return func(this, a_device);
 	}
 
 	void PlayerCharacter::UpdateCrosshairs()

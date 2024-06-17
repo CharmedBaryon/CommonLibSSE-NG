@@ -26,6 +26,8 @@ namespace RE
 		};
 
 		const char* _data;  // 0
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(hkStringPtr) == 0x8);
 }

@@ -15,6 +15,8 @@ namespace RE
 
 		// members
 		GFxEvent* scaleformEvent;  // 10
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(BSUIScaleformData) == 0x18);
 }

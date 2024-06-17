@@ -128,11 +128,17 @@ namespace RE
 #	if !defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE)
 		std::uint64_t pad68;  // 68
 #	endif
-		RUNTIME_DATA_CONTENT  // 40, 70
+		RUNTIME_DATA_CONTENT;  // 40, 70
 #endif
+	private:
+		KEEP_FOR_RE()
 	};
 #ifndef ENABLE_SKYRIM_VR
+#	ifdef ENABLE_SKYRIM_AE
+	static_assert(sizeof(HUDMenu) == 0xA8);
+#	else
 	static_assert(sizeof(HUDMenu) == 0x98);
+#	endif
 #elif !defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE)
 	static_assert(sizeof(HUDMenu) == 0xC8);
 #endif

@@ -18,6 +18,8 @@ namespace RE
 		// members
 		float         cooldown;  // 48 - in seconds
 		std::uint32_t unk4C;     // 4C
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(ShoutMeter) == 0x50);
 }

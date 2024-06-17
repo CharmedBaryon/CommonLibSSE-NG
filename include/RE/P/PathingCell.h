@@ -26,6 +26,8 @@ namespace RE
 		// members
 		FormID unk10;   // 10
 		FormID cellID;  // 14
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(PathingCell) == 0x18);
 }

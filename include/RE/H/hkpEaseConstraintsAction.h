@@ -21,6 +21,8 @@ namespace RE
 		float                           timePassed;           // 44
 		hkArray<hkpConstraintInstance*> originalConstraints;  // 48
 		hkArray<float>                  originalLimits;       // 58
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(hkpEaseConstraintsAction) == 0x68);
 }

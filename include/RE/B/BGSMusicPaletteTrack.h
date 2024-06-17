@@ -30,6 +30,8 @@ namespace RE
 		std::uint32_t            pad7C;              // 7C
 		std::uint64_t            playTime;           // 80
 		std::uint64_t            pauseTime;          // 88
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(BGSMusicPaletteTrack) == 0x90);
 }

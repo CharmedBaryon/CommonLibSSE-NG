@@ -15,6 +15,8 @@ namespace RE
 		// override (CombatInventoryItemMagic)
 		TYPE GetType() override;                                  // 09 - { return 8; }
 		bool CheckBusy(CombatController* a_controller) override;  // 0E
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(CombatInventoryItemScroll) == 0x50);
 }

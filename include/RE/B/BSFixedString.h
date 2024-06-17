@@ -250,3 +250,35 @@ namespace RE
 		}
 	};
 }
+
+#ifdef FMT_VERSION
+template <>
+struct fmt::formatter<RE::BSFixedString>
+{
+	// Presentation format: 'f' - fixed, 'e' - exponential.
+	char presentation = 'f';
+
+	// Parses format specifications of the form ['f' | 'e'].
+	constexpr auto parse(format_parse_context& ctx) -> format_parse_context::iterator
+	{
+		auto it = ctx.begin(), end = ctx.end();
+		if (it != end && (*it == 'f'))
+			presentation = *it++;
+
+		// Check if reached the end of the range:
+		if (it != end && *it != '}')
+			format_error("invalid format");
+
+		// Return an iterator past the end of the parsed range:
+		return it;
+	}
+
+	// Formats the point p using the parsed format specification (presentation)
+	// stored in this formatter.
+	auto format(const RE::BSFixedString& v, format_context& ctx) const -> format_context::iterator
+	{
+		// ctx.out() is an output iterator to write to.
+		return fmt::format_to(ctx.out(), "{}", v.data());
+	}
+};
+#endif

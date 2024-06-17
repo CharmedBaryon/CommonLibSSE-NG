@@ -92,6 +92,7 @@ set(SOURCES
 	include/RE/B/BGSDualCastData.h
 	include/RE/B/BGSEncounterZone.h
 	include/RE/B/BGSEntryPoint.h
+	include/RE/B/BGSEntryPointFunction.h
 	include/RE/B/BGSEntryPointFunctionData.h
 	include/RE/B/BGSEntryPointFunctionDataActivateChoice.h
 	include/RE/B/BGSEntryPointFunctionDataOneValue.h
@@ -114,6 +115,7 @@ set(SOURCES
 	include/RE/B/BGSImpactDataSet.h
 	include/RE/B/BGSImpactManager.h
 	include/RE/B/BGSInstancedQuestObjective.h
+	include/RE/B/BGSKeyword.cpp
 	include/RE/B/BGSKeyword.h
 	include/RE/B/BGSKeywordForm.h
 	include/RE/B/BGSLensFlare.h
@@ -228,7 +230,7 @@ set(SOURCES
 	include/RE/B/BSFaceGenKeyframe.h
 	include/RE/B/BSFaceGenKeyframeMultiple.h
 	include/RE/B/BSFaceGenManager.h
-    include/RE/B/BSFaceGenModel.h
+	include/RE/B/BSFaceGenModel.h
 	include/RE/B/BSFaceGenModelExtraData.h
 	include/RE/B/BSFaceGenNiNode.h
 	include/RE/B/BSFadeNode.h
@@ -258,6 +260,7 @@ set(SOURCES
 	include/RE/B/BSKeyboardDevice.h
 	include/RE/B/BSLensFlareRenderData.h
 	include/RE/B/BSLight.h
+	include/RE/B/BSLightingShader.h
 	include/RE/B/BSLightingShaderMaterial.h
 	include/RE/B/BSLightingShaderMaterialBase.h
 	include/RE/B/BSLightingShaderMaterialEnvmap.h
@@ -309,6 +312,7 @@ set(SOURCES
 	include/RE/B/BSPrecomputedNavmeshInfoPathMap.h
 	include/RE/B/BSReloadShaderI.h
 	include/RE/B/BSRenderPass.h
+	include/RE/B/BSResource.h
 	include/RE/B/BSResourceEntryDB.h
 	include/RE/B/BSResourceNiBinaryStream.h
 	include/RE/B/BSResponse.h
@@ -370,6 +374,7 @@ set(SOURCES
 	include/RE/B/BSTriShape.h
 	include/RE/B/BSUIMessageData.h
 	include/RE/B/BSUIScaleformData.h
+	include/RE/B/BSVRInterface.h
 	include/RE/B/BSValueNode.h
 	include/RE/B/BSVRInterface.h
 	include/RE/B/BSVirtualKeyboardDevice.h
@@ -438,6 +443,7 @@ set(SOURCES
 	include/RE/C/CFilter.h
 	include/RE/C/CRC.h
 	include/RE/C/Calendar.h
+	include/RE/C/CalibrationOptionMenu.h
 	include/RE/C/CalmEffect.h
 	include/RE/C/CharEvent.h
 	include/RE/C/Character.h
@@ -522,6 +528,7 @@ set(SOURCES
 	include/RE/D/DialogueMenu.h
 	include/RE/D/DialoguePackage.h
 	include/RE/D/DialogueTypes.h
+	include/RE/D/DirectionHandler.h
 	include/RE/D/DisarmEffect.h
 	include/RE/D/DisarmedEvent.h
 	include/RE/D/DisguiseEffect.h
@@ -532,6 +539,7 @@ set(SOURCES
 	include/RE/D/DualValueModifierEffect.h
 	include/RE/E/Effect.h
 	include/RE/E/EffectArchetypes.h
+	include/RE/E/EffectSetting.cpp
 	include/RE/E/EffectSetting.h
 	include/RE/E/EmotionTypes.h
 	include/RE/E/EnchantConstructMenu.h
@@ -909,6 +917,7 @@ set(SOURCES
 	include/RE/H/HighProcessData.h
 	include/RE/H/HitData.h
 	include/RE/H/HorseCameraState.h
+	include/RE/H/HudModeChangeEvent.h
 	include/RE/H/SendHUDMessage.h
 	include/RE/H/hkAabb.h
 	include/RE/H/hkArray.h
@@ -1121,6 +1130,7 @@ set(SOURCES
 	include/RE/I/IngredientItem.h
 	include/RE/I/InputDevices.h
 	include/RE/I/InputEvent.h
+	include/RE/I/InterfaceLightSchemes.h
 	include/RE/I/InterfaceStrings.h
 	include/RE/I/InteriorData.h
 	include/RE/I/Inventory.h
@@ -1222,9 +1232,13 @@ set(SOURCES
 	include/RE/N/NavMesh.h
 	include/RE/N/NavMeshInfoMap.h
 	include/RE/N/NiAVObject.h
+	include/RE/N/NiAccumulator.h
 	include/RE/N/NiAllocator.h
+	include/RE/N/NiAlphaAccumulator.h
 	include/RE/N/NiAlphaProperty.h
 	include/RE/N/NiAnimationKey.h
+	include/RE/N/NiBackToFrontAccumulator.h
+	include/RE/N/NiBillboardNode.h
 	include/RE/N/NiBinaryStream.h
 	include/RE/N/NiBoneMatrixSetterI.h
 	include/RE/N/NiBooleanExtraData.h
@@ -1239,6 +1253,7 @@ set(SOURCES
 	include/RE/N/NiControllerManager.h
 	include/RE/N/NiControllerSequence.h
 	include/RE/N/NiCullingProcess.h
+	include/RE/N/NiDirectionalLight.h
 	include/RE/N/NiExtraData.h
 	include/RE/N/NiFile.h
 	include/RE/N/NiFloatData.h
@@ -1398,8 +1413,10 @@ set(SOURCES
 	include/RE/S/SettingCollectionMap.h
 	include/RE/S/SettingT.h
 	include/RE/S/Sexes.h
+	include/RE/S/ShaderAccumulator.h
 	include/RE/S/ShaderReferenceEffect.h
 	include/RE/S/ShadowSceneNode.h
+	include/RE/S/ShadowState.h
 	include/RE/S/ShoutAttack.h
 	include/RE/S/ShoutHandler.h
 	include/RE/S/ShoutMeter.h
@@ -1586,6 +1603,7 @@ set(SOURCES
 	include/RE/T/TargetValueModifierEffect.h
 	include/RE/T/TaskQueueInterface.h
 	include/RE/T/TelekinesisEffect.h
+	include/RE/T/TeleportHandler.h
 	include/RE/T/TempEffectTraits.h
 	include/RE/T/TextureAddressModes.h
 	include/RE/T/TextureFileFormat.h
@@ -1614,6 +1632,10 @@ set(SOURCES
 	include/RE/U/UserEvents.h
 	include/RE/V/VATS.h
 	include/RE/V/VDescTable.h
+	include/RE/V/VRDeviceConnectionChange.h
+	include/RE/V/VROverlayChange.h
+	include/RE/V/VRResetHMDHeight.h
+	include/RE/V/VRWandEvent.h
 	include/RE/V/ValueAndConditionsEffect.h
 	include/RE/V/ValueModifierEffect.h
 	include/RE/V/VampireLordEffect.h
@@ -1621,6 +1643,9 @@ set(SOURCES
 	include/RE/V/VertexDesc.h
 	include/RE/V/VirtualMachine.h
 	include/RE/V/VoiceSpellFireHandler.h
+	include/RE/V/VrWandTouchpadPositionEvent.h
+	include/RE/V/VrWandTouchpadSwipeEvent.h
+	include/RE/W/WSActivateRollover.h
 	include/RE/W/WeaponAnimationGraphManagerHolder.h
 	include/RE/W/WeatherType.h
 	include/RE/W/WerewolfEffect.h
@@ -1732,13 +1757,14 @@ set(SOURCES
 	src/RE/B/BSInputDeviceFactory.cpp
 	src/RE/B/BSInputDeviceManager.cpp
 	src/RE/B/BSInputEventQueue.cpp
-    src/RE/B/BSInstanceTriShape.cpp
-    src/RE/B/BSKeyboardDevice.cpp
+	src/RE/B/BSInstanceTriShape.cpp
+	src/RE/B/BSKeyboardDevice.cpp
 	src/RE/B/BSLightingShaderMaterialBase.cpp
 	src/RE/B/BSLightingShaderProperty.cpp
 	src/RE/B/BSModelDB.cpp
 	src/RE/B/BSMouseDevice.cpp
-    src/RE/B/BSMultiBoundNode.cpp
+	src/RE/B/BSMultiBoundNode.cpp
+	src/RE/B/BSOpenVR.cpp
 	src/RE/B/BSPCGamepadDeviceDelegate.cpp
 	src/RE/B/BSPCGamepadDeviceHandler.cpp
 	src/RE/B/BSPCOrbisGamepadDevice.cpp
@@ -2014,6 +2040,7 @@ set(SOURCES
 	src/RE/U/UserEvents.cpp
 	src/RE/V/Variable.cpp
 	src/RE/V/VirtualMachine.cpp
+	src/RE/W/WorldSpaceMenu.cpp
 	src/RE/Z/ZeroFunctionArguments.cpp
 	src/REL/ID.cpp
 	src/REL/Module.cpp

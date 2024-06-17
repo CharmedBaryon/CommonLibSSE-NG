@@ -201,6 +201,8 @@ namespace RE
 		std::uint16_t                                                         pad422;                                                     // 422
 		std::uint32_t                                                         pad424;                                                     // 424
 		std::uint64_t                                                         pad428;                                                     // 428
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(hkpWorld) == 0x430);
 }

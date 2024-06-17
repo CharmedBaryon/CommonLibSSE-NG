@@ -19,6 +19,8 @@ namespace RE
 		// members
 		FormID        id;     // 10 - BGSOutfit
 		std::uint32_t pad14;  // 14
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(ExtraOutfitItem) == 0x18);
 }

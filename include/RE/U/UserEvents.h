@@ -28,14 +28,29 @@ namespace RE
 				kTFCMode,
 				kMapDebug,
 				kLockpicking,
-#ifdef SKYRIM_SUPPORT_AE
+#ifdef ENABLE_SKYRIM_AE
 				kMarketplace,
 #endif
 				kFavor,
 
-				kTotal,
-
+#if !defined(ENABLE_SKYRIM_VR) //flat
+#	if !defined(ENABLE_SKYRIM_AE) && defined(ENABLE_SKYRIM_SE)  // SSE
+				kTotal = 17,
 				kNone
+				#else // AE
+				kTotal = 18,
+				kNone,
+#endif
+#elif !defined(ENABLE_SKYRIM_AE) && defined(ENABLE_SKYRIM_SE) // VR
+				kTotal = 17,
+				kNone = 22  // More input contexts might be available, needs REing
+#else // ALL
+				kTotal = 17,
+				kAETotal = 18, // AE 1130
+				kVRTotal = 17,
+				kNone = 22  // More input contexts might be available, needs REing
+#endif
+
 			};
 		};
 		using INPUT_CONTEXT_ID = INPUT_CONTEXT_IDS::INPUT_CONTEXT_ID;
@@ -169,6 +184,8 @@ namespace RE
 		BSFixedString localMap;           // 328 - "LocalMap"
 		BSFixedString localMapMoveMode;   // 330 - "LocalMapMoveMode"
 		BSFixedString itemZoom;           // 338 - "Item Zoom"
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(UserEvents) == 0x340);
 }

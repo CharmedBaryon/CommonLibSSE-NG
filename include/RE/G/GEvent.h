@@ -18,6 +18,8 @@ namespace RE
 		std::uint32_t  pad24;               // 24
 		mutable GMutex stateMutex;          // 28
 		GWaitCondition stateWaitCondition;  // 50
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(GEvent) == 0x58);
 }

@@ -20,6 +20,8 @@ namespace RE
 
 		// members
 		TESForm* startingWorldOrCell;  // 10
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(ExtraStartingWorldOrCell) == 0x18);
 }

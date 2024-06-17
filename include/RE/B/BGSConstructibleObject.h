@@ -45,6 +45,8 @@ namespace RE
 		ConstructibleObjectData data;           // 50
 		std::uint16_t           pad52;          // 52
 		std::uint32_t           unk54;          // 54
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(BGSConstructibleObject) == 0x58);
 }

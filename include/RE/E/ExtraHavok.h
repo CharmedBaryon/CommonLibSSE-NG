@@ -23,6 +23,8 @@ namespace RE
 		// members
 		NiPointer<bhkWorld> world;     // 10
 		NiPointer<CellMopp> cellMopp;  // 18
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(ExtraHavok) == 0x20);
 }

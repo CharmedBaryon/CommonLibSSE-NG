@@ -15,6 +15,8 @@ namespace RE
 		hkArray<hkStringPtr> attributeNames;          // 20
 		hkArray<hkStringPtr> variableNames;           // 30
 		hkArray<hkStringPtr> characterPropertyNames;  // 40
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(hkbBehaviorGraphStringData) == 0x50);
 }

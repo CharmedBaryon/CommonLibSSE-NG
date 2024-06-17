@@ -40,6 +40,8 @@ namespace RE
 	protected:
 		// members
 		float _time;  // 00
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(NiAnimationKey) == 0x4);
 }

@@ -30,6 +30,8 @@ namespace RE
 
 		// members
 		BSTSmallArray<LinkedRef> linkedRefs;  // 10
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(ExtraLinkedRef) == 0x30);
 }

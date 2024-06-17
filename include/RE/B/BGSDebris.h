@@ -61,6 +61,8 @@ namespace RE
 
 		// members
 		BSSimpleList<BGSDebrisData*> data;  // 28
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(BGSDebris) == 0x38);
 }

@@ -1,4 +1,5 @@
 #include "RE/I/IAnimationGraphManagerHolder.h"
+#include "RE/N/NiPoint3.h"
 
 namespace RE
 {

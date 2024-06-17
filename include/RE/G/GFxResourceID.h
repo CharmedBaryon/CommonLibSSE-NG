@@ -59,6 +59,8 @@ namespace RE
 	protected:
 		// members
 		std::uint32_t id;  // 0
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(GFxResourceID) == 0x4);
 }

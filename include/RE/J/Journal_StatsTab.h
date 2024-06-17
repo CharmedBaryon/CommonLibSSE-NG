@@ -13,6 +13,8 @@ namespace RE
 
 		// override (JournalTab)
 		void Accept(CallbackProcessor* a_cbReg) override;  // 01
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(Journal_StatsTab) == 0x18);
 }

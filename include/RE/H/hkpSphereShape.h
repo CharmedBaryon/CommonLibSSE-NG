@@ -23,6 +23,8 @@ namespace RE
 		void             Unk_0E(void) override;                                                                                // 0E
 		void             Unk_0F(void) override;                                                                                // 0F
 		void             Unk_11(void) override;                                                                                // 11
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(hkpSphereShape) == 0x28);
 }

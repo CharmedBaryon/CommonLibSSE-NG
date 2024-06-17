@@ -14,6 +14,9 @@ namespace RE
 
 		// override (IHandleFunctor)
 		bool ExecuteHandler(Actor& a_actor, const BSFixedString& a_tag) override;
+
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(VoiceSpellFireHandler) == 0x10);
 }

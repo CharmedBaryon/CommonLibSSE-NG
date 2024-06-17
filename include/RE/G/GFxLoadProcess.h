@@ -62,6 +62,8 @@ namespace RE
 		GArray<GASExecuteTag*> loadingFrameData[TimelineType::kTotal];  // 3A0
 		GArray<GASExecuteTag*> importActions;                           // 3D0
 		GFxStream*             streamEx;                                // 3E8
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(GFxLoadProcess) == 0x3F0);
 }

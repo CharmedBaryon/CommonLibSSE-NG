@@ -120,6 +120,8 @@ namespace RE
 
 		// members
 		MapMarkerData* mapData;  // 10
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(ExtraMapMarker) == 0x18);
 }

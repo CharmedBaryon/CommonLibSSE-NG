@@ -47,6 +47,8 @@ namespace RE
 		std::uint32_t          unk3C;  // 3C
 		std::uint64_t          unk40;  // 40
 		std::uint32_t          unk48;  // 48
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(ImageSpaceModifierInstanceForm) == 0x50);
 }

@@ -101,6 +101,9 @@ namespace RE
 	protected:
 		friend class BSGamepadDeviceHandler;
 		BSWin32GamepadDevice();
+
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(BSWin32GamepadDevice) == 0x128);
 }

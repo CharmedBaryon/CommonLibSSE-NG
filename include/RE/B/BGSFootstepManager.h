@@ -22,6 +22,8 @@ namespace RE
 		std::uint32_t           pad5C;  // 5C
 		BSTArray<BSFixedString> unk60;  // 60
 		std::uint64_t           unk78;  // 78
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(BGSFootstepManager) == 0x80);
 }

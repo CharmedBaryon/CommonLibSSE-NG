@@ -32,6 +32,8 @@ namespace RE
 		[[nodiscard]] virtual const BSIAttenuationCharacteristics* DoGetAttenuation() const = 0;                                                                // 07
 		[[nodiscard]] virtual float                                DoGetReverbSendLevel() const = 0;                                                            // 08
 		[[nodiscard]] virtual bool                                 DoGetSupportsMonitor(std::uint32_t a_arg1) const = 0;                                        // 09
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(BSISoundOutputModel) == 0x8);
 }

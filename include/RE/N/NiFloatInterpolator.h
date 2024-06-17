@@ -47,6 +47,8 @@ namespace RE
 		NiPointer<NiFloatData> floatData;   // 20
 		std::uint32_t          lastIndex;   // 28
 		std::uint32_t          pad2C;       // 2C
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(NiFloatInterpolator) == 0x30);
 }

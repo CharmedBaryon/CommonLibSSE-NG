@@ -38,6 +38,8 @@ namespace RE
 		std::uint8_t               pad81;            // 81
 		std::uint16_t              pad82;            // 82
 		std::uint32_t              pad84;            // 84
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(TESWaterReflections) == 0x88);
 }

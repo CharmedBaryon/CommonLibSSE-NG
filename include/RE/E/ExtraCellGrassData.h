@@ -35,6 +35,8 @@ namespace RE
 		// members
 		BSTArray<CellGrassData*>    grassHandles;  // 10
 		NiPointer<AddCellGrassTask> addGrassTask;  // 28
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(ExtraCellGrassData) == 0x30);
 }

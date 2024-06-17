@@ -1,6 +1,7 @@
 #pragma once
 
 #include "RE/B/BSFixedString.h"
+#include "RE/B/BSLightingShaderProperty.h"
 #include "RE/B/BSShaderMaterial.h"
 #include "RE/C/CollisionLayers.h"
 #include "RE/N/NiBound.h"
@@ -20,6 +21,7 @@ namespace RE
 	class NiNode;
 	class NiPoint3;
 	class TESObjectREFR;
+	class BSGeometry;
 
 	class NiUpdateData
 	{
@@ -33,6 +35,8 @@ namespace RE
 
 		float                                 time;   // 0
 		stl::enumeration<Flag, std::uint32_t> flags;  // 4
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(NiUpdateData) == 0x8);
 
@@ -43,6 +47,8 @@ namespace RE
 
 		// add
 		virtual bool operator()(NiAVObject* a_object);  // 01
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(PerformOpFunc) == 0x8);
 
@@ -99,10 +105,10 @@ namespace RE
 #if !defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE)
 		virtual void Unk_VRFunc(void);
 #endif
-		SKYRIM_REL_VR_VIRTUAL void PerformOp(PerformOpFunc& a_func);                                                                          // 26
-		SKYRIM_REL_VR_VIRTUAL void AttachProperty(NiAlphaProperty* a_property);                                                               // 27 - { return; }
-		SKYRIM_REL_VR_VIRTUAL void SetMaterialNeedsUpdate(bool a_needsUpdate);                                                                // 28 - { return; }
-		SKYRIM_REL_VR_VIRTUAL void SetDefaultMaterialNeedsUpdateFlag(bool a_flag);                                                            // 29 - { return; }
+		SKYRIM_REL_VR_VIRTUAL void        PerformOp(PerformOpFunc& a_func);                                                                   // 26
+		SKYRIM_REL_VR_VIRTUAL void        AttachProperty(NiAlphaProperty* a_property);                                                        // 27 - { return; }
+		SKYRIM_REL_VR_VIRTUAL void        SetMaterialNeedsUpdate(bool a_needsUpdate);                                                         // 28 - { return; }
+		SKYRIM_REL_VR_VIRTUAL void        SetDefaultMaterialNeedsUpdateFlag(bool a_flag);                                                     // 29 - { return; }
 		SKYRIM_REL_VR_VIRTUAL NiAVObject* GetObjectByName(const BSFixedString& a_name);                                                       // 2A
 		SKYRIM_REL_VR_VIRTUAL void        SetSelectiveUpdateFlags(bool& a_selectiveUpdate, bool a_selectiveUpdateTransforms, bool& a_rigid);  // 2B
 		SKYRIM_REL_VR_VIRTUAL void        UpdateDownwardPass(NiUpdateData& a_data, std::uint32_t a_arg2);                                     // 2C
@@ -149,6 +155,8 @@ namespace RE
 			return REL::RelocateMember<stl::enumeration<Flag, std::uint32_t>>(this, 0x0F4, 0x10C);
 		}
 
+		BSLightingShaderProperty* temp_nicast(BSGeometry* a_geometry);
+
 		// members
 		NiNode*                      parent;           // 030
 		std::uint32_t                parentIndex;      // 038
@@ -158,7 +166,7 @@ namespace RE
 		NiTransform                  world;            // 07C
 		NiTransform                  previousWorld;    // 0B0
 		NiBound                      worldBound;       // 0E4
-#ifndef ENABLE_SKYRIM_VR
+#if !defined(ENABLE_SKYRIM_VR)
 		stl::enumeration<Flag, std::uint32_t> flags;                    // 0F4
 		TESObjectREFR*                        userData;                 // 0F8
 		float                                 fadeAmount;               // 100
@@ -167,6 +175,8 @@ namespace RE
 		std::uint8_t                          flags02;                  // 109
 		std::uint16_t                         unk10A;                   // 10A
 		std::uint32_t                         pad10C;                   // 10C
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(NiAVObject) == 0x110);
 #elif !defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE)

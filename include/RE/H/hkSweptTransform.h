@@ -13,6 +13,8 @@ namespace RE
 		hkQuaternion rotation0;          // 20
 		hkQuaternion rotation1;          // 30
 		hkVector4    centerOfMassLocal;  // 40
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(hkSweptTransform) == 0x50);
 }

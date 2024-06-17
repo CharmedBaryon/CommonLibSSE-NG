@@ -21,6 +21,8 @@ namespace RE
 
 		// members
 		TESForm* source;  // 10
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(ExtraEmittanceSource) == 0x18);
 }

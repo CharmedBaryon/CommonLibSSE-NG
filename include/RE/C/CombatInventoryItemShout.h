@@ -17,6 +17,8 @@ namespace RE
 		bool       CheckBusy(CombatController* a_controller) override;         // 0E - { return actor->GetVoiceState() != 0; }
 		bool       CheckShouldEquip(CombatController* a_controller) override;  // 0F - { return fCombatInventoryShoutMaxRecoveryTime >= actor->GetVoiceRecoveryTime(); }
 		MagicItem* GetMagic() override;                                        // 16
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(CombatInventoryItemShout) == 0x50);
 }

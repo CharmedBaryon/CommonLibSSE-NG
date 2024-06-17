@@ -15,6 +15,8 @@ namespace RE
 		// override (bhkPhantom)
 		const NiRTTI* GetRTTI() const override;                 // 02
 		void          LinkObject(NiStream& a_stream) override;  // 19 - { bhkWorldObject::LinkObject(a_stream); }
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(bhkShapePhantom) == 0x30);
 }

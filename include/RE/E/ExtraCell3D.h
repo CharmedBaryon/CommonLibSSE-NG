@@ -21,6 +21,8 @@ namespace RE
 
 		// members
 		NiPointer<NiNode> cellNode;  // 10
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(ExtraCell3D) == 0x18);
 }

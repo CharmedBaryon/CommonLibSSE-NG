@@ -23,6 +23,8 @@ namespace RE
 		std::uint8_t    pad11;   // 11
 		std::uint16_t   pad12;   // 12
 		ObjectRefHandle parent;  // 14
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(ExtraEnableStateParent) == 0x18);
 }

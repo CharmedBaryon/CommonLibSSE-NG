@@ -36,6 +36,8 @@ namespace RE
 		bool                 unkB0;   // B0
 		bool                 unkB1;   // B1
 		bool                 unkB2;   // B2
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(BoundItemEffect) == 0xB8);
 }

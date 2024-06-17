@@ -14,6 +14,8 @@ namespace RE
 		// override (ActiveEffect)
 		virtual ~DispelEffect();        // 13
 		virtual void Start() override;  // 14
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(DispelEffect) == 0x90);
 }

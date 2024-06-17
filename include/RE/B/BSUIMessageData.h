@@ -26,6 +26,8 @@ namespace RE
 		BSString*     str;       // 10
 		BSFixedString fixedStr;  // 18
 		Data          data;      // 20
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(BSUIMessageData) == 0x28);
 }

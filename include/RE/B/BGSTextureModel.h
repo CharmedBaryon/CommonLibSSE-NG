@@ -13,6 +13,8 @@ namespace RE
 
 		// override (TESModel)
 		void SetModel(const char* a_model) override;  // 05
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(BGSTextureModel) == 0x28);
 }

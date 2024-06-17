@@ -61,7 +61,7 @@ namespace RE
 	float                 partialPickAngle;    /* B8 */ \
 	std::uint32_t         numBrokenPicks;      /* BC */ \
 	bool                  init3DElements;      /* C0 */ \
-    bool                  animating;           /* C1 */ \
+	bool                  animating;           /* C1 */ \
 	bool                  unk10A;              /* C2 */ \
 	bool                  menuCleared;         /* C3 */ \
 	bool                  animationFinished;   /* C4 */ \
@@ -123,11 +123,13 @@ namespace RE
 
 		// members
 #ifndef SKYRIM_CROSS_VR
-		RUNTIME_DATA_CONTENT  // 48, 58
+		RUNTIME_DATA_CONTENT;  // 48, 58
 #endif
+	private:
+		KEEP_FOR_RE()
 	};
-#ifndef ENABLE_SKYRIM_VR
-	static_assert(sizeof(LockpickingMenu) == 0x110);
+#if !defined(ENABLE_SKYRIM_VR)
+	static_assert(sizeof(LockpickingMenu) == 0x120);
 #elif !defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE)
 	static_assert(sizeof(LockpickingMenu) == 0x120);
 #endif

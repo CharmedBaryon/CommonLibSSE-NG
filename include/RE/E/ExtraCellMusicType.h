@@ -21,6 +21,8 @@ namespace RE
 
 		// members
 		BGSMusicType* type;  // 10
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(ExtraCellMusicType) == 0x18);
 }

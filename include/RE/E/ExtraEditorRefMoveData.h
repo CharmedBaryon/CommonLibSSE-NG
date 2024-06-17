@@ -22,6 +22,8 @@ namespace RE
 		NiPoint3      realLocation;  // 1C
 		NiPoint3      oldLocation;   // 28
 		std::uint32_t pad34;         // 34
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(ExtraEditorRefMoveData) == 0x38);
 }

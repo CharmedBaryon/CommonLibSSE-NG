@@ -68,7 +68,7 @@ namespace RE
 		return func(this, a_node);
 	}
 
-	void BSSoundHandle::SetOutputModel(const BGSSoundOutput* a_outputModel)
+	void BSSoundHandle::SetOutputModel(const BSISoundOutputModel* a_outputModel)
 	{
 		using func_t = decltype(&BSSoundHandle::SetOutputModel);
 		REL::Relocation<func_t> func{ RELOCATION_ID(66363, 67624) };

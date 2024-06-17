@@ -30,6 +30,8 @@ namespace RE
 		// add
 		[[nodiscard]] virtual Type GetType() const = 0;   // 25
 		virtual void               Update(float a_time);  // 26
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(NiProperty) == 0x30);
 }

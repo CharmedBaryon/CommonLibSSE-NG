@@ -43,6 +43,8 @@ namespace RE
 		bool          isUpdated;  // 1C
 		std::uint8_t  pad1D;      // 1D
 		std::uint16_t pad1E;      // 1E
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(BSFaceGenKeyframeMultiple) == 0x20);
 }

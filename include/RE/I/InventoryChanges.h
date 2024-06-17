@@ -15,6 +15,12 @@ namespace RE
 	class InventoryChanges
 	{
 	public:
+		enum class VisitResult : std::uint32_t
+		{
+			kStop = 0,
+			kContinue = 1,
+		};
+
 		class IItemChangeVisitor
 		{
 		public:
@@ -39,8 +45,10 @@ namespace RE
 		~InventoryChanges();
 
 		void           AddEntryData(InventoryEntryData* a_entry);
+		void           GenerateLeveledListChanges();
 		TESObjectARMO* GetArmorInSlot(std::int32_t a_slot);
 		float          GetInventoryWeight();
+		std::int16_t   GetItemCount(RE::TESBoundObject* a_obj);
 		std::uint16_t  GetNextUniqueID();
 		std::uint32_t  GetWornMask();
 		void           InitFromContainerExtra();
@@ -52,8 +60,6 @@ namespace RE
 		void           SendContainerChangedEvent(ExtraDataList* a_itemExtraList, TESObjectREFR* a_fromRefr, TESForm* a_item, std::int32_t a_count);
 		void           SetFavorite(InventoryEntryData* a_entry, ExtraDataList* a_itemList);
 		void           SetUniqueID(ExtraDataList* a_itemList, TESForm* a_oldForm, TESForm* a_newForm);
-		void           GenerateLeveledListChanges();
-		std::int16_t   GetItemCount(RE::TESBoundObject* a_obj);
 		void           VisitInventory(IItemChangeVisitor& visitor);
 		void           VisitWornItems(IItemChangeVisitor& visitor);
 
@@ -73,6 +79,9 @@ namespace RE
 	private:
 		InventoryChanges* Ctor(TESObjectREFR* a_ref);
 		void              Dtor();
+
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(InventoryChanges) == 0x20);
 }

@@ -253,6 +253,7 @@ namespace RE
 		[[nodiscard]] SEX            GetSex() const;
 		bool                         HasApplicableKeywordString(std::string_view a_editorID);
 		bool                         HasOverlays();
+		bool                         IsInClass(TESClass* a_class) const;
 		bool                         IsInFaction(TESFaction* a_faction) const;
 		bool                         RemovePerk(BGSPerk* a_perk);
 		bool                         RemovePerks(const std::vector<BGSPerk*>& a_perks);
@@ -298,6 +299,9 @@ namespace RE
 
 	private:
 		void CopyPerkRankArray(const std::vector<PerkRankData>& a_copiedData);
+
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(TESNPC) == 0x268);
 }

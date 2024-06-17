@@ -45,6 +45,8 @@ namespace RE
 		std::uint16_t                 numInterps;    // 58
 		std::uint16_t                 pad5A;         // 58
 		std::uint32_t                 pad5C;         // 5C
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(NiMultiTargetTransformController) == 0x60);
 }

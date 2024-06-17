@@ -21,6 +21,8 @@ namespace RE
 		// members
 		BGSSoundDescriptorForm* pickupSound;   // 08 - YNAM
 		BGSSoundDescriptorForm* putdownSound;  // 10 - ZNAM
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(BGSPickupPutdownSounds) == 0x18);
 }

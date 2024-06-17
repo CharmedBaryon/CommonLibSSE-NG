@@ -23,6 +23,8 @@ namespace RE
 		virtual std::uint32_t GetCollisionFilterInfo(hkpShapeKey a_key) const;                       // 04 - { return 0; }
 		virtual const hkpShape*             GetChildShape(hkpShapeKey a_key, hkpShapeBuffer& a_buffer) const = 0;  // 05
 		[[nodiscard]] virtual bool          IsWeldingEnabled() const;                                              // 06 - { return true; }
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(hkpShapeContainer) == 0x8);
 }

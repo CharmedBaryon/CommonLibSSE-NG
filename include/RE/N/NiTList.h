@@ -9,6 +9,8 @@ namespace RE
 	class NiTList : public NiTPointerListBase<NiTDefaultAllocator<T>, T>
 	{
 	public:
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(NiTList<void*>) == 0x18);
 }

@@ -119,6 +119,8 @@ namespace RE
 		bool                                                         removableObjects;         // B2
 		std::uint8_t                                                 unkB3;                    // B3
 		std::uint32_t                                                unkB4;                    // B4
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(NiControllerSequence) == 0xB8);
 }

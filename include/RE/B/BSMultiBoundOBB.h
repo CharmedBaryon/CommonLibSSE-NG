@@ -35,6 +35,8 @@ namespace RE
 		bool          unk64;     // 64
 		std::uint8_t  pad65;     // 65
 		std::uint16_t pad66;     // 66
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(BSMultiBoundOBB) == 0x68);
 }

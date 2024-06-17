@@ -29,10 +29,17 @@ namespace RE
 		return func(this);
 	}
 
-	std::uint32_t Inventory3DManager::Render()
+	void Inventory3DManager::Render()
 	{
 		using func_t = decltype(&Inventory3DManager::Render);
 		REL::Relocation<func_t> func{ RELOCATION_ID(50882, 51755) };
+		return func(this);
+	}
+
+	bool Inventory3DManager::ToggleItemZoom()
+	{
+		using func_t = decltype(&Inventory3DManager::ToggleItemZoom);
+		REL::Relocation<func_t> func{ RELOCATION_ID(50887, 51760) };
 		return func(this);
 	}
 }

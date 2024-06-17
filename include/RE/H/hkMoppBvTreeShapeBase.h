@@ -31,6 +31,8 @@ namespace RE
 		std::uint32_t       moppDataSize;  // 38
 		std::uint32_t       pad3C;         // 3C
 		hkVector4           codeInfoCopy;  // 40
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(hkMoppBvTreeShapeBase) == 0x50);
 }

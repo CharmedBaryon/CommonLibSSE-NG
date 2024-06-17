@@ -80,6 +80,8 @@ namespace RE
 		GAtomicInt<std::int32_t> _refCount;  // 08
 		std::uint32_t            _pad0C;     // 0C
 		GFxResourceLibBase*      _lib;       // 10
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(GFxResource) == 0x18);
 }

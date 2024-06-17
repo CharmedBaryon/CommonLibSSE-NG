@@ -18,6 +18,8 @@ namespace RE
 		virtual std::uint32_t GetObjectType() = 0;                 // 02
 		virtual void          SaveGame(BGSSaveGameBuffer* a_buf);  // 03 - { return }
 		virtual void          LoadGame(BGSLoadGameBuffer* a_buf);  // 04 - { return }
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(CombatObject) == 0x10);
 }

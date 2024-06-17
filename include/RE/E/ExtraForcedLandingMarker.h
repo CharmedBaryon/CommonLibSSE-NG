@@ -21,6 +21,8 @@ namespace RE
 		// members
 		ObjectRefHandle landingMarker;  // 10
 		std::uint32_t   pad14;          // 14
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(ExtraForcedLandingMarker) == 0x18);
 }

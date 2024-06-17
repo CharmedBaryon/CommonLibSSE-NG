@@ -50,6 +50,8 @@ namespace RE
 		// members
 		Data  data;  // 08
 		char* name;  // 10
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(Setting) == 0x18);
 }

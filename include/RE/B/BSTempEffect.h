@@ -108,6 +108,8 @@ namespace RE
 		std::uint16_t  pad26;        // 26
 		std::uint32_t  effectID;     // 28
 		std::uint32_t  pad2C;        // 2C
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(BSTempEffect) == 0x30);
 }

@@ -54,6 +54,7 @@ namespace RE
 
 	private:
 		void CopyKeywords(const std::vector<RE::BGSKeyword*>& a_copiedData);
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(BGSKeywordForm) == 0x18);
 }

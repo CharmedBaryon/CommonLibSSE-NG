@@ -15,6 +15,8 @@ namespace RE
 		float                    maxExtraPenetration;  // 70
 		float                    cachedPathLength;     // 74
 		hkpCollisionAgentConfig* config;               // 78
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(hkpLinearCastCollisionInput) == 0x80);
 }

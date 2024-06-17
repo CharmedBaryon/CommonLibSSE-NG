@@ -55,6 +55,8 @@ namespace RE
 		BoneData*                  boneData;          // 50
 		std::uint32_t              bones;             // 58
 		std::uint32_t              pad5C;             // 5C
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(NiSkinData) == 0x60);
 }

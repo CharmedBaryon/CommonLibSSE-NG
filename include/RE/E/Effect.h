@@ -28,6 +28,7 @@ namespace RE
 
 		TES_HEAP_REDEFINE_NEW();
 
+		bool          IsMatch(EffectSetting* a_base, float a_mag, std::uint32_t a_area, std::uint32_t a_dur, float a_cost);
 		float         GetMagnitude() const;
 		std::uint32_t GetArea() const;
 		std::uint32_t GetDuration() const;
@@ -40,6 +41,8 @@ namespace RE
 		float          cost;        // 18
 		std::uint32_t  pad1C;       // 1C
 		TESCondition   conditions;  // 20 - CTDA
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(Effect) == 0x28);
 }

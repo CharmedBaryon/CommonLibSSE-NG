@@ -53,6 +53,8 @@ namespace RE
 		stl::enumeration<INPUT_DEVICE, std::uint32_t>     device;     // 08
 		stl::enumeration<INPUT_EVENT_TYPE, std::uint32_t> eventType;  // 0C
 		InputEvent*                                       next;       // 10
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(InputEvent) == 0x18);
 }

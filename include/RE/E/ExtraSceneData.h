@@ -21,6 +21,8 @@ namespace RE
 
 		// members
 		BGSScene* scene;  // 10
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(ExtraSceneData) == 0x18);
 }

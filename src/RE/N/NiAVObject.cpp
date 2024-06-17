@@ -12,12 +12,12 @@
 #include "RE/B/BSXFlags.h"
 #include "RE/B/bhkNiCollisionObject.h"
 #include "RE/B/bhkRigidBody.h"
+#include "RE/H/hkpRigidBody.h"
 #include "RE/N/NiColor.h"
 #include "RE/N/NiNode.h"
 #include "RE/N/NiProperty.h"
 #include "RE/N/NiRTTI.h"
 #include "RE/S/State.h"
-#include "RE/H/hkpRigidBody.h"
 
 namespace RE
 {
@@ -101,7 +101,7 @@ namespace RE
 
 	TESObjectREFR* NiAVObject::GetUserData() const
 	{
-		auto* thisUserData = REL::RelocateMember<RE::TESObjectREFR*>(this, 0x0F8, 0x100);
+		auto* thisUserData = REL::RelocateMember<RE::TESObjectREFR*>(this, 0x0F8, 0x110);
 		if (thisUserData) {
 			return thisUserData;
 		}
@@ -115,7 +115,7 @@ namespace RE
 
 	void NiAVObject::SetUserData(TESObjectREFR* a_ref) noexcept
 	{
-		REL::RelocateMember<RE::TESObjectREFR*>(this, 0x0F8, 0x100) = a_ref;
+		REL::RelocateMember<RE::TESObjectREFR*>(this, 0x0F8, 0x110) = a_ref;
 	}
 
 	bool NiAVObject::HasAnimation() const
@@ -398,4 +398,16 @@ namespace RE
 		REL::RelocateVirtual<decltype(&NiAVObject::OnVisible)>(0x34, 0x35, this, a_process);
 	}
 #endif
+	BSLightingShaderProperty* NiAVObject::temp_nicast(BSGeometry* a_geometry)
+	{
+		if (auto effect = a_geometry->GetGeometryRuntimeData().properties[BSGeometry::States::kEffect].get(); effect) {
+			if (auto rtti = effect->GetRTTI(); rtti) {
+				const std::string temp_name(rtti->GetName());
+				if (temp_name == "BSLightingShaderProperty") {
+					return static_cast<RE::BSLightingShaderProperty*>(effect);
+				}
+			}
+		}
+		return nullptr;
+	}
 }

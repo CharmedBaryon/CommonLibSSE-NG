@@ -30,6 +30,8 @@ namespace RE
 		float    cubeSize;                                       // F60
 		float    density;                                        // F64
 		NiPoint3 instanceOffsets[10];                            // F68
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(BSParticleShaderCubeEmitter) == 0xFE0);
 }

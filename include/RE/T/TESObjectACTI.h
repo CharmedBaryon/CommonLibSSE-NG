@@ -79,6 +79,8 @@ namespace RE
 		stl::enumeration<ActiFlags, std::uint16_t> flags;          // C0 - FNAM
 		std::uint16_t                              padC2;          // C2
 		std::uint32_t                              padC4;          // C4
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(TESObjectACTI) == 0xC8);
 }

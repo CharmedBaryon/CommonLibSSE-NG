@@ -38,6 +38,8 @@ namespace RE
 		NiPointer<NiSourceTexture> bloodTextures[kTotal];  // 088
 		std::int32_t               textureClampMode;       // 0A0
 		float*                     alphaSource;            // 0A8
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(BSBloodSplatterShaderProperty) == 0xB0);
 }

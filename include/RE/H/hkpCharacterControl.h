@@ -23,6 +23,8 @@ namespace RE
 		std::uint8_t                                    pad35;                  // 35
 		std::uint16_t                                   pad36;                  // 36
 		std::uint64_t                                   pad38;                  // 38
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(hkpSurfaceInfo) == 0x40);
 }

@@ -13,6 +13,8 @@ namespace RE
 
 		// override (TESTexture)
 		std::uint32_t GetMaxAllowedSize() override;  // 04 - { return 1024; }
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(TESTexture1024) == 0x10);
 }

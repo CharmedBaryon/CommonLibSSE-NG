@@ -108,6 +108,8 @@ namespace RE
 		Data          data;      // 130 - ENIT
 		GameData      gamedata;  // 138
 		std::uint32_t pad13C;    // 13C
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(IngredientItem) == 0x140);
 }

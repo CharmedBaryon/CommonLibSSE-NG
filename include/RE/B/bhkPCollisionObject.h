@@ -22,6 +22,8 @@ namespace RE
 		void          Unk_2B() override;                                  // 2B
 		void          Unk_2C() override;                                  // 2C
 		void          Unk_2F() override;                                  // 2F
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(bhkPCollisionObject) == 0x28);
 }

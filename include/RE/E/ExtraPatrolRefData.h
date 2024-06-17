@@ -29,6 +29,8 @@ namespace RE
 
 		// members
 		PatrolRefData* patrolData;  // 10
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(ExtraPatrolRefData) == 0x18);
 }

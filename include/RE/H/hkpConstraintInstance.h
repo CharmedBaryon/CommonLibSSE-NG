@@ -59,6 +59,8 @@ namespace RE
 		uint64_t                                               userData;              // 58
 		hkConstraintInternal*                                  internal;              // 60
 		uint32_t                                               uid;                   // 68
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(hkpConstraintInstance) == 0x70);
 

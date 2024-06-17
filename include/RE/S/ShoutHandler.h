@@ -18,6 +18,12 @@ namespace RE
 		// members
 		std::uint64_t unk10;  // 10
 		std::uint64_t unk18;  // 18
+	private:
+		KEEP_FOR_RE()
 	};
+#if !defined(ENABLE_SKYRIM_VR)
 	static_assert(sizeof(ShoutHandler) == 0x20);
+#elif !defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE)
+	static_assert(sizeof(ShoutHandler) == 0x38);
+#endif
 }

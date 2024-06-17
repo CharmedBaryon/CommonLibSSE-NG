@@ -32,6 +32,8 @@ namespace RE
 
 		// members
 		BGSEquipSlot* equipSlot;  // 08 - ETYP
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(BGSEquipType) == 0x10);
 }

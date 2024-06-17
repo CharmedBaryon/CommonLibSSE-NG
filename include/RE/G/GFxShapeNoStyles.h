@@ -30,6 +30,8 @@ namespace RE
 		std::int32_t  unk60;  // 60
 		std::int32_t  unk64;  // 64
 		void*         unk68;  // 68
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(GFxShapeNoStyles) == 0x70);
 }

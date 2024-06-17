@@ -26,6 +26,8 @@ namespace RE
 		std::uint8_t  pad99;  // 99
 		std::uint16_t pad9A;  // 9A
 		std::uint32_t pad9C;  // 9C
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(ReanimateEffect) == 0xA0);
 }

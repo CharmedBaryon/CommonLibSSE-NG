@@ -21,6 +21,8 @@ namespace RE
 
 		// members
 		NiPointer<BSPortal> portal;  // 10
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(ExtraPortal) == 0x18);
 }

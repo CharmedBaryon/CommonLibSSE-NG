@@ -108,6 +108,8 @@ namespace RE
 		std::uint32_t                                                  pad104;                      // 104
 		hkArray<hkpNamedMeshMaterial>                                  namedMaterials;              // 108
 		std::uint64_t                                                  pad118;                      // 118
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(hkpCompressedMeshShape) == 0x120);
 }

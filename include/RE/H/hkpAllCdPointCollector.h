@@ -20,6 +20,8 @@ namespace RE
 
 		// members
 		hkInplaceArray<hkpRootCdPoint, 8> hits;  // 010
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(hkpAllCdPointCollector) == 0x220);
 }

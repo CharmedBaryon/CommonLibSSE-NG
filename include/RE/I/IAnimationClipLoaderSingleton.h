@@ -21,5 +21,7 @@ namespace RE
 		virtual std::int32_t Unload(const hkbContext& a_hkbContext, hkbClipGenerator* a_clipGenerator, BSSynchronizedClipGenerator* a_synchronizedClipGenerator);  // 03
 		virtual void         Unk_04(const hkbContext& a_context, std::int16_t a_animationBindingIndex);                                                            // 04
 		virtual void         Unk_05(const hkbContext& a_context, std::int16_t a_animationBindingIndex);                                                            // 05
+	private:
+		KEEP_FOR_RE()
 	};
 }

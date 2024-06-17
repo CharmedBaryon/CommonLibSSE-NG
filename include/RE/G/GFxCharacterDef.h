@@ -22,6 +22,8 @@ namespace RE
 		// members
 		GFxResourceID resourceId;  // 18
 		std::uint32_t pad1C;       // 1C
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(GFxCharacterDef) == 0x20);
 }

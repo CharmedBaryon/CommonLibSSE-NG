@@ -119,6 +119,8 @@ namespace RE
 		std::uint8_t       padD1;                   // D1
 		std::uint16_t      padD2;                   // D2
 		std::uint32_t      padD4;                   // D4
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(bhkThreadMemorySource) == 0xD8);
 }

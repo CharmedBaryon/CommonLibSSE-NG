@@ -17,6 +17,8 @@ namespace RE
 		bool ReadSetting(Setting* a_setting) override;   // 04
 		bool OpenHandle(bool a_create) override;         // 05
 		bool CloseHandle() override;                     // 06
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(RegSettingCollection) == 0x128);
 }

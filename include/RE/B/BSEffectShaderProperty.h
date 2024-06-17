@@ -33,10 +33,14 @@ namespace RE
 		void                   Unk_3C(void) override;                                                                                       // 3C - { return 1; }
 		BSShaderMaterial::Type GetMaterialType() override;                                                                                  // 3E - { return 1; }
 
+		BSEffectShaderMaterial* GetMaterial() { return static_cast<BSEffectShaderMaterial*>(GetBaseMaterial()); }
+
 		// members
 		NiColor*      unk88;  // 88
 		std::uint64_t unk90;  // 90
 		std::uint64_t unk98;  // 98
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(BSEffectShaderProperty) == 0xA0);
 }

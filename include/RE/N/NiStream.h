@@ -58,6 +58,13 @@ namespace RE
 		virtual bool          SaveObjectSizeTable(std::uint64_t a_size);                // 16
 		virtual bool          LoadObjectSizeTable();                                    // 17
 
+		void LoadLinkID()
+		{
+			using func_t = decltype(&NiStream::LoadLinkID);
+			REL::Relocation<func_t> func{ RELOCATION_ID(69002, 70359) };
+			return func(this);
+		}
+
 		// members
 		BSStreamHeader                                header;                                // 008
 		BSTSmallArray<NiObjectGroup>                  groups;                                // 0D0
@@ -93,6 +100,8 @@ namespace RE
 		std::uint32_t                                 lastError;                             // 410
 		char                                          lastErrorMessage[REX::W32::MAX_PATH];  // 414
 		char                                          filePath[REX::W32::MAX_PATH];          // 518
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(NiStream) == 0x620);
 }

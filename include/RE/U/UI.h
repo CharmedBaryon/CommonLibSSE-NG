@@ -99,6 +99,7 @@ namespace RE
 		template <class T>
 		void RemoveEventSink(BSTEventSink<T>* a_sink);
 		void ShowMenus(bool a_show);
+		void GetTopMostMenu(RE::IMenu** a_result, std::uint32_t a_depthLimit);
 
 		template <
 			class T,
@@ -141,8 +142,12 @@ namespace RE
 		bool                                   closingAllMenus;               // 1C1
 		std::uint16_t                          pad1C2;                        // 1C2
 		std::uint32_t                          pad1C4;                        // 1C4
+	private:
+		KEEP_FOR_RE()
 	};
+#if !defined(ENABLE_SKYRIM_VR)
 	static_assert(sizeof(UI) == 0x1C8);
+#endif
 
 	template <class T>
 	void UI::AddEventSink(BSTEventSink<T>* a_sink)

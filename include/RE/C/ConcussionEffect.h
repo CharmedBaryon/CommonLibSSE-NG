@@ -13,6 +13,8 @@ namespace RE
 
 		// override (ActiveEffect)
 		virtual ~ConcussionEffect();  // 13
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(ConcussionEffect) == 0x90);
 }

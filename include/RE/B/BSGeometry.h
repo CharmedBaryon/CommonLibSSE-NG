@@ -1,6 +1,8 @@
 #pragma once
 
+#include "RE/B/BSLightingShaderProperty.h"
 #include "RE/N/NiAVObject.h"
+#include "RE/N/NiRTTI.h"
 #include "RE/N/NiSkinPartition.h"
 #include "RE/N/NiSmartPointer.h"
 
@@ -58,7 +60,7 @@ namespace RE
 #endif
 			MODEL_DATA_CONTENT
 		};
-#ifndef ENABLE_SKYRIM_VR
+#if !defined(ENABLE_SKYRIM_VR)
 		static_assert(sizeof(MODEL_DATA) == 0x10);
 #elif !defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE)
 		static_assert(sizeof(MODEL_DATA) == 0x28);
@@ -101,7 +103,7 @@ namespace RE
 #endif
 
 		// add
-		SKYRIM_REL_VR_VIRTUAL BSMultiIndexTriShape* AsMultiIndexTriShape();      // 35 - { return 0; }
+		SKYRIM_REL_VR_VIRTUAL BSMultiIndexTriShape*   AsMultiIndexTriShape();    // 35 - { return 0; }
 		SKYRIM_REL_VR_VIRTUAL BSSkinnedDecalTriShape* AsSkinnedDecalTriShape();  // 36 - { return 0; }
 		SKYRIM_REL_VR_VIRTUAL void                    Unk_37(void);              // 37 - { return 0; }
 
@@ -135,6 +137,19 @@ namespace RE
 			return REL::RelocateMember<stl::enumeration<Type, std::uint8_t>>(this, 0x150, 0x190);
 		}
 
+		inline BSLightingShaderProperty* lightingShaderProp_cast()
+		{
+			if (auto effect = GetGeometryRuntimeData().properties[States::kEffect].get(); effect) {
+				if (auto rtti = effect->GetRTTI(); rtti) {
+					const std::string rttiStr(rtti->GetName());
+					if (rttiStr == "BSLightingShaderProperty") {
+						return static_cast<BSLightingShaderProperty*>(effect);
+					}
+				}
+			}
+			return nullptr;
+		}
+
 		// members
 #ifndef SKYRIM_CROSS_VR
 		MODEL_DATA_CONTENT;    // 110, 138
@@ -152,7 +167,7 @@ namespace RE
 #	endif
 #endif
 	};
-#ifndef ENABLE_SKYRIM_VR
+#if !defined(ENABLE_SKYRIM_VR)
 	static_assert(sizeof(BSGeometry) == 0x158);
 #elif !defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE)
 	static_assert(sizeof(BSGeometry) == 0x1A0);

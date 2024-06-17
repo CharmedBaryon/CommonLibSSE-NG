@@ -275,6 +275,8 @@ namespace RE
 		std::uint8_t green;  // 1
 		std::uint8_t blue;   // 2
 		std::uint8_t alpha;  // 3
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(Color) == 0x4);
 }

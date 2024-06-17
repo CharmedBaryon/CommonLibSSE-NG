@@ -24,6 +24,8 @@ namespace RE
 		NiPoint3     unk2C;  // 2C
 		float        unk38;  // 38
 		NiPoint3     unk3C;  // 3C
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(DetectionState) == 0x48);
 }

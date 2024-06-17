@@ -82,6 +82,8 @@ namespace RE
 		std::uint8_t               unk21F;                    // 21F
 		mutable BSSpinLock         lock;                      // 220
 		std::uint64_t              unk228;                    // 228
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(BSFaceGenAnimationData) == 0x230);
 }

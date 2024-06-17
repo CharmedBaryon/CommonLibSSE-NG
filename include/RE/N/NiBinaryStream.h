@@ -56,6 +56,8 @@ namespace RE
 		std::uint32_t _pad0C;               // 0C
 		ReadFn*       _readFn;              // 10
 		WriteFn*      _writeFn;             // 18
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(NiBinaryStream) == 0x20);
 

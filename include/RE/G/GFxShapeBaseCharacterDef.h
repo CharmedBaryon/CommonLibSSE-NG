@@ -26,6 +26,8 @@ namespace RE
 		virtual void Unk_0F(void) = 0;  // 0F
 		virtual void Unk_10(void) = 0;  // 10
 		virtual void Unk_11(void) = 0;  // 11
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(GFxShapeBaseCharacterDef) == 0x20);
 }

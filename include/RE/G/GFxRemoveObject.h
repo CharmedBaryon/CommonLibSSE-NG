@@ -18,6 +18,8 @@ namespace RE
 		std::uint16_t characterId;  // 08
 		std::uint16_t depth;        // 0A
 		std::uint32_t pad0C;        // 0A
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(GFxRemoveObject) == 0x10);
 }

@@ -12,7 +12,7 @@ namespace RE
 
 	ObjectRefHandle Console::GetSelectedRefHandle()
 	{
-		REL::Relocation<ObjectRefHandle*> selectedRef{ Offset::Console::SelectedRef };
+		REL::Relocation<ObjectRefHandle*> selectedRef{ RELOCATION_ID(519394, AE_CHECK(SKSE::RUNTIME_SSE_1_6_1130, 405935, 504099)) };
 		return *selectedRef;
 	}
 

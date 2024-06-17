@@ -28,6 +28,8 @@ namespace RE
 		void ClearData() override;           // 05
 		bool Load(TESFile* a_mod) override;  // 06
 		void InitItemImpl() override;        // 13
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(BGSLensFlare) == 0x40);
 }

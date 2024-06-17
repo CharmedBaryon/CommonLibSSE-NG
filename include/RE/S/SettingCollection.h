@@ -24,6 +24,8 @@ namespace RE
 		// members
 		char  subKey[0x104];  // 008
 		void* handle;         // 110
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(SettingCollection<void*>) == 0x118);
 }

@@ -18,6 +18,8 @@ namespace RE
 
 		// override (BSExtraData)
 		[[nodiscard]] ExtraDataType GetType() const override;  // 01 - { return kMagicLight; }
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(ExtraMagicLight) == 0x18);
 }

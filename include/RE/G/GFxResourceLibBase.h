@@ -14,6 +14,8 @@ namespace RE
 		virtual void RemoveResourceOnRelease(GFxResource* a_res) = 0;  // 01
 		virtual void PinResource(GFxResource* a_res) = 0;              // 02
 		virtual void UnpinResource(GFxResource* a_res) = 0;            // 03
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(GFxResourceLibBase) == 0x10);
 }

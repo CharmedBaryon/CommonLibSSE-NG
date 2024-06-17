@@ -48,6 +48,8 @@ namespace RE
 		// members
 		Data          data;   // 68 - DNAM
 		std::uint32_t pad6C;  // 6C
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(BGSArtObject) == 0x70);
 }

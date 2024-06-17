@@ -41,6 +41,8 @@ namespace RE
 		BSTArray<SubtitleInfo> subtitles;       // 18
 		mutable BSSpinLock     lock;            // 20
 		ObjectRefHandle        currentSpeaker;  // 28
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(SubtitleManager) == 0x30);
 }

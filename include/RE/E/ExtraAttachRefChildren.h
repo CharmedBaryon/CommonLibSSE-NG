@@ -20,6 +20,8 @@ namespace RE
 
 		// members
 		BSSimpleList<ObjectRefHandle> children;  // 10
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(ExtraAttachRefChildren) == 0x20);
 }

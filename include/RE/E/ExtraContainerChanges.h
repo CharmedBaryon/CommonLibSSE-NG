@@ -23,6 +23,8 @@ namespace RE
 
 		// members
 		InventoryChanges* changes;  // 10
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(ExtraContainerChanges) == 0x18);
 }

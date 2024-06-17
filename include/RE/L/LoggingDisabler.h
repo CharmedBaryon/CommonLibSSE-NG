@@ -15,6 +15,8 @@ namespace RE
 
 		// override (GFxLog)
 		void LogMessageVarg([[maybe_unused]] LogMessageType a_messageType, [[maybe_unused]] const char* a_fmt, [[maybe_unused]] std::va_list a_argList) override{};  // 01
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(LoggingDisabler) == 0x20);
 }

@@ -171,6 +171,8 @@ namespace RE
 		// members
 		first_type  first;   // 00
 		second_type second;  // ??
+	private:
+		KEEP_FOR_RE()
 	};
 
 	template <class T1, class T2>

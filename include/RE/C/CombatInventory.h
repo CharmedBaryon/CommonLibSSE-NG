@@ -69,6 +69,8 @@ namespace RE
 		float                                    optimalRange;              // 1BC
 		float                                    minimumRange;              // 1C0
 		bool                                     dirty;                     // 1C4
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(CombatInventory) == 0x1C8);
 }

@@ -31,6 +31,8 @@ namespace RE
 		Conditional   conditional;  // 08
 		float         healthMult;   // 10
 		std::uint32_t pad14;        // 14
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(ContainerItemExtra) == 0x18);
 }

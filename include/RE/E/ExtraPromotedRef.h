@@ -20,6 +20,8 @@ namespace RE
 
 		// members
 		BSTArray<TESForm*> promotedRefOwners;  // 10
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(ExtraPromotedRef) == 0x28);
 }

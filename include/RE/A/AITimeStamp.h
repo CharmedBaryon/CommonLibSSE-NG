@@ -7,6 +7,8 @@ namespace RE
 	public:
 		// members
 		float timeStamp;  // 0
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(AITimeStamp) == 0x4);
 }
