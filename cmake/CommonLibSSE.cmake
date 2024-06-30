@@ -57,7 +57,7 @@ function(target_commonlibsse_properties TARGET)
 
     # Handle minimum SKSE version constraints.
     if (NOT DEFINED ADD_COMMONLIBSSE_PLUGIN_MINIMUM_SKSE_VERSION)
-        set(ADD_COMMONLIBSSE_PLUGIN_MINIMUM_SKSE_VERSION 0)
+        set(ADD_COMMONLIBSSE_PLUGIN_MINIMUM_SKSE_VERSION "0.0.0.0")
     endif ()
     commonlibsse_parse_version("${ADD_COMMONLIBSSE_PLUGIN_MINIMUM_SKSE_VERSION}")
     if (NOT COMMONLIBSSE_VERSION_MATCH)
