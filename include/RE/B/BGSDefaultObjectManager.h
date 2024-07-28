@@ -1055,7 +1055,7 @@ namespace RE
 
 		[[nodiscard]] bool IsObjectInitialized(std::size_t a_idx) const noexcept
 		{
-			return REL::RelocateMember<bool*>(this, 0xB80, 0xBA8)[a_idx];
+			return (&REL::RelocateMember<bool>(this, 0xB80, 0xBA8))[a_idx];
 		}
 
 		[[nodiscard]] static bool SupportsVR(DefaultObjectID a_object) noexcept;
