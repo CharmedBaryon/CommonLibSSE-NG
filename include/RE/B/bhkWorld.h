@@ -88,6 +88,8 @@ namespace RE
 		std::uint16_t                 unkC5FA;                    // C5FA
 		std::uint16_t                 unkC5FC;                    // C5FC
 		std::uint16_t                 unkC5FE;                    // C5FE
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(bhkWorld) == 0xC600);
 }

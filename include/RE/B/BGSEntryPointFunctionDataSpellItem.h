@@ -12,13 +12,10 @@ namespace RE
 		inline static constexpr auto RTTI = RTTI_BGSEntryPointFunctionDataSpellItem;
 		inline static constexpr auto VTABLE = VTABLE_BGSEntryPointFunctionDataSpellItem;
 
-		// override
-		~BGSEntryPointFunctionDataSpellItem() override;  // 0
-
-		// override (BGSEntryPointFunctionData)
-		[[nodiscard]] FunctionType GetType() const override;                   // 01
-		bool                       LoadFunctionData(TESFile* a_mod) override;  // 02
-		void                       ResolveForms(TESFile* a_form) override;     // 03
+		// Override (BGSEntryPointFunctionData)
+		[[nodiscard]] virtual ENTRY_POINT_FUNCTION_DATA GetType() const override;            // 1
+		virtual bool                                    LoadImpl(TESFile* a_mod) override;   // 2
+		virtual void                                    InitItem(TESForm* a_form) override;  // 3
 
 		// Member variables
 		SpellItem* spell;  // 8

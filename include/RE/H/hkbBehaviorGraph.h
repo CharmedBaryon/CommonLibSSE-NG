@@ -71,6 +71,8 @@ namespace RE
 		bool                                         isLinked;                         // 12D
 		bool                                         updateActiveNodes;                // 12E
 		bool                                         stateOrTransitionChanged;         // 12F
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(hkbBehaviorGraph) == 0x130);
 }

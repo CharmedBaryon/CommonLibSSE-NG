@@ -27,21 +27,21 @@ namespace RE
 		bool LoadPNG(const BSFixedString& a_path)
 		{
 			using func_t = decltype(&BSScaleformExternalTexture::LoadPNG);
-			REL::Relocation<func_t> func{ RELOCATION_ID(80298, 82321) };
+			static REL::Relocation<func_t> func{ RELOCATION_ID(80298, 82321) };
 			return func(this, a_path);
 		}
 
 		void ReleaseTexture()
 		{
 			using func_t = decltype(&BSScaleformExternalTexture::ReleaseTexture);
-			REL::Relocation<func_t> func{ RELOCATION_ID(80294, 82317) };
+			static REL::Relocation<func_t> func{ RELOCATION_ID(80294, 82317) };
 			return func(this);
 		}
 
 		bool SetTexture(NiTexture* a_texture)
 		{
 			using func_t = decltype(&BSScaleformExternalTexture::SetTexture);
-			REL::Relocation<func_t> func{ RELOCATION_ID(80295, 82318) };
+			static REL::Relocation<func_t> func{ RELOCATION_ID(80295, 82318) };
 			return func(this, a_texture);
 		}
 
@@ -50,6 +50,8 @@ namespace RE
 		std::uint32_t        renderTarget;     // 08
 		std::uint32_t        pad0C;            // 0C
 		BSFixedString        filePath;         // 10
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(BSScaleformExternalTexture) == 0x18);
 }

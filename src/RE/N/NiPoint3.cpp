@@ -24,6 +24,11 @@ namespace RE
 		return !operator==(a_rhs);
 	}
 
+	bool NiPoint3::operator<(const NiPoint3& a_rhs) const
+	{
+		return std::tie(x, y, z) < std::tie(a_rhs.x, a_rhs.y, a_rhs.z);
+	}
+
 	NiPoint3 NiPoint3::operator+(const NiPoint3& a_rhs) const
 	{
 		return NiPoint3(x + a_rhs.x, y + a_rhs.y, z + a_rhs.z);
@@ -160,7 +165,7 @@ namespace RE
 
 	const NiPoint3& NiPoint3::Zero()
 	{
-		static REL::Relocation<NiPoint3*> zero{ Offset::NiPoint3::Zero };
+		static REL::Relocation<NiPoint3*> zero{ RELOCATION_ID(523887, 410468) };
 		return *zero.get();
 	}
 }

@@ -10,7 +10,8 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_ExtraItemDropper;
-		inline static auto           EXTRADATATYPE = ExtraDataType::kItemDropper;
+		inline static constexpr auto VTABLE = VTABLE_ExtraItemDropper;
+		inline static constexpr auto EXTRADATATYPE = ExtraDataType::kItemDropper;
 
 		~ExtraItemDropper() override;  // 00
 
@@ -20,6 +21,8 @@ namespace RE
 		// members
 		ObjectRefHandle dropper;  // 10
 		std::uint32_t   pad14;    // 14
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(ExtraItemDropper) == 0x18);
 }

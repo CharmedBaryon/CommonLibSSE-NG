@@ -9,7 +9,8 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_ExtraObjectHealth;
-		inline static auto           EXTRADATATYPE = ExtraDataType::kObjectHealth;
+		inline static constexpr auto VTABLE = VTABLE_ExtraObjectHealth;
+		inline static constexpr auto EXTRADATATYPE = ExtraDataType::kObjectHealth;
 
 		~ExtraObjectHealth() override;  // 00
 
@@ -19,6 +20,8 @@ namespace RE
 		// members
 		float         health;  // 10
 		std::uint32_t pad14;   // 14
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(ExtraObjectHealth) == 0x18);
 }

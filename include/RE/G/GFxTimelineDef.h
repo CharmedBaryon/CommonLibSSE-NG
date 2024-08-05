@@ -20,6 +20,8 @@ namespace RE
 		virtual ExecuteTagList* GetMovieTagArray(ExecuteTagList& a_data, std::int32_t a_frameNumber) = 0;                     // 0B
 		virtual ExecuteTagList* GetImportTagArray(ExecuteTagList& a_data, std::int32_t a_frameNumber) = 0;                    // 0C
 		virtual bool            GetLabeledFrame(const char* a_label, std::int32_t& a_frameNumber, bool a_labelIsNumber) = 0;  // 0D
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(GFxTimelineDef) == 0x20);
 }

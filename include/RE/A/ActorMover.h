@@ -8,6 +8,7 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_ActorMover;
+		inline static constexpr auto VTABLE = VTABLE_ActorMover;
 
 		virtual ~ActorMover();  // 00
 
@@ -18,6 +19,8 @@ namespace RE
 
 		// members
 		Actor* actor;  // 08
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(ActorMover) == 0x10);
 }

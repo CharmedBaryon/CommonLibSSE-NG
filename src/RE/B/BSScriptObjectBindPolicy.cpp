@@ -7,7 +7,7 @@ namespace RE
 		void ObjectBindPolicy::BindObject(BSTSmartPointer<Object>& a_objectPtr, VMHandle a_handle)
 		{
 			using func_t = decltype(&ObjectBindPolicy::BindObject);
-			REL::Relocation<func_t> func{ Offset::BSScript::ObjectBindPolicy::BindObject };
+			static REL::Relocation<func_t> func{ RELOCATION_ID(97379, 104184) };
 			return func(this, a_objectPtr, a_handle);
 		}
 	}

@@ -11,7 +11,8 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_NiMultiTargetTransformController;
-		inline static auto           Ni_RTTI = NiRTTI_NiMultiTargetTransformController;
+		inline static constexpr auto Ni_RTTI = NiRTTI_NiMultiTargetTransformController;
+		inline static constexpr auto VTABLE = VTABLE_NiMultiTargetTransformController;
 
 		~NiMultiTargetTransformController() override;  // 00
 
@@ -45,6 +46,8 @@ namespace RE
 		std::uint16_t                 numInterps;    // 58
 		std::uint16_t                 pad5A;         // 58
 		std::uint32_t                 pad5C;         // 5C
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(NiMultiTargetTransformController) == 0x60);
 }

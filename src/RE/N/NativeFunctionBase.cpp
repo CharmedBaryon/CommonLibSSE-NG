@@ -107,7 +107,7 @@ namespace RE
 				-> CallResult
 			{
 				using func_t = decltype(&NativeFunctionBase::Call);
-				REL::Relocation<func_t> func{ Offset::BSScript::NF_util::NativeFunctionBase::Call };
+				static REL::Relocation<func_t> func{ RELOCATION_ID(97923, 104651) };
 				return func(this, a_stack, a_logger, a_vm, a_arg4);
 			}
 

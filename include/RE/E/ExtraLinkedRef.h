@@ -13,7 +13,8 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_ExtraLinkedRef;
-		inline static auto           EXTRADATATYPE = ExtraDataType::kLinkedRef;
+		inline static constexpr auto VTABLE = VTABLE_ExtraLinkedRef;
+		inline static constexpr auto EXTRADATATYPE = ExtraDataType::kLinkedRef;
 
 		struct LinkedRef
 		{
@@ -30,6 +31,8 @@ namespace RE
 
 		// members
 		BSTSmallArray<LinkedRef> linkedRefs;  // 10
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(ExtraLinkedRef) == 0x30);
 }

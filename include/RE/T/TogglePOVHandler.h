@@ -8,6 +8,7 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_TogglePOVHandler;
+		inline static constexpr auto VTABLE = VTABLE_TogglePOVHandler;
 
 		~TogglePOVHandler() override;  // 00
 
@@ -20,6 +21,12 @@ namespace RE
 		std::uint8_t  pad19;            // 19
 		std::uint16_t pad1A;            // 1A
 		std::uint32_t pad1C;            // 1C
+	private:
+		KEEP_FOR_RE()
 	};
+#if defined(EXCLUSIVE_SKYRIM_FLAT)
 	static_assert(sizeof(TogglePOVHandler) == 0x20);
+#elif defined(EXCLUSIVE_SKYRIM_VR)
+	static_assert(sizeof(TogglePOVHandler) == 0x38);
+#endif
 }

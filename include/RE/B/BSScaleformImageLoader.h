@@ -14,6 +14,7 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_BSScaleformImageLoader;
+		inline static constexpr auto VTABLE = VTABLE_BSScaleformImageLoader;
 
 		class TextureEntry
 		{
@@ -33,19 +34,21 @@ namespace RE
 		bool AddTexture(BSScaleformExternalTexture& a_texture)
 		{
 			using func_t = decltype(&BSScaleformImageLoader::AddTexture);
-			REL::Relocation<func_t> func{ RELOCATION_ID(82382, 84469) };
+			static REL::Relocation<func_t> func{ RELOCATION_ID(82382, 84469) };
 			return func(this, a_texture);
 		}
 
 		void RemoveTexture(BSScaleformExternalTexture& a_texture)
 		{
 			using func_t = decltype(&BSScaleformImageLoader::RemoveTexture);
-			REL::Relocation<func_t> func{ RELOCATION_ID(82383, 84470) };
+			static REL::Relocation<func_t> func{ RELOCATION_ID(82383, 84470) };
 			return func(this, a_texture);
 		}
 
 		// members
 		BSTHashMap<std::uint32_t, TextureEntry> textures;  // 18
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(BSScaleformImageLoader) == 0x48);
 }

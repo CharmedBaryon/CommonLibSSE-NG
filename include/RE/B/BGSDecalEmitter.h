@@ -17,6 +17,8 @@ namespace RE
 		std::uint16_t                   pad06;            // 06
 		BGSImpactData*                  impactData;       // 08
 		NiPointer<BSTempEffectParticle> particleEmitter;  // 10
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(BGSDecalEmitter) == 0x18);
 }

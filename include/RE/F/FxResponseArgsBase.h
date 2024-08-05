@@ -18,6 +18,8 @@ namespace RE
 
 		// add
 		virtual std::uint32_t GetValues(GFxValue** a_params) = 0;  // 01
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(FxResponseArgsBase) == 0x8);
 }

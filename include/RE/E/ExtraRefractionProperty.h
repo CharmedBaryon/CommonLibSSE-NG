@@ -9,7 +9,8 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_ExtraRefractionProperty;
-		inline static auto           EXTRADATATYPE = ExtraDataType::kRefractionProperty;
+		inline static constexpr auto VTABLE = VTABLE_ExtraRefractionProperty;
+		inline static constexpr auto EXTRADATATYPE = ExtraDataType::kRefractionProperty;
 
 		~ExtraRefractionProperty() override;  // 00
 
@@ -19,6 +20,8 @@ namespace RE
 		// members
 		float         refractionPower;  // 10
 		std::uint32_t unk14;            // 14
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(ExtraRefractionProperty) == 0x18);
 }

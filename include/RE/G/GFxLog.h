@@ -11,6 +11,7 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_GFxLog;
+		inline static constexpr auto VTABLE = VTABLE_GFxLog;
 
 		GFxLog();
 		~GFxLog() override = default;  // 00
@@ -19,6 +20,9 @@ namespace RE
 		virtual void LogMessageVarg(LogMessageType a_messageType, const char* a_fmt, std::va_list a_argList);  // 01
 
 		void LogMessageByType(LogMessageType a_messageType, const char* a_fmt, ...);
+
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(GFxLog) == 0x20);
 }

@@ -7,7 +7,7 @@ namespace RE
 {
 	Main* Main::GetSingleton()
 	{
-		REL::Relocation<Main**> singleton{ Offset::Main::Singleton };
+		REL::Relocation<Main**> singleton{ RELOCATION_ID(516943, 403449) };
 		return *singleton;
 	}
 
@@ -20,7 +20,7 @@ namespace RE
 	NiCamera* Main::WorldRootCamera()
 	{
 		using func_t = decltype(&Main::WorldRootCamera);
-		REL::Relocation<func_t> func{ RELOCATION_ID(35601, 36609) };
+		static REL::Relocation<func_t> func{ RELOCATION_ID(35601, 36609) };
 		return func();
 	}
 
@@ -33,7 +33,7 @@ namespace RE
 	void Main::SetActive(bool a_active)
 	{
 		using func_t = decltype(&Main::SetActive);
-		REL::Relocation<func_t> func{ RELOCATION_ID(35598, 36606) };
+		static REL::Relocation<func_t> func{ RELOCATION_ID(35598, 36606) };
 		return func(this, a_active);
 	}
 }

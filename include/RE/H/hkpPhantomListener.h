@@ -16,6 +16,8 @@ namespace RE
 		virtual void PhantomRemovedCallback(hkpPhantom* a_phantom);   // 02 - { return; }
 		virtual void PhantomShapeSetCallback(hkpPhantom* a_phantom);  // 03
 		virtual void PhantomDeletedCallback(hkpPhantom* a_phantom);   // 04 - { return; }
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(hkpPhantomListener) == 0x8);
 }

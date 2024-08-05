@@ -14,6 +14,9 @@ namespace RE
 
 		FormID                                    cellID;
 		stl::enumeration<CellFlag, std::uint32_t> flags;
+
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(BGSActorCellEvent) == 0xC);
 }

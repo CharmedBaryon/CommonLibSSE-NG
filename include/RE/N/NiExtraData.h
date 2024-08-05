@@ -35,6 +35,8 @@ namespace RE
 
 		// members
 		BSFixedString name;  // 10
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(NiExtraData) == 0x18);
 

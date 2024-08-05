@@ -13,6 +13,7 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_TESCamera;
+		inline static constexpr auto VTABLE = VTABLE_TESCamera;
 
 		virtual ~TESCamera();  // 00
 
@@ -31,6 +32,8 @@ namespace RE
 		std::uint8_t                    pad31;             // 31
 		std::uint16_t                   pad32;             // 32
 		std::uint32_t                   pad34;             // 34
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(TESCamera) == 0x38);
 }

@@ -17,6 +17,8 @@ namespace RE
 		virtual bool GetAllowMultipleCastingSourceStacking() override;  // 11
 		virtual ~DetectLifeEffect();                                    // 13
 		virtual bool CheckCustomSkillUseConditions() const override;    // 17
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(DetectLifeEffect) == 0x90);
 }

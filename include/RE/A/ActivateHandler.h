@@ -8,6 +8,7 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_ActivateHandler;
+		inline static constexpr auto VTABLE = VTABLE_ActivateHandler;
 
 		~ActivateHandler() override;  // 00
 
@@ -23,6 +24,12 @@ namespace RE
 		bool          heldButtonActionSuccess;  // 1A
 		bool          disabled;                 // 1B
 		std::uint32_t unk1C;                    // 1C
+	private:
+		KEEP_FOR_RE()
 	};
+#if defined(EXCLUSIVE_SKYRIM_VR)
+	static_assert(sizeof(ActivateHandler) == 0x38);
+#else
 	static_assert(sizeof(ActivateHandler) == 0x20);
+#endif
 }

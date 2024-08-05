@@ -133,6 +133,8 @@ namespace RE
 		std::uint16_t                                 padE2;                // E2
 		stl::enumeration<ActiveMarker, std::uint32_t> furnFlags;            // E4
 		SpellItem*                                    associatedForm;       // E8
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(TESFurniture) == 0xF0);
 }

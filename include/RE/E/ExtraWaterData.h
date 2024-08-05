@@ -25,7 +25,8 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_ExtraWaterData;
-		inline static auto           EXTRADATATYPE = ExtraDataType::kWaterData;
+		inline static constexpr auto VTABLE = VTABLE_ExtraWaterData;
+		inline static constexpr auto EXTRADATATYPE = ExtraDataType::kWaterData;
 
 		~ExtraWaterData() override;  // 00
 
@@ -37,6 +38,8 @@ namespace RE
 		std::uint64_t                unk10;         // 10
 		hkRefPtr<hkReferencedObject> unk18;         // 18
 		BSCurrent::ActionArray*      currentArray;  // 20
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(ExtraWaterData) == 0x28);
 }

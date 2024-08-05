@@ -25,6 +25,7 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_MagicCaster;
+		inline static constexpr auto VTABLE = VTABLE_MagicCaster;
 
 		enum class State
 		{
@@ -93,6 +94,8 @@ namespace RE
 		float                                  magnitudeOverride;  // 3C
 		float                                  nextTargetUpdate;   // 40
 		float                                  projectileTimer;    // 44
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(MagicCaster) == 0x48);
 }

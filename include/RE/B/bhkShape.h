@@ -33,13 +33,15 @@ namespace RE
 		[[nodiscard]] MATERIAL_ID GetMaterialID(hkpShapeKey a_key) const
 		{
 			using func_t = decltype(&bhkShape::GetMaterialID);
-			REL::Relocation<func_t> func{ RELOCATION_ID(76799, 78676) };
+			static REL::Relocation<func_t> func{ RELOCATION_ID(76799, 78676) };
 			return func(this, a_key);
 		}
 
 		// members
 		MATERIAL_ID   materialID;  // 20
 		std::uint32_t filterInfo;  // 24
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(bhkShape) == 0x28);
 }

@@ -8,6 +8,7 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_PathingCell;
+		inline static constexpr auto VTABLE = VTABLE_PathingCell;
 
 		~PathingCell() override;  // 00
 
@@ -26,6 +27,8 @@ namespace RE
 		// members
 		FormID unk10;   // 10
 		FormID cellID;  // 14
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(PathingCell) == 0x18);
 }

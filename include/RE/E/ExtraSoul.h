@@ -28,6 +28,8 @@ namespace RE
 		std::uint8_t                               pad11;  // 11
 		std::uint16_t                              pad12;  // 12
 		std::uint32_t                              pad14;  // 14
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(ExtraSoul) == 0x18);
 }

@@ -26,6 +26,8 @@ namespace RE
 		// members
 		Script*       script;        // 90
 		ScriptLocals* effectLocals;  // 98
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(ScriptEffect) == 0xA0);
 }

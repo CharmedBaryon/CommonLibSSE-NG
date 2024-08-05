@@ -12,7 +12,8 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_ExtraGroupConstraint;
-		inline static auto           EXTRADATATYPE = ExtraDataType::kGroupConstraint;
+		inline static constexpr auto VTABLE = VTABLE_ExtraGroupConstraint;
+		inline static constexpr auto EXTRADATATYPE = ExtraDataType::kGroupConstraint;
 
 		~ExtraGroupConstraint() override;  // 00
 
@@ -28,6 +29,8 @@ namespace RE
 		NiPoint3        constraintOffsetB;        // 34
 		std::uint32_t   originalCollisionGroupB;  // 40
 		float           dynamicMassScaleB;        // 44
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(ExtraGroupConstraint) == 0x48);
 }

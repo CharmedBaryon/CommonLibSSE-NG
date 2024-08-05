@@ -45,6 +45,8 @@ namespace RE
 		virtual void                  LeaveState(hkpCharacterContext& a_context, hkpCharacterStateType a_nextState, const hkpCharacterInput& a_input, hkpCharacterOutput& a_output);  // 05 - { return; }
 		virtual void                  Update(hkpCharacterContext& a_context, const hkpCharacterInput& a_input, hkpCharacterOutput& a_output) = 0;                                     // 06
 		virtual void                  Change(hkpCharacterContext& a_context, const hkpCharacterInput& a_input, hkpCharacterOutput& a_output) = 0;                                     // 07
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(hkpCharacterState) == 0x10);
 }

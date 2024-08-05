@@ -163,6 +163,9 @@ namespace RE
 			{ 0x0FFE5, BreakInfoFlags::kNonTerminatingChar, 0 },
 			{ 0x0FFE6, BreakInfoFlags::kNonTerminatingChar, 0 }
 		};
+
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(GFxWWHelper) == 0x1);
 }

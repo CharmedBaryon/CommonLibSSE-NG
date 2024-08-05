@@ -10,6 +10,7 @@ namespace RE
 	public:
 		inline static constexpr auto RTTI = RTTI_NiPSysGravityModifier;
 		inline static constexpr auto Ni_RTTI = NiRTTI_NiPSysGravityModifier;
+		inline static constexpr auto VTABLE = VTABLE_NiPSysGravityModifier;
 
 		enum class ForceType
 		{
@@ -42,6 +43,8 @@ namespace RE
 		std::uint8_t                               pad59;         // 59
 		std::uint16_t                              pad5A;         // 5A
 		std::uint32_t                              pad5C;         // 5C
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(NiPSysGravityModifier) == 0x60);
 }

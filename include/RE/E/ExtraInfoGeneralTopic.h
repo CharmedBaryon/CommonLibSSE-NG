@@ -9,7 +9,8 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_ExtraInfoGeneralTopic;
-		inline static auto           EXTRADATATYPE = ExtraDataType::kInfoGeneralTopic;
+		inline static constexpr auto VTABLE = VTABLE_ExtraInfoGeneralTopic;
+		inline static constexpr auto EXTRADATATYPE = ExtraDataType::kInfoGeneralTopic;
 
 		struct Data
 		{
@@ -34,6 +35,8 @@ namespace RE
 
 		// members
 		Data* unk10;  // 10
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(ExtraInfoGeneralTopic) == 0x18);
 }

@@ -9,7 +9,8 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_ExtraAlphaCutoff;
-		inline static auto           EXTRADATATYPE = ExtraDataType::kAlphaCutoff;
+		inline static constexpr auto VTABLE = VTABLE_ExtraAlphaCutoff;
+		inline static constexpr auto EXTRADATATYPE = ExtraDataType::kAlphaCutoff;
 
 		~ExtraAlphaCutoff() override;  // 00
 
@@ -22,6 +23,8 @@ namespace RE
 		std::int8_t   originalCutoff;  // 11
 		std::uint16_t pad12;           // 12
 		std::uint32_t pad14;           // 14
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(ExtraAlphaCutoff) == 0x18);
 }

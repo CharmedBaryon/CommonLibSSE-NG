@@ -16,7 +16,8 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_ExtraMissingRefIDs;
-		inline static auto           EXTRADATATYPE = ExtraDataType::kMissingRefIDs;
+		inline static constexpr auto VTABLE = VTABLE_ExtraMissingRefIDs;
+		inline static constexpr auto EXTRADATATYPE = ExtraDataType::kMissingRefIDs;
 
 		~ExtraMissingRefIDs() override;  // 00
 
@@ -28,6 +29,8 @@ namespace RE
 		std::uint32_t     numIDs;  // 18
 		std::uint32_t     unk1C;   // 1C
 		std::uint64_t     unk20;   // 20
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(ExtraMissingRefIDs) == 0x28);
 }

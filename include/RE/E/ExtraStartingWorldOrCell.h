@@ -11,7 +11,8 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_ExtraStartingWorldOrCell;
-		inline static auto           EXTRADATATYPE = ExtraDataType::kStartingWorldOrCell;
+		inline static constexpr auto VTABLE = VTABLE_ExtraStartingWorldOrCell;
+		inline static constexpr auto EXTRADATATYPE = ExtraDataType::kStartingWorldOrCell;
 
 		~ExtraStartingWorldOrCell() override;  // 00
 
@@ -20,6 +21,8 @@ namespace RE
 
 		// members
 		TESForm* startingWorldOrCell;  // 10
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(ExtraStartingWorldOrCell) == 0x18);
 }

@@ -53,10 +53,14 @@ namespace RE
 #endif
 
 		// add
-		SKYRIM_REL_VR_VIRTUAL void Unk_128(void);  // 128
-		SKYRIM_REL_VR_VIRTUAL void Unk_129(void);  // 129 - { return 1; }
+		virtual void Unk_128(void);  // 128
+		virtual void Unk_129(void);  // 129 - { return 1; }
+	private:
+		KEEP_FOR_RE()
 	};
 #ifndef ENABLE_SKYRIM_AE
 	static_assert(sizeof(Character) == 0x2B0);
+#else
+	static_assert(sizeof(Character) == 0x78);
 #endif
 }

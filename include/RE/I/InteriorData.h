@@ -41,6 +41,8 @@ namespace RE
 		float                                    lightFadeEnd;                      // 54
 		stl::enumeration<Inherit, std::uint32_t> lightingTemplateInheritanceFlags;  // 58
 		std::uint32_t                            unk5C;                             // 5C - interiorOffset?
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(INTERIOR_DATA) == 0x60);
 }

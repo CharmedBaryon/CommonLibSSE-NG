@@ -13,7 +13,8 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_BSBloodSplatterShaderProperty;
-		inline static auto           Ni_RTTI = NiRTTI_BSBloodSplatterShaderProperty;
+		inline static constexpr auto Ni_RTTI = NiRTTI_BSBloodSplatterShaderProperty;
+		inline static constexpr auto VTABLE = VTABLE_BSBloodSplatterShaderProperty;
 
 		enum : std::uint32_t
 		{
@@ -38,6 +39,8 @@ namespace RE
 		NiPointer<NiSourceTexture> bloodTextures[kTotal];  // 088
 		std::int32_t               textureClampMode;       // 0A0
 		float*                     alphaSource;            // 0A8
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(BSBloodSplatterShaderProperty) == 0xB0);
 }

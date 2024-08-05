@@ -8,6 +8,7 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI___OldMessageBoxCallback;
+		inline static constexpr auto VTABLE = VTABLE___OldMessageBoxCallback;
 
 		using Callback = void(Message);
 
@@ -18,6 +19,8 @@ namespace RE
 
 		// members
 		Callback* callback;  // 10
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(OldMessageBoxCallback) == 0x18);
 }

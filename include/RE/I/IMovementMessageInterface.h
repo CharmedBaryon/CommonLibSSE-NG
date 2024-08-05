@@ -8,6 +8,7 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_IMovementMessageInterface;
+		inline static constexpr auto VTABLE = VTABLE_IMovementMessageInterface;
 
 		~IMovementMessageInterface() override;  // 00
 
@@ -15,6 +16,8 @@ namespace RE
 		virtual void Unk_01(void) = 0;  // 01
 		virtual void Unk_02(void) = 0;  // 02
 		virtual void Unk_03(void) = 0;  // 03
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(IMovementMessageInterface) == 0x8);
 }

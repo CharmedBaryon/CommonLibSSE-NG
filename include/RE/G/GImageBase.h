@@ -33,6 +33,8 @@ namespace RE
 		std::uint32_t                                dataSize;     // 18
 		std::uint32_t                                mipMapCount;  // 1C
 		GArray<GColor>                               colorMap;     // 20
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(GImageBase) == 0x38);
 }

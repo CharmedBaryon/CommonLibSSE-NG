@@ -37,6 +37,8 @@ namespace RE
 		std::uint8_t          pad513;                      // 513
 		std::uint32_t         pad514;                      // 514
 		std::uint64_t         pad520;                      // 520
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(Clouds) == 0x520);
 }

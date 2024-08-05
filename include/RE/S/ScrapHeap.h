@@ -10,6 +10,7 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_ScrapHeap;
+		inline static constexpr auto VTABLE = VTABLE_ScrapHeap;
 
 		struct Block
 		{

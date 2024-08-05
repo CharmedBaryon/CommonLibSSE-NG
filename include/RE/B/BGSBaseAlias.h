@@ -12,7 +12,8 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_BGSBaseAlias;
-		inline static auto           VMTYPEID = static_cast<VMTypeID>(139);
+		inline static constexpr auto VTABLE = VTABLE_BGSBaseAlias;
+		inline static constexpr auto VMTYPEID = static_cast<VMTypeID>(139);
 
 		enum class FLAGS
 		{
@@ -79,6 +80,8 @@ namespace RE
 		stl::enumeration<FILL_TYPE, std::uint16_t> fillType;     // 20
 		std::uint16_t                              pad22;        // 22
 		std::uint32_t                              pad24;        // 24
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(BGSBaseAlias) == 0x28);
 }

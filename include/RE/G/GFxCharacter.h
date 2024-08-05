@@ -84,6 +84,8 @@ namespace RE
 		std::uint32_t     unk90;           // 90
 		std::uint16_t     unk94;           // 94
 		std::uint16_t     unk96;           // 96
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(GFxCharacter) == 0x98);
 }

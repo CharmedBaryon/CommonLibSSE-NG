@@ -60,6 +60,8 @@ namespace RE
 		BSFixedString                          associationLabels[Members::kTotal][Sexes::kTotal];  // 20 - MPRT - FCHT
 		stl::enumeration<FLAGS, std::uint32_t> flags;                                              // 40 - DATA
 		std::uint32_t                          pad44;                                              // 44
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(BGSAssociationType) == 0x48);
 }

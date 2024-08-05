@@ -32,6 +32,8 @@ namespace RE
 		std::uint32_t size;   // 18
 		std::uint32_t pad;    // 1C
 		float*        value;  // 20
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(NiFloatsExtraData) == 0x28);
 }

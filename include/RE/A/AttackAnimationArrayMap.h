@@ -13,6 +13,7 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_AttackAnimationArrayMap;
+		inline static constexpr auto VTABLE = VTABLE_AttackAnimationArrayMap;
 
 		// hash key (hiword = right hand | loward = left hand)
 		enum HashKey : std::uint32_t
@@ -32,6 +33,8 @@ namespace RE
 		};
 
 		virtual ~AttackAnimationArrayMap();  // 00
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(AttackAnimationArrayMap) == 0x40);
 }

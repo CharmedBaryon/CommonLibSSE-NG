@@ -77,6 +77,8 @@ namespace RE
 		// members
 		ENCOUNTER_ZONE_DATA      data;      // 20 - DATA
 		ENCOUNTER_ZONE_GAME_DATA gameData;  // 38
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(BGSEncounterZone) == 0x48);
 }

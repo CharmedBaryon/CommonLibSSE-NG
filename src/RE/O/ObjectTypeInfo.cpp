@@ -169,7 +169,7 @@ namespace RE
 		void ObjectTypeInfo::ReleaseData()
 		{
 			using func_t = decltype(&ObjectTypeInfo::ReleaseData);
-			REL::Relocation<func_t> func{ 97538 };
+			static REL::Relocation<func_t> func{ 97538 };
 			return func(this);
 		}
 	}

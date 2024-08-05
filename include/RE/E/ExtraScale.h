@@ -9,7 +9,8 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_ExtraScale;
-		inline static auto           EXTRADATATYPE = ExtraDataType::kScale;
+		inline static constexpr auto VTABLE = VTABLE_ExtraScale;
+		inline static constexpr auto EXTRADATATYPE = ExtraDataType::kScale;
 
 		~ExtraScale() override;  // 00
 
@@ -20,6 +21,8 @@ namespace RE
 		// members
 		float         scale;  // 10
 		std::uint32_t pad14;  // 14
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(ExtraScale) == 0x18);
 }

@@ -53,6 +53,8 @@ namespace RE
 		TESActorBase*           unk98;  // 98
 		BSSimpleList<TESQuest*> unkA0;  // A0
 		std::uint64_t           unkB0;  // B0
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(BGSNote) == 0xB8);
 }

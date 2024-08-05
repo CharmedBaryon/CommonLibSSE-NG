@@ -13,6 +13,7 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_TESSpellList;
+		inline static constexpr auto VTABLE = VTABLE_TESSpellList;
 
 		struct SpellData  // SPLO
 		{
@@ -63,6 +64,8 @@ namespace RE
 
 		// members
 		SpellData* actorEffects;  // 08 - SPLO
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(TESSpellList) == 0x10);
 }

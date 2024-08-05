@@ -10,7 +10,8 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_ExtraRefrPath;
-		inline static auto           EXTRADATATYPE = ExtraDataType::kRefrPath;
+		inline static constexpr auto VTABLE = VTABLE_ExtraRefrPath;
+		inline static constexpr auto EXTRADATATYPE = ExtraDataType::kRefrPath;
 
 		enum class PATH_TYPE
 		{
@@ -32,6 +33,8 @@ namespace RE
 		float                                      maxRotSpeed;       // 5C
 		float                                      currentParameter;  // 60
 		stl::enumeration<PATH_TYPE, std::uint32_t> type;              // 64
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(ExtraRefrPath) == 0x68);
 }

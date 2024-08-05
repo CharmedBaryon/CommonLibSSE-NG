@@ -34,6 +34,14 @@ namespace RE
 		bool                  useCurrentHeading;  // 134
 		std::uint8_t          pad135;             // 135
 		std::uint16_t         pad136;             // 136
+	private:
+		KEEP_FOR_RE()
 	};
+#if defined(EXCLUSIVE_SKYRIM_FLAT)
 	static_assert(sizeof(BleedoutCameraState) == 0x138);
+#elif defined(EXCLUSIVE_SKYRIM_VR)
+	static_assert(sizeof(BleedoutCameraState) == 0x150);
+#else
+	static_assert(sizeof(BleedoutCameraState) == 0x138);
+#endif
 }

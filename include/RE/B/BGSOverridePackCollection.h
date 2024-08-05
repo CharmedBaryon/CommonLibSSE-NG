@@ -10,6 +10,7 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_BGSOverridePackCollection;
+		inline static constexpr auto VTABLE = VTABLE_BGSOverridePackCollection;
 
 		~BGSOverridePackCollection() override;  // 00
 
@@ -23,6 +24,8 @@ namespace RE
 		BGSListForm* observeCorpseOverRidePackList;  // 10 - OCOR
 		BGSListForm* guardWarnOverRidePackList;      // 18 - GWOR
 		BGSListForm* enterCombatOverRidePackList;    // 20 - ECOR
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(BGSOverridePackCollection) == 0x28);
 }

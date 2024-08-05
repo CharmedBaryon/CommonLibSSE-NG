@@ -13,18 +13,16 @@
       "name": "vcpkg-cmake-config",
       "host": true
     },
+    "directxmath",
+    "directxtk",
     "rapidcsv",
     "spdlog"
   ],
   "features": {
     "tests": {
       "description": "Build tests for CommonLibSSE.",
-      "dependencies": [
-        "catch2"
-      ]
+      "dependencies": ["catch2"]
     }
   },
-  "default-features": [
-    "tests"
-  ]
+  "default-features": ["tests"]
 }

@@ -12,7 +12,8 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_BSMultiBound;
-		inline static auto           Ni_RTTI = NiRTTI_BSMultiBound;
+		inline static constexpr auto Ni_RTTI = NiRTTI_BSMultiBound;
+		inline static constexpr auto VTABLE = VTABLE_BSMultiBound;
 
 		virtual ~BSMultiBound();  // 00
 
@@ -33,6 +34,8 @@ namespace RE
 		std::uint32_t                unk10;  // 10
 		std::uint32_t                pad14;  // 14
 		NiPointer<BSMultiBoundShape> data;   // 18
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(BSMultiBound) == 0x20);
 }

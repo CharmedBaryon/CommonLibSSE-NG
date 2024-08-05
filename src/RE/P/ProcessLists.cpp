@@ -17,7 +17,7 @@ namespace RE
 	void ProcessLists::ClearCachedFactionFightReactions() const
 	{
 		using func_t = decltype(&ProcessLists::ClearCachedFactionFightReactions);
-		REL::Relocation<func_t> func{ RELOCATION_ID(40396, 41410) };
+		static REL::Relocation<func_t> func{ RELOCATION_ID(40396, 41410) };
 		return func(this);
 	}
 
@@ -82,14 +82,14 @@ namespace RE
 	float ProcessLists::GetSystemTimeClock()
 	{
 		using func_t = decltype(&ProcessLists::GetSystemTimeClock);
-		REL::Relocation<func_t> func{ RELOCATION_ID(40327, 41337) };
+		static REL::Relocation<func_t> func{ RELOCATION_ID(40327, 41337) };
 		return func(this);
 	}
 
 	std::int16_t ProcessLists::RequestHighestDetectionLevelAgainstActor(Actor* a_actor, std::uint32_t& a_LOSCount)
 	{
 		using func_t = decltype(&ProcessLists::RequestHighestDetectionLevelAgainstActor);
-		REL::Relocation<func_t> func{ RELOCATION_ID(40394, 41408) };
+		static REL::Relocation<func_t> func{ RELOCATION_ID(40394, 41408) };
 		return func(this, a_actor, a_LOSCount);
 	}
 
@@ -108,7 +108,7 @@ namespace RE
 	void ProcessLists::StopCombatAndAlarmOnActor(Actor* a_actor, bool a_notAlarm)
 	{
 		using func_t = decltype(&ProcessLists::StopCombatAndAlarmOnActor);
-		REL::Relocation<func_t> func{ RELOCATION_ID(40330, 41340) };
+		static REL::Relocation<func_t> func{ RELOCATION_ID(40330, 41340) };
 		return func(this, a_actor, a_notAlarm);
 	}
 }

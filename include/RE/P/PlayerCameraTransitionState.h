@@ -30,6 +30,8 @@ namespace RE
 		TESCameraState* transitionFrom;  // 28
 		TESCameraState* transitionTo;    // 30
 		std::uint16_t   unk38;           // 38
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(PlayerCameraTransitionState) == 0x40);
 }

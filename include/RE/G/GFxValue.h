@@ -433,6 +433,8 @@ namespace RE
 		stl::enumeration<ValueType, std::uint32_t> _type;             // 08
 		std::uint32_t                              _pad0C;            // 0C
 		ValueUnion                                 _value;            // 10
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(GFxValue) == 0x18);
 }

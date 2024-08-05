@@ -28,7 +28,8 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_NiSkinPartition;
-		inline static auto           Ni_RTTI = NiRTTI_NiSkinPartition;
+		inline static constexpr auto Ni_RTTI = NiRTTI_NiSkinPartition;
+		inline static constexpr auto VTABLE = VTABLE_NiSkinPartition;
 
 		class Partition
 		{
@@ -70,6 +71,8 @@ namespace RE
 		SimpleArray<Partition> partitions;     // 18
 		std::uint32_t          vertexCount;    // 20
 		std::uint32_t          unk24;          // 24
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(NiSkinPartition) == 0x28);
 }

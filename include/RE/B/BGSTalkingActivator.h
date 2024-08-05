@@ -52,6 +52,8 @@ namespace RE
 		// members
 		TESObjectREFR* tempRef;    // C8
 		BGSVoiceType*  voiceType;  // D0 - VNAM
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(BGSTalkingActivator) == 0xD8);
 }

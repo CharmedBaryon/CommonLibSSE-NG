@@ -10,7 +10,8 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_ExtraCreatureAwakeSound;
-		inline static auto           EXTRADATATYPE = ExtraDataType::kCreatureAwakeSound;
+		inline static constexpr auto VTABLE = VTABLE_ExtraCreatureAwakeSound;
+		inline static constexpr auto EXTRADATATYPE = ExtraDataType::kCreatureAwakeSound;
 
 		~ExtraCreatureAwakeSound() override;  // 00
 
@@ -20,6 +21,8 @@ namespace RE
 		// members
 		BSSoundHandle handle;  // 10
 		std::uint32_t pad1C;   // 1C
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(ExtraCreatureAwakeSound) == 0x20);
 }

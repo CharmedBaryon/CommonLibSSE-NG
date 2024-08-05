@@ -26,6 +26,7 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_MenuTopicManager;
+		inline static constexpr auto VTABLE = VTABLE_MenuTopicManager;
 
 		struct Dialogue
 		{
@@ -91,6 +92,8 @@ namespace RE
 		bool                           unkBB;                 // BB
 		std::uint16_t                  padBC;                 // BC
 		BSTArray<TESTopic*>            unkC0;                 // C0
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(MenuTopicManager) == 0xD8);
 }

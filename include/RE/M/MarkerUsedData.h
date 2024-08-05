@@ -12,6 +12,8 @@ namespace RE
 		ActorHandle   actorinMarker;  // 0
 		std::uint32_t markerID;       // 4
 		AITimeStamp   expiration;     // 8
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(MarkerUsedData) == 0xC);
 }

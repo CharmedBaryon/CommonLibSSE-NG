@@ -11,7 +11,8 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_ExtraDecalGroup;
-		inline static auto           EXTRADATATYPE = ExtraDataType::kDecalGroup;
+		inline static constexpr auto VTABLE = VTABLE_ExtraDecalGroup;
+		inline static constexpr auto EXTRADATATYPE = ExtraDataType::kDecalGroup;
 
 		~ExtraDecalGroup() override;  // 00
 
@@ -20,6 +21,8 @@ namespace RE
 
 		// members
 		BGSDecalGroup* decalGroup;  // 10
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(ExtraDecalGroup) == 0x18);
 }

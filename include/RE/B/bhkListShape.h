@@ -8,7 +8,8 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_bhkListShape;
-		inline static auto           Ni_RTTI = NiRTTI_bhkListShape;
+		inline static constexpr auto Ni_RTTI = NiRTTI_bhkListShape;
+		inline static constexpr auto VTABLE = VTABLE_bhkListShape;
 
 		~bhkListShape() override;  // 00
 
@@ -31,6 +32,8 @@ namespace RE
 
 		// members
 		std::uint64_t unk28;  // 28
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(bhkListShape) == 0x30);
 }

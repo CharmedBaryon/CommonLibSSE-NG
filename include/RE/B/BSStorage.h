@@ -14,6 +14,7 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_BSStorage;
+		inline static constexpr auto VTABLE = VTABLE_BSStorage;
 
 		struct UnkData
 		{
@@ -40,6 +41,8 @@ namespace RE
 		uint16_t      unk0E;      // 0E
 		UnkData*      unk10;      // 10
 		std::uint64_t unk18;      // 18
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(BSStorage) == 0x20);
 }

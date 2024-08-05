@@ -9,7 +9,8 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_ExtraHasNoRumors;
-		inline static auto           EXTRADATATYPE = ExtraDataType::kHasNoRumors;
+		inline static constexpr auto VTABLE = VTABLE_ExtraHasNoRumors;
+		inline static constexpr auto EXTRADATATYPE = ExtraDataType::kHasNoRumors;
 
 		~ExtraHasNoRumors() override;  // 00
 
@@ -21,6 +22,8 @@ namespace RE
 		std::uint8_t  pad11;     // 11
 		std::uint16_t pad12;     // 12
 		std::uint32_t pad14;     // 14
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(ExtraHasNoRumors) == 0x18);
 }

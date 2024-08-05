@@ -9,7 +9,7 @@ namespace REL
 	public:
 		constexpr Offset() noexcept = default;
 
-		explicit constexpr Offset(std::size_t a_offset) noexcept:
+		explicit constexpr Offset(std::size_t a_offset) noexcept :
 			_offset(a_offset)
 		{}
 
@@ -26,7 +26,7 @@ namespace REL
 	private:
 		[[nodiscard]] static std::uintptr_t base() { return Module::get().base(); }
 
-		std::size_t _offset{0};
+		std::size_t _offset{ 0 };
 	};
 
 	class VariantOffset
@@ -60,19 +60,19 @@ namespace REL
 		{
 			switch (Module::GetRuntime()) {
 #ifdef ENABLE_SKYRIM_AE
-				case Module::Runtime::AE:
-					return _aeOffset;
+			case Module::Runtime::AE:
+				return _aeOffset;
 #endif
 #ifdef ENABLE_SKYRIM_SE
-				case Module::Runtime::SE:
-					return _seOffset;
+			case Module::Runtime::SE:
+				return _seOffset;
 #endif
 #ifdef ENABLE_SKYRIM_VR
-				case Module::Runtime::VR:
-					return _vrOffset;
+			case Module::Runtime::VR:
+				return _vrOffset;
 #endif
-				default:
-					return 0;
+			default:
+				return 0;
 			}
 		}
 
@@ -82,13 +82,13 @@ namespace REL
 		[[nodiscard]] static std::uintptr_t base() { return Module::get().base(); }
 
 #ifdef ENABLE_SKYRIM_SE
-		std::size_t _seOffset{0};
+		std::size_t _seOffset{ 0 };
 #endif
 #ifdef ENABLE_SKYRIM_AE
-		std::size_t _aeOffset{0};
+		std::size_t _aeOffset{ 0 };
 #endif
 #ifdef ENABLE_SKYRIM_VR
-		std::size_t _vrOffset{0};
+		std::size_t _vrOffset{ 0 };
 #endif
 	};
 }

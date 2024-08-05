@@ -41,21 +41,20 @@ namespace RE
 		public TESModelTextureSwap,  // 040
 		public TESIcon,              // 078
 		public BGSMessageIcon,       // 088
-#ifndef ENABLE_SKYRIM_VR
-		public TESValueForm,               // 0A0
+		public TESValueForm         // 0A0
+#if defined(EXCLUSIVE_SKYRIM_FLAT)
+		,
 		public TESWeightForm,              // 0B0
 		public BGSDestructibleObjectForm,  // 0C0
 		public BGSPickupPutdownSounds,     // 0D0
 		public TESDescription,             // 0E8
 		public BGSKeywordForm              // 0F8
-#elif !defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE)
-		public TESValueForm,               // 0A0
+#elif defined(EXCLUSIVE_SKYRIM_VR)
+		,
 		public BGSDestructibleObjectForm,  // 0B0
 		public BGSPickupPutdownSounds,     // 0C0
 		public TESDescription,             // 0D8
 		public BGSKeywordForm              // 0E8
-#else
-		public TESValueForm  // 0A0
 #endif
 	{
 	public:
@@ -95,7 +94,7 @@ namespace RE
 		NiAVObject* Clone3D(TESObjectREFR* a_ref, bool a_arg3) override;                 // 40
 		void        HandleRemoveItemFromContainer(TESObjectREFR* a_container) override;  // 4E
 
-#ifndef ENABLE_SKYRIM_VR
+#if defined(EXCLUSIVE_SKYRIM_FLAT)
 		// override (BGSKeywordForm)
 		[[nodiscard]] BGSKeyword* GetDefaultKeyword() const override;  // 05
 #endif
@@ -154,11 +153,17 @@ namespace RE
 		}
 
 		// members
-		RUNTIME_DATA_CONTENT  // 110, 100
+#if defined(EXCLUSIVE_SKYRIM_FLAT)
+		RUNTIME_DATA_CONTENT;  // 110
+#elif defined(EXCLUSIVE_SKYRIM_VR)
+		RUNTIME_DATA_CONTENT;  // VR 100
+#endif
+	private:
+		KEEP_FOR_RE()
 	};
-#ifndef ENABLE_SKYRIM_VR
+#if defined(EXCLUSIVE_SKYRIM_FLAT)
 	static_assert(sizeof(TESAmmo) == 0x128);
-#elif !defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE)
+#elif defined(EXCLUSIVE_SKYRIM_VR)
 	static_assert(sizeof(TESAmmo) == 0x118);
 #endif
 }

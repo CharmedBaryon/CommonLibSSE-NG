@@ -17,7 +17,7 @@ namespace RE
 		[[nodiscard]] static BGSStoryEventManager* GetSingleton()
 		{
 			using func_t = decltype(&BGSStoryEventManager::GetSingleton);
-			REL::Relocation<func_t> func{ RELOCATION_ID(22317, 22790) };
+			static REL::Relocation<func_t> func{ RELOCATION_ID(22317, 22790) };
 			return func();
 		}
 
@@ -37,9 +37,12 @@ namespace RE
 		std::uint32_t AddEvent_Impl(std::uint32_t a_index, const void* a_event)
 		{
 			using func_t = decltype(&BGSStoryEventManager::AddEvent_Impl);
-			REL::Relocation<func_t> func{ RELOCATION_ID(31576, 32359) };
+			static REL::Relocation<func_t> func{ RELOCATION_ID(31576, 32359) };
 			return func(this, a_index, a_event);
 		}
+
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(BGSStoryEventManager) == 0x68);
 }

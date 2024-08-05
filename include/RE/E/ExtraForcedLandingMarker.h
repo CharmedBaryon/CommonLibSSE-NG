@@ -10,7 +10,8 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_ExtraForcedLandingMarker;
-		inline static auto           EXTRADATATYPE = ExtraDataType::kForcedLandingMarker;
+		inline static constexpr auto VTABLE = VTABLE_ExtraForcedLandingMarker;
+		inline static constexpr auto EXTRADATATYPE = ExtraDataType::kForcedLandingMarker;
 
 		~ExtraForcedLandingMarker() override;  // 00
 
@@ -21,6 +22,8 @@ namespace RE
 		// members
 		ObjectRefHandle landingMarker;  // 10
 		std::uint32_t   pad14;          // 14
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(ExtraForcedLandingMarker) == 0x18);
 }

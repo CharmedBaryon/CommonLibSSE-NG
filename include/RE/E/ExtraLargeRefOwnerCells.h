@@ -12,7 +12,8 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_ExtraLargeRefOwnerCells;
-		inline static auto           EXTRADATATYPE = ExtraDataType::kLargeRefOwnerCells;
+		inline static constexpr auto VTABLE = VTABLE_ExtraLargeRefOwnerCells;
+		inline static constexpr auto EXTRADATATYPE = ExtraDataType::kLargeRefOwnerCells;
 
 		~ExtraLargeRefOwnerCells() override;  // 00
 
@@ -22,6 +23,8 @@ namespace RE
 		// members
 		BSTArray<TESForm*> ownerCells;  // 10
 		std::uint64_t      unk28;       // 28
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(ExtraLargeRefOwnerCells) == 0x30);
 }

@@ -31,6 +31,8 @@ namespace RE
 		mutable hkRefPtr<hkaMirroredSkeleton>      mirroredSkeleton;                  // 50
 		hkRefPtr<hkbSymbolIdMap>                   characterPropertyIdMap;            // 58
 		mutable hkCriticalSection*                 criticalSection;                   // 60
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(hkbCharacterSetup) == 0x68);
 }

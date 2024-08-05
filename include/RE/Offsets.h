@@ -111,11 +111,6 @@ namespace RE::Offset
 		constexpr auto SetEndianSwap = RELOCATION_ID(69643, 71021);
 	}
 
-	namespace BSScaleformTranslator
-	{
-		constexpr auto GetCachedString = RELOCATION_ID(67844, 69188);
-	}
-
 	namespace BSScript
 	{
 		namespace ObjectBindPolicy
@@ -140,10 +135,10 @@ namespace RE::Offset
 	namespace BSSoundHandle
 	{
 		constexpr auto IsValid = RELOCATION_ID(66360, 67621);
+		constexpr auto Pause = RELOCATION_ID(66357, 67618);
 		constexpr auto Play = RELOCATION_ID(66355, 67616);
 		constexpr auto SetObjectToFollow = RELOCATION_ID(66375, 67636);
 		constexpr auto SetPosition = RELOCATION_ID(66370, 67631);
-		constexpr auto Pause = RELOCATION_ID(66357, 67618);
 		constexpr auto Stop = RELOCATION_ID(66358, 67619);
 	}
 
@@ -169,7 +164,6 @@ namespace RE::Offset
 
 	namespace Console
 	{
-		constexpr auto SelectedRef = RELOCATION_ID(519394, 405935);
 		constexpr auto SetSelectedRef = RELOCATION_ID(50164, 51093);
 	}
 
@@ -213,7 +207,7 @@ namespace RE::Offset
 		constexpr auto Singleton = RELOCATION_ID(514622, 400782);
 	}
 
-#if !defined(ENABLE_SKYRIM_SE) && !defined(ENABLE_SKYRIM_VR)
+#if defined(EXCLUSIVE_SKYRIM_AE)
 	namespace GASActionBufferData
 	{
 		constexpr auto Vtbl = RELOCATION_ID(0, 242366);
@@ -245,31 +239,31 @@ namespace RE::Offset
 		constexpr auto InvokeNoReturn = RELOCATION_ID(80547, 82665);
 	}
 
-#if !defined(ENABLE_SKYRIM_SE) && !defined(ENABLE_SKYRIM_VR)
-    namespace GFxPlaceObject2
-    {
-        constexpr auto Vtbl = RELOCATION_ID(0, 242592);
-    }
+#if defined(EXCLUSIVE_SKYRIM_AE)
+	namespace GFxPlaceObject2
+	{
+		constexpr auto Vtbl = RELOCATION_ID(0, 242592);
+	}
 
-    namespace GFxPlaceObject3
-    {
-        constexpr auto Vtbl = RELOCATION_ID(0, 242593);
-    }
+	namespace GFxPlaceObject3
+	{
+		constexpr auto Vtbl = RELOCATION_ID(0, 242593);
+	}
 
-    namespace GFxRemoveObject
-    {
-        constexpr auto Vtbl = RELOCATION_ID(0, 244863);
-    }
+	namespace GFxRemoveObject
+	{
+		constexpr auto Vtbl = RELOCATION_ID(0, 244863);
+	}
 
-    namespace GFxRemoveObject2
-    {
-        constexpr auto Vtbl = RELOCATION_ID(0, 244864);
-    }
+	namespace GFxRemoveObject2
+	{
+		constexpr auto Vtbl = RELOCATION_ID(0, 244864);
+	}
 
-    namespace GFxSetBackgroundColor
-    {
-        constexpr auto Vtbl = RELOCATION_ID(0, 244865);
-    }
+	namespace GFxSetBackgroundColor
+	{
+		constexpr auto Vtbl = RELOCATION_ID(0, 244865);
+	}
 #endif
 
 	namespace GFxValue
@@ -279,9 +273,9 @@ namespace RE::Offset
 			constexpr auto AttachMovie = RELOCATION_ID(80197, 82219);
 			constexpr auto DeleteMember = RELOCATION_ID(80207, 82230);
 			constexpr auto GetArraySize = RELOCATION_ID(80214, 82237);
-            constexpr auto GetCxform = RELOCATION_ID(80215, 82238);
+			constexpr auto GetCxform = RELOCATION_ID(80215, 82238);
 			constexpr auto GetDisplayInfo = RELOCATION_ID(80216, 82239);
-            constexpr auto GetDisplayMatrix = RELOCATION_ID(80217, 82240);
+			constexpr auto GetDisplayMatrix = RELOCATION_ID(80217, 82240);
 			constexpr auto GetElement = RELOCATION_ID(80218, 82241);
 			constexpr auto GetMember = RELOCATION_ID(80222, 82245);
 			constexpr auto GotoAndPlay = RELOCATION_ID(80230, 82253);
@@ -292,13 +286,13 @@ namespace RE::Offset
 			constexpr auto PushBack = RELOCATION_ID(80248, 82273);
 			constexpr auto RemoveElements = RELOCATION_ID(80252, 82280);
 			constexpr auto SetArraySize = RELOCATION_ID(80261, 82285);
-            constexpr auto SetCxform = RELOCATION_ID(80262, 82286);
+			constexpr auto SetCxform = RELOCATION_ID(80262, 82286);
 			constexpr auto SetDisplayInfo = RELOCATION_ID(80263, 82287);
-            constexpr auto SetDisplayMatrix = RELOCATION_ID(80264, 82288);
+			constexpr auto SetDisplayMatrix = RELOCATION_ID(80264, 82288);
 			constexpr auto SetElement = RELOCATION_ID(80265, 82289);
 			constexpr auto SetMember = RELOCATION_ID(80268, 82292);
 			constexpr auto SetText = RELOCATION_ID(80270, 82293);
-            constexpr auto VisitMembers = RELOCATION_ID(80279, 82302);
+			constexpr auto VisitMembers = RELOCATION_ID(80279, 82302);
 		}
 	}
 
@@ -470,7 +464,6 @@ namespace RE::Offset
 
 	namespace Script
 	{
-		constexpr auto CompileAndRun = RELOCATION_ID(21416, 21890);
 		constexpr auto GetProcessScripts = RELOCATION_ID(21436, 21921);
 		constexpr auto SetProcessScripts = RELOCATION_ID(21435, 21920);
 	}
@@ -481,10 +474,18 @@ namespace RE::Offset
 		constexpr auto FirstScriptCommand = RELOCATION_ID(501789, 361120);
 	}
 
+	namespace Sky
+	{
+		constexpr auto GetSingleton = RELOCATION_ID(13789, 13878);
+		constexpr auto SetWeather = RELOCATION_ID(25694, 26241);
+		constexpr auto ForceWeather = RELOCATION_ID(25696, 26243);
+		constexpr auto ResetWeather = RELOCATION_ID(25695, 26242);
+	}
+
 	namespace SkyrimVM
 	{
 		constexpr auto QueuePostRenderCall = RELOCATION_ID(53144, 53955);
-        constexpr auto RelayEvent = RELOCATION_ID(53221, 54033);
+		constexpr auto RelayEvent = RELOCATION_ID(53221, 54033);
 		constexpr auto Singleton = RELOCATION_ID(514315, 400475);
 	}
 
@@ -578,9 +579,11 @@ namespace RE::Offset
 	}
 
 	constexpr auto CreateRefHandle = RELOCATION_ID(12193, 12326);
+	constexpr auto D3D11Device = RELOCATION_ID(524729, 411348);
 	constexpr auto DebugNotification = RELOCATION_ID(52050, 52933);
 	constexpr auto LookupReferenceByHandle = RELOCATION_ID(12204, 12332);
 	constexpr auto PlaySound = RELOCATION_ID(52054, 52939);
+	constexpr auto RendererShadowStateInstance = RELOCATION_ID(524773, 388819);
 	constexpr auto TlsIndex = RELOCATION_ID(528600, 415542);
-    constexpr auto GlobalStateCounter = RELOCATION_ID(514157, 400305);
+	constexpr auto GlobalStateCounter = RELOCATION_ID(514157, 400305);
 }

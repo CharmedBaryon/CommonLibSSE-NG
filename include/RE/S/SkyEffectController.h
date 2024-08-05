@@ -8,6 +8,7 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_SkyEffectController;
+		inline static constexpr auto VTABLE = VTABLE_SkyEffectController;
 
 		~SkyEffectController() override;  // 00
 
@@ -20,6 +21,8 @@ namespace RE
 		NiAVObject*      GetAttachRoot() override;                                // 0F
 		bool             EffectAttachesToCamera() override;                       // 1A - { return true; }
 		bool             EffectRotatesWithCamera() override;                      // 1B
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(SkyEffectController) == 0x8);
 }

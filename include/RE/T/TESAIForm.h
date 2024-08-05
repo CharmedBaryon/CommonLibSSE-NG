@@ -118,6 +118,7 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_TESAIForm;
+		inline static constexpr auto VTABLE = VTABLE_TESAIForm;
 
 		~TESAIForm() override;  // 00
 
@@ -141,6 +142,8 @@ namespace RE
 		// members
 		AIDATA_GAME aiData;      // 08 - AIDT
 		PackageList aiPackages;  // 18 - PKID
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(TESAIForm) == 0x28);
 }

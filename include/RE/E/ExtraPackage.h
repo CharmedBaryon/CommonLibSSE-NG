@@ -12,7 +12,8 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_ExtraPackage;
-		inline static auto           EXTRADATATYPE = ExtraDataType::kPackage;
+		inline static constexpr auto VTABLE = VTABLE_ExtraPackage;
+		inline static constexpr auto EXTRADATATYPE = ExtraDataType::kPackage;
 
 		~ExtraPackage() override;  // 00
 
@@ -28,6 +29,8 @@ namespace RE
 		bool            doneOnce;        // 22
 		std::uint8_t    unk23;           // 23
 		std::uint32_t   unk24;           // 24
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(ExtraPackage) == 0x28);
 }

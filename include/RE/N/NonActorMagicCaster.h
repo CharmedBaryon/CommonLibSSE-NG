@@ -12,6 +12,7 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_NonActorMagicCaster;
+		inline static constexpr auto VTABLE = VTABLE_NonActorMagicCaster;
 		inline static constexpr auto EXTRADATATYPE = ExtraDataType::kMagicCaster;
 
 		~NonActorMagicCaster() override;  // 00
@@ -30,6 +31,8 @@ namespace RE
 		TESObjectREFR* unk58;       // 58
 		ActorHandle    blameActor;  // 60
 		std::uint32_t  unk64;       // 64
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(NonActorMagicCaster) == 0x68);
 }

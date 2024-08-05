@@ -15,6 +15,7 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_BSMusicManager;
+		inline static constexpr auto VTABLE = VTABLE_BSMusicManager;
 
 		~BSMusicManager() override;  // 00
 
@@ -32,6 +33,8 @@ namespace RE
 		BSIMusicType*           current;     // 28
 		std::uint32_t           unk30;       // 30
 		std::uint32_t           pad34;       // 34
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(BSMusicManager) == 0x38);
 }

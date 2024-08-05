@@ -6,7 +6,7 @@ namespace RE
 {
 	UI* UI::GetSingleton()
 	{
-		REL::Relocation<UI**> singleton{ Offset::UI::Singleton };
+		REL::Relocation<UI**> singleton{ RELOCATION_ID(514178, 400327) };
 		return *singleton;
 	}
 
@@ -81,5 +81,12 @@ namespace RE
 	void UI::ShowMenus(bool a_show)
 	{
 		menuSystemVisible = a_show;
+	}
+
+	void UI::GetTopMostMenu(RE::IMenu** a_result, std::uint32_t a_depthLimit)
+	{
+		using func_t = decltype(&UI::GetTopMostMenu);
+		REL::Relocation<func_t> func{ RELOCATION_ID(79944, 82081) };
+		return func(this, a_result, a_depthLimit);
 	}
 }

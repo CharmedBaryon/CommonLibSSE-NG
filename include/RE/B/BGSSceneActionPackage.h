@@ -11,6 +11,7 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_BGSSceneActionPackage;
+		inline static constexpr auto VTABLE = VTABLE_BGSSceneActionPackage;
 		inline static constexpr auto TYPE = Type::kPackage;
 
 		~BGSSceneActionPackage() override;  // 00
@@ -31,6 +32,8 @@ namespace RE
 		// members
 		std::uint64_t         unk20;     // 20
 		BSTArray<TESPackage*> packages;  // 28 - PNAM
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(BGSSceneActionPackage) == 0x40);
 }

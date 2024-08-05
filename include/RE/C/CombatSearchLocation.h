@@ -12,6 +12,8 @@ namespace RE
 		BGSWorldLocation loc;        // 00
 		AITimeStamp      timestamp;  // 18
 		float            unk20;      // 20
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(CombatSearchLocation) == 0x20);
 }

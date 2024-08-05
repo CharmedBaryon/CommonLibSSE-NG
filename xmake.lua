@@ -46,7 +46,7 @@ option("tests")
 option_end()
 
 -- require packages
-add_requires("spdlog", { configs = { header_only = false, wchar = true, std_format = true } })
+add_requires("directxmath", "directxtk", "spdlog", { configs = { header_only = false, wchar = true, std_format = true } })
 
 if has_config("skyrim_vr") then
     add_requires("rapidcsv")
@@ -62,7 +62,7 @@ target("commonlibsse-ng")
     set_kind("static")
 
     -- add packages
-    add_packages("spdlog", { public = true })
+    add_packages("directxmath", "directxtk", "spdlog", { public = true })
 
     if has_config("skyrim_vr") then
         add_packages("rapidcsv", { public = true })

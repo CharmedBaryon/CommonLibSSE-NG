@@ -11,6 +11,7 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_BSTempEffectWeaponBlood;
+		inline static constexpr auto VTABLE = VTABLE_BSTempEffectWeaponBlood;
 		inline static constexpr auto TYPE = TEMP_EFFECT_TYPE::kWeaponBlood;
 
 		~BSTempEffectWeaponBlood() override;  // 00
@@ -21,13 +22,15 @@ namespace RE
 		static void ClearEffectForWeapon(NiAVObject* a_weapon3D)
 		{
 			using func_t = decltype(&ClearEffectForWeapon);
-			REL::Relocation<func_t> func{ RELOCATION_ID(29303, 30154) };
+			static REL::Relocation<func_t> func{ RELOCATION_ID(29303, 30154) };
 			return func(a_weapon3D);
 		}
 
 		// members;
 		NiPointer<NiAVObject> weapon3D;        // 030
 		float                 alphaThreshold;  // 038
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(BSTempEffectWeaponBlood) == 0x40);
 }

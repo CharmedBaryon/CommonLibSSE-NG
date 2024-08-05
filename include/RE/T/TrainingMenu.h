@@ -28,16 +28,16 @@ namespace RE
 		struct RUNTIME_DATA
 		{
 #define RUNTIME_DATA_CONTENT                                   \
-	Actor*        trainer;          /* 38 - smart ptr */ \
-			ActorValue    skill;            /* 40 */ \
-			std::uint32_t unk44;            /* 44 */ \
-			GFxValue      trainingMenuObj;  /* 48 - MovieClip */ \
-			GFxValue      skillName;        /* 60 - TextField */ \
-			GFxValue      skillMeter;       /* 78 - Components.Meter */ \
-			GFxValue      trainerSkill;     /* 90 - TextField */ \
-			GFxValue      timesTrained;     /* A8 - TextField */ \
-			GFxValue      trainCost;        /* C0 - TextField */ \
-			GFxValue      currentGold;      /* D8 - TextField */
+	Actor*        trainer;         /* 38 - smart ptr */        \
+	ActorValue    skill;           /* 40 */                    \
+	std::uint32_t unk44;           /* 44 */                    \
+	GFxValue      trainingMenuObj; /* 48 - MovieClip */        \
+	GFxValue      skillName;       /* 60 - TextField */        \
+	GFxValue      skillMeter;      /* 78 - Components.Meter */ \
+	GFxValue      trainerSkill;    /* 90 - TextField */        \
+	GFxValue      timesTrained;    /* A8 - TextField */        \
+	GFxValue      trainCost;       /* C0 - TextField */        \
+	GFxValue      currentGold;     /* D8 - TextField */
 
 			RUNTIME_DATA_CONTENT
 		};
@@ -76,13 +76,17 @@ namespace RE
 
 		// members
 #ifndef SKYRIM_CROSS_VR
-		RUNTIME_DATA_CONTENT  // 38, 48
+		RUNTIME_DATA_CONTENT;  // 38, 48
 #endif
+	private:
+		KEEP_FOR_RE()
 	};
-#ifndef ENABLE_SKYRIM_VR
+#if defined(EXCLUSIVE_SKYRIM_FLAT)
 	static_assert(sizeof(TrainingMenu) == 0x0F0);
-#elif !defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE)
+#elif defined(EXCLUSIVE_SKYRIM_VR)
 	static_assert(sizeof(TrainingMenu) == 0x100);
+#else
+	static_assert(sizeof(TrainingMenu) == 0x30);
 #endif
 }
 

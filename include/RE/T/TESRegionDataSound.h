@@ -13,6 +13,7 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_TESRegionDataSound;
+		inline static constexpr auto VTABLE = VTABLE_TESRegionDataSound;
 		inline static constexpr auto TYPE = Type::kSound;
 
 		struct Sound
@@ -48,6 +49,8 @@ namespace RE
 		// members
 		BGSMusicType*    music;   // 10 - RDMO
 		BSTArray<Sound*> sounds;  // 18 - RDSA
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(TESRegionDataSound) == 0x30);
 }

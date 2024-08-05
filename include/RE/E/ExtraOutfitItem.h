@@ -9,7 +9,8 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_ExtraOutfitItem;
-		inline static auto           EXTRADATATYPE = ExtraDataType::kOutfitItem;
+		inline static constexpr auto VTABLE = VTABLE_ExtraOutfitItem;
+		inline static constexpr auto EXTRADATATYPE = ExtraDataType::kOutfitItem;
 
 		~ExtraOutfitItem() override;  // 00
 
@@ -19,6 +20,8 @@ namespace RE
 		// members
 		FormID        id;     // 10 - BGSOutfit
 		std::uint32_t pad14;  // 14
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(ExtraOutfitItem) == 0x18);
 }

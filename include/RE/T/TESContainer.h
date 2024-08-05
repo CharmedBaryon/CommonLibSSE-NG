@@ -33,6 +33,7 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_TESContainer;
+		inline static constexpr auto VTABLE = VTABLE_TESContainer;
 
 		~TESContainer() override;  // 00
 
@@ -67,6 +68,9 @@ namespace RE
 
 	private:
 		void CopyObjectList(const std::vector<ContainerObject*>& a_copiedData);
+
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(TESContainer) == 0x18);
 }

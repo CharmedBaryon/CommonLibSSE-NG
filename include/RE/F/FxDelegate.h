@@ -15,6 +15,7 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_FxDelegate;
+		inline static constexpr auto VTABLE = VTABLE_FxDelegate;
 
 		struct CallbackDefn
 		{
@@ -48,6 +49,8 @@ namespace RE
 
 		// members
 		CallbackHash callbacks;  // 18
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(FxDelegate) == 0x20);
 }

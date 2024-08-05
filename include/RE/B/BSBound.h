@@ -9,7 +9,8 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_BSBound;
-		inline static auto           Ni_RTTI = NiRTTI_BSBound;
+		inline static constexpr auto Ni_RTTI = NiRTTI_BSBound;
+		inline static constexpr auto VTABLE = VTABLE_BSBound;
 
 		~BSBound() override;  // 00
 
@@ -25,6 +26,8 @@ namespace RE
 		// members
 		NiPoint3 center;   // 18
 		NiPoint3 extents;  // 24
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(BSBound) == 0x30);
 }

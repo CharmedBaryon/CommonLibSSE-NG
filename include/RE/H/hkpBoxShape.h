@@ -29,6 +29,8 @@ namespace RE
 		std::uint32_t pad28;        // 28
 		std::uint32_t pad2C;        // 2C
 		hkVector4     halfExtents;  // 30
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(hkpBoxShape) == 0x40);
 }

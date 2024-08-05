@@ -63,6 +63,8 @@ namespace RE
 		// members
 		ReverbParams  data;   // 28 - DATA
 		std::uint16_t pad36;  // 36
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(BGSReverbParameters) == 0x38);
 }

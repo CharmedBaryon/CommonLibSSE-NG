@@ -15,6 +15,7 @@ namespace RE
 		{
 		public:
 			inline static constexpr auto RTTI = RTTI_BSTArrayBase__IAllocatorFunctor;
+			inline static constexpr auto VTABLE = VTABLE_BSTArrayBase__IAllocatorFunctor;
 
 			// add
 			virtual bool Allocate(std::uint32_t a_num, std::uint32_t a_elemSize) = 0;                                                                                                             // 00

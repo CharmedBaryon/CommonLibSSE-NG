@@ -3,6 +3,7 @@
 #include "RE/B/BSTriShape.h"
 #include "RE/N/NiColor.h"
 #include "RE/N/NiSmartPointer.h"
+#include <DirectXMath.h>
 
 #include "REX/W32/D3D.h"
 
@@ -19,7 +20,8 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_BSMultiIndexTriShape;
-		inline static auto           Ni_RTTI = NiRTTI_BSMultiIndexTriShape;
+		inline static constexpr auto Ni_RTTI = NiRTTI_BSMultiIndexTriShape;
+		inline static constexpr auto VTABLE = VTABLE_BSMultiIndexTriShape;
 
 		struct MULTI_INDEX_TRISHAPE_RUNTIME_DATA
 		{
@@ -46,7 +48,7 @@ namespace RE
 		// override (BSGeometry)
 		const NiRTTI* GetRTTI() const override;                           // 02
 		NiObject*     CreateClone(NiCloningProcess& a_cloning) override;  // 17
-#if !defined(ENABLE_SKYRIM_VR) || (!defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_VR))
+#if defined(EXCLUSIVE_SKYRIM_FLAT)
 		// Compatibility between VR and non-VR breaks beyond this point.
 		BSMultiIndexTriShape* AsMultiIndexTriShape() override;  // 35 - { return this; }
 #endif
@@ -66,9 +68,9 @@ namespace RE
 		RUNTIME_DATA_CONTENT  // 160, 1A8
 #endif
 	};
-#ifndef ENABLE_SKYRIM_VR
+#if defined(EXCLUSIVE_SKYRIM_FLAT)
 	static_assert(sizeof(BSMultiIndexTriShape) == 0x1D8);
-#elif !defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE)
+#elif defined(EXCLUSIVE_SKYRIM_VR)
 	static_assert(sizeof(BSMultiIndexTriShape) == 0x220);
 #endif
 }

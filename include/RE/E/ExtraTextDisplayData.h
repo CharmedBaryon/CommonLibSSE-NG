@@ -44,6 +44,8 @@ namespace RE
 		std::uint16_t                                   customNameLength;  // 30 - length w/o temper string, only valid if ownerInstance is kCustomName
 		std::uint16_t                                   pad32;             // 32
 		std::uint32_t                                   pad34;             // 34
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(ExtraTextDisplayData) == 0x38);
 }

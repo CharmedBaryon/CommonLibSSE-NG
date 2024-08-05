@@ -9,49 +9,49 @@ namespace RE
 	MagicTarget* MagicCaster::FindPickTarget(NiPoint3& a_targetLocation, TESObjectCELL** a_targetCell, bhkPickData& a_pickData)
 	{
 		using func_t = decltype(&MagicCaster::FindPickTarget);
-		REL::Relocation<func_t> func{ RELOCATION_ID(33676, 34456) };
+		static REL::Relocation<func_t> func{ RELOCATION_ID(33676, 34456) };
 		return func(this, a_targetLocation, a_targetCell, a_pickData);
 	}
 
 	bool MagicCaster::FindTargets(float a_effectivenessMult, std::uint32_t& a_targetCount, TESBoundObject* a_source, bool a_loadCast, bool a_adjustOnlyHostileEffectiveness)
 	{
 		using func_t = decltype(&MagicCaster::FindTargets);
-		REL::Relocation<func_t> func{ RELOCATION_ID(33632, 34410) };
+		static REL::Relocation<func_t> func{ RELOCATION_ID(33632, 34410) };
 		return func(this, a_effectivenessMult, a_targetCount, a_source, a_loadCast, a_adjustOnlyHostileEffectiveness);
 	}
 
 	void MagicCaster::FinishCast()
 	{
 		using func_t = decltype(&MagicCaster::FinishCast);
-		REL::Relocation<func_t> func{ RELOCATION_ID(33657, 34435) };
+		static REL::Relocation<func_t> func{ RELOCATION_ID(33657, 34435) };
 		return func(this);
 	}
 
 	float MagicCaster::GetCurrentSpellCost()
 	{
 		using func_t = decltype(&MagicCaster::GetCurrentSpellCost);
-		REL::Relocation<func_t> func{ RELOCATION_ID(33426, 34204) };
+		static REL::Relocation<func_t> func{ RELOCATION_ID(33426, 34204) };
 		return func(this);
 	}
 
 	void MagicCaster::InterruptCast(bool a_refund)
 	{
 		using func_t = decltype(&MagicCaster::InterruptCast);
-		REL::Relocation<func_t> func{ RELOCATION_ID(33630, 34408) };
+		static REL::Relocation<func_t> func{ RELOCATION_ID(33630, 34408) };
 		return func(this, a_refund);
 	}
 
 	void MagicCaster::PlayReleaseSound(MagicItem* a_item)
 	{
 		using func_t = decltype(&MagicCaster::PlayReleaseSound);
-		REL::Relocation<func_t> func{ RELOCATION_ID(33675, 34448) };
+		static REL::Relocation<func_t> func{ RELOCATION_ID(33675, 34448) };
 		return func(this, a_item);
 	}
 
 	void MagicCaster::SetCurrentSpell(MagicItem* a_item)
 	{
 		using func_t = decltype(&MagicCaster::SetCurrentSpell);
-		REL::Relocation<func_t> func{ RELOCATION_ID(33644, 34422) };
+		static REL::Relocation<func_t> func{ RELOCATION_ID(33644, 34422) };
 		return func(this, a_item);
 	}
 
@@ -84,7 +84,7 @@ namespace RE
 	void MagicCaster::UpdateImpl(float a_delta)
 	{
 		using func_t = decltype(&MagicCaster::UpdateImpl);
-		REL::Relocation<func_t> func{ RELOCATION_ID(33622, 34400) };
+		static REL::Relocation<func_t> func{ RELOCATION_ID(33622, 34400) };
 		return func(this, a_delta);
 	}
 }

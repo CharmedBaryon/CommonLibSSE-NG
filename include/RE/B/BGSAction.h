@@ -26,6 +26,8 @@ namespace RE
 		// members
 		std::uint32_t index;  // 28
 		std::uint32_t pad2C;  // 2C
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(BGSAction) == 0x30);
 }

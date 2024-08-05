@@ -25,6 +25,8 @@ namespace RE
 		NiMatrix3 rotate;     // 00
 		NiPoint3  translate;  // 24
 		float     scale;      // 30
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(NiTransform) == 0x34);
 }

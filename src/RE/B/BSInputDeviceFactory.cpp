@@ -7,7 +7,7 @@ namespace RE
 	BSIInputDevice* BSInputDeviceFactory::CreateInputDevice(INPUT_DEVICE a_deviceType)
 	{
 		using func_t = decltype(&BSInputDeviceFactory::CreateInputDevice);
-		REL::Relocation<func_t> func{ RELOCATION_ID(67431, 68738) };
+		static REL::Relocation<func_t> func{ RELOCATION_ID(67431, 68738) };
 		return func(a_deviceType);
 	}
 

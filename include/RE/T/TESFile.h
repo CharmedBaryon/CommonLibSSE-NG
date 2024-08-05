@@ -67,6 +67,10 @@ namespace RE
 		bool                                  Seek(std::uint32_t a_offset);
 		bool                                  SeekNextForm(bool a_skipIgnored);
 		bool                                  SeekNextSubrecord();
+		std::uint32_t                         GetFormID(FormID formLower) const
+		{
+			return std::uint32_t(compileIndex) << 24 | (formLower & 0xFFFFFF);
+		}
 
 		// members
 		stl::enumeration<Error, std::uint32_t>      lastError;                        // 000
@@ -134,6 +138,8 @@ namespace RE
 		std::uint32_t                               reservedDecompressionBufferSize;  // 4B8
 		std::uint32_t                               pad4BC;                           // 4BC
 		void*                                       unk4C0;                           // 4C0
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(TESFile) == 0x4C8);
 }

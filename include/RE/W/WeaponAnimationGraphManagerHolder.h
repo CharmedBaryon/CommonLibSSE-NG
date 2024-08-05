@@ -12,6 +12,7 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_WeaponAnimationGraphManagerHolder;
+		inline static constexpr auto VTABLE = VTABLE_WeaponAnimationGraphManagerHolder;
 
 		// override (IAnimationGraphManagerHolder)
 		bool GetAnimationGraphManagerImpl(BSTSmartPointer<BSAnimationGraphManager>& a_out) const override;  // 02 - { a_out = animationGraphManager; return a_out; }
@@ -25,6 +26,8 @@ namespace RE
 		// members
 		std::uint32_t                            pad0C;                  // 0C
 		BSTSmartPointer<BSAnimationGraphManager> animationGraphManager;  // 10
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(WeaponAnimationGraphManagerHolder) == 0x18);
 }

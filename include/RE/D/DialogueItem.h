@@ -34,13 +34,15 @@ namespace RE
 		bool                                         soundLip;          // 39
 		std::uint16_t                                pad3A;             // 3A
 		std::uint32_t                                pad3C;             // 3C
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(DialogueResponse) == 0x40);
 
 	class DialogueItem : public BSIntrusiveRefCounted
 	{
 	public:
-		DialogueItem(TESQuest* a_quest, TESTopic* a_topic, TESTopicInfo* a_topicInfo, Actor* a_speaker)
+		DialogueItem(TESQuest* a_quest, TESTopic* a_topic, TESTopicInfo* a_topicInfo, TESObjectREFR* a_speaker)
 		{
 			Ctor(a_quest, a_topic, a_topicInfo, a_speaker);
 		}
@@ -60,12 +62,13 @@ namespace RE
 		ExtraSayToTopicInfo*                   extraData{ nullptr };        // 40
 
 	private:
-		DialogueItem* Ctor(TESQuest* a_quest, TESTopic* a_topic, TESTopicInfo* a_topicInfo, Actor* a_speaker)
+		DialogueItem* Ctor(TESQuest* a_quest, TESTopic* a_topic, TESTopicInfo* a_topicInfo, TESObjectREFR* a_speaker)
 		{
 			using func_t = decltype(&DialogueItem::Ctor);
-			REL::Relocation<func_t> func{ RELOCATION_ID(34413, 35220) };
+			static REL::Relocation<func_t> func{ RELOCATION_ID(34413, 35220) };
 			return func(this, a_quest, a_topic, a_topicInfo, a_speaker);
 		}
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(DialogueItem) == 0x48);
 }

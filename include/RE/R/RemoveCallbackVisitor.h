@@ -9,6 +9,7 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_RemoveCallbackVisitor;
+		inline static constexpr auto VTABLE = VTABLE_RemoveCallbackVisitor;
 
 		RemoveCallbackVisitor(FxDelegate::CallbackHash* a_hash);
 		~RemoveCallbackVisitor() override = default;  // 00
@@ -18,6 +19,8 @@ namespace RE
 
 		// members
 		FxDelegate::CallbackHash* hash;  // 08
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(RemoveCallbackVisitor) == 0x10);
 }

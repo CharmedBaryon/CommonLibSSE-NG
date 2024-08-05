@@ -13,7 +13,8 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_ExtraAnimationSequencer;
-		inline static auto           EXTRADATATYPE = ExtraDataType::kAnimationSequencer;
+		inline static constexpr auto VTABLE = VTABLE_ExtraAnimationSequencer;
+		inline static constexpr auto EXTRADATATYPE = ExtraDataType::kAnimationSequencer;
 
 		~ExtraAnimationSequencer() override;  // 00
 
@@ -22,6 +23,8 @@ namespace RE
 
 		// members
 		BGSAnimationSequencer* sequencer;  // 10
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(ExtraAnimationSequencer) == 0x18);
 }

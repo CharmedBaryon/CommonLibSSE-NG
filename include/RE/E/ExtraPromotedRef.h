@@ -11,7 +11,8 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_ExtraPromotedRef;
-		inline static auto           EXTRADATATYPE = ExtraDataType::kPromotedRef;
+		inline static constexpr auto VTABLE = VTABLE_ExtraPromotedRef;
+		inline static constexpr auto EXTRADATATYPE = ExtraDataType::kPromotedRef;
 
 		~ExtraPromotedRef() override;  // 00
 
@@ -20,6 +21,8 @@ namespace RE
 
 		// members
 		BSTArray<TESForm*> promotedRefOwners;  // 10
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(ExtraPromotedRef) == 0x28);
 }

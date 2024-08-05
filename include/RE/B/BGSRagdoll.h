@@ -66,6 +66,8 @@ namespace RE
 		std::uint64_t    unk1A0;  // 1A0
 		BGSBodyPartData* unk1A8;  // 1A8
 		TESActorBase*    unk1B0;  // 1B0
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(BGSRagdoll) == 0x1B8);
 }

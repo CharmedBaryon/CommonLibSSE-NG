@@ -9,7 +9,8 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_ExtraTimeLeft;
-		inline static auto           EXTRADATATYPE = ExtraDataType::kTimeLeft;
+		inline static constexpr auto VTABLE = VTABLE_ExtraTimeLeft;
+		inline static constexpr auto EXTRADATATYPE = ExtraDataType::kTimeLeft;
 
 		~ExtraTimeLeft() override;  // 00
 
@@ -20,6 +21,8 @@ namespace RE
 		// members
 		float         time;   // 10
 		std::uint32_t pad14;  // 14
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(ExtraTimeLeft) == 0x18);
 }

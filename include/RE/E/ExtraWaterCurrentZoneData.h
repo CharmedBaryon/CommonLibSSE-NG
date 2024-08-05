@@ -19,7 +19,8 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_ExtraWaterCurrentZoneData;
-		inline static auto           EXTRADATATYPE = ExtraDataType::kWaterCurrentZoneData;
+		inline static constexpr auto VTABLE = VTABLE_ExtraWaterCurrentZoneData;
+		inline static constexpr auto EXTRADATATYPE = ExtraDataType::kWaterCurrentZoneData;
 
 		~ExtraWaterCurrentZoneData() override;  // 00
 
@@ -33,6 +34,8 @@ namespace RE
 		TESObjectCELL*                                  affectedCell;          // 48
 		NiPoint3                                        angularVelocity;       // 50
 		NiPoint3                                        linearVelocity;        // 5C
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(ExtraWaterCurrentZoneData) == 0x68);
 }

@@ -8,6 +8,7 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_IMessageBoxCallback;
+		inline static constexpr auto VTABLE = VTABLE_IMessageBoxCallback;
 
 		enum class Message
 		{
@@ -23,6 +24,8 @@ namespace RE
 
 		// members
 		std::uint32_t unk0C;  // 0C
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(IMessageBoxCallback) == 0x10);
 }

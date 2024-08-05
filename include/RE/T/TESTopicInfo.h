@@ -129,7 +129,7 @@ namespace RE
 		bool BelongsInGroup(FORM* a_form, bool a_allowParentGroups, bool a_currentOnly) override;  // 30
 		void CreateGroupData(FORM* a_form, FORM_GROUP* a_group) override;                          // 31
 
-		DialogueItem GetDialogueData(Actor* a_speaker);
+		DialogueItem GetDialogueData(TESObjectREFR* a_speaker);
 
 		// members
 		TESTopic*                                  parentTopic;    // 20
@@ -141,6 +141,8 @@ namespace RE
 		TOPIC_INFO_DATA                            data;           // 3C - ENAM
 		std::uint32_t                              fileOffset;     // 40
 		std::uint32_t                              pad44;          // 44
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(TESTopicInfo) == 0x48);
 }

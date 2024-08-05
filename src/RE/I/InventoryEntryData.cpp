@@ -98,7 +98,7 @@ namespace RE
 	EnchantmentItem* InventoryEntryData::GetEnchantment() const
 	{
 		using func_t = decltype(&InventoryEntryData::GetEnchantment);
-		REL::Relocation<func_t> func{ RELOCATION_ID(15788, 16026) };
+		static REL::Relocation<func_t> func{ RELOCATION_ID(15788, 16026) };
 		return func(this);
 	}
 
@@ -180,7 +180,7 @@ namespace RE
 	std::int32_t InventoryEntryData::GetValue() const
 	{
 		using func_t = decltype(&InventoryEntryData::GetValue);
-		REL::Relocation<func_t> func{ RELOCATION_ID(15757, 15995) };
+		static REL::Relocation<func_t> func{ RELOCATION_ID(15757, 15995) };
 		return func(this);
 	}
 
@@ -259,14 +259,14 @@ namespace RE
 	void InventoryEntryData::PoisonObject(AlchemyItem* a_alchItem, std::uint32_t a_count)
 	{
 		using func_t = decltype(&InventoryEntryData::PoisonObject);
-		REL::Relocation<func_t> func{ RELOCATION_ID(15786, 16024) };
+		static REL::Relocation<func_t> func{ RELOCATION_ID(15786, 16024) };
 		return func(this, a_alchItem, a_count);
 	}
 
 	bool InventoryEntryData::IsOwnedBy_Impl(Actor* a_testOwner, TESForm* a_itemOwner, bool a_defaultTo)
 	{
 		using func_t = decltype(&InventoryEntryData::IsOwnedBy_Impl);
-		REL::Relocation<func_t> func{ RELOCATION_ID(15782, 16020) };
+		static REL::Relocation<func_t> func{ RELOCATION_ID(15782, 16020) };
 		return func(this, a_testOwner, a_itemOwner, a_defaultTo);
 	}
 }

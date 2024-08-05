@@ -42,6 +42,8 @@ namespace RE
 		float   power;             // 3C
 		float   currentAV;         // 40
 		Effect* effect;            // 48
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(CombatInventoryItemMagic) == 0x50);
 }

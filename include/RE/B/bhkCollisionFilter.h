@@ -10,6 +10,7 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_bhkCollisionFilter;
+		inline static constexpr auto VTABLE = VTABLE_bhkCollisionFilter;
 
 		[[nodiscard]] static bhkCollisionFilter* GetSingleton()
 		{
@@ -39,6 +40,8 @@ namespace RE
 		BSFixedString collisionLayerNames[64];   // 3E0
 		std::uint8_t  unk5E0[256];               // 5E0
 		BSFixedString collisionBoneNames[32];    // 6E0
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(bhkCollisionFilter) == 0x7E0);
 }

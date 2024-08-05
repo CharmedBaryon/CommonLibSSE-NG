@@ -23,6 +23,8 @@ namespace RE
 		std::uint16_t              padC2;                         // C2
 		std::uint32_t              padC4;                         // C4
 		std::uint32_t              padC8;                         // C8
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(bhkPickData) == 0xD0);
 }

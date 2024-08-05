@@ -41,6 +41,8 @@ namespace RE
 
 		// members
 		BSTArray<TESForm*> outfitItems;  // 20 - INAM
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(BGSOutfit) == 0x38);
 }

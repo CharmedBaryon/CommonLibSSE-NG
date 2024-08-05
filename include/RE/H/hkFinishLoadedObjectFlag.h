@@ -6,5 +6,8 @@ namespace RE
 	{
 		// members
 		std::int32_t finishing{ 0 };
+
+	private:
+		KEEP_FOR_RE()
 	};
 }

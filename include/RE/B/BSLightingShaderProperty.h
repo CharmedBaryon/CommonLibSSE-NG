@@ -6,16 +6,26 @@
 
 namespace RE
 {
+	class BSShader;
+	class BSLight;
+
 	class BSLightingShaderProperty : public BSShaderProperty
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_BSLightingShaderProperty;
-		inline static auto           Ni_RTTI = NiRTTI_BSLightingShaderProperty;
+		inline static constexpr auto Ni_RTTI = NiRTTI_BSLightingShaderProperty;
+		inline static constexpr auto VTABLE = VTABLE_BSLightingShaderProperty;
 
 		struct Data
 		{
-			std::uint64_t unk00;  // 00
-			std::uint64_t unk08;  // 08
+			void          Clear();
+			BSRenderPass* EmplacePass(BSShader* a_shader, BSShaderProperty* a_property, BSGeometry* a_geometry,
+				uint32_t a_technique, uint8_t a_numLights = 0, BSLight* a_light0 = nullptr, BSLight* a_light1 = nullptr,
+				BSLight* a_light2 = nullptr, BSLight* a_light3 = nullptr);
+
+			// members
+			RE::BSRenderPass* head;   // 00
+			std::uint64_t     unk08;  // 08
 		};
 		static_assert(sizeof(Data) == 0x10);
 
@@ -50,6 +60,14 @@ namespace RE
 		BSShaderMaterial::Type GetMaterialType() override;                                                                                  // 3E - { return 2; }
 
 		void CopyMembers(BSLightingShaderProperty* a_other);
+		void InvalidateTextures(std::uint32_t a_unk1);
+
+		BSLightingShaderProperty* Ctor()
+		{
+			using func_t = decltype(&BSLightingShaderProperty::Ctor);
+			REL::Relocation<func_t> func{ RELOCATION_ID(99854, 106499) };
+			return func(this);
+		}
 
 		// members
 		Data            unk088[3];          // 088
@@ -74,6 +92,8 @@ namespace RE
 		std::uint8_t    pad159;             // 159
 		std::uint16_t   pad15A;             // 15A
 		std::uint32_t   pad15C;             // 15C
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(BSLightingShaderProperty) == 0x160);
 }

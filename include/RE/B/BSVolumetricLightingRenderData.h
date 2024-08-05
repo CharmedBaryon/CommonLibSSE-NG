@@ -50,6 +50,8 @@ namespace RE
 		Density             density;              // 14
 		PhaseFunction       phaseFunction;        // 24
 		SamplingRepartition samplingRepartition;  // 2C
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(BSVolumetricLightingRenderData) == 0x30);
 }

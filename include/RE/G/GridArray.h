@@ -6,6 +6,7 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_GridArray;
+		inline static constexpr auto VTABLE = VTABLE_GridArray;
 
 		virtual ~GridArray();  // 00
 
@@ -24,6 +25,8 @@ namespace RE
 		std::uint32_t unk0C;   // 0C - 1000
 		std::uint32_t length;  // 10 - takes value from uGridsToLoad
 		std::uint32_t pad14;   // 14
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(GridArray) == 0x18);
 };

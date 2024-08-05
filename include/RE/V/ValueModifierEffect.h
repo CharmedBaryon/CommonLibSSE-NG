@@ -38,6 +38,8 @@ namespace RE
 		// members
 		ActorValue actorValue;  // 90
 		float      value;       // 94
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(ValueModifierEffect) == 0x98);
 }

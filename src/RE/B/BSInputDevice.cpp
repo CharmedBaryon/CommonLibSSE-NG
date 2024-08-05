@@ -26,7 +26,7 @@ namespace RE
 	bool BSInputDevice::LoadControlsDefinitionFile(const char* a_fileName)
 	{
 		using func_t = decltype(&BSInputDevice::LoadControlsDefinitionFile);
-		REL::Relocation<func_t> func{ RELOCATION_ID(67438, 68745) };
+		static REL::Relocation<func_t> func{ RELOCATION_ID(67438, 68745) };
 		return func(this, a_fileName);
 	}
 
@@ -39,7 +39,7 @@ namespace RE
 	void BSInputDevice::SetButtonState(std::uint32_t a_buttonId, float a_timeSinceLastPoll, bool a_buttonWasPressed, bool a_buttonIsPressed)
 	{
 		using func_t = decltype(&BSInputDevice::SetButtonState);
-		REL::Relocation<func_t> func{ RELOCATION_ID(67441, 68748) };
+		static REL::Relocation<func_t> func{ RELOCATION_ID(67441, 68748) };
 		return func(this, a_buttonId, a_timeSinceLastPoll, a_buttonWasPressed, a_buttonIsPressed);
 	}
 }

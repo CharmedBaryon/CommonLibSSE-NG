@@ -19,6 +19,8 @@ namespace RE
 		BSIMusicType*                                      musicType;  // 00
 		stl::enumeration<MUSIC_MESSAGE_TYPE, std::int32_t> msgType;    // 08
 		std::uint32_t                                      pad0C;      // 0C
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(BSMusicEvent) == 0x10);
 }

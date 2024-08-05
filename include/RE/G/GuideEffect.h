@@ -25,6 +25,8 @@ namespace RE
 		TESQuest*                 quest;        // 90
 		TESQuestTarget*           questTarget;  // 98
 		BSTArray<ObjectRefHandle> hazards;      // A0
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(GuideEffect) == 0xB8);
 }

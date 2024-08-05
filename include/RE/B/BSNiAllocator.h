@@ -8,6 +8,7 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_BSNiAllocator;
+		inline static constexpr auto VTABLE = VTABLE_BSNiAllocator;
 
 		~BSNiAllocator() override;  // 00
 
@@ -21,6 +22,8 @@ namespace RE
 		void  Initialize() override;                                                                                                                                                                                                                                 // 07 - { return; }
 		void  Shutdown() override;                                                                                                                                                                                                                                   // 08 - { return; }
 		bool  VerifyAddress(const void* a_memory) override;                                                                                                                                                                                                          // 09 - { return true; }
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(BSNiAllocator) == 0x8);
 }

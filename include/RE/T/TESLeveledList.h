@@ -40,6 +40,7 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_TESLeveledList;
+		inline static constexpr auto VTABLE = VTABLE_TESLeveledList;
 
 		enum Flag : std::uint8_t  // LVLF
 		{
@@ -74,6 +75,8 @@ namespace RE
 		std::uint32_t               pad14;         // 14
 		void*                       unk18;         // 18
 		TESGlobal*                  chanceGlobal;  // 20 - LVLG
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(TESLeveledList) == 0x28);
 }

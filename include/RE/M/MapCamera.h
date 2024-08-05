@@ -1,7 +1,7 @@
 #pragma once
 
-#include "RE/B/BSTSmartPointer.h"
-#include "RE/T/TESCamera.h"
+#	include "RE/B/BSTSmartPointer.h"
+#	include "RE/T/TESCamera.h"
 
 namespace RE
 {
@@ -75,6 +75,7 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_MapCamera;
+		inline static constexpr auto VTABLE = VTABLE_MapCamera;
 
 		~MapCamera() override;  // 00
 
@@ -99,6 +100,8 @@ namespace RE
 		std::uint8_t                                 pad89;       // 89
 		std::uint16_t                                pad8A;       // 8A
 		std::uint32_t                                pad8C;       // 8C
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(MapCamera) == 0x90);
 }

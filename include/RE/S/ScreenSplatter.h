@@ -22,7 +22,7 @@ namespace RE
 		void Clear()
 		{
 			using func_t = decltype(&ScreenSplatter::Clear);
-			REL::Relocation<func_t> func{ RELOCATION_ID(16175, 16407) };
+			static REL::Relocation<func_t> func{ RELOCATION_ID(16175, 16407) };
 			return func(this);
 		}
 
@@ -39,6 +39,8 @@ namespace RE
 		std::uint16_t              pad22;                                            // 22
 		std::uint32_t              uiCount;                                          // 24
 		NiPointer<NiSourceTexture> textures[BSBloodSplatterShaderProperty::kTotal];  // 28
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(ScreenSplatter) == 0x40);
 }

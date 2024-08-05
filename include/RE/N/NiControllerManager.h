@@ -17,7 +17,8 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_NiControllerManager;
-		inline static auto           Ni_RTTI = NiRTTI_NiControllerManager;
+		inline static constexpr auto Ni_RTTI = NiRTTI_NiControllerManager;
+		inline static constexpr auto VTABLE = VTABLE_NiControllerManager;
 
 		~NiControllerManager() override;  // 00
 
@@ -54,6 +55,8 @@ namespace RE
 		std::uint32_t                                    padAC;            // AC
 		NiTObjectSet<NiPointer<NiControllerSequence>>    tempBlendSeqs;    // B0
 		NiPointer<NiAVObjectPalette>                     objectPalette;    // C0
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(NiControllerManager) == 0xC8);
 }

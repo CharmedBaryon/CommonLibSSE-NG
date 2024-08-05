@@ -19,7 +19,8 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_ExtraStartingPosition;
-		inline static auto           EXTRADATATYPE = ExtraDataType::kStartingPosition;
+		inline static constexpr auto VTABLE = VTABLE_ExtraStartingPosition;
+		inline static constexpr auto EXTRADATATYPE = ExtraDataType::kStartingPosition;
 
 		~ExtraStartingPosition() override;  // 00
 
@@ -30,6 +31,8 @@ namespace RE
 		// members
 		FILE_POS_ROT startPosition;  // 10
 		BGSLocation* location;       // 28
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(ExtraStartingPosition) == 0x30);
 }

@@ -24,6 +24,8 @@ namespace RE
 		std::int16_t  count;  // 10
 		std::uint16_t pad12;  // 12
 		std::int32_t  pad14;  // 14
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(ExtraCount) == 0x18);
 }

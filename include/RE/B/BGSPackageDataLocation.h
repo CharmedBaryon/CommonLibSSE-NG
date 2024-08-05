@@ -13,6 +13,7 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_BGSPackageDataLocation;
+		inline static constexpr auto VTABLE = VTABLE_BGSPackageDataLocation;
 
 		~BGSPackageDataLocation() override;  // 00
 
@@ -23,6 +24,8 @@ namespace RE
 		void Unk_09(void) override;                            // 09 - { return; }
 		bool GetDataAsString(BSString* a_dst) const override;  // 0A
 		void Unk_0C(void) override;                            // 0C - { return pointer->type == PackageLocation::Type::kNearPackageStartLocation; }
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(BGSPackageDataLocation) == 0x20);
 }

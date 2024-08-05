@@ -25,6 +25,7 @@ namespace RE
 		{
 		public:
 			inline static constexpr auto RTTI = RTTI_BSResource__LooseFileLocation;
+			inline static constexpr auto VTABLE = VTABLE_BSResource__LooseFileLocation;
 
 			~LooseFileLocation() override;  // 00
 
@@ -37,6 +38,26 @@ namespace RE
 			ErrorCode                   DoDelete(const char* a_path) override;                                                                                          // 08
 			const char*                 DoGetName() const override;                                                                                                     // 09 - { return directory.c_str(); }
 			[[nodiscard]] std::uint32_t DoGetMinimumAsyncPacketSize() const override;                                                                                   // 0B - { return minimumAsyncPacketSize; }
+
+			static LooseFileLocation* Create(const char* a_prefix)
+			{
+				return Create(a_prefix, 512, true);
+			}
+
+			static LooseFileLocation* Create(const char* a_prefix, std::uint32_t a_minimumAsyncPacketSize, bool a_asyncSupported)
+			{
+				auto memory = malloc<LooseFileLocation>();
+				std::memset(memory, 0, sizeof(LooseFileLocation));
+
+				REL::Relocation<std::uintptr_t> vtbl{ RELOCATION_ID(232012, 188191) };
+				((std::uintptr_t*)memory)[0] = vtbl.address();
+
+				memory->prefix = a_prefix;
+				memory->minimumAsyncPacketSize = a_minimumAsyncPacketSize;
+				memory->asyncSupported = a_asyncSupported;
+
+				return memory;
+			}
 
 			// members
 			BSFixedString prefix;                  // 10

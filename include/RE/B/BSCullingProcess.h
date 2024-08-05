@@ -8,16 +8,45 @@
 namespace RE
 {
 	class BSCompoundFrustum;
+	class BSCullingProcess;
 	class BSMultiBound;
 	class BSOcclusionPlane;
-	class NiAVObject;
+	class BSPortalGraphEntry;
+	class BSShaderAccumulator;
 	class NiBound;
+	class NiFrustumPlanes;
+
+	struct CullJobDescriptor
+	{
+		NiPointer<BSShaderAccumulator>   shaderAccumulator;           // 00
+		NiPointer<BSShaderAccumulator>   shaderAccumulatorSecondary;  // 08
+		NiPointer<NiCamera>              camera;                      // 10
+		BSCompoundFrustum*               compoundFrustum;             // 18
+		NiFrustum*                       frustum;                     // 20
+		BSPortalGraphEntry*              portalGraphEntry;            // 28
+		BSCullingProcess*                cullingProcess;              // 30
+		NiFrustumPlanes*                 customCullPlanes;            // 38
+		NiAVObject*                      scene;                       // 40
+		BSTArray<NiPointer<NiAVObject>>* cullingObjects;              // 48
+		uint32_t                         cullMode;                    // 50
+		float                            lightRadius;                 // 54
+		uint32_t                         unk58;                       // 58
+		bool                             isParabolic;                 // 5C
+		bool                             isDirectionalLight;          // 5D
+		bool                             ignorePreprocess;            // 5E
+		bool                             doCustomCullPlanes;          // 5F
+		bool                             cameraRelatedUpdates;        // 60
+		bool                             unk61;                       // 61
+		bool                             updateAccumulateFlag;        // 62
+	};
+	static_assert(sizeof(CullJobDescriptor) == 0x68);
 
 	class BSCullingProcess : public NiCullingProcess
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_BSCullingProcess;
-		inline static auto           Ni_RTTI = NiRTTI_BSCullingProcess;
+		inline static constexpr auto Ni_RTTI = NiRTTI_BSCullingProcess;
+		inline static constexpr auto VTABLE = VTABLE_BSCullingProcess;
 
 		enum class BSCPCullingType
 		{
@@ -59,7 +88,7 @@ namespace RE
 		std::uint64_t                                     unk30178;           // 30178
 		std::uint64_t                                     unk30180;           // 30180
 		std::uint64_t                                     unk30188;           // 30188
-		void*                                             unk30190;           // 30190
+		BSPortalGraphEntry*                               portalGraphEntry;   // 30190
 		std::int32_t                                      cullMode;           // 30198
 		BSCompoundFrustum*                                compoundFrustum;    // 301A0
 		std::uint64_t                                     unk301A8;           // 301A8
@@ -73,6 +102,8 @@ namespace RE
 		std::uint16_t                                     unk301D6;           // 301D6
 		BSTArray<void*>                                   unk301D8;           // 301D8
 		std::uint64_t                                     unk301F0;           // 301F0
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(BSCullingProcess) == 0x301F8);
 }

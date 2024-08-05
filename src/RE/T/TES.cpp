@@ -11,7 +11,7 @@ namespace RE
 {
 	TES* TES::GetSingleton()
 	{
-		REL::Relocation<TES**> singleton{ Offset::TES::Singleton };
+		REL::Relocation<TES**> singleton{ RELOCATION_ID(516923, 403450) };
 		return *singleton;
 	}
 
@@ -38,10 +38,12 @@ namespace RE
 				} while (x < gridLength);
 			}
 		}
-		if (const auto skyCell = worldSpace ? worldSpace->GetSkyCell() : nullptr; skyCell) {
-			skyCell->ForEachReference([&](TESObjectREFR* a_ref) {
-				return a_callback(a_ref);
-			});
+		if (const auto ws = GetRuntimeData2().worldSpace) {
+			if (const auto skyCell = ws ? ws->GetSkyCell() : nullptr; skyCell) {
+				skyCell->ForEachReference([&](TESObjectREFR* a_ref) {
+					return a_callback(a_ref);
+				});
+			}
 		}
 	}
 
@@ -81,11 +83,12 @@ namespace RE
 					} while (x < gridLength);
 				}
 			}
-
-			if (const auto skyCell = worldSpace ? worldSpace->GetSkyCell() : nullptr; skyCell) {
-				skyCell->ForEachReferenceInRange(originPos, a_radius, [&](TESObjectREFR* a_ref) {
-					return a_callback(a_ref);
-				});
+			if (const auto ws = GetRuntimeData2().worldSpace) {
+				if (const auto skyCell = ws ? ws->GetSkyCell() : nullptr; skyCell) {
+					skyCell->ForEachReferenceInRange(originPos, a_radius, [&](TESObjectREFR* a_ref) {
+						return a_callback(a_ref);
+					});
+				}
 			}
 		} else {
 			ForEachReference([&](TESObjectREFR* a_ref) {
@@ -97,49 +100,49 @@ namespace RE
 	TESObjectCELL* TES::GetCell(const NiPoint3& a_position) const
 	{
 		using func_t = decltype(&TES::GetCell);
-		REL::Relocation<func_t> func{ RELOCATION_ID(13177, 13322) };
+		static REL::Relocation<func_t> func{ RELOCATION_ID(13177, 13322) };
 		return func(this, a_position);
 	}
 
 	MATERIAL_ID TES::GetLandMaterialType(const NiPoint3& a_position) const
 	{
 		using func_t = decltype(&TES::GetLandMaterialType);
-		REL::Relocation<func_t> func{ RELOCATION_ID(13203, 13349) };
+		static REL::Relocation<func_t> func{ RELOCATION_ID(13203, 13349) };
 		return func(this, a_position);
 	}
 
 	bool TES::GetLandHeight(const NiPoint3& a_positionIn, float& a_heightOut)
 	{
 		using func_t = decltype(&TES::GetLandHeight);
-		REL::Relocation<func_t> func{ RELOCATION_ID(13198, 13344) };
+		static REL::Relocation<func_t> func{ RELOCATION_ID(13198, 13344) };
 		return func(this, a_positionIn, a_heightOut);
 	}
 
 	TESLandTexture* TES::GetLandTexture(const NiPoint3& a_position) const
 	{
 		using func_t = decltype(&TES::GetLandTexture);
-		REL::Relocation<func_t> func{ RELOCATION_ID(13202, 13348) };
+		static REL::Relocation<func_t> func{ RELOCATION_ID(13202, 13348) };
 		return func(this, a_position);
 	}
 
 	float TES::GetWaterHeight(const NiPoint3& a_pos, TESObjectCELL* a_cell) const
 	{
 		using func_t = decltype(&TES::GetWaterHeight);
-		REL::Relocation<func_t> func{ RELOCATION_ID(13212, 13358) };
+		static REL::Relocation<func_t> func{ RELOCATION_ID(13212, 13358) };
 		return func(this, a_pos, a_cell);
 	}
 
 	NiAVObject* TES::Pick(bhkPickData& a_pickData)
 	{
 		using func_t = decltype(&TES::Pick);
-		REL::Relocation<func_t> func{ RELOCATION_ID(13221, 13371) };
+		static REL::Relocation<func_t> func{ RELOCATION_ID(13221, 13371) };
 		return func(this, a_pickData);
 	}
 
 	void TES::PurgeBufferedCells()
 	{
 		using func_t = decltype(&TES::PurgeBufferedCells);
-		REL::Relocation<func_t> func{ RELOCATION_ID(13159, 13299) };
+		static REL::Relocation<func_t> func{ RELOCATION_ID(13159, 13299) };
 		return func(this);
 	}
 }

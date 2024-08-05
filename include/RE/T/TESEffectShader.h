@@ -210,6 +210,8 @@ namespace RE
 		TESTexture       particlePaletteTexture;  // 200 - NAM9
 		void*            unk210;                  // 210 - smart ptr
 		void*            unk218;                  // 218 - smart ptr
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(TESEffectShader) == 0x220);
 }

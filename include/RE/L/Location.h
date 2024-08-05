@@ -17,6 +17,7 @@ namespace RE
 		{
 		public:
 			inline static constexpr auto RTTI = RTTI_BSResource__Location;
+			inline static constexpr auto VTABLE = VTABLE_BSResource__Location;
 
 			Location();
 			virtual ~Location();  // 00

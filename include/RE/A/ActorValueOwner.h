@@ -8,6 +8,7 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_ActorValueOwner;
+		inline static constexpr auto VTABLE = VTABLE_ActorValueOwner;
 
 		virtual ~ActorValueOwner();  // 00
 
@@ -23,6 +24,9 @@ namespace RE
 
 		[[nodiscard]] float GetArmorRatingSkillMultiplier(float a_skillLevel) const;
 		[[nodiscard]] float GetClampedActorValue(ActorValue a_akValue) const;
+
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(ActorValueOwner) == 0x8);
 }

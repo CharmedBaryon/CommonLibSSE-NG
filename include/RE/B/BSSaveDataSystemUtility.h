@@ -12,11 +12,13 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_BSSaveDataSystemUtility;
+		inline static constexpr auto VTABLE = VTABLE_BSSaveDataSystemUtility;
 
 		class Entry
 		{
 		public:
 			inline static constexpr auto RTTI = RTTI_BSSaveDataSystemUtility__Entry;
+			inline static constexpr auto VTABLE = VTABLE_BSSaveDataSystemUtility__Entry;
 
 			virtual void Unk_00(void);  // 00
 
@@ -100,6 +102,8 @@ namespace RE
 		std::uint64_t unk210;       // 210
 		std::uint64_t unk218;       // 218
 		std::uint64_t unk220;       // 220
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(BSSaveDataSystemUtility) == 0x228);
 }

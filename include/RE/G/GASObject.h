@@ -48,6 +48,8 @@ namespace RE
 		std::uint64_t unk50;  // 50
 		std::uint64_t unk58;  // 58
 		std::uint64_t unk60;  // 60
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(GASObject) == 0x68);
 }

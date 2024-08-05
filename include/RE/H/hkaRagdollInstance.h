@@ -20,6 +20,8 @@ namespace RE
 		hkArray<hkpConstraintInstance*> constraints;         // 20
 		hkArray<int>                    boneToRigidBodyMap;  // 30
 		hkRefPtr<const hkaSkeleton>     skeleton;            // 40
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(hkaRagdollInstance) == 0x48);
 }

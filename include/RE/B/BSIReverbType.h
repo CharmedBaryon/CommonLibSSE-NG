@@ -6,6 +6,7 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_BSIReverbType;
+		inline static constexpr auto VTABLE = VTABLE_BSIReverbType;
 
 		// add
 		[[nodiscard]] virtual std::int32_t DoGetRoomLevel() const = 0;        // 00
@@ -19,6 +20,8 @@ namespace RE
 		[[nodiscard]] virtual float        DoGetDiffusion() const = 0;        // 08
 		[[nodiscard]] virtual float        DoGetDensity() const = 0;          // 09
 		[[nodiscard]] virtual float        DoGetHFReference() const = 0;      // 0A
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(BSIReverbType) == 0x8);
 }

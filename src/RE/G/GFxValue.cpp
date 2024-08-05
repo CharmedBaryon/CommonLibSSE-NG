@@ -273,168 +273,168 @@ namespace RE
 	void GFxValue::ObjectInterface::ObjectAddRef(GFxValue* a_val, void* a_obj)
 	{
 		using func_t = decltype(&GFxValue::ObjectInterface::ObjectAddRef);
-		REL::Relocation<func_t> func{ Offset::GFxValue::ObjectInterface::ObjectAddRef };
+		static REL::Relocation<func_t> func{ RELOCATION_ID(80244, 82269) };
 		return func(this, a_val, a_obj);
 	}
 
 	void GFxValue::ObjectInterface::ObjectRelease(GFxValue* a_val, void* a_obj)
 	{
 		using func_t = decltype(&GFxValue::ObjectInterface::ObjectRelease);
-		REL::Relocation<func_t> func{ Offset::GFxValue::ObjectInterface::ObjectRelease };
+		static REL::Relocation<func_t> func{ RELOCATION_ID(80245, 82270) };
 		return func(this, a_val, a_obj);
 	}
 
 	bool GFxValue::ObjectInterface::HasMember(void* a_data, const char* a_name, bool a_isDObj) const
 	{
 		using func_t = decltype(&GFxValue::ObjectInterface::HasMember);
-		REL::Relocation<func_t> func{ Offset::GFxValue::ObjectInterface::HasMember };
+		static REL::Relocation<func_t> func{ RELOCATION_ID(80231, 82254) };
 		return func(this, a_data, a_name, a_isDObj);
 	}
 
 	bool GFxValue::ObjectInterface::GetMember(void* a_data, const char* a_name, GFxValue* a_val, bool a_isDObj) const
 	{
 		using func_t = decltype(&GFxValue::ObjectInterface::GetMember);
-		REL::Relocation<func_t> func{ Offset::GFxValue::ObjectInterface::GetMember };
+		static REL::Relocation<func_t> func{ RELOCATION_ID(80222, 82245) };
 		return func(this, a_data, a_name, a_val, a_isDObj);
 	}
 
 	bool GFxValue::ObjectInterface::SetMember(void* a_data, const char* a_name, const GFxValue& a_value, bool a_isDObj)
 	{
 		using func_t = decltype(&GFxValue::ObjectInterface::SetMember);
-		REL::Relocation<func_t> func{ Offset::GFxValue::ObjectInterface::SetMember };
+		static REL::Relocation<func_t> func{ RELOCATION_ID(80268, 82292) };
 		return func(this, a_data, a_name, a_value, a_isDObj);
 	}
 
 	bool GFxValue::ObjectInterface::Invoke(void* a_data, GFxValue* a_result, const char* a_name, const GFxValue* a_args, UPInt a_numArgs, bool isDObj)
 	{
 		using func_t = decltype(&GFxValue::ObjectInterface::Invoke);
-		REL::Relocation<func_t> func{ Offset::GFxValue::ObjectInterface::Invoke };
+		static REL::Relocation<func_t> func{ RELOCATION_ID(80233, 82256) };
 		return func(this, a_data, a_result, a_name, a_args, a_numArgs, isDObj);
 	}
 
 	bool GFxValue::ObjectInterface::DeleteMember(void* a_data, const char* a_name, bool a_isDObj)
 	{
 		using func_t = decltype(&GFxValue::ObjectInterface::DeleteMember);
-		REL::Relocation<func_t> func{ Offset::GFxValue::ObjectInterface::DeleteMember };
+		static REL::Relocation<func_t> func{ RELOCATION_ID(80207, 82230) };
 		return func(this, a_data, a_name, a_isDObj);
 	}
 
 	void GFxValue::ObjectInterface::VisitMembers(void* a_data, ObjVisitor* a_visitor, bool a_isDObj) const
 	{
 		using func_t = decltype(&GFxValue::ObjectInterface::VisitMembers);
-		REL::Relocation<func_t> func{ Offset::GFxValue::ObjectInterface::VisitMembers };
+		static REL::Relocation<func_t> func{ RELOCATION_ID(80279, 82302) };
 		return func(this, a_data, a_visitor, a_isDObj);
 	}
 
 	std::uint32_t GFxValue::ObjectInterface::GetArraySize(void* a_data) const
 	{
 		using func_t = decltype(&GFxValue::ObjectInterface::GetArraySize);
-		REL::Relocation<func_t> func{ Offset::GFxValue::ObjectInterface::GetArraySize };
+		static REL::Relocation<func_t> func{ RELOCATION_ID(80214, 82237) };
 		return func(this, a_data);
 	}
 
 	bool GFxValue::ObjectInterface::SetArraySize(void* a_data, std::uint32_t a_size)
 	{
 		using func_t = decltype(&GFxValue::ObjectInterface::SetArraySize);
-		REL::Relocation<func_t> func{ Offset::GFxValue::ObjectInterface::SetArraySize };
+		static REL::Relocation<func_t> func{ RELOCATION_ID(80261, 82285) };
 		return func(this, a_data, a_size);
 	}
 
 	bool GFxValue::ObjectInterface::GetElement(void* a_data, std::uint32_t a_idx, GFxValue* a_val) const
 	{
 		using func_t = decltype(&GFxValue::ObjectInterface::GetElement);
-		REL::Relocation<func_t> func{ Offset::GFxValue::ObjectInterface::GetElement };
+		static REL::Relocation<func_t> func{ RELOCATION_ID(80218, 82241) };
 		return func(this, a_data, a_idx, a_val);
 	}
 
 	bool GFxValue::ObjectInterface::SetElement(void* a_data, std::uint32_t a_idx, const GFxValue& a_val)
 	{
 		using func_t = decltype(&GFxValue::ObjectInterface::SetElement);
-		REL::Relocation<func_t> func{ Offset::GFxValue::ObjectInterface::SetElement };
+		static REL::Relocation<func_t> func{ RELOCATION_ID(80265, 82289) };
 		return func(this, a_data, a_idx, a_val);
 	}
 
 	bool GFxValue::ObjectInterface::PushBack(void* a_data, const GFxValue& a_value)
 	{
 		using func_t = decltype(&GFxValue::ObjectInterface::PushBack);
-		REL::Relocation<func_t> func{ Offset::GFxValue::ObjectInterface::PushBack };
+		static REL::Relocation<func_t> func{ RELOCATION_ID(80248, 82273) };
 		return func(this, a_data, a_value);
 	}
 
 	bool GFxValue::ObjectInterface::RemoveElements(void* a_data, std::uint32_t a_idx, std::int32_t a_count)
 	{
 		using func_t = decltype(&GFxValue::ObjectInterface::RemoveElements);
-		REL::Relocation<func_t> func{ Offset::GFxValue::ObjectInterface::RemoveElements };
+		static REL::Relocation<func_t> func{ RELOCATION_ID(80252, 82280) };
 		return func(this, a_data, a_idx, a_count);
 	}
 
 	bool GFxValue::ObjectInterface::GetDisplayInfo(void* a_data, DisplayInfo* a_info) const
 	{
 		using func_t = decltype(&GFxValue::ObjectInterface::GetDisplayInfo);
-		REL::Relocation<func_t> func{ Offset::GFxValue::ObjectInterface::GetDisplayInfo };
+		static REL::Relocation<func_t> func{ RELOCATION_ID(80216, 82239) };
 		return func(this, a_data, a_info);
 	}
 
 	bool GFxValue::ObjectInterface::SetDisplayInfo(void* a_data, const DisplayInfo& a_info)
 	{
 		using func_t = decltype(&GFxValue::ObjectInterface::SetDisplayInfo);
-		REL::Relocation<func_t> func{ Offset::GFxValue::ObjectInterface::SetDisplayInfo };
+		static REL::Relocation<func_t> func{ RELOCATION_ID(80263, 82287) };
 		return func(this, a_data, a_info);
 	}
 
 	bool GFxValue::ObjectInterface::GetDisplayMatrix(void* a_data, GMatrix2D* a_mat) const
 	{
 		using func_t = decltype(&GFxValue::ObjectInterface::GetDisplayMatrix);
-		REL::Relocation<func_t> func{ Offset::GFxValue::ObjectInterface::GetDisplayMatrix };
+		static REL::Relocation<func_t> func{ RELOCATION_ID(80217, 82240) };
 		return func(this, a_data, a_mat);
 	}
 
 	bool GFxValue::ObjectInterface::SetDisplayMatrix(void* a_data, const GMatrix2D& a_mat)
 	{
 		using func_t = decltype(&GFxValue::ObjectInterface::SetDisplayMatrix);
-		REL::Relocation<func_t> func{ Offset::GFxValue::ObjectInterface::SetDisplayMatrix };
+		static REL::Relocation<func_t> func{ RELOCATION_ID(80264, 82288) };
 		return func(this, a_data, a_mat);
 	}
 
 	bool GFxValue::ObjectInterface::GetCxform(void* a_data, GRenderer::Cxform* a_cx) const
 	{
 		using func_t = decltype(&GFxValue::ObjectInterface::GetCxform);
-		REL::Relocation<func_t> func{ Offset::GFxValue::ObjectInterface::GetCxform };
+		static REL::Relocation<func_t> func{ RELOCATION_ID(80215, 82238) };
 		return func(this, a_data, a_cx);
 	}
 
 	bool GFxValue::ObjectInterface::SetCxform(void* a_data, const GRenderer::Cxform& a_cx)
 	{
 		using func_t = decltype(&GFxValue::ObjectInterface::SetCxform);
-		REL::Relocation<func_t> func{ Offset::GFxValue::ObjectInterface::SetCxform };
+		static REL::Relocation<func_t> func{ RELOCATION_ID(80262, 82286) };
 		return func(this, a_data, a_cx);
 	}
 
 	bool GFxValue::ObjectInterface::SetText(void* a_data, const char* a_text, bool a_isHTML)
 	{
 		using func_t = decltype(&GFxValue::ObjectInterface::SetText);
-		REL::Relocation<func_t> func{ Offset::GFxValue::ObjectInterface::SetText };
+		static REL::Relocation<func_t> func{ RELOCATION_ID(80270, 82293) };
 		return func(this, a_data, a_text, a_isHTML);
 	}
 
 	bool GFxValue::ObjectInterface::AttachMovie(void* a_data, GFxValue* a_movieClip, const char* a_symbolName, const char* a_instanceName, std::int32_t a_depth, const GFxValue* a_initObj)
 	{
 		using func_t = decltype(&GFxValue::ObjectInterface::AttachMovie);
-		REL::Relocation<func_t> func{ Offset::GFxValue::ObjectInterface::AttachMovie };
+		static REL::Relocation<func_t> func{ RELOCATION_ID(80197, 82219) };
 		return func(this, a_data, a_movieClip, a_symbolName, a_instanceName, a_depth, a_initObj);
 	}
 
 	bool GFxValue::ObjectInterface::CreateEmptyMovieClip(void* a_data, GFxValue* a_movieClip, const char* a_instanceName, std::int32_t a_depth)
 	{
 		using func_t = decltype(&GFxValue::ObjectInterface::CreateEmptyMovieClip);
-		REL::Relocation<func_t> func{ RELOCATION_ID(80201, 82224) };
+		static REL::Relocation<func_t> func{ RELOCATION_ID(80201, 82224) };
 		return func(this, a_data, a_movieClip, a_instanceName, a_depth);
 	}
 
 	bool GFxValue::ObjectInterface::GotoAndPlay(void* a_data, const char* a_frame, bool a_stop)
 	{
 		using func_t = decltype(&GFxValue::ObjectInterface::GotoAndPlay);
-		REL::Relocation<func_t> func{ Offset::GFxValue::ObjectInterface::GotoAndPlay };
+		static REL::Relocation<func_t> func{ RELOCATION_ID(80230, 82253) };
 		return func(this, a_data, a_frame, a_stop);
 	}
 

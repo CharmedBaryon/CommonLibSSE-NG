@@ -12,6 +12,7 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_FxDelegateHandler;
+		inline static constexpr auto VTABLE = VTABLE_FxDelegateHandler;
 
 		using CallbackFn = void(const FxDelegateArgs& a_params);
 
@@ -19,6 +20,7 @@ namespace RE
 		{
 		public:
 			inline static constexpr auto RTTI = RTTI_FxDelegateHandler__CallbackProcessor;
+			inline static constexpr auto VTABLE = VTABLE_FxDelegateHandler__CallbackProcessor;
 
 			virtual ~CallbackProcessor() = default;  // 00
 
@@ -31,6 +33,8 @@ namespace RE
 
 		// add
 		virtual void Accept(CallbackProcessor* a_cbReg) = 0;  // 01
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(FxDelegateHandler) == 0x10);
 }

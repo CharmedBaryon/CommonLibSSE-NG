@@ -9,7 +9,8 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_BSMultiBoundAABB;
-		inline static auto           Ni_RTTI = NiRTTI_BSMultiBoundAABB;
+		inline static constexpr auto Ni_RTTI = NiRTTI_BSMultiBoundAABB;
+		inline static constexpr auto VTABLE = VTABLE_BSMultiBoundAABB;
 
 		~BSMultiBoundAABB() override;  // 00
 
@@ -39,6 +40,8 @@ namespace RE
 		NiPoint3      size;    // 2C
 		std::uint32_t pad38;   // 38
 		std::uint32_t pad3C;   // 3C
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(BSMultiBoundAABB) == 0x40);
 }

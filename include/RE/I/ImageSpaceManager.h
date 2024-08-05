@@ -177,63 +177,166 @@ namespace RE
 			Total = 159
 		};
 
+		struct UNK_BSImagespaceShaderISTemporalAA
+		{
+			BSImagespaceShaderISTemporalAA* shader;                                // 00
+			BSImagespaceShader*             BSImagespaceShaderISTemporalAA_UI;     // 08
+			BSImagespaceShader*             BSImagespaceShaderISTemporalAA_Water;  // 10
+			bool                            taaEnabled;                            // 18
+		};
+
+		struct RUNTIME_DATA
+		{
+#define RUNTIME_DATA_CONTENT                                                                                                                                                                     \
+	std::uint8_t        unk58;                                                           /* 058, VR 68 */                                                                                        \
+	std::uint32_t       unk5C;                                                           /* 05C, VR 68 */                                                                                        \
+	std::uint32_t       unk60;                                                           /* 060, VR 6C */                                                                                        \
+	RENDER_TARGET       renderTarget;                                                    /* 064, VR 70 */                                                                                        \
+	std::uint32_t       unk68;                                                           /* 068, VR 74 */                                                                                        \
+	std::uint32_t       unk6C;                                                           /* 06C, VR 78 */                                                                                        \
+	std::uint32_t       unk70;                                                           /* 070, VR 7C */                                                                                        \
+	float               unk74;                                                           /* 074, VR 80 */                                                                                        \
+	ImageSpaceTexture   unk78;                                                           /* 078, VR 88 */                                                                                        \
+	NiColorA            refractionTint;                                                  /* 098, VR A8 */                                                                                        \
+	ImageSpaceBaseData* currentBaseData;                                                 /* 0A8, VR B8 */                                                                                        \
+	ImageSpaceBaseData* overrideBaseData;                                                /* 0B0, VR C0 */                                                                                        \
+	ImageSpaceBaseData* underwaterBaseData;                                              /* 0B8, VR C8 */                                                                                        \
+	ImageSpaceBaseData* consoleBaseData;                                                 /* 0C0, VR D0 */                                                                                        \
+	ImageSpaceData      data;                                                            /* 0C8, VR D8 */                                                                                        \
+																						 /* the structure is unclear and varies for each, but at least the first entry is a BSImagespaceShader*/ \
+	NiPointer<BSImagespaceShader>       BSImagespaceShaderApplyReflections;              /* 168, VR 178 */                                                                                       \
+	NiPointer<BSImagespaceShader>       BSImagespaceShaderISApplyVolumetricLighting;     /* 170, VR 180 */                                                                                       \
+	NiPointer<BSImagespaceShader>       BSImagespaceShaderISBasicCopy;                   /* 178, VR 188 */                                                                                       \
+	NiPointer<BSImagespaceShader>       BSImagespaceShaderISBlur;                        /* 180, VR 190 */                                                                                       \
+	NiPointer<BSImagespaceShader>       BSImagespaceShaderISVolumetricLightingBlurHCS;   /* 188, VR 198 */                                                                                       \
+	NiPointer<BSImagespaceShader>       BSImagespaceShaderISCompositeVolumetricLighting; /* 190, VR 1A0 */                                                                                       \
+	NiPointer<BSImagespaceShader>       BSImagespaceShaderISCopySubRegionCS;             /* 198, VR 1A8 */                                                                                       \
+	NiPointer<BSImagespaceShader>       BSImagespaceShaderISDebugSnow;                   /* 1A0, VR 1B0 */                                                                                       \
+	NiPointer<BSImagespaceShader>       BSImagespaceShaderISExp;                         /* 1A8, VR 1C0 */                                                                                       \
+	NiPointer<BSImagespaceShader>       BSImagespaceShaderISLightingComposite;           /* 1B0, VR 1D0 */                                                                                       \
+	NiPointer<BSImagespaceShader>       BSImagespaceShaderISPerlinNoiseCS;               /* 1B8, VR 1D8 */                                                                                       \
+	NiPointer<BSImagespaceShader>       BSImagespaceShaderReflectionsRayTracing;         /* 1C0, VR 1E8 */                                                                                       \
+	NiPointer<BSImagespaceShader>       BSImagespaceShaderISSAOBlurH;                    /* 1C8, VR 1F0 */                                                                                       \
+	NiPointer<BSImagespaceShader>       BSImagespaceShaderISSAOBlurHCS;                  /* 1D0, VR 1F8 */                                                                                       \
+	NiPointer<BSImagespaceShader>       BSImagespaceShaderISSILComposite;                /* 1D8, VR 200 */                                                                                       \
+	NiPointer<BSImagespaceShader>       BSImagespaceShaderISSimpleColor;                 /* 1E0, VR 208 */                                                                                       \
+	NiPointer<BSImagespaceShader>       BSImagespaceShaderISSnowSSS;                     /* 1E8, VR 210 */                                                                                       \
+	UNK_BSImagespaceShaderISTemporalAA* BSImagespaceShaderISTemporalAA;                  /* 1F0, VR 218 */                                                                                       \
+	NiPointer<BSImagespaceShader>       BSImagespaceShaderISUpsampleDynamicResolution;   /* 1F8, VR 220 */                                                                                       \
+	NiPointer<BSImagespaceShader>       BSImagespaceShaderISWaterBlend;                  /* 200, VR 228 */                                                                                       \
+	NiPointer<BSImagespaceShader>       BSImagespaceShaderISUnderwaterMask;              /* 208, VR 230 */                                                                                       \
+	bool                                usesLDR;                                         /* 210, VR 238 */                                                                                       \
+	bool                                unk211;                                          /* 211, VR 239 */                                                                                       \
+	std::uint64_t                       unk218;                                          /* 218, VR 240 */
+            RUNTIME_DATA_CONTENT
+		};
+		static_assert(sizeof(RUNTIME_DATA) == 0x1C8);
+
+		struct VR_RUNTIME_DATA
+		{
+#define VR_RUNTIME_DATA_CONTENT                                                                                                                                                                          \
+	NiPointer<BSTriShape> VRunk58;                                                               /* VR 058 */                                                                                            \
+	NiPointer<BSTriShape> VRunk60;                                                               /* VR 060 */                                                                                            \
+	std::uint32_t         unk5C;                                                                 /* 05C, VR 68 */                                                                                        \
+	std::uint32_t         unk60;                                                                 /* 060, VR 6C */                                                                                        \
+	RENDER_TARGET         renderTarget;                                                          /* 064, VR 70 */                                                                                        \
+	std::uint32_t         unk68;                                                                 /* 068, VR 74 */                                                                                        \
+	std::uint32_t         unk6C;                                                                 /* 06C, VR 78 */                                                                                        \
+	std::uint32_t         unk70;                                                                 /* 070, VR 7C */                                                                                        \
+	float                 VRunk84;                                                               /* VR, 84*/                                                                                             \
+	float                 unk74;                                                                 /* 074, VR 80 */                                                                                        \
+	ImageSpaceTexture     unk78;                                                                 /* 078, VR 88 */                                                                                        \
+	NiColorA              refractionTint;                                                        /* 098, VR A8 */                                                                                        \
+	ImageSpaceBaseData*   currentBaseData;                                                       /* 0A8, VR B8 */                                                                                        \
+	ImageSpaceBaseData*   overrideBaseData;                                                      /* 0B0, VR C0 */                                                                                        \
+	ImageSpaceBaseData*   underwaterBaseData;                                                    /* 0B8, VR C8 */                                                                                        \
+	ImageSpaceBaseData*   consoleBaseData;                                                       /* 0C0, VR D0 */                                                                                        \
+	ImageSpaceData        data;                                                                  /* 0C8, VR D8 */                                                                                        \
+																								 /* the structure is unclear and varies for each, but at least the first entry is a BSImagespaceShader*/ \
+	NiPointer<BSImagespaceShader>       BSImagespaceShaderApplyReflections;                      /* 168, VR 178 */                                                                                       \
+	NiPointer<BSImagespaceShader>       BSImagespaceShaderISApplyVolumetricLighting;             /* 170, VR 180 */                                                                                       \
+	NiPointer<BSImagespaceShader>       BSImagespaceShaderISBasicCopy;                           /* 178, VR 188 */                                                                                       \
+	NiPointer<BSImagespaceShader>       BSImagespaceShaderISBlur;                                /* 180, VR 190 */                                                                                       \
+	NiPointer<BSImagespaceShader>       BSImagespaceShaderISVolumetricLightingBlurHCS;           /* 188, VR 198 */                                                                                       \
+	NiPointer<BSImagespaceShader>       BSImagespaceShaderISCompositeVolumetricLighting;         /* 190, VR 1A0 */                                                                                       \
+	NiPointer<BSImagespaceShader>       BSImagespaceShaderISCopySubRegionCS;                     /* 198, VR 1A8 */                                                                                       \
+	NiPointer<BSImagespaceShader>       BSImagespaceShaderISDebugSnow;                           /* 1A0, VR 1B0 */                                                                                       \
+	NiPointer<BSImagespaceShader>       BSImagespaceShaderISDownsampleHierarchicalDepthBufferCS; /* VR, 1B8 */                                                                                           \
+	NiPointer<BSImagespaceShader>       BSImagespaceShaderISExp;                                 /* 1A8, VR 1C0 */                                                                                       \
+	NiPointer<BSImagespaceShader>       BSImagespaceShaderISFullScreenVR;                        /* VR 1C8 */                                                                                            \
+	NiPointer<BSImagespaceShader>       BSImagespaceShaderISLightingComposite;                   /* 1B0, VR 1D0 */                                                                                       \
+	NiPointer<BSImagespaceShader>       BSImagespaceShaderISPerlinNoiseCS;                       /* 1B8, VR 1D8 */                                                                                       \
+	NiPointer<BSImagespaceShader>       BSImagespaceShaderTransformLvl7PreTest;                  /* VR 1E0 */                                                                                            \
+	NiPointer<BSImagespaceShader>       BSImagespaceShaderReflectionsRayTracing;                 /* 1C0, VR 1E8 */                                                                                       \
+	NiPointer<BSImagespaceShader>       BSImagespaceShaderISSAOBlurH;                            /* 1C8, VR 1F0 */                                                                                       \
+	NiPointer<BSImagespaceShader>       BSImagespaceShaderISSAOBlurHCS;                          /* 1D0, VR 1F8 */                                                                                       \
+	NiPointer<BSImagespaceShader>       BSImagespaceShaderISSILComposite;                        /* 1D8, VR 200 */                                                                                       \
+	NiPointer<BSImagespaceShader>       BSImagespaceShaderISSimpleColor;                         /* 1E0, VR 208 */                                                                                       \
+	NiPointer<BSImagespaceShader>       BSImagespaceShaderISSnowSSS;                             /* 1E8, VR 210 */                                                                                       \
+	UNK_BSImagespaceShaderISTemporalAA* BSImagespaceShaderISTemporalAA;                          /* 1F0, VR 218 */                                                                                       \
+	NiPointer<BSImagespaceShader>       BSImagespaceShaderISUpsampleDynamicResolution;           /* 1F8, VR 220 */                                                                                       \
+	NiPointer<BSImagespaceShader>       BSImagespaceShaderISWaterBlend;                          /* 200, VR 228 */                                                                                       \
+	NiPointer<BSImagespaceShader>       BSImagespaceShaderISUnderwaterMask;                      /* 208, VR 230 */                                                                                       \
+	bool                                usesLDR;                                                 /* 210, VR 238 */                                                                                       \
+	bool                                unk211;                                                  /* 211, VR 239 */                                                                                       \
+	std::uint64_t                       unk218;                                                  /* 218, VR 240 */
+            VR_RUNTIME_DATA_CONTENT
+		};
+		static_assert(sizeof(VR_RUNTIME_DATA) == 0x1F0);
 		static ImageSpaceManager* GetSingleton()
 		{
 			REL::Relocation<ImageSpaceManager**> singleton{ RELOCATION_ID(527731, 414660) };
 			return *singleton;
 		}
 
+		[[nodiscard]] inline RUNTIME_DATA& GetRuntimeData() noexcept
+		{
+			return REL::RelocateMember<RUNTIME_DATA>(this, 0x58, 0);
+		}
+
+		[[nodiscard]] inline const RUNTIME_DATA& GetRuntimeData() const noexcept
+		{
+			return REL::RelocateMember<RUNTIME_DATA>(this, 0x58, 0);
+		}
+
+		[[nodiscard]] inline VR_RUNTIME_DATA& GetVRRuntimeData() noexcept
+		{
+			return REL::RelocateMember<VR_RUNTIME_DATA>(this, 0, 0x58);
+		}
+
+		[[nodiscard]] inline const VR_RUNTIME_DATA& GetVRRuntimeData() const noexcept
+		{
+			return REL::RelocateMember<VR_RUNTIME_DATA>(this, 0, 0x58);
+		}
+
 		// members
-		std::uint64_t                        unk00;               // 000
-		std::uint64_t                        unk08;               // 008
-		std::int32_t                         unk10;               // 010
-		std::int32_t                         unk14;               // 014
-		std::uint64_t                        unk18;               // 018
-		NiTPrimitiveArray<ImageSpaceEffect*> effects;             // 020
-		bool                                 initEffects;         // 038
-		std::uint32_t                        unk3C;               // 03C
-		std::int32_t                         unk40;               // 040
-		NiPointer<BSTriShape>                unk48;               // 048
-		NiPointer<BSTriShape>                unk50;               // 050
-		std::uint8_t                         unk58;               // 058
-		std::uint32_t                        unk5C;               // 05C
-		std::uint32_t                        unk60;               // 060
-		RENDER_TARGET                        unk64;               // 064
-		std::uint32_t                        unk68;               // 068
-		std::uint32_t                        unk6C;               // 06C
-		std::uint32_t                        unk70;               // 070
-		float                                unk74;               // 074
-		ImageSpaceTexture                    unk78;               // 078
-		NiColorA                             refractionTint;      // 098
-		ImageSpaceBaseData*                  currentBaseData;     // 0A8
-		ImageSpaceBaseData*                  overrideBaseData;    // 0B0
-		ImageSpaceBaseData*                  underwaterBaseData;  // 0B8
-		ImageSpaceBaseData*                  consoleBaseData;     // 0C0
-		ImageSpaceData                       data;                // 0C8
-		std::uint64_t                        unk168;              // 168
-		std::uint64_t                        unk170;              // 170
-		std::uint64_t                        unk178;              // 178
-		std::uint64_t                        unk180;              // 180
-		std::uint64_t                        unk188;              // 188
-		std::uint64_t                        unk190;              // 190
-		std::uint64_t                        unk198;              // 198
-		std::uint64_t                        unk1A0;              // 1A0
-		std::uint64_t                        unk1A8;              // 1A8
-		std::uint64_t                        unk1B0;              // 1B0
-		std::uint64_t                        unk1B8;              // 1B8
-		std::uint64_t                        unk1C0;              // 1C0
-		std::uint64_t                        unk1C8;              // 1C8
-		std::uint64_t                        unk1D0;              // 1D0
-		std::uint64_t                        unk1D8;              // 1D8
-		std::uint64_t                        unk1E0;              // 1E0
-		std::uint64_t                        unk1E8;              // 1E8
-		std::uint64_t                        unk1F0;              // 1F0
-		std::uint64_t                        unk1F8;              // 1F8
-		std::uint64_t                        unk200;              // 200
-		std::uint64_t                        unk208;              // 208
-		bool                                 usesLDR;             // 210
-		bool                                 unk211;              // 211
-		std::uint64_t                        unk218;              // 218
+		std::uint64_t                        unk00;       /* 000 */
+		std::uint64_t                        unk08;       /* 008 */
+		std::int32_t                         unk10;       /* 010 */
+		std::int32_t                         unk14;       /* 014 */
+		std::uint64_t                        unk18;       /* 018 */
+		NiTPrimitiveArray<ImageSpaceEffect*> effects;     /* 020 */
+		bool                                 initEffects; /* 038 */
+		std::uint32_t                        unk3C;       /* 03C */
+		std::int32_t                         unk40;       /* 040 */
+		NiPointer<BSTriShape>                unk48;       /* 048 */
+		NiPointer<BSTriShape>                unk50;       /* 050 */
+#if defined(EXCLUSIVE_SKYRIM_FLAT)
+		RUNTIME_DATA_CONTENT
+#elif defined(EXCLUSIVE_SKYRIM_VR)
+		VR_RUNTIME_DATA_CONTENT
+#endif
+	private:
+		KEEP_FOR_RE()
 	};
+#if defined(EXCLUSIVE_SKYRIM_FLAT)
 	static_assert(sizeof(ImageSpaceManager) == 0x220);
+#elif defined(EXCLUSIVE_SKYRIM_VR)
+	static_assert(sizeof(ImageSpaceManager) == 0x248);
+#else
+	static_assert(sizeof(ImageSpaceManager) == 0x58);
+
+#endif
 }
+#undef RUNTIME_DATA_CONTENT
+#undef VR_RUNTIME_DATA_CONTENT

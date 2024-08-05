@@ -16,7 +16,8 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_ExtraOcclusionPlaneRefData;
-		inline static auto           EXTRADATATYPE = ExtraDataType::kOcclusionPlaneRefData;
+		inline static constexpr auto VTABLE = VTABLE_ExtraOcclusionPlaneRefData;
+		inline static constexpr auto EXTRADATATYPE = ExtraDataType::kOcclusionPlaneRefData;
 
 		~ExtraOcclusionPlaneRefData() override;  // 00
 
@@ -26,6 +27,8 @@ namespace RE
 
 		// members
 		OcclusionPlaneLinkedRefData* data;  // 10
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(ExtraOcclusionPlaneRefData) == 0x18);
 }

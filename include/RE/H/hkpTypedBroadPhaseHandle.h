@@ -17,6 +17,8 @@ namespace RE
 		std::int8_t   objectQualityType;    // 6
 		std::int8_t   pad7;                 // 7
 		std::uint32_t collisionFilterInfo;  // 8
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(hkpTypedBroadPhaseHandle) == 0xC);
 }

@@ -9,6 +9,7 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_TESRegionDataMap;
+		inline static constexpr auto VTABLE = VTABLE_TESRegionDataMap;
 		inline static constexpr auto TYPE = Type::kMap;
 
 		~TESRegionDataMap() override;  // 00
@@ -22,6 +23,8 @@ namespace RE
 
 		// members
 		BSFixedString mapName;  // 10 - RDMP
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(TESRegionDataMap) == 0x18);
 }

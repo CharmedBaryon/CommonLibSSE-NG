@@ -35,6 +35,8 @@ namespace RE
 		std::uint8_t                   pad4D;             // 4D
 		std::uint16_t                  pad4E;             // 4E
 		NiPointer<BSShaderAccumulator> sunAccumulator;    // 50
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(Sun) == 0x58);
 }

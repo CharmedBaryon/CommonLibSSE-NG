@@ -24,6 +24,8 @@ namespace RE
 		FormID        baseID;    // 10
 		std::uint16_t uniqueID;  // 14
 		std::uint16_t pad16;     // 16
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(ExtraUniqueID) == 0x18);
 }

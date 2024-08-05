@@ -12,6 +12,7 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_BGSMusicTrack;
+		inline static constexpr auto VTABLE = VTABLE_BGSMusicTrack;
 
 		~BGSMusicTrack() override;  // 00
 
@@ -25,6 +26,8 @@ namespace RE
 		// members
 		TESCondition  conditions;  // 10
 		std::uint64_t unk18;       // 18
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(BGSMusicTrack) == 0x20);
 }

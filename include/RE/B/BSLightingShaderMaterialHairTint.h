@@ -17,7 +17,7 @@ namespace RE
 		// override (BSLightingShaderMaterialBase)
 		BSShaderMaterial* Create() override;                                // 01
 		void              CopyMembers(BSShaderMaterial* a_other) override;  // 02
-		std::uint32_t     ComputeCRC32(void) override;                      // 04
+		std::uint32_t     ComputeCRC32(uint32_t srcHash) override;          // 04
 		Feature           GetFeature() const override;                      // 06 - { return Feature::kHairTint; }
 		void              SaveBinary(NiStream& a_stream) override;          // 0C
 		void              LoadBinary(NiStream& a_stream) override;          // 0D
@@ -30,10 +30,13 @@ namespace RE
 		BSLightingShaderMaterialHairTint* Ctor()
 		{
 			using func_t = decltype(&BSLightingShaderMaterialHairTint::Ctor);
-			REL::Relocation<func_t> func{ RELOCATION_ID(100095, 106802) };
+			static REL::Relocation<func_t> func{ RELOCATION_ID(100095, 106802) };
 			return func(this);
 		}
 		friend class BSLightingShaderMaterialBase;
+
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(BSLightingShaderMaterialHairTint) == 0xB0);
 }

@@ -19,6 +19,8 @@ namespace RE
 		};
 
 		std::uint8_t states;  // 0
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(GFxSpecialKeysState) == 0x1);
 }

@@ -14,6 +14,7 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_UIBlurManager;
+		inline static constexpr auto VTABLE = VTABLE_UIBlurManager;
 
 		~UIBlurManager() override;  // 00
 
@@ -29,6 +30,8 @@ namespace RE
 		TESImageSpaceModifier* blurEffect;  // 10
 		std::uint32_t          blurCount;   // 18
 		std::uint32_t          pad1C;       // 1C
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(UIBlurManager) == 0x20);
 }

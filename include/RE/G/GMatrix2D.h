@@ -56,6 +56,8 @@ namespace RE
 		}
 
 		float data[2][3];  // 00
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(GMatrix2D) == 0x18);
 }

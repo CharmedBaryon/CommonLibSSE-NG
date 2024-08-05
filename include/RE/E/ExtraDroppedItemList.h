@@ -11,7 +11,8 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_ExtraDroppedItemList;
-		inline static auto           EXTRADATATYPE = ExtraDataType::kDroppedItemList;
+		inline static constexpr auto VTABLE = VTABLE_ExtraDroppedItemList;
+		inline static constexpr auto EXTRADATATYPE = ExtraDataType::kDroppedItemList;
 
 		~ExtraDroppedItemList() override;  // 00
 
@@ -20,6 +21,8 @@ namespace RE
 
 		// members
 		BSSimpleList<ObjectRefHandle> droppedItemList;  // 10
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(ExtraDroppedItemList) == 0x20);
 }

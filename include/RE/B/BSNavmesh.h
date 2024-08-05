@@ -149,6 +149,7 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_BSNavmesh;
+		inline static constexpr auto VTABLE = VTABLE_BSNavmesh;
 
 		virtual ~BSNavmesh();  // 00
 
@@ -169,6 +170,8 @@ namespace RE
 		BSTArray<void*>                                              unk0F0;                 // 0F0 - obstaclePOVs/disabledLinks?
 		BSTSmartPointer<BSPathingCell>                               parentCell;             // 108
 		void*                                                        unk110;                 // 110 - navmeshInfo?
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(BSNavmesh) == 0x118);
 }

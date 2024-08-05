@@ -33,6 +33,7 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_BShkbAnimationGraph;
+		inline static constexpr auto VTABLE = VTABLE_BShkbAnimationGraph;
 
 		struct BoneNodeEntry
 		{
@@ -79,42 +80,42 @@ namespace RE
 		bool GetGraphVariableBool(const BSFixedString& a_variableName, bool& a_out) const
 		{
 			using func_t = decltype(&BShkbAnimationGraph::GetGraphVariableBool);
-			REL::Relocation<func_t> func{ RELOCATION_ID(62696, 63613) };
+			static REL::Relocation<func_t> func{ RELOCATION_ID(62696, 63613) };
 			return func(this, a_variableName, a_out);
 		}
 
 		bool GetGraphVariableFloat(const BSFixedString& a_variableName, float& a_out) const
 		{
 			using func_t = decltype(&BShkbAnimationGraph::GetGraphVariableFloat);
-			REL::Relocation<func_t> func{ RELOCATION_ID(62695, 63614) };
+			static REL::Relocation<func_t> func{ RELOCATION_ID(62695, 63614) };
 			return func(this, a_variableName, a_out);
 		}
 
 		bool GetGraphVariableInt(const BSFixedString& a_variableName, int& a_out) const
 		{
 			using func_t = decltype(&BShkbAnimationGraph::GetGraphVariableInt);
-			REL::Relocation<func_t> func{ RELOCATION_ID(62694, 63615) };
+			static REL::Relocation<func_t> func{ RELOCATION_ID(62694, 63615) };
 			return func(this, a_variableName, a_out);
 		}
 
 		bool SetGraphVariableBool(const BSFixedString& a_variableName, const bool a_in)
 		{
 			using func_t = decltype(&BShkbAnimationGraph::SetGraphVariableBool);
-			REL::Relocation<func_t> func{ RELOCATION_ID(63609, 62708) };
+			static REL::Relocation<func_t> func{ RELOCATION_ID(63609, 62708) };
 			return func(this, a_variableName, a_in);
 		}
 
 		bool SetGraphVariableFloat(const BSFixedString& a_variableName, const float a_in)
 		{
 			using func_t = decltype(&BShkbAnimationGraph::SetGraphVariableFloat);
-			REL::Relocation<func_t> func{ RELOCATION_ID(63608, 62709) };
+			static REL::Relocation<func_t> func{ RELOCATION_ID(63608, 62709) };
 			return func(this, a_variableName, a_in);
 		}
 
 		bool SetGraphVariableInt(const BSFixedString& a_variableName, const int a_in)
 		{
 			using func_t = decltype(&BShkbAnimationGraph::SetGraphVariableInt);
-			REL::Relocation<func_t> func{ RELOCATION_ID(63607, 62710) };
+			static REL::Relocation<func_t> func{ RELOCATION_ID(63607, 62710) };
 			return func(this, a_variableName, a_in);
 		}
 
@@ -147,6 +148,8 @@ namespace RE
 		std::uint8_t                   doFootIK;                     // 249
 		std::uint16_t                  unk24A;                       // 24A
 		std::uint32_t                  unk24C;                       // 24C
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(BShkbAnimationGraph) == 0x250);
 }

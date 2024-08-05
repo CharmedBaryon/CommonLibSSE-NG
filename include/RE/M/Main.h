@@ -51,20 +51,26 @@ namespace RE
 	static_assert(sizeof(BSSaveDataSystemUtilityImage) == 0x18);
 
 	class Main :
+#if defined(EXCLUSIVE_SKYRIM_FLAT)
 		public BSTEventSink<PositionPlayerEvent>,  // 00
 		public BSTEventSink<BSGamerProfileEvent>   // 08
+#else
+		public BSTEventSink<PositionPlayerEvent>  // 00
+#endif
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_Main;
+		inline static constexpr auto VTABLE = VTABLE_Main;
 
 		~Main() override;  // 00
 
 		// override (BSTEventSink<PositionPlayerEvent>)
 		BSEventNotifyControl ProcessEvent(const PositionPlayerEvent* a_event, BSTEventSource<PositionPlayerEvent>* a_eventSource) override;  // 01 - { return BSEventNotifyControl::kContinue; }
 
+#if defined(EXCLUSIVE_SKYRIM_FLAT)
 		// override (BSTEventSink<BSGamerProfileEvent>)
 		BSEventNotifyControl ProcessEvent(const BSGamerProfileEvent* a_event, BSTEventSource<BSGamerProfileEvent>* a_eventSource) override;  // 01
-
+#endif
 		static Main* GetSingleton();
 
 		static float       QFrameAnimTime();
@@ -74,14 +80,14 @@ namespace RE
 		void SetActive(bool a_active);
 
 		// members
-		bool                         quitGame;                     // 010
-		bool                         resetGame;                    // 011
-		bool                         fullReset;                    // 012
-		bool                         gameActive;                   // 013
-		bool                         onIdle;                       // 014
-		bool                         reloadContent;                // 015
-		bool                         freezeTime;                   // 016
-		bool                         freezeNextFrame;              // 017
+		bool                         quitGame;                     // 010 VR 08
+		bool                         resetGame;                    // 011 VR 09
+		bool                         fullReset;                    // 012 VR 0a
+		bool                         gameActive;                   // 013 VR 0b
+		bool                         onIdle;                       // 014 VR 0c
+		bool                         reloadContent;                // 015 VR 0d
+		bool                         freezeTime;                   // 016 VR 0e
+		bool                         freezeNextFrame;              // 017 VR 0f This continues for all members I assume
 		REX::W32::HWND               wnd;                          // 018
 		REX::W32::HINSTANCE          instance;                     // 020
 		std::uint32_t                threadID;                     // 028
@@ -97,6 +103,12 @@ namespace RE
 		std::uint32_t                unk1DC;                       // 1DC
 		BSSaveDataSystemUtilityImage saveDataBackgroundImages[3];  // 1E0
 		BSSaveDataSystemUtilityImage saveDataIconImages[3];        // 228
+	private:
+		KEEP_FOR_RE()
 	};
+#if defined(EXCLUSIVE_SKYRIM_FLAT)
 	static_assert(sizeof(Main) == 0x270);
+#else
+	static_assert(sizeof(Main) == 0x268);
+#endif
 }

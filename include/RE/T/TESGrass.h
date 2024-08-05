@@ -100,6 +100,8 @@ namespace RE
 
 		// members
 		GRASS_DATA data;  // 58 - DATA
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(TESGrass) == 0x78);
 }

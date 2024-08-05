@@ -93,6 +93,7 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_ActorState;
+		inline static constexpr auto VTABLE = VTABLE_ActorState;
 
 		struct ActorState1
 		{
@@ -202,6 +203,8 @@ namespace RE
 		// members
 		ActorState1 actorState1;  // 08
 		ActorState2 actorState2;  // 0C
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(ActorState) == 0x10);
 }

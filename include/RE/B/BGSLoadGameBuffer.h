@@ -16,7 +16,7 @@ namespace RE
 		void LoadDataEndian(void* a_data, std::uint32_t a_offset, std::uint32_t a_size)
 		{
 			using func_t = decltype(&BGSLoadGameBuffer::LoadDataEndian);
-			REL::Relocation<func_t> func{ RELOCATION_ID(35112, 36005) };
+			static REL::Relocation<func_t> func{ RELOCATION_ID(35112, 36005) };
 			return func(this, a_data, a_offset, a_size);
 		}
 
@@ -27,6 +27,8 @@ namespace RE
 		std::uint32_t unk1C;           // 1C
 		std::uint32_t unk20;           // 20
 		std::uint32_t bufferPosition;  // 24
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(BGSLoadGameBuffer) == 0x28);
 }

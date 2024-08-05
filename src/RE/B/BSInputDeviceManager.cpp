@@ -12,14 +12,20 @@ namespace RE
 {
 	BSInputDeviceManager* BSInputDeviceManager::GetSingleton()
 	{
-		REL::Relocation<BSInputDeviceManager**> singleton{ Offset::BSInputDeviceManager::Singleton };
+		REL::Relocation<BSInputDeviceManager**> singleton{ RELOCATION_ID(516574, 402776) };
 		return *singleton;
+	}
+
+	bool BSInputDeviceManager::GetButtonNameFromID(INPUT_DEVICE a_device, std::int32_t a_id, BSFixedString& a_buttonName) const
+	{
+		const auto device = devices[a_device];
+		return device && device->GetKeyMapping(a_id, a_buttonName);
 	}
 
 	BSPCGamepadDeviceDelegate* BSInputDeviceManager::GetGamepad()
 	{
 		auto handler = GetGamepadHandler();
-		return handler ? handler->currentPCGamePadDelegate : nullptr;
+		return handler ? handler->GetRuntimeData().currentPCGamePadDelegate : nullptr;
 	}
 
 	BSPCGamepadDeviceHandler* BSInputDeviceManager::GetGamepadHandler()
@@ -39,43 +45,45 @@ namespace RE
 
 	BSTrackedControllerDevice* BSInputDeviceManager::GetVRControllerRight()
 	{
-#ifndef ENABLE_SKYRIM_VR
+#if !defined(ENABLE_SKYRIM_VR)
 		return nullptr;
 #else
 		if SKYRIM_REL_VR_CONSTEXPR (!REL::Module::IsVR()) {
 			return nullptr;
 		}
-		return static_cast<BSTrackedControllerDevice*>(devices[std::to_underlying(INPUT_DEVICE::kVRRight)]);
+		const auto deviceType = BSOpenVR::GetSingleton()->GetHMDDeviceType();
+		return static_cast<BSTrackedControllerDevice*>(devices[2 * std::to_underlying(deviceType) + 3]);  //3,5,7 for vive, oculus, windows
 #endif
 	}
 
 	BSTrackedControllerDevice* BSInputDeviceManager::GetVRControllerLeft()
 	{
-#ifndef ENABLE_SKYRIM_VR
+#if !defined(ENABLE_SKYRIM_VR)
 		return nullptr;
 #else
 		if SKYRIM_REL_VR_CONSTEXPR (!REL::Module::IsVR()) {
 			return nullptr;
 		}
-		return static_cast<BSTrackedControllerDevice*>(devices[std::to_underlying(INPUT_DEVICE::kVRLeft)]);
+		const auto deviceType = BSOpenVR::GetSingleton()->GetHMDDeviceType();
+		return static_cast<BSTrackedControllerDevice*>(devices[2 * std::to_underlying(deviceType) + 4]);  //4,6,8 for vive, oculus, windows
 #endif
 	}
 
 	BSWin32VirtualKeyboardDevice* BSInputDeviceManager::GetVirtualKeyboard()
 	{
-		return static_cast<BSWin32VirtualKeyboardDevice*>(devices[std::to_underlying(INPUT_DEVICE::kVirtualKeyboard)]);
+		return static_cast<BSWin32VirtualKeyboardDevice*>(devices[std::to_underlying(INPUT_DEVICES::VirtualKeyboard())]);
 	}
 
 	bool BSInputDeviceManager::IsGamepadConnected()
 	{
 		auto handler = GetGamepadHandler();
-		return handler && handler->currentPCGamePadDelegate;
+		return handler && handler->GetRuntimeData().currentPCGamePadDelegate;
 	}
 
 	bool BSInputDeviceManager::IsGamepadEnabled()
 	{
 		auto handler = GetGamepadHandler();
-		return handler && handler->currentPCGamePadDelegate && handler->currentPCGamePadDelegate->IsEnabled();
+		return handler && handler->GetRuntimeData().currentPCGamePadDelegate && handler->GetRuntimeData().currentPCGamePadDelegate->IsEnabled();
 	}
 
 	bool BSInputDeviceManager::IsMouseBackground()
@@ -149,7 +157,7 @@ namespace RE
 		// Emits the last InputEvent
 		// resets the global BSInputEventQueue
 		using func_t = decltype(&BSInputDeviceManager::PollInputDevices);
-		REL::Relocation<func_t> func{ RELOCATION_ID(67315, 68617) };
+		static REL::Relocation<func_t> func{ RELOCATION_ID(67315, 68617) };
 		return func(this, a_secsSinceLastFrame);
 	}
 }

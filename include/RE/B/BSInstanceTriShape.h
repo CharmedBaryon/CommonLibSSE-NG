@@ -9,7 +9,8 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_BSInstanceTriShape;
-		inline static auto           Ni_RTTI = NiRTTI_BSInstanceTriShape;
+		inline static constexpr auto Ni_RTTI = NiRTTI_BSInstanceTriShape;
+		inline static constexpr auto VTABLE = VTABLE_BSInstanceTriShape;
 
 		~BSInstanceTriShape() override;  // 00
 
@@ -24,9 +25,9 @@ namespace RE
 		SKYRIM_REL_VR_VIRTUAL std::uint32_t AddGroup(std::uint32_t a_numInstances, std::uint16_t& a_instanceData, std::uint32_t a_arg3, float a_arg4);  // 3C
 		SKYRIM_REL_VR_VIRTUAL void          RemoveGroup(std::uint32_t a_numInstance);                                                                   // 3D
 	};
-#ifndef ENABLE_SKYRIM_VR
+#if defined(EXCLUSIVE_SKYRIM_FLAT)
 	static_assert(sizeof(BSInstanceTriShape) == 0x160);
-#elif !defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE)
+#elif defined(EXCLUSIVE_SKYRIM_VR)
 	static_assert(sizeof(BSInstanceTriShape) == 0x1A8);
 #endif
 }

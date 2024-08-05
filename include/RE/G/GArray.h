@@ -41,6 +41,9 @@ namespace RE
 			BaseType::operator=(a_array);
 			return *this;
 		}
+
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(GArray<void*>) == 0x18);
 }

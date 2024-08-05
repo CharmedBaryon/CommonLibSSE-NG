@@ -5,6 +5,7 @@
 #include "RE/B/BSTList.h"
 #include "RE/B/BSTSingleton.h"
 #include "RE/F/FormTypes.h"
+#include "RE/I/InventoryChanges.h"
 #include "RE/N/NiTArray.h"
 #include "RE/N/NiTList.h"
 #include "RE/T/TESForm.h"
@@ -38,7 +39,8 @@ namespace RE
 	class TESDataHandler : public BSTSingletonSDM<TESDataHandler>
 	{
 	public:
-		static TESDataHandler* GetSingleton();
+		inline static RE::TESFileCollection* VRcompiledFileCollection = nullptr;  // used by SkyrimVRESL to store pointer to VR version
+		static TESDataHandler*               GetSingleton(bool a_VRESL = true);
 
 		bool AddFormToDataHandler(TESForm* a_form);
 
@@ -98,67 +100,77 @@ namespace RE
 			return REL::RelocateMember<RUNTIME_DATA>(this, 0xDA0, 0x1570);
 		}
 
-		[[nodiscard]] inline TESFile** GetLoadedMods() noexcept {
+		[[nodiscard]] inline TESFile** GetLoadedMods() noexcept
+		{
 			if SKYRIM_REL_CONSTEXPR (REL::Module::IsVR()) {
-				return &REL::RelocateMember<TESFile*>(this, 0x0, 0xD78);
+				return !VRcompiledFileCollection ? &REL::RelocateMember<TESFile*>(this, 0x0, 0xD78) : const_cast<TESFile**>(VRcompiledFileCollection->files.data());
 			} else {
 				return REL::RelocateMember<TESFileCollection>(this, 0xD70, 0).files.data();
 			}
 		}
 
-		[[nodiscard]] inline const TESFile* const * GetLoadedMods() const noexcept {
+		[[nodiscard]] inline const TESFile* const* GetLoadedMods() const noexcept
+		{
 			if SKYRIM_REL_CONSTEXPR (REL::Module::IsVR()) {
-				return &REL::RelocateMember<const TESFile*>(this, 0x0, 0xD78);
+				return !VRcompiledFileCollection ? &REL::RelocateMember<const TESFile*>(this, 0x0, 0xD78) : VRcompiledFileCollection->files.data();
 			} else {
 				return REL::RelocateMember<const TESFileCollection>(this, 0xD70, 0).files.data();
 			}
 		}
 
-		[[nodiscard]] inline std::uint8_t GetLoadedModCount() const noexcept {
+		[[nodiscard]] inline std::uint8_t GetLoadedModCount() const noexcept
+		{
 			if SKYRIM_REL_CONSTEXPR (REL::Module::IsVR()) {
-				return static_cast<std::uint8_t>(REL::RelocateMember<std::uint32_t>(this, 0x0, 0xD70));
+				return static_cast<std::uint8_t>(!VRcompiledFileCollection ? REL::RelocateMember<std::uint32_t>(this, 0x0, 0xD70) : VRcompiledFileCollection->files.size());
 			} else {
 				return static_cast<std::uint8_t>(REL::RelocateMember<const TESFileCollection>(this, 0xD70, 0).files.size());
 			}
 		}
 
-		[[nodiscard]] inline TESFile** GetLoadedLightMods() noexcept {
+		[[nodiscard]] inline TESFile** GetLoadedLightMods() noexcept
+		{
 			if SKYRIM_REL_CONSTEXPR (REL::Module::IsVR()) {
-				return nullptr;
+				return !VRcompiledFileCollection ? nullptr : const_cast<TESFile**>(VRcompiledFileCollection->smallFiles.data());
 			} else {
 				return REL::RelocateMember<TESFileCollection>(this, 0xD70, 0).smallFiles.data();
 			}
 		}
 
-		[[nodiscard]] inline const TESFile* const * GetLoadedLightMods() const noexcept {
+		[[nodiscard]] inline const TESFile* const* GetLoadedLightMods() const noexcept
+		{
 			if SKYRIM_REL_CONSTEXPR (REL::Module::IsVR()) {
-				return nullptr;
+				return !VRcompiledFileCollection ? nullptr : VRcompiledFileCollection->smallFiles.data();
 			} else {
 				return REL::RelocateMember<const TESFileCollection>(this, 0xD70, 0).smallFiles.data();
 			}
 		}
 
-		[[nodiscard]] inline std::uint8_t GetLoadedLightModCount() const noexcept {
+		[[nodiscard]] inline std::uint8_t GetLoadedLightModCount() const noexcept
+		{
 			if SKYRIM_REL_CONSTEXPR (REL::Module::IsVR()) {
-				return 0;
+				return (!VRcompiledFileCollection) ? 0 : static_cast<std::uint8_t>(VRcompiledFileCollection->smallFiles.size());
 			} else {
 				return static_cast<std::uint8_t>(REL::RelocateMember<const TESFileCollection>(this, 0xD70, 0).smallFiles.size());
 			}
 		}
 
-		[[nodiscard]] inline TESRegionDataManager* GetRegionDataManager() noexcept {
+		[[nodiscard]] inline TESRegionDataManager* GetRegionDataManager() noexcept
+		{
 			return REL::RelocateMember<TESRegionDataManager*>(this, 0xDB0, 0x1580);
 		}
 
-		[[nodiscard]] inline const TESRegionDataManager* GetRegionDataManager() const noexcept {
+		[[nodiscard]] inline const TESRegionDataManager* GetRegionDataManager() const noexcept
+		{
 			return REL::RelocateMember<TESRegionDataManager*>(this, 0xDB0, 0x1580);
 		}
 
-		[[nodiscard]] inline InventoryChanges* GetMerchantInventory() noexcept {
+		[[nodiscard]] inline InventoryChanges* GetMerchantInventory() noexcept
+		{
 			return REL::RelocateMember<InventoryChanges*>(this, 0xDB8, 0x1588);
 		}
 
-		[[nodiscard]] inline const InventoryChanges* GetMerchantInventory() const noexcept {
+		[[nodiscard]] inline const InventoryChanges* GetMerchantInventory() const noexcept
+		{
 			return REL::RelocateMember<InventoryChanges*>(this, 0xDB8, 0x1588);
 		}
 
@@ -176,25 +188,26 @@ namespace RE
 		std::uint32_t                     padD54;                                         // D54
 		TESFile*                          activeFile;                                     // D58
 		BSSimpleList<TESFile*>            files;                                          // D60
-#ifndef ENABLE_SKYRIM_VR
-		TESFileCollection                 compiledFileCollection;                         // D70
+#if defined(EXCLUSIVE_SKYRIM_FLAT)
+		TESFileCollection compiledFileCollection;  // D70
 		RUNTIME_DATA_CONTENT
-		std::uint8_t                      unkDAA;                                         // DAA
-		std::uint8_t                      padDAB;                                         // DAB
-		std::uint32_t                     padDAC;                                         // DAC
-		TESRegionDataManager*             regionDataManager;                              // DB0
-		InventoryChanges*                 merchantInventory;                              // DB8
-#elif !defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE)
-		std::uint32_t         loadedModCount;     // D70
-		std::uint32_t         pad14;              // D74
-		TESFile*              loadedMods[0xFF];   // D78
+		std::uint8_t          unkDAA;             // DAA
+		std::uint8_t          padDAB;             // DAB
+		std::uint32_t         padDAC;             // DAC
+		TESRegionDataManager* regionDataManager;  // DB0
+		InventoryChanges*     merchantInventory;  // DB8
+#elif defined(EXCLUSIVE_SKYRIM_VR)
+		std::uint32_t loadedModCount;    // D70 this should be avoided if SkyrimVRESL is available
+		std::uint32_t pad14;             // D74
+		TESFile*      loadedMods[0xFF];  // D78 this should be avoided if SkyrimVRESL is available
 		RUNTIME_DATA_CONTENT
 		std::uint8_t          pad157B[5];         // 157B
 		TESRegionDataManager* regionDataManager;  // 1580
 		InventoryChanges*     merchantInventory;  // 1588
 #endif
+	private:
+		KEEP_FOR_RE()
 	};
-#undef RUNTIME_DATA_CONTENT
 
 	template <class T>
 	T* TESDataHandler::LookupForm(FormID a_localFormID, std::string_view a_modName)
@@ -224,3 +237,4 @@ namespace RE
 		return reinterpret_cast<BSTArray<T*>&>(GetFormArray(T::FORMTYPE));
 	}
 }
+#undef RUNTIME_DATA_CONTENT

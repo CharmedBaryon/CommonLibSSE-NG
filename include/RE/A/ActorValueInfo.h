@@ -89,6 +89,8 @@ namespace RE
 		BGSSkillPerkTreeNode* perkTree;       // 118
 		std::uint32_t         perkTreeWidth;  // 120
 		std::uint32_t         unk124;         // 124 - CNAM
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(ActorValueInfo) == 0x128);
 }

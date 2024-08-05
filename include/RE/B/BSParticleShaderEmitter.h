@@ -11,6 +11,7 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_BSParticleShaderEmitter;
+		inline static constexpr auto VTABLE = VTABLE_BSParticleShaderEmitter;
 
 		enum class EMITTER_TYPE
 		{
@@ -45,10 +46,10 @@ namespace RE
 			float        rotationStart;  // 20
 			float        rotationSpeed;  // 24
 			float        speedMult;      // 28
-			std::uint8_t texCoordU;      // 29
-			std::uint8_t texCoordV;      // 2A
-			std::uint8_t vertexX;        // 2B
-			std::uint8_t vertexY;        // 2C
+			std::uint8_t texCoordU;      // 2C
+			std::uint8_t texCoordV;      // 2D
+			std::uint8_t vertexX;        // 2E
+			std::uint8_t vertexY;        // 2F
 		};
 		static_assert(sizeof(ParticleData) == 0x30);
 
@@ -67,6 +68,8 @@ namespace RE
 		float                                         maxParticleRatio;  // 24
 		TextureAnimInfo*                              textureAnims;      // 28
 		ParticleData                                  instanceData[78];  // 30
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(BSParticleShaderEmitter) == 0xED0);
 }

@@ -114,6 +114,8 @@ namespace RE
 		std::uint8_t        unk34A;        // 34A
 		std::uint8_t        unk34B;        // 34B
 		std::uint32_t       unk34C;        // 34C
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(GFxSprite) == 0x350);
 }

@@ -26,6 +26,8 @@ namespace RE
 
 		// override (BGSKeywordForm)
 		[[nodiscard]] BGSKeyword* GetDefaultKeyword() const override;  // 05
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(TESKey) == 0x100);
 }

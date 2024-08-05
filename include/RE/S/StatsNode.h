@@ -16,6 +16,7 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_StatsNode;
+		inline static constexpr auto VTABLE = VTABLE_StatsNode;
 
 		~StatsNode() override;  // 00
 
@@ -34,6 +35,8 @@ namespace RE
 		BSTSmartPointer<BSIntrusiveRefCounted>           unk50;  // 50
 		BSTSmartPointer<BSIntrusiveRefCounted>           unk58;  // 58
 		std::uint64_t                                    unk60;  // 60
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(StatsNode) == 0x68);
 }

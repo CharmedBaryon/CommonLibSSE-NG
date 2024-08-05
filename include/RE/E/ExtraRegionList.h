@@ -11,7 +11,8 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_ExtraRegionList;
-		inline static auto           EXTRADATATYPE = ExtraDataType::kRegionList;
+		inline static constexpr auto VTABLE = VTABLE_ExtraRegionList;
+		inline static constexpr auto EXTRADATATYPE = ExtraDataType::kRegionList;
 
 		~ExtraRegionList() override;  // 00
 
@@ -20,6 +21,8 @@ namespace RE
 
 		// members
 		TESRegionList* list;  // 10
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(ExtraRegionList) == 0x18);
 }

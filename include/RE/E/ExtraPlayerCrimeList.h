@@ -12,7 +12,8 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_ExtraPlayerCrimeList;
-		inline static auto           EXTRADATATYPE = ExtraDataType::kPlayerCrimeList;
+		inline static constexpr auto VTABLE = VTABLE_ExtraPlayerCrimeList;
+		inline static constexpr auto EXTRADATATYPE = ExtraDataType::kPlayerCrimeList;
 
 		~ExtraPlayerCrimeList() override;  // 00
 
@@ -21,6 +22,8 @@ namespace RE
 
 		// members
 		BSSimpleList<Crime*>* crimes;  // 10
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(ExtraPlayerCrimeList) == 0x18);
 }

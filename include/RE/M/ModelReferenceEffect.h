@@ -20,7 +20,8 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_ModelReferenceEffect;
-		inline static auto           Ni_RTTI = NiRTTI_ModelReferenceEffect;
+		inline static constexpr auto Ni_RTTI = NiRTTI_ModelReferenceEffect;
+		inline static constexpr auto VTABLE = VTABLE_ModelReferenceEffect;
 		inline static constexpr auto TYPE = TEMP_EFFECT_TYPE::kRefModel;
 
 		enum class Flags
@@ -62,6 +63,8 @@ namespace RE
 		NiPointer<NiAVObject>                  artObject3D;        // C8
 		stl::enumeration<Flags, std::uint32_t> flags;              // D0
 		std::uint32_t                          padD4;              // D4
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(ModelReferenceEffect) == 0xD8);
 }

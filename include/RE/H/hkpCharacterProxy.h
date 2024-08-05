@@ -67,6 +67,8 @@ namespace RE
 		float                               penetrationRecoverySpeed;       // DC
 		std::int32_t                        maxCastIterations;              // E0
 		bool                                refreshManifoldInCheckSupport;  // E4
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(hkpCharacterProxy) == 0xF0);
 }

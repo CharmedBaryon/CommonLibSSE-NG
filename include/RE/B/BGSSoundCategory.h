@@ -65,6 +65,8 @@ namespace RE
 		std::uint16_t                         defaultMenuValue;  // 4E - UNAM
 		float                                 volumeMult;        // 50
 		float                                 frequencyMult;     // 54
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(BGSSoundCategory) == 0x58);
 }

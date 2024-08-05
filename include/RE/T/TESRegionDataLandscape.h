@@ -12,6 +12,7 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_TESRegionDataLandscape;
+		inline static constexpr auto VTABLE = VTABLE_TESRegionDataLandscape;
 		inline static constexpr auto TYPE = Type::kLand;
 
 		~TESRegionDataLandscape() override;  // 00
@@ -30,6 +31,8 @@ namespace RE
 
 		// members
 		TESTexture* icon;  // 10
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(TESRegionDataLandscape) == 0x18);
 }

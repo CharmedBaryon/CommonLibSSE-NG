@@ -8,12 +8,15 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_MapZoomHandler;
+		inline static constexpr auto VTABLE = VTABLE_MapZoomHandler;
 
 		~MapZoomHandler() override;  // 00
 
 		// override (MapInputHandler)
 		bool CanProcess(InputEvent* a_event) override;      // 01
 		bool ProcessButton(ButtonEvent* a_event) override;  // 05
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(MapZoomHandler) == 0x18);
 }

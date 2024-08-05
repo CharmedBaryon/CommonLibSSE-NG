@@ -56,14 +56,17 @@ namespace RE
 		bool PlayImpactEffect(TESObjectREFR* a_ref, BGSImpactDataSet* a_impactEffect, const BSFixedString& a_nodeName, NiPoint3& a_pickDirection, float a_pickLength, bool a_applyNodeRotation, bool a_useNodeLocalRotation)
 		{
 			using func_t = decltype(&BGSImpactManager::PlayImpactEffect);
-			REL::Relocation<func_t> func{ RELOCATION_ID(35320, 36215) };
+			static REL::Relocation<func_t> func{ RELOCATION_ID(35320, 36215) };
 			return func(this, a_ref, a_impactEffect, a_nodeName, a_pickDirection, a_pickLength, a_applyNodeRotation, a_useNodeLocalRotation);
 		}
 		bool PlayImpactDataSounds(ImpactSoundData& a_impactSoundData)
 		{
 			using func_t = decltype(&BGSImpactManager::PlayImpactDataSounds);
-			REL::Relocation<func_t> func{ RELOCATION_ID(35317, 36212) };
+			static REL::Relocation<func_t> func{ RELOCATION_ID(35317, 36212) };
 			return func(this, a_impactSoundData);
 		}
+
+	private:
+		KEEP_FOR_RE()
 	};
 }

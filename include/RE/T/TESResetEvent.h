@@ -11,6 +11,8 @@ namespace RE
 	public:
 		// members
 		NiPointer<TESObjectREFR> object;  // 0
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(TESResetEvent) == 0x8);
 }

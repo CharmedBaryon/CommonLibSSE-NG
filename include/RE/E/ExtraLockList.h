@@ -11,7 +11,8 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_ExtraLockList;
-		inline static auto           EXTRADATATYPE = ExtraDataType::kLockList;
+		inline static constexpr auto VTABLE = VTABLE_ExtraLockList;
+		inline static constexpr auto EXTRADATATYPE = ExtraDataType::kLockList;
 
 		~ExtraLockList() override;  // 00
 
@@ -21,6 +22,8 @@ namespace RE
 
 		// members
 		TESForm* list;  // 10
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(ExtraLockList) == 0x18);
 }

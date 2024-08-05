@@ -22,6 +22,8 @@ namespace RE
 
 		// members
 		std::uint64_t unk40;  // 40
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(GFxConstShapeNoStyles) == 0x48);
 }

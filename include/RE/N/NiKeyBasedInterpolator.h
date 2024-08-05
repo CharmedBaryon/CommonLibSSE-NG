@@ -9,7 +9,8 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_NiKeyBasedInterpolator;
-		inline static auto           Ni_RTTI = NiRTTI_NiKeyBasedInterpolator;
+		inline static constexpr auto Ni_RTTI = NiRTTI_NiKeyBasedInterpolator;
+		inline static constexpr auto VTABLE = VTABLE_NiKeyBasedInterpolator;
 
 		using KeyType = NiAnimationKey::KeyType;
 		using KeyContent = NiAnimationKey::KeyContent;
@@ -33,6 +34,8 @@ namespace RE
 		[[nodiscard]] virtual void*         GetKeyArray(std::uint16_t a_channel) const = 0;      // 3D
 		[[nodiscard]] virtual std::uint8_t  GetKeyStride(std::uint16_t a_channel) const = 0;     // 3E
 		[[nodiscard]] virtual bool          GetChannelPosed(std::uint16_t a_channel) const = 0;  // 3F
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(NiKeyBasedInterpolator) == 0x18);
 }

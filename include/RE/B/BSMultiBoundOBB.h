@@ -9,7 +9,8 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_BSMultiBoundOBB;
-		inline static auto           Ni_RTTI = NiRTTI_BSMultiBoundOBB;
+		inline static constexpr auto Ni_RTTI = NiRTTI_BSMultiBoundOBB;
+		inline static constexpr auto VTABLE = VTABLE_BSMultiBoundOBB;
 
 		~BSMultiBoundOBB() override;  // 00
 
@@ -35,6 +36,8 @@ namespace RE
 		bool          unk64;     // 64
 		std::uint8_t  pad65;     // 65
 		std::uint16_t pad66;     // 66
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(BSMultiBoundOBB) == 0x68);
 }

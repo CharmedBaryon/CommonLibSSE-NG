@@ -20,6 +20,8 @@ namespace RE
 		NiPointer<BSTriShape>         faceShape;  // 10
 		void*                         triData;    // 18
 		NiPointer<BSFaceGenMorphData> morphData;  // 20
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(BSFaceGenModelMeshData) == 0x28);
 
@@ -35,6 +37,8 @@ namespace RE
 		BSTSmartPointer<BSFaceGenModelMeshData> modelMeshData;  // 10
 		std::uint32_t                           unk18;          // 18
 		std::uint32_t                           pad1C;          // 1C
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(BSFaceGenModel) == 0x20);
 }

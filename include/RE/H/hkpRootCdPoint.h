@@ -16,6 +16,8 @@ namespace RE
 		const hkpCollidable* rootCollidableB;  // 30
 		hkpShapeKey          shapeKeyB;        // 38
 		std::uint32_t        pad3C;            // 3C
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(hkpRootCdPoint) == 0x40);
 }

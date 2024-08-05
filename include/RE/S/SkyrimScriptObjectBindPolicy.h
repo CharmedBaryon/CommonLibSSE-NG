@@ -11,6 +11,7 @@ namespace RE
 		{
 		public:
 			inline static constexpr auto RTTI = RTTI_SkyrimScript__ObjectBindPolicy;
+			inline static constexpr auto VTABLE = VTABLE_SkyrimScript__ObjectBindPolicy;
 
 			~ObjectBindPolicy() override;  // 00
 

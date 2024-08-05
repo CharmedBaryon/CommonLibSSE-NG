@@ -21,6 +21,8 @@ namespace RE
 	class TESFileArray : public BSStaticArray<TESFile*>
 	{
 	public:
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(TESFileArray) == 0x10);
 
@@ -29,6 +31,8 @@ namespace RE
 	public:
 		// members
 		TESFileArray* array;  // 0
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(TESFileContainer) == 0x8);
 
@@ -36,6 +40,7 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_TESForm;
+		inline static constexpr auto VTABLE = VTABLE_TESForm;
 		inline static constexpr auto FORMTYPE = FormType::None;
 
 		struct ChangeFlags
@@ -183,7 +188,7 @@ namespace RE
 		static void AddCompileIndex(FormID& a_id, TESFile* a_file)
 		{
 			using func_t = decltype(&TESForm::AddCompileIndex);
-			REL::Relocation<func_t> func{ RELOCATION_ID(14509, 14667) };
+			static REL::Relocation<func_t> func{ RELOCATION_ID(14509, 14667) };
 			func(a_id, a_file);
 		}
 
@@ -356,6 +361,8 @@ namespace RE
 		stl::enumeration<FormType, std::uint8_t>        formType;         // 1A
 		std::uint8_t                                    pad1B;            // 1B
 		std::uint32_t                                   pad1C;            // 1C
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(TESForm) == 0x20);
 }

@@ -23,6 +23,8 @@ namespace RE
 		// members
 		std::int32_t  rank;   // 10
 		std::uint32_t pad14;  // 14
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(ExtraRank) == 0x18);
 }

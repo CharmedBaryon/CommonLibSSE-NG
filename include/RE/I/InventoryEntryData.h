@@ -34,6 +34,7 @@ namespace RE
 		InventoryEntryData& operator=(InventoryEntryData&& a_rhs);
 
 		void                                          AddExtraList(ExtraDataList* a_extra);
+		bool                                          CanItemBeTaken(bool a_noEquipped, bool a_noFavourited, bool a_noQuestItem) const;
 		[[nodiscard]] const char*                     GetDisplayName();
 		[[nodiscard]] EnchantmentItem*                GetEnchantment() const;
 		[[nodiscard]] std::optional<double>           GetEnchantmentCharge() const;
@@ -77,6 +78,9 @@ namespace RE
 
 			return false;
 		}
+
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(InventoryEntryData) == 0x18);
 }

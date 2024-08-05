@@ -51,6 +51,8 @@ namespace RE
 		stl::enumeration<RenderCapBits, std::uint32_t> rendererCapBits;     // 2C
 		stl::enumeration<VertexFormat, std::uint32_t>  rendererVtxFmts;     // 30
 		std::uint32_t                                  pad34;               // 34
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(GFxRenderConfig) == 0x38);
 }

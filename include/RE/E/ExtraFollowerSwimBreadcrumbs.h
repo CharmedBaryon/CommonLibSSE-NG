@@ -30,7 +30,8 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_ExtraFollowerSwimBreadcrumbs;
-		inline static auto           EXTRADATATYPE = ExtraDataType::kFollowerSwimBreadcrumbs;
+		inline static constexpr auto VTABLE = VTABLE_ExtraFollowerSwimBreadcrumbs;
+		inline static constexpr auto EXTRADATATYPE = ExtraDataType::kFollowerSwimBreadcrumbs;
 
 		~ExtraFollowerSwimBreadcrumbs() override;  // 00
 
@@ -43,6 +44,8 @@ namespace RE
 		std::uint32_t                                     leaderNavMeshID;  // 20
 		std::uint32_t                                     pad24;            // 24
 		BSSimpleList<ExtraFollowerSwimBreadcrumb*>        crumbs;           // 28
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(ExtraFollowerSwimBreadcrumbs) == 0x38);
 }

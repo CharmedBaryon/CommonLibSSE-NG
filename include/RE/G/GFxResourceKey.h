@@ -55,6 +55,8 @@ namespace RE
 		// members
 		KeyInterface* _keyInterface;  // 00
 		KeyHandle     _keyData;       // 08
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(GFxResourceKey) == 0x10);
 }

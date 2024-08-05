@@ -33,6 +33,8 @@ namespace RE
 		HitData         hitData;       // 18
 		std::uint64_t   unkA8;         // A8
 		std::uint32_t   unkB0;         // B0
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(VATSCommand) == 0xB8);
 
@@ -54,7 +56,7 @@ namespace RE
 		void SetMagicTimeSlowdown(float a_magicTimeSlowdown, float a_playerMagicTimeSlowdown)
 		{
 			using func_t = decltype(&VATS::SetMagicTimeSlowdown);
-			REL::Relocation<func_t> func{ RELOCATION_ID(43103, 44300) };
+			static REL::Relocation<func_t> func{ RELOCATION_ID(43103, 44300) };
 			return func(this, a_magicTimeSlowdown, a_playerMagicTimeSlowdown);
 		}
 
@@ -89,6 +91,8 @@ namespace RE
 		NiPointer<Actor>                       attacker;                 // A8
 		NiPointer<Actor>                       unkB0;                    // B0 - stranger?
 		mutable BSSpinLock                     lock;                     // B8
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(VATS) == 0xC0);
 }

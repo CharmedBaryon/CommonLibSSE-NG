@@ -29,6 +29,8 @@ namespace RE
 
 		// members
 		BSTranslator translator;  // 20
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(BSScaleformTranslator) == 0x50);
 }

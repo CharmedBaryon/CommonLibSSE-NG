@@ -9,6 +9,7 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_BSAnimationGraphChannel;
+		inline static constexpr auto VTABLE = VTABLE_BSAnimationGraphChannel;
 
 		virtual ~BSAnimationGraphChannel();  // 00
 
@@ -21,6 +22,8 @@ namespace RE
 		const BSFixedString channelName;  // 10
 		std::uint32_t       value;        // 18
 		std::uint32_t       pad1C;        // 1C
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(BSAnimationGraphChannel) == 0x20);
 }

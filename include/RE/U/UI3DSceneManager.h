@@ -3,6 +3,7 @@
 #include "RE/B/BSAtomic.h"
 #include "RE/B/BSTArray.h"
 #include "RE/B/BSTSingleton.h"
+#include "RE/I/InterfaceLightSchemes.h"
 #include "RE/N/NiColor.h"
 #include "RE/N/NiFrustum.h"
 #include "RE/N/NiMatrix3.h"
@@ -20,20 +21,6 @@ namespace RE
 	class ShadowSceneNode;
 	class TESImageSpaceModifier;
 
-	enum class INTERFACE_LIGHT_SCHEME
-	{
-		kJournal = 0,
-		kInventory,
-		kInventoryMagic,
-		kBook,
-		kLoading,
-		kUnk05,
-		kStats,
-		kLockpicking,
-
-		kTotal = 8
-	};
-
 	class MenuLight
 	{
 	public:
@@ -45,6 +32,8 @@ namespace RE
 		bool               castsShadows;  // 20
 		NiPointer<BSLight> light;         // 28
 		MenuLight*         last;          // 30
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(MenuLight) == 0x38);
 
@@ -79,6 +68,8 @@ namespace RE
 		NiPoint3                                   cachedCameraPos;     // C8
 		NiMatrix3                                  cachedCameraRot;     // D0
 		NiFrustum                                  viewFrustum;         // F8
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(UI3DSceneManager) == 0x118);
 }

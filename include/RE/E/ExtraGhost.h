@@ -9,7 +9,8 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_ExtraGhost;
-		inline static auto           EXTRADATATYPE = ExtraDataType::kGhost;
+		inline static constexpr auto VTABLE = VTABLE_ExtraGhost;
+		inline static constexpr auto EXTRADATATYPE = ExtraDataType::kGhost;
 
 		~ExtraGhost() override;  // 00
 
@@ -21,6 +22,8 @@ namespace RE
 		std::uint8_t  pad11;  // 11
 		std::uint16_t pad12;  // 12
 		std::uint32_t pad14;  // 14
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(ExtraGhost) == 0x18);
 }

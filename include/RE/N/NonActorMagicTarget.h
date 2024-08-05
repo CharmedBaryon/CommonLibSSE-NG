@@ -16,6 +16,7 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_NonActorMagicTarget;
+		inline static constexpr auto VTABLE = VTABLE_NonActorMagicTarget;
 		inline static constexpr auto EXTRADATATYPE = ExtraDataType::kNonActorMagicTarget;
 
 		~NonActorMagicTarget() override;  // 00
@@ -32,6 +33,8 @@ namespace RE
 		// members
 		TESObjectREFR*              targetObject;   // 28
 		BSSimpleList<ActiveEffect*> activeEffects;  // 30
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(NonActorMagicTarget) == 0x40);
 }

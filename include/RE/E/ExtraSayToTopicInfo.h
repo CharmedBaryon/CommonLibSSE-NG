@@ -14,7 +14,8 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_ExtraSayToTopicInfo;
-		inline static auto           EXTRADATATYPE = ExtraDataType::kSayTopicInfo;
+		inline static constexpr auto VTABLE = VTABLE_ExtraSayToTopicInfo;
+		inline static constexpr auto EXTRADATATYPE = ExtraDataType::kSayTopicInfo;
 
 		~ExtraSayToTopicInfo() override;  // 00
 
@@ -31,6 +32,8 @@ namespace RE
 		BSSoundHandle      sound;                // 28
 		std::uint32_t      pad34;                // 34
 		DialogueItem*      item;                 // 38
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(ExtraSayToTopicInfo) == 0x40);
 }

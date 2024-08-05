@@ -27,6 +27,8 @@ namespace RE
 		// members
 		ActorHandle   commandedActor;  // 90
 		std::uint32_t pad94;           // 94
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(CommandEffect) == 0x98);
 }

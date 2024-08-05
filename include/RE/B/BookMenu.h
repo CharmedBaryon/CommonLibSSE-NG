@@ -13,8 +13,10 @@ namespace RE
 {
 	struct BSAnimationGraphEvent;
 
+	class BSGeometry;
 	class ExtraDataList;
 	class NiAVObject;
+	class NiSourceTexture;
 	class TESObjectBOOK;
 	class TESObjectREFR;
 
@@ -37,22 +39,21 @@ namespace RE
 
 		struct RUNTIME_DATA
 		{
-#define RUNTIME_DATA_CONTENT                                                \
-	BSTArray<BSScaleformExternalTexture> bookTextures; /* 00 */             \
-	GPtr<GFxMovieView>                   book;         /* 18 */             \
-	NiPointer<NiAVObject>                book3D;       /* 20 */             \
-	std::uint32_t                        unk78;        /* 28 */             \
-	std::uint32_t                        pad7C;        /* 2C */             \
-	std::uint64_t                        unk80;        /* 30 */             \
-	void*                                unk88;        /* 38 - smart ptr */ \
-	std::uint16_t                        unk90;        /* 40 */             \
-	std::uint16_t                        unk92;        /* 42 */             \
-	bool                                 closeMenu;    /* 44 */             \
-	bool                                 isNote;       /* 45 */             \
-	std::uint8_t                         unk96;        /* 46 */             \
-	std::uint8_t                         pad97;        /* 47 */
-
-			RUNTIME_DATA_CONTENT
+#define RUNTIME_DATA_CONTENT                                                    \
+	BSTArray<BSScaleformExternalTexture> bookTextures;     /* 00 */             \
+	GPtr<GFxMovieView>                   book;             /* 18 */             \
+	NiPointer<NiAVObject>                bookModel;        /* 20 */             \
+	std::uint32_t                        numRenderTargets; /* 28 */             \
+	std::uint32_t                        pad7C;            /* 2C */             \
+	NiSourceTexture*                     pageTexture;      /* 80*/              \
+	NiPointer<BSGeometry>                pageTextGeo;      /* 88 - smart ptr */ \
+	std::uint16_t                        unk90;            /* 90 */             \
+	std::uint16_t                        startAnimating;   /* 92*/              \
+	bool                                 closeMenu;        /* 94*/              \
+	bool                                 isNote;           /* 95 */             \
+	bool                                 bookInitialized;  /* 96 */             \
+	std::uint8_t                         pad97;            /* 97 */
+            RUNTIME_DATA_CONTENT
 		};
 		static_assert(sizeof(RUNTIME_DATA) == 0x48);
 
@@ -109,10 +110,12 @@ namespace RE
 		RUNTIME_DATA_CONTENT  // 50, 60
 #endif
 	};
-#ifndef ENABLE_SKYRIM_VR
+#if defined(EXCLUSIVE_SKYRIM_FLAT)
 	static_assert(sizeof(BookMenu) == 0x98);
-#elif !defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE)
+#elif defined(EXCLUSIVE_SKYRIM_VR)
 	static_assert(sizeof(BookMenu) == 0xA8);
+#else
+	static_assert(sizeof(BookMenu) == 0x30);
 #endif
 }
 #undef RUNTIME_DATA_CONTENT

@@ -9,12 +9,15 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_ExtraWorn;
-		inline static auto           EXTRADATATYPE = ExtraDataType::kWorn;
+		inline static constexpr auto VTABLE = VTABLE_ExtraWorn;
+		inline static constexpr auto EXTRADATATYPE = ExtraDataType::kWorn;
 
 		~ExtraWorn() override;  // 00
 
 		// override (BSExtraData)
 		[[nodiscard]] ExtraDataType GetType() const override;  // 01 - { return kWorn; }
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(ExtraWorn) == 0x10);
 }

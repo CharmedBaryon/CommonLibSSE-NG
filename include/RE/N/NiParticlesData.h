@@ -10,6 +10,39 @@ namespace RE
 	public:
 		inline static constexpr auto RTTI = RTTI_NiParticlesData;
 		inline static constexpr auto Ni_RTTI = NiRTTI_NiParticlesData;
+		inline static constexpr auto VTABLE = VTABLE_NiParticlesData;
+
+		struct PARTICLES_RUNTIME_DATA
+		{
+#define RUNTIME_DATA_CONTENT                                               \
+	bool          hasRotations;           /* 10, VR 28 */                  \
+	std::uint8_t  unk11;                  /* 11, VR 29 */                  \
+	std::uint16_t maxNumVertices;         /* 12, VR 2A */                  \
+	NiBound       bound;                  /* 14, VR 2C */                  \
+	std::uint32_t pad24;                  /* 24, VR 3C */                  \
+	NiQuaternion* rotations;              /* 28, VR 40 */                  \
+	NiPoint3*     positions;              /* 30, VR 48 */                  \
+	NiColorA*     color;                  /* 38, VR 50 */                  \
+	float*        radii;                  /* 40, VR 58 */                  \
+	float*        sizes;                  /* 48, VR 60 */                  \
+	float*        rotationAngles;         /* 50, VR 68 */                  \
+	NiPoint3*     rotationAxes;           /* 58, VR 70 */                  \
+	NiColorA*     subtextureOffsets;      /* 60, VR 78 */                  \
+	std::uint32_t subTextureOffsetsCount; /* 68, VR 80 - max 256 */        \
+	float         aspectRatio;            /* 6C, VR 84 */                  \
+	float         speedToAspectAspect2;   /* 70, VR 88 */                  \
+	float         speedToAspectAspect1;   /* 74, VR 8C */                  \
+	float         speedToAspectSpeed2;    /* 78, VR 90 */                  \
+	std::uint16_t numVertices;            /* 7C, VR 94 */                  \
+	std::uint16_t pad7E;                  /* 7E, VR 96 */                  \
+	std::uint8_t* textureIndices;         /* 80, VR 98 */                  \
+	std::uint8_t  unk88;                  /* 88, VR A0 - aspect flags?  */ \
+	std::uint8_t  unk89;                  /* 89, VR A1 */                  \
+	std::uint16_t pad8A;                  /* 8A, VR A2 */                  \
+	std::uint32_t pad8C;                  /* 8C, VR A4 */
+			RUNTIME_DATA_CONTENT
+		};
+		static_assert(sizeof(PARTICLES_RUNTIME_DATA) == 0x80);
 
 		~NiParticlesData() override;  // 00
 
@@ -27,32 +60,29 @@ namespace RE
 		virtual void          RemoveParticle(std::uint16_t a_particleCount);      // 28
 		virtual void          CalculateNormals();                                 // 29 - { return; }
 
+		[[nodiscard]] inline PARTICLES_RUNTIME_DATA& GetParticlesRuntimeData() noexcept
+		{
+			return REL::RelocateMember<PARTICLES_RUNTIME_DATA>(this, 0x10, 0x28);
+		}
+
+		[[nodiscard]] inline const PARTICLES_RUNTIME_DATA& GetParticlesRuntimeData() const noexcept
+		{
+			return REL::RelocateMember<PARTICLES_RUNTIME_DATA>(this, 0x10, 0x28);
+		}
 		// members
-		bool          hasRotations;            // 10
-		std::uint8_t  unk11;                   // 11
-		std::uint16_t maxNumVertices;          // 12
-		NiBound       bound;                   // 14
-		std::uint32_t pad24;                   // 24
-		NiQuaternion* rotations;               // 28
-		NiPoint3*     positions;               // 30
-		NiColorA*     color;                   // 38
-		float*        radii;                   // 40
-		float*        sizes;                   // 48
-		float*        rotationAngles;          // 50
-		NiPoint3*     rotationAxes;            // 58
-		NiColorA*     subtextureOffsets;       // 60
-		std::uint32_t subTextureOffsetsCount;  // 68 - max 256
-		float         aspectRatio;             // 6C
-		float         speedToAspectAspect2;    // 70
-		float         speedToAspectAspect1;    // 74
-		float         speedToAspectSpeed2;     // 78
-		std::uint16_t numVertices;             // 7C
-		std::uint16_t pad7E;                   // 7E
-		std::uint8_t* textureIndices;          // 80
-		std::uint8_t  unk88;                   // 88 - aspect flags?
-		std::uint8_t  unk89;                   // 89
-		std::uint16_t pad8A;                   // 8A
-		std::uint32_t pad8C;                   // 8C
+
+#ifndef SKYRIM_CROSS_VR
+		RUNTIME_DATA_CONTENT;
+#endif
+	private:
+		KEEP_FOR_RE()
 	};
+#if defined(EXCLUSIVE_SKYRIM_FLAT)
 	static_assert(sizeof(NiParticlesData) == 0x90);
+#elif defined(EXCLUSIVE_SKYRIM_VR)
+	static_assert(sizeof(NiParticlesData) == 0x90);
+#else
+	static_assert(sizeof(NiParticlesData) == 0x10);
+#endif
 }
+#undef RUNTIME_DATA_CONTENT

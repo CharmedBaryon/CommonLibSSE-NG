@@ -10,7 +10,8 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_BGSLocAlias;
-		inline static auto           VMTYPEID = static_cast<VMTypeID>(141);
+		inline static constexpr auto VTABLE = VTABLE_BGSLocAlias;
+		inline static constexpr auto VMTYPEID = static_cast<VMTypeID>(141);
 
 		~BGSLocAlias() override;  // 00
 
@@ -22,6 +23,8 @@ namespace RE
 		std::uint64_t unk48;       // 48
 		std::uint64_t unk50;       // 50
 		TESCondition* conditions;  // 58
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(BGSLocAlias) == 0x60);
 }

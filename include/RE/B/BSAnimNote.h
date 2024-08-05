@@ -8,7 +8,8 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_BSAnimNote;
-		inline static auto           Ni_RTTI = NiRTTI_BSAnimNote;
+		inline static constexpr auto Ni_RTTI = NiRTTI_BSAnimNote;
+		inline static constexpr auto VTABLE = VTABLE_BSAnimNote;
 
 		enum class AnimNoteType
 		{
@@ -30,6 +31,8 @@ namespace RE
 
 		// add
 		virtual void Unk_25(void);  // 25
+	private:
+		KEEP_FOR_RE()
 	};
 	//static_assert(sizeof(BSAnimNote) == 0x);
 }

@@ -172,6 +172,8 @@ namespace RE
 		std::uint32_t      numTopicInfos;            // 50 - TIFC
 		std::uint32_t      firstFileOffset;          // 54
 		BSFixedString      formEditorID;             // 58
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(TESTopic) == 0x60);
 }

@@ -11,6 +11,7 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_BGSSkillPerkTreeNode;
+		inline static constexpr auto VTABLE = VTABLE_BGSSkillPerkTreeNode;
 
 		BGSSkillPerkTreeNode(std::int32_t a_index, ActorValueInfo* a_avInfo);
 
@@ -31,6 +32,8 @@ namespace RE
 		ActorValueInfo*                 associatedSkill;     // 58 - SNAM
 		float                           horizontalPosition;  // 60 - HNAM
 		float                           verticalPosition;    // 64 - VNAM
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(BGSSkillPerkTreeNode) == 0x68);
 }

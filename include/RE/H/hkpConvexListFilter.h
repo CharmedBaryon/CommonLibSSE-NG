@@ -25,6 +25,8 @@ namespace RE
 
 		// add
 		virtual ConvexListCollisionType GetConvexListCollisionType(const hkpCdBody& a_convexListBody, const hkpCdBody& a_otherBody, const hkpCollisionInput& a_input) const = 0;  // 03
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(hkpConvexListFilter) == 0x10);
 }

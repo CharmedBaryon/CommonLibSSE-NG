@@ -60,6 +60,8 @@ namespace RE
 		std::uint8_t     deactivationIntegrateCounter;                 // 127
 		float            maxConstraintViolationSqrd;                   // 128
 		std::uint32_t    pad12C;                                       // 12C
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(hkpSolverInfo) == 0x130);
 }

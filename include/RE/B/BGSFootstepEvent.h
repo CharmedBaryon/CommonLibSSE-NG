@@ -11,6 +11,8 @@ namespace RE
 		// members
 		std::uint32_t pad04;  // 04
 		BSFixedString tag;    // 08
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(BGSFootstepEvent) == 0x10);
 }

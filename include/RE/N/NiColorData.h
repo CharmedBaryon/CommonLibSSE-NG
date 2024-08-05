@@ -9,7 +9,8 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_NiColorData;
-		inline static auto           Ni_RTTI = NiRTTI_NiColorData;
+		inline static constexpr auto Ni_RTTI = NiRTTI_NiColorData;
+		inline static constexpr auto VTABLE = VTABLE_NiColorData;
 
 		using KeyType = NiColorKey::KeyType;
 
@@ -33,6 +34,8 @@ namespace RE
 		std::uint8_t  keySize;  // 24
 		std::uint8_t  pad25;    // 25
 		std::uint16_t pad26;    // 26
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(NiColorData) == 0x28);
 }

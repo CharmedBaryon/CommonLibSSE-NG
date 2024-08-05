@@ -11,6 +11,7 @@ namespace RE
 	public:
 		inline static constexpr auto RTTI = RTTI_BSWaterShaderProperty;
 		inline static constexpr auto Ni_RTTI = NiRTTI_BSWaterShaderProperty;
+		inline static constexpr auto VTABLE = VTABLE_BSWaterShaderProperty;
 
 		enum class WaterFlag
 		{
@@ -63,6 +64,8 @@ namespace RE
 		std::uint8_t                               padF9;                 // F9
 		std::uint16_t                              padFA;                 // FA
 		std::uint16_t                              padFC;                 // FC
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(BSWaterShaderProperty) == 0x100);
 }

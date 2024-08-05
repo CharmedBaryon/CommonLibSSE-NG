@@ -12,6 +12,8 @@ namespace RE
 
 		// add
 		[[nodiscard]] virtual bool IsVerboseActionErrors() const { return true; }  // 01
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(GFxLogBase<void*>) == 0x8);
 }

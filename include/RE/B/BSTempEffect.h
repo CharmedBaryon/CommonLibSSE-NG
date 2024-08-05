@@ -29,7 +29,8 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_BSTempEffect;
-		inline static auto           Ni_RTTI = NiRTTI_BSTempEffect;
+		inline static constexpr auto Ni_RTTI = NiRTTI_BSTempEffect;
+		inline static constexpr auto VTABLE = VTABLE_BSTempEffect;
 		inline static constexpr auto TYPE = TEMP_EFFECT_TYPE::kDefault;
 
 		~BSTempEffect() override;  // 00
@@ -108,6 +109,8 @@ namespace RE
 		std::uint16_t  pad26;        // 26
 		std::uint32_t  effectID;     // 28
 		std::uint32_t  pad2C;        // 2C
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(BSTempEffect) == 0x30);
 }

@@ -32,6 +32,8 @@ namespace RE
 
 		// members
 		Movement::TypeData movementTypeData;  // 20
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(BGSMovementType) == 0x60);
 }

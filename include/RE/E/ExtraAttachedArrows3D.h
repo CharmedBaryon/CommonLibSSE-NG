@@ -14,7 +14,8 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_ExtraAttachedArrows3D;
-		inline static auto           EXTRADATATYPE = ExtraDataType::kAttachedArrows3D;
+		inline static constexpr auto VTABLE = VTABLE_ExtraAttachedArrows3D;
+		inline static constexpr auto EXTRADATATYPE = ExtraDataType::kAttachedArrows3D;
 
 		struct DataItem
 		{
@@ -37,6 +38,8 @@ namespace RE
 		std::uint16_t      nextStorage;    // 28
 		std::uint16_t      oldestStorage;  // 2A
 		std::uint32_t      pad2C;          // 2C
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(ExtraAttachedArrows3D) == 0x30);
 }

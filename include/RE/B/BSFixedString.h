@@ -191,14 +191,14 @@ namespace RE
 			inline BSFixedString* ctor8(const char* a_data)
 			{
 				using func_t = decltype(&BSFixedString::ctor8);
-				REL::Relocation<func_t> func{ RELOCATION_ID(67819, 69161) };
+				static REL::Relocation<func_t> func{ RELOCATION_ID(67819, 69161) };
 				return func(this, a_data);
 			}
 
 			inline BSFixedString* ctor16(const wchar_t* a_data)
 			{
 				using func_t = decltype(&BSFixedString::ctor16);
-				REL::Relocation<func_t> func{ RELOCATION_ID(67834, 69176) };
+				static REL::Relocation<func_t> func{ RELOCATION_ID(67834, 69176) };
 				return func(this, a_data);
 			}
 
@@ -250,3 +250,35 @@ namespace RE
 		}
 	};
 }
+
+#ifdef FMT_VERSION
+template <>
+struct fmt::formatter<RE::BSFixedString>
+{
+	// Presentation format: 'f' - fixed, 'e' - exponential.
+	char presentation = 'f';
+
+	// Parses format specifications of the form ['f' | 'e'].
+	constexpr auto parse(format_parse_context& ctx) -> format_parse_context::iterator
+	{
+		auto it = ctx.begin(), end = ctx.end();
+		if (it != end && (*it == 'f'))
+			presentation = *it++;
+
+		// Check if reached the end of the range:
+		if (it != end && *it != '}')
+			format_error("invalid format");
+
+		// Return an iterator past the end of the parsed range:
+		return it;
+	}
+
+	// Formats the point p using the parsed format specification (presentation)
+	// stored in this formatter.
+	auto format(const RE::BSFixedString& v, format_context& ctx) const -> format_context::iterator
+	{
+		// ctx.out() is an output iterator to write to.
+		return fmt::format_to(ctx.out(), "{}", v.data());
+	}
+};
+#endif

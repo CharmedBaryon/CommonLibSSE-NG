@@ -50,6 +50,8 @@ namespace RE
 
 		// members
 		stl::enumeration<Flag, std::uint32_t> flags;  // 0
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(CFilter) == 0x4);
 }

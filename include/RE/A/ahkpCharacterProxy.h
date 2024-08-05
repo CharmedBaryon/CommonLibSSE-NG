@@ -8,12 +8,15 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_ahkpCharacterProxy;
+		inline static constexpr auto VTABLE = VTABLE_ahkpCharacterProxy;
 
 		~ahkpCharacterProxy() override;  // 00
 
 		// members
 		std::uint64_t unk0F0;  // 0F0
 		std::uint64_t unk0F8;  // 0F8
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(ahkpCharacterProxy) == 0x100);
 }

@@ -10,6 +10,7 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_BSUIMessageData;
+		inline static constexpr auto VTABLE = VTABLE_BSUIMessageData;
 
 		union Data
 		{
@@ -26,6 +27,8 @@ namespace RE
 		BSString*     str;       // 10
 		BSFixedString fixedStr;  // 18
 		Data          data;      // 20
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(BSUIMessageData) == 0x28);
 }

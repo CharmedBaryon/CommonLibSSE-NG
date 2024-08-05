@@ -12,7 +12,7 @@ namespace RE
 
 	ObjectRefHandle Console::GetSelectedRefHandle()
 	{
-		REL::Relocation<ObjectRefHandle*> selectedRef{ Offset::Console::SelectedRef };
+		REL::Relocation<ObjectRefHandle*> selectedRef{ RELOCATION_ID(519394, AE_CHECK(SKSE::RUNTIME_SSE_1_6_1130, 405935, 504099)) };
 		return *selectedRef;
 	}
 
@@ -36,7 +36,7 @@ namespace RE
 	void Console::SetSelectedRef_Impl(ObjectRefHandle& a_handle)
 	{
 		using func_t = decltype(&Console::SetSelectedRef_Impl);
-		REL::Relocation<func_t> func{ Offset::Console::SetSelectedRef };
+		static REL::Relocation<func_t> func{ RELOCATION_ID(50164, 51093) };
 		return func(this, a_handle);
 	}
 }

@@ -171,14 +171,14 @@ namespace RE
 		void ClearHeadtrackTarget(HEAD_TRACK_TYPE a_headtrackType, bool a_defaultHold)
 		{
 			using func_t = decltype(&HighProcessData::ClearHeadtrackTarget);
-			REL::Relocation<func_t> func{ RELOCATION_ID(38726, 39756) };
+			static REL::Relocation<func_t> func{ RELOCATION_ID(38726, 39756) };
 			return func(this, a_headtrackType, a_defaultHold);
 		}
 
 		void SetHeadtrackTarget(HEAD_TRACK_TYPE a_headtrackType, TESObjectREFR* a_target)
 		{
 			using func_t = decltype(&HighProcessData::SetHeadtrackTarget);
-			REL::Relocation<func_t> func{ RELOCATION_ID(38760, 39783) };
+			static REL::Relocation<func_t> func{ RELOCATION_ID(38760, 39783) };
 			return func(this, a_headtrackType, a_target);
 		}
 
@@ -227,9 +227,7 @@ namespace RE
 		void*                                                 unk188;                                    // 188 - smart ptr
 		BSTSmartPointer<Data190>                              unk190;                                    // 190
 		BSTSmartPointer<Data190>                              unk198;                                    // 198
-		float                                                 unk1A0;                                    // 1A0
-		float                                                 unk1A4;                                    // 1A4
-		float                                                 unk1A8;                                    // 1A8
+		NiPoint3                                              unk1A0;                                    // 1A0
 		std::uint32_t                                         unk1AC;                                    // 1AC
 		std::uint64_t                                         unk1B0;                                    // 1B0
 		std::uint64_t                                         unk1B8;                                    // 1B8
@@ -367,6 +365,8 @@ namespace RE
 		bool                                                  aggroRadiusStarted;                        // 472
 		std::uint8_t                                          pad473;                                    // 473
 		std::uint32_t                                         pad474;                                    // 474
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(HighProcessData) == 0x478);
 }

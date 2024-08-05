@@ -11,7 +11,8 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_ExtraGlobal;
-		inline static auto           EXTRADATATYPE = ExtraDataType::kGlobal;
+		inline static constexpr auto VTABLE = VTABLE_ExtraGlobal;
+		inline static constexpr auto EXTRADATATYPE = ExtraDataType::kGlobal;
 
 		~ExtraGlobal() override;  // 00
 
@@ -21,6 +22,8 @@ namespace RE
 
 		// members
 		TESGlobal* global;  // 10
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(ExtraGlobal) == 0x18);
 }

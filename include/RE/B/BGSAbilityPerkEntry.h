@@ -23,6 +23,8 @@ namespace RE
 
 		// members
 		SpellItem* ability;  // 10
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(BGSAbilityPerkEntry) == 0x18);
 }

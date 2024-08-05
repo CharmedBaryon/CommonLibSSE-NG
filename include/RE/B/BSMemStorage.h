@@ -24,6 +24,8 @@ namespace RE
 		// members
 		Win32FileType* file;   // 20
 		std::uint64_t  unk28;  // 28
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(BSMemStorage) == 0x30);
 }

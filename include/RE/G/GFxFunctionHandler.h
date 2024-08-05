@@ -12,6 +12,7 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_GFxFunctionHandler;
+		inline static constexpr auto VTABLE = VTABLE_GFxFunctionHandler;
 
 		struct Params
 		{
@@ -30,6 +31,8 @@ namespace RE
 
 		// add
 		virtual void Call(Params& a_params) = 0;  // 01
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(GFxFunctionHandler) == 0x10);
 }

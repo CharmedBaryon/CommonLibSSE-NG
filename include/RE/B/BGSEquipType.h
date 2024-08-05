@@ -9,6 +9,7 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_BGSEquipType;
+		inline static constexpr auto VTABLE = VTABLE_BGSEquipType;
 
 		enum class EQUIPPED_ITEM_TYPE
 		{
@@ -32,6 +33,8 @@ namespace RE
 
 		// members
 		BGSEquipSlot* equipSlot;  // 08 - ETYP
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(BGSEquipType) == 0x10);
 }

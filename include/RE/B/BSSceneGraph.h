@@ -5,12 +5,14 @@
 namespace RE
 {
 	class NiCamera;
+	class NiVisibleArray;
 
 	class BSSceneGraph : public NiNode
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_BSSceneGraph;
 		inline static constexpr auto Ni_RTTI = NiRTTI_BSSceneGraph;
+		inline static constexpr auto VTABLE = VTABLE_BSSceneGraph;
 
 		~BSSceneGraph() override;  // 00
 
@@ -24,13 +26,13 @@ namespace RE
 
 		struct BS_SCENE_GRAPH_RUNTIME_DATA
 		{
-#define RUNTIME_DATA_CONTENT                        \
-	NiPointer<NiCamera> camera;    /* 128 */        \
-	std::uint64_t       unk130;    /* 130 - 0x18 */ \
-	bool                unk138;    /* 138 */        \
-	std::uint8_t        pad139;    /* 139 */        \
-	std::uint16_t       pad13A;    /* 13A */        \
-	float               cameraFOV; /* 13C */
+#define RUNTIME_DATA_CONTENT                             \
+	NiPointer<NiCamera> camera;         /* 128 */        \
+	NiVisibleArray*     visArray;       /* 130 - 0x18 */ \
+	bool                menuSceneGraph; /* 138 */        \
+	std::uint8_t        pad139;         /* 139 */        \
+	std::uint16_t       pad13A;         /* 13A */        \
+	float               cameraFOV;      /* 13C */
 
 			RUNTIME_DATA_CONTENT
 		};

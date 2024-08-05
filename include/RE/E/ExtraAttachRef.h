@@ -10,7 +10,8 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_ExtraAttachRef;
-		inline static auto           EXTRADATATYPE = ExtraDataType::kAttachRef;
+		inline static constexpr auto VTABLE = VTABLE_ExtraAttachRef;
+		inline static constexpr auto EXTRADATATYPE = ExtraDataType::kAttachRef;
 
 		~ExtraAttachRef() override;  // 00
 
@@ -21,6 +22,8 @@ namespace RE
 		// members
 		ObjectRefHandle attachRef;  // 10
 		std::uint32_t   pad14;      // 14
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(ExtraAttachRef) == 0x18);
 }

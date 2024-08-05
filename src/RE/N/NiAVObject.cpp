@@ -12,19 +12,19 @@
 #include "RE/B/BSXFlags.h"
 #include "RE/B/bhkNiCollisionObject.h"
 #include "RE/B/bhkRigidBody.h"
+#include "RE/H/hkpRigidBody.h"
 #include "RE/N/NiColor.h"
 #include "RE/N/NiNode.h"
 #include "RE/N/NiProperty.h"
 #include "RE/N/NiRTTI.h"
 #include "RE/S/State.h"
-#include "RE/H/hkpRigidBody.h"
 
 namespace RE
 {
 	NiAVObject* NiAVObject::Clone()
 	{
 		using func_t = decltype(&NiAVObject::Clone);
-		REL::Relocation<func_t> func{ RELOCATION_ID(68835, 70187) };
+		static REL::Relocation<func_t> func{ RELOCATION_ID(68835, 70187) };
 		return func(this);
 	}
 
@@ -54,7 +54,7 @@ namespace RE
 	bhkCollisionObject* NiAVObject::GetCollisionObject() const
 	{
 		using func_t = decltype(&NiAVObject::GetCollisionObject);
-		REL::Relocation<func_t> func{ RELOCATION_ID(25482, 26022) };
+		static REL::Relocation<func_t> func{ RELOCATION_ID(25482, 26022) };
 		return func(this);
 	}
 
@@ -99,9 +99,23 @@ namespace RE
 		return firstGeometry;
 	}
 
+	float NiAVObject::GetMass()
+	{
+		float mass = 0.0f;
+
+		BSVisit::TraverseScenegraphCollision(this, [&](bhkNiCollisionObject* a_col) -> BSVisit::BSVisitControl {
+			if (auto hkpBody = a_col->body ? static_cast<RE::hkpRigidBody*>(a_col->body->referencedObject.get()) : nullptr) {
+				mass += hkpBody->motion.GetMass();
+			}
+			return BSVisit::BSVisitControl::kContinue;
+		});
+
+		return mass;
+	}
+
 	TESObjectREFR* NiAVObject::GetUserData() const
 	{
-		auto* thisUserData = REL::RelocateMember<RE::TESObjectREFR*>(this, 0x0F8, 0x100);
+		auto* thisUserData = REL::RelocateMember<RE::TESObjectREFR*>(this, 0x0F8, 0x110);
 		if (thisUserData) {
 			return thisUserData;
 		}
@@ -115,7 +129,7 @@ namespace RE
 
 	void NiAVObject::SetUserData(TESObjectREFR* a_ref) noexcept
 	{
-		REL::RelocateMember<RE::TESObjectREFR*>(this, 0x0F8, 0x100) = a_ref;
+		REL::RelocateMember<RE::TESObjectREFR*>(this, 0x0F8, 0x110) = a_ref;
 	}
 
 	bool NiAVObject::HasAnimation() const
@@ -147,7 +161,7 @@ namespace RE
 	void NiAVObject::RemoveDecals()
 	{
 		using func_t = decltype(&NiAVObject::RemoveDecals);
-		REL::Relocation<func_t> func{ RELOCATION_ID(15547, 15723) };
+		static REL::Relocation<func_t> func{ RELOCATION_ID(15547, 15723) };
 		return func(this);
 	}
 
@@ -159,22 +173,22 @@ namespace RE
 	void NiAVObject::SetCollisionLayer(COL_LAYER a_collisionLayer)
 	{
 		using func_t = decltype(&NiAVObject::SetCollisionLayer);
-		REL::Relocation<func_t> func{ RELOCATION_ID(76170, 77998) };
+		static REL::Relocation<func_t> func{ RELOCATION_ID(76170, 77998) };
 		return func(this, a_collisionLayer);
 	}
 
 	void NiAVObject::SetCollisionLayerAndGroup(COL_LAYER a_collisionLayer, std::uint32_t a_group)
 	{
 		using func_t = decltype(&NiAVObject::SetCollisionLayerAndGroup);
-		REL::Relocation<func_t> func{ RELOCATION_ID(76171, 77999) };
+		static REL::Relocation<func_t> func{ RELOCATION_ID(76171, 77999) };
 		return func(this, a_collisionLayer, a_group);
 	}
 
-	bool NiAVObject::SetMotionType(std::uint32_t a_motionType, bool a_arg2, bool a_arg3, bool a_allowActivate)
+	bool NiAVObject::SetMotionType(hkpMotion::MotionType a_motionType, bool a_recurse, bool a_force, bool a_allowActivate)
 	{
 		using func_t = decltype(&NiAVObject::SetMotionType);
-		REL::Relocation<func_t> func{ Offset::NiAVObject::SetMotionType };
-		return func(this, a_motionType, a_arg2, a_arg3, a_allowActivate);
+		static REL::Relocation<func_t> func{ RELOCATION_ID(76033, 77866) };
+		return func(this, a_motionType, a_recurse, a_force, a_allowActivate);
 	}
 
 	bool NiAVObject::SetProjectedUVData(const NiColorA& a_projectedUVParams, const NiColor& a_projectedUVColor, bool a_isSnow)
@@ -222,14 +236,14 @@ namespace RE
 		auto                                gState = BSGraphics::State::GetSingleton();
 		BSTSmartPointer<BSEffectShaderData> newShaderData(new BSEffectShaderData());
 		newShaderData->fillColor = a_color;
-		newShaderData->baseTexture = gState->defaultTextureWhite;
+		newShaderData->baseTexture = gState->GetRuntimeData().defaultTextureWhite;
 
 		BSVisit::TraverseScenegraphGeometries(this, [&](BSGeometry* a_geometry) -> BSVisit::BSVisitControl {
 			auto effect = a_geometry->GetGeometryRuntimeData().properties[BSGeometry::States::kEffect];
 			auto shaderProp = netimmerse_cast<BSShaderProperty*>(effect.get());
 			if (shaderProp && shaderProp->AcceptsEffectData()) {
 				auto shaderData = shaderProp->effectData;
-				if (!shaderData || shaderData->baseTexture == gState->defaultTextureWhite) {
+				if (!shaderData || shaderData->baseTexture == gState->GetRuntimeData().defaultTextureWhite) {
 					shaderProp->SetEffectShaderData(newShaderData);
 				}
 			}
@@ -241,7 +255,7 @@ namespace RE
 	void NiAVObject::Update(NiUpdateData& a_data)
 	{
 		using func_t = decltype(&NiAVObject::Update);
-		REL::Relocation<func_t> func{ Offset::NiAVObject::Update };
+		static REL::Relocation<func_t> func{ RELOCATION_ID(68900, 70251) };
 		return func(this, a_data);
 	}
 
@@ -318,7 +332,7 @@ namespace RE
 	void NiAVObject::UpdateRigidConstraints(bool a_enable, std::uint8_t a_arg2, std::uint32_t a_arg3)
 	{
 		using func_t = decltype(&NiAVObject::UpdateRigidConstraints);
-		REL::Relocation<func_t> func{ RELOCATION_ID(76271, 78103) };
+		static REL::Relocation<func_t> func{ RELOCATION_ID(76271, 78103) };
 		return func(this, a_enable, a_arg2, a_arg3);
 	}
 
@@ -398,4 +412,16 @@ namespace RE
 		REL::RelocateVirtual<decltype(&NiAVObject::OnVisible)>(0x34, 0x35, this, a_process);
 	}
 #endif
+	BSLightingShaderProperty* NiAVObject::temp_nicast(BSGeometry* a_geometry)
+	{
+		if (auto effect = a_geometry->GetGeometryRuntimeData().properties[BSGeometry::States::kEffect].get(); effect) {
+			if (auto rtti = effect->GetRTTI(); rtti) {
+				const std::string temp_name(rtti->GetName());
+				if (temp_name == "BSLightingShaderProperty") {
+					return static_cast<RE::BSLightingShaderProperty*>(effect);
+				}
+			}
+		}
+		return nullptr;
+	}
 }

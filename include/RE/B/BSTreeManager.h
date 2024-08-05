@@ -19,6 +19,7 @@ namespace RE
 		{
 		public:
 			inline static constexpr auto RTTI = RTTI_BSTreeManager__IQueryCullingCamera;
+			inline static constexpr auto VTABLE = VTABLE_BSTreeManager__IQueryCullingCamera;
 
 			virtual ~IQueryCullingCamera();  // 00
 
@@ -51,6 +52,8 @@ namespace RE
 		float                               treeUpdateTimer;   // 7C
 		float                               midLODSwitchDist;  // 80
 		std::uint32_t                       pad84;             // 84
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(BSTreeManager) == 0x88);
 }

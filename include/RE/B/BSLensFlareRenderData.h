@@ -14,6 +14,8 @@ namespace RE
 		float                                            fadeDistRadiusScale;  // 00
 		float                                            colorInfluence;       // 04
 		BSTArray<NiPointer<BSLensFlareSpriteRenderData>> sprites;              // 08
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(BSLensFlareRenderData) == 0x20);
 }

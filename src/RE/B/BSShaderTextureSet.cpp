@@ -5,7 +5,7 @@ namespace RE
 	BSShaderTextureSet* BSShaderTextureSet::Ctor()
 	{
 		using func_t = decltype(&BSShaderTextureSet::Ctor);
-		REL::Relocation<func_t> func{ REL::ID(99886) };
+		static REL::Relocation<func_t> func{ REL::ID(99886) };
 		return func(this);
 	}
 
@@ -13,7 +13,7 @@ namespace RE
 	{
 		if SKYRIM_REL_CONSTEXPR (REL::Module::IsAE()) {
 			using func_t = decltype(&BSShaderTextureSet::Create);
-			REL::Relocation<func_t> func{ REL::ID(107172) };
+			static REL::Relocation<func_t> func{ REL::ID(107172) };
 			return func();
 		} else {
 			auto textureset = malloc<BSShaderTextureSet>();

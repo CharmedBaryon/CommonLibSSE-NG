@@ -27,6 +27,8 @@ namespace RE
 		bool             removeOnUnequip;  // 1A
 		std::uint8_t     pad1B;            // 1B
 		std::uint32_t    pad1C;            // 1C
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(ExtraEnchantment) == 0x20);
 }

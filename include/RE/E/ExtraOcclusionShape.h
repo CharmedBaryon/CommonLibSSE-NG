@@ -12,7 +12,8 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_ExtraOcclusionShape;
-		inline static auto           EXTRADATATYPE = ExtraDataType::kOcclusionShape;
+		inline static constexpr auto VTABLE = VTABLE_ExtraOcclusionShape;
+		inline static constexpr auto EXTRADATATYPE = ExtraDataType::kOcclusionShape;
 
 		~ExtraOcclusionShape() override;  // 00
 
@@ -21,6 +22,8 @@ namespace RE
 
 		// members
 		NiPointer<BSOcclusionShape> shape;  // 10
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(ExtraOcclusionShape) == 0x18);
 }

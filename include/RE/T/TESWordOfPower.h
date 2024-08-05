@@ -32,6 +32,8 @@ namespace RE
 
 		// members
 		BSFixedString translation;  // 30 - TNAM
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(TESWordOfPower) == 0x38);
 }

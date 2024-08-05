@@ -5,7 +5,7 @@ namespace RE
 	BSTEventSource<SoulsTrapped::Event>* SoulsTrapped::GetEventSource()
 	{
 		using func_t = decltype(&SoulsTrapped::GetEventSource);
-		REL::Relocation<func_t> func{ RELOCATION_ID(37916, 38873) };
+		static REL::Relocation<func_t> func{ RELOCATION_ID(37916, 38873) };
 		return func();
 	}
 

@@ -16,6 +16,8 @@ namespace RE
 		bool                     isApplied;             // 12
 		std::uint8_t             pad13;                 // 13
 		std::uint32_t            pad14;                 // 14
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(TESActiveEffectApplyRemoveEvent) == 0x18);
 }

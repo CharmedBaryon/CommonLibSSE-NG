@@ -8,6 +8,7 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_NiRefObject;
+		inline static constexpr auto VTABLE = VTABLE_NiRefObject;
 
 		NiRefObject();
 		virtual ~NiRefObject();  // 00
@@ -26,6 +27,8 @@ namespace RE
 		// members
 		volatile std::uint32_t _refCount{ 0 };  // 08
 		std::uint32_t          _pad0C{ 0 };     // 0C
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(NiRefObject) == 0x10);
 }

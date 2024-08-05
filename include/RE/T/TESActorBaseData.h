@@ -81,6 +81,7 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_TESActorBaseData;
+		inline static constexpr auto VTABLE = VTABLE_TESActorBaseData;
 
 		~TESActorBaseData() override;
 
@@ -117,7 +118,7 @@ namespace RE
 		[[nodiscard]] std::uint16_t GetLevel() const
 		{
 			using func_t = decltype(&TESActorBaseData::GetLevel);
-			REL::Relocation<func_t> func{ RELOCATION_ID(14262, 14384) };
+			static REL::Relocation<func_t> func{ RELOCATION_ID(14262, 14384) };
 			return func(this);
 		}
 
@@ -128,6 +129,8 @@ namespace RE
 		TESForm*               baseTemplateForm;  // 30 - TPLT
 		TESForm**              templateForms;     // 38
 		BSTArray<FACTION_RANK> factions;          // 40
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(TESActorBaseData) == 0x58);
 }

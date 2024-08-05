@@ -8,6 +8,7 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_BSThread;
+		inline static constexpr auto VTABLE = VTABLE_BSThread;
 
 		virtual ~BSThread();  // 00
 
@@ -25,6 +26,8 @@ namespace RE
 		std::uint8_t               pad49;          // 49
 		std::uint16_t              pad4A;          // 4A
 		std::uint32_t              pad4C;          // 4C
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(BSThread) == 0x50);
 }

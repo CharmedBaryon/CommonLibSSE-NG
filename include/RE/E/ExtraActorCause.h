@@ -12,7 +12,8 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_ExtraActorCause;
-		inline static auto           EXTRADATATYPE = ExtraDataType::kActorCause;
+		inline static constexpr auto VTABLE = VTABLE_ExtraActorCause;
+		inline static constexpr auto EXTRADATATYPE = ExtraDataType::kActorCause;
 
 		~ExtraActorCause() override;  // 00
 
@@ -21,6 +22,8 @@ namespace RE
 
 		// members
 		NiPointer<ActorCause> actorCause;  // 10
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(ExtraActorCause) == 0x18);
 }

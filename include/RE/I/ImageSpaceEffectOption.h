@@ -8,6 +8,7 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_ImageSpaceEffectOption;
+		inline static constexpr auto VTABLE = VTABLE_ImageSpaceEffectOption;
 
 		~ImageSpaceEffectOption() override;  // 00
 
@@ -16,6 +17,8 @@ namespace RE
 
 		// members
 		NiTPrimitiveArray<bool> options;  // 90
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(ImageSpaceEffectOption) == 0xA8);
 }

@@ -37,6 +37,8 @@ namespace RE
 		BSTHashMap<std::uint32_t, CreatedMagicItemData> poisons;             // 68
 		BSTSet<MagicItem*>                              queuedDeletes;       // 98
 		mutable BSSpinLock                              lock;                // C8
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(BGSCreatedObjectManager) == 0xD0);
 }

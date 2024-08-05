@@ -35,6 +35,8 @@ namespace RE
 		bool        GetIgnoredBySandbox() const override;      // 22 - { return (BGSIdleCollection::flags >> 4) & 1; }
 		void        UnClone3D(TESObjectREFR* a_ref) override;  // 41
 		NiAVObject* Clone3D(TESObjectREFR* a_ref) override;    // 4A
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(BGSIdleMarker) == 0x78);
 }

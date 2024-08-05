@@ -77,6 +77,8 @@ namespace RE
 		void*                       unk28;            // 28
 		GPtr<GFxMovieDefBindStates> movieBindStates;  // 30
 		GPtr<BindTaskData>          bindTaskData;     // 38
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(GFxMovieDefImpl) == 0x40);
 }

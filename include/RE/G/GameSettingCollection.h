@@ -9,6 +9,7 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_GameSettingCollection;
+		inline static constexpr auto VTABLE = VTABLE_GameSettingCollection;
 
 		~GameSettingCollection() override;  // 00
 
@@ -24,6 +25,9 @@ namespace RE
 		static GameSettingCollection* GetSingleton();
 
 		Setting* GetSetting(const char* a_name);
+
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(GameSettingCollection) == 0x140);
 }

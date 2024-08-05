@@ -46,6 +46,8 @@ namespace RE
 		[[nodiscard]] virtual bool SavesBefore(FORM* a_form);     // 3C - { return fa;se; }
 		[[nodiscard]] virtual bool SavesBefore(TESForm* a_form);  // 3D - { return false; }
 		[[nodiscard]] virtual bool ProcessBeforeSave();           // 3E - { return false; }
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(NavMesh) == 0x140);
 }

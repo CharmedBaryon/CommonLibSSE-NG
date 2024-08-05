@@ -47,16 +47,16 @@ TEST_CASE("ActorValue/std::format", "[.][e2e]")
 	REQUIRE(REL::Module::inject());
 	SECTION("Sample types")
 	{
-		CHECK(std::format("{}", RE::ActorValue::kAlchemyModifier) == "AlchemyModifier");
-		CHECK(std::format("{}", RE::ActorValue::kHeavyArmor) == "HeavyArmor");
+		CHECK(std::format("{}", std::to_string(RE::ActorValue::kAlchemyModifier)) == "AlchemyModifier");
+		CHECK(std::format("{}", std::to_string(RE::ActorValue::kHeavyArmor)) == "HeavyArmor");
 	}
 	SECTION("Less than valid types")
 	{
-		CHECK(std::format("{}", RE::ActorValue::kNone) == "NONE");
+		CHECK(std::format("{}", std::to_string(RE::ActorValue::kNone)) == "NONE");
 	}
 	SECTION("Greater than valid types")
 	{
-		CHECK(std::format("{}", RE::ActorValue::kTotal) == "NONE");
+		CHECK(std::format("{}", std::to_string(RE::ActorValue::kTotal)) == "NONE");
 	}
 	REL::Module::reset();
 }

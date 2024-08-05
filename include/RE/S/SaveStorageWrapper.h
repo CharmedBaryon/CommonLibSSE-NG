@@ -21,6 +21,8 @@ namespace RE
 
 		// members
 		std::uint64_t unk30;  // 30
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(SaveStorageWrapper) == 0x38);
 }

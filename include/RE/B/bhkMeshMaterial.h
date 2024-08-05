@@ -10,6 +10,8 @@ namespace RE
 	public:
 		//members
 		MATERIAL_ID materialID;  // 04
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(bhkMeshMaterial) == 0x8);
 }

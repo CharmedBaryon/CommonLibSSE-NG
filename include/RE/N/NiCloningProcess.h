@@ -16,6 +16,8 @@ namespace RE
 		char                             appendChar;  // 64
 		std::uint16_t                    unk65;       // 65
 		NiPoint3                         unk68;       // 68
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(NiCloningProcess) == 0x78);
 }

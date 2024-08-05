@@ -98,5 +98,7 @@ namespace RE
 		T*         data;    // 00
 		UPInt      size;    // 08
 		SizePolicy policy;  // 10
+	private:
+		KEEP_FOR_RE()
 	};
 }

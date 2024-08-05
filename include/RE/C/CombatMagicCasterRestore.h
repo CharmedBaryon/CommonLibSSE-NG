@@ -28,6 +28,8 @@ namespace RE
 		AITimeStamp   concentrationCastTimeStamp;  // 20
 		std::uint32_t unk24;                       // 24
 		ActorValue    primaryAV;                   // 28
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(CombatMagicCasterRestore) == 0x30);
 }

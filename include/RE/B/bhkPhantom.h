@@ -8,7 +8,8 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_bhkPhantom;
-		inline static auto           Ni_RTTI = NiRTTI_bhkPhantom;
+		inline static constexpr auto Ni_RTTI = NiRTTI_bhkPhantom;
+		inline static constexpr auto VTABLE = VTABLE_bhkPhantom;
 
 		~bhkPhantom() override;  // 00
 
@@ -18,6 +19,8 @@ namespace RE
 
 		// members
 		std::uint64_t unk28;  // 28
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(bhkPhantom) == 0x30);
 }

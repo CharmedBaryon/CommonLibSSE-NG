@@ -49,6 +49,8 @@ namespace RE
 		std::uint32_t           unk68;              // 68
 		mutable BSReadWriteLock lock;               // 68
 		std::uint32_t           unk74;              // 74
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(Crime) == 0x78);
 }

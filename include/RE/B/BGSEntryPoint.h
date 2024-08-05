@@ -1,5 +1,7 @@
 #pragma once
 
+#include "RE/B/BGSEntryPointFunction.h"
+
 namespace RE
 {
 	class Actor;
@@ -108,11 +110,51 @@ namespace RE
 		};
 		using ENTRY_POINT = ENTRY_POINTS::ENTRY_POINT;
 
+		struct EntryPointParameter
+		{
+		public:
+			const char*   name;      // 00
+			bool          nonActor;  // 08
+			std::uint8_t  pad09;     // 09
+			std::uint16_t pad0A;     // 0A
+			std::uint32_t pad0C;     // 0C
+		};
+		static_assert(sizeof(EntryPointParameter) == 0x10);
+
+		struct EntryPointParameters
+		{
+		public:
+			std::uint32_t        count;  // 00
+			std::uint32_t        pad04;  // 04
+			EntryPointParameter* data;   // 08
+		};
+		static_assert(sizeof(EntryPointParameters) == 0x10);
+
+		struct EntryPoint
+		{
+		public:
+			const char*                                      name;          // 00
+			EntryPointParameters                             parameters;    // 08
+			BGSEntryPointFunction::ENTRY_POINT_FUNCTION_TYPE functionType;  // 18
+			std::uint32_t                                    pad1C;         // 1C
+		};
+		static_assert(sizeof(EntryPoint) == 0x20);
+
+		static EntryPoint* GetEntryPoint(ENTRY_POINT a_entryPoint)
+		{
+			if (a_entryPoint < ENTRY_POINT::kTotal) {
+				REL::Relocation<EntryPoint*> entryPoints{ RELOCATION_ID(675707, 368994) };  //TODO: Verify SSE ID against VR
+				return &entryPoints.get()[a_entryPoint];
+			}
+
+			return nullptr;
+		}
+
 		template <class... Args>
 		static void HandleEntryPoint(ENTRY_POINT a_entryPoint, Actor* a_perkOwner, Args... a_args)
 		{
 			using func_t = decltype(&BGSEntryPoint::HandleEntryPoint<Args...>);
-			REL::Relocation<func_t> func{ RELOCATION_ID(23073, 23526) };
+			static REL::Relocation<func_t> func{ RELOCATION_ID(23073, 23526) };
 			func(a_entryPoint, a_perkOwner, a_args...);
 		}
 	};

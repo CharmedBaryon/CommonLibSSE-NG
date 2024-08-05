@@ -9,6 +9,7 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_BGSProcedureTreeConditionalItem;
+		inline static constexpr auto VTABLE = VTABLE_BGSProcedureTreeConditionalItem;
 
 		~BGSProcedureTreeConditionalItem() override;  // 00
 
@@ -20,6 +21,8 @@ namespace RE
 
 		// members
 		TESCondition conditions;  // 08
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(BGSProcedureTreeConditionalItem) == 0x10);
 }

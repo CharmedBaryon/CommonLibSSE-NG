@@ -61,6 +61,7 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_BGSDestructibleObjectForm;
+		inline static constexpr auto VTABLE = VTABLE_BGSDestructibleObjectForm;
 
 		~BGSDestructibleObjectForm() override;  // 00
 
@@ -71,6 +72,8 @@ namespace RE
 
 		// members
 		DestructibleObjectData* data;  // 08
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(BGSDestructibleObjectForm) == 0x10);
 }

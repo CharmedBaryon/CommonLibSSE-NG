@@ -61,6 +61,7 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_BSSmallBlockAllocator;
+		inline static constexpr auto VTABLE = VTABLE_BSSmallBlockAllocator;
 
 		struct Pool : public BSSmallBlockAllocatorUtil::Pool
 		{
@@ -109,6 +110,8 @@ namespace RE
 		bool              allowDecommits;       // 1264
 		std::uint8_t      pad1265;              // 1265
 		std::uint16_t     pad1266;              // 1266
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(BSSmallBlockAllocator) == 0x1268);
 }

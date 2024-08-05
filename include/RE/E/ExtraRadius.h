@@ -9,7 +9,8 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_ExtraRadius;
-		inline static auto           EXTRADATATYPE = ExtraDataType::kRadius;
+		inline static constexpr auto VTABLE = VTABLE_ExtraRadius;
+		inline static constexpr auto EXTRADATATYPE = ExtraDataType::kRadius;
 
 		~ExtraRadius() override;  // 00
 
@@ -20,6 +21,8 @@ namespace RE
 		// members
 		float         radius;  // 10
 		std::uint32_t pad14;   // 14
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(ExtraRadius) == 0x18);
 }

@@ -24,5 +24,8 @@ namespace RE
 		static_assert(sizeof(Event) == 0x18);
 
 		static BSTEventSource<CriticalHit::Event>* GetEventSource();
+
+	private:
+		KEEP_FOR_RE()
 	};
 }

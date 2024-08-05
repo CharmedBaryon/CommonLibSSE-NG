@@ -1,5 +1,6 @@
 #pragma once
 
+#include "RE/A/ActorValues.h"
 #include "RE/B/BSFixedString.h"
 #include "RE/B/BSTEvent.h"
 #include "RE/F/FxDelegateHandler.h"
@@ -20,6 +21,7 @@ namespace RE
 		{
 		public:
 			inline static constexpr auto RTTI = RTTI_CraftingSubMenus__CraftingSubMenu;
+			inline static constexpr auto VTABLE = VTABLE_CraftingSubMenus__CraftingSubMenu;
 
 			~CraftingSubMenu() override;  // 00
 
@@ -30,6 +32,13 @@ namespace RE
 			virtual bool ProcessUserEvent(BSFixedString* a_control);  // 05 - { return 0; }
 			virtual void Unk_06(void);                                // 06 - { return; }
 			virtual void SetItemCardInfo(ItemCard* a_itemCard);       // 07 - { return; }
+
+			void UpdateCraftingInfo(ActorValue a_actorValue)
+			{
+				using func_t = decltype(&CraftingSubMenu::UpdateCraftingInfo);
+				static REL::Relocation<func_t> func{ RELOCATION_ID(50461, 51364) };
+				return func(this, a_actorValue);
+			}
 
 			// members
 			GFxMovieView* view;                   // 018

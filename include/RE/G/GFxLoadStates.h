@@ -39,6 +39,8 @@ namespace RE
 		std::uint16_t          pad7A;             // 7A
 		std::uint32_t          pad7C;             // 7C
 		std::uint64_t          unk80[3];          // 80
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(GFxLoadStates) == 0x98);
 }

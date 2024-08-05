@@ -35,4 +35,13 @@ namespace RE
 	{
 		return static_cast<ConcreteFormFactory<T, T::FORMTYPE>*>(GetFormFactoryByType(T::FORMTYPE));
 	}
+
+	template <class T>
+	[[nodiscard]] T* IFormFactory::Create()
+	{
+		auto factory = IFormFactory::GetConcreteFormFactoryByType<T>();
+		auto form = factory ? factory->Create() : nullptr;
+
+		return form ? form->As<T>() : nullptr;
+	}
 }

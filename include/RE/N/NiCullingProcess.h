@@ -34,7 +34,8 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_NiCullingProcess;
-		inline static auto           Ni_RTTI = NiRTTI_NiCullingProcess;
+		inline static constexpr auto Ni_RTTI = NiRTTI_NiCullingProcess;
+		inline static constexpr auto VTABLE = VTABLE_NiCullingProcess;
 
 		// add
 		[[nodiscard]] virtual const NiRTTI*   GetRTTI() const;                      // 00
@@ -79,10 +80,12 @@ namespace RE
 		bool            updateAccumulateFlag;       // 11D
 		bool            ignorePreprocess;           // 11E
 		bool            doCustomCullPlanes;         // 11F
-		std::uint8_t    unk120;                     // 120
+		bool            enablePlaneOptimizations;   // 120
 		std::uint8_t    unk121;                     // 121
 		std::uint16_t   pad122;                     // 122
 		std::uint32_t   pad124;                     // 124
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(NiCullingProcess) == 0x128);
 }

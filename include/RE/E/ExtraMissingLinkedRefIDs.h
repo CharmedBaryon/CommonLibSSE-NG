@@ -12,7 +12,8 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_ExtraMissingLinkedRefIDs;
-		inline static auto           EXTRADATATYPE = ExtraDataType::kMissingLinkedRefIDs;
+		inline static constexpr auto VTABLE = VTABLE_ExtraMissingLinkedRefIDs;
+		inline static constexpr auto EXTRADATATYPE = ExtraDataType::kMissingLinkedRefIDs;
 
 		struct Entry
 		{
@@ -61,6 +62,8 @@ namespace RE
 
 		// members
 		Array entries;  // 10
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(ExtraMissingLinkedRefIDs) == 0x28);
 }

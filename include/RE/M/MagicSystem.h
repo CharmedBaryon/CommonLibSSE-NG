@@ -1,8 +1,11 @@
 #pragma once
 
+#include "RE/B/BSString.h"
+
 namespace RE
 {
 	class BGSSoundDescriptorForm;
+	class MagicItem;
 
 	namespace MagicSystem
 	{
@@ -92,5 +95,6 @@ namespace RE
 		const char*             GetCannotCastString(CannotCastReason a_reason);
 		float                   GetMagicCasterTargetUpdateInterval();
 		BGSSoundDescriptorForm* GetMagicFailureSound(SpellType a_type);
+		void                    GetMagicItemDescription(BSString& a_out, MagicItem* a_magicItem, const char* a_beginTagFormat, const char* a_endTagFormat);
 	}
 }

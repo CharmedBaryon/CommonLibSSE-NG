@@ -11,6 +11,7 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_TESEnchantableForm;
+		inline static constexpr auto VTABLE = VTABLE_TESEnchantableForm;
 
 		~TESEnchantableForm() override;  // 00
 
@@ -27,6 +28,8 @@ namespace RE
 		stl::enumeration<MagicSystem::CastingType, std::uint16_t> castingType;          // 10
 		std::uint16_t                                             amountofEnchantment;  // 12 - EAMT
 		std::uint32_t                                             pad14;                // 14
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(TESEnchantableForm) == 0x18);
 }

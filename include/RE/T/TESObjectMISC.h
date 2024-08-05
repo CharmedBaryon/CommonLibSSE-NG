@@ -56,6 +56,8 @@ namespace RE
 		virtual void SaveImpl();                                         // 53 - { return; }
 		virtual void LoadImpl(TESFile* a_mod, std::uint32_t a_chunkID);  // 54 - { return; }
 		virtual void InitImpl();                                         // 55 - { return; }
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(TESObjectMISC) == 0x100);
 }

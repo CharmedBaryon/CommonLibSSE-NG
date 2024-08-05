@@ -12,7 +12,8 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_ExtraLitWaterRefs;
-		inline static auto           EXTRADATATYPE = ExtraDataType::kLitWaterRefs;
+		inline static constexpr auto VTABLE = VTABLE_ExtraLitWaterRefs;
+		inline static constexpr auto EXTRADATATYPE = ExtraDataType::kLitWaterRefs;
 
 		~ExtraLitWaterRefs() override;  // 00
 
@@ -22,6 +23,8 @@ namespace RE
 
 		// members
 		BSSimpleList<TESObjectREFR*> refs;  // 10
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(ExtraLitWaterRefs) == 0x20);
 }

@@ -9,6 +9,7 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_GFxState;
+		inline static constexpr auto VTABLE = VTABLE_GFxState;
 
 		// An enumeration type defining the type of a State object, such as kRenderConfig, kFSCommandHandler, State_Log, etc. Only one State object of each type can be set on the loader or a movie.
 		enum class StateType
@@ -68,6 +69,8 @@ namespace RE
 	protected:
 		StateType     stateType;  // 10
 		std::uint32_t pad14;      // 14
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(GFxState) == 0x18);
 }

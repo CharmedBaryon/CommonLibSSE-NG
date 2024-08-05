@@ -184,6 +184,8 @@ namespace RE
 		BGSVolumetricLighting*              volumetricLighting[ColorTime::kTotal];                // 8A8 - HNAM
 		BGSShaderParticleGeometryData*      precipitationData;                                    // 8C8 - MNAM
 		BGSReferenceEffect*                 referenceEffect;                                      // 8D0 - NNAM
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(TESWeather) == 0x8D8);
 }

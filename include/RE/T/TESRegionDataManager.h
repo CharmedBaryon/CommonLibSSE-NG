@@ -18,6 +18,7 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_TESRegionDataManager;
+		inline static constexpr auto VTABLE = VTABLE_TESRegionDataManager;
 
 		virtual ~TESRegionDataManager();  // 00
 
@@ -34,6 +35,8 @@ namespace RE
 
 		// members
 		TESRegion* lastLoadedRegion;  // 08
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(TESRegionDataManager) == 0x10);
 }

@@ -14,6 +14,8 @@ namespace RE
 		std::int32_t       unk18;   // 18
 		std::uint32_t      unk1C;   // 1C
 		std::uint8_t       unk20;   // 20
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(BSShaderPropertyLightData) == 0x28);
 }

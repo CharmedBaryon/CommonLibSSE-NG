@@ -8,6 +8,7 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_ImageSpaceModifierInstanceTemp;
+		inline static constexpr auto VTABLE = VTABLE_ImageSpaceModifierInstanceTemp;
 
 		~ImageSpaceModifierInstanceTemp() override;  // 00
 
@@ -18,6 +19,8 @@ namespace RE
 		// members
 		float         duration;  // 28
 		std::uint32_t pad3C;     // 2C
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(ImageSpaceModifierInstanceTemp) == 0x30);
 }

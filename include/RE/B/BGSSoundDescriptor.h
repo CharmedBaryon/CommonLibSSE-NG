@@ -26,6 +26,8 @@ namespace RE
 		BGSSoundCategory* category;              // 08 - GNAM
 		FormID            alternateSoundFormID;  // 10 - SNAM
 		std::uint32_t     pad14;                 // 14
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(BGSSoundDescriptor) == 0x18);
 }

@@ -9,7 +9,8 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_bhkCharacterProxy;
-		inline static auto           Ni_RTTI = NiRTTI_bhkCharacterProxy;
+		inline static constexpr auto Ni_RTTI = NiRTTI_bhkCharacterProxy;
+		inline static constexpr auto VTABLE = VTABLE_bhkCharacterProxy;
 
 		~bhkCharacterProxy() override;  // 00
 
@@ -30,6 +31,8 @@ namespace RE
 
 		// members
 		bhkCharacterPointCollector ignoredCollisionStartCollector;  // 020
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(bhkCharacterProxy) == 0x260);
 }

@@ -26,6 +26,8 @@ namespace RE
 		AlchemyItem*  poison;  // 10
 		std::uint32_t count;   // 18
 		std::uint32_t pad1C;   // 1C
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(ExtraPoison) == 0x20);
 }

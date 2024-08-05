@@ -10,6 +10,7 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_ImageSpaceModifierInstanceForm;
+		inline static constexpr auto VTABLE = VTABLE_ImageSpaceModifierInstanceForm;
 
 		~ImageSpaceModifierInstanceForm() override;  // 00
 
@@ -22,21 +23,21 @@ namespace RE
 		static ImageSpaceModifierInstanceForm* Trigger(TESImageSpaceModifier* a_imod, float a_strength, NiAVObject* a_target)
 		{
 			using func_t = decltype(&ImageSpaceModifierInstanceForm::Trigger);
-			REL::Relocation<func_t> func{ RELOCATION_ID(18185, 18570) };
+			static REL::Relocation<func_t> func{ RELOCATION_ID(18185, 18570) };
 			return func(a_imod, a_strength, a_target);
 		}
 
 		static void Stop(TESImageSpaceModifier* a_imod)
 		{
 			using func_t = decltype(&ImageSpaceModifierInstanceForm::Stop);
-			REL::Relocation<func_t> func{ RELOCATION_ID(18188, 18573) };
+			static REL::Relocation<func_t> func{ RELOCATION_ID(18188, 18573) };
 			return func(a_imod);
 		}
 
 		static void StopCrossFade(float a_seconds)
 		{
 			using func_t = decltype(&ImageSpaceModifierInstanceForm::StopCrossFade);
-			REL::Relocation<func_t> func{ RELOCATION_ID(18192, 18577) };
+			static REL::Relocation<func_t> func{ RELOCATION_ID(18192, 18577) };
 			return func(a_seconds);
 		}
 
@@ -47,6 +48,8 @@ namespace RE
 		std::uint32_t          unk3C;  // 3C
 		std::uint64_t          unk40;  // 40
 		std::uint32_t          unk48;  // 48
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(ImageSpaceModifierInstanceForm) == 0x50);
 }

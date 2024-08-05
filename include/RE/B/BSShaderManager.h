@@ -78,8 +78,11 @@ namespace RE
 		static void GetTexture(const char* a_path, bool a_demand, NiPointer<NiTexture>& a_textureOut, bool a_isHeightMap)
 		{
 			using func_t = decltype(&BSShaderManager::GetTexture);
-			REL::Relocation<func_t> func{ RELOCATION_ID(98986, 105640) };
+			static REL::Relocation<func_t> func{ RELOCATION_ID(98986, 105640) };
 			return func(a_path, a_demand, a_textureOut, a_isHeightMap);
 		}
+
+	private:
+		KEEP_FOR_RE()
 	};
 }

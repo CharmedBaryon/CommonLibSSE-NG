@@ -16,6 +16,8 @@ namespace RE
 		// members
 		std::uint32_t movieIndex;  // 08
 		std::uint32_t pad0C;       // 0C
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(GFxInitImportActions) == 0x10);
 }

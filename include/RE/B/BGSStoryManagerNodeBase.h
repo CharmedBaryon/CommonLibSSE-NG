@@ -9,6 +9,7 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_BGSStoryManagerNodeBase;
+		inline static constexpr auto VTABLE = VTABLE_BGSStoryManagerNodeBase;
 
 		struct Flags  // DNAM
 		{
@@ -49,6 +50,8 @@ namespace RE
 		std::uint32_t              maxQuests;        // 38 - XNAM
 		Flags                      flags;            // 3C - DNAM
 		TESCondition               conditions;       // 40 - CITC
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(BGSStoryManagerNodeBase) == 0x48);
 }

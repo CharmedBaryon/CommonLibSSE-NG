@@ -12,7 +12,8 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_ExtraActivateRefChildren;
-		inline static auto           EXTRADATATYPE = ExtraDataType::kActivateRefChildren;
+		inline static constexpr auto VTABLE = VTABLE_ExtraActivateRefChildren;
+		inline static constexpr auto EXTRADATATYPE = ExtraDataType::kActivateRefChildren;
 
 		~ExtraActivateRefChildren() override;  // 00
 
@@ -23,6 +24,8 @@ namespace RE
 		BSSimpleList<REF_ACTIVATE_DATA*> children;               // 10
 		float                            activateChildrenTimer;  // 20
 		std::uint32_t                    pad24;                  // 24
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(ExtraActivateRefChildren) == 0x28);
 }

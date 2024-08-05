@@ -29,6 +29,8 @@ namespace RE
 		stl::enumeration<ACTOR_PACKAGE_FLAG, std::int8_t> actorPackageFlags;      // 2A
 		std::int8_t                                       preferredSpeed;         // 2B
 		std::uint32_t                                     pad2C;                  // 2C
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(ActorPackage) == 0x30);
 }

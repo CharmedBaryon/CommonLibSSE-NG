@@ -8,6 +8,7 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_AttackBlockHandler;
+		inline static constexpr auto VTABLE = VTABLE_AttackBlockHandler;
 
 		enum class AttackType : std::uint8_t
 		{
@@ -40,6 +41,12 @@ namespace RE
 		bool          heldLeft;                    // 42
 		bool          heldRight;                   // 43
 		std::uint32_t unk44;                       // 44
+	private:
+		KEEP_FOR_RE()
 	};
+#if defined(EXCLUSIVE_SKYRIM_VR)
+	static_assert(sizeof(AttackBlockHandler) == 0x60);
+#else
 	static_assert(sizeof(AttackBlockHandler) == 0x48);
+#endif
 }

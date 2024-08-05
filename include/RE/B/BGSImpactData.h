@@ -70,6 +70,8 @@ namespace RE
 		BGSHazard*              hazard;            // 80 - NAM2
 		DecalData               dData;             // 88 - DODT
 		std::uint32_t           padAC;             // AC
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(BGSImpactData) == 0xB0);
 }

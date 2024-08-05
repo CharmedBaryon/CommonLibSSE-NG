@@ -15,6 +15,7 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_BGSMoviePlayer;
+		inline static constexpr auto VTABLE = VTABLE_BGSMoviePlayer;
 
 		~BGSMoviePlayer() override;  // 00
 
@@ -35,6 +36,8 @@ namespace RE
 
 		// members
 		std::uint64_t unkB8;  // B8
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(BGSMoviePlayer) == 0xC0);
 }

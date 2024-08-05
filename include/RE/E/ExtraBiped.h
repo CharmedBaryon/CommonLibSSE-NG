@@ -12,7 +12,8 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_ExtraBiped;
-		inline static auto           EXTRADATATYPE = ExtraDataType::kBiped;
+		inline static constexpr auto VTABLE = VTABLE_ExtraBiped;
+		inline static constexpr auto EXTRADATATYPE = ExtraDataType::kBiped;
 
 		~ExtraBiped() override;  // 00
 
@@ -21,6 +22,8 @@ namespace RE
 
 		// members
 		BSTSmartPointer<BipedAnim> biped;  // 10
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(ExtraBiped) == 0x18);
 }

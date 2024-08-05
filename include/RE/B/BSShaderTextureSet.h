@@ -21,8 +21,8 @@ namespace RE
 		void          SaveBinary(NiStream& a_stream) override;                                // 1B
 		bool          IsEqual(NiObject* a_object) override;                                   // 1C
 		const char*   GetTexturePath(Texture a_texture) override;                             // 25
-		void          SetTexture(Texture a_texture, NiSourceTexture* a_srcTexture) override;  // 26
-		void          SetTexturePath(Texture a_texture, const char* a_path) override;         // 27
+		void          SetTexture(Texture a_texture, NiSourceTexturePtr& a_srcTexture) override;  // 26
+		void          SetTexturePath(Texture a_texture, const char* a_path) override;            // 27
 
 		static BSShaderTextureSet* Create();
 
@@ -31,6 +31,9 @@ namespace RE
 
 	private:
 		BSShaderTextureSet* Ctor();
+
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(BSShaderTextureSet) == 0x58);
 }

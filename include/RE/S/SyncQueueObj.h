@@ -8,6 +8,7 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_SyncQueueObj;
+		inline static constexpr auto VTABLE = VTABLE_SyncQueueObj;
 
 		virtual ~SyncQueueObj();  // 00
 
@@ -16,6 +17,8 @@ namespace RE
 
 		// members
 		std::uint32_t unk0C;  // 0C
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(SyncQueueObj) == 0x10);
 }

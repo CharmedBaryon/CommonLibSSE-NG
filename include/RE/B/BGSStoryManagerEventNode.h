@@ -29,6 +29,8 @@ namespace RE
 		std::uint8_t                   pad21;        // 21
 		std::uint16_t                  pad22;        // 22
 		std::uint32_t                  pad24;        // 24
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(BGSRegisteredStoryEvent) == 0x28);
 
@@ -36,6 +38,7 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_BGSStoryManagerEventNode;
+		inline static constexpr auto VTABLE = VTABLE_BGSStoryManagerEventNode;
 		inline static constexpr auto FORMTYPE = FormType::StoryManagerEventNode;
 
 		struct RecordFlags
@@ -58,6 +61,8 @@ namespace RE
 
 		// members
 		const BGSRegisteredStoryEvent* event;  // 60 - ENAM
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(BGSStoryManagerEventNode) == 0x68);
 }

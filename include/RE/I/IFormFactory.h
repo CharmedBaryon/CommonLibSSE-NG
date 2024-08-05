@@ -19,6 +19,7 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_IFormFactory;
+		inline static constexpr auto VTABLE = VTABLE_IFormFactory;
 
 		virtual ~IFormFactory();  // 00
 
@@ -40,6 +41,8 @@ namespace RE
 		static ConcreteFormFactory<T, T::FORMTYPE>* GetConcreteFormFactoryByType();
 
 		TESForm* Create();
+		template <class T>
+		static T* Create();
 	};
 	static_assert(sizeof(IFormFactory) == 0x8);
 }

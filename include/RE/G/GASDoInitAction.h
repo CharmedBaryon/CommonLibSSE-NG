@@ -12,6 +12,8 @@ namespace RE
 		// override (GASExecuteTag)
 		void Execute1(GFxSprite* a_sprite) override;  // 01
 		bool Unk_04() override;                       // 04 - { return 0; }
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(GASDoInitAction) == 0x10);
 }

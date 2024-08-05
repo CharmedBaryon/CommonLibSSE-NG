@@ -38,6 +38,8 @@ namespace RE
 		std::uint32_t    bufferSize;     // 068
 		char             buffer[0x200];  // 06C
 		std::uint32_t    pad26C;         // 26C
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(GFxStream) == 0x270);
 }

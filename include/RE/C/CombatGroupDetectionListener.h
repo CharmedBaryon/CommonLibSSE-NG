@@ -8,6 +8,7 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_CombatGroupDetectionListener;
+		inline static constexpr auto VTABLE = VTABLE_CombatGroupDetectionListener;
 
 		~CombatGroupDetectionListener() override;  // 00
 
@@ -19,6 +20,8 @@ namespace RE
 
 		// members
 		void* unk10;  // 10
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(CombatGroupDetectionListener) == 0x18);
 }

@@ -10,18 +10,37 @@ namespace RE
 	class NiGeometry : public NiAVObject
 	{
 	public:
+		inline static constexpr auto RTTI = RTTI_NiGeometry;
+		inline static constexpr auto Ni_RTTI = NiRTTI_NiGeometry;
+		inline static constexpr auto VTABLE = VTABLE_NiGeometry;
+
 		struct RUNTIME_DATA
 		{
-#define RUNTIME_DATA_CONTENT                               \
-	NiPointer<NiProperty>     m_spPropertyState; /* 110 */ \
-	NiPointer<NiProperty>     m_spEffectState;   /* 118 */ \
-	NiPointer<NiSkinInstance> m_spSkinInstance;  /* 120 */ \
-	NiPointer<NiGeometryData> m_spModelData;     /* 128 */ \
-	std::uint64_t             unk130;            /* 130 */
+#define RUNTIME_DATA_CONTENT                             \
+	NiPointer<NiProperty>     spPropertyState; /* 110 */ \
+	NiPointer<NiProperty>     spEffectState;   /* 118 */ \
+	NiPointer<NiSkinInstance> spSkinInstance;  /* 120 */ \
+	NiPointer<NiGeometryData> spModelData;     /* 128 */ \
+	std::uint64_t             unk130;          /* 130 */
 
 			RUNTIME_DATA_CONTENT
 		};
 		static_assert(sizeof(RUNTIME_DATA) == 0x28);
+
+		~NiGeometry() override;  // 00
+
+		// override (NiAVObject)
+		const NiRTTI* GetRTTI() const override;                                                                                    // 02
+		void          LoadBinary(NiStream& a_stream) override;                                                                     // 18
+		void          LinkObject(NiStream& a_stream) override;                                                                     // 19
+		bool          RegisterStreamables(NiStream& a_stream) override;                                                            // 1A
+		void          SaveBinary(NiStream& a_stream) override;                                                                     // 1B
+		bool          IsEqual(NiObject* a_object) override;                                                                        // 1C
+		void          ProcessClone(NiCloningProcess& a_cloning) override;                                                          // 1D
+
+		// override (NiObject)
+		NiGeometry* AsNiGeometry() { return nullptr; }                             // 0D
+		void        PostLinkObject([[maybe_unused]] NiStream& a_stream) override;  // 1E
 
 		// add
 		SKYRIM_REL_VR_VIRTUAL void  Unk_35(void);                           // 35, 36 - call controller vtbl+0xA0?
@@ -42,9 +61,11 @@ namespace RE
 			return REL::RelocateMember<RUNTIME_DATA>(this, 0x110, 0x138);
 		}
 
-		RUNTIME_DATA_CONTENT  // 110, 138
+		RUNTIME_DATA_CONTENT;  // 110, 138
+	private:
+		KEEP_FOR_RE()
 	};
-#if !defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE)
+#if defined(EXCLUSIVE_SKYRIM_VR)
 	static_assert(sizeof(NiGeometry) == 0x160);
 #else
 	static_assert(sizeof(NiGeometry) == 0x138);

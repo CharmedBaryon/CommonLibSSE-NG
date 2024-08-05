@@ -10,7 +10,8 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_ExtraCellWaterEnvMap;
-		inline static auto           EXTRADATATYPE = ExtraDataType::kCellWaterEnvMap;
+		inline static constexpr auto VTABLE = VTABLE_ExtraCellWaterEnvMap;
+		inline static constexpr auto EXTRADATATYPE = ExtraDataType::kCellWaterEnvMap;
 
 		~ExtraCellWaterEnvMap() override;  // 00
 
@@ -20,6 +21,8 @@ namespace RE
 
 		// members
 		TESTexture waterEnvMap;  // 10
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(ExtraCellWaterEnvMap) == 0x20);
 }

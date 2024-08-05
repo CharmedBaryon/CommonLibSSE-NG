@@ -115,6 +115,8 @@ namespace RE
 		float              intToFloatFloorCorrection;  // 100
 		std::uint32_t      pad104;                     // 104
 		std::uint64_t      pad108;                     // 108
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(hkp3AxisSweep) == 0x110);
 }

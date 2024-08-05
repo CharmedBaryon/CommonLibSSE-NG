@@ -12,7 +12,8 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_ExtraScriptedAnimDependence;
-		inline static auto           EXTRADATATYPE = ExtraDataType::kScriptedAnimDependence;
+		inline static constexpr auto VTABLE = VTABLE_ExtraScriptedAnimDependence;
+		inline static constexpr auto EXTRADATATYPE = ExtraDataType::kScriptedAnimDependence;
 
 		~ExtraScriptedAnimDependence() override;  // 00
 
@@ -21,6 +22,8 @@ namespace RE
 
 		// members
 		BSTArray<BSTTuple<ObjectRefHandle, std::uint32_t>> dependentManagers;  // 10
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(ExtraScriptedAnimDependence) == 0x28);
 }

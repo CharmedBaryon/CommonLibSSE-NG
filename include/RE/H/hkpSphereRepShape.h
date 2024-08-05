@@ -17,6 +17,8 @@ namespace RE
 		// add
 		virtual std::int32_t     GetNumCollisionSpheresImpl() = 0;                       // 0B
 		virtual const hkpSphere* GetCollisionSpheresImpl(hkSphere* a_sphereBuffer) = 0;  // 0C
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(hkpSphereRepShape) == 0x20);
 }

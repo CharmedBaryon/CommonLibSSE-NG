@@ -27,6 +27,8 @@ namespace RE
 		const GFxValue*    _args;        // 28
 		std::uint32_t      _numArgs;     // 30
 		std::uint32_t      _pad34;       // 34
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(FxDelegateArgs) == 0x38);
 }

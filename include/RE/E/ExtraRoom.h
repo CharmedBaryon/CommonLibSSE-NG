@@ -12,7 +12,8 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_ExtraRoom;
-		inline static auto           EXTRADATATYPE = ExtraDataType::kRoom;
+		inline static constexpr auto VTABLE = VTABLE_ExtraRoom;
+		inline static constexpr auto EXTRADATATYPE = ExtraDataType::kRoom;
 
 		~ExtraRoom() override;  // 00
 
@@ -21,6 +22,8 @@ namespace RE
 
 		// members
 		NiPointer<BSMultiBoundRoom> room;  // 10
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(ExtraRoom) == 0x18);
 }

@@ -23,6 +23,8 @@ namespace RE
 
 		// members
 		hkpConstraintInfo constraintInfo;  // 10
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(hkpConstraintOwner) == 0x20);
 }

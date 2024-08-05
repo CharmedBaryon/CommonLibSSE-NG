@@ -24,6 +24,8 @@ namespace RE
 		bool          remapMode;      // 2C
 		std::uint8_t  unk2D;          // 2D
 		std::uint16_t unk2E;          // 2E
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(PlayerControlsData) == 0x30);
 }

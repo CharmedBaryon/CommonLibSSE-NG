@@ -9,7 +9,8 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_ExtraHeadTrackingWeight;
-		inline static auto           EXTRADATATYPE = ExtraDataType::kHeadTrackingWeight;
+		inline static constexpr auto VTABLE = VTABLE_ExtraHeadTrackingWeight;
+		inline static constexpr auto EXTRADATATYPE = ExtraDataType::kHeadTrackingWeight;
 
 		~ExtraHeadTrackingWeight() override;  // 00
 
@@ -20,6 +21,8 @@ namespace RE
 		// members
 		float         weight;  // 10
 		std::uint32_t pad14;   // 14
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(ExtraHeadTrackingWeight) == 0x18);
 }

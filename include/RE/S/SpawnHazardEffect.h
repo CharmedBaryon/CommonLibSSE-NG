@@ -25,6 +25,8 @@ namespace RE
 		// members
 		NiPointer<ActorCause> actorCause;  // 90
 		ObjectRefHandle       hazard;      // 98
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(SpawnHazardEffect) == 0xA0);
 }

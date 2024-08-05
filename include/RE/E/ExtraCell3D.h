@@ -12,7 +12,8 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_ExtraCell3D;
-		inline static auto           EXTRADATATYPE = ExtraDataType::kCell3D;
+		inline static constexpr auto VTABLE = VTABLE_ExtraCell3D;
+		inline static constexpr auto EXTRADATATYPE = ExtraDataType::kCell3D;
 
 		~ExtraCell3D() override;  // 00
 
@@ -21,6 +22,8 @@ namespace RE
 
 		// members
 		NiPointer<NiNode> cellNode;  // 10
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(ExtraCell3D) == 0x18);
 }

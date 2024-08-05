@@ -17,6 +17,8 @@ namespace RE
 		FormType      formType;    // 00
 		const char*   formString;  // 08
 		std::uint32_t formCode;    // 10
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(FORM_ENUM_STRING) == 0x18);
 }

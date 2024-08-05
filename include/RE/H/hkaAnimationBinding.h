@@ -27,6 +27,8 @@ namespace RE
 		hkArray<std::int16_t>                     floatTrackToFloatSlotIndices;  // 30
 		stl::enumeration<BlendHint, std::uint8_t> blendHint;                     // 40
 		char                                      pad41[7];                      // 41
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(hkaAnimationBinding) == 0x48);
 }

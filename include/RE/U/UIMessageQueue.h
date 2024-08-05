@@ -34,6 +34,8 @@ namespace RE
 		std::uint32_t                                poolUsed;                // 378
 		std::uint32_t                                pad37C;                  // 37C
 		UIMessage                                    messagePool[kPoolSize];  // 380
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(UIMessageQueue) == 0xB80);
 }

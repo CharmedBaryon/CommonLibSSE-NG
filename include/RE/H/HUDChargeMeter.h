@@ -20,6 +20,8 @@ namespace RE
 		// members
 		float unk28;  // 28 - 100.0
 		float unk2C;  // 2C - 100.0
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(HUDChargeMeter) == 0x30);
 }

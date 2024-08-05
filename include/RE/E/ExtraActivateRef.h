@@ -12,7 +12,8 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_ExtraActivateRef;
-		inline static auto           EXTRADATATYPE = ExtraDataType::kActivateRef;
+		inline static constexpr auto VTABLE = VTABLE_ExtraActivateRef;
+		inline static constexpr auto EXTRADATATYPE = ExtraDataType::kActivateRef;
 
 		~ExtraActivateRef() override;  // 00
 
@@ -26,6 +27,8 @@ namespace RE
 		std::uint8_t                     pad21;          // 21
 		std::uint16_t                    pad22;          // 22
 		std::uint32_t                    pad24;          // 24
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(ExtraActivateRef) == 0x28);
 }

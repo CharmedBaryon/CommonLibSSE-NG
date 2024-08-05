@@ -8,6 +8,7 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_IMovementMotionDrivenControl;
+		inline static constexpr auto VTABLE = VTABLE_IMovementMotionDrivenControl;
 
 		~IMovementMotionDrivenControl() override;  // 00
 
@@ -20,6 +21,8 @@ namespace RE
 		virtual void Unk_06(void) = 0;  // 06
 		virtual void Unk_07(void) = 0;  // 07
 		virtual void Unk_08(void) = 0;  // 08
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(IMovementMotionDrivenControl) == 0x8);
 }

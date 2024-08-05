@@ -9,6 +9,7 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_IDEvent;
+		inline static constexpr auto VTABLE = VTABLE_IDEvent;
 
 		~IDEvent() override;  // 00
 
@@ -22,6 +23,8 @@ namespace RE
 		BSFixedString userEvent;  // 18
 		std::uint32_t idCode;     // 20
 		std::uint32_t pad24;      // 24
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(IDEvent) == 0x28);
 }

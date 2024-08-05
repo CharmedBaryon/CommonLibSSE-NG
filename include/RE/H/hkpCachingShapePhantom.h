@@ -51,6 +51,8 @@ namespace RE
 		std::uint16_t            pad1B2;            // 1B2
 		std::uint32_t            pad1B4;            // 1B4
 		std::uint64_t            pad1B8;            // 1B8
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(hkpCachingShapePhantom) == 0x1C0);
 }

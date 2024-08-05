@@ -13,6 +13,7 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_BSMaterialObject;
+		inline static constexpr auto VTABLE = VTABLE_BSMaterialObject;
 
 		struct DIRECTIONAL_DATA  // DATA
 		{
@@ -45,6 +46,8 @@ namespace RE
 		// members
 		DIRECTIONAL_DATA                directionalData;  // 08 - DATA
 		BSTArray<NiPointer<NiProperty>> properties;       // 40
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(BSMaterialObject) == 0x58);
 }

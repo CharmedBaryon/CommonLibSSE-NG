@@ -10,7 +10,7 @@ namespace RE
 		static FixedStrings* GetSingleton()
 		{
 			using func_t = decltype(&FixedStrings::GetSingleton);
-			REL::Relocation<func_t> func{ RELOCATION_ID(11308, 11437) };
+			static REL::Relocation<func_t> func{ RELOCATION_ID(11308, 11437) };
 			return func();
 		}
 
@@ -205,6 +205,8 @@ namespace RE
 		BSFixedString pickup;                                // 0x5D8 - "PickUp"
 		BSFixedString pathTweenerStart;                      // 0x5E0 - "PathTweenerStart"
 		BSFixedString pathTweenerEnd;                        // 0x5E8 - "PathTweenerEnd"
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(FixedStrings) == 0x5F0);
 }

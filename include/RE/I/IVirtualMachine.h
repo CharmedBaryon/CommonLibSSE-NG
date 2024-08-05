@@ -5,8 +5,10 @@
 #include "RE/B/BSTEvent.h"
 #include "RE/B/BSTSmartPointer.h"
 #include "RE/E/ErrorLogger.h"
+#include "RE/I/IStackCallbackFunctor.h"
 #include "RE/T/TypeInfo.h"
 #include "RE/T/TypeTraits.h"
+#include "RE/V/Variable.h"
 
 namespace RE
 {
@@ -25,7 +27,6 @@ namespace RE
 		class IFunction;
 		class IFunctionArguments;
 		class ISavePatcherInterface;
-		class IStackCallbackFunctor;
 		class ITypeLinkedCallback;
 		class Object;
 		class ObjectBindPolicy;
@@ -39,15 +40,36 @@ namespace RE
 		{
 		public:
 			inline static constexpr auto RTTI = RTTI_BSScript__IVirtualMachine;
+			inline static constexpr auto VTABLE = VTABLE_BSScript__IVirtualMachine;
 
 			using Severity = BSScript::ErrorLogger::Severity;
+			struct Awaitable
+			{
+				struct CallbackFunctor : public IStackCallbackFunctor
+				{
+					void operator()(Variable a_result) override;
+					void SetObject(const BSTSmartPointer<Object>&) override {}
+
+					bool                    pending{ false };
+					Variable                result;
+					std::coroutine_handle<> continuation;
+				};
+
+				Awaitable();
+				void     SetPending(bool a_pending = true);
+				bool     await_ready() const;
+				void     await_suspend(std::coroutine_handle<> a_handle);
+				Variable await_resume() const;
+
+				BSTSmartPointer<IStackCallbackFunctor> callback;
+			};
 
 			virtual ~IVirtualMachine();  // 00
 
 			// add
 			virtual void SetLinkedCallback(ITypeLinkedCallback* a_callback) = 0;                                                                                    // 01
 			virtual void TraceStack(const char* a_str, VMStackID a_stackID, Severity a_severity = Severity::kError) = 0;                                            // 02
-			virtual void FormatAndPostMessage(const char* a_message, Severity a_severity) = 0;                                                                                                                       // 03
+			virtual void FormatAndPostMessage(const char* a_message, Severity a_severity) = 0;                                                                      // 03
 			virtual void Update(float a_budget) = 0;                                                                                                                // 04
 			virtual void UpdateTasklets(float a_budget) = 0;                                                                                                        // 05
 			virtual void SetOverstressed(bool a_set) = 0;                                                                                                           // 06
@@ -71,11 +93,11 @@ namespace RE
 			virtual bool BindNativeMethod(IFunction* a_fn) = 0;                                                                                                     // 18
 			virtual void SetCallableFromTasklets1(const char* a_className, const char* a_stateName, const char* a_fnName, bool a_callable) = 0;                     // 19
 			virtual void SetCallableFromTasklets2(const char* a_className, const char* a_fnName, bool a_callable) = 0;                                              // 1A
-#if !defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE)
+#if defined(EXCLUSIVE_SKYRIM_VR)
 			virtual void New_1B(void) = 0;
 #endif
 			SKYRIM_REL_VR_VIRTUAL void ForEachBoundObject(VMHandle a_handle, IForEachScriptObjectFunctor* a_functor);  // 1B, 1C
-#if !defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE)
+#if defined(EXCLUSIVE_SKYRIM_VR)
 			virtual void New_1D(void) = 0;
 #endif
 			SKYRIM_REL_VR_VIRTUAL bool                       FindBoundObject(VMHandle a_handle, const char* a_className, BSTSmartPointer<Object>& a_result) const;                                                                                   // 1C
@@ -110,7 +132,10 @@ namespace RE
 			bool                       CreateObject(const BSFixedString& a_className, void* a_property, BSTSmartPointer<Object>& a_objPtr);
 			bool                       CreateObject(const BSFixedString& a_className, BSTSmartPointer<Object>& a_result);
 			bool                       DispatchMethodCall(BSTSmartPointer<Object>& a_obj, const BSFixedString& a_fnName, IFunctionArguments* a_args, BSTSmartPointer<IStackCallbackFunctor>& a_result);
+			Awaitable                  ADispatchMethodCall(BSTSmartPointer<Object>& a_obj, const BSFixedString& a_fnName, IFunctionArguments* a_args);
 			bool                       DispatchMethodCall(VMHandle a_handle, const BSFixedString& a_className, const BSFixedString& a_fnName, IFunctionArguments* a_args, BSTSmartPointer<IStackCallbackFunctor>& a_result);
+			Awaitable                  ADispatchMethodCall(VMHandle a_handle, const BSFixedString& a_className, const BSFixedString& a_fnName, IFunctionArguments* a_args);
+			Awaitable                  ADispatchStaticCall(const BSFixedString& a_className, const BSFixedString& a_fnName, IFunctionArguments* a_args);
 			ObjectBindPolicy*          GetObjectBindPolicy();
 			const ObjectBindPolicy*    GetObjectBindPolicy() const;
 			IObjectHandlePolicy*       GetObjectHandlePolicy();
@@ -129,7 +154,7 @@ namespace RE
 			void RegisterLatentFunction(std::string_view a_fnName, std::string_view a_className, F a_callback, bool a_callableFromTasklets = false);
 
 			template <class V>
-			requires is_return_convertible_v<V>
+				requires is_return_convertible_v<V>
 			void ReturnLatentResult(VMStackID a_stackID, V result);
 
 			void SetCallableFromTasklets(const char* a_className, const char* a_stateName, const char* a_fnName, bool a_callable);

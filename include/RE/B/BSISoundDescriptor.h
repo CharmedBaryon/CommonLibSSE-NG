@@ -6,11 +6,13 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_BSISoundDescriptor;
+		inline static constexpr auto VTABLE = VTABLE_BSISoundDescriptor;
 
 		class BSIPlaybackCharacteristics
 		{
 		public:
 			inline static constexpr auto RTTI = RTTI_BSISoundDescriptor__BSIPlaybackCharacteristics;
+			inline static constexpr auto VTABLE = VTABLE_BSISoundDescriptor__BSIPlaybackCharacteristics;
 
 			virtual ~BSIPlaybackCharacteristics();  // 00
 
@@ -28,6 +30,8 @@ namespace RE
 		// add
 		virtual void Unk_01(void) = 0;  // 01
 		virtual void Unk_02(void) = 0;  // 02
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(BSISoundDescriptor) == 0x8);
 }

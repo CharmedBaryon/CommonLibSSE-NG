@@ -18,6 +18,7 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_BSTerrainEffect;
+		inline static constexpr auto VTABLE = VTABLE_BSTerrainEffect;
 		inline static constexpr auto TYPE = TEMP_EFFECT_TYPE::kTerrain;
 
 		~BSTerrainEffect() override;  // 00
@@ -48,6 +49,8 @@ namespace RE
 		std::uint32_t         collisionFilter;  // A8
 		std::uint32_t         unkAC;            // AC
 		NiPointer<NiAVObject> followNode;       // B0
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(BSTerrainEffect) == 0xB8);
 }

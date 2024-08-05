@@ -15,6 +15,8 @@ namespace RE
 		// members
 		T x;  // 00
 		T y;  // ??
+	private:
+		KEEP_FOR_RE()
 	};
 
 	using GPointF = GPoint<float>;

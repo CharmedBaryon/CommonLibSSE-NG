@@ -12,7 +12,8 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_bhkSerializable;
-		inline static auto           Ni_RTTI = NiRTTI_bhkSerializable;
+		inline static constexpr auto Ni_RTTI = NiRTTI_bhkSerializable;
+		inline static constexpr auto VTABLE = VTABLE_bhkSerializable;
 
 		~bhkSerializable() override;  // 00
 
@@ -39,6 +40,8 @@ namespace RE
 
 		// members
 		bhkSerializable* serializable;  // 18
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(bhkSerializable) == 0x20);
 }

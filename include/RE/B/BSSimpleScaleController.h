@@ -8,7 +8,8 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_BSSimpleScaleController;
-		inline static auto           Ni_RTTI = NiRTTI_BSSimpleScaleController;
+		inline static constexpr auto Ni_RTTI = NiRTTI_BSSimpleScaleController;
+		inline static constexpr auto VTABLE = VTABLE_BSSimpleScaleController;
 
 		~BSSimpleScaleController() override;  // 00
 
@@ -22,6 +23,8 @@ namespace RE
 		float scale3D;            // 48
 		float refScale;           // 4C
 		float scaleAnimDuration;  // 50
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(BSSimpleScaleController) == 0x58);
 }

@@ -9,6 +9,7 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_BGSProcedureTreeBranch;
+		inline static constexpr auto VTABLE = VTABLE_BGSProcedureTreeBranch;
 
 		~BGSProcedureTreeBranch() override;  // 00
 
@@ -31,6 +32,8 @@ namespace RE
 		// members
 		BSTArray<BGSProcedureTreeConditionalItem*> conditions;  // 10
 		std::uint64_t                              unk28;       // 28
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(BGSProcedureTreeBranch) == 0x30);
 }

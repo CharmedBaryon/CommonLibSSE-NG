@@ -134,13 +134,16 @@ namespace RE
 		[[nodiscard]] virtual GFxResource*           GetMovieDataResource() const = 0;                                                                               // 14
 		[[nodiscard]] virtual const GFxExporterInfo* GetExporterInfo() const = 0;                                                                                    // 15
 		virtual MemoryContext*                       CreateMemoryContext(const char* a_heapName, const MemoryParams& a_memParams, bool a_debugHeap) = 0;             // 16
-		virtual GFxMovieView*                        CreateInstance(const MemoryParams& a_memParams, bool a_initFirstFrame = true) = 0;                              // 17
-		virtual GFxMovieView*                        CreateInstance(MemoryContext* a_memContext, bool a_initFirstFrame = true) = 0;                                  // 18
+		virtual GFxMovieView*                        CreateInstanceWithContext(MemoryContext* a_memContext, bool a_initFirstFrame = true) = 0;                       // 17
+		virtual GFxMovieView*                        CreateInstance(const MemoryParams& a_memParams, bool a_initFirstFrame = true) = 0;                              // 18
 		virtual void                                 VisitImportedMovies(ImportVisitor* a_visitor) = 0;                                                              // 19
 		virtual void                                 VisitResources(ResourceVisitor* a_visitor, VisitResourceMask a_visitMask = VisitResourceMask::kAllImages) = 0;  // 1A
 		virtual GFxResource*                         GetResource(const char* a_exportName) const = 0;                                                                // 1B
 
 		GFxMovieView* CreateInstance(bool a_initFirstFrame = true, UPInt a_memoryArena = 0);
+
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(GFxMovieDef) == 0x20);
 }

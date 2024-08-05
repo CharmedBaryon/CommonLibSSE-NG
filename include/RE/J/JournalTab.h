@@ -11,6 +11,7 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_JournalTab;
+		inline static constexpr auto VTABLE = VTABLE_JournalTab;
 
 		~JournalTab() override;  // 00
 
@@ -20,6 +21,8 @@ namespace RE
 
 		// members
 		GPtr<GFxMovieView> view;  // 10
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(JournalTab) == 0x18);
 }

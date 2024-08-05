@@ -12,6 +12,8 @@ namespace RE
 		HeapBlockFreeHead*  leftChild;             // 28
 		HeapBlockFreeHead*  rightChild;            // 30
 		HeapBlockFreeHead** root;                  // 38
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(HeapBlockFreeHead) == 0x40);
 }

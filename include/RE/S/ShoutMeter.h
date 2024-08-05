@@ -8,6 +8,7 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_ShoutMeter;
+		inline static constexpr auto VTABLE = VTABLE_ShoutMeter;
 
 		~ShoutMeter() override;  // 00
 
@@ -18,6 +19,8 @@ namespace RE
 		// members
 		float         cooldown;  // 48 - in seconds
 		std::uint32_t unk4C;     // 4C
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(ShoutMeter) == 0x50);
 }

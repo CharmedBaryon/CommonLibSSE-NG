@@ -13,13 +13,14 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_MessageBoxData;
+		inline static constexpr auto VTABLE = VTABLE_MessageBoxData;
 
 		~MessageBoxData() override;  // 00
 
 		void QueueMessage()
 		{
 			using func_t = decltype(&MessageBoxData::QueueMessage);
-			REL::Relocation<func_t> func{ RELOCATION_ID(51422, 52271) };
+			static REL::Relocation<func_t> func{ RELOCATION_ID(51422, 52271) };
 			return func(this);
 		}
 
@@ -34,6 +35,8 @@ namespace RE
 		std::uint8_t                         unk4D;       // 4D
 		std::uint8_t                         unk4E;       // 4E
 		std::uint8_t                         unk4F;       // 4F
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(MessageBoxData) == 0x50);
 }

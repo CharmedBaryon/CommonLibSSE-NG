@@ -17,6 +17,7 @@ namespace RE
 		{
 		public:
 			inline static constexpr auto RTTI = RTTI_SkyrimScript____DropObjectFunctor;
+			inline static constexpr auto VTABLE = VTABLE_SkyrimScript____DropObjectFunctor;
 
 			~DropObjectFunctor() override;  // 00
 

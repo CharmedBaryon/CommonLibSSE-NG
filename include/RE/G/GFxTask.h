@@ -62,6 +62,8 @@ namespace RE
 		// members
 		TaskId             thisTaskId;    // 10
 		volatile TaskState currentState;  // 14
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(GFxTask) == 0x18);
 }

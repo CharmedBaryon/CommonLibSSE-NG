@@ -195,7 +195,7 @@ namespace RE
 		ImageSpaceModifierInstanceForm* TriggerIfNotActive(float a_strength, NiAVObject* a_target)
 		{
 			using func_t = decltype(&TESImageSpaceModifier::TriggerIfNotActive);
-			REL::Relocation<func_t> func{ RELOCATION_ID(18187, 18572) };
+			static REL::Relocation<func_t> func{ RELOCATION_ID(18187, 18572) };
 			return func(this, a_strength, a_target);
 		}
 
@@ -213,6 +213,8 @@ namespace RE
 		DOF                            dof;                   // 2B0
 		NiPointer<NiColorInterpolator> motionBlurStrength;    // 2C8 - NAM4
 		BSString                       formEditorID;          // 2D0 - EDID
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(TESImageSpaceModifier) == 0x2E0);
 }

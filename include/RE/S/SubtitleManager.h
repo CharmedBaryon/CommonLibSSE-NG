@@ -30,7 +30,7 @@ namespace RE
 		void KillSubtitles()
 		{
 			using func_t = decltype(&SubtitleManager ::KillSubtitles);
-			REL::Relocation<func_t> func{ RELOCATION_ID(51755, 52628) };
+			static REL::Relocation<func_t> func{ RELOCATION_ID(51755, 52628) };
 			return func(this);
 		}
 
@@ -41,6 +41,8 @@ namespace RE
 		BSTArray<SubtitleInfo> subtitles;       // 18
 		mutable BSSpinLock     lock;            // 20
 		ObjectRefHandle        currentSpeaker;  // 28
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(SubtitleManager) == 0x30);
 }

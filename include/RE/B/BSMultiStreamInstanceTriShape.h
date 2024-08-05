@@ -8,7 +8,8 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_BSMultiStreamInstanceTriShape;
-		inline static auto           Ni_RTTI = NiRTTI_BSMultiStreamInstanceTriShape;
+		inline static constexpr auto Ni_RTTI = NiRTTI_BSMultiStreamInstanceTriShape;
+		inline static constexpr auto VTABLE = VTABLE_BSMultiStreamInstanceTriShape;
 
 		struct MULTISTREAM_TRISHAPE_RUNTIME_DATA
 		{
@@ -31,7 +32,7 @@ namespace RE
 		// override (BSInstanceTriShape)
 		const NiRTTI* GetRTTI() const override;                           // 02
 		NiObject*     CreateClone(NiCloningProcess& a_cloning) override;  // 17
-#if !defined(ENABLE_SKYRIM_VR) || (!defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_VR))
+#if defined(EXCLUSIVE_SKYRIM_FLAT)
 		// The following are virtual functions past the point where VR compatibility breaks.
 		void OnVisible(NiCullingProcess& a_process) override;  // 34
 
@@ -60,9 +61,9 @@ namespace RE
 		RUNTIME_DATA_CONTENT  // 160, 1A8
 #endif
 	};
-#ifndef ENABLE_SKYRIM_VR
+#if defined(EXCLUSIVE_SKYRIM_FLAT)
 	static_assert(sizeof(BSMultiStreamInstanceTriShape) == 0x1A0);
-#elif !defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE)
+#elif defined(EXCLUSIVE_SKYRIM_VR)
 	static_assert(sizeof(BSMultiStreamInstanceTriShape) == 0x1E8);
 #endif
 }

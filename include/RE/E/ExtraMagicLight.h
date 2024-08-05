@@ -12,12 +12,15 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_ExtraMagicLight;
-		inline static auto           EXTRADATATYPE = ExtraDataType::kMagicLight;
+		inline static constexpr auto VTABLE = VTABLE_ExtraMagicLight;
+		inline static constexpr auto EXTRADATATYPE = ExtraDataType::kMagicLight;
 
 		~ExtraMagicLight() override;  // 00
 
 		// override (BSExtraData)
 		[[nodiscard]] ExtraDataType GetType() const override;  // 01 - { return kMagicLight; }
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(ExtraMagicLight) == 0x18);
 }

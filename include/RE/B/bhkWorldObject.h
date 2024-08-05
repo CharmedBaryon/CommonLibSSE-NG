@@ -8,7 +8,8 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_bhkWorldObject;
-		inline static auto           Ni_RTTI = NiRTTI_bhkWorldObject;
+		inline static constexpr auto Ni_RTTI = NiRTTI_bhkWorldObject;
+		inline static constexpr auto VTABLE = VTABLE_bhkWorldObject;
 
 		~bhkWorldObject() override;  // 00
 
@@ -28,6 +29,8 @@ namespace RE
 
 		// members
 		hkpWorld* world;  // 20
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(bhkWorldObject) == 0x28);
 }

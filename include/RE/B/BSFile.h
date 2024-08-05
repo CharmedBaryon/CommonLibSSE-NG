@@ -10,6 +10,7 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_BSFile;
+		inline static constexpr auto VTABLE = VTABLE_BSFile;
 
 		~BSFile() override;  // 00
 
@@ -49,6 +50,8 @@ namespace RE
 		bool          virtualAlloc;                  // 178
 		std::uint8_t  unk179;                        // 179
 		std::uint16_t unk17A;                        // 17A
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(BSFile) == 0x180);
 }

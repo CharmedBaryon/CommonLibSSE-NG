@@ -17,6 +17,8 @@ namespace RE
 		CombatInventoryItem::CATEGORY GetCategory() override;                                         // 05
 		bool                          CheckStartCast(CombatController* a_combatController) override;  // 06
 		bool                          CheckStopCast(CombatController* a_combatController) override;   // 07
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(CombatMagicCasterLight) == 0x20);
 }

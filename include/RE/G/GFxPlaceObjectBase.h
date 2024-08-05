@@ -87,6 +87,8 @@ namespace RE
 		virtual void  GetPlaceObjectData(GFxPlaceObjectData& a_data);  // 08 - pure
 		virtual void* GetClipActions();                                // 09 - { return nullptr; }
 		virtual void  GetPlaceFlags(GFxPlaceFlags& a_flags);           // 0A - pure
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(GFxPlaceObjectBase) == 0x8);
 }

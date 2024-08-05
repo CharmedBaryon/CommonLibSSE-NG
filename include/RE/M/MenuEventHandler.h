@@ -14,6 +14,7 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_MenuEventHandler;
+		inline static constexpr auto VTABLE = VTABLE_MenuEventHandler;
 
 		MenuEventHandler() = default;
 		virtual ~MenuEventHandler() = default;  // 00
@@ -28,6 +29,8 @@ namespace RE
 		bool          registered;  // 0C
 		std::uint8_t  unk0D;       // 0D
 		std::uint16_t pad0E;       // 0E
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(MenuEventHandler) == 0x10);
 }

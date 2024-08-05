@@ -9,7 +9,8 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_ExtraHealthPerc;
-		inline static auto           EXTRADATATYPE = ExtraDataType::kHealthPerc;
+		inline static constexpr auto VTABLE = VTABLE_ExtraHealthPerc;
+		inline static constexpr auto EXTRADATATYPE = ExtraDataType::kHealthPerc;
 
 		~ExtraHealthPerc() override;  // 00
 
@@ -20,6 +21,8 @@ namespace RE
 		// members
 		std::uint32_t unk10;  // 10
 		std::uint32_t pad14;  // 14
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(ExtraHealthPerc) == 0x18);
 }

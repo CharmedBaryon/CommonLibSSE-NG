@@ -41,7 +41,6 @@ namespace RE
 	std::uint8_t                         unk1A1;    /* 161 */ \
 	std::uint16_t                        unk1A2;    /* 162 */ \
 	std::uint32_t                        unk1A4;    /* 164 */
-
 			RUNTIME_DATA_CONTENT
 		};
 		static_assert(sizeof(RUNTIME_DATA) == 0x168);
@@ -86,13 +85,17 @@ namespace RE
 
 		// members
 #ifndef SKYRIM_CROSS_VR
-		RUNTIME_DATA_CONTENT  // 40, 50
+		RUNTIME_DATA_CONTENT;  // 40, 50
 #endif
+	private:
+		KEEP_FOR_RE()
 	};
-#ifndef ENABLE_SKYRIM_VR
+#if defined(EXCLUSIVE_SKYRIM_FLAT)
 	static_assert(sizeof(RaceSexMenu) == 0x1A8);
-#elif !defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE)
+#elif defined(EXCLUSIVE_SKYRIM_VR)
 	static_assert(sizeof(RaceSexMenu) == 0x1B8);
+#else
+	static_assert(sizeof(RaceSexMenu) == 0x30);
 #endif
 }
 #undef RUNTIME_DATA_CONTENT

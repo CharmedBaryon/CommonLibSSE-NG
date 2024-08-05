@@ -6,10 +6,12 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_BSISoundOutputModel;
+		inline static constexpr auto VTABLE = VTABLE_BSISoundOutputModel;
 
 		struct BSIAttenuationCharacteristics
 		{
 			inline static constexpr auto RTTI = RTTI_BSISoundOutputModel__BSIAttenuationCharacteristics;
+			inline static constexpr auto VTABLE = VTABLE_BSISoundOutputModel__BSIAttenuationCharacteristics;
 
 			virtual ~BSIAttenuationCharacteristics();  // 00
 
@@ -32,6 +34,8 @@ namespace RE
 		[[nodiscard]] virtual const BSIAttenuationCharacteristics* DoGetAttenuation() const = 0;                                                                // 07
 		[[nodiscard]] virtual float                                DoGetReverbSendLevel() const = 0;                                                            // 08
 		[[nodiscard]] virtual bool                                 DoGetSupportsMonitor(std::uint32_t a_arg1) const = 0;                                        // 09
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(BSISoundOutputModel) == 0x8);
 }

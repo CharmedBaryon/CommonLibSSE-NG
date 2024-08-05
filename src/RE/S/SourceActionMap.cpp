@@ -27,7 +27,7 @@ namespace RE
 		bool DoAction(Actor* a_actor, DEFAULT_OBJECT a_action)
 		{
 			using func_t = decltype(&SourceActionMap::DoAction);
-			REL::Relocation<func_t> func{ RELOCATION_ID(33423, 34202) };
+			static REL::Relocation<func_t> func{ RELOCATION_ID(33423, 34202) };
 			return func(a_actor, a_action);
 		}
 	}

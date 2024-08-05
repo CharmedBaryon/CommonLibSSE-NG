@@ -27,6 +27,8 @@ namespace RE
 		// members
 		std::int32_t  value;  // 18
 		std::uint32_t pad1C;  // 1C
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(NiIntegerExtraData) == 0x20);
 }

@@ -11,6 +11,7 @@ namespace RE
 		{
 		public:
 			inline static constexpr auto RTTI = RTTI_BSScript__ISavePatcherInterface;
+			inline static constexpr auto VTABLE = VTABLE_BSScript__ISavePatcherInterface;
 
 			virtual ~ISavePatcherInterface();  // 00
 

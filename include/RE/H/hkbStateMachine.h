@@ -36,6 +36,7 @@ namespace RE
 		{
 		public:
 			inline static constexpr auto RTTI = RTTI_hkbStateMachine__StateInfo;
+			inline static constexpr auto VTABLE = VTABLE_hkbStateMachine__StateInfo;
 
 			~StateInfo() override;  // 00
 
@@ -56,6 +57,7 @@ namespace RE
 		{
 		public:
 			inline static constexpr auto RTTI = RTTI_hkbStateMachine__TransitionInfoArray;
+			inline static constexpr auto VTABLE = VTABLE_hkbStateMachine__TransitionInfoArray;
 
 			~TransitionInfoArray() override;  // 00
 
@@ -124,6 +126,8 @@ namespace RE
 		bool                                                           echoNextUpdate;                           // 101
 		std::uint16_t                                                  currentStateIndexAndEntered;              // 102
 		std::uint32_t                                                  pad0BC;                                   // 104
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(hkbStateMachine) == 0x108);
 }

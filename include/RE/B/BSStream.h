@@ -29,6 +29,8 @@ namespace RE
 		void*                       objectRefMap;    // 620 - BSTHashMap<const char*,NiObjectNET *>* ?
 		NiPointer<BSNodeReferences> nodeReferences;  // 628
 		std::uint64_t               unk630;          // 630
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(BSStream) == 0x638);
 }

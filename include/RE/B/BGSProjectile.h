@@ -116,6 +116,8 @@ namespace RE
 		TESModel          muzzleFlashModel;  // 108
 		SOUND_LEVEL       soundLevel;        // 130 - VNAM
 		std::uint32_t     pad134;            // 134
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(BGSProjectile) == 0x138);
 }

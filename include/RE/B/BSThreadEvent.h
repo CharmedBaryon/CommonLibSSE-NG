@@ -7,8 +7,11 @@ namespace RE
 		static void InitSDM()
 		{
 			using func_t = decltype(&BSThreadEvent::InitSDM);
-			REL::Relocation<func_t> func{ RELOCATION_ID(67151, 68449) };
+			static REL::Relocation<func_t> func{ RELOCATION_ID(67151, 68449) };
 			return func();
 		}
+
+	private:
+		KEEP_FOR_RE()
 	};
 }

@@ -8,6 +8,7 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI___ArmorRatingVisitorBase;
+		inline static constexpr auto VTABLE = VTABLE___ArmorRatingVisitorBase;
 
 		virtual ~ArmorRatingVisitorBase();  // 00
 
@@ -24,6 +25,8 @@ namespace RE
 		float  armorPerks;        // 14
 		float  lightArmorRating;  // 18
 		float  heavyArmorRating;  // 1C
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(ArmorRatingVisitorBase) == 0x20);
 }

@@ -9,6 +9,7 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_BGSBlockBashData;
+		inline static constexpr auto VTABLE = VTABLE_BGSBlockBashData;
 
 		~BGSBlockBashData() override;  // 00
 
@@ -20,6 +21,8 @@ namespace RE
 		// members
 		BGSImpactDataSet* blockBashImpactDataSet;  // 08 - BIDS
 		BGSMaterialType*  altBlockMaterialType;    // 10 - BAMT
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(BGSBlockBashData) == 0x18);
 }

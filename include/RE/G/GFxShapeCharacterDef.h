@@ -34,6 +34,8 @@ namespace RE
 
 		// members
 		GFxShapeWithStyles shape;  // 20
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(GFxShapeCharacterDef) == 0xF0);
 }

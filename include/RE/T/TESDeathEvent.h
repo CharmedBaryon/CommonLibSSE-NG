@@ -16,6 +16,8 @@ namespace RE
 		std::uint8_t             pad11{ 0 };   // 11
 		std::uint16_t            pad12{ 0 };   // 12
 		std::uint32_t            pad14{ 0 };   // 14
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(TESDeathEvent) == 0x18);
 }

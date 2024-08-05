@@ -9,7 +9,8 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_ExtraShouldWear;
-		inline static auto           EXTRADATATYPE = ExtraDataType::kShouldWear;
+		inline static constexpr auto VTABLE = VTABLE_ExtraShouldWear;
+		inline static constexpr auto EXTRADATATYPE = ExtraDataType::kShouldWear;
 
 		~ExtraShouldWear() override;  // 00
 
@@ -18,6 +19,8 @@ namespace RE
 
 		// members
 		std::uint64_t unk10;  // 10
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(ExtraShouldWear) == 0x18);
 }

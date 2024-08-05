@@ -9,7 +9,8 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_ExtraFromAlias;
-		inline static auto           EXTRADATATYPE = ExtraDataType::kFromAlias;
+		inline static constexpr auto VTABLE = VTABLE_ExtraFromAlias;
+		inline static constexpr auto EXTRADATATYPE = ExtraDataType::kFromAlias;
 
 		~ExtraFromAlias() override;  // 00
 
@@ -20,6 +21,8 @@ namespace RE
 		TESQuest*     quest;    // 10
 		std::uint32_t aliasID;  // 18
 		std::uint32_t pad1C;    // 1C
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(ExtraFromAlias) == 0x20);
 }

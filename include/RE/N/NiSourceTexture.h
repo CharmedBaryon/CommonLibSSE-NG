@@ -7,7 +7,13 @@ namespace RE
 {
 	namespace BSGraphics
 	{
-		class Texture;
+		struct Texture
+		{
+			ID3D11Texture2D*          texture;       // 00
+			uint64_t                  unk08;         // 08
+			ID3D11ShaderResourceView* resourceView;  // 10
+		};
+		static_assert(sizeof(Texture) == 0x18);
 	}
 
 	namespace BSResource
@@ -21,7 +27,8 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_NiSourceTexture;
-		inline static auto           Ni_RTTI = NiRTTI_NiSourceTexture;
+		inline static constexpr auto Ni_RTTI = NiRTTI_NiSourceTexture;
+		inline static constexpr auto VTABLE = VTABLE_NiSourceTexture;
 
 		~NiSourceTexture() override;  // 00
 
@@ -41,6 +48,8 @@ namespace RE
 		std::uint8_t         pad51;            // 51
 		std::uint16_t        pad52;            // 52
 		std::uint32_t        pad54;            // 54
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(NiSourceTexture) == 0x58);
 }

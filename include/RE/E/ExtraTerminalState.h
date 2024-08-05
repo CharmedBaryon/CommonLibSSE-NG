@@ -9,7 +9,8 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_ExtraTerminalState;
-		inline static auto           EXTRADATATYPE = ExtraDataType::kTerminalState;
+		inline static constexpr auto VTABLE = VTABLE_ExtraTerminalState;
+		inline static constexpr auto EXTRADATATYPE = ExtraDataType::kTerminalState;
 
 		~ExtraTerminalState() override;  // 00
 
@@ -18,6 +19,8 @@ namespace RE
 
 		// members
 		std::uint64_t unk10;  // 10
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(ExtraTerminalState) == 0x18);
 }

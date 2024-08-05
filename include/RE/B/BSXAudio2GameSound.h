@@ -11,6 +11,7 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_BSXAudio2GameSound;
+		inline static constexpr auto VTABLE = VTABLE_BSXAudio2GameSound;
 
 		// override (BSGameSound)
 		void Unk_00(void) override;  // 00
@@ -82,6 +83,8 @@ namespace RE
 		std::uint64_t unk208;  // 208
 		std::uint64_t unk210;  // 210
 		std::uint64_t unk218;  // 218
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(BSXAudio2GameSound) == 0x220);
 }

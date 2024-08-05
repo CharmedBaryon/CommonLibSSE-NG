@@ -62,6 +62,8 @@ namespace RE
 		std::uint8_t            padA9;      // A9
 		std::uint16_t           padAA;      // AA
 		std::uint32_t           padAC;      // AC
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(BGSMovableStatic) == 0xB0);
 }

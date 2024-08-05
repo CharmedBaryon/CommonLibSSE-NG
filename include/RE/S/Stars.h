@@ -23,6 +23,8 @@ namespace RE
 		NiPointer<NiNode> stars;  // 10
 		float             alpha;  // 18
 		std::uint32_t     pad1C;  // 1C
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(Stars) == 0x20);
 }

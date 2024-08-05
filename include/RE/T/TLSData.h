@@ -19,13 +19,15 @@ namespace RE
 		std::uint8_t                     unk601[0x167];                            // 601
 		std::uint32_t                    taskFlag;                                 // 768 -- unknown enum
 																				   // ... many others ...
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(offsetof(TLSData, consoleMode) == 0x600);
 	static_assert(offsetof(TLSData, taskFlag) == 0x768);
 
 	inline static TLSData* GetStaticTLSData()
 	{
-		REL::Relocation<std::uint32_t*> tlsIndex{ Offset::TlsIndex };
+		REL::Relocation<std::uint32_t*> tlsIndex{ RELOCATION_ID(528600, 415542) };
 		auto                            tlsDataArray = reinterpret_cast<TLSData**>(__readgsqword(0x58));
 		return tlsDataArray[*tlsIndex];
 	}

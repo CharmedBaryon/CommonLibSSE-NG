@@ -14,12 +14,15 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_BGSAttackDataMap;
+		inline static constexpr auto VTABLE = VTABLE_BGSAttackDataMap;
 
 		~BGSAttackDataMap() override;  // 00
 
 		// members
 		BSTHashMap<BSFixedString, NiPointer<BGSAttackData>> attackDataMap;    // 10
 		TESRace*                                            defaultDataRace;  // 40 - ATKR
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(BGSAttackDataMap) == 0x48);
 }

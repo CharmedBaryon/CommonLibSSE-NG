@@ -114,17 +114,17 @@ namespace RE
 		public BSTEventSource<TESUniqueIDChangeEvent>,           // 10D8
 		public BSTEventSource<TESWaitStartEvent>,                // 1130 - ?
 		public BSTEventSource<TESWaitStopEvent>,                 // 1188 - ?
-#ifndef ENABLE_SKYRIM_VR
-		public BSTEventSource<TESSwitchRaceCompleteEvent>,       // 11E0
-		public BSTEventSource<TESFastTravelEndEvent>             // 1238
+#if defined(EXCLUSIVE_SKYRIM_FLAT)
+		public BSTEventSource<TESSwitchRaceCompleteEvent>,  // 11E0
+		public BSTEventSource<TESFastTravelEndEvent>        // 1238
 #else
-    public BSTEventSource<TESSwitchRaceCompleteEvent>       // 11E0
+		public BSTEventSource<TESSwitchRaceCompleteEvent>  // 11E0
 #endif
 	{
 	public:
 		static ScriptEventSourceHolder* GetSingleton();
 
-		void SendActivateEvent(const NiPointer<TESObjectREFR>& a_objectActivated, const NiPointer<TESObjectREFR>& a_actionRef);
+		void SendActivateEvent(const NiPointer<TESObjectREFR>& a_objectActivated, const NiPointer<TESObjectREFR>& a_actionRef); // may be VR only
 		void SendOpenCloseEvent(const NiPointer<TESObjectREFR>& a_ref, const NiPointer<TESObjectREFR>& a_activeRef, bool a_isOpened);
 		void SendSpellCastEvent(const NiPointer<TESObjectREFR>& a_object, FormID a_formID);
 
@@ -134,20 +134,20 @@ namespace RE
 			return static_cast<BSTEventSource<T>*>(this);
 		}
 
-        template <>
-        inline BSTEventSource<TESFastTravelEndEvent>* GetEventSource() noexcept
-        {
-            return AsTESFastTravelEndEventSource();
-        }
+		template <>
+		inline BSTEventSource<TESFastTravelEndEvent>* GetEventSource() noexcept
+		{
+			return AsTESFastTravelEndEventSource();
+		}
 
-        inline BSTEventSource<TESFastTravelEndEvent>* AsTESFastTravelEndEventSource() noexcept
-        {
-            if SKYRIM_REL_CONSTEXPR (REL::Module::IsVR()) {
-                return nullptr;
-            } else {
-                return &REL::RelocateMember<BSTEventSource<TESFastTravelEndEvent>>(this, 0x1238, 0);
-            }
-        }
+		inline BSTEventSource<TESFastTravelEndEvent>* AsTESFastTravelEndEventSource() noexcept
+		{
+			if SKYRIM_REL_CONSTEXPR (REL::Module::IsVR()) {
+				return nullptr;
+			} else {
+				return &REL::RelocateMember<BSTEventSource<TESFastTravelEndEvent>>(this, 0x1238, 0);
+			}
+		}
 
 		template <class T>
 		inline void AddEventSink(BSTEventSink<T>* a_sink)
@@ -166,10 +166,13 @@ namespace RE
 		{
 			GetEventSource<T>()->SendEvent(a_event);
 		}
+
+	private:
+		KEEP_FOR_RE()
 	};
-#ifndef ENABLE_SKYRIM_VR
+#if defined(EXCLUSIVE_SKYRIM_FLAT)
 	static_assert(sizeof(ScriptEventSourceHolder) == 0x1290);
-#elif !defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE)
-    static_assert(sizeof(ScriptEventSourceHolder) == 0x1238);
+#elif defined(EXCLUSIVE_SKYRIM_VR)
+	static_assert(sizeof(ScriptEventSourceHolder) == 0x1238);
 #endif
 }

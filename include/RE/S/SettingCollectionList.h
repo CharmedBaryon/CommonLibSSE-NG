@@ -19,6 +19,8 @@ namespace RE
 
 		// members
 		BSSimpleList<T*> settings;  // 118
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(SettingCollectionList<void*>) == 0x128);
 }

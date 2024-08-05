@@ -19,6 +19,8 @@ namespace RE
 		std::uint8_t  pad19;             // 19
 		std::uint16_t pad1A;             // 1A
 		std::uint32_t pad1C;             // 1C
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(TESRegionList) == 0x20);
 }

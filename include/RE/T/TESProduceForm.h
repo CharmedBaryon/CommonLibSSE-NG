@@ -25,6 +25,7 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_TESProduceForm;
+		inline static constexpr auto VTABLE = VTABLE_TESProduceForm;
 
 		~TESProduceForm() override;  // 00
 
@@ -38,6 +39,8 @@ namespace RE
 		TESBoundObject*         produceItem;                    // 10 - PFIG
 		std::int8_t             produceChance[SEASON::kTotal];  // 18 - PFPC
 		std::uint32_t           pad1C;                          // 1C
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(TESProduceForm) == 0x20);
 }

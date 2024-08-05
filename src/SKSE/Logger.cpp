@@ -81,8 +81,8 @@ namespace SKSE
 				path /= "Skyrim VR";
 			} else {
 				path /= std::filesystem::exists("steam_api64.dll") ?
-					(std::filesystem::exists("openvr_api.dll") ? "Skyrim VR" : "Skyrim Special Edition") :
-				    "Skyrim Special Edition GOG";
+				            (std::filesystem::exists("openvr_api.dll") ? "Skyrim VR" : "Skyrim Special Edition") :
+				            "Skyrim Special Edition GOG";
 			}
 			path /= "SKSE"sv;
 

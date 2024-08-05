@@ -36,6 +36,8 @@ namespace RE
 		// members
 		hkArray<hkpPhantomOverlapListener*> overlapListeners;  // D0
 		hkArray<hkpPhantomListener*>        phantomListeners;  // E0
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(hkpPhantom) == 0xF0);
 }

@@ -30,6 +30,8 @@ namespace RE
 
 		// members
 		ImageSpaceBaseData data;  // 20
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(TESImageSpace) == 0x70);
 }

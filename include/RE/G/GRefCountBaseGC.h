@@ -24,6 +24,8 @@ namespace RE
 		std::uint32_t refCount;  // 10
 		std::uint32_t pad14;     // 14
 		std::uint64_t unk18;     // 18 - union
+	private:
+		KEEP_FOR_RE()
 	};
 	// size == 0x20
 }

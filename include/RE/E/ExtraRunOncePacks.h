@@ -20,7 +20,8 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_ExtraRunOncePacks;
-		inline static auto           EXTRADATATYPE = ExtraDataType::kRunOncePacks;
+		inline static constexpr auto VTABLE = VTABLE_ExtraRunOncePacks;
+		inline static constexpr auto EXTRADATATYPE = ExtraDataType::kRunOncePacks;
 
 		~ExtraRunOncePacks() override;  // 00
 
@@ -29,6 +30,8 @@ namespace RE
 
 		// members
 		BSSimpleList<RunOncePackage*>* packages;  // 10
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(ExtraRunOncePacks) == 0x18);
 }

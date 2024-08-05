@@ -17,6 +17,8 @@ namespace RE
 
 		void Start() override;   // 14
 		void Finish() override;  // 15
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(ParalysisEffect) == 0x98);
 }

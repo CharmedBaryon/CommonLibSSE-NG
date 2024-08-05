@@ -16,6 +16,8 @@ namespace RE
 		void ModifyOnStart() override;                                                  // 1B
 		void ModifyOnUpdate(float a_delta) override;                                    // 1D
 		void ModifyOnFinish(Actor* a_caster, Actor* a_target, float a_value) override;  // 1F
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(AbsorbEffect) == 0x98);
 }

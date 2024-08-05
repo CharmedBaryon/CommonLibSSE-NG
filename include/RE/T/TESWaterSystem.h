@@ -35,7 +35,7 @@ namespace RE
 		void AddRipple(const NiPoint3& a_pos, float a_scale)
 		{
 			using func_t = decltype(&TESWaterSystem::AddRipple);
-			REL::Relocation<func_t> func{ RELOCATION_ID(31410, 32217) };
+			static REL::Relocation<func_t> func{ RELOCATION_ID(31410, 32217) };
 			return func(this, a_pos, a_scale);
 		}
 
@@ -90,6 +90,8 @@ namespace RE
 		TESObjectCELL*                               unk118;                   // 118
 		mutable BSSpinLock                           lock;                     // 120
 		NiPointer<BSTriShape>                        autoWater;                // 128
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(TESWaterSystem) == 0x130);
 };

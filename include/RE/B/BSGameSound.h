@@ -6,6 +6,7 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_BSGameSound;
+		inline static constexpr auto VTABLE = VTABLE_BSGameSound;
 
 		// add
 		virtual void Unk_00(void);  // 00 - { return; }
@@ -61,6 +62,8 @@ namespace RE
 		std::uint64_t unkB0;  // B0
 		std::uint64_t unkB8;  // B8
 		std::uint64_t unkC0;  // C0
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(BSGameSound) == 0xC8);
 }

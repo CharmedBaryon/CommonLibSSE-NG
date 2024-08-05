@@ -3,25 +3,38 @@
 #include "RE/T/TESFile.h"
 #include "RE/T/TESForm.h"
 
+#include "REX/W32/BASE.h"
+#undef GetModuleHandle
+
 namespace RE
 {
-	TESDataHandler* TESDataHandler::GetSingleton()
+
+	TESDataHandler* TESDataHandler::GetSingleton(bool a_VRESL)
 	{
-		REL::Relocation<TESDataHandler**> singleton{ Offset::TESDataHandler::Singleton };
+		REL::Relocation<TESDataHandler**> singleton{ RELOCATION_ID(514141, 400269) };
+		if (REL::Module::IsVR() && a_VRESL && !VRcompiledFileCollection) {
+			const auto VRhandle = REX::W32::GetModuleHandleW(L"skyrimvresl");
+			if (VRhandle != NULL) {
+				const auto GetCompiledFileCollection = reinterpret_cast<const RE::TESFileCollection* (*)()>(REX::W32::GetProcAddress(VRhandle, "GetCompiledFileCollectionExtern"));
+				if (GetCompiledFileCollection != nullptr) {
+					TESDataHandler::VRcompiledFileCollection = const_cast<RE::TESFileCollection*>(GetCompiledFileCollection());
+				}
+			}
+		}
 		return *singleton;
 	}
 
 	bool TESDataHandler::AddFormToDataHandler(TESForm* a_form)
 	{
 		using func_t = decltype(&TESDataHandler::AddFormToDataHandler);
-		REL::Relocation<func_t> func{ RELOCATION_ID(13597, 13693) };
+		static REL::Relocation<func_t> func{ RELOCATION_ID(13597, 13693) };
 		return func(this, a_form);
 	}
 
 	std::uint32_t TESDataHandler::LoadScripts()
 	{
 		using func_t = decltype(&TESDataHandler::LoadScripts);
-		REL::Relocation<func_t> func{ Offset::TESDataHandler::LoadScripts };
+		static REL::Relocation<func_t> func{ RELOCATION_ID(13657, 13766) };
 		return func(this);
 	}
 
@@ -44,7 +57,7 @@ namespace RE
 			return 0;
 		}
 
-		if SKYRIM_REL_VR_CONSTEXPR (REL::Module::IsVR()) {
+		if (REL::Module::IsVR() && !VRcompiledFileCollection) {
 			// Use SkyrimVR lookup logic, ignore light plugin index which doesn't exist in VR
 			return (a_localFormID & 0xFFFFFF) | (file->compileIndex << 24);
 		} else {
@@ -63,7 +76,7 @@ namespace RE
 		}
 
 		auto rawIndex = (a_rawFormID & 0xFF000000) >> 24;
-		if SKYRIM_REL_VR_CONSTEXPR (REL::Module::IsVR()) {
+		if (REL::Module::IsVR() && !VRcompiledFileCollection) {
 			if (rawIndex >= file->masterCount) {
 				return 0;
 			}
@@ -107,7 +120,7 @@ namespace RE
 
 	const TESFile* TESDataHandler::LookupLoadedModByName(std::string_view a_modName)
 	{
-		auto size = GetLoadedModCount();
+		auto  size = GetLoadedModCount();
 		auto* file = GetLoadedMods();
 		for (auto i = 0; i < size; ++i, ++file) {
 			if (a_modName.size() == strlen((*file)->fileName) &&
@@ -120,7 +133,7 @@ namespace RE
 
 	const TESFile* TESDataHandler::LookupLoadedModByIndex(std::uint8_t a_index)
 	{
-		auto size = GetLoadedModCount();
+		auto  size = GetLoadedModCount();
 		auto* file = GetLoadedMods();
 		for (auto i = 0; i < size; ++i, ++file) {
 			if ((*file)->compileIndex == a_index) {
@@ -138,7 +151,7 @@ namespace RE
 
 	const TESFile* TESDataHandler::LookupLoadedLightModByName(std::string_view a_modName)
 	{
-		auto size = GetLoadedLightModCount();
+		auto  size = GetLoadedLightModCount();
 		auto* file = GetLoadedLightMods();
 		for (auto i = 0; i < size; ++i, ++file) {
 			if (a_modName.size() == strlen((*file)->fileName) &&
@@ -151,7 +164,7 @@ namespace RE
 
 	const TESFile* TESDataHandler::LookupLoadedLightModByIndex(std::uint16_t a_index)
 	{
-		auto size = GetLoadedLightModCount();
+		auto  size = GetLoadedLightModCount();
 		auto* file = GetLoadedLightMods();
 		for (auto i = 0; i < size; ++i, ++file) {
 			if ((*file)->smallFileCompileIndex == a_index) {
@@ -180,7 +193,7 @@ namespace RE
 	ObjectRefHandle TESDataHandler::CreateReferenceAtLocation(TESBoundObject* a_base, const NiPoint3& a_location, const NiPoint3& a_rotation, TESObjectCELL* a_targetCell, TESWorldSpace* a_selfWorldSpace, TESObjectREFR* a_alreadyCreatedRef, BGSPrimitive* a_primitive, const ObjectRefHandle& a_linkedRoomRefHandle, bool a_forcePersist, bool a_arg11)
 	{
 		using func_t = decltype(&TESDataHandler::CreateReferenceAtLocation);
-		REL::Relocation<func_t> func{ RELOCATION_ID(13625, 13723) };
+		static REL::Relocation<func_t> func{ RELOCATION_ID(13625, 13723) };
 		return func(this, a_base, a_location, a_rotation, a_targetCell, a_selfWorldSpace, a_alreadyCreatedRef, a_primitive, a_linkedRoomRefHandle, a_forcePersist, a_arg11);
 	}
 }

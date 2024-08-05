@@ -11,7 +11,8 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_ExtraRandomTeleportMarker;
-		inline static auto           EXTRADATATYPE = ExtraDataType::kRandomTeleportMarker;
+		inline static constexpr auto VTABLE = VTABLE_ExtraRandomTeleportMarker;
+		inline static constexpr auto EXTRADATATYPE = ExtraDataType::kRandomTeleportMarker;
 
 		~ExtraRandomTeleportMarker() override;  // 00
 
@@ -21,6 +22,8 @@ namespace RE
 
 		// members
 		TESObjectREFR* marker;  // 10
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(ExtraRandomTeleportMarker) == 0x18);
 }

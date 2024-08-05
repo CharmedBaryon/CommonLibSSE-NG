@@ -23,6 +23,8 @@ namespace RE
 
 		// members
 		AITimer cooldownTimer;  // 20
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(CombatMagicCasterWard) == 0x28);
 }

@@ -13,30 +13,32 @@ namespace RE::CraftingSubMenus
 		{
 		public:
 			inline static constexpr auto RTTI = RTTI_CraftingSubMenus__AlchemyMenu;
+			inline static constexpr auto VTABLE = VTABLE_CraftingSubMenus__AlchemyMenu;
 
-		class QuitMenuCallback : public IMessageBoxCallback
-		{
-		public:
-			inline static constexpr auto RTTI = RTTI_CraftingSubMenus__AlchemyMenu__QuitMenuCallback;
+			class QuitMenuCallback : public IMessageBoxCallback
+			{
+			public:
+				inline static constexpr auto RTTI = RTTI_CraftingSubMenus__AlchemyMenu__QuitMenuCallback;
+				inline static constexpr auto VTABLE = VTABLE_CraftingSubMenus__AlchemyMenu__QuitMenuCallback;
 
-			~QuitMenuCallback() override;  // 00
+				~QuitMenuCallback() override;  // 00
 
 				// override (IMessageBoxCallback)
 				void Run(Message a_msg) override;  // 01
 
-			// members
-			AlchemyMenu* subMenu;  // 10
-		};
-		static_assert(sizeof(QuitMenuCallback) == 0x18);
+				// members
+				AlchemyMenu* subMenu;  // 10
+			};
+			static_assert(sizeof(QuitMenuCallback) == 0x18);
 
-		class UsableEffectMap
-		{
-		public:
-			std::uint32_t ingredientIndex;               // 00
-			std::uint32_t effectIndex;                   // 04
-			std::uint32_t nextCompatibleEffectMapIndex;  // 08
-		};
-		static_assert(sizeof(UsableEffectMap) == 0xC);
+			class UsableEffectMap
+			{
+			public:
+				std::uint32_t ingredientIndex;               // 00
+				std::uint32_t effectIndex;                   // 04
+				std::uint32_t nextCompatibleEffectMapIndex;  // 08
+			};
+			static_assert(sizeof(UsableEffectMap) == 0xC);
 
 			class MenuIngredientEntry
 			{
@@ -52,15 +54,15 @@ namespace RE::CraftingSubMenus
 			};
 			static_assert(sizeof(MenuIngredientEntry) == 0x10);
 
-		class PotionCreationData
-		{
-		public:
-			BSTArray<UsableEffectMap>      usableEffectsMaps;  // 0
-			BSTArray<MenuIngredientEntry>* ingredientEntries;  // 18
-		};
-		static_assert(sizeof(PotionCreationData) == 0x20);
+			class PotionCreationData
+			{
+			public:
+				BSTArray<UsableEffectMap>      usableEffectsMaps;  // 0
+				BSTArray<MenuIngredientEntry>* ingredientEntries;  // 18
+			};
+			static_assert(sizeof(PotionCreationData) == 0x20);
 
-		~AlchemyMenu() override;  // 00
+			~AlchemyMenu() override;  // 00
 
 			// override (CraftingSubMenu)
 			void Accept(CallbackProcessor* a_cbReg) override;          // 01

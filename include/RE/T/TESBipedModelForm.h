@@ -12,6 +12,7 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_TESBipedModelForm;
+		inline static constexpr auto VTABLE = VTABLE_TESBipedModelForm;
 
 		struct Sexes
 		{
@@ -35,6 +36,8 @@ namespace RE
 		TESIcon             inventoryIcons[Sexes::kTotal];  // 78
 		BGSMessageIcon      messageIcons[Sexes::kTotal];    // 98
 		TESModelRDT         constraintTemplate;             // C8
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(TESBipedModelForm) == 0xF0);
 }

@@ -15,7 +15,7 @@ namespace RE
 
 	MenuControls* MenuControls::GetSingleton()
 	{
-		REL::Relocation<MenuControls**> singelton{ Offset::MenuControls::Singleton };
+		REL::Relocation<MenuControls**> singelton{ RELOCATION_ID(515124, 401263) };
 		return *singelton;
 	}
 
@@ -30,7 +30,7 @@ namespace RE
 			return;
 		}
 
-		if (isProcessing) {
+		if (GetRuntimeData().isProcessing) {
 			auto pos = std::find_if(regBuffer.begin(), regBuffer.end(), [a_handler](const QueuedReg& a_elem) -> bool {
 				return a_elem.handler == a_handler;
 			});
@@ -69,7 +69,7 @@ namespace RE
 			return;
 		}
 
-		if (isProcessing) {
+		if (GetRuntimeData().isProcessing) {
 			a_handler->registered = false;
 			auto pos = std::find_if(regBuffer.begin(), regBuffer.end(), [a_handler](const QueuedReg& a_elem) -> bool {
 				return a_elem.handler == a_handler;

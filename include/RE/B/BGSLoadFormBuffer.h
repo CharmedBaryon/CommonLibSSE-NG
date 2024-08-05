@@ -17,6 +17,8 @@ namespace RE
 
 		// override (BGSLoadGameBuffer)
 		std::uint8_t GetVersion(void) override;  // 01 - { return version; }
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(BGSLoadFormBuffer) == 0x50);
 }

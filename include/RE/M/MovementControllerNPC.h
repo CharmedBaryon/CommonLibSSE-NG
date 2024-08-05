@@ -21,6 +21,7 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_MovementControllerNPC;
+		inline static constexpr auto VTABLE = VTABLE_MovementControllerNPC;
 
 		~MovementControllerNPC() override;  // 00
 
@@ -57,6 +58,10 @@ namespace RE
 		std::uint8_t  unk1C5;  // 1C5
 		std::uint16_t unk1C6;  // 1C6
 		std::uint64_t unk1C8;  // 1C8
+	private:
+		KEEP_FOR_RE()
 	};
+#if defined(EXCLUSIVE_SKYRIM_FLAT)
 	static_assert(sizeof(MovementControllerNPC) == 0x1D0);
+#endif
 }

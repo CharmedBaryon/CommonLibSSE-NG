@@ -10,7 +10,8 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_ExtraWeaponIdleSound;
-		inline static auto           EXTRADATATYPE = ExtraDataType::kWeaponIdleSound;
+		inline static constexpr auto VTABLE = VTABLE_ExtraWeaponIdleSound;
+		inline static constexpr auto EXTRADATATYPE = ExtraDataType::kWeaponIdleSound;
 
 		~ExtraWeaponIdleSound() override;  // 00
 
@@ -20,6 +21,8 @@ namespace RE
 		// members
 		BSSoundHandle handle;  // 10
 		std::uint32_t pad1C;   // 1C
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(ExtraWeaponIdleSound) == 0x20);
 }

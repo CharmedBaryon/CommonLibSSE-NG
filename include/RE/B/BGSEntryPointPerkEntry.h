@@ -13,6 +13,7 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_BGSEntryPointPerkEntry;
+		inline static constexpr auto VTABLE = VTABLE_BGSEntryPointPerkEntry;
 
 		struct EntryData  // DATA
 		{
@@ -68,6 +69,8 @@ namespace RE
 		BGSEntryPointFunctionData* functionData;  // 18
 		SimpleArray<TESCondition>  conditions;    // 20
 		BGSPerk*                   perk;          // 28
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(BGSEntryPointPerkEntry) == 0x30);
 }

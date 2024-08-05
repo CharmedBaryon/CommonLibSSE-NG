@@ -36,6 +36,8 @@ namespace RE
 		float         percent;          // B8
 		GRectF        shapeBounds;      // BC
 		std::uint32_t padCC;            // CC
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(GFxShapeWithStyles) == 0xD0);
 }

@@ -23,6 +23,8 @@ namespace RE
 		hkStringPtr          scriptsPath;         // 68
 		hkStringPtr          fullPathToSource;    // 70
 		hkStringPtr          rootPath;            // 78
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(hkbProjectStringData) == 0x80);
 }

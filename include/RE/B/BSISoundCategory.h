@@ -6,6 +6,7 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_BSISoundCategory;
+		inline static constexpr auto VTABLE = VTABLE_BSISoundCategory;
 
 		virtual ~BSISoundCategory();  // 00
 
@@ -21,6 +22,8 @@ namespace RE
 		virtual void                        Unk_09(void) = 0;                                       // 09
 		virtual void                        Unk_0A(void) = 0;                                       // 0A
 		virtual void                        Unk_0B(void) = 0;                                       // 0B
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(BSISoundCategory) == 0x8);
 }

@@ -9,7 +9,8 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_ExtraGIDBuffer;
-		inline static auto           EXTRADATATYPE = ExtraDataType::kGIDBuffer;
+		inline static constexpr auto VTABLE = VTABLE_ExtraGIDBuffer;
+		inline static constexpr auto EXTRADATATYPE = ExtraDataType::kGIDBuffer;
 
 		~ExtraGIDBuffer() override;  // 00
 
@@ -18,6 +19,8 @@ namespace RE
 
 		// members
 		std::int8_t* buffer;  // 10
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(ExtraGIDBuffer) == 0x18);
 }

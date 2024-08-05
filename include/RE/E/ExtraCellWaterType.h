@@ -11,7 +11,8 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_ExtraCellWaterType;
-		inline static auto           EXTRADATATYPE = ExtraDataType::kCellWaterType;
+		inline static constexpr auto VTABLE = VTABLE_ExtraCellWaterType;
+		inline static constexpr auto EXTRADATATYPE = ExtraDataType::kCellWaterType;
 
 		~ExtraCellWaterType() override;  // 00
 
@@ -21,6 +22,8 @@ namespace RE
 
 		// members
 		TESWaterForm* water;  // 10
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(ExtraCellWaterType) == 0x18);
 }

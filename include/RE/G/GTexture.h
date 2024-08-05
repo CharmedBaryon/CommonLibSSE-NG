@@ -86,5 +86,7 @@ namespace RE
 
 		// members
 		GAtomicInt<std::int32_t> refCount;  // 08
+	private:
+		KEEP_FOR_RE()
 	};
 }

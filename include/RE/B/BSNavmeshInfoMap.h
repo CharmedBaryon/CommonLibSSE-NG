@@ -11,11 +11,13 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_BSNavmeshInfoMap;
+		inline static constexpr auto VTABLE = VTABLE_BSNavmeshInfoMap;
 
 		struct IVisitor
 		{
 		public:
 			inline static constexpr auto RTTI = RTTI_BSNavmeshInfoMap__IVisitor;
+			inline static constexpr auto VTABLE = VTABLE_BSNavmeshInfoMap__IVisitor;
 
 			virtual ~IVisitor();  // 00
 
@@ -32,6 +34,8 @@ namespace RE
 		virtual void           GetAllNavMeshInfo(BSTArray<BSNavmeshInfo*>& a_results) = 0;                                       // 03
 		virtual void           BuildListOfConnectedInfos(const BSNavmeshInfo* a_info, BSTArray<BSNavmeshInfo*>& a_results) = 0;  // 04
 		virtual void           ForEach(IVisitor* a_visitor) = 0;                                                                 // 05
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(BSNavmeshInfoMap) == 0x8);
 }

@@ -13,7 +13,8 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_ExtraHavok;
-		inline static auto           EXTRADATATYPE = ExtraDataType::kHavok;
+		inline static constexpr auto VTABLE = VTABLE_ExtraHavok;
+		inline static constexpr auto EXTRADATATYPE = ExtraDataType::kHavok;
 
 		~ExtraHavok() override;  // 00
 
@@ -23,6 +24,8 @@ namespace RE
 		// members
 		NiPointer<bhkWorld> world;     // 10
 		NiPointer<CellMopp> cellMopp;  // 18
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(ExtraHavok) == 0x20);
 }

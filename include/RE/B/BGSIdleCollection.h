@@ -10,6 +10,7 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_BGSIdleCollection;
+		inline static constexpr auto VTABLE = VTABLE_BGSIdleCollection;
 
 		enum class IdleFlags
 		{
@@ -46,10 +47,13 @@ namespace RE
 		BGSIdleCollection* Ctor()
 		{
 			using func_t = decltype(&BGSIdleCollection::Ctor);
-			REL::Relocation<func_t> func{ RELOCATION_ID(14127, 14227) };
+			static REL::Relocation<func_t> func{ RELOCATION_ID(14127, 14227) };
 			return func(this);
 		}
 		void CopyIdles(const std::vector<TESIdleForm*>& a_copiedData);
+
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(BGSIdleCollection) == 0x20);
 }

@@ -44,6 +44,9 @@ namespace RE
 	private:
 		BSResourceNiBinaryStream* ctor(const char* a_name, bool a_writeable = false, BSResource::Location* a_optionalStart = 0);
 		void                      dtor();
+
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(BSResourceNiBinaryStream) == 0x38);
 }

@@ -145,6 +145,8 @@ namespace RE
 
 		// members
 		DataDescUnion _dataDesc;  // 0
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(GString) == 0x8);
 }

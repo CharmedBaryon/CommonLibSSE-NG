@@ -8,6 +8,7 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_IMovementPlannerDirectControl;
+		inline static constexpr auto VTABLE = VTABLE_IMovementPlannerDirectControl;
 
 		~IMovementPlannerDirectControl() override;  // 00
 
@@ -17,6 +18,8 @@ namespace RE
 		virtual void Unk_03(void) = 0;  // 03
 		virtual void Unk_04(void) = 0;  // 04
 		virtual void Unk_05(void) = 0;  // 05
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(IMovementPlannerDirectControl) == 0x8);
 }

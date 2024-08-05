@@ -12,6 +12,7 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_ImageSpaceShaderParam;
+		inline static constexpr auto VTABLE = VTABLE_ImageSpaceShaderParam;
 
 		~ImageSpaceShaderParam() override;  // 00
 
@@ -36,6 +37,8 @@ namespace RE
 		std::uint32_t                                    unk4C;                    // 4C
 		NiTObjectArray<NiPointer<NiTexture>>             textures;                 // 50
 		NiTPrimitiveArray<BSGraphics::TextureFilterMode> textureFilterModes;       // 68 - NiTPrimitiveArray<enum BSGraphics::TextureFilterMode>
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(ImageSpaceShaderParam) == 0x80);
 }

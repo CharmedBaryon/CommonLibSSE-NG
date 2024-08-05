@@ -33,7 +33,7 @@ namespace RE
 		static void OpenTutorialMenu(DEFAULT_OBJECT a_tutorial)
 		{
 			using func_t = decltype(&TutorialMenu::OpenTutorialMenu);
-			REL::Relocation<func_t> func{ RELOCATION_ID(51818, 52692) };
+			static REL::Relocation<func_t> func{ RELOCATION_ID(51818, 52692) };
 			return func(a_tutorial);
 		}
 
@@ -41,10 +41,14 @@ namespace RE
 #ifndef SKYRIM_CROSS_VR
 		GFxValue root;  // 30, 40 - "Menu_mc"
 #endif
+	private:
+		KEEP_FOR_RE()
 	};
-#ifndef ENABLE_SKYRIM_VR
+#if defined(EXCLUSIVE_SKYRIM_FLAT)
 	static_assert(sizeof(TutorialMenu) == 0x48);
-#elif !defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE)
+#elif defined(EXCLUSIVE_SKYRIM_VR)
 	static_assert(sizeof(TutorialMenu) == 0x58);
+#else
+	static_assert(sizeof(TutorialMenu) == 0x30);
 #endif
 }

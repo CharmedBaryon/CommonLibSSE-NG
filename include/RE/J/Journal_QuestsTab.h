@@ -9,6 +9,7 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_Journal_QuestsTab;
+		inline static constexpr auto VTABLE = VTABLE_Journal_QuestsTab;
 
 		~Journal_QuestsTab() override;  // 00
 
@@ -21,6 +22,8 @@ namespace RE
 		std::uint8_t  unk31;  // 31
 		std::uint16_t unk32;  // 32
 		std::uint32_t unk34;  // 34
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(Journal_QuestsTab) == 0x38);
 }

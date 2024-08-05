@@ -10,6 +10,8 @@ namespace RE
 		// members
 		hkVector4 min;  // 00
 		hkVector4 max;  // 10
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(hkAabb) == 0x20);
 }

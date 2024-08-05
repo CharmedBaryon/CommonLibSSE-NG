@@ -9,6 +9,7 @@ namespace RE
 	public:
 		inline static constexpr auto RTTI = RTTI_bhkPCollisionObject;
 		inline static constexpr auto Ni_RTTI = NiRTTI_bhkPCollisionObject;
+		inline static constexpr auto VTABLE = VTABLE_bhkPCollisionObject;
 
 		~bhkPCollisionObject() override;  // 00
 
@@ -22,6 +23,8 @@ namespace RE
 		void          Unk_2B() override;                                  // 2B
 		void          Unk_2C() override;                                  // 2C
 		void          Unk_2F() override;                                  // 2F
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(bhkPCollisionObject) == 0x28);
 }

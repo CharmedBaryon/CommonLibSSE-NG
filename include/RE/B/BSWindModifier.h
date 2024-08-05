@@ -32,6 +32,9 @@ namespace RE
 
 	private:
 		BSWindModifier* Ctor();
+
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(BSWindModifier) == 0x38);
 }

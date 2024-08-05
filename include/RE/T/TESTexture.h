@@ -10,6 +10,7 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_TESTexture;
+		inline static constexpr auto VTABLE = VTABLE_TESTexture;
 
 		~TESTexture() override;  // 00
 
@@ -25,6 +26,8 @@ namespace RE
 
 		// members
 		BSFixedString textureName;  // 08 - ICON
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(TESTexture) == 0x10);
 }

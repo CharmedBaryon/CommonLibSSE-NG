@@ -110,7 +110,8 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_ExtraMapMarker;
-		inline static auto           EXTRADATATYPE = ExtraDataType::kMapMarker;
+		inline static constexpr auto VTABLE = VTABLE_ExtraMapMarker;
+		inline static constexpr auto EXTRADATATYPE = ExtraDataType::kMapMarker;
 
 		~ExtraMapMarker() override;  // 00
 
@@ -120,6 +121,8 @@ namespace RE
 
 		// members
 		MapMarkerData* mapData;  // 10
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(ExtraMapMarker) == 0x18);
 }

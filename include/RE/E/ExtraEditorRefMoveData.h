@@ -10,7 +10,8 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_ExtraEditorRefMoveData;
-		inline static auto           EXTRADATATYPE = ExtraDataType::kEditorRefMoveData;
+		inline static constexpr auto VTABLE = VTABLE_ExtraEditorRefMoveData;
+		inline static constexpr auto EXTRADATATYPE = ExtraDataType::kEditorRefMoveData;
 
 		~ExtraEditorRefMoveData() override;  // 00
 
@@ -22,6 +23,8 @@ namespace RE
 		NiPoint3      realLocation;  // 1C
 		NiPoint3      oldLocation;   // 28
 		std::uint32_t pad34;         // 34
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(ExtraEditorRefMoveData) == 0x38);
 }

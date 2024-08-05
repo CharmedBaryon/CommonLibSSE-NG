@@ -11,7 +11,8 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_ExtraCombatStyle;
-		inline static auto           EXTRADATATYPE = ExtraDataType::kCombatStyle;
+		inline static constexpr auto VTABLE = VTABLE_ExtraCombatStyle;
+		inline static constexpr auto EXTRADATATYPE = ExtraDataType::kCombatStyle;
 
 		~ExtraCombatStyle() override;  // 00
 
@@ -21,6 +22,8 @@ namespace RE
 
 		// members
 		TESCombatStyle* combatStyle;  // 10
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(ExtraCombatStyle) == 0x18);
 }

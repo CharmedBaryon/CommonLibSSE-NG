@@ -8,6 +8,7 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_MapMoveHandler;
+		inline static constexpr auto VTABLE = VTABLE_MapMoveHandler;
 
 		~MapMoveHandler() override;  // 00
 
@@ -17,6 +18,8 @@ namespace RE
 
 		// members
 		std::uint64_t unk18;  // 18
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(MapMoveHandler) == 0x20);
 }

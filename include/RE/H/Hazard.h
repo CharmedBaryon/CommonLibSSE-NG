@@ -79,11 +79,13 @@ namespace RE
 
 		// members
 #ifndef ENABLE_SKYRIM_AE
-		HAZARD_RUNTIME_DATA_CONTENT
+		HAZARD_RUNTIME_DATA_CONTENT;
 #endif
+	private:
+		KEEP_FOR_RE()
 	};
 #ifndef ENABLE_SKYRIM_AE
-	static_assert(sizeof(Hazard) == 0xD8);
+static_assert(sizeof(Hazard) == 0xD8);
 #endif
 }
 #undef HAZARD_RUNTIME_DATA_CONTENT

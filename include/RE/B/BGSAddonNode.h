@@ -53,6 +53,8 @@ namespace RE
 		BGSSoundDescriptorForm* sound;  // 70 - SNAM
 		ADDON_DATA              data;   // 78 - DNAM
 		std::uint32_t           pad7C;  // 7C
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(BGSAddonNode) == 0x80);
 }

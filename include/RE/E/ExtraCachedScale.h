@@ -9,7 +9,8 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_ExtraCachedScale;
-		inline static auto           EXTRADATATYPE = ExtraDataType::kCachedScale;
+		inline static constexpr auto VTABLE = VTABLE_ExtraCachedScale;
+		inline static constexpr auto EXTRADATATYPE = ExtraDataType::kCachedScale;
 
 		~ExtraCachedScale() override;  // 00
 
@@ -19,6 +20,8 @@ namespace RE
 		// members
 		float scale3D;   // 10
 		float refScale;  // 10
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(ExtraCachedScale) == 0x18);
 }

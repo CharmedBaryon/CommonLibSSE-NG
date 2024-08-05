@@ -27,6 +27,8 @@ namespace RE
 		float         unk40;              // 40
 		float         unk44;              // 44
 		float         unk48;              // 48
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(GrassParam) == 0x50);
 }

@@ -21,6 +21,8 @@ namespace RE
 		std::uint8_t         pad17;          // 17
 		TESQuest*            owner;          // 18
 		TESQuestStage*       owningStage;    // 20
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(TESQuestStageItem) == 0x28);
 }

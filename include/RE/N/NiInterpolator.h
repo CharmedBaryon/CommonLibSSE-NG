@@ -16,7 +16,8 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_NiInterpolator;
-		inline static auto           Ni_RTTI = NiRTTI_NiInterpolator;
+		inline static constexpr auto Ni_RTTI = NiRTTI_NiInterpolator;
+		inline static constexpr auto VTABLE = VTABLE_NiInterpolator;
 
 		~NiInterpolator() override;  // 00
 
@@ -60,6 +61,8 @@ namespace RE
 		// members
 		float         lastTime;  // 10
 		std::uint32_t pad14;     // 14
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(NiInterpolator) == 0x18);
 }

@@ -15,7 +15,8 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_BSParticleShaderProperty;
-		inline static auto           Ni_RTTI = NiRTTI_BSParticleShaderProperty;
+		inline static constexpr auto Ni_RTTI = NiRTTI_BSParticleShaderProperty;
+		inline static constexpr auto VTABLE = VTABLE_BSParticleShaderProperty;
 
 		virtual ~BSParticleShaderProperty();  // 00
 
@@ -79,6 +80,8 @@ namespace RE
 		float                                        explosionWindSpeed;               // 188
 		std::uint32_t                                unk18C;                           // 18C
 		BSParticleShaderEmitter*                     particleEmitter;                  // 190
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(BSParticleShaderProperty) == 0x198);
 }

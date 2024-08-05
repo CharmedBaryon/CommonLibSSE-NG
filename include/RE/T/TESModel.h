@@ -37,6 +37,8 @@ namespace RE
 		std::uint16_t   numTextures;  // 20
 		std::uint16_t   numAddons;    // 22
 		std::uint32_t   pad24;        // 24
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(TESModel) == 0x28);
 }

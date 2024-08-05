@@ -11,6 +11,8 @@ namespace RE
 		T top;     // ??
 		T right;   // ??
 		T bottom;  // ??
+	private:
+		KEEP_FOR_RE()
 	};
 
 	using GRectF = GRect<float>;

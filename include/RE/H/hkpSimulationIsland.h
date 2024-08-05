@@ -53,6 +53,8 @@ namespace RE
 		hkInplaceArray<hkpEntity*, 1> entities;                         // 60
 		hkpAgentNnTrack               midphaseAgentTrack;               // 78
 		hkpAgentNnTrack               narrowphaseAgentTrack;            // 98
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(hkpSimulationIsland) == 0xB8);
 }

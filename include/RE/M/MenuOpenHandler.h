@@ -8,6 +8,7 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_MenuOpenHandler;
+		inline static constexpr auto VTABLE = VTABLE_MenuOpenHandler;
 
 		~MenuOpenHandler() override;  // 00
 
@@ -21,6 +22,8 @@ namespace RE
 		std::uint8_t  unk11;  // 11
 		std::uint16_t unk12;  // 12
 		std::uint32_t unk14;  // 14
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(MenuOpenHandler) == 0x18);
 }

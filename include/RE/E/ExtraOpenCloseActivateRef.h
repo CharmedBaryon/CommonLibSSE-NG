@@ -10,7 +10,8 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_ExtraOpenCloseActivateRef;
-		inline static auto           EXTRADATATYPE = ExtraDataType::kOpenCloseActivateRef;
+		inline static constexpr auto VTABLE = VTABLE_ExtraOpenCloseActivateRef;
+		inline static constexpr auto EXTRADATATYPE = ExtraDataType::kOpenCloseActivateRef;
 
 		~ExtraOpenCloseActivateRef() override;  // 00
 
@@ -20,6 +21,8 @@ namespace RE
 		// members
 		ObjectRefHandle activateRef;  // 10
 		std::uint32_t   pad14;        // 14
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(ExtraOpenCloseActivateRef) == 0x18);
 }

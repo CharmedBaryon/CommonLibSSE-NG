@@ -72,7 +72,7 @@ namespace RE
 		void CheckAttachCastingArt()
 		{
 			using func_t = decltype(&ActorMagicCaster::CheckAttachCastingArt);
-			REL::Relocation<func_t> func{ RELOCATION_ID(33403, 34185) };
+			static REL::Relocation<func_t> func{ RELOCATION_ID(33403, 34185) };
 			return func(this);
 		}
 
@@ -89,6 +89,8 @@ namespace RE
 		float                                  costCharged;                  // F0
 		MagicSystem::CastingSource             castingSource;                // F4
 		stl::enumeration<Flags, std::uint32_t> flags;                        // F8
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(ActorMagicCaster) == 0x100);
 }

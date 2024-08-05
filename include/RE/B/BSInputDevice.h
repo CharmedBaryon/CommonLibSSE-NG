@@ -43,6 +43,8 @@ namespace RE
 		std::uint32_t                            pad0C;            // 0C
 		BSTHashMap<std::uint32_t, InputButton*>  deviceButtons;    // 10
 		BSTHashMap<BSFixedString, std::uint32_t> buttonNameIDMap;  // 40
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(BSInputDevice) == 0x70);
 }

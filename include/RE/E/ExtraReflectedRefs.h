@@ -11,7 +11,8 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_ExtraReflectedRefs;
-		inline static auto           EXTRADATATYPE = ExtraDataType::kReflectedRefs;
+		inline static constexpr auto VTABLE = VTABLE_ExtraReflectedRefs;
+		inline static constexpr auto EXTRADATATYPE = ExtraDataType::kReflectedRefs;
 
 		~ExtraReflectedRefs() override;  // 00
 
@@ -21,6 +22,8 @@ namespace RE
 
 		// members
 		BSTArray<ObjectRefHandle> refs;  // 10
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(ExtraReflectedRefs) == 0x28);
 }

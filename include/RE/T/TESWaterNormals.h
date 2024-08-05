@@ -13,6 +13,7 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_TESWaterNormals;
+		inline static constexpr auto VTABLE = VTABLE_TESWaterNormals;
 
 		virtual ~TESWaterNormals();  // 00
 
@@ -25,6 +26,8 @@ namespace RE
 		NiPointer<NiSourceTexture> noiseLayer1;    // 38
 		NiPointer<NiSourceTexture> noiseLayer2;    // 40
 		NiPointer<NiSourceTexture> noiseLayer3;    // 48
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(TESWaterNormals) == 0x50);
 }

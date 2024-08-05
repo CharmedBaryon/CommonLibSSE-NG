@@ -16,6 +16,8 @@ namespace RE
 
 		// override (TargetValueModifierEffect)
 		virtual float GetTargetValue() const override;  // 21
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(RallyEffect) == 0x98);
 }

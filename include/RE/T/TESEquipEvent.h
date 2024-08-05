@@ -17,6 +17,8 @@ namespace RE
 		bool                     equipped;      // 12
 		std::uint8_t             pad13;         // 13
 		std::uint32_t            pad14;         // 14
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(TESEquipEvent) == 0x18);
 }

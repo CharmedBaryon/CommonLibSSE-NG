@@ -111,6 +111,8 @@ namespace RE
 		mutable hkMultiThreadCheck                            multiThreadCheck;  // 18
 		std::uint32_t                                         pad24;             // 24
 		hkCriticalSection*                                    criticalSection;   // 28
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(hkpBroadPhase) == 0x30);
 }

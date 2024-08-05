@@ -8,6 +8,7 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_IProcedureTreeItem;
+		inline static constexpr auto VTABLE = VTABLE_IProcedureTreeItem;
 
 		virtual ~IProcedureTreeItem();  // 00
 
@@ -28,6 +29,8 @@ namespace RE
 		virtual void Unk_0E(void) = 0;          // 0E
 		virtual void Unk_0F(void) = 0;          // 0F
 		virtual void Unk_10(void) = 0;          // 10
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(IProcedureTreeItem) == 0x8);
 }

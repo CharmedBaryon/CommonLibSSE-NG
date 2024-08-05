@@ -13,7 +13,8 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_NiTimeController;
-		inline static auto           Ni_RTTI = NiRTTI_NiTimeController;
+		inline static constexpr auto Ni_RTTI = NiRTTI_NiTimeController;
+		inline static constexpr auto VTABLE = VTABLE_NiTimeController;
 
 		enum class CycleType
 		{
@@ -88,6 +89,9 @@ namespace RE
 	private:
 		NiTimeController* ctor();
 		void              dtor();
+
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(NiTimeController) == 0x48);
 }

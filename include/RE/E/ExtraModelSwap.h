@@ -12,7 +12,8 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_ExtraModelSwap;
-		inline static auto           EXTRADATATYPE = ExtraDataType::kModelSwap;
+		inline static constexpr auto VTABLE = VTABLE_ExtraModelSwap;
+		inline static constexpr auto EXTRADATATYPE = ExtraDataType::kModelSwap;
 
 		~ExtraModelSwap() override;  // 00
 
@@ -22,6 +23,8 @@ namespace RE
 		// members
 		TESModel* modelSwap;      // 10
 		TESForm*  modelSwapForm;  // 18
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(ExtraModelSwap) == 0x20);
 }

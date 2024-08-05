@@ -21,6 +21,8 @@ namespace RE
 
 		// members
 		uint32_t flags;  // 58
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(BGSActionData) == 0x60);
 }

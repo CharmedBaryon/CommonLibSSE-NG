@@ -18,6 +18,8 @@ namespace RE
 		std::uint32_t                       collisionFilterInfo;  // 00
 		stl::enumeration<Type, std::int8_t> type;                 // 04
 		hkbShapeSetup                       shapeSetup;           // 05
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(hkbRigidBodySetup) == 0x20);
 }

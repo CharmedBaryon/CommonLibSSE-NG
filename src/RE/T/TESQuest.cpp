@@ -13,14 +13,14 @@ namespace RE
 	ObjectRefHandle& TESQuest::CreateRefHandleByAliasID(ObjectRefHandle& a_handle, std::uint32_t a_aliasID)
 	{
 		using func_t = decltype(&TESQuest::CreateRefHandleByAliasID);
-		REL::Relocation<func_t> func{ RELOCATION_ID(24537, 25066) };
+		static REL::Relocation<func_t> func{ RELOCATION_ID(24537, 25066) };
 		return func(this, a_handle, a_aliasID);
 	}
 
 	bool TESQuest::EnsureQuestStarted(bool& a_result, bool a_startNow)
 	{
 		using func_t = decltype(&TESQuest::EnsureQuestStarted);
-		REL::Relocation<func_t> func{ Offset::TESQuest::EnsureQuestStarted };
+		static REL::Relocation<func_t> func{ RELOCATION_ID(24481, 25003) };
 		return func(this, a_result, a_startNow);
 	}
 
@@ -67,7 +67,7 @@ namespace RE
 	void TESQuest::Reset()
 	{
 		using func_t = decltype(&TESQuest::Reset);
-		REL::Relocation<func_t> func{ Offset::TESQuest::ResetQuest };
+		static REL::Relocation<func_t> func{ RELOCATION_ID(24486, 25014) };
 		return func(this);
 	}
 

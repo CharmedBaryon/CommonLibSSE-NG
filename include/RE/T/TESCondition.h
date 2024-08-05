@@ -1003,6 +1003,8 @@ namespace RE
 
 		// members
 		TESConditionItem* head;  // 0
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(TESCondition) == 0x8);
 }

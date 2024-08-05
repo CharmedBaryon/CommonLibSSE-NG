@@ -20,6 +20,8 @@ namespace RE
 		// members
 		hkArray<hkbAnimationBindingWithTriggers*> bindings;      // 10
 		hkArray<hkRefPtr<hkbAssetBundle>>         assetBundles;  // 20
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(hkbAnimationBindingSet) == 0x30);
 }

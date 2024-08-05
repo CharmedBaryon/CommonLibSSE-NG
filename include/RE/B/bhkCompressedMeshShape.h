@@ -11,7 +11,8 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_bhkCompressedMeshShape;
-		inline static auto           Ni_RTTI = NiRTTI_bhkCompressedMeshShape;
+		inline static constexpr auto Ni_RTTI = NiRTTI_bhkCompressedMeshShape;
+		inline static constexpr auto VTABLE = VTABLE_bhkCompressedMeshShape;
 
 		~bhkCompressedMeshShape() override;  // 00
 
@@ -34,6 +35,8 @@ namespace RE
 
 		// members
 		NiPointer<bhkCompressedMeshShapeData> data;  // 28
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(bhkCompressedMeshShape) == 0x30);
 }

@@ -16,35 +16,35 @@ namespace RE
 	void UI3DSceneManager::AttachChild(NiAVObject* a_obj, INTERFACE_LIGHT_SCHEME a_scheme)
 	{
 		using func_t = void (*)(UI3DSceneManager*, NiAVObject*, INTERFACE_LIGHT_SCHEME);
-		REL::Relocation<func_t> func{ RELOCATION_ID(51859, 52731) };
+		static REL::Relocation<func_t> func{ RELOCATION_ID(51859, 52731) };
 		return func(this, a_obj, a_scheme);
 	}
 
 	void UI3DSceneManager::DetachChild(NiAVObject* a_obj)
 	{
 		using func_t = decltype(&UI3DSceneManager::DetachChild);
-		REL::Relocation<func_t> func{ RELOCATION_ID(51861, 52733) };
+		static REL::Relocation<func_t> func{ RELOCATION_ID(51861, 52733) };
 		return func(this, a_obj);
 	}
 
 	void UI3DSceneManager::SetCameraFOV(float a_fov)
 	{
 		using func_t = decltype(&UI3DSceneManager::SetCameraFOV);
-		REL::Relocation<func_t> func{ RELOCATION_ID(51870, 52742) };
+		static REL::Relocation<func_t> func{ RELOCATION_ID(51870, 52742) };
 		return func(this, a_fov);
 	}
 
 	void UI3DSceneManager::SetCameraRotate(const NiMatrix3& a_rotate)
 	{
 		using func_t = decltype(&UI3DSceneManager::SetCameraRotate);
-		REL::Relocation<func_t> func{ RELOCATION_ID(51869, 52741) };
+		static REL::Relocation<func_t> func{ RELOCATION_ID(51869, 52741) };
 		return func(this, a_rotate);
 	}
 
 	void UI3DSceneManager::SetCameraPosition(const NiPoint3& a_pos)
 	{
 		using func_t = decltype(&UI3DSceneManager::SetCameraRotate);
-		REL::Relocation<func_t> func{ RELOCATION_ID(51867, 52739) };
+		static REL::Relocation<func_t> func{ RELOCATION_ID(51867, 52739) };
 		return func(this, a_pos);
 	}
 }

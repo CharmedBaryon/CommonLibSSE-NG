@@ -14,6 +14,8 @@ namespace RE
 
 		// add
 		virtual bool IsCollisionEnabled(const hkpCollidable& a_collidableA, const hkpCollidable& a_collidableB) const = 0;  // 01
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(hkpCollidableCollidableFilter) == 0x8);
 }

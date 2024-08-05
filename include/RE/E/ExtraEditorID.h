@@ -10,7 +10,8 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_ExtraEditorID;
-		inline static auto           EXTRADATATYPE = ExtraDataType::kEditorID;
+		inline static constexpr auto VTABLE = VTABLE_ExtraEditorID;
+		inline static constexpr auto EXTRADATATYPE = ExtraDataType::kEditorID;
 
 		~ExtraEditorID() override;  // 00
 
@@ -19,6 +20,8 @@ namespace RE
 
 		// members
 		BSFixedString editorID;  // 10
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(ExtraEditorID) == 0x18);
 }

@@ -11,7 +11,8 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_ExtraPackageData;
-		inline static auto           EXTRADATATYPE = ExtraDataType::kPackageData;
+		inline static constexpr auto VTABLE = VTABLE_ExtraPackageData;
+		inline static constexpr auto EXTRADATATYPE = ExtraDataType::kPackageData;
 
 		~ExtraPackageData() override;  // 00
 
@@ -20,6 +21,8 @@ namespace RE
 
 		// members
 		ActorPackageData* actorPackageData;  // 10
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(ExtraPackageData) == 0x18);
 }

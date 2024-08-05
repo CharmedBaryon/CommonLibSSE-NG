@@ -11,7 +11,8 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_BSFaceGenAnimationData;
-		inline static auto           Ni_RTTI = NiRTTI_BSFaceGenAnimationData;
+		inline static constexpr auto Ni_RTTI = NiRTTI_BSFaceGenAnimationData;
+		inline static constexpr auto VTABLE = VTABLE_BSFaceGenAnimationData;
 
 		~BSFaceGenAnimationData() override;  // 00
 
@@ -23,14 +24,14 @@ namespace RE
 		void Reset(float a_timer, bool a_resetExpression, bool a_resetModifierAndPhoneme, bool a_resetCustom, bool a_closeEyes)
 		{
 			using func_t = decltype(&BSFaceGenAnimationData::Reset);
-			REL::Relocation<func_t> func{ RELOCATION_ID(25977, 26586) };
+			static REL::Relocation<func_t> func{ RELOCATION_ID(25977, 26586) };
 			return func(this, a_timer, a_resetExpression, a_resetModifierAndPhoneme, a_resetCustom, a_closeEyes);
 		}
 
 		void SetExpressionOverride(std::int32_t a_idx, float a_value)
 		{
 			using func_t = decltype(&BSFaceGenAnimationData::SetExpressionOverride);
-			REL::Relocation<func_t> func{ RELOCATION_ID(25980, 26594) };
+			static REL::Relocation<func_t> func{ RELOCATION_ID(25980, 26594) };
 			return func(this, a_idx, a_value);
 		}
 
@@ -82,6 +83,8 @@ namespace RE
 		std::uint8_t               unk21F;                    // 21F
 		mutable BSSpinLock         lock;                      // 220
 		std::uint64_t              unk228;                    // 228
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(BSFaceGenAnimationData) == 0x230);
 }

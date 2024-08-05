@@ -10,7 +10,8 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_ExtraDistantData;
-		inline static auto           EXTRADATATYPE = ExtraDataType::kDistantData;
+		inline static constexpr auto VTABLE = VTABLE_ExtraDistantData;
+		inline static constexpr auto EXTRADATATYPE = ExtraDataType::kDistantData;
 
 		~ExtraDistantData() override;  // 00
 
@@ -20,6 +21,8 @@ namespace RE
 		// members
 		NiPoint3      landNormal;  // 10
 		std::uint32_t pad1C;       // 1C
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(ExtraDistantData) == 0x20);
 }

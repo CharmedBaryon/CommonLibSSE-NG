@@ -9,6 +9,7 @@ namespace RE
 	public:
 		inline static constexpr auto RTTI = RTTI_bhkSPCollisionObject;
 		inline static constexpr auto Ni_RTTI = NiRTTI_bhkSPCollisionObject;
+		inline static constexpr auto VTABLE = VTABLE_bhkSPCollisionObject;
 
 		~bhkSPCollisionObject() override;  // 00
 
@@ -21,6 +22,8 @@ namespace RE
 		void          SaveBinary(NiStream& a_stream) override;            // 1B
 		void          Unk_2B() override;                                  // 2B
 		void          Unk_2C() override;                                  // 2C
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(bhkSPCollisionObject) == 0x28);
 }

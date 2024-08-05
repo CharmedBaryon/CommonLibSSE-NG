@@ -16,6 +16,7 @@ namespace RE
 		{
 		public:
 			inline static constexpr auto RTTI = RTTI_BSResource____LooseFileStream;
+			inline static constexpr auto VTABLE = VTABLE_BSResource____LooseFileStream;
 
 			~LooseFileStream() override;  // 00
 

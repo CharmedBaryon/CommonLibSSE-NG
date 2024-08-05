@@ -21,8 +21,11 @@ namespace RE
 		virtual ~TESCameraState();  // 00
 
 		// add
-		virtual void Begin();                                               // 01 - { return; }
-		virtual void End();                                                 // 02 - { return; }
+		virtual void Begin();  // 01 - { return; }
+		virtual void End();    // 02 - { return; }
+#ifdef ENABLE_SKYRIM_VR
+		virtual void Unk_03();  // 03 - Directly calls Update
+#endif
 		virtual void Update(BSTSmartPointer<TESCameraState>& a_nextState);  // 03
 		virtual void GetRotation(NiQuaternion& a_rotation);                 // 04
 		virtual void GetTranslation(NiPoint3& a_translation);               // 05
@@ -35,6 +38,8 @@ namespace RE
 		TESCamera*    camera;  // 10
 		CameraState   id;      // 18
 		std::uint32_t pad1C;   // 1C
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(TESCameraState) == 0x20);
 }

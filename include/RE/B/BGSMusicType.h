@@ -45,6 +45,8 @@ namespace RE
 
 		// members
 		BSFixedString formEditorID;  // 70 - EDID
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(BGSMusicType) == 0x78);
 }

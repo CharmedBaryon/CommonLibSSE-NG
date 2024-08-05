@@ -15,14 +15,14 @@ namespace RE
 		void EnchantConstructMenu::RenameItem_Impl(InventoryEntryData* a_entryData, ExtraDataList* a_extraList, const char* a_name)
 		{
 			using func_t = decltype(&EnchantConstructMenu::RenameItem_Impl);
-			REL::Relocation<func_t> func{ Offset::CraftingSubMenus::EnchantConstructMenu::RenameItem };
+			static REL::Relocation<func_t> func{ RELOCATION_ID(50530, 51415) };
 			return func(this, a_entryData, a_extraList, a_name);
 		}
 
 		void EnchantConstructMenu::UpdateInterface()
 		{
 			using func_t = decltype(&EnchantConstructMenu::UpdateInterface);
-			REL::Relocation<func_t> func{ Offset::CraftingSubMenus::EnchantConstructMenu::UpdateInterface };
+			static REL::Relocation<func_t> func{ RELOCATION_ID(50567, 51459) };
 			return func(this);
 		}
 	}

@@ -22,7 +22,8 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_SummonPlacementEffect;
-		inline static auto           Ni_RTTI = NiRTTI_SummonPlacementEffect;
+		inline static constexpr auto Ni_RTTI = NiRTTI_SummonPlacementEffect;
+		inline static constexpr auto VTABLE = VTABLE_SummonPlacementEffect;
 		inline static constexpr auto TYPE = TEMP_EFFECT_TYPE::kMagicSummon;
 
 		~SummonPlacementEffect() override;  // 00
@@ -50,6 +51,8 @@ namespace RE
 		std::uint64_t                          unk88;      // 88
 		BSTSmartPointer<BGSArtObjectCloneTask> cloneTask;  // 90
 		std::uint8_t                           unk98;      // 98
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(SummonPlacementEffect) == 0xA0);
 }

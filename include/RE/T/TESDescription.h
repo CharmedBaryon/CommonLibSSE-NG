@@ -12,6 +12,7 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_TESDescription;
+		inline static constexpr auto VTABLE = VTABLE_TESDescription;
 
 		~TESDescription() override;  // 00
 
@@ -25,6 +26,8 @@ namespace RE
 		// members
 		std::uint32_t        fileOffset;       // 08
 		BGSLocalizedStringDL descriptionText;  // 0C
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(TESDescription) == 0x10);
 }

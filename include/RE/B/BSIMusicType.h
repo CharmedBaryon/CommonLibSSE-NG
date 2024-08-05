@@ -11,6 +11,7 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_BSIMusicType;
+		inline static constexpr auto VTABLE = VTABLE_BSIMusicType;
 
 		enum class MST  // FNAM
 		{
@@ -55,6 +56,8 @@ namespace RE
 		BSTArray<BSIMusicTrack*>                      tracks;             // 30 - TNAM
 		stl::enumeration<MUSIC_STATUS, std::uint32_t> typeStatus;         // 48
 		std::uint32_t                                 pad4C;              // 4C
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(BSIMusicType) == 0x50);
 }

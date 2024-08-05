@@ -12,7 +12,8 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_ExtraLeveledCreature;
-		inline static auto           EXTRADATATYPE = ExtraDataType::kLeveledCreature;
+		inline static constexpr auto VTABLE = VTABLE_ExtraLeveledCreature;
+		inline static constexpr auto EXTRADATATYPE = ExtraDataType::kLeveledCreature;
 
 		~ExtraLeveledCreature() override;  // 00
 
@@ -22,6 +23,8 @@ namespace RE
 		// members
 		TESActorBase* originalBase;  // 10
 		TESActorBase* templateBase;  // 18
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(ExtraLeveledCreature) == 0x20);
 }

@@ -12,7 +12,8 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_ExtraAnimGraphManager;
-		inline static auto           EXTRADATATYPE = ExtraDataType::kAnimGraphManager;
+		inline static constexpr auto VTABLE = VTABLE_ExtraAnimGraphManager;
+		inline static constexpr auto EXTRADATATYPE = ExtraDataType::kAnimGraphManager;
 
 		~ExtraAnimGraphManager() override;  // 00
 
@@ -21,6 +22,8 @@ namespace RE
 
 		// members
 		BSTSmartPointer<BSAnimationGraphManager> animGraphMgr;  // 10
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(ExtraAnimGraphManager) == 0x18);
 }

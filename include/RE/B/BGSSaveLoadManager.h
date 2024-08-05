@@ -10,6 +10,7 @@
 #include "RE/B/BSThread.h"
 #include "RE/R/RaceSexMenuEvent.h"
 #include "RE/R/Request.h"
+#include <SKSE/Version.h>
 
 namespace RE
 {
@@ -39,6 +40,8 @@ namespace RE
 		std::uint64_t unk60;        // 60
 		std::uint64_t unk68;        // 68
 		std::uint64_t unk70;        // 70
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(BGSSaveLoadFileEntry) == 0x78);
 
@@ -50,11 +53,13 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_BGSSaveLoadManager;
+		inline static constexpr auto VTABLE = VTABLE_BGSSaveLoadManager;
 
 		class Thread : public BSThread
 		{
 		public:
 			inline static constexpr auto RTTI = RTTI_BGSSaveLoadManager__Thread;
+			inline static constexpr auto VTABLE = VTABLE_BGSSaveLoadManager__Thread;
 
 			~Thread() override;  // 00
 
@@ -87,8 +92,60 @@ namespace RE
 		void Save(const char* a_fileName);
 		void Load(const char* a_fileName);
 		void Load(const char* a_fileName, bool a_checkForMods);
+		bool PopulateSaveList();
 
 		bool LoadMostRecentSaveGame();
+
+		struct RUNTIME_DATA
+		{
+#define RUNTIME_DATA_CONTENT                                                                  \
+	Thread                                                                  thread; /* 2B0 */ \
+	BSTCommonStaticMessageQueue<BSTSmartPointer<bgs::saveload::Request>, 8> unk370; /* 370 */ \
+	uint64_t                                                                unk3D0; /* 3D0 */
+            RUNTIME_DATA_CONTENT
+		};
+
+		// 1130 and later
+		struct AE_RUNTIME_DATA
+		{
+#define AE_RUNTIME_DATA_CONTENT                                                               \
+	std::uint16_t                                                           unk2B0; /* 2B0 */ \
+	std::uint16_t                                                           unk2B2; /* 2B2 */ \
+	std::uint64_t                                                           unk2B8; /* 2B8 */ \
+	BSTArray<void*>                                                         unk2C0; /* 2C0 */ \
+	BSTArray<void*>                                                         unk2D8; /* 2D8 */ \
+	std::uint8_t                                                            unk2F0; /* 2F0 */ \
+	Thread                                                                  thread; /* 2F8 */ \
+	BSTCommonStaticMessageQueue<BSTSmartPointer<bgs::saveload::Request>, 8> unk370; /* 370 */ \
+	uint64_t                                                                unk3D0; /* 3D0 */
+            AE_RUNTIME_DATA_CONTENT
+		};
+		static_assert(offsetof(AE_RUNTIME_DATA, thread) == 0x48);
+
+		[[nodiscard]] inline RUNTIME_DATA& GetRuntimeData() noexcept
+		{
+			return REL::RelocateMemberIfNewer<RUNTIME_DATA>(SKSE::RUNTIME_SSE_1_6_1130, this, 0x2b0, 0x2f8);
+		}
+
+		[[nodiscard]] inline const RUNTIME_DATA& GetRuntimeData() const noexcept
+		{
+			return REL::RelocateMemberIfNewer<RUNTIME_DATA>(SKSE::RUNTIME_SSE_1_6_1130, this, 0x2b0, 0x2f8);
+		}
+
+		[[nodiscard]] inline AE_RUNTIME_DATA* GetAERuntimeData() noexcept
+		{
+			if SKYRIM_REL_CONSTEXPR (REL::Module::IsAE()) {
+				if (REL::Module::get().version().compare(SKSE::RUNTIME_SSE_1_6_1130) != std::strong_ordering::less) {
+					return REL::RelocateMember<AE_RUNTIME_DATA*>(this, 0x2b0);
+				}
+			}
+			return nullptr;
+		}
+
+		[[nodiscard]] inline const AE_RUNTIME_DATA& GetAERuntimeData() const noexcept
+		{
+			return this->GetAERuntimeData();
+		}
 
 		// members
 		BSTHashMap<std::uint64_t, BSFixedString> playerIDNameMap;  // 078
@@ -146,53 +203,61 @@ namespace RE
 		std::uint64_t                   unk1F0;        // 1F0
 		std::uint64_t                   unk1F8;        // 1F8
 
-		std::uint64_t unk200;  // 200
-		std::uint64_t unk208;  // 208
-		std::uint64_t unk210;  // 210
-		std::uint64_t unk218;  // 218
-		std::uint64_t unk220;  // 220
-		std::uint64_t unk228;  // 228
-		std::uint64_t unk230;  // 230
-		std::uint64_t unk238;  // 238
-		std::uint64_t unk240;  // 240
-		std::uint64_t unk248;  // 248
-		std::uint32_t unk250;  // 250
-		std::uint32_t unk254;  // 254
-		std::uint64_t unk258;  // 258
-		std::uint16_t unk260;  // 260
-		std::uint16_t unk262;  // 262
-		std::uint32_t unk264;  // 264
-		std::uint64_t unk268;  // 268
-		std::uint32_t unk270;  // 270
-		std::uint32_t unk274;  // 274
-		std::uint64_t unk278;  // 278
-		std::uint64_t unk280;  // 280
-		std::uint32_t unk288;  // 288
-		std::uint32_t unk28C;  // 28C
-		std::uint64_t unk290;  // 290
-		std::uint64_t unk298;  // 298
-		std::uint32_t unk2A0;  // 2A0
-		std::uint32_t unk2A4;  // 2A4
-		std::uint64_t unk2A8;  // 2A8
-#ifdef SKYRIM_SUPPORT_AE
-		std::uint16_t   unk2B0;  // 2B0
-		std::uint16_t   unk2B2;  // 2B2
-		std::uint64_t   unk2B8;  // 2B8
-		BSTArray<void*> unk2C0;  // 2C0
-		BSTArray<void*> unk2D8;  // 2D8
-		std::uint8_t    unk2F0;  // 2F0
+		std::uint64_t unk200;                                                               // 200
+		std::uint64_t unk208;                                                               // 208
+		std::uint64_t unk210;                                                               // 210
+		std::uint64_t unk218;                                                               // 218
+		std::uint64_t unk220;                                                               // 220
+		std::uint64_t unk228;                                                               // 228
+		std::uint64_t unk230;                                                               // 230
+		std::uint64_t unk238;                                                               // 238
+		std::uint64_t unk240;                                                               // 240
+		std::uint64_t unk248;                                                               // 248
+		std::uint32_t unk250;                                                               // 250
+		std::uint32_t unk254;                                                               // 254
+		std::uint64_t unk258;                                                               // 258
+		std::uint16_t unk260;                                                               // 260
+		std::uint16_t unk262;                                                               // 262
+		std::uint32_t unk264;                                                               // 264
+		std::uint64_t unk268;                                                               // 268
+		std::uint32_t unk270;                                                               // 270
+		std::uint32_t unk274;                                                               // 274
+		std::uint64_t unk278;                                                               // 278
+		std::uint64_t unk280;                                                               // 280
+		std::uint32_t unk288;                                                               // 288
+		std::uint32_t unk28C;                                                               // 28C
+		std::uint64_t unk290;                                                               // 290
+		std::uint64_t unk298;                                                               // 298
+		std::uint32_t unk2A0;                                                               // 2A0
+		std::uint32_t unk2A4;                                                               // 2A4
+		std::uint64_t unk2A8;                                                               // 2A8
+#if defined(EXCLUSIVE_SKYRIM_AE)  // AE 1130 specific change
+		std::uint16_t   unk2B0;                                                             // 2B0
+		std::uint16_t   unk2B2;                                                             // 2B2
+		std::uint64_t   unk2B8;                                                             // 2B8
+		BSTArray<void*> unk2C0;                                                             // 2C0
+		BSTArray<void*> unk2D8;                                                             // 2D8
+		std::uint8_t    unk2F0;                                                             // 2F0
 #endif
-		Thread thread;  // 2B0
-
-		BSTCommonStaticMessageQueue<BSTSmartPointer<bgs::saveload::Request>, 8> unk370;  // 370
-
+#if !defined(SKYRIM_CROSS_VR)
+		RUNTIME_DATA_CONTENT;
+#endif
 	protected:
 		bool Save_Impl(std::int32_t a_deviceID, std::uint32_t a_outputStats, const char* a_fileName);
 		bool Load_Impl(const char* a_fileName, std::int32_t a_deviceID, std::uint32_t a_outputStats, bool a_checkForMods);
+
+	private:
+		KEEP_FOR_RE()
 	};
-#ifdef SKYRIM_SUPPORT_AE
-	static_assert(sizeof(BGSSaveLoadManager) == 0x418);
+#if defined(EXCLUSIVE_SKYRIM_FLAT)
+#	if defined(EXCLUSIVE_SKYRIM_AE)
+	static_assert(sizeof(BGSSaveLoadManager) == 0x420);
+#	else
+	static_assert(sizeof(BGSSaveLoadManager) == 0x3D8);
+#	endif
+#elif defined(EXCLUSIVE_SKYRIM_VR)
+	static_assert(sizeof(BGSSaveLoadManager) == 0x3D8);
 #else
-	static_assert(sizeof(BGSSaveLoadManager) == 0x3D0);
+	static_assert(sizeof(BGSSaveLoadManager) == 0x2B0);
 #endif
 }

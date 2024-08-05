@@ -12,6 +12,8 @@ namespace RE
 		// members
 		NiPointer<TESObjectREFR> objectActivated;  // 00
 		NiPointer<TESObjectREFR> actionRef;        // 08
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(TESActivateEvent) == 0x10);
 }

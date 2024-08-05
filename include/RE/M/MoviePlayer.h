@@ -6,6 +6,7 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_MoviePlayer;
+		inline static constexpr auto VTABLE = VTABLE_MoviePlayer;
 
 		virtual ~MoviePlayer();  // 00
 
@@ -35,6 +36,8 @@ namespace RE
 		std::uint64_t unk40;  // 40
 		std::uint64_t unk48;  // 48
 		std::uint64_t unk50;  // 50
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(MoviePlayer) == 0x58);
 }

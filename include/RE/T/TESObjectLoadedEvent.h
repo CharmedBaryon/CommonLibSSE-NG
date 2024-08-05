@@ -10,6 +10,8 @@ namespace RE
 		bool          loaded;  // 4
 		std::uint8_t  pad5;    // 5
 		std::uint16_t pad6;    // 6
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(TESObjectLoadedEvent) == 0x8);
 }

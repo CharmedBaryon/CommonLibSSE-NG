@@ -8,6 +8,7 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_bhkCharacterState;
+		inline static constexpr auto VTABLE = VTABLE_bhkCharacterState;
 
 		~bhkCharacterState() override;  // 00
 
@@ -17,6 +18,8 @@ namespace RE
 
 		// add
 		virtual void Unk_08(void) = 0;  // 08
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(bhkCharacterState) == 0x10);
 }

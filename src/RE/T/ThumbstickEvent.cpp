@@ -11,4 +11,14 @@ namespace RE
 	{
 		return idCode == InputType::kRightThumbstick;
 	}
+
+	bool ThumbstickEvent::IsOffHand() const
+	{
+		return IsLeft();
+	}
+
+	bool ThumbstickEvent::IsMainHand() const
+	{
+		return IsRight();
+	}
 }

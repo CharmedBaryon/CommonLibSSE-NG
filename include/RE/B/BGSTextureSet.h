@@ -52,6 +52,8 @@ namespace RE
 		std::uint16_t                         pad0CA;                                // 0CA
 		BSResource::ID                        textureFileIDs[Textures::kUsedTotal];  // 0CC
 		std::uint32_t                         pad12C;                                // 12C
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(BGSTextureSet) == 0x130);
 }

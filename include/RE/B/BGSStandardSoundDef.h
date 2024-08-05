@@ -13,11 +13,13 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_BGSStandardSoundDef;
+		inline static constexpr auto VTABLE = VTABLE_BGSStandardSoundDef;
 
 		struct SoundPlaybackCharacteristics : public BSISoundDescriptor::BSIPlaybackCharacteristics  // BNAM
 		{
 		public:
 			inline static constexpr auto RTTI = RTTI_BGSStandardSoundDef__SoundPlaybackCharacteristics;
+			inline static constexpr auto VTABLE = VTABLE_BGSStandardSoundDef__SoundPlaybackCharacteristics;
 
 			// override (BSIPlaybackCharacteristics)
 			std::uint8_t  GetFrequencyShift() override;     // 01 - { return frequencyShift; }
@@ -70,6 +72,8 @@ namespace RE
 		BGSSoundOutput*              outputModel;            // 48 - ONAM
 		LengthCharacteristics        lengthCharacteristics;  // 50 - LNAM
 		std::int32_t                 unk54;                  // 54
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(BGSStandardSoundDef) == 0x58);
 }

@@ -68,6 +68,8 @@ namespace RE
 		HeapBlock*  previous;    // 08
 		FreeOrUsed  freeOrUsed;  // 10
 		HeapBlock*  nextFree;    // 18
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(HeapBlock) == 0x20);
 }

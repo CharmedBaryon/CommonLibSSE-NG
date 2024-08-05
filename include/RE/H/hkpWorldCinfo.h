@@ -135,6 +135,8 @@ namespace RE
 		std::uint8_t                                             pad0F9;                                                     // 0F9
 		std::uint16_t                                            pad0FA;                                                     // 0FA
 		std::uint32_t                                            pad0FC;                                                     // 0FC
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(hkpWorldCinfo) == 0x100);
 }

@@ -8,6 +8,7 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_TESAttackDamageForm;
+		inline static constexpr auto VTABLE = VTABLE_TESAttackDamageForm;
 
 		~TESAttackDamageForm() override;  // 00
 
@@ -23,6 +24,8 @@ namespace RE
 		std::uint16_t attackDamage;  // 08
 		std::uint16_t pad0A;         // 0A
 		std::uint32_t pad0C;         // 0C
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(TESAttackDamageForm) == 0x10);
 }

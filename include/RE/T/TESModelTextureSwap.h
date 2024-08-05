@@ -10,6 +10,7 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_TESModelTextureSwap;
+		inline static constexpr auto VTABLE = VTABLE_TESModelTextureSwap;
 
 		struct AlternateTexture  // MODS
 		{
@@ -32,6 +33,8 @@ namespace RE
 		AlternateTexture* alternateTextures;     // 28 - MODS
 		std::uint32_t     numAlternateTextures;  // 30
 		std::uint32_t     pad34;                 // 34
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(TESModelTextureSwap) == 0x38);
 }

@@ -21,6 +21,8 @@ namespace RE
 		std::uint32_t   unk00;                                                // 00
 		std::uint32_t   pad04;                                                // 04
 		ActorValueInfo* actorValues[std::to_underlying(ActorValue::kTotal)];  // 08
+	private:
+		KEEP_FOR_RE()
 	};
 }
 

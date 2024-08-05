@@ -37,6 +37,8 @@ namespace RE
 		// members
 		float x{ 0.0F };  // 0
 		float y{ 0.0F };  // 4
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(NiPoint2) == 0x8);
 }

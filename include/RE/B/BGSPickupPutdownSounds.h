@@ -10,6 +10,7 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_BGSPickupPutdownSounds;
+		inline static constexpr auto VTABLE = VTABLE_BGSPickupPutdownSounds;
 
 		~BGSPickupPutdownSounds() override;  // 00
 
@@ -21,6 +22,8 @@ namespace RE
 		// members
 		BGSSoundDescriptorForm* pickupSound;   // 08 - YNAM
 		BGSSoundDescriptorForm* putdownSound;  // 10 - ZNAM
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(BGSPickupPutdownSounds) == 0x18);
 }

@@ -18,6 +18,8 @@ namespace RE
 		virtual bool IsCollisionEnabled(const hkpShapeRayCastInput& a_input, const hkpShapeContainer& a_container, hkpShapeKey a_key) const = 0;  // 00
 
 		virtual ~hkpRayShapeCollectionFilter();  // 01
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(hkpRayShapeCollectionFilter) == 0x08);
 }

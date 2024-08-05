@@ -8,12 +8,15 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_bhkCharacterStateSwimming;
+		inline static constexpr auto VTABLE = VTABLE_bhkCharacterStateSwimming;
 
 		~bhkCharacterStateSwimming() override;  // 00
 
 		// override (bhkCharacterState)
 		hkpCharacterStateType GetType() const override;  // 03 - { return kSwimming; }
 		void                  Unk_08(void) override;     // 08
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(bhkCharacterStateSwimming) == 0x10);
 }

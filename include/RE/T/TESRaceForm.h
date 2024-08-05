@@ -10,6 +10,7 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_TESRaceForm;
+		inline static constexpr auto VTABLE = VTABLE_TESRaceForm;
 
 		~TESRaceForm() override;  // 00
 
@@ -20,6 +21,8 @@ namespace RE
 
 		// members
 		TESRace* race;  // 08 - RNAM
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(TESRaceForm) == 0x10);
 }

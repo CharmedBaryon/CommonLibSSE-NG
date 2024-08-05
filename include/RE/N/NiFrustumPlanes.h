@@ -38,6 +38,8 @@ namespace RE
 		std::uint32_t                                basePlaneStates;                // 64
 		std::uint32_t                                unk68;                          // 68
 		std::uint32_t                                unk6C;                          // 6C
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(NiFrustumPlanes) == 0x70);
 }

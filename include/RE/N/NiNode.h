@@ -12,7 +12,8 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_NiNode;
-		inline static auto           Ni_RTTI = NiRTTI_NiNode;
+		inline static constexpr auto Ni_RTTI = NiRTTI_NiNode;
+		inline static constexpr auto VTABLE = VTABLE_NiNode;
 
 		~NiNode() override;  // 00
 
@@ -78,10 +79,13 @@ namespace RE
 
 	protected:
 		NiNode* Ctor(std::uint16_t a_arrBufLen);
+
+	private:
+		KEEP_FOR_RE()
 	};
-#ifndef ENABLE_SKYRIM_VR
+#if defined(EXCLUSIVE_SKYRIM_FLAT)
 	static_assert(sizeof(NiNode) == 0x128);
-#elif !defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE)
+#elif defined(EXCLUSIVE_SKYRIM_VR)
 	static_assert(sizeof(NiNode) == 0x150);
 #endif
 }

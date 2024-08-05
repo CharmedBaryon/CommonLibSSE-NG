@@ -45,7 +45,7 @@ namespace RE
 	NiNode* NiNode::Ctor(std::uint16_t a_arrBuffLen)
 	{
 		using func_t = decltype(&NiNode::Ctor);
-		REL::Relocation<func_t> func{ Offset::NiNode::Ctor };
+		static REL::Relocation<func_t> func{ RELOCATION_ID(68936, 70287) };
 		return func(this, a_arrBuffLen);
 	}
 

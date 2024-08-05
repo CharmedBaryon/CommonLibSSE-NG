@@ -56,7 +56,7 @@ namespace RE
 
 	SCRIPT_FUNCTION* SCRIPT_FUNCTION::GetFirstScriptCommand()
 	{
-		REL::Relocation<SCRIPT_FUNCTION*> ptr{ Offset::SCRIPT_FUNCTION::FirstScriptCommand };
+		REL::Relocation<SCRIPT_FUNCTION*> ptr{ RELOCATION_ID(501789, 361120) };
 		return ptr.get();
 	}
 
@@ -74,7 +74,7 @@ namespace RE
 
 	SCRIPT_FUNCTION* SCRIPT_FUNCTION::GetFirstConsoleCommand()
 	{
-		REL::Relocation<SCRIPT_FUNCTION*> ptr{ Offset::SCRIPT_FUNCTION::FirstConsoleCommand };
+		REL::Relocation<SCRIPT_FUNCTION*> ptr{ RELOCATION_ID(501797, 365650) };
 		return ptr.get();
 	}
 

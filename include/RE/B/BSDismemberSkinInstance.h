@@ -8,7 +8,8 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_BSDismemberSkinInstance;
-		inline static auto           Ni_RTTI = NiRTTI_BSDismemberSkinInstance;
+		inline static constexpr auto Ni_RTTI = NiRTTI_BSDismemberSkinInstance;
+		inline static constexpr auto VTABLE = VTABLE_BSDismemberSkinInstance;
 
 		struct Data
 		{
@@ -50,7 +51,7 @@ namespace RE
 		void UpdateDismemberPartion(std::uint16_t a_slot, bool a_enable)
 		{
 			using func_t = decltype(&BSDismemberSkinInstance::UpdateDismemberPartion);
-			REL::Relocation<func_t> func{ RELOCATION_ID(15576, 15753) };
+			static REL::Relocation<func_t> func{ RELOCATION_ID(15576, 15753) };
 			return func(this, a_slot, a_enable);
 		}
 
@@ -69,9 +70,9 @@ namespace RE
 		RUNTIME_DATA_CONTENT  // 88, 68
 #endif
 	};
-#ifndef ENABLE_SKYRIM_VR
+#if defined(EXCLUSIVE_SKYRIM_FLAT)
 	static_assert(sizeof(BSDismemberSkinInstance) == 0xA0);
-#elif !defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE)
+#elif defined(EXCLUSIVE_SKYRIM_VR)
 	static_assert(sizeof(BSDismemberSkinInstance) == 0x80);
 #endif
 }

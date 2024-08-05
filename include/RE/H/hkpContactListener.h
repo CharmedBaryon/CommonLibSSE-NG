@@ -24,6 +24,8 @@ namespace RE
 		virtual void ContactPointAddedCallback(hkpContactPointAddedEvent&) {}      // 05
 		virtual void ContactPointRemovedCallback(hkpContactPointRemovedEvent&) {}  // 06
 		virtual void ContactProcessCallback(hkpContactProcessEvent&) {}            // 07
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(hkpContactListener) == 0x8);
 }

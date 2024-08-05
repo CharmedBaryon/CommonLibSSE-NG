@@ -138,6 +138,7 @@ namespace RE
 		[[nodiscard]] constexpr Archetype    GetArchetype() const noexcept { return data.archetype; }
 		[[nodiscard]] constexpr ActorValue   GetMagickSkill() const noexcept { return data.associatedSkill; }
 		[[nodiscard]] constexpr std::int32_t GetMinimumSkillLevel() const noexcept { return data.minimumSkill; }
+		[[nodiscard]] BSFixedString          GetArchetypeAsString();
 		[[nodiscard]] constexpr bool         HasArchetype(Archetype a_type) const noexcept { return data.archetype == a_type; }
 		[[nodiscard]] bool                   HasKeyword(std::string_view a_editorID) { return HasKeywordString(a_editorID); }
 		[[nodiscard]] bool                   IsDetrimental() const noexcept { return data.flags.all(EffectSettingData::Flag::kDetrimental); }
@@ -153,6 +154,8 @@ namespace RE
 		std::int32_t                 effectLoadedCount;          // 188
 		std::int32_t                 associatedItemLoadedCount;  // 18C
 		TESCondition                 conditions;                 // 190
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(EffectSetting) == 0x198);
 }

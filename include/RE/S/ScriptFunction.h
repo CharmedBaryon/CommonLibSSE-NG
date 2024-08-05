@@ -16,6 +16,7 @@ namespace RE
 			{
 			public:
 				inline static constexpr auto RTTI = RTTI_BSScript__Internal__ScriptFunction;
+				inline static constexpr auto VTABLE = VTABLE_BSScript__Internal__ScriptFunction;
 
 				~ScriptFunction() override;  // 00
 

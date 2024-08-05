@@ -10,7 +10,8 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_ExtraSavedHavokData;
-		inline static auto           EXTRADATATYPE = ExtraDataType::kSavedHavokData;
+		inline static constexpr auto VTABLE = VTABLE_ExtraSavedHavokData;
+		inline static constexpr auto EXTRADATATYPE = ExtraDataType::kSavedHavokData;
 
 		~ExtraSavedHavokData() override;  // 00
 
@@ -19,6 +20,8 @@ namespace RE
 
 		// members
 		BGSLoadGameSubBuffer havokBuffer;  // 10
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(ExtraSavedHavokData) == 0x18);
 }

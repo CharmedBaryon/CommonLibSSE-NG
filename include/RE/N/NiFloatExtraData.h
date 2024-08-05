@@ -26,6 +26,8 @@ namespace RE
 
 		// members
 		float value;  // 18
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(NiFloatExtraData) == 0x20);
 }

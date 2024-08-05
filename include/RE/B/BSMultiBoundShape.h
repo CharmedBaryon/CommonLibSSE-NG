@@ -8,7 +8,8 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_BSMultiBoundShape;
-		inline static auto           Ni_RTTI = NiRTTI_BSMultiBoundShape;
+		inline static constexpr auto Ni_RTTI = NiRTTI_BSMultiBoundShape;
+		inline static constexpr auto VTABLE = VTABLE_BSMultiBoundShape;
 
 		~BSMultiBoundShape() override;  // 00
 
@@ -36,6 +37,8 @@ namespace RE
 		// members
 		std::uint32_t unk10;  // 10
 		std::uint32_t pad14;  // 14
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(BSMultiBoundShape) == 0x18);
 }

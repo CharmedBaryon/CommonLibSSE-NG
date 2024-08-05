@@ -6,6 +6,7 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_BSFaceGenKeyframe;
+		inline static constexpr auto VTABLE = VTABLE_BSFaceGenKeyframe;
 
 		virtual ~BSFaceGenKeyframe();  // 00
 
@@ -27,6 +28,8 @@ namespace RE
 		// members
 		std::uint32_t type;   // 08
 		float         unk0C;  // 0C
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(BSFaceGenKeyframe) == 0x10);
 }

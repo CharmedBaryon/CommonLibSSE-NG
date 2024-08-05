@@ -8,6 +8,7 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_BSWin32SaveDataSystemUtility;
+		inline static constexpr auto VTABLE = VTABLE_BSWin32SaveDataSystemUtility;
 
 		~BSWin32SaveDataSystemUtility() override;
 
@@ -23,6 +24,9 @@ namespace RE
 		void    Unk_11(void) override;                                                                                // 11 - { return; }
 
 		static BSWin32SaveDataSystemUtility* GetSingleton();
+
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(BSWin32SaveDataSystemUtility) == 0x228);
 }

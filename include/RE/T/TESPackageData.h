@@ -10,6 +10,7 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_TESPackageData;
+		inline static constexpr auto VTABLE = VTABLE_TESPackageData;
 
 		virtual ~TESPackageData();  // 00
 
@@ -19,6 +20,8 @@ namespace RE
 		virtual void InitItem(TESForm* a_form);                         // 03 - { return; }
 		virtual void SaveGame(BGSSaveFormBuffer* a_buf);                // 04 - { return; }
 		virtual void LoadGame(BGSLoadFormBuffer* a_buf);                // 05 - { return; }
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(TESPackageData) == 0x8);
 }

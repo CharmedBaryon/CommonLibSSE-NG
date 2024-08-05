@@ -13,7 +13,8 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_NiObjectNET;
-		inline static auto           Ni_RTTI = NiRTTI_NiObjectNET;
+		inline static constexpr auto Ni_RTTI = NiRTTI_NiObjectNET;
+		inline static constexpr auto VTABLE = VTABLE_NiObjectNET;
 
 		~NiObjectNET() override;  // 00
 
@@ -46,6 +47,7 @@ namespace RE
 		bool                        InsertExtraData(NiExtraData* a_extra);
 		void                        RemoveAllExtraData();
 		bool                        RemoveExtraData(const BSFixedString& a_key);
+		bool                        RemoveExtraData(NiExtraData* a_extra);
 		bool                        RemoveExtraDataAt(std::uint16_t a_extraDataIndex);
 		bool                        SetExtraDataSize(std::uint16_t a_size);
 
@@ -56,6 +58,8 @@ namespace RE
 		std::uint16_t               extraDataSize;  // 28
 		std::uint16_t               maxSize;        // 2A
 		std::uint32_t               pad2C;          // 2C
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(NiObjectNET) == 0x30);
 

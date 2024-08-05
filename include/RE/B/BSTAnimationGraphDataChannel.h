@@ -10,5 +10,7 @@ namespace RE
 		public Channel<T, Val>           // 20
 	{
 	public:
+	private:
+		KEEP_FOR_RE()
 	};
 }

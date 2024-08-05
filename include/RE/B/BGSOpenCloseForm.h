@@ -9,6 +9,7 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_BGSOpenCloseForm;
+		inline static constexpr auto VTABLE = VTABLE_BGSOpenCloseForm;
 
 		enum class OPEN_STATE
 		{
@@ -28,6 +29,9 @@ namespace RE
 
 		[[nodiscard]] static OPEN_STATE GetOpenState(const TESObjectREFR* a_ref);
 		static void                     SetOpenState(TESObjectREFR* a_ref, bool a_open, bool a_snap);
+
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(BGSOpenCloseForm) == 0x8);
 }

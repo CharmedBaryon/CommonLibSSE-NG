@@ -23,7 +23,7 @@ namespace RE
 	BSContainer::ForEachResult MagicItemDataCollector::operator()(Effect* a_effect)
 	{
 		using func_t = decltype(&MagicItemDataCollector::operator());
-		REL::Relocation<func_t> func{ RELOCATION_ID(33834, 34626) };
+		static REL::Relocation<func_t> func{ RELOCATION_ID(33834, 34626) };
 		return func(this, a_effect);
 	}
 }

@@ -24,6 +24,8 @@ namespace RE
 		std::uint32_t fileNamesLength;       // 1C
 		std::uint16_t archiveType;           // 20
 		std::uint16_t pad22;                 // 22
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(BSArchiveHeader) == 0x24);
 }

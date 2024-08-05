@@ -11,7 +11,8 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_ExtraLeveledItemBase;
-		inline static auto           EXTRADATATYPE = ExtraDataType::kLeveledItemBase;
+		inline static constexpr auto VTABLE = VTABLE_ExtraLeveledItemBase;
+		inline static constexpr auto EXTRADATATYPE = ExtraDataType::kLeveledItemBase;
 
 		~ExtraLeveledItemBase() override;  // 00
 
@@ -21,6 +22,8 @@ namespace RE
 
 		// members
 		TESLevItem* levItem;  // 10
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(ExtraLeveledItemBase) == 0x18);
 }

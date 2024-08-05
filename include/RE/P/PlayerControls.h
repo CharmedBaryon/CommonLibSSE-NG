@@ -36,6 +36,7 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_PlayerControls;
+		inline static constexpr auto VTABLE = VTABLE_PlayerControls;
 
 		PlayerControls();
 		~PlayerControls() override = default;  // 00
@@ -80,6 +81,9 @@ namespace RE
 
 	private:
 		PlayerControls* Ctor();
+
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(PlayerControls) == 0x1E0);
 }

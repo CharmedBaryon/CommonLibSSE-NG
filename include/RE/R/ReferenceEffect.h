@@ -12,7 +12,8 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_ReferenceEffect;
-		inline static auto           Ni_RTTI = NiRTTI_ReferenceEffect;
+		inline static constexpr auto Ni_RTTI = NiRTTI_ReferenceEffect;
+		inline static constexpr auto VTABLE = VTABLE_ReferenceEffect;
 		inline static constexpr auto TYPE = TEMP_EFFECT_TYPE::kRefDefault;
 
 		~ReferenceEffect() override;  // 00
@@ -47,6 +48,8 @@ namespace RE
 		bool                       ownController;  // 41
 		std::uint16_t              pad42;          // 42
 		std::uint32_t              pad44;          // 44
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(ReferenceEffect) == 0x48);
 }

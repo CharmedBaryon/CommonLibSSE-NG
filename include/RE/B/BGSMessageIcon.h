@@ -9,6 +9,7 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_BGSMessageIcon;
+		inline static constexpr auto VTABLE = VTABLE_BGSMessageIcon;
 
 		~BGSMessageIcon() override;  // 00
 
@@ -19,6 +20,8 @@ namespace RE
 
 		// members
 		TESIcon icon;  // 08
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(BGSMessageIcon) == 0x18);
 }

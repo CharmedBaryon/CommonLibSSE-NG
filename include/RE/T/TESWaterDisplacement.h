@@ -12,6 +12,7 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_TESWaterDisplacement;
+		inline static constexpr auto VTABLE = VTABLE_TESWaterDisplacement;
 
 		virtual ~TESWaterDisplacement();  // 00
 
@@ -22,6 +23,8 @@ namespace RE
 		std::uint32_t         flags;                 // 20
 		std::uint32_t         pad24;                 // 24
 		NiPointer<NiAVObject> displacementGeometry;  // 28
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(TESWaterDisplacement) == 0x30);
 }

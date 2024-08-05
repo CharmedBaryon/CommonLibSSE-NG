@@ -25,6 +25,8 @@ namespace RE
 		TESCondition              startConditions;       // 00
 		TESCondition              completionConditions;  // 08
 		BGSStoryManagerQuestNode* questNode;             // 10
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(BGSScenePhase) == 0x18);
 
@@ -104,6 +106,8 @@ namespace RE
 		std::uint32_t                                               unkBC;                  // BC
 		std::uint32_t                                               unkC0;                  // C0
 		std::uint32_t                                               padC4;                  // C4
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(BGSScene) == 0xC8);
 }

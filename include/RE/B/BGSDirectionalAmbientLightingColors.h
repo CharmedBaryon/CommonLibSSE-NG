@@ -31,6 +31,8 @@ namespace RE
 		Directional directional;   // 00
 		Color       specular;      // 18
 		float       fresnelPower;  // 1C
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(BGSDirectionalAmbientLightingColors) == 0x20);
 }

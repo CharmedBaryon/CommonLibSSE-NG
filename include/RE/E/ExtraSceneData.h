@@ -11,7 +11,8 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_ExtraSceneData;
-		inline static auto           EXTRADATATYPE = ExtraDataType::kSceneData;
+		inline static constexpr auto VTABLE = VTABLE_ExtraSceneData;
+		inline static constexpr auto EXTRADATATYPE = ExtraDataType::kSceneData;
 
 		~ExtraSceneData() override;  // 00
 
@@ -21,6 +22,8 @@ namespace RE
 
 		// members
 		BGSScene* scene;  // 10
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(ExtraSceneData) == 0x18);
 }

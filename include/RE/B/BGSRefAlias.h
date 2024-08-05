@@ -15,7 +15,8 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_BGSRefAlias;
-		inline static auto           VMTYPEID = static_cast<VMTypeID>(140);
+		inline static constexpr auto VTABLE = VTABLE_BGSRefAlias;
+		inline static constexpr auto VMTYPEID = static_cast<VMTypeID>(140);
 
 		struct ForcedFillData  // kForced
 		{
@@ -152,6 +153,8 @@ namespace RE
 		// members
 		GenericFillData fillData;    // 28
 		TESCondition*   conditions;  // 40
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(BGSRefAlias) == 0x48);
 }

@@ -9,16 +9,16 @@ namespace RE
 {
 	class BSSaveDataEvent;
 	class BSSystemEvent;
+	struct MapMenuMarker;
 
 	// menuDepth = 0
 	// flags = kPausesGame | kDisablePauseMenu | kRequiresUpdate | kUpdateUsesCursor | kApplicationMenu
 	// context = kMenuMode
 	class MainMenu :
 #ifndef SKYRIM_CROSS_VR
-		public IMenu,                          // 00
-		public BSTEventSink<BSSystemEvent>,    // 30
-		public BSTEventSink<BSSaveDataEvent>,  // 38
-		public GFxFunctionHandler              // 40
+		public IMenu,                         // 00
+		public BSTEventSink<BSSystemEvent>,   // 30
+		public BSTEventSink<BSSaveDataEvent>  // 38
 #else
 		public IMenu  // 00
 #endif
@@ -51,12 +51,8 @@ namespace RE
 #ifndef SKYRIM_CROSS_VR
 		// override (BSTEventSink<BSSystemEvent>)
 		BSEventNotifyControl ProcessEvent(const BSSystemEvent* a_event, BSTEventSource<BSSystemEvent>* a_eventSource) override;  // 01
-
 		// override (BSTEventSink<BSSaveDataEvent>)
 		BSEventNotifyControl ProcessEvent(const BSSaveDataEvent* a_event, BSTEventSource<BSSaveDataEvent>* a_eventSource) override;  // 01
-
-		// override (GFxFunctionHandler)
-		void Call(Params& a_params) override;  // 01
 #endif
 
 		[[nodiscard]] BSTEventSink<BSSystemEvent>* AsBSSystemEventSink() noexcept
@@ -89,6 +85,34 @@ namespace RE
 			return const_cast<MainMenu*>(this)->AsGFxFunctionHandler();
 		}
 
+		[[nodiscard]] BSTEventSink<BSGamerProfileEvent>* AsBSGamerProfileEventSink() noexcept
+		{
+			if SKYRIM_REL_VR_CONSTEXPR (!REL::Module::IsVR()) {
+				return nullptr;
+			} else {
+				return &REL::RelocateMember<BSTEventSink<BSGamerProfileEvent>>(this, 0, 0x50);
+			}
+		}
+
+		[[nodiscard]] const BSTEventSink<BSGamerProfileEvent>* AsBSGamerProfileEventSink() const noexcept
+		{
+			return const_cast<MainMenu*>(this)->AsBSGamerProfileEventSink();
+		}
+
+		[[nodiscard]] const MenuEventHandler* AsMenuEventHandler() const noexcept
+		{
+			return const_cast<MainMenu*>(this)->AsMenuEventHandler();
+		}
+
+		[[nodiscard]] MenuEventHandler* AsMenuEventHandler() noexcept
+		{
+			if SKYRIM_REL_VR_CONSTEXPR (!REL::Module::IsVR()) {
+				return nullptr;
+			} else {
+				return &REL::RelocateMember<MenuEventHandler>(this, 0, 0x58);
+			}
+		}
+
 		[[nodiscard]] inline RUNTIME_DATA& GetRuntimeData() noexcept
 		{
 			return REL::RelocateMember<RUNTIME_DATA>(this, 0x50, 0x60);
@@ -101,13 +125,17 @@ namespace RE
 
 		// members
 #ifndef SKYRIM_CROSS_VR
-		RUNTIME_DATA_CONTENT  // 50, 60
+		RUNTIME_DATA_CONTENT;  // 50, 60
 #endif
+	private:
+		KEEP_FOR_RE();
 	};
-#ifndef ENABLE_SKYRIM_VR
+#if defined(EXCLUSIVE_SKYRIM_FLAT)
+	static_assert(sizeof(MainMenu) == 0x60);
+#elif defined(EXCLUSIVE_SKYRIM_VR)
 	static_assert(sizeof(MainMenu) == 0x70);
-#elif !defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE)
-	static_assert(sizeof(MainMenu) == 0x80);
+#else
+	static_assert(sizeof(MainMenu) == 0x30);
 #endif
 }
 #undef RUNTIME_DATA_CONTENT

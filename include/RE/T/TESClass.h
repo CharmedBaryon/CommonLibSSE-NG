@@ -117,6 +117,8 @@ namespace RE
 		// members
 		CLASS_DATA    data;   // 50 - DATA
 		std::uint32_t pad74;  // 74
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(TESClass) == 0x78);
 }

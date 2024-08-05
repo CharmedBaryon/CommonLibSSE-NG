@@ -11,6 +11,7 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_TESRegionDataWeather;
+		inline static constexpr auto VTABLE = VTABLE_TESRegionDataWeather;
 		inline static constexpr auto TYPE = Type::kWeather;
 
 		~TESRegionDataWeather() override;  // 00
@@ -27,6 +28,8 @@ namespace RE
 
 		// members
 		BSSimpleList<WeatherType*> weatherTypes;  // 10
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(TESRegionDataWeather) == 0x20);
 }

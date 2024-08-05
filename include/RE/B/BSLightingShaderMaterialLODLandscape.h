@@ -21,7 +21,7 @@ namespace RE
 		Feature           GetFeature() const override;                                                                                                       // 06 - { return Feature::kLODLandNoise; }
 		void              ClearTextures() override;                                                                                                          // 09
 		void              ReceiveValuesFromRootMaterial(bool a_skinned, bool a_rimLighting, bool a_softLighting, bool a_backLighting, bool a_MSN) override;  // 0A
-		void              GetTextures(void) override;                                                                                                        // 0B
+		uint32_t          GetTextures(NiSourceTexture** textures) override;                                                                                  // 0B
 
 		// members
 		NiPointer<NiSourceTexture> parentDiffuseTexture;   // A0
@@ -35,10 +35,13 @@ namespace RE
 		BSLightingShaderMaterialLODLandscape* Ctor()
 		{
 			using func_t = decltype(&BSLightingShaderMaterialLODLandscape::Ctor);
-			REL::Relocation<func_t> func{ RELOCATION_ID(100110, 106817) };
+			static REL::Relocation<func_t> func{ RELOCATION_ID(100110, 106817) };
 			return func(this);
 		}
 		friend class BSLightingShaderMaterialBase;
+
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(BSLightingShaderMaterialLODLandscape) == 0xC8);
 }

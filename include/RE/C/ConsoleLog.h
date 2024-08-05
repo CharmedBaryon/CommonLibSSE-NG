@@ -20,6 +20,8 @@ namespace RE
 		std::uint16_t pad402;              // 402
 		std::uint32_t pad404;              // 404
 		BSString      buffer;              // 408
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(ConsoleLog) == 0x418);
 }

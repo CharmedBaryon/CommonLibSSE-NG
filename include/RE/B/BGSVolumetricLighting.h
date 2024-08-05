@@ -12,6 +12,7 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_BGSVolumetricLighting;
+		inline static constexpr auto VTABLE = VTABLE_BGSVolumetricLighting;
 		inline static constexpr auto FORMTYPE = FormType::VolumetricLighting;
 
 		struct RecordFlags
@@ -29,6 +30,8 @@ namespace RE
 		void ClearData() override;           // 05 - { return; }
 		bool Load(TESFile* a_mod) override;  // 06
 		void InitItemImpl() override;        // 13
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(BGSVolumetricLighting) == 0x50);
 }

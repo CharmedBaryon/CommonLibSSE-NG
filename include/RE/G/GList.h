@@ -326,6 +326,8 @@ namespace RE
 	protected:
 		// members
 		GListNode<value_type> _root;  // 00
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(GList<void*>) == 0x10);
 }

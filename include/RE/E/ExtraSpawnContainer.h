@@ -10,7 +10,8 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_ExtraSpawnContainer;
-		inline static auto           EXTRADATATYPE = ExtraDataType::kSpawnContainer;
+		inline static constexpr auto VTABLE = VTABLE_ExtraSpawnContainer;
+		inline static constexpr auto EXTRADATATYPE = ExtraDataType::kSpawnContainer;
 
 		~ExtraSpawnContainer() override;  // 00
 
@@ -21,6 +22,8 @@ namespace RE
 		// members
 		ObjectRefHandle container;  // 10
 		std::uint32_t   pad14;      // 14
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(ExtraSpawnContainer) == 0x18);
 }

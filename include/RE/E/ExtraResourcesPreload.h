@@ -9,7 +9,8 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_ExtraResourcesPreload;
-		inline static auto           EXTRADATATYPE = ExtraDataType::kResourcesPreload;
+		inline static constexpr auto VTABLE = VTABLE_ExtraResourcesPreload;
+		inline static constexpr auto EXTRADATATYPE = ExtraDataType::kResourcesPreload;
 
 		~ExtraResourcesPreload() override;  // 00
 
@@ -18,6 +19,8 @@ namespace RE
 
 		// members
 		void* unk10;  // 10
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(ExtraResourcesPreload) == 0x18);
 }

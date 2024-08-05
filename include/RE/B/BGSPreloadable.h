@@ -8,6 +8,7 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_BGSPreloadable;
+		inline static constexpr auto VTABLE = VTABLE_BGSPreloadable;
 
 		~BGSPreloadable() override;  // 00
 
@@ -18,6 +19,8 @@ namespace RE
 
 		// add
 		virtual void Unk_04(void) = 0;  // 04
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(BGSPreloadable) == 0x8);
 }

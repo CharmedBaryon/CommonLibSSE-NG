@@ -429,5 +429,7 @@ namespace RE
 
 		// T				_item;	// 00
 		// BSSimpleList<T>* _next;	// ??
+	private:
+		KEEP_FOR_RE()
 	};
 }

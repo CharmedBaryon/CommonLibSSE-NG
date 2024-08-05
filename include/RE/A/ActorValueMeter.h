@@ -9,6 +9,7 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_ActorValueMeter;
+		inline static constexpr auto VTABLE = VTABLE_ActorValueMeter;
 
 		~ActorValueMeter() override;  // 00
 
@@ -19,6 +20,8 @@ namespace RE
 		// members
 		ActorValue    actorValue;  // 48
 		std::uint32_t pad4C;       // 4C
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(ActorValueMeter) == 0x50);
 }

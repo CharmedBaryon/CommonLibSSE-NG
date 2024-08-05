@@ -27,7 +27,8 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_ExtraNavMeshPortal;
-		inline static auto           EXTRADATATYPE = ExtraDataType::kNavMeshPortal;
+		inline static constexpr auto VTABLE = VTABLE_ExtraNavMeshPortal;
+		inline static constexpr auto EXTRADATATYPE = ExtraDataType::kNavMeshPortal;
 
 		~ExtraNavMeshPortal() override;  // 00
 
@@ -36,6 +37,8 @@ namespace RE
 
 		// members
 		NAVMESH_PORTAL portal;  // 10
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(ExtraNavMeshPortal) == 0x20);
 }

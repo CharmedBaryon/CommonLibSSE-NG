@@ -46,6 +46,8 @@ namespace RE
 		std::uint32_t                     unkA8;                   // A8
 		std::uint32_t                     flags;                   // AC
 		bool                              unkB0;                   // B0
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(BSTempEffectGeometryDecal) == 0xB8);
 }

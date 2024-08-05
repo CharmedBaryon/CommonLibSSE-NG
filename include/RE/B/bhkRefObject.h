@@ -11,7 +11,8 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_bhkRefObject;
-		inline static auto           Ni_RTTI = NiRTTI_bhkRefObject;
+		inline static constexpr auto Ni_RTTI = NiRTTI_bhkRefObject;
+		inline static constexpr auto VTABLE = VTABLE_bhkRefObject;
 
 		~bhkRefObject() override;  // 00
 
@@ -24,6 +25,8 @@ namespace RE
 
 		// members
 		hkRefPtr<hkReferencedObject> referencedObject;  // 10
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(bhkRefObject) == 0x18);
 }

@@ -10,6 +10,7 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_TESImageSpaceModifiableForm;
+		inline static constexpr auto VTABLE = VTABLE_TESImageSpaceModifiableForm;
 
 		~TESImageSpaceModifiableForm() override;  // 00
 
@@ -20,6 +21,8 @@ namespace RE
 
 		// members
 		TESImageSpaceModifier* imageSpaceModifying;  // 08 - MNAM
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(TESImageSpaceModifiableForm) == 0x10);
 }

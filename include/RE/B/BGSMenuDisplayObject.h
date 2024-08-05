@@ -10,6 +10,7 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_BGSMenuDisplayObject;
+		inline static constexpr auto VTABLE = VTABLE_BGSMenuDisplayObject;
 
 		~BGSMenuDisplayObject() override;  // 00
 
@@ -23,6 +24,8 @@ namespace RE
 
 		// members
 		TESBoundObject* menuDispObject;  // 08 - MDOB
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(BGSMenuDisplayObject) == 0x10);
 }

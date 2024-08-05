@@ -49,7 +49,8 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_ExtraLock;
-		inline static auto           EXTRADATATYPE = ExtraDataType::kLock;
+		inline static constexpr auto VTABLE = VTABLE_ExtraLock;
+		inline static constexpr auto EXTRADATATYPE = ExtraDataType::kLock;
 
 		~ExtraLock() override;  // 00
 
@@ -59,6 +60,8 @@ namespace RE
 
 		// members
 		REFR_LOCK* lock;  // 10
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(ExtraLock) == 0x18);
 }

@@ -10,6 +10,8 @@ namespace RE
 	public:
 		hkRotation rotation;     // 00
 		hkVector4  translation;  // 30
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(hkTransform) == 0x40);
 }

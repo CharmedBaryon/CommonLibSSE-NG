@@ -30,6 +30,7 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_MagicItem;
+		inline static constexpr auto VTABLE = VTABLE_MagicItem;
 
 		class PreloadableVisitor
 		{
@@ -121,6 +122,7 @@ namespace RE
 		[[nodiscard]] bool                   HasEffect(EffectArchetype a_archetype);
 		[[nodiscard]] bool                   IsHostile() const;
 		[[nodiscard]] bool                   IsPermanent() const;
+		[[nodiscard]] Effect*                GetEffectIsMatch(EffectSetting* a_base, float a_mag, ::uint32_t a_area, ::uint32_t a_dur, float a_cost);
 		void                                 Traverse(MagicItemTraversalFunctor& a_visitor) const;
 
 		// members
@@ -134,6 +136,9 @@ namespace RE
 
 	protected:
 		float CalculateCost(Actor* a_caster) const;
+
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(MagicItem) == 0x90);
 }

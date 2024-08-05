@@ -18,7 +18,8 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_BSTempEffectSimpleDecal;
-		inline static auto           Ni_RTTI = NiRTTI_BSTempEffectSimpleDecal;
+		inline static constexpr auto Ni_RTTI = NiRTTI_BSTempEffectSimpleDecal;
+		inline static constexpr auto VTABLE = VTABLE_BSTempEffectSimpleDecal;
 		inline static constexpr auto TYPE = TEMP_EFFECT_TYPE::kDecal;
 
 		~BSTempEffectSimpleDecal() override;  // 00
@@ -87,6 +88,8 @@ namespace RE
 		std::uint8_t            unk1D7;           // 1D7
 		std::uint32_t           unk1D8;           // 1D8
 		std::uint32_t           unk1DC;           // 1DC
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(BSTempEffectSimpleDecal) == 0x1E0);
 };

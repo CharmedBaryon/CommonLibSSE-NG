@@ -12,6 +12,7 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_AbstractHeap;
+		inline static constexpr auto VTABLE = VTABLE_AbstractHeap;
 
 		~AbstractHeap() override;  // 00
 
@@ -57,6 +58,8 @@ namespace RE
 		std::uint16_t      pad0A0;              // 0A6
 		HeapBlock*         smallFreeLists[32];  // 0A8
 		HeapBlockFreeHead* largeFreeTrees[32];  // 1A8
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(AbstractHeap) == 0x2A8);
 }

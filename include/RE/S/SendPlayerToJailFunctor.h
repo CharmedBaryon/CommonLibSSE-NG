@@ -16,6 +16,7 @@ namespace RE
 		{
 		public:
 			inline static constexpr auto RTTI = RTTI_SkyrimScript____SendPlayerToJailFunctor;
+			inline static constexpr auto VTABLE = VTABLE_SkyrimScript____SendPlayerToJailFunctor;
 
 			enum class Flag
 			{

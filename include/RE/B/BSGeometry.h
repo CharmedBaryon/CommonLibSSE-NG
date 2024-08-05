@@ -1,6 +1,8 @@
 #pragma once
 
+#include "RE/B/BSLightingShaderProperty.h"
 #include "RE/N/NiAVObject.h"
+#include "RE/N/NiRTTI.h"
 #include "RE/N/NiSkinPartition.h"
 #include "RE/N/NiSmartPointer.h"
 
@@ -15,7 +17,8 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_BSGeometry;
-		inline static auto           Ni_RTTI = NiRTTI_BSGeometry;
+		inline static constexpr auto Ni_RTTI = NiRTTI_BSGeometry;
+		inline static constexpr auto VTABLE = VTABLE_BSGeometry;
 
 		enum class Type
 		{
@@ -48,7 +51,7 @@ namespace RE
 
 		struct MODEL_DATA
 		{
-#if !defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE)
+#if defined(EXCLUSIVE_SKYRIM_VR)
 #	define MODEL_DATA_CONTENT        \
 		NiBound  modelBound; /* 0 */  \
 		NiPoint3 unk148;     /* 10 */ \
@@ -58,9 +61,9 @@ namespace RE
 #endif
 			MODEL_DATA_CONTENT
 		};
-#ifndef ENABLE_SKYRIM_VR
+#if defined(EXCLUSIVE_SKYRIM_FLAT)
 		static_assert(sizeof(MODEL_DATA) == 0x10);
-#elif !defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE)
+#elif defined(EXCLUSIVE_SKYRIM_VR)
 		static_assert(sizeof(MODEL_DATA) == 0x28);
 #endif
 
@@ -101,7 +104,7 @@ namespace RE
 #endif
 
 		// add
-		SKYRIM_REL_VR_VIRTUAL BSMultiIndexTriShape* AsMultiIndexTriShape();      // 35 - { return 0; }
+		SKYRIM_REL_VR_VIRTUAL BSMultiIndexTriShape*   AsMultiIndexTriShape();    // 35 - { return 0; }
 		SKYRIM_REL_VR_VIRTUAL BSSkinnedDecalTriShape* AsSkinnedDecalTriShape();  // 36 - { return 0; }
 		SKYRIM_REL_VR_VIRTUAL void                    Unk_37(void);              // 37 - { return 0; }
 
@@ -135,6 +138,19 @@ namespace RE
 			return REL::RelocateMember<stl::enumeration<Type, std::uint8_t>>(this, 0x150, 0x190);
 		}
 
+		inline BSLightingShaderProperty* lightingShaderProp_cast()
+		{
+			if (auto effect = GetGeometryRuntimeData().properties[States::kEffect].get(); effect) {
+				if (auto rtti = effect->GetRTTI(); rtti) {
+					const std::string rttiStr(rtti->GetName());
+					if (rttiStr == "BSLightingShaderProperty") {
+						return static_cast<BSLightingShaderProperty*>(effect);
+					}
+				}
+			}
+			return nullptr;
+		}
+
 		// members
 #ifndef SKYRIM_CROSS_VR
 		MODEL_DATA_CONTENT;    // 110, 138
@@ -144,7 +160,7 @@ namespace RE
 		std::uint8_t                         pad31;  // 151
 		std::uint16_t                        pad32;  // 152
 		std::uint32_t                        pad34;  // 154
-#	elif !defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE)
+#	elif defined(EXCLUSIVE_SKYRIM_VR)
 		stl::enumeration<Type, std::uint32_t> type;   // 190
 		std::uint8_t                          pad31;  // 194
 		std::uint16_t                         pad32;  // 195
@@ -152,9 +168,9 @@ namespace RE
 #	endif
 #endif
 	};
-#ifndef ENABLE_SKYRIM_VR
+#if defined(EXCLUSIVE_SKYRIM_FLAT)
 	static_assert(sizeof(BSGeometry) == 0x158);
-#elif !defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE)
+#elif defined(EXCLUSIVE_SKYRIM_VR)
 	static_assert(sizeof(BSGeometry) == 0x1A0);
 #endif
 }

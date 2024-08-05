@@ -9,12 +9,15 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_ExtraBadPosition;
-		inline static auto           EXTRADATATYPE = ExtraDataType::kBadPosition;
+		inline static constexpr auto VTABLE = VTABLE_ExtraBadPosition;
+		inline static constexpr auto EXTRADATATYPE = ExtraDataType::kBadPosition;
 
 		~ExtraBadPosition() override;  // 00
 
 		// override (BSExtraData)
 		[[nodiscard]] ExtraDataType GetType() const override;  // 01 - { return kBadPosition; }
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(ExtraBadPosition) == 0x10);
 }

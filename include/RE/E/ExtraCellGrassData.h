@@ -25,7 +25,8 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_ExtraCellGrassData;
-		inline static auto           EXTRADATATYPE = ExtraDataType::kCellGrassData;
+		inline static constexpr auto VTABLE = VTABLE_ExtraCellGrassData;
+		inline static constexpr auto EXTRADATATYPE = ExtraDataType::kCellGrassData;
 
 		~ExtraCellGrassData() override;  // 00
 
@@ -35,6 +36,8 @@ namespace RE
 		// members
 		BSTArray<CellGrassData*>    grassHandles;  // 10
 		NiPointer<AddCellGrassTask> addGrassTask;  // 28
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(ExtraCellGrassData) == 0x30);
 }

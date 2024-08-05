@@ -12,7 +12,8 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_ExtraInteraction;
-		inline static auto           EXTRADATATYPE = ExtraDataType::kInteraction;
+		inline static constexpr auto VTABLE = VTABLE_ExtraInteraction;
+		inline static constexpr auto EXTRADATATYPE = ExtraDataType::kInteraction;
 
 		~ExtraInteraction() override;  // 00
 
@@ -22,6 +23,8 @@ namespace RE
 
 		// members
 		BSTSmartPointer<RefrInteraction> interaction;  // 10
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(ExtraInteraction) == 0x18);
 }

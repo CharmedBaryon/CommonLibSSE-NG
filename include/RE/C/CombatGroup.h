@@ -41,6 +41,8 @@ namespace RE
 		ActorHandle                            attackedMember;      // A0
 		std::uint16_t                          attackerCount;       // A4
 		stl::enumeration<Flags, std::uint16_t> flags;               // A6
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(CombatTarget) == 0xA8);
 
@@ -51,6 +53,8 @@ namespace RE
 		ActorHandle memberHandle;              // 00
 		float       groupStrengthUpdateTimer;  // 04
 		float       threatValue;               // 08
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(CombatMember) == 0x0C);
 
@@ -91,14 +95,14 @@ namespace RE
 		BSPathingLOSGridMap*           gridMap;                      // 0E0
 		AITimer                        searchUpdateTimer;            // 0E8
 		AITimer                        searchAreaUpdateTimer;        // 0F0
-		AITimeStamp                    unkF8;                        // 0F8
+		AITimeStamp                    searchStartedTimeStamp;       // 0F8
 		ActorHandle                    targetToSearchFor;            // 0FC
 		BGSWorldLocation               searchTargetLoc;              // 100
 		float                          searchRadius;                 // 118
-		std::uint32_t                  unk11C;                       // 11C
+		std::uint32_t                  pad11C;                       // 11C
 		BSTArray<CombatSearchLocation> searchLocations;              // 120
 		BSTArray<CombatSearchDoor>     searchDoors;                  // 138
-		std::uint32_t                  unk150;                       // 150 - count
+		std::uint32_t                  initializedMemberCount;       // 150 - count
 		std::uint32_t                  fleeCount;                    // 154
 		std::uint32_t                  fightCount;                   // 158
 		std::uint8_t                   musicState;                   // 15C
@@ -106,6 +110,8 @@ namespace RE
 		std::uint8_t                   unk15E;                       // 15E
 		std::uint8_t                   unk15F;                       // 15F
 		mutable BSReadWriteLock        lock;                         // 160
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(CombatGroup) == 0x168);
 }

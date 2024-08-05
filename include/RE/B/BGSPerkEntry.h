@@ -20,6 +20,7 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_BGSPerkEntry;
+		inline static constexpr auto VTABLE = VTABLE_BGSPerkEntry;
 
 		using EntryPoint = BGSEntryPoint::ENTRY_POINT;
 
@@ -54,6 +55,8 @@ namespace RE
 
 		// members
 		Header header;  // 08 - PRKE
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(BGSPerkEntry) == 0x10);
 }

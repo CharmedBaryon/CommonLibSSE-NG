@@ -28,6 +28,21 @@ namespace RE
 		entry[2][2] = a_z.z;
 	}
 
+	NiPoint3 NiMatrix3::GetVectorX() const
+	{
+		return NiPoint3{ entry[0][0], entry[1][0], entry[2][0] };
+	}
+
+	NiPoint3 NiMatrix3::GetVectorY() const
+	{
+		return NiPoint3{ entry[0][1], entry[1][1], entry[2][1] };
+	}
+
+	NiPoint3 NiMatrix3::GetVectorZ() const
+	{
+		return NiPoint3{ entry[0][2], entry[1][2], entry[2][2] };
+	}
+
 	bool NiMatrix3::ToEulerAnglesXYZ(NiPoint3& a_angle) const
 	{
 		return ToEulerAnglesXYZ(a_angle.x, a_angle.y, a_angle.z);

@@ -9,6 +9,7 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI___ArmorRatingVisitor;
+		inline static constexpr auto VTABLE = VTABLE___ArmorRatingVisitor;
 
 		~ArmorRatingVisitor() override;  // 00
 
@@ -18,6 +19,8 @@ namespace RE
 
 		// members
 		BSScrapArray<TESObjectARMO*> armors;  // 20
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(ArmorRatingVisitor) == 0x40);
 }

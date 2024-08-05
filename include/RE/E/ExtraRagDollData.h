@@ -31,7 +31,8 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_ExtraRagDollData;
-		inline static auto           EXTRADATATYPE = ExtraDataType::kRagDollData;
+		inline static constexpr auto VTABLE = VTABLE_ExtraRagDollData;
+		inline static constexpr auto EXTRADATATYPE = ExtraDataType::kRagDollData;
 
 		~ExtraRagDollData() override;  // 00
 
@@ -41,6 +42,8 @@ namespace RE
 
 		// members
 		RagDollData* ragDollData;  // 10
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(ExtraRagDollData) == 0x18);
 }

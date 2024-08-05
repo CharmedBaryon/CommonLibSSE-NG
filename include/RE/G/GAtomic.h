@@ -28,6 +28,8 @@ namespace RE
 
 		// members
 		REX::W32::CRITICAL_SECTION cs;  // 00
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(GLock) == 0x28);
 

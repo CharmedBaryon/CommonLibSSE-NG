@@ -17,6 +17,8 @@ namespace RE
 
 		// members
 		stl::enumeration<EVENT_TYPE, std::uint32_t> type;  // 0
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(PositionPlayerEvent) == 0x4);
 }

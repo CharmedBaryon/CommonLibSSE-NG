@@ -21,10 +21,13 @@ namespace RE
 		BSLightingShaderMaterial* Ctor()
 		{
 			using func_t = decltype(&BSLightingShaderMaterial::Ctor);
-			REL::Relocation<func_t> func{ RELOCATION_ID(100004, 106711) };
+			static REL::Relocation<func_t> func{ RELOCATION_ID(100004, 106711) };
 			return func(this);
 		}
 		friend class BSLightingShaderMaterialBase;
+
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(BSLightingShaderMaterial) == 0xA0);
 }

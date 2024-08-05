@@ -17,6 +17,8 @@ namespace RE
 		virtual bool Unk_05(void);                                        // 05 - { return 0; }
 		virtual void Unk_06(void);                                        // 06 - {}
 		virtual void Unk_07(void);                                        // 07 - {}
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(GASExecuteTag) == 0x8);
 }

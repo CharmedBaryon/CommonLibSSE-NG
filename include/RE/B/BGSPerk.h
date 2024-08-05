@@ -20,6 +20,8 @@ namespace RE
 		std::int8_t numRanks;  // 2
 		bool        playable;  // 3
 		bool        hidden;    // 4
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(PerkData) == 0x5);
 
@@ -48,6 +50,7 @@ namespace RE
 		{
 		public:
 			inline static constexpr auto RTTI = RTTI_BGSPerk__FindPerkInRanksVisitor;
+			inline static constexpr auto VTABLE = VTABLE_BGSPerk__FindPerkInRanksVisitor;
 
 			// override (PerkRankVisitor)
 			bool operator()(const PerkRankData* a_entry) override;  // 00
@@ -58,6 +61,7 @@ namespace RE
 		{
 		public:
 			inline static constexpr auto RTTI = RTTI_BGSPerk__ApplyPerksVisitor;
+			inline static constexpr auto VTABLE = VTABLE_BGSPerk__ApplyPerksVisitor;
 
 			// override (PerkRankVisitor)
 			bool operator()(const PerkRankData* a_entry) override;  // 00
@@ -68,6 +72,7 @@ namespace RE
 		{
 		public:
 			inline static constexpr auto RTTI = RTTI_BGSPerk__AddPerkVisitor;
+			inline static constexpr auto VTABLE = VTABLE_BGSPerk__AddPerkVisitor;
 
 			// override (PerkRankVisitor)
 			bool operator()(const PerkRankData* a_entry) override;  // 00
@@ -89,6 +94,8 @@ namespace RE
 		TESCondition            perkConditions;  // 58
 		BSTArray<BGSPerkEntry*> perkEntries;     // 60
 		BGSPerk*                nextPerk;        // 78 - NNAM
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(BGSPerk) == 0x80);
 }

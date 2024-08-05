@@ -8,7 +8,8 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_bhkShapeCollection;
-		inline static auto           Ni_RTTI = NiRTTI_bhkShapeCollection;
+		inline static constexpr auto Ni_RTTI = NiRTTI_bhkShapeCollection;
+		inline static constexpr auto VTABLE = VTABLE_bhkShapeCollection;
 
 		~bhkShapeCollection() override;  // 00
 
@@ -19,6 +20,8 @@ namespace RE
 
 		// add
 		virtual void Unk_36(void) = 0;  // 36
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(bhkShapeCollection) == 0x28);
 }

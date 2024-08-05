@@ -30,6 +30,8 @@ namespace RE
 		GFxPreprocessParams*    preprocessParams;     // 40
 		GFxFontCompactorParams* fontCompactorParams;  // 48
 		GFxImagePackParamsBase* imagePackerParams;    // 50
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(GFxMovieDefBindStates) == 0x58);
 }

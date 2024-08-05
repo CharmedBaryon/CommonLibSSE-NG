@@ -20,7 +20,8 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_ExtraSayTopicInfoOnceADay;
-		inline static auto           EXTRADATATYPE = ExtraDataType::kSayTopicInfoOnceADay;
+		inline static constexpr auto VTABLE = VTABLE_ExtraSayTopicInfoOnceADay;
+		inline static constexpr auto EXTRADATATYPE = ExtraDataType::kSayTopicInfoOnceADay;
 
 		~ExtraSayTopicInfoOnceADay() override;  // 00
 
@@ -29,6 +30,8 @@ namespace RE
 
 		// members
 		BSSimpleList<SayOnceTopicInfos*>* saidOnceTopicInfos;  // 10
+	private:
+		KEEP_FOR_RE()
 	};
 	static_assert(sizeof(ExtraSayTopicInfoOnceADay) == 0x18);
 }

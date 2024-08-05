@@ -19,6 +19,18 @@ namespace RE
 		conditions()
 	{}
 
+	inline bool essentially_equal(float a, float b)
+	{
+		constexpr float EPSILON = std::numeric_limits<float>::epsilon();
+		return fabs(a - b) <= ((fabs(a) > fabs(b) ? fabs(b) : fabs(a)) * EPSILON);
+	}
+
+	bool Effect::IsMatch(EffectSetting* a_base, float a_mag, std::uint32_t a_area, std::uint32_t a_dur, float a_cost)
+	{
+		return baseEffect == a_base &&
+		       essentially_equal(effectItem.magnitude, a_mag) && effectItem.area == a_area && effectItem.duration == a_dur && essentially_equal(cost, a_cost);
+	}
+
 	float Effect::GetMagnitude() const
 	{
 		if (baseEffect->data.flags.any(EffectSetting::EffectSettingData::Flag::kNoMagnitude)) {

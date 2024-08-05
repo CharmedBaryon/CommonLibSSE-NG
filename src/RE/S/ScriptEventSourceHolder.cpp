@@ -9,7 +9,7 @@ namespace RE
 	ScriptEventSourceHolder* ScriptEventSourceHolder::GetSingleton()
 	{
 		using func_t = decltype(&ScriptEventSourceHolder::GetSingleton);
-		REL::Relocation<func_t> func{ RELOCATION_ID(14108, 14298) };
+		static REL::Relocation<func_t> func{ RELOCATION_ID(14108, 14298) };
 		return func();
 	}
 
@@ -26,7 +26,7 @@ namespace RE
 	void ScriptEventSourceHolder::SendOpenCloseEvent(const NiPointer<TESObjectREFR>& a_ref, const NiPointer<TESObjectREFR>& a_activeRef, bool a_isOpened)
 	{
 		using func_t = decltype(&ScriptEventSourceHolder::SendOpenCloseEvent);
-		REL::Relocation<func_t> func{ RELOCATION_ID(14190, 14299) };
+		static REL::Relocation<func_t> func{ RELOCATION_ID(14190, 14299) };
 		return func(this, a_ref, a_activeRef, a_isOpened);
 	}
 
