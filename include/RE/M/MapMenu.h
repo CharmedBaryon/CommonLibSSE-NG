@@ -19,6 +19,7 @@ namespace RE
 	class MapZoomHandler;
 	class MenuOpenCloseEvent;
 	class TESWorldSpace;
+	struct MapMenuMarker;
 
 	// menuDepth = 3
 	// flags = kPausesGame | kUsesCursor | kRendersOffscreenTargets | kCustomRendering
@@ -39,45 +40,6 @@ namespace RE
 	public:
 		inline static constexpr auto      RTTI = RTTI_MapMenu;
 		constexpr static std::string_view MENU_NAME = "MapMenu";
-
-		struct Unk30470Entry
-		{
-			TESFullName*  unk00;
-			std::uint32_t unk08;
-			std::uint32_t unk0C;
-			TESForm*      unk10;
-			std::uint32_t unk18;
-			std::uint32_t unk1C;
-			std::uint32_t unk20;
-			std::uint32_t unk24;
-			std::uint32_t unk28;
-			std::uint32_t unk2C;
-			std::uint32_t unk30;
-			std::uint32_t unk34;
-		};
-		static_assert(sizeof(Unk30470Entry) == 0x38);
-
-		struct Unk30488Entry
-		{
-			std::uint32_t unk00;
-			std::uint32_t unk04;
-			std::uint32_t unk08;
-			std::uint32_t unk0C;
-			const char*   label;
-			std::uint32_t unk18;
-			std::uint32_t unk1C;
-			std::uint32_t unk20;
-			std::uint32_t unk24;
-			std::uint32_t unk28;
-			std::uint32_t unk2C;
-			std::uint32_t unk30;
-			std::uint32_t unk34;
-			std::uint32_t unk38;
-			std::uint32_t unk3C;
-			std::uint32_t unk40;
-			std::uint32_t unk44;
-		};
-		static_assert(sizeof(Unk30488Entry) == 0x48);
 
 		struct RUNTIME_DATA
 		{
@@ -101,19 +63,21 @@ namespace RE
 #define RUNTIME_DATA2_CONTENT                                 \
 	RefHandle                unk30460;              /* 000 */ \
 	NiPoint3                 playerMarkerPosition;  /* 004 */ \
-	BSTArray<Unk30470Entry*> unk30470;              /* 010 */ \
-	BSTArray<Unk30488Entry*> unk30488;              /* 028 */ \
+	BSTArray<MapMenuMarker>  mapMarkers;            /* 010 */ \
+	BSTArray<GFxValue>       markerData;            /* 028 */ \
 	MapCamera                camera;                /* 040 */ \
 	std::uint64_t            unk30530;              /* 0D0 */ \
 	TESWorldSpace*           worldSpace;            /* 0D8 */ \
-	GFxValue                 unk30540;              /* 0E0 */ \
-	std::uint64_t            unk30558;              /* 0F8 */ \
-	std::uint64_t            unk30560;              /* 100 */ \
-	std::uint64_t            unk30568;              /* 108 */ \
-	std::uint32_t            unk30570;              /* 110 */ \
+	GFxValue                 mapMovie;              /* 0E0 */ \
+	std::int32_t             selectedMarker;        /* 0F8 */ \
+	NiPoint3                 cameraPickOrigin;      /* 0FC */ \
+	NiPoint3                 cameraPickDirection;   /* 108 */ \
 	BSSoundHandle            unk30574;              /* 114 */ \
 	std::uint64_t            unk30580;              /* 120 */ \
-	std::uint64_t            unk30588;              /* 128 */ \
+	std::uint32_t            unk30588;              /* 128 */ \
+	bool                     controlsReady;         /* 12C */ \
+	std::uint8_t             unk3058D;              /* 12D */ \
+	std::uint16_t            unk3058E;              /* 12E */ \
 	std::uint64_t            unk30590;              /* 130 */
             RUNTIME_DATA2_CONTENT
 		};

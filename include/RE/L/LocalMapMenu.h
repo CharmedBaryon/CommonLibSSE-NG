@@ -15,6 +15,7 @@ namespace RE
 {
 	class BSShaderAccumulator;
 	class NiNode;
+	struct MapMenuMarker;
 
 	struct LocalMapMenu
 	{
@@ -111,12 +112,16 @@ namespace RE
 
 		struct RUNTIME_DATA
 		{
-			BSScaleformExternalTexture    unk303A0;  // 00
-			GFxValue                      unk303B8;  // 18
-			GFxValue                      unk303D0;  // 30
-			void*                         unk303E8;  // 48
-			BSTSmartPointer<InputHandler> unk303F0;  // 50
-			std::uint64_t                 unk303F8;  // 58
+			BSScaleformExternalTexture    unk303A0;        // 00
+			GFxValue                      localMapMovie;   // 18
+			GFxValue                      mapMovie;        // 30
+			void*                         unk303E8;        // 48
+			BSTSmartPointer<InputHandler> unk303F0;        // 50
+			std::int32_t                  selectedMarker;  // 58
+			bool                          showingMap;      // 5C
+			bool                          dragging;        // 5D
+			bool                          controlsReady;   // 5E
+			std::uint8_t                  unk303FF;        // 5F
 		};
 		static_assert(sizeof(RUNTIME_DATA) == 0x60);
 
@@ -131,14 +136,14 @@ namespace RE
 		}
 
 		// members
-		BSTArray<void*>        unk00000;             // 00000
-		GFxValue               unk00018;             // 00018
-		float                  unk00030;             // 00030
-		float                  unk00034;             // 00034
-		float                  unk00038;             // 00038
-		float                  unk0003C;             // 0003C
-		LocalMapCullingProcess localCullingProcess;  // 00040
-		RUNTIME_DATA           runtimeData;          // 303A0, 30418
+		BSTArray<MapMenuMarker> mapMarkers;           // 00000
+		GFxValue                unk00018;             // 00018
+		float                   unk00030;             // 00030
+		float                   unk00034;             // 00034
+		float                   unk00038;             // 00038
+		float                   unk0003C;             // 0003C
+		LocalMapCullingProcess  localCullingProcess;  // 00040
+		RUNTIME_DATA            runtimeData;          // 303A0, 30418
 #if !defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE)
 		std::uint32_t unk30478;  // 30478
 		std::uint32_t pad3047C;  // 3047C
