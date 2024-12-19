@@ -146,34 +146,34 @@ namespace RE
 		std::uint64_t                   unk1F0;        // 1F0
 		std::uint64_t                   unk1F8;        // 1F8
 
-		std::uint64_t unk200;  // 200
-		std::uint64_t unk208;  // 208
-		std::uint64_t unk210;  // 210
-		std::uint64_t unk218;  // 218
-		std::uint64_t unk220;  // 220
-		std::uint64_t unk228;  // 228
-		std::uint64_t unk230;  // 230
-		std::uint64_t unk238;  // 238
-		std::uint64_t unk240;  // 240
-		std::uint64_t unk248;  // 248
-		std::uint32_t unk250;  // 250
-		std::uint32_t unk254;  // 254
-		std::uint64_t unk258;  // 258
-		std::uint16_t unk260;  // 260
-		std::uint16_t unk262;  // 262
-		std::uint32_t unk264;  // 264
-		std::uint64_t unk268;  // 268
-		std::uint32_t unk270;  // 270
-		std::uint32_t unk274;  // 274
-		std::uint64_t unk278;  // 278
-		std::uint64_t unk280;  // 280
-		std::uint32_t unk288;  // 288
-		std::uint32_t unk28C;  // 28C
-		std::uint64_t unk290;  // 290
-		std::uint64_t unk298;  // 298
-		std::uint32_t unk2A0;  // 2A0
-		std::uint32_t unk2A4;  // 2A4
-		std::uint64_t unk2A8;  // 2A8
+		std::uint64_t                 unk200;                            // 200
+		std::uint64_t                 unk208;                            // 208
+		std::uint64_t                 unk210;                            // 210
+		std::uint64_t                 unk218;                            // 218
+		std::uint64_t                 unk220;                            // 220
+		std::uint64_t                 unk228;                            // 228
+		std::uint64_t                 unk230;                            // 230
+		std::uint64_t                 unk238;                            // 238
+		const char*                   MostRecentSaveGameFileName;        // 240
+		std::uint64_t                 unk248;                            // 248
+		std::uint32_t                 unk250;                            // 250
+		std::uint32_t                 unk254;                            // 254
+		std::uint64_t                 unk258;                            // 258
+		std::uint16_t                 unk260;                            // 260
+		std::uint16_t                 unk262;                            // 262
+		std::uint32_t                 unk264;                            // 264
+		std::uint64_t                 unk268;                            // 268
+		std::uint32_t                 unk270;                            // 270
+		std::uint32_t                 unk274;                            // 274
+		std::uint64_t                 unk278;                            // 278
+		std::uint64_t                 unk280;                            // 280
+		std::uint32_t                 unk288;                            // 288
+		std::uint32_t                 unk28C;                            // 28C
+		std::uint64_t                 unk290;                            // 290
+		std::uint64_t                 unk298;                            // 298
+		std::uint32_t                 unk2A0;                            // 2A0
+		std::uint32_t                 unk2A4;                            // 2A4
+		std::uint64_t                 unk2A8;                            // 2A8
 #ifdef SKYRIM_SUPPORT_AE
 		std::uint16_t   unk2B0;  // 2B0
 		std::uint16_t   unk2B2;  // 2B2
