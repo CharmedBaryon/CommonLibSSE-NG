@@ -101,7 +101,7 @@ namespace RE
 
 	TESObjectREFR* NiAVObject::GetUserData() const
 	{
-		auto* thisUserData = REL::RelocateMember<RE::TESObjectREFR*>(this, 0x0F8, 0x100);
+		auto* thisUserData = REL::RelocateMember<RE::TESObjectREFR*>(this, 0x0F8, 0x110);
 		if (thisUserData) {
 			return thisUserData;
 		}
@@ -115,7 +115,7 @@ namespace RE
 
 	void NiAVObject::SetUserData(TESObjectREFR* a_ref) noexcept
 	{
-		REL::RelocateMember<RE::TESObjectREFR*>(this, 0x0F8, 0x100) = a_ref;
+		REL::RelocateMember<RE::TESObjectREFR*>(this, 0x0F8, 0x110) = a_ref;
 	}
 
 	bool NiAVObject::HasAnimation() const
