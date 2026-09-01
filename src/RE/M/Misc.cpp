@@ -102,6 +102,13 @@ namespace RE
 		return func(a_editorID);
 	}
 
+	void SendInventoryUpdateMessage(TESObjectREFR* a_refr, const TESBoundObject* a_item)
+	{
+		using func_t = decltype(&SendInventoryUpdateMessage);
+		REL::Relocation<func_t> func{ RELOCATION_ID(51911, 52849) };
+		return func(a_refr, a_item);
+	}
+
 	void ShakeCamera(float a_strength, const NiPoint3& a_position, float a_duration)
 	{
 		using func_t = decltype(&ShakeCamera);
