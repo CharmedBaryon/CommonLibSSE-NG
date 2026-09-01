@@ -622,6 +622,7 @@ namespace RE
 		bool                                    SetSleepOutfit(BGSOutfit* a_outfit, bool a_update3D);
 		void                                    SetRotationX(float a_angle);
 		void                                    SetRotationZ(float a_angle);
+		bool                                    StartCombat(Actor* a_target, void* a_unk3 = nullptr);
 		void                                    StealAlarm(TESObjectREFR* a_ref, TESForm* a_object, std::int32_t a_num, std::int32_t a_total, TESForm* a_owner, bool a_allowWarning);
 		void                                    StopAlarmOnActor();
 		void                                    StopInteractingQuick(bool a_unk02);

@@ -1645,6 +1645,13 @@ namespace RE
 		RelocateVirtual<decltype(&Actor::StopCombat)>(0x0E5, 0x0E7, this);
 	}
 
+	bool Actor::StartCombat(Actor* a_target, void* a_unk3)
+	{
+		using func_t = decltype(&Actor::StartCombat);
+		REL::Relocation<func_t> func{ RELOCATION_ID(37608, 38561) };
+		return func(this, a_target, a_unk3);
+	}
+
 	float Actor::CalcArmorRating()
 	{
 		return RelocateVirtual<decltype(&Actor::CalcArmorRating)>(0x0E6, 0x0E8, this);
