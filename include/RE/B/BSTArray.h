@@ -836,7 +836,7 @@ namespace RE
 		[[nodiscard]] inline const_iterator end() const noexcept { return data() + size(); }
 		[[nodiscard]] inline const_iterator cend() const noexcept { return end(); }
 
-		[[nodiscard]] constexpr bool empty() const noexcept { return size() != 0; }
+		[[nodiscard]] constexpr bool empty() const noexcept { return size() == 0; }
 
 		[[nodiscard]] constexpr size_type size() const noexcept { return _size; }
 
