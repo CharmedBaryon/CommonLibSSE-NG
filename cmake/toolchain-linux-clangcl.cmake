@@ -4,11 +4,13 @@
 set(CMAKE_SYSTEM_NAME Windows)
 set(CMAKE_SYSTEM_PROCESSOR AMD64)
 
-# Debian/Ubuntu register only versioned names, so keep the fallbacks.
-set(_clangcl_names clang-cl clang-cl-19 clang-cl-18 clang-cl-17 clang-cl-16 clang-cl-15)
-set(_lldlink_names lld-link lld-link-19 lld-link-18 lld-link-17 lld-link-16 lld-link-15)
-set(_llvmrc_names  llvm-rc llvm-rc-19 llvm-rc-18 llvm-rc-17 llvm-rc-16 llvm-rc-15)
-set(_llvmmt_names  llvm-mt llvm-mt-19 llvm-mt-18 llvm-mt-17 llvm-mt-16 llvm-mt-15)
+# Debian/Ubuntu register only versioned names, so keep the fallbacks. Newest
+# first: an older version present alongside a newer one (e.g. a transitive
+# apt dependency) must not silently win over one a caller explicitly installed.
+set(_clangcl_names clang-cl clang-cl-20 clang-cl-19 clang-cl-18 clang-cl-17 clang-cl-16 clang-cl-15)
+set(_lldlink_names lld-link lld-link-20 lld-link-19 lld-link-18 lld-link-17 lld-link-16 lld-link-15)
+set(_llvmrc_names  llvm-rc llvm-rc-20 llvm-rc-19 llvm-rc-18 llvm-rc-17 llvm-rc-16 llvm-rc-15)
+set(_llvmmt_names  llvm-mt llvm-mt-20 llvm-mt-19 llvm-mt-18 llvm-mt-17 llvm-mt-16 llvm-mt-15)
 
 find_program(CMAKE_C_COMPILER NAMES ${_clangcl_names} REQUIRED)
 find_program(CMAKE_CXX_COMPILER NAMES ${_clangcl_names} REQUIRED)
