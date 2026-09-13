@@ -1,3 +1,13 @@
+## [8.0.1](https://github.com/alandtse/CommonLibSSE-NG/compare/v8.0.0...v8.0.1) (2026-09-13)
+
+### Bug Fixes
+
+* **AE:** add missing id for ObjectTypeInfo::ReleaseData ([#359](https://github.com/alandtse/CommonLibSSE-NG/issues/359)) ([bbd0d3f](https://github.com/alandtse/CommonLibSSE-NG/commit/bbd0d3f452575ba310757b141537e8ecc8cf4a78))
+* **re:** correct BSTSmallSharedArray::empty() ([#361](https://github.com/alandtse/CommonLibSSE-NG/issues/361)) ([fd13f06](https://github.com/alandtse/CommonLibSSE-NG/commit/fd13f062878cfb4145dbb2be76485b482eff5831))
+* **skse:** set V5 flag in plugin declarations ([#360](https://github.com/alandtse/CommonLibSSE-NG/issues/360)) ([98c8df0](https://github.com/alandtse/CommonLibSSE-NG/commit/98c8df05f1c05915b16af45181c7638ef925f465)), closes [#310](https://github.com/alandtse/CommonLibSSE-NG/issues/310)
+* **xmake:** define multi-runtime targeting ([#357](https://github.com/alandtse/CommonLibSSE-NG/issues/357)) ([d8d560d](https://github.com/alandtse/CommonLibSSE-NG/commit/d8d560d44f0a0bbcb0a489c7679adb7c65744c49))
+* **xmake:** enable patch-site diagnostics ([#358](https://github.com/alandtse/CommonLibSSE-NG/issues/358)) ([770dc12](https://github.com/alandtse/CommonLibSSE-NG/commit/770dc1210dff859ee2aec2840b7e58ff4c92e109)), closes [#232](https://github.com/alandtse/CommonLibSSE-NG/issues/232)
+
 ## [8.0.0](https://github.com/alandtse/CommonLibSSE-NG/compare/v7.5.4...v8.0.0) (2026-09-12)
 
 ### ⚠ BREAKING CHANGES
