@@ -55,6 +55,12 @@ option("skse_xbyak", function()
     add_defines("SKSE_SUPPORT_XBYAK=1")
 end)
 
+option("skse_patch_safety", function()
+    set_default(true)
+    set_description("Enable trampoline patch-site diagnostics")
+    add_defines("SKSE_SUPPORT_PATCH_SAFETY=1")
+end)
+
 option("tests", function()
     set_default(false)
     set_description("Enable building unit tests")
@@ -163,6 +169,28 @@ target("commonlibsse-ng", function()
             -- pcxxheader, so set the PCH here rather than unconditionally.
             target:set("pcxxheader", path.join(target:scriptdir(), "include", "SKSE", "Impl", "PCH.h"))
 
+            if has_config("skse_patch_safety") then
+                local cachedir = path.join(target:autogendir(), "minhook-v1.3.4")
+                local hde = path.join(cachedir, "minhook-1.3.4", "src", "hde")
+                if not os.isfile(path.join(cachedir, ".complete")) then
+                    import("net.http")
+                    import("utils.archive")
+                    local arch = os.tmpfile() .. ".tar.gz"
+                    try { function()
+                        http.download("https://github.com/TsudaKageyu/minhook/archive/refs/tags/v1.3.4.tar.gz", arch)
+                        assert(hash.sha256(arch) == "1aebeae4ca898330c507860acc2fca2eb335fe446a3a2b8444c3bf8b2660a14e",
+                            "MinHook v1.3.4 sha256 verification failed")
+                        archive.extract(arch, cachedir)
+                    end, finally { function(ok, errors)
+                        os.tryrm(arch)
+                        if not ok then raise(errors) end
+                    end } }
+                    io.writefile(path.join(cachedir, ".complete"), "")
+                end
+                target:add("files", path.join(hde, "hde64.c"))
+                target:add("includedirs", hde)
+            end
+
             -- The embedded license notice (src/REL/Module.cpp) wants a version string.
             -- Derive it from the git tag rather than tracking a second, manually-synced
             -- version number -- CMake's PROJECT_VERSION is itself just a mirror of the
@@ -187,13 +215,13 @@ target("commonlibsse-ng", function()
         if target:kind() ~= "phony" then return end
         local required = {
             skyrim_se = true, skyrim_ae = true, skyrim_vr = true,
-            rex_json = false, rex_toml = false,
+            rex_json = false, rex_toml = false, skse_patch_safety = true,
         }
         for opt, want in pairs(required) do
             local got = has_config(opt) and true or false
             if got ~= want then
                 raise("prebuilt commonlibsse-ng.lib requires %s=%s, but the consumer has %s=%s. "
-                    .. "Match the baked config (skyrim all; rex_json/toml off; see PREBUILT.md) "
+                    .. "Match the baked config (skyrim all; rex_json/toml off; patch safety on; see PREBUILT.md) "
                     .. "or build from source.", opt, want and "y" or "n", opt, got and "y" or "n")
             end
         end
@@ -238,7 +266,7 @@ target("commonlibsse-ng", function()
     end
 
     -- add options
-    add_options("rex_ini", "rex_json", "rex_toml", "skyrim_se", "skyrim_ae", "skyrim_vr", "skse_xbyak", "tests", { public = true })
+    add_options("rex_ini", "rex_json", "rex_toml", "skyrim_se", "skyrim_ae", "skyrim_vr", "skse_xbyak", "skse_patch_safety", "tests", { public = true })
 
     if (has_config("skyrim_se") and has_config("skyrim_ae"))
         or (has_config("skyrim_se") and has_config("skyrim_vr"))

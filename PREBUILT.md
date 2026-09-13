@@ -33,6 +33,7 @@ The library is compiled **once**, for the config our xmake consumers use:
 | Runtime | **all** — `skyrim_se` + `skyrim_ae` + `skyrim_vr` |
 | REX | **`rex_ini` + `rex_json` + `rex_toml`** on (the full superset) |
 | Trampoline | **`skse_xbyak`** on |
+| Patch diagnostics | **`skse_patch_safety`** on |
 | Build | `releasedbg`, x64, **MSVC** |
 | C++ | C++23 |
 
@@ -46,6 +47,8 @@ consumer **must** build with a compatible setup:
   link — the symbols are present regardless.
 - Same mode/ABI: xmake `releasedbg` (release CRT `/MD`, `NDEBUG`). No `debug` bundle
   is published. A true `debug` build must compile from source.
+- Patch diagnostics are compiled into the bundle. To disable them with
+  `--skse_patch_safety=n`, build CommonLib from source.
 - Same compiler family (**MSVC**) and a compatible MSVC toolset version. Toolset drift
   between this bundle and the consumer is the most common cause of link/ABI errors.
 

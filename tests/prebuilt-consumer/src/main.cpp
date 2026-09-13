@@ -10,3 +10,8 @@ extern "C" __declspec(dllexport) std::uint32_t commonlib_link_probe()
 {
 	return static_cast<std::uint32_t>(SKSE::GetPluginHandle());
 }
+
+extern "C" __declspec(dllexport) void commonlib_trampoline_link_probe(SKSE::Trampoline& trampoline, std::uintptr_t src, std::uintptr_t dst)
+{
+	trampoline.write_branch<5>(src, dst);
+}

@@ -101,6 +101,7 @@ jobs:
           # Drop-in replacement for the lib/commonlibsse-ng source tree: same xmake.lua
           # (auto-detects the shipped lib), headers, plugin-rule templates, VR headers.
           Copy-Item xmake.lua, PREBUILT.md "$stage/"
+          Copy-Item licenses/LICENSE-hde64.txt "$stage/"
           Copy-Item -Recurse include "$stage/include"
           Copy-Item -Recurse res "$stage/res"
           Copy-Item -Recurse extern/openvr/headers "$stage/extern/openvr/headers"
@@ -276,6 +277,7 @@ jobs:
           # openvr_api.lib is linked PUBLIC by the IMPORTED target, so it ships in the bundle.
           Copy-Item extern/openvr/lib/win64/openvr_api.lib "$stage/lib/"
           Copy-Item PREBUILT.md "$stage/"
+          Copy-Item licenses/LICENSE-hde64.txt "$stage/"
           # Stamp the toolset version (Prebuilt.cmake's compatibility gate); the file-version
           # resource, not the usage banner, is locale-independent and matches CMake's own format.
           $clPath = (Get-Command cl.exe -ErrorAction Stop).Source
