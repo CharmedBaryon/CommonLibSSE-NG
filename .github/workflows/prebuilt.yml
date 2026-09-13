@@ -26,10 +26,19 @@ on:
       - src/**
       - res/**
       - vcpkg.json
+      - vcpkg-configuration.json
       - .github/workflows/prebuilt.yml
       - tests/prebuilt-consumer/**
       - tests/prebuilt-consumer-cmake/**
   workflow_dispatch:
+    inputs:
+      ref:
+        type: string
+        default: ""
+      attach_tag:
+        description: "If set, create/attach the bundles to this release tag (e.g. to refresh a stale published bundle)."
+        type: string
+        default: ""
   workflow_call:
     inputs:
       ref:
@@ -193,7 +202,7 @@ jobs:
         uses: actions/cache@v4
         with:
           path: ${{ github.workspace }}/vcpkg_downloads
-          key: ${{ runner.os }}-vcpkg-downloads-${{ hashFiles('vcpkg.json') }}
+          key: ${{ runner.os }}-vcpkg-downloads-${{ hashFiles('vcpkg.json', 'vcpkg-configuration.json') }}
           restore-keys: |
             ${{ runner.os }}-vcpkg-downloads-
 
@@ -202,7 +211,7 @@ jobs:
         uses: actions/cache/restore@v4
         with:
           path: ${{ github.workspace }}/vcpkg_downloads
-          key: ${{ runner.os }}-vcpkg-downloads-${{ hashFiles('vcpkg.json') }}
+          key: ${{ runner.os }}-vcpkg-downloads-${{ hashFiles('vcpkg.json', 'vcpkg-configuration.json') }}
           restore-keys: |
             ${{ runner.os }}-vcpkg-downloads-
 
@@ -213,7 +222,7 @@ jobs:
         uses: actions/cache@v4
         with:
           path: ${{ github.workspace }}/vcpkg_binary_cache
-          key: ${{ runner.os }}-vcpkg-binpkgs-x64-windows-static-md-msvc-${{ hashFiles('vcpkg.json') }}
+          key: ${{ runner.os }}-vcpkg-binpkgs-x64-windows-static-md-msvc-${{ hashFiles('vcpkg.json', 'vcpkg-configuration.json') }}
           restore-keys: |
             ${{ runner.os }}-vcpkg-binpkgs-x64-windows-static-md-msvc-
             ${{ runner.os }}-vcpkg-binpkgs-x64-windows-static-md-
@@ -223,7 +232,7 @@ jobs:
         uses: actions/cache/restore@v4
         with:
           path: ${{ github.workspace }}/vcpkg_binary_cache
-          key: ${{ runner.os }}-vcpkg-binpkgs-x64-windows-static-md-msvc-${{ hashFiles('vcpkg.json') }}
+          key: ${{ runner.os }}-vcpkg-binpkgs-x64-windows-static-md-msvc-${{ hashFiles('vcpkg.json', 'vcpkg-configuration.json') }}
           restore-keys: |
             ${{ runner.os }}-vcpkg-binpkgs-x64-windows-static-md-msvc-
             ${{ runner.os }}-vcpkg-binpkgs-x64-windows-static-md-
