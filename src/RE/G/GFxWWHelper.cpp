@@ -6,7 +6,7 @@ namespace RE
 {
 	bool GFxWWHelper::FindCharWithFlags(WordWrappingType a_wwMode, wchar_t a_ch, BreakInfoFlags a_charBreakFlags)
 	{
-		const stl::enumeration wwMode{ a_wwMode };
+		const REX::EnumSet wwMode{ a_wwMode };
 		if ((wwMode & WordWrappingType::kProhibition) == WordWrappingType::kNone) {
 			return false;
 		}
@@ -29,7 +29,7 @@ namespace RE
 
 	bool GFxWWHelper::IsAsianChar(WordWrappingType a_wwMode, wchar_t a_ch)
 	{
-		const stl::enumeration wwMode{ a_wwMode };
+		const REX::EnumSet wwMode{ a_wwMode };
 		if ((wwMode & WordWrappingType::kNoHangulWrap) != WordWrappingType::kNone) {
 			if ((a_ch >= 0x1100 && a_ch <= 0x11FF) || (a_ch >= 0x3130 && a_ch <= 0x318F) || (a_ch >= 0xAC00 && a_ch <= 0xD7A3)) {
 				return false;
@@ -131,7 +131,7 @@ namespace RE
 	{
 		assert(a_paraText);
 
-		const stl::enumeration wwMode{ a_wwMode };
+		const REX::EnumSet wwMode{ a_wwMode };
 		if ((wwMode & WordWrappingType::kAll) == WordWrappingType::kNone || a_lineLen == 0) {
 			return UPINT_MAX;
 		}

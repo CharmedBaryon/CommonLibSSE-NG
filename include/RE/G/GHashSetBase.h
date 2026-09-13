@@ -172,7 +172,7 @@ namespace RE
 			SetCapacity(this, a_sizeHint);
 		}
 
-		explicit GHashSetBase([[maybe_unused]] void* a_memAddr) :
+		explicit GHashSetBase(void*) :
 			table(0)
 		{}
 
@@ -211,7 +211,7 @@ namespace RE
 			Clear();
 			if (a_src.IsEmpty() == false) {
 				SetCapacity(a_memAddr, a_src.GetSize());
-				for (const_iterator it = a_src.Begin(); it != a_src.End(); ++it) {
+				for (const_iterator it = a_src.begin(); it != a_src.end(); ++it) {
 					Add(a_memAddr, *it);
 				}
 			}

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "RE/B/BSTList.h"
+#include "RE/B/BSSimpleList.h"
 #include "RE/F/FormTypes.h"
 #include "RE/T/TESForm.h"
 #include "RE/T/TESModel.h"
@@ -67,12 +67,12 @@ namespace RE
 			[[nodiscard]] std::uint8_t GetPhaseLength() const;
 
 			// members
-			Interval                                        sunrise;          // 0
-			Interval                                        sunset;           // 2
-			std::uint8_t                                    volatility;       // 4
-			stl::enumeration<MoonPhaseLength, std::uint8_t> moonPhaseLength;  // 5
-			std::uint8_t                                    unk6;             // 6
-			std::uint8_t                                    unk7;             // 7
+			Interval                                    sunrise;          // 0
+			Interval                                    sunset;           // 2
+			std::uint8_t                                volatility;       // 4
+			REX::EnumSet<MoonPhaseLength, std::uint8_t> moonPhaseLength;  // 5
+			std::uint8_t                                unk6;             // 6
+			std::uint8_t                                unk7;             // 7
 		};
 		static_assert(sizeof(Timing) == 0x8);
 

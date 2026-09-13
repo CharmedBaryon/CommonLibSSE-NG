@@ -23,7 +23,7 @@ namespace RE
 			kShowOwner = 1 << 2
 		};
 
-		stl::enumeration<Flag, std::uint8_t> flags;  // 0
+		REX::EnumSet<Flag, std::uint8_t> flags;  // 0
 	};
 	static_assert(sizeof(CONT_DATA) == 0x1);
 
@@ -79,6 +79,8 @@ namespace RE
 		BGSSoundDescriptorForm* openSound;   // C0 - SNAM
 		BGSSoundDescriptorForm* closeSound;  // C8 - QNAM
 	};
+#if defined(EXCLUSIVE_SKYRIM_FLAT)
 	static_assert(offsetof(TESObjectCONT, data) == 0xB9);
 	static_assert(sizeof(TESObjectCONT) == 0xD0);
+#endif
 }

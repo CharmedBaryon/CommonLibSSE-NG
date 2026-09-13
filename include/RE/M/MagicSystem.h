@@ -1,8 +1,11 @@
 #pragma once
 
+#include "RE/B/BSString.h"
+
 namespace RE
 {
 	class BGSSoundDescriptorForm;
+	class MagicItem;
 
 	namespace MagicSystem
 	{
@@ -25,7 +28,9 @@ namespace RE
 			kLeftHand = 0,
 			kRightHand = 1,
 			kOther = 2,
-			kInstant = 3
+			kInstant = 3,
+
+			kNone = 4
 		};
 
 		enum class CastingType
@@ -44,7 +49,7 @@ namespace RE
 			kTargetActor = 3,
 			kTargetLocation = 4,
 
-			kTotal
+			kNone = 5
 		};
 
 		enum class SoundID
@@ -92,5 +97,6 @@ namespace RE
 		const char*             GetCannotCastString(CannotCastReason a_reason);
 		float                   GetMagicCasterTargetUpdateInterval();
 		BGSSoundDescriptorForm* GetMagicFailureSound(SpellType a_type);
+		void                    GetMagicItemDescription(BSString& a_out, MagicItem* a_magicItem, const char* a_beginTagFormat, const char* a_endTagFormat);
 	}
 }

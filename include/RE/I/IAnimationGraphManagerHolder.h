@@ -18,6 +18,7 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_IAnimationGraphManagerHolder;
+		inline static constexpr auto VTABLE = VTABLE_IAnimationGraphManagerHolder;
 
 		virtual ~IAnimationGraphManagerHolder();  // 00
 

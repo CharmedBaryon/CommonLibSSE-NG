@@ -9,26 +9,27 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_BSMultiBoundOBB;
-		inline static auto           Ni_RTTI = NiRTTI_BSMultiBoundOBB;
+		inline static constexpr auto Ni_RTTI = NiRTTI_BSMultiBoundOBB;
+		inline static constexpr auto VTABLE = VTABLE_BSMultiBoundOBB;
 
 		~BSMultiBoundOBB() override;  // 00
 
 		// override (NiObject)
-		const NiRTTI* GetRTTI() const override;                           // 02
-		NiObject*     CreateClone(NiCloningProcess& a_cloning) override;  // 17
-		void          LoadBinary(NiStream& a_stream) override;            // 18
-		void          LinkObject(NiStream& a_stream) override;            // 19
-		bool          RegisterStreamables(NiStream& a_stream) override;   // 1A
-		void          SaveBinary(NiStream& a_stream) override;            // 1B
-		bool          IsEqual(NiObject* a_object) override;               // 1C
-		std::uint32_t GetType() override;                                 // 25 - { return 2; }
-		bool          Unk_27() override;                                  // 27
-		void          Unk_28() override;                                  // 28
-		bool          Unk_29() override;                                  // 29
-		void          Unk_2A() override;                                  // 2A
-		void          Unk_2B() override;                                  // 2B
-		bool          GetWithinPoint(const NiPoint3& a_pos) override;     // 2C
-		void          Unk_2E() override;                                  // 2E
+		const NiRTTI* GetRTTI() const override;                                  // 02
+		NiObject*     CreateClone(NiCloningProcess& a_cloning) override;         // 17
+		void          LoadBinary(NiStream& a_stream) override;                   // 18
+		void          LinkObject(NiStream& a_stream) override;                   // 19
+		bool          RegisterStreamables(NiStream& a_stream) override;          // 1A
+		void          SaveBinary(NiStream& a_stream) override;                   // 1B
+		bool          IsEqual(NiObject* a_object) override;                      // 1C
+		std::uint32_t GetType() override;                                        // 25 - { return 2; }
+		bool          CheckBound(BSMultiBound const&) override;                  // 27
+		bool          CheckBound(NiBound const&) override;                       // 28
+		bool          WithinFrustum(NiFrustumPlanes const&) override;            // 29
+		bool          CompletelyWithinFrustum(NiFrustumPlanes const&) override;  // 2A
+		void          GetNiBound(NiBound*) override;                             // 2B
+		bool          GetWithinPoint(const NiPoint3& a_pos) override;            // 2C
+		void          MoveToWorld(NiTransform const&) override;                  // 2E
 
 		// members
 		NiMatrix3     rotation;  // 40

@@ -1,10 +1,20 @@
 #pragma once
 
+#include "RE/N/NiColor.h"
+
+#include <cstddef>
+
 namespace RE
 {
 	class BSVolumetricLightingRenderData
 	{
 	public:
+		[[nodiscard]] static BSVolumetricLightingRenderData& GetCurrentRenderData()
+		{
+			static REL::Relocation<float*> red{ RELOCATION_ID(527719, 414629) };
+			return *reinterpret_cast<BSVolumetricLightingRenderData*>(reinterpret_cast<std::byte*>(red.get()) - offsetof(BSVolumetricLightingRenderData, color));
+		}
+
 		struct CustomColor
 		{
 		public:
@@ -44,9 +54,7 @@ namespace RE
 		// members
 		float               intensity;            // 00 - CNAM
 		CustomColor         customColor;          // 04
-		float               red;                  // 08 - ENAM
-		float               green;                // 0C - FNAM
-		float               blue;                 // 10 - GNAM
+		NiColor             color;                // 08 - ENAM (red) / FNAM (green) / GNAM (blue)
 		Density             density;              // 14
 		PhaseFunction       phaseFunction;        // 24
 		SamplingRepartition samplingRepartition;  // 2C

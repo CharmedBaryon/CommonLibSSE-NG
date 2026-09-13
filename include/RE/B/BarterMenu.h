@@ -3,12 +3,15 @@
 #include "RE/B/BSTArray.h"
 #include "RE/G/GFxValue.h"
 #include "RE/I/IMenu.h"
+#include "REL/RuntimeDataAccessors.h"
 
 namespace RE
 {
 	struct BottomBar;
 	struct ItemCard;
 	struct ItemList;
+
+	class Actor;
 
 	// menuDepth = 0
 	// flags = kPausesGame | kUsesMenuContext | kDisablePauseMenu | kUpdateUsesCursor | kInventoryItemMenu | kCustomRendering
@@ -17,6 +20,7 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto      RTTI = RTTI_BarterMenu;
+		inline static constexpr auto      VTABLE = VTABLE_BarterMenu;
 		constexpr static std::string_view MENU_NAME = "BarterMenu";
 
 		struct RUNTIME_DATA
@@ -34,7 +38,8 @@ namespace RE
 	std::uint16_t   pad7A;           /* 4A */             \
 	std::uint32_t   pad7C;           /* 4C */             \
 	BSTArray<void*> unk80;           /* 50 */             \
-	std::uint64_t   unk98;           /* 68 */             \
+	std::int32_t    playerGold;      /* 68 */             \
+	std::int32_t    merchantGold;    /* 6C */             \
 	std::uint32_t   unkA0;           /* 70 */             \
 	bool            pcControlsReady; /* 74 */             \
 	std::uint8_t    padA5;           /* 75 */             \
@@ -52,26 +57,16 @@ namespace RE
 		void               PostDisplay() override;                           // 06
 
 		[[nodiscard]] static RefHandle GetTargetRefHandle();
+		bool                           IsViewingVendorItems() noexcept;
 
-		[[nodiscard]] inline RUNTIME_DATA& GetRuntimeData() noexcept
-		{
-			return REL::RelocateMember<RUNTIME_DATA>(this, 0x30, 0x40);
-		}
+		static void OpenMenu(Actor* a_targetActor);
 
-		[[nodiscard]] inline const RUNTIME_DATA& GetRuntimeData() const noexcept
-		{
-			return REL::RelocateMember<RUNTIME_DATA>(this, 0x30, 0x40);
-		}
-
+		RUNTIME_DATA_ACCESSOR(RUNTIME_DATA, 0x30, 0x40);
 		// members
 #ifndef SKYRIM_CROSS_VR
 		RUNTIME_DATA_CONTENT  // 30, 40
 #endif
 	};
-#ifndef ENABLE_SKYRIM_VR
-	static_assert(sizeof(BarterMenu) == 0xA8);
-#elif !defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE)
-	static_assert(sizeof(BarterMenu) == 0xB8);
-#endif
+	STATIC_ASSERT_SIZE(BarterMenu, 0xA8, 0xA8, 0xB8, 0x30);
 }
 #undef RUNTIME_DATA_CONTENT

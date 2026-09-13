@@ -11,27 +11,33 @@ namespace RE
 			Object::~Object()
 			{
 				Dtor();
-				stl::memzero(this);
 			}
 
 			void Object::Dtor()
 			{
 				using func_t = decltype(&Object::Dtor);
-				REL::Relocation<func_t> func{ RELOCATION_ID(98654, 105309) };
+				static REL::Relocation<func_t> func{ RELOCATION_ID(98654, 105309) };
 				return func(this);
 			}
 
 			Object* Object::Ctor()
 			{
 				using func_t = decltype(&Object::Ctor);
-				REL::Relocation<func_t> func{ RELOCATION_ID(98759, 105410) };
+				static REL::Relocation<func_t> func{ RELOCATION_ID(98759, 105410) };
 				return func(this);
 			}
 
 			Object* Object::Create()
 			{
 				auto object = malloc<Object>();
+#ifdef __clang__
+#	pragma clang diagnostic push
+#	pragma clang diagnostic ignored "-Wnontrivial-memaccess"
+#endif
 				std::memset(object, 0, sizeof(Object));
+#ifdef __clang__
+#	pragma clang diagnostic pop
+#endif
 				if (object) {
 					object->Ctor();
 				}

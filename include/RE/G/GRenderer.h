@@ -274,10 +274,10 @@ namespace RE
 		{
 		public:
 			// members
-			stl::enumeration<RenderCapBits, std::uint32_t> capBits;         // 00
-			std::uint32_t                                  vertexFormats;   // 04
-			std::uint32_t                                  blendModes;      // 08
-			std::uint32_t                                  maxTextureSize;  // 0C
+			REX::EnumSet<RenderCapBits, std::uint32_t> capBits;         // 00
+			std::uint32_t                              vertexFormats;   // 04
+			std::uint32_t                              blendModes;      // 08
+			std::uint32_t                              maxTextureSize;  // 0C
 		};
 		static_assert(sizeof(RenderCaps) == 0x10);
 
@@ -287,13 +287,13 @@ namespace RE
 			UserData();
 
 			// members
-			const char*                                          string;      // 00
-			float*                                               flt;         // 08
-			float*                                               matrix;      // 10
-			std::uint32_t                                        matrixSize;  // 18
-			stl::enumeration<UserDataPropertyFlag, std::uint8_t> propFlags;   // 1C
-			std::uint8_t                                         pad1D;       // 1D
-			std::uint16_t                                        pad1E;       // 1E
+			const char*                                      string;      // 00
+			float*                                           flt;         // 08
+			float*                                           matrix;      // 10
+			std::uint32_t                                    matrixSize;  // 18
+			REX::EnumSet<UserDataPropertyFlag, std::uint8_t> propFlags;   // 1C
+			std::uint8_t                                     pad1D;       // 1D
+			std::uint16_t                                    pad1E;       // 1E
 		};
 		static_assert(sizeof(UserData) == 0x20);
 
@@ -301,10 +301,10 @@ namespace RE
 		{
 		public:
 			// members
-			GTexture*                                         texture;        // 00
-			Matrix                                            textureMatrix;  // 08
-			stl::enumeration<BitmapWrapMode, std::uint32_t>   wrapMode;       // 20
-			stl::enumeration<BitmapSampleMode, std::uint32_t> sampleMode;     // 24
+			GTexture*                                     texture;        // 00
+			Matrix                                        textureMatrix;  // 08
+			REX::EnumSet<BitmapWrapMode, std::uint32_t>   wrapMode;       // 20
+			REX::EnumSet<BitmapSampleMode, std::uint32_t> sampleMode;     // 24
 		};
 		static_assert(sizeof(FillTexture) == 0x28);
 
@@ -444,9 +444,9 @@ namespace RE
 		void FillStyleBitmap(GTexture* a_texture, const Matrix& a_matrix, BitmapWrapMode a_wrapMode, BitmapSampleMode a_sampleMode);
 
 		// members
-		GList<GRendererEventHandler>                   handlers;    // 10
-		StereoParams                                   s3DParams;   // 20
-		stl::enumeration<StereoDisplay, std::uint32_t> s3DDisplay;  // 34
+		GList<GRendererEventHandler>               handlers;    // 10
+		StereoParams                               s3DParams;   // 20
+		REX::EnumSet<StereoDisplay, std::uint32_t> s3DDisplay;  // 34
 	};
 	static_assert(sizeof(GRenderer) == 0x38);
 }

@@ -13,6 +13,7 @@ namespace RE
 		{
 		public:
 			inline static constexpr auto RTTI = RTTI_BSScript__IObjectHandlePolicy;
+			inline static constexpr auto VTABLE = VTABLE_BSScript__IObjectHandlePolicy;
 
 			virtual ~IObjectHandlePolicy();  // 00
 

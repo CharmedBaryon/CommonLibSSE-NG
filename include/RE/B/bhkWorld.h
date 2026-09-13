@@ -2,6 +2,9 @@
 
 #include "RE/B/BSAtomic.h"
 #include "RE/B/bhkSerializable.h"
+#include "RE/B/bhkWorldCinfo.h"
+#include "RE/H/hkVector4.h"
+#include "REL/RuntimeDataAccessors.h"
 
 namespace RE
 {
@@ -41,13 +44,13 @@ namespace RE
 
 		static float GetWorldScale()
 		{
-			REL::Relocation<float*> worldScale{ RELOCATION_ID(231896, 188105) };
+			static REL::Relocation<float*> worldScale{ RELOCATION_ID(231896, 188105) };
 			return *worldScale;
 		}
 
 		static float GetWorldScaleInverse()
 		{
-			REL::Relocation<float*> worldScaleInverse{ RELOCATION_ID(230692, 187407) };
+			static REL::Relocation<float*> worldScaleInverse{ RELOCATION_ID(230692, 187407) };
 			return *worldScaleInverse;
 		}
 
@@ -88,6 +91,25 @@ namespace RE
 		std::uint16_t                 unkC5FA;                    // C5FA
 		std::uint16_t                 unkC5FC;                    // C5FC
 		std::uint16_t                 unkC5FE;                    // C5FE
+
+#ifdef ENABLE_SKYRIM_AE
+		struct AE1799_RUNTIME_DATA
+		{
+			std::uint64_t unkC5D8;        // C5D8
+			bhkWorldCinfo worldCinfo;     // C5E0
+			std::uint32_t unkC6E0;        // C6E0
+			std::uint32_t unkC6E4;        // C6E4
+			std::uint32_t unkC6E8;        // C6E8
+			std::uint32_t unkC6EC;        // C6EC
+			std::uint32_t unkC6F0;        // C6F0
+			std::uint32_t unkC6F4;        // C6F4
+			float         tau;            // C6F8
+			float         damping;        // C6FC
+			std::uint8_t  _pad700[0x10];  // C700
+		};
+
+		RUNTIME_DATA_ACCESSOR_VERSIONED_OPTIONAL_EX(AE1799_RUNTIME_DATA, GetAe1799RuntimeData, SKSE::RUNTIME_SSE_1_7_99, 0xC5D8);
+#endif
 	};
 	static_assert(sizeof(bhkWorld) == 0xC600);
 }

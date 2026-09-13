@@ -6,6 +6,7 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_GSysAllocBase;
+		inline static constexpr auto VTABLE = VTABLE_GSysAllocBase;
 
 		virtual ~GSysAllocBase() = default;  // 00
 

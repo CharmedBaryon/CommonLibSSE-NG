@@ -11,7 +11,7 @@ namespace RE
 			VirtualMachine* VirtualMachine::GetSingleton()
 			{
 				auto vm = SkyrimVM::GetSingleton();
-				return vm ? static_cast<VirtualMachine*>(vm->impl.get()) : nullptr;
+				return vm ? static_cast<VirtualMachine*>(vm->GetVMRuntimeData().impl.get()) : nullptr;
 			}
 		}
 	}

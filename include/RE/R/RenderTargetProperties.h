@@ -8,16 +8,16 @@ namespace RE
 	{
 		struct RenderTargetProperties
 		{
-			std::uint32_t                           width;                   // 00
-			std::uint32_t                           height;                  // 04
-			stl::enumeration<Format, std::uint32_t> format;                  // 08
-			bool                                    copyable;                // 0C
-			bool                                    supportUnorderedAccess;  // 0D
-			bool                                    allowMipGeneration;      // 0E
-			bool                                    unk0F;                   // 0F
-			std::int32_t                            mipLevel;                // 10
-			std::uint32_t                           textureTarget;           // 14
-			std::uint32_t                           unk18;                   // 18
+			std::uint32_t                       width;                   // 00
+			std::uint32_t                       height;                  // 04
+			REX::EnumSet<Format, std::uint32_t> format;                  // 08
+			bool                                copyable;                // 0C
+			bool                                supportUnorderedAccess;  // 0D
+			bool                                allowMipGeneration;      // 0E
+			bool                                unk0F;                   // 0F
+			std::int32_t                        mipLevel;                // 10
+			std::uint32_t                       textureTarget;           // 14
+			std::uint32_t                       unk18;                   // 18
 		};
 		static_assert(sizeof(RenderTargetProperties) == 0x1C);
 
@@ -34,9 +34,9 @@ namespace RE
 
 		struct CubeMapRenderTargetProperties
 		{
-			std::uint32_t                           width;   // 00
-			std::uint32_t                           height;  // 04
-			stl::enumeration<Format, std::uint32_t> format;  // 08
+			std::uint32_t                       width;   // 00
+			std::uint32_t                       height;  // 04
+			REX::EnumSet<Format, std::uint32_t> format;  // 08
 		};
 		static_assert(sizeof(CubeMapRenderTargetProperties) == 0xC);
 	}

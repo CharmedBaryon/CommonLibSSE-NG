@@ -44,7 +44,7 @@ namespace RE
 				clear_flags();
 				a_rhs.clear_flags();
 				_storage.address = a_rhs._storage.address;
-				a_rhs.storage.address = 0;
+				a_rhs._storage.address = 0;
 			}
 			return *this;
 		}

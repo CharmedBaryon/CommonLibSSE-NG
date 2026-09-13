@@ -1,5 +1,6 @@
 #include "SKSE/Trampoline.h"
 
+#include "REL/Verify.h"
 #include "SKSE/Logger.h"
 
 #include "REX/W32/KERNEL32.h"
@@ -15,10 +16,56 @@
 #	undef PAGE_EXECUTE_READWRITE
 #endif
 
+// hde64.h transitively pulls in <Windows.h> (like xbyak above), colliding with REX::W32's
+// own MEM_*/PAGE_* names used below.
+#ifdef SKSE_SUPPORT_PATCH_SAFETY
+#	include <hde64.h>
+#	undef max
+#	undef MEM_COMMIT
+#	undef MEM_FREE
+#	undef MEM_RELEASE
+#	undef MEM_RESERVE
+#	undef PAGE_EXECUTE_READWRITE
+#endif
+
 namespace SKSE
 {
 	namespace detail
 	{
+#ifdef SKSE_SUPPORT_PATCH_SAFETY
+		// Detects a write_branch<N> patch overwriting part of the next instruction, then
+		// delegates verification to REL::VerifyBytes.
+		void check_patch_site_boundary(std::uintptr_t a_src, std::size_t a_len, std::uint64_t a_expectedPatchHash, std::source_location a_loc)
+		{
+			std::size_t consumed = 0;
+			std::size_t instrCount = 0;
+			std::size_t lastLen = 0;
+
+			while (consumed < a_len) {
+				hde64s     hs{};
+				const auto len = hde64_disasm(reinterpret_cast<const void*>(a_src + consumed), &hs);
+				if (len == 0 || (hs.flags & F_ERROR) != 0) {
+					const auto file = REL::detail::basename(a_loc);
+					log::debug(
+						"patch-site safety [{}:{}]: failed to decode instruction at 0x{:X} (+0x{:X} into a "
+						"write_branch<{}> at 0x{:X}) -- skipping boundary check for this patch"sv,
+						file, a_loc.line(), a_src + consumed, consumed, a_len, a_src);
+					return;
+				}
+				consumed += len;
+				lastLen = len;
+				++instrCount;
+			}
+
+			if (consumed == a_len || instrCount == 1) {
+				return;  // safe: exact boundary, or never left the first instruction
+			}
+
+			const auto badAddr = a_src + (consumed - lastLen);
+			REL::VerifyBytes(badAddr, lastLen, a_expectedPatchHash, "orphan tail past write_branch"sv, a_loc);
+		}
+#endif
+
 		[[nodiscard]] constexpr std::size_t roundup(std::size_t a_number, std::size_t a_multiple) noexcept
 		{
 			if (a_multiple == 0)
@@ -123,7 +170,7 @@ namespace SKSE
 		return mem;
 	}
 
-	void Trampoline::write_5branch(std::uintptr_t a_src, std::uintptr_t a_dst, std::uint8_t a_opcode)
+	void Trampoline::write_5branch(std::uintptr_t a_src, std::uintptr_t a_dst, std::uint8_t a_opcode, bool a_skipSafetyCheck, std::uint64_t a_expectedPatchHash, std::source_location a_loc)
 	{
 #pragma pack(push, 1)
 		struct SrcAssembly
@@ -168,6 +215,12 @@ namespace SKSE
 			stl::report_and_fail("displacement is out of range"sv);
 		}
 
+#ifdef SKSE_SUPPORT_PATCH_SAFETY
+		if (!a_skipSafetyCheck) {
+			detail::check_patch_site_boundary(a_src, sizeof(SrcAssembly), a_expectedPatchHash, a_loc);
+		}
+#endif
+
 		SrcAssembly assembly;
 		assembly.opcode = a_opcode;
 		assembly.disp = static_cast<std::int32_t>(disp);
@@ -179,7 +232,7 @@ namespace SKSE
 		mem->addr = static_cast<std::uint64_t>(a_dst);
 	}
 
-	void Trampoline::write_6branch(std::uintptr_t a_src, std::uintptr_t a_dst, std::uint8_t a_modrm)
+	void Trampoline::write_6branch(std::uintptr_t a_src, std::uintptr_t a_dst, std::uint8_t a_modrm, bool a_skipSafetyCheck, std::uint64_t a_expectedPatchHash, std::source_location a_loc)
 	{
 #pragma pack(push, 1)
 		struct Assembly
@@ -209,6 +262,12 @@ namespace SKSE
 		if (!in_range(disp)) {  // the trampoline should already be in range, so this should never happen
 			stl::report_and_fail("displacement is out of range"sv);
 		}
+
+#ifdef SKSE_SUPPORT_PATCH_SAFETY
+		if (!a_skipSafetyCheck) {
+			detail::check_patch_site_boundary(a_src, sizeof(Assembly), a_expectedPatchHash, a_loc);
+		}
+#endif
 
 		Assembly assembly;
 		assembly.opcode = static_cast<std::uint8_t>(0xFF);

@@ -4,24 +4,29 @@
 #include "RE/B/BSFixedString.h"
 #include "RE/B/BSHandleRefObject.h"
 #include "RE/B/BSPointerHandle.h"
+#include "RE/B/BSResourceHandle.h"
 #include "RE/B/BSTArray.h"
 #include "RE/B/BSTEvent.h"
 #include "RE/B/BSTList.h"
+#include "RE/B/BSTObjectArena.h"
 #include "RE/B/BSTSmartPointer.h"
 #include "RE/B/BipedObjects.h"
 #include "RE/E/ExtraDataList.h"
 #include "RE/F/FormTypes.h"
 #include "RE/H/hkVector4.h"
+#include "RE/H/hkpMotion.h"
 #include "RE/I/IAnimationGraphManagerHolder.h"
 #include "RE/M/MagicSystem.h"
 #include "RE/N/NiPoint3.h"
 #include "RE/N/NiSmartPointer.h"
 #include "RE/N/NiTransform.h"
 #include "RE/T/TESForm.h"
+#include "REL/RuntimeDataAccessors.h"
 #include "SKSE/Version.h"
 
 namespace RE
 {
+	enum class ITEM_REMOVE_REASON;
 	enum class LOCK_LEVEL;
 	class hkpCollidable;
 	class Actor;
@@ -35,6 +40,7 @@ namespace RE
 	class BSFaceGenNiNode;
 	class BSFlattenedBoneTree;
 	class DialogueResponse;
+	class EnchantmentItem;
 	class Explosion;
 	class InventoryChanges;
 	class InventoryEntryData;
@@ -44,6 +50,7 @@ namespace RE
 	class NiAVObject;
 	class NiControllerManager;
 	class NiControllerSequence;
+	class NiMatrix3;
 	class NiNode;
 	class NiObject;
 	class Projectile;
@@ -56,19 +63,11 @@ namespace RE
 	class TrapData;
 	class TrapEntry;
 	struct BGSDecalGroup;
+	struct BGSWorldLocation;
 	struct BSAnimationGraphEvent;
 	struct BSAnimationUpdateData;
+	struct DoorTeleportData;
 	struct REFR_LOCK;
-
-	enum class ITEM_REMOVE_REASON
-	{
-		kRemove,
-		kSteal,
-		kSelling,
-		kDropping,
-		kStoreInContainer,
-		kStoreInTeammate
-	};
 
 	struct OBJ_REFR
 	{
@@ -84,22 +83,16 @@ namespace RE
 	{
 	public:
 		// members
-		BSTSmallArray<void*>  unk00;                // 00 - handleList?
-		TESWaterForm*         currentWaterType;     // 18
-		float                 relevantWaterHeight;  // 20
-		float                 cachedRadius;         // 24
-		std::uint16_t         flags;                // 28
-		std::int16_t          underwaterCount;      // 2A
-		std::uint32_t         pad2C;                // 2C
-		std::uint64_t         unk30;                // 30 - AIProcess::Data0B8
-		std::uint64_t         unk38;                // 38
-		std::uint64_t         unk40;                // 40
-		std::uint64_t         unk48;                // 48
-		std::uint64_t         unk50;                // 50
-		std::uint64_t         unk58;                // 58
-		std::uint64_t         unk60;                // 60
-		NiPointer<NiAVObject> data3D;               // 68
-		void*                 unk70;                // 70 - smart ptr
+		BSTSmallArray<void*>                  unk00;                // 00 - handleList?
+		TESWaterForm*                         currentWaterType;     // 18
+		float                                 relevantWaterHeight;  // 20
+		float                                 cachedRadius;         // 24
+		std::uint16_t                         flags;                // 28
+		std::int16_t                          underwaterCount;      // 2A
+		std::uint32_t                         pad2C;                // 2C
+		BSTHeapObjectArena<ModelDBHandle, 16> handleList;           // 30
+		NiPointer<NiAVObject>                 data3D;               // 68
+		void*                                 unk70;                // 70 - smart ptr
 	};
 	static_assert(sizeof(LOADED_REF_DATA) == 0x78);
 
@@ -123,17 +116,6 @@ namespace RE
 
 		static inline constexpr auto DEFAULT_INVENTORY_FILTER = [](TESBoundObject&) { return true; };
 
-		enum class MotionType  // hkpMotion::MotionType
-		{
-			kDynamic = 1,
-			kSphereInertia = 2,
-			kBoxInertia = 3,
-			kKeyframed = 4,
-			kFixed = 5,
-			kThinBoxInertia = 6,
-			kCharacter = 7
-		};
-
 		struct ChangeFlags
 		{
 			enum ChangeFlag : std::uint32_t
@@ -148,6 +130,7 @@ namespace RE
 				kItemExtraData = 1 << 10,
 				kAmmoExtra = 1 << 11,
 				kLockExtra = 1 << 12,
+				kTeleportExtra = 1 << 17,
 				kEmpty = 1 << 21,
 				kOpenDefaultState = 1 << 22,
 				kOpenState = 1 << 23,
@@ -191,6 +174,7 @@ namespace RE
 
 				kDoesntLightLandscape = 1 << 17,
 
+				kTemp3D = 1 << 19,
 				kIgnoreFriendlyHits = 1 << 20,  // Actor
 
 				kNoAIAcquire = 1 << 25,
@@ -210,35 +194,35 @@ namespace RE
 		~TESObjectREFR() override;  // 00
 
 		// override (TESForm)
-		void                 InitializeData() override;                                                            // 04
-		void                 ClearData() override;                                                                 // 05
-		bool                 Load(TESFile* a_mod) override;                                                        // 06
-		TESForm*             CreateDuplicateForm(bool a_createEditorID, void* a_arg2) override;                    // 09
-		bool                 CheckSaveGame(BGSSaveFormBuffer* a_buf) override;                                     // 0D
-		void                 SaveGame(BGSSaveFormBuffer* a_buf) override;                                          // 0E
-		void                 LoadGame(BGSLoadFormBuffer* a_buf) override;                                          // 0F
-		void                 InitLoadGame(BGSLoadFormBuffer* a_buf) override;                                      // 10
-		void                 FinishLoadGame(BGSLoadFormBuffer* a_buf) override;                                    // 11
-		void                 Revert(BGSLoadFormBuffer* a_buf) override;                                            // 12
-		void                 InitItemImpl() override;                                                              // 13
-		FormType             GetSavedFormType() const override;                                                    // 15
-		void                 GetFormDetailedString(char* a_buf, std::uint32_t a_bufLen) override;                  // 16
-		bool                 GetRandomAnim() const override;                                                       // 18 - { return data.objectReference->GetRandomAnim(); }
-		bool                 IsHeadingMarker() const override;                                                     // 1A - { return data.objectReference->formType == FormType::Light ? (flags & RecordFlags::kNeverFades) != 0 : false; }
-		bool                 GetDangerous() const override;                                                        // 1B - { return data.objectReference->GetDangerous(); }
-		bool                 GetObstacle() const override;                                                         // 1D - { return data.objectReference ? data.objectReference->GetObstacle() : false; }
-		bool                 GetOnLocalMap() const override;                                                       // 1F - { return (flags >> 9) & 1 && data.objectReference->GetOnLocalMap(); }
-		bool                 GetMustUpdate() const override;                                                       // 20 - { return data.objectReference->GetMustUpdate(); }
-		void                 SetOnLocalMap(bool a_set) override;                                                   // 21
-		bool                 GetIgnoredBySandbox() const override;                                                 // 22
-		void                 SetDelete(bool a_set) override;                                                       // 23
-		void                 SetAltered(bool a_set) override;                                                      // 24
-		bool                 IsWater() const override;                                                             // 2A - { return data.objectReference ? data.objectReference->IsWater() : false; }
-		TESObjectREFR*       AsReference1() override;                                                              // 2B - { return this; }
-		const TESObjectREFR* AsReference2() const override;                                                        // 2C - { return this; }
-		bool                 BelongsInGroup(FORM* a_form, bool a_allowParentGroups, bool a_currentOnly) override;  // 30
-		void                 CreateGroupData(FORM* a_form, FORM_GROUP* a_group) override;                          // 31
-		const char*          GetFormEditorID() const override;                                                     // 32
+		void                 InitializeData() override;                                                                          // 04
+		void                 ClearData() override;                                                                               // 05
+		bool                 Load(TESFile* a_mod) override;                                                                      // 06
+		TESForm*             CreateDuplicateForm(bool a_createEditorID, NiTPointerMap<TESForm*, TESForm*>* a_copyMap) override;  // 09
+		bool                 CheckSaveGame(BGSSaveFormBuffer* a_buf) override;                                                   // 0D
+		void                 SaveGame(BGSSaveFormBuffer* a_buf) override;                                                        // 0E
+		void                 LoadGame(BGSLoadFormBuffer* a_buf) override;                                                        // 0F
+		void                 InitLoadGame(BGSLoadFormBuffer* a_buf) override;                                                    // 10
+		void                 FinishLoadGame(BGSLoadFormBuffer* a_buf) override;                                                  // 11
+		void                 Revert(BGSLoadFormBuffer* a_buf) override;                                                          // 12
+		void                 InitItemImpl() override;                                                                            // 13
+		FormType             GetSavedFormType() const override;                                                                  // 15
+		void                 GetFormDetailedString(char* a_buf, std::uint32_t a_bufLen) override;                                // 16
+		bool                 GetRandomAnim() const override;                                                                     // 18 - { return data.objectReference->GetRandomAnim(); }
+		bool                 IsHeadingMarker() const override;                                                                   // 1A - { return data.objectReference->formType == FormType::Light ? (flags & RecordFlags::kNeverFades) != 0 : false; }
+		bool                 GetDangerous() const override;                                                                      // 1B - { return data.objectReference->GetDangerous(); }
+		bool                 GetObstacle() const override;                                                                       // 1D - { return data.objectReference ? data.objectReference->GetObstacle() : false; }
+		bool                 GetOnLocalMap() const override;                                                                     // 1F - { return (flags >> 9) & 1 && data.objectReference->GetOnLocalMap(); }
+		bool                 GetMustUpdate() const override;                                                                     // 20 - { return data.objectReference->GetMustUpdate(); }
+		void                 SetOnLocalMap(bool a_set) override;                                                                 // 21
+		bool                 GetIgnoredBySandbox() const override;                                                               // 22
+		void                 SetDelete(bool a_set) override;                                                                     // 23
+		void                 SetAltered(bool a_set) override;                                                                    // 24
+		bool                 IsWater() const override;                                                                           // 2A - { return data.objectReference ? data.objectReference->IsWater() : false; }
+		TESObjectREFR*       AsReference1() override;                                                                            // 2B - { return this; }
+		const TESObjectREFR* AsReference2() const override;                                                                      // 2C - { return this; }
+		bool                 BelongsInGroup(FORM* a_form, bool a_allowParentGroups, bool a_currentOnly) override;                // 30
+		void                 CreateGroupData(FORM* a_form, FORM_GROUP* a_group) override;                                        // 31
+		const char*          GetFormEditorID() const override;                                                                   // 32
 
 		// override (BSTEventSink<BSAnimationGraphEvent>)
 		BSEventNotifyControl ProcessEvent(const BSAnimationGraphEvent* a_event, BSTEventSource<BSAnimationGraphEvent>* a_dispatcher) override;  // 01
@@ -272,7 +256,7 @@ namespace RE
 		virtual bool                                            UpdateInDialogue(DialogueResponse* a_response, bool a_unused);                                                                                                                                               // 4C
 		[[nodiscard]] virtual BGSDialogueBranch*                GetExclusiveBranch() const;                                                                                                                                                                                  // 4D
 		virtual void                                            SetExclusiveBranch(BGSDialogueBranch* a_branch);                                                                                                                                                             // 4E
-		virtual void                                            PauseCurrentDialogue();                                                                                                                                                                                      // 4F
+		virtual void                                            StopCurrentDialogue();                                                                                                                                                                                       // 4F
 		virtual void                                            SetActorCause(ActorCause* a_cause);                                                                                                                                                                          // 50
 		[[nodiscard]] virtual ActorCause*                       GetActorCause() const;                                                                                                                                                                                       // 51
 		[[nodiscard]] virtual NiPoint3                          GetStartingAngle() const;                                                                                                                                                                                    // 52
@@ -322,27 +306,39 @@ namespace RE
 		[[nodiscard]] virtual const BSTSmartPointer<BipedAnim>& GetBiped1(bool a_firstPerson) const;                                                                                                                                                                         // 7E - { return GetBiped2(); }
 		[[nodiscard]] virtual const BSTSmartPointer<BipedAnim>& GetBiped2() const;                                                                                                                                                                                           // 7F
 		[[nodiscard]] virtual const BSTSmartPointer<BipedAnim>& GetCurrentBiped() const;                                                                                                                                                                                     // 80 - { return GetBiped2(); }
-		virtual void                                            SetBiped(const BSTSmartPointer<BipedAnim>& a_biped);                                                                                                                                                         // 81 - { return; }
-		virtual void                                            RemoveWeapon(BIPED_OBJECT equipIndex);                                                                                                                                                                                                // 82 - { return; }
-		virtual void                                            Unk_83(void);                                                                                                                                                                                                // 83 - { return; }
-																																																																			 // Virtual functions defined in TESObjectREFR after the vtable structure becomes different in VR.
-#if !defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE)
-		virtual void Unk_84(void);  // 84 - sets flag 24 if the object has destructibles
+		virtual void                                            SetBiped(const BSTSmartPointer<BipedAnim>& a_biped);                                                                                                                                                         // 81 - { return; }																																																																			 // Virtual functions defined in TESObjectREFR after the vtable structure becomes different in VR.
+#if defined(EXCLUSIVE_SKYRIM_VR)
+		SKYRIM_REL_VR_VIRTUAL void AttachWeapon(RE::TESObjectWEAP* a_weapon, bool attachToShieldHand);  // 82 - Virtual in VR, non-virtual in SE/AE. Shield hand may be just left hand?
+#elif defined(SKYRIM_CROSS_VR)
+		// Virtual on VR only (real slot 0x82); SE/AE calls it directly (non-virtually) and
+		// CommonLib doesn't bind that address, so this only reaches the real implementation
+		// when actually running under VR -- a no-op otherwise.
+		void AttachWeapon(RE::TESObjectWEAP* a_weapon, bool attachToShieldHand)
+		{
+			if (REL::Module::IsVR()) {
+				REL::RelocateVirtual<decltype(&TESObjectREFR::AttachWeapon)>(0, 0x82, this, a_weapon, attachToShieldHand);
+			}
+		}
 #endif
-		SKYRIM_REL_VR_VIRTUAL void                         SetObjectReference(TESBoundObject* a_object);                                         // 84 - sets flag 24 if the object has destructibles
-		SKYRIM_REL_VR_VIRTUAL void                         MoveHavok(bool a_forceRec);                                                           // 85
-		SKYRIM_REL_VR_VIRTUAL void                         GetLinearVelocity(NiPoint3& a_velocity) const;                                        // 86
-		SKYRIM_REL_VR_VIRTUAL void                         SetActionComplete(bool a_set);                                                        // 87 - { return; }
-		SKYRIM_REL_VR_VIRTUAL void                         SetMovementComplete(bool a_set);                                                      // 88 - { return; }
-		SKYRIM_REL_VR_VIRTUAL void                         Disable();                                                                            // 89
-		SKYRIM_REL_VR_VIRTUAL void                         ResetInventory(bool a_leveledOnly);                                                   // 8A
-		[[nodiscard]] SKYRIM_REL_VR_VIRTUAL NiNode*        GetFireNode();                                                                        // 8B - { return 0; }
-		SKYRIM_REL_VR_VIRTUAL void                         SetFireNode(NiNode* a_fireNode);                                                      // 8C - { return; }
-		[[nodiscard]] SKYRIM_REL_VR_VIRTUAL NiAVObject*    GetCurrent3D() const;                                                                 // 8D - { return Get3D2(); }
-		[[nodiscard]] SKYRIM_REL_VR_VIRTUAL Explosion*     AsExplosion();                                                                        // 8E - { return 0; }
-		[[nodiscard]] SKYRIM_REL_VR_VIRTUAL Projectile*    AsProjectile();                                                                       // 8F - { return 0; }
-		SKYRIM_REL_VR_VIRTUAL bool                         OnAddCellPerformQueueReference(TESObjectCELL& a_cell) const;                          // 90 - { return true; }
-		SKYRIM_REL_VR_VIRTUAL void                         DoMoveToHigh();                                                                       // 91 - { return; }
+		SKYRIM_REL_VR_VIRTUAL void RemoveWeapon(BIPED_OBJECT equipIndex);          // 82 - { return; }
+		SKYRIM_REL_VR_VIRTUAL void Unk_83(void);                                   // 83 - { return; }
+		SKYRIM_REL_VR_VIRTUAL void SetObjectReference(TESBoundObject* a_object);   // 84 - sets flag 24 if the object has destructibles
+		SKYRIM_REL_VR_VIRTUAL void MoveHavok(bool a_forceRec);                     // 85
+		SKYRIM_REL_VR_VIRTUAL void GetLinearVelocity(NiPoint3& a_velocity) const;  // 86
+		SKYRIM_REL_VR_VIRTUAL void SetActionComplete(bool a_set);                  // 87 - { return; }
+		SKYRIM_REL_VR_VIRTUAL void SetMovementComplete(bool a_set);                // 89 - { return; }
+		SKYRIM_REL_VR_VIRTUAL void Disable();                                      // 8A
+		SKYRIM_REL_VR_VIRTUAL void ResetInventory(bool a_leveledOnly);             // 8B
+		// Getter/setter pair over AIProcess::middleHigh->weaponBone (MiddleHighProcessData+0x150):
+		// GetFireNode lazily computes and caches it, SetFireNode stores directly.
+		[[nodiscard]] SKYRIM_REL_VR_VIRTUAL NiNode*     GetFireNode();                    // SE/AE 0x8B, VR 0x8C - { return 0; }
+		SKYRIM_REL_VR_VIRTUAL void                      SetFireNode(NiNode* a_fireNode);  // SE/AE 0x8C, VR 0x8D - { return; }
+		[[nodiscard]] SKYRIM_REL_VR_VIRTUAL NiAVObject* GetCurrent3D() const;             // SE/AE 0x8D, VR 0x8E - { return Get3D2(); }
+		[[nodiscard]] SKYRIM_REL_VR_VIRTUAL Explosion*  AsExplosion();                    // 90 - { return 0; }
+		// UNVERIFIED - unverified past this point (2026-07); slots need re-confirming against SkyrimVR.exe
+		[[nodiscard]] SKYRIM_REL_VR_VIRTUAL Projectile*    AsProjectile();                                                                       // UNVERIFIED - { return 0; }
+		SKYRIM_REL_VR_VIRTUAL bool                         OnAddCellPerformQueueReference(TESObjectCELL& a_cell) const;                          // UNVERIFIED - { return true; }
+		SKYRIM_REL_VR_VIRTUAL void                         DoMoveToHigh();                                                                       // UNVERIFIED - { return; }
 		SKYRIM_REL_VR_VIRTUAL void                         TryMoveToMiddleLow();                                                                 // 92 - { return; }
 		SKYRIM_REL_VR_VIRTUAL bool                         TryChangeSkyCellActorsProcessLevel();                                                 // 93 - { return false; }
 		SKYRIM_REL_VR_VIRTUAL void                         Unk_94(void);                                                                         // 94 - { return; }
@@ -360,18 +356,24 @@ namespace RE
 		SKYRIM_REL_VR_VIRTUAL bool                         Unk_A0(NiAVObject* a_node, float& a_angleX, float& a_angleZ, NiPoint3& a_pos);        // A0
 		SKYRIM_REL_VR_VIRTUAL void                         UnequipItem(std::uint64_t a_arg1, TESBoundObject* a_object);                          // A1 - { return; }
 
+		static ObjectRefHandle          CreateReference(ObjectRefHandle& a_handleOut, FormType a_formType, bool a_addActorToProcessList);
 		static NiPointer<TESObjectREFR> LookupByHandle(RefHandle a_refHandle);
 		static bool                     LookupByHandle(RefHandle a_refHandle, NiPointer<TESObjectREFR>& a_refrOut);
 		static TESObjectREFR*           FindReferenceFor3D(NiAVObject* a_object3D);
 
-		bool                                            ActivateRef(TESObjectREFR* a_activator, uint8_t a_arg2, TESBoundObject* a_object, int32_t a_count, bool a_defaultProcessingOnly);
+		bool                                            ActivateRef(TESObjectREFR* a_activator, std::uint8_t a_arg2, TESBoundObject* a_object, std::int32_t a_count, bool a_defaultProcessingOnly);
+		REFR_LOCK*                                      AddLock();
+		void                                            AddLockChange();
+		DoorTeleportData*                               AddTeleport();
 		ModelReferenceEffect*                           ApplyArtObject(BGSArtObject* a_artObject, float a_duration = -1.0f, TESObjectREFR* a_facingRef = nullptr, bool a_faceTarget = false, bool a_attachToCamera = false, NiAVObject* a_attachNode = nullptr, bool a_interfaceEffect = false);
 		ShaderReferenceEffect*                          ApplyEffectShader(TESEffectShader* a_effectShader, float a_duration = -1.0f, TESObjectREFR* a_facingRef = nullptr, bool a_faceTarget = false, bool a_attachToCamera = false, NiAVObject* a_attachNode = nullptr, bool a_interfaceEffect = false);
 		[[nodiscard]] bool                              CanBeMoved();
+		void                                            ClearDestruction();
 		ObjectRefHandle                                 CreateRefHandle();
 		void                                            DoTrap(TrapData& a_data);
 		void                                            DoTrap(TrapEntry* a_trap, TargetEntry* a_target);
 		void                                            Enable(bool a_resetInventory);
+		[[nodiscard]] std::optional<RE::NiPoint3>       FindNearestVertex(const float a_minimum_offset = 0.f);
 		[[nodiscard]] NiAVObject*                       Get3D() const;
 		[[nodiscard]] NiAVObject*                       Get3D(bool a_firstPerson) const;
 		[[nodiscard]] TESNPC*                           GetActorOwner();
@@ -388,14 +390,17 @@ namespace RE
 		[[nodiscard]] TESContainer*                     GetContainer() const;
 		[[nodiscard]] BGSLocation*                      GetCurrentLocation() const;
 		[[nodiscard]] const char*                       GetDisplayFullName();
+		[[nodiscard]] float                             GetDistance(TESObjectREFR* a_other, bool a_disabledRefs = false, bool a_ignoreWorldspace = false) const;
 		[[nodiscard]] InventoryDropMap                  GetDroppedInventory();
 		[[nodiscard]] InventoryDropMap                  GetDroppedInventory(std::function<bool(TESBoundObject&)> a_filter);
 		[[nodiscard]] BGSLocation*                      GetEditorLocation() const;
 		[[nodiscard]] bool                              GetEditorLocation(NiPoint3& a_outPos, NiPoint3& a_outRot, TESForm*& a_outWorldOrCell, TESObjectCELL* a_fallback);
+		BGSEncounterZone*                               GetEncounterZone() const;
+		EnchantmentItem*                                GetEnchantment() const;
 		[[nodiscard]] std::optional<double>             GetEnchantmentCharge() const;
 		[[nodiscard]] TESFaction*                       GetFactionOwner();
 		[[nodiscard]] ObjectRefHandle                   GetHandle();
-		[[nodiscard]] float                             GetHeadingAngle(const RE::NiPoint3& a_pos, bool a_abs);
+		[[nodiscard]] float                             GetHeadingAngle(const RE::NiPoint3& a_pos, bool a_abs) const;
 		[[nodiscard]] float                             GetHeight() const;
 		[[nodiscard]] InventoryItemMap                  GetInventory();
 		[[nodiscard]] InventoryItemMap                  GetInventory(std::function<bool(TESBoundObject&)> a_filter, bool a_noInit = false);
@@ -403,6 +408,8 @@ namespace RE
 		[[nodiscard]] InventoryCountMap                 GetInventoryCounts();
 		[[nodiscard]] InventoryCountMap                 GetInventoryCounts(std::function<bool(TESBoundObject&)> a_filter, bool a_noInit = false);
 		[[nodiscard]] InventoryChanges*                 GetInventoryChanges(bool a_noInit = false);
+		[[nodiscard]] RE::InventoryEntryData*           GetInventoryItemAt(std::int32_t a_index, bool a_isViewingContainer = false) const;
+		[[nodiscard]] std::int32_t                      GetInventoryItemCount(bool a_isViewingContainer = false, bool a_playable = true) const;
 		[[nodiscard]] TESObjectREFR*                    GetLinkedRef(BGSKeyword* a_keyword);
 		[[nodiscard]] REFR_LOCK*                        GetLock() const;
 		[[nodiscard]] LOCK_LEVEL                        GetLockLevel() const;
@@ -415,28 +422,32 @@ namespace RE
 		[[nodiscard]] constexpr float                   GetPositionX() const noexcept { return data.location.x; }
 		[[nodiscard]] constexpr float                   GetPositionY() const noexcept { return data.location.y; }
 		[[nodiscard]] constexpr float                   GetPositionZ() const noexcept { return data.location.z; }
+		[[nodiscard]] NiMatrix3*                        GetRotationMatrix(NiMatrix3* a_out) const;
 		[[nodiscard]] float                             GetScale() const;
 		[[nodiscard]] NiControllerSequence*             GetSequence(stl::zstring a_name) const;
 		[[nodiscard]] std::uint32_t                     GetStealValue(const InventoryEntryData* a_entryData, std::uint32_t a_numItems, bool a_useMult) const;
+		[[nodiscard]] float                             GetSubmergeLevel(float a_zPos, TESObjectCELL* a_cell) const;
 		void                                            GetTransform(NiTransform& a_transform) const;
 		[[nodiscard]] float                             GetWaterHeight() const;
 		[[nodiscard]] float                             GetWeight() const;
 		[[nodiscard]] float                             GetWeightInContainer();
+		[[nodiscard]] BGSWorldLocation                  GetWorldLocation() const;
 		[[nodiscard]] TESWorldSpace*                    GetWorldspace() const;
 		[[nodiscard]] bool                              HasCollision() const;
 		[[nodiscard]] bool                              HasContainer() const;
 		[[nodiscard]] bool                              HasKeyword(const BGSKeyword* a_keyword) const;
 		[[nodiscard]] bool                              HasKeywordInArray(const std::vector<BGSKeyword*>& a_keywords, bool a_matchAll) const;
 		[[nodiscard]] bool                              HasKeywordInList(BGSListForm* a_keywordList, bool a_matchAll) const;
+		bool                                            HasKeywordWithType(DEFAULT_OBJECT keywordType) const;
 		bool                                            HasKeywordWithType(DefaultObjectID keywordType) const;
 		[[nodiscard]] bool                              HasQuestObject() const;
 		void                                            InitChildActivates(TESObjectREFR* a_actionRef);
 		bool                                            InitInventoryIfRequired(bool a_ignoreContainerExtraData = false);
+		ModelReferenceEffect*                           InstantiateHitArt(BGSArtObject* a_art, float a_dur, TESObjectREFR* a_facingRef, bool a_faceTarget, bool a_attachToCamera, NiAVObject* a_attachNode = nullptr, bool a_interfaceEffect = false);
+		ShaderReferenceEffect*                          InstantiateHitShader(TESEffectShader* a_shader, float a_dur, TESObjectREFR* a_facingRef = nullptr, bool a_faceTarget = false, bool a_attachToCamera = false, NiAVObject* a_attachNode = nullptr, bool a_interfaceEffect = false);
 		bool                                            Is3DLoaded() const;
 		bool                                            IsActivationBlocked() const;
 		bool                                            IsAnimal() const;
-		ModelReferenceEffect*                           InstantiateHitArt(BGSArtObject* a_art, float a_dur, TESObjectREFR* a_facingRef, bool a_faceTarget, bool a_attachToCamera, NiAVObject* a_attachNode = nullptr, bool a_interfaceEffect = false);
-		ShaderReferenceEffect*                          InstantiateHitShader(TESEffectShader* a_shader, float a_dur, TESObjectREFR* a_facingRef = nullptr, bool a_faceTarget = false, bool a_attachToCamera = false, NiAVObject* a_attachNode = nullptr, bool a_interfaceEffect = false);
 		[[nodiscard]] bool                              IsAnOwner(const Actor* a_testOwner, bool a_useFaction, bool a_requiresOwner) const;
 		[[nodiscard]] bool                              IsCrimeToActivate();
 		[[nodiscard]] bool                              IsDisabled() const;
@@ -451,23 +462,30 @@ namespace RE
 		[[nodiscard]] bool                              IsMarkedForDeletion() const;
 		[[nodiscard]] bool                              IsOffLimits();
 		[[nodiscard]] bool                              IsPersistent() const;
-        [[nodiscard]] float                             IsPointDeepUnderWater(float a_zPos, TESObjectCELL* a_cell) const;
-        [[nodiscard]] bool                              IsPointSubmergedMoreThan(const NiPoint3& a_pos, TESObjectCELL* a_cell, float a_waterLevel) const;
+		[[nodiscard]] float                             IsPointDeepUnderWater(float a_zPos, TESObjectCELL* a_cell) const;
+		[[nodiscard]] bool                              IsPointSubmergedMoreThan(const NiPoint3& a_pos, TESObjectCELL* a_cell, float a_waterLevel) const;
+		void                                            MoveRefToNewSpace(TESObjectCELL* a_interior, TESWorldSpace* a_world);
 		void                                            MoveTo(TESObjectREFR* a_target);
+		bool                                            MoveToEditorLocation(const NiPoint3& a_position, const NiPoint3& a_rotation);
+		bool                                            MoveToEditorLocation();
+		bool                                            MoveToNearestNavmesh(const float a_minimum_offset = 0.f);
 		bool                                            MoveToNode(TESObjectREFR* a_target, const BSFixedString& a_nodeName);
 		bool                                            MoveToNode(TESObjectREFR* a_target, NiAVObject* a_node);
-		bool                                            NameIncludes(std::string a_word);
-		void                                            OpenContainer(std::int32_t a_openType) const;
+		bool                                            NameIncludes(std::string_view a_word) const;
 		NiPointer<TESObjectREFR>                        PlaceObjectAtMe(TESBoundObject* a_baseToPlace, bool a_forcePersist) const;
 		void                                            PlayAnimation(stl::zstring a_from, stl::zstring a_to);
 		void                                            PlayAnimation(NiControllerManager* a_manager, NiControllerSequence* a_toSeq, NiControllerSequence* a_fromSeq);
 		void                                            SetActivationBlocked(bool a_blocked);
+		void                                            SetAngle(const NiPoint3& a_angle);
 		void                                            SetCollision(bool a_enable);
 		bool                                            SetDisplayName(const BSFixedString& a_name, bool a_force);
 		void                                            SetEncounterZone(BGSEncounterZone* a_zone);
-		bool                                            SetMotionType(MotionType a_motionType, bool a_allowActivate = true);
+		bool                                            SetMotionType(hkpMotion::MotionType a_motionType, bool a_allowActivate = true);
+		void                                            SetOwner(TESForm* a_owner);
 		void                                            SetPosition(float a_x, float a_y, float a_z);
-		void                                            SetPosition(NiPoint3 a_pos);
+		void                                            SetPosition(const NiPoint3& a_pos);
+		void                                            SetScale(float a_scale);
+		void                                            SetTemporary();
 
 		struct REFERENCE_RUNTIME_DATA
 		{
@@ -480,25 +498,19 @@ namespace RE
 
 			RUNTIME_DATA_CONTENT
 		};
+		static_assert(sizeof(REFERENCE_RUNTIME_DATA) == 0x10);
 
-		[[nodiscard]] inline REFERENCE_RUNTIME_DATA& GetReferenceRuntimeData() noexcept
-		{
-			return REL::RelocateMemberIfNewer<REFERENCE_RUNTIME_DATA>(SKSE::RUNTIME_SSE_1_6_629, this, 0x88, 0x90);
-		}
-
-		[[nodiscard]] inline const REFERENCE_RUNTIME_DATA& GetReferenceRuntimeData() const noexcept
-		{
-			return REL::RelocateMemberIfNewer<REFERENCE_RUNTIME_DATA>(SKSE::RUNTIME_SSE_1_6_629, this, 0x88, 0x90);
-		}
-
+		RUNTIME_DATA_ACCESSOR_VERSIONED_EX(REFERENCE_RUNTIME_DATA, GetReferenceRuntimeData, SKSE::RUNTIME_SSE_1_6_629, 0x88, 0x90);
 		// members
-		OBJ_REFR         data;          // 40
-		TESObjectCELL*   parentCell;    // 60
-		LOADED_REF_DATA* loadedData;    // 68
-		ExtraDataList    extraList;     // 70
+		OBJ_REFR         data;        // 40
+		TESObjectCELL*   parentCell;  // 60
+		LOADED_REF_DATA* loadedData;  // 68
+		ExtraDataList    extraList;   // 70
 
-#ifndef ENABLE_SKYRIM_AE
-		RUNTIME_DATA_CONTENT
+#if defined(EXCLUSIVE_SKYRIM_SE) || defined(EXCLUSIVE_SKYRIM_VR)
+		RUNTIME_DATA_CONTENT;  // 0x88
+#elif defined(EXCLUSIVE_SKYRIM_AE)
+		RUNTIME_DATA_CONTENT;  // 0x90
 #endif
 
 	private:
@@ -507,8 +519,6 @@ namespace RE
 		void              MoveTo_Impl(const ObjectRefHandle& a_targetHandle, TESObjectCELL* a_targetCell, TESWorldSpace* a_selfWorldSpace, const NiPoint3& a_position, const NiPoint3& a_rotation);
 		void              PlayAnimation_Impl(NiControllerManager* a_manager, NiControllerSequence* a_toSeq, NiControllerSequence* a_fromSeq, bool a_arg4 = false);
 	};
-#ifndef ENABLE_SKYRIM_AE
-	static_assert(sizeof(TESObjectREFR) == 0x98);
-#endif
+	STATIC_ASSERT_SIZE(TESObjectREFR, 0x98, 0xA0, 0x98);
 }
 #undef RUNTIME_DATA_CONTENT

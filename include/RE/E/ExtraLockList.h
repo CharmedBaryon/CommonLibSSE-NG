@@ -11,7 +11,8 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_ExtraLockList;
-		inline static auto           EXTRADATATYPE = ExtraDataType::kLockList;
+		inline static constexpr auto VTABLE = VTABLE_ExtraLockList;
+		inline static constexpr auto EXTRADATATYPE = ExtraDataType::kLockList;
 
 		~ExtraLockList() override;  // 00
 

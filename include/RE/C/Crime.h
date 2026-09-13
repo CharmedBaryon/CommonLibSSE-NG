@@ -23,7 +23,7 @@ namespace RE
 				kAttack = 3,
 				kMurder = 4,
 				kEscape = 5,
-				kUnused = 6,
+				kWerewolf = 6,
 
 				kTotal = 7
 			};
@@ -41,10 +41,10 @@ namespace RE
 		std::uint64_t           unk18;              // 18
 		std::uint64_t           unk20;              // 20
 		BSTArray<ActorHandle>   actorsKnowOfCrime;  // 28
-		std::uint64_t           unk40;              // 40
+		TESForm*                owner;              // 40
 		std::uint64_t           unk48;              // 48
 		std::uint64_t           unk50;              // 50
-		std::uint64_t           unk58;              // 58
+		TESFaction*             unk58;              // 58
 		TESFaction*             crimeFaction;       // 60
 		std::uint32_t           unk68;              // 68
 		mutable BSReadWriteLock lock;               // 68

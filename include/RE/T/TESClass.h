@@ -69,14 +69,14 @@ namespace RE
 		static_assert(sizeof(AttributeWeights) == 0x3);
 
 		// members
-		std::uint32_t                         unk00;                 // 00
-		stl::enumeration<Skill, std::uint8_t> teaches;               // 04
-		std::uint8_t                          maximumTrainingLevel;  // 05
-		SkillWeights                          skillWeights;          // 06
-		float                                 bleedoutDefault;       // 18
-		std::uint32_t                         voicePoints;           // 1C
-		AttributeWeights                      attributeWeights;      // 20
-		std::uint8_t                          pad23;                 // 23
+		std::uint32_t                     unk00;                 // 00
+		REX::EnumSet<Skill, std::uint8_t> teaches;               // 04
+		std::uint8_t                      maximumTrainingLevel;  // 05
+		SkillWeights                      skillWeights;          // 06
+		float                             bleedoutDefault;       // 18
+		std::uint32_t                     voicePoints;           // 1C
+		AttributeWeights                  attributeWeights;      // 20
+		std::uint8_t                      pad23;                 // 23
 	};
 	static_assert(sizeof(CLASS_DATA) == 0x24);
 

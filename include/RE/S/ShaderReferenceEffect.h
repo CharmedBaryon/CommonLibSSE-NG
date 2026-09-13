@@ -1,5 +1,6 @@
 #pragma once
 
+#include "RE/B/BSResourceHandle.h"
 #include "RE/B/BSSoundHandle.h"
 #include "RE/B/BSTArray.h"
 #include "RE/N/NiSmartPointer.h"
@@ -27,8 +28,9 @@ namespace RE
 		enum class Flag
 		{
 			kNone = 0,
-			kVisible = 1 << 0,
+			kThirdPerson = 1 << 0,
 			kInterfaceEffect = 1 << 1,
+			kSuspended = 1 << 6,
 			kAllowTargetRoot = 1 << 7
 		};
 
@@ -71,29 +73,29 @@ namespace RE
 		void             DetachImpl() override;                                     // 3E
 
 		// members
-		BSTArray<TextureRequest>              textureRequests;         // 048
-		BSTArray<NiPointer<NiAVObject>>       addonModels;             // 060 - smart ptrs
-		BSTArray<void*>                       unk078;                  // 078
-		BSTArray<ParticleShader>              particleShaders;         // 090
-		BSTArray<void*>                       unk0A8;                  // 0A8 - smart ptrs
-		BSSoundHandle                         soundHandle;             // 0C0
-		std::uint32_t                         pad0CC;                  // 0CC
-		NiPointer<NiSourceTexture>            particleShaderTexture;   // 0D0 - smart ptr
-		NiPointer<NiSourceTexture>            particlePaletteTexture;  // 0D8 - smart ptr
-		NiPointer<NiSourceTexture>            fillTexture;             // 0E0
-		NiPointer<NiSourceTexture>            holesTexture;            // 0E8
-		NiPointer<NiSourceTexture>            paletteTexture;          // 0F0
-		NiPointer<NiAVObject>                 lastRootNode;            // 0F8
-		TESBoundObject*                       wornObject;              // 100
-		TESEffectShader*                      effectData;              // 108
-		BSEffectShaderData*                   effectShaderData;        // 110
-		NiPointer<NiAVObject>                 targetRoot;              // 118 - smart ptr
-		float                                 alphaTimer;              // 120
-		float                                 addonAlpha;              // 124 - 1.0f
-		float                                 addonScale;              // 128 - 1.0f
-		float                                 effectShaderAge;         // 12C
-		stl::enumeration<Flag, std::uint32_t> flags;                   // 130
-		std::uint32_t                         pushCount;               // 134
+		BSTArray<TextureRequest>          textureRequests;         // 048
+		BSTArray<NiPointer<NiAVObject>>   addonObjects;            // 060 - smart ptrs
+		BSTArray<ModelDBHandle>           modelHandles;            // 078
+		BSTArray<ParticleShader>          particleShaders;         // 090
+		BSTArray<void*>                   unk0A8;                  // 0A8 - smart ptrs
+		BSSoundHandle                     soundHandle;             // 0C0
+		std::uint32_t                     pad0CC;                  // 0CC
+		NiPointer<NiSourceTexture>        particleShaderTexture;   // 0D0 - smart ptr
+		NiPointer<NiSourceTexture>        particlePaletteTexture;  // 0D8 - smart ptr
+		NiPointer<NiSourceTexture>        fillTexture;             // 0E0
+		NiPointer<NiSourceTexture>        holesTexture;            // 0E8
+		NiPointer<NiSourceTexture>        paletteTexture;          // 0F0
+		NiPointer<NiAVObject>             lastRootNode;            // 0F8
+		TESBoundObject*                   wornObject;              // 100
+		TESEffectShader*                  effectData;              // 108
+		BSEffectShaderData*               effectShaderData;        // 110
+		NiPointer<NiAVObject>             targetRoot;              // 118 - smart ptr
+		float                             alphaTimer;              // 120
+		float                             addonAlpha;              // 124 - 1.0f
+		float                             addonScale;              // 128 - 1.0f
+		float                             effectShaderAge;         // 12C
+		REX::EnumSet<Flag, std::uint32_t> flags;                   // 130
+		std::uint32_t                     pushCount;               // 134
 	};
 	static_assert(sizeof(ShaderReferenceEffect) == 0x138);
 }

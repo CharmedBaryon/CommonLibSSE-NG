@@ -1,10 +1,6 @@
 #pragma once
 
-struct ID3D11DepthStencilView;
-struct ID3D11RenderTargetView;
-struct ID3D11ShaderResourceView;
-struct ID3D11Texture2D;
-struct ID3D11UnorderedAccessView;
+#include <REX/W32/D3D11.h>
 
 namespace RE
 {
@@ -12,30 +8,30 @@ namespace RE
 	{
 		struct RenderTargetData
 		{
-			ID3D11Texture2D*           texture;      // 00
-			ID3D11Texture2D*           textureCopy;  // 08
-			ID3D11RenderTargetView*    RTV;          // 10 - for "Texture"
-			ID3D11ShaderResourceView*  SRV;          // 18 - for Texture"
-			ID3D11ShaderResourceView*  SRVCopy;      // 20 - for "TextureCopy"
-			ID3D11UnorderedAccessView* UAV;          // 28 - for "Texture"
+			REX::W32::ID3D11Texture2D*           texture;      // 00
+			REX::W32::ID3D11Texture2D*           textureCopy;  // 08
+			REX::W32::ID3D11RenderTargetView*    RTV;          // 10 - for "Texture"
+			REX::W32::ID3D11ShaderResourceView*  SRV;          // 18 - for Texture"
+			REX::W32::ID3D11ShaderResourceView*  SRVCopy;      // 20 - for "TextureCopy"
+			REX::W32::ID3D11UnorderedAccessView* UAV;          // 28 - for "Texture"
 		};
 		static_assert(sizeof(RenderTargetData) == 0x30);
 
 		struct DepthStencilData
 		{
-			ID3D11Texture2D*          texture;           // 00
-			ID3D11DepthStencilView*   views[8];          // 08
-			ID3D11DepthStencilView*   readOnlyViews[8];  // 48
-			ID3D11ShaderResourceView* depthSRV;          // 88
-			ID3D11ShaderResourceView* stencilSRV;        // 90
+			REX::W32::ID3D11Texture2D*          texture;           // 00
+			REX::W32::ID3D11DepthStencilView*   views[8];          // 08
+			REX::W32::ID3D11DepthStencilView*   readOnlyViews[8];  // 48
+			REX::W32::ID3D11ShaderResourceView* depthSRV;          // 88
+			REX::W32::ID3D11ShaderResourceView* stencilSRV;        // 90
 		};
 		static_assert(sizeof(DepthStencilData) == 0x98);
 
 		struct CubemapRenderTargetData
 		{
-			ID3D11Texture2D*          texture;         // 00
-			ID3D11RenderTargetView*   cubeSideRTV[6];  // 08
-			ID3D11ShaderResourceView* SRV;             // 38
+			REX::W32::ID3D11Texture2D*          texture;         // 00
+			REX::W32::ID3D11RenderTargetView*   cubeSideRTV[6];  // 08
+			REX::W32::ID3D11ShaderResourceView* SRV;             // 38
 		};
 		static_assert(sizeof(CubemapRenderTargetData) == 0x40);
 

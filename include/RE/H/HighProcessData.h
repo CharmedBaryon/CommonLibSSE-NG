@@ -5,9 +5,10 @@
 #include "RE/B/BSFixedString.h"
 #include "RE/B/BSIntrusiveRefCounted.h"
 #include "RE/B/BSPointerHandle.h"
+#include "RE/B/BSResourceHandle.h"
+#include "RE/B/BSSimpleList.h"
 #include "RE/B/BSSoundHandle.h"
 #include "RE/B/BSTHashMap.h"
-#include "RE/B/BSTList.h"
 #include "RE/B/BSTSmartPointer.h"
 #include "RE/B/BSTTuple.h"
 #include "RE/M/Movement.h"
@@ -151,11 +152,11 @@ namespace RE
 		{
 		public:
 			// members
-			bool                    unk00;                // 00
-			bool                    unk01;                // 01
-			bool                    unk02;                // 02
+			bool                    enabled;              // 00
+			bool                    mpsEnabled;           // 01
+			bool                    updateLight;          // 02
 			bool                    unk03;                // 03
-			float                   unk04;                // 04
+			float                   enableTimer;          // 04
 			float                   muzzleFlashDuration;  // 08
 			std::uint32_t           unk0C;                // 0C
 			NiPointer<NiAVObject>   projectile3D;         // 10
@@ -171,19 +172,19 @@ namespace RE
 		void ClearHeadtrackTarget(HEAD_TRACK_TYPE a_headtrackType, bool a_defaultHold)
 		{
 			using func_t = decltype(&HighProcessData::ClearHeadtrackTarget);
-			REL::Relocation<func_t> func{ RELOCATION_ID(38726, 39756) };
+			static REL::Relocation<func_t> func{ RELOCATION_ID(38726, 39756) };
 			return func(this, a_headtrackType, a_defaultHold);
 		}
 
 		void SetHeadtrackTarget(HEAD_TRACK_TYPE a_headtrackType, TESObjectREFR* a_target)
 		{
 			using func_t = decltype(&HighProcessData::SetHeadtrackTarget);
-			REL::Relocation<func_t> func{ RELOCATION_ID(38760, 39783) };
+			static REL::Relocation<func_t> func{ RELOCATION_ID(38760, 39783) };
 			return func(this, a_headtrackType, a_target);
 		}
 
 		// members
-		stl::enumeration<VOICE_STATE, std::uint32_t>          voiceState;                                // 000
+		REX::EnumSet<VOICE_STATE, std::uint32_t>              voiceState;                                // 000
 		std::uint32_t                                         pad004;                                    // 004
 		TESShout*                                             currentShout;                              // 008
 		TESShout::VariationID                                 currentShoutVariation;                     // 010
@@ -211,7 +212,7 @@ namespace RE
 		std::uint32_t                                         pad0E4;                                    // 0E4
 		MagicItem*                                            reanimateSpell;                            // 0E8
 		Movement::TypeData                                    currentMovementType;                       // 0F0
-		stl::enumeration<FADE_STATE, std::uint32_t>           fadeState;                                 // 130
+		REX::EnumSet<FADE_STATE, std::uint32_t>               fadeState;                                 // 130
 		float                                                 fadeAlpha;                                 // 134
 		TESObjectREFR*                                        fadeTrigger;                               // 138
 		ObjectRefHandle                                       headTrackTarget[HEAD_TRACK_TYPE::kTotal];  // 140
@@ -227,9 +228,7 @@ namespace RE
 		void*                                                 unk188;                                    // 188 - smart ptr
 		BSTSmartPointer<Data190>                              unk190;                                    // 190
 		BSTSmartPointer<Data190>                              unk198;                                    // 198
-		float                                                 unk1A0;                                    // 1A0
-		float                                                 unk1A4;                                    // 1A4
-		float                                                 unk1A8;                                    // 1A8
+		NiPoint3                                              unk1A0;                                    // 1A0
 		std::uint32_t                                         unk1AC;                                    // 1AC
 		std::uint64_t                                         unk1B0;                                    // 1B0
 		std::uint64_t                                         unk1B8;                                    // 1B8
@@ -247,7 +246,7 @@ namespace RE
 		float                                                 takeBackTimer;                             // 200
 		std::uint32_t                                         pad204;                                    // 204
 		Data208*                                              unk208;                                    // 208
-		std::uint32_t                                         unk210;                                    // 210
+		float                                                 avoidWaitTimer;                            // 210
 		PLAYER_ACTION                                         playerActionReaction;                      // 214
 		BSFixedString                                         voiceSubtitle;                             // 218
 		BSTArray<BSTTuple<FormID, NiPointer<ActorKnowledge>>> knowledgeArray;                            // 220
@@ -298,7 +297,7 @@ namespace RE
 		BSTSmartPointer<DialogueItem>                         greetTopic;                                // 360
 		std::uint32_t                                         unk368;                                    // 368
 		RefHandle                                             unk36C;                                    // 36C
-		void*                                                 unk370;                                    // 370
+		ModelDBHandle                                         faceGenGeomHandle;                         // 370
 		std::uint64_t                                         unk378;                                    // 378
 		NiPointer<NiBillboardNode>                            healthBarNode;                             // 380
 		float                                                 unk388;                                    // 388
@@ -361,7 +360,7 @@ namespace RE
 		bool                                                  fistsDrawn;                                // 46C
 		bool                                                  unk46D;                                    // 46D
 		bool                                                  unk46E;                                    // 46E
-		bool                                                  unk46F;                                    // 46F
+		bool                                                  allowRotation;                             // 46F
 		bool                                                  doorActivated;                             // 470
 		bool                                                  unk471;                                    // 471
 		bool                                                  aggroRadiusStarted;                        // 472

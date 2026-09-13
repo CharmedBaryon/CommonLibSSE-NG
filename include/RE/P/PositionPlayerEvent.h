@@ -16,7 +16,7 @@ namespace RE
 		};
 
 		// members
-		stl::enumeration<EVENT_TYPE, std::uint32_t> type;  // 0
+		REX::EnumSet<EVENT_TYPE, std::uint32_t> type;  // 0
 	};
 	static_assert(sizeof(PositionPlayerEvent) == 0x4);
 }

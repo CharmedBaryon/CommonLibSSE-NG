@@ -172,7 +172,7 @@ namespace RE
 
 	Projectile::Manager* Projectile::Manager::GetSingleton()
 	{
-		REL::Relocation<Manager**> singleton{ RELOCATION_ID(514313, 400473) };
+		static REL::Relocation<Manager**> singleton{ RELOCATION_ID(514313, 400473) };
 		return *singleton;
 	}
 
@@ -222,7 +222,7 @@ namespace RE
 	}
 
 	Projectile::LaunchData::LaunchData(Actor* a_shooter, const NiPoint3& a_origin, const ProjectileRot& a_angles, TESAmmo* a_ammo, TESObjectWEAP* a_weap) :
-		LaunchData(a_ammo->data.projectile, a_shooter, a_origin, a_angles)
+		LaunchData(a_ammo->GetRuntimeData().data.projectile, a_shooter, a_origin, a_angles)
 	{
 		weaponSource = a_weap;
 		ammoSource = a_ammo;
@@ -255,7 +255,7 @@ namespace RE
 	ProjectileHandle* Projectile::Launch(ProjectileHandle* a_result, LaunchData& a_data) noexcept
 	{
 		using func_t = decltype(&Projectile::Launch);
-		REL::Relocation<func_t> func{ RELOCATION_ID(42928, 44108) };
+		static REL::Relocation<func_t> func{ RELOCATION_ID(42928, 44108) };
 		return func(a_result, a_data);
 	}
 
@@ -282,7 +282,21 @@ namespace RE
 			origin.z += (bound_max.z - bound_min.z) * 0.7f;
 		}
 
-		ProjectileRot angles{ a_shooter->GetAimAngle(), a_shooter->GetAimHeading() };
+		ProjectileRot angles;
+		if (auto shooter_char = a_shooter->As<Actor>()) {
+			angles = { shooter_char->GetAimAngle(), shooter_char->GetAimHeading() };
+		} else if (auto target = caster->desiredTarget.get().get()) {
+			auto CombatUtilities__GetAngleToProjectedTarget = [](NiPoint3* angles, NiPoint3* cur_pos, TESObjectREFR* target, float speed, float gravity, uint32_t los_loc) {
+				REL::Relocation<NiPoint3*(NiPoint3*, NiPoint3*, TESObjectREFR*, float, float, uint32_t)> func{ RELOCATION_ID(46022, 0) };
+				return func(angles, cur_pos, target, speed, gravity, los_loc);
+			};
+
+			RE::NiPoint3 vec_angles;
+			CombatUtilities__GetAngleToProjectedTarget(&vec_angles, &origin, target, a_spell->GetAVEffect()->data.projectileBase->data.speed, 0, /* head */ 2);
+			angles = { vec_angles.x, vec_angles.z };
+		} else {
+			angles = { 0, 0 };
+		}
 
 		return LaunchSpell(a_result, a_shooter, a_spell, origin, angles);
 	}
@@ -310,14 +324,28 @@ namespace RE
 		if (fireNode) {
 			origin = fireNode->world.translate;
 			a_shooter->Unk_A0(fireNode, angles.x, angles.z, origin);
-		} else {
+		} else if (auto shooter_char = a_shooter->As<Actor>()) {
 			origin = a_shooter->GetPosition();
 			origin.z += 96.0f;
 
-			angles.x = a_shooter->GetAimAngle();
-			angles.z = a_shooter->GetAimHeading();
+			angles.x = shooter_char->GetAimAngle();
+			angles.z = shooter_char->GetAimHeading();
+		} else {
+			origin = a_shooter->GetPosition();
+
+			angles.x = a_shooter->GetAngleX();
+			angles.z = a_shooter->GetAngleZ();
 		}
 
 		return LaunchArrow(a_result, a_shooter, a_ammo, a_weap, origin, angles);
 	}
+
+	void Projectile::Kill()
+	{
+		using func_t = decltype(&Projectile::Kill);
+		static REL::Relocation<func_t> func{ RELOCATION_ID(42930, 44110) };
+
+		return func(this);
+	}
+
 }

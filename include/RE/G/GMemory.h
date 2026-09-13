@@ -42,18 +42,47 @@ namespace RE
 #define GHEAP_AUTO_ALLOC(a_addr, a_count) RE::GMemory::AllocAutoHeap((a_addr), (a_count))
 #define GHEAP_FREE(a_heap, a_ptr) RE::GMemory::FreeInHeap((a_heap), (a_ptr))
 
-#define GFC_MEMORY_REDEFINE_NEW_IMPL(a_className, a_check_delete, a_statType)                                   \
-	void* operator new(std::size_t a_count) { return GALLOC(a_count); }                                         \
-	void* operator new[](std::size_t a_count) { return GALLOC(a_count); }                                       \
-	void* operator new([[maybe_unused]] std::size_t a_count, void* a_plcmnt) { return a_plcmnt; }               \
-	void* operator new[]([[maybe_unused]] std::size_t a_count, void* a_plcmnt) { return a_plcmnt; }             \
-	void* operator new(std::size_t a_count, RE::GMemoryHeap* a_heap) { return GHEAP_ALLOC(a_heap, a_count); }   \
-	void* operator new[](std::size_t a_count, RE::GMemoryHeap* a_heap) { return GHEAP_ALLOC(a_heap, a_count); } \
-	void  operator delete(void* a_ptr) { GFREE(a_ptr); }                                                        \
-	void  operator delete[](void* a_ptr) { GFREE(a_ptr); }                                                      \
-	void  operator delete([[maybe_unused]] void* a_ptr, [[maybe_unused]] void* a_plcmnt) {}                     \
-	void  operator delete[]([[maybe_unused]] void* a_ptr, [[maybe_unused]] void* a_plcmnt) {}                   \
-	void  operator delete(void* a_ptr, RE::GMemoryHeap* a_heap) { GHEAP_FREE(a_heap, a_ptr); }
+#define GFC_MEMORY_REDEFINE_NEW_IMPL(a_className, a_check_delete, a_statType)             \
+	void* operator new(std::size_t a_count)                                               \
+	{                                                                                     \
+		return GALLOC(a_count);                                                           \
+	}                                                                                     \
+	void* operator new[](std::size_t a_count)                                             \
+	{                                                                                     \
+		return GALLOC(a_count);                                                           \
+	}                                                                                     \
+	void* operator new([[maybe_unused]] std::size_t a_count, void* a_plcmnt)              \
+	{                                                                                     \
+		return a_plcmnt;                                                                  \
+	}                                                                                     \
+	void* operator new[]([[maybe_unused]] std::size_t a_count, void* a_plcmnt)            \
+	{                                                                                     \
+		return a_plcmnt;                                                                  \
+	}                                                                                     \
+	void* operator new(std::size_t a_count, RE::GMemoryHeap* a_heap)                      \
+	{                                                                                     \
+		return GHEAP_ALLOC(a_heap, a_count);                                              \
+	}                                                                                     \
+	void* operator new[](std::size_t a_count, RE::GMemoryHeap* a_heap)                    \
+	{                                                                                     \
+		return GHEAP_ALLOC(a_heap, a_count);                                              \
+	}                                                                                     \
+	void operator delete(void* a_ptr)                                                     \
+	{                                                                                     \
+		GFREE(a_ptr);                                                                     \
+	}                                                                                     \
+	void operator delete[](void* a_ptr)                                                   \
+	{                                                                                     \
+		GFREE(a_ptr);                                                                     \
+	}                                                                                     \
+	void operator delete([[maybe_unused]] void* a_ptr, [[maybe_unused]] void* a_plcmnt)   \
+	{}                                                                                    \
+	void operator delete[]([[maybe_unused]] void* a_ptr, [[maybe_unused]] void* a_plcmnt) \
+	{}                                                                                    \
+	void operator delete(void* a_ptr, RE::GMemoryHeap* a_heap)                            \
+	{                                                                                     \
+		GHEAP_FREE(a_heap, a_ptr);                                                        \
+	}
 
 #define GFC_MEMORY_CHECK_DELETE_NONE(a_className, a_ptr)
 #define GFC_MEMORY_REDEFINE_NEW(a_className, a_statType) GFC_MEMORY_REDEFINE_NEW_IMPL(a_className, GFC_MEMORY_CHECK_DELETE_NONE, a_statType)

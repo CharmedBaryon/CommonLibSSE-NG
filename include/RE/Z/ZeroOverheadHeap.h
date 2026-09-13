@@ -9,6 +9,7 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_ZeroOverheadHeap;
+		inline static constexpr auto VTABLE = VTABLE_ZeroOverheadHeap;
 
 		~ZeroOverheadHeap() override;  // 00
 

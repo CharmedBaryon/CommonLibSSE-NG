@@ -11,6 +11,7 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_GFxLog;
+		inline static constexpr auto VTABLE = VTABLE_GFxLog;
 
 		GFxLog();
 		~GFxLog() override = default;  // 00

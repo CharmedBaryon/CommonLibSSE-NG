@@ -39,6 +39,8 @@ namespace SKSE::log
 
 	void add_papyrus_sink(std::regex a_filter);
 	void remove_papyrus_sink();
+
+	void init();
 }
 
 #undef SKSE_MAKE_SOURCE_LOGGER

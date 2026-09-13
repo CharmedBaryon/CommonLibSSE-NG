@@ -13,8 +13,10 @@ namespace RE
 		~JumpHandler() override;  // 00
 
 		// override (PlayerInputHandler)
-		bool CanProcess(InputEvent* a_event) override;                                  // 01
+		bool CanProcess(InputEvent* a_event) override;  // 01
+#ifdef EXCLUSIVE_SKYRIM_VR
 		void ProcessButton(ButtonEvent* a_event, PlayerControlsData* a_data) override;  // 04
+#endif
 	};
-	static_assert(sizeof(JumpHandler) == 0x10);
+	STATIC_ASSERT_SIZE(JumpHandler, 0x10, 0x10, 0x28, 0x10);
 }

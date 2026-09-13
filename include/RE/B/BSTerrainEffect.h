@@ -3,6 +3,7 @@
 #include "RE/B/BSPointerHandle.h"
 #include "RE/B/BSTEvent.h"
 #include "RE/B/BSTempEffect.h"
+#include "RE/I/ID.h"
 #include "RE/N/NiQuaternion.h"
 #include "RE/N/NiSmartPointer.h"
 
@@ -18,7 +19,18 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_BSTerrainEffect;
+		inline static constexpr auto VTABLE = VTABLE_BSTerrainEffect;
 		inline static constexpr auto TYPE = TEMP_EFFECT_TYPE::kTerrain;
+
+		struct BoneAdjustment
+		{
+		public:
+			// members
+			NiMatrix3   rotation;  // 00
+			NiAVObject* bone;      // 28
+			float       zOffset;   // 30
+		};
+		static_assert(sizeof(BoneAdjustment) == 0x38);
 
 		~BSTerrainEffect() override;  // 00
 
@@ -36,18 +48,18 @@ namespace RE
 		BSEventNotifyControl ProcessEvent(const PositionPlayerEvent* a_event, BSTEventSource<PositionPlayerEvent>* a_eventSource) override;  // 01 - { return BSEventNotifyControl::kContinue; }
 
 		// members;
-		NiQuaternion          orientation;      // 38
-		NiPoint3              location;         // 48
-		std::uint32_t         unk54;            // 54
-		BSTArray<void*>       unk58;            // 58
-		BSTArray<void*>       unk70;            // 70
-		NiPointer<NiAVObject> effectModel;      // 88
-		NiPoint3              unk90;            // 90
-		ObjectRefHandle       unk9C;            // 9C
-		NiPointer<bhkWorld>   physicsWorld;     // A0
-		std::uint32_t         collisionFilter;  // A8
-		std::uint32_t         unkAC;            // AC
-		NiPointer<NiAVObject> followNode;       // B0
+		NiQuaternion             orientation;         // 38
+		NiPoint3                 location;            // 48
+		std::uint32_t            pad54;               // 54
+		BSTArray<BoneAdjustment> terrainAdjustments;  // 58
+		BSTArray<BoneAdjustment> dynamicAdjustments;  // 70
+		NiPointer<NiAVObject>    model;               // 88
+		BSResource::ID           modelID;             // 90
+		ObjectRefHandle          target;              // 9C
+		NiPointer<bhkWorld>      physicsWorld;        // A0
+		std::uint32_t            collisionFilter;     // A8
+		std::uint32_t            padAC;               // AC
+		NiPointer<NiAVObject>    followNode;          // B0
 	};
 	static_assert(sizeof(BSTerrainEffect) == 0xB8);
 }

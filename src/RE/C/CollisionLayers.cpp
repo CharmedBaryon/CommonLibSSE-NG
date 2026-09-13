@@ -1,0 +1,122 @@
+#include "RE/C/CollisionLayers.h"
+
+namespace RE
+{
+	std::string_view CollisionLayerToString(COL_LAYER a_layer) noexcept
+	{
+		switch (a_layer) {
+		case COL_LAYER::kUnidentified:
+			return "Unidentified";
+		case COL_LAYER::kStatic:
+			return "Static";
+		case COL_LAYER::kAnimStatic:
+			return "AnimStatic";
+		case COL_LAYER::kTransparent:
+			return "Transparent";
+		case COL_LAYER::kClutter:
+			return "Clutter";
+		case COL_LAYER::kWeapon:
+			return "Weapon";
+		case COL_LAYER::kProjectile:
+			return "Projectile";
+		case COL_LAYER::kSpell:
+			return "Spell";
+		case COL_LAYER::kBiped:
+			return "Biped";
+		case COL_LAYER::kTrees:
+			return "Trees";
+		case COL_LAYER::kProps:
+			return "Props";
+		case COL_LAYER::kWater:
+			return "Water";
+		case COL_LAYER::kTrigger:
+			return "Trigger";
+		case COL_LAYER::kTerrain:
+			return "Terrain";
+		case COL_LAYER::kTrap:
+			return "Trap";
+		case COL_LAYER::kNonCollidable:
+			return "NonCollidable";
+		case COL_LAYER::kCloudTrap:
+			return "CloudTrap";
+		case COL_LAYER::kGround:
+			return "Ground";
+		case COL_LAYER::kPortal:
+			return "Portal";
+		case COL_LAYER::kDebrisSmall:
+			return "DebrisSmall";
+		case COL_LAYER::kDebrisLarge:
+			return "DebrisLarge";
+		case COL_LAYER::kAcousticSpace:
+			return "AcousticSpace";
+		case COL_LAYER::kActorZone:
+			return "ActorZone";
+		case COL_LAYER::kProjectileZone:
+			return "ProjectileZone";
+		case COL_LAYER::kGasTrap:
+			return "GasTrap";
+		case COL_LAYER::kShellCasting:
+			return "ShellCasting";
+		case COL_LAYER::kTransparentSmall:
+			return "TransparentSmall";
+		case COL_LAYER::kInvisibleWall:
+			return "InvisibleWall";
+		case COL_LAYER::kTransparentSmallAnim:
+			return "TransparentSmallAnim";
+		case COL_LAYER::kWard:
+			return "Ward";
+		case COL_LAYER::kCharController:
+			return "CharController";
+		case COL_LAYER::kStairHelper:
+			return "StairHelper";
+		case COL_LAYER::kDeadBip:
+			return "DeadBip";
+		case COL_LAYER::kBipedNoCC:
+			return "BipedNoCC";
+		case COL_LAYER::kAvoidBox:
+			return "AvoidBox";
+		case COL_LAYER::kCollisionBox:
+			return "CollisionBox";
+		case COL_LAYER::kCameraSphere:
+			return "CameraSphere";
+		case COL_LAYER::kDoorDetection:
+			return "DoorDetection";
+		case COL_LAYER::kConeProjectile:
+			return "ConeProjectile";
+		case COL_LAYER::kCameraPick:
+			return "CameraPick";
+		case COL_LAYER::kItemPick:
+			return "ItemPick";
+		case COL_LAYER::kLineOfSight:
+			return "LineOfSight";
+		case COL_LAYER::kPathPick:
+			return "PathPick";
+		case COL_LAYER::kCustomPick1:
+			return "CustomPick1";
+		case COL_LAYER::kCustomPick2:
+			return "CustomPick2";
+		case COL_LAYER::kSpellExplosion:
+			return "SpellExplosion";
+		case COL_LAYER::kDroppingPick:
+			return "DroppingPick";
+		case COL_LAYER::kUnused1:
+			return "Unused1";
+		case COL_LAYER::kUnused2:
+			return "Unused2";
+		case COL_LAYER::kUnused3:
+			return "Unused3";
+		case COL_LAYER::kUnused4:
+			return "Unused4";
+		case COL_LAYER::kUnused5:
+			return "Unused5";
+		case COL_LAYER::kUnused6:
+			return "Unused6";
+		case COL_LAYER::kUnused7:
+			return "Unused7";
+		case COL_LAYER::kInvalid:
+			return "Invalid";
+		default:
+			return "Unknown";
+		}
+	}
+}

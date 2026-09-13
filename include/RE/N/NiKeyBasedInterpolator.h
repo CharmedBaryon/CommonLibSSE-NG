@@ -9,7 +9,8 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_NiKeyBasedInterpolator;
-		inline static auto           Ni_RTTI = NiRTTI_NiKeyBasedInterpolator;
+		inline static constexpr auto Ni_RTTI = NiRTTI_NiKeyBasedInterpolator;
+		inline static constexpr auto VTABLE = VTABLE_NiKeyBasedInterpolator;
 
 		using KeyType = NiAnimationKey::KeyType;
 		using KeyContent = NiAnimationKey::KeyContent;

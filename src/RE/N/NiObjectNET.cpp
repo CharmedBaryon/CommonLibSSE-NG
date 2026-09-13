@@ -97,6 +97,13 @@ namespace RE
 		return nullptr;
 	}
 
+	void NiObjectNET::RemoveController(NiTimeController* a_controller)
+	{
+		using func_t = decltype(&NiObjectNET::RemoveController);
+		static REL::Relocation<func_t> func{ RELOCATION_ID(69156, 70517) };
+		return func(this, a_controller);
+	}
+
 	NiExtraData* NiObjectNET::GetExtraData(const BSFixedString& a_key) const
 	{
 		if (a_key.empty()) {
@@ -235,6 +242,40 @@ namespace RE
 			middle = (top + bottom) >> 1;
 
 			std::ptrdiff_t compare = a_key.c_str() - extra[middle]->GetName().c_str();
+
+			if (compare == 0) {
+				DeleteExtraData(middle);
+				return true;
+			} else if (compare > 0) {
+				bottom = middle + 1;
+			} else {
+				top = middle - 1;
+			}
+		}
+
+		return false;
+	}
+
+	bool NiObjectNET::RemoveExtraData(NiExtraData* a_extra)
+	{
+		if (extraDataSize == 0) {
+			return false;
+		}
+
+		if (a_extra == nullptr) {
+			return false;
+		}
+
+		assert(extraDataSize < std::numeric_limits<std::int16_t>::max());
+
+		std::int16_t bottom = 0;
+		std::int16_t top = static_cast<std::int16_t>(extraDataSize - 1);
+		std::int16_t middle = 0;
+
+		while (bottom <= top) {
+			middle = (top + bottom) >> 1;
+
+			std::ptrdiff_t compare = a_extra->GetName().c_str() - extra[middle]->GetName().c_str();
 
 			if (compare == 0) {
 				DeleteExtraData(middle);

@@ -3,25 +3,110 @@
 #include "RE/T/TESFile.h"
 #include "RE/T/TESForm.h"
 
+#include "REX/W32/BASE.h"
+#include <atomic>
+#include <chrono>
+#undef GetModuleHandle
+
 namespace RE
 {
-	TESDataHandler* TESDataHandler::GetSingleton()
+	namespace
 	{
-		REL::Relocation<TESDataHandler**> singleton{ Offset::TESDataHandler::Singleton };
+		using GetCompiledFileCollection_t = const RE::TESFileCollection* (*)();
+
+		inline std::atomic<GetCompiledFileCollection_t> g_getCompiledFileCollectionExtern{ nullptr };
+		inline std::atomic<std::uint64_t>               g_nextVRESLProbeTimeMs{ 0 };
+		constexpr std::uint64_t                         kVRESLProbeIntervalMs = 5000;
+
+		[[nodiscard]] std::uint64_t GetMonotonicMs() noexcept
+		{
+			using namespace std::chrono;
+			return static_cast<std::uint64_t>(duration_cast<milliseconds>(steady_clock::now().time_since_epoch()).count());
+		}
+
+		[[nodiscard]] GetCompiledFileCollection_t ResolveGetCompiledFileCollectionExtern() noexcept
+		{
+			auto getter = g_getCompiledFileCollectionExtern.load(std::memory_order_acquire);
+			if (getter) {
+				return getter;
+			}
+
+			const auto vreslModule = REX::W32::GetModuleHandleW(L"skyrimvresl");
+			if (vreslModule == NULL) {
+				return nullptr;
+			}
+
+			getter = reinterpret_cast<GetCompiledFileCollection_t>(REX::W32::GetProcAddress(vreslModule, "GetCompiledFileCollectionExtern"));
+			if (getter) {
+				g_getCompiledFileCollectionExtern.store(getter, std::memory_order_release);
+			}
+
+			return getter;
+		}
+	}
+
+	TESFileCollection* TESDataHandler::GetVRCompiledFileCollection(bool a_allowRefresh) noexcept
+	{
+		if (!REL::Module::IsVR()) {
+			return nullptr;
+		}
+
+		auto collection = VRcompiledFileCollection.load(std::memory_order_acquire);
+		if (HasValidVRCompiledFileCollection(collection)) {
+			return collection;
+		}
+
+		VRcompiledFileCollection.compare_exchange_strong(collection, nullptr, std::memory_order_release, std::memory_order_relaxed);
+
+		if (!a_allowRefresh) {
+			return nullptr;
+		}
+
+		const auto now = GetMonotonicMs();
+		auto       nextProbeTime = g_nextVRESLProbeTimeMs.load(std::memory_order_acquire);
+		if (now < nextProbeTime) {
+			return nullptr;
+		}
+
+		const auto desiredNextProbeTime = now + kVRESLProbeIntervalMs;
+		if (!g_nextVRESLProbeTimeMs.compare_exchange_strong(nextProbeTime, desiredNextProbeTime, std::memory_order_acq_rel, std::memory_order_acquire) && now < nextProbeTime) {
+			return nullptr;
+		}
+
+		const auto getter = ResolveGetCompiledFileCollectionExtern();
+		if (!getter) {
+			return nullptr;
+		}
+
+		collection = const_cast<TESFileCollection*>(getter());
+		if (!HasValidVRCompiledFileCollection(collection)) {
+			return nullptr;
+		}
+
+		VRcompiledFileCollection.store(collection, std::memory_order_release);
+		return collection;
+	}
+
+	TESDataHandler* TESDataHandler::GetSingleton(bool a_VRESL)
+	{
+		static REL::Relocation<TESDataHandler**> singleton{ RELOCATION_ID(514141, 400269) };
+		if (a_VRESL && REL::Module::IsVR()) {
+			(void)GetVRCompiledFileCollection(true);
+		}
 		return *singleton;
 	}
 
 	bool TESDataHandler::AddFormToDataHandler(TESForm* a_form)
 	{
 		using func_t = decltype(&TESDataHandler::AddFormToDataHandler);
-		REL::Relocation<func_t> func{ RELOCATION_ID(13597, 13693) };
+		static REL::Relocation<func_t> func{ RELOCATION_ID(13597, 13693) };
 		return func(this, a_form);
 	}
 
 	std::uint32_t TESDataHandler::LoadScripts()
 	{
 		using func_t = decltype(&TESDataHandler::LoadScripts);
-		REL::Relocation<func_t> func{ Offset::TESDataHandler::LoadScripts };
+		static REL::Relocation<func_t> func{ RELOCATION_ID(13657, 13766) };
 		return func(this);
 	}
 
@@ -44,7 +129,7 @@ namespace RE
 			return 0;
 		}
 
-		if SKYRIM_REL_VR_CONSTEXPR (REL::Module::IsVR()) {
+		if (REL::Module::IsVR() && !HasValidVRCompiledFileCollection(GetVRCompiledFileCollection(false))) {
 			// Use SkyrimVR lookup logic, ignore light plugin index which doesn't exist in VR
 			return (a_localFormID & 0xFFFFFF) | (file->compileIndex << 24);
 		} else {
@@ -63,7 +148,7 @@ namespace RE
 		}
 
 		auto rawIndex = (a_rawFormID & 0xFF000000) >> 24;
-		if SKYRIM_REL_VR_CONSTEXPR (REL::Module::IsVR()) {
+		if (REL::Module::IsVR() && !HasValidVRCompiledFileCollection(GetVRCompiledFileCollection(false))) {
 			if (rawIndex >= file->masterCount) {
 				return 0;
 			}
@@ -107,7 +192,7 @@ namespace RE
 
 	const TESFile* TESDataHandler::LookupLoadedModByName(std::string_view a_modName)
 	{
-		auto size = GetLoadedModCount();
+		auto  size = GetLoadedModCount();
 		auto* file = GetLoadedMods();
 		for (auto i = 0; i < size; ++i, ++file) {
 			if (a_modName.size() == strlen((*file)->fileName) &&
@@ -120,7 +205,7 @@ namespace RE
 
 	const TESFile* TESDataHandler::LookupLoadedModByIndex(std::uint8_t a_index)
 	{
-		auto size = GetLoadedModCount();
+		auto  size = GetLoadedModCount();
 		auto* file = GetLoadedMods();
 		for (auto i = 0; i < size; ++i, ++file) {
 			if ((*file)->compileIndex == a_index) {
@@ -138,7 +223,7 @@ namespace RE
 
 	const TESFile* TESDataHandler::LookupLoadedLightModByName(std::string_view a_modName)
 	{
-		auto size = GetLoadedLightModCount();
+		auto  size = GetLoadedLightModCount();
 		auto* file = GetLoadedLightMods();
 		for (auto i = 0; i < size; ++i, ++file) {
 			if (a_modName.size() == strlen((*file)->fileName) &&
@@ -151,7 +236,7 @@ namespace RE
 
 	const TESFile* TESDataHandler::LookupLoadedLightModByIndex(std::uint16_t a_index)
 	{
-		auto size = GetLoadedLightModCount();
+		auto  size = GetLoadedLightModCount();
 		auto* file = GetLoadedLightMods();
 		for (auto i = 0; i < size; ++i, ++file) {
 			if ((*file)->smallFileCompileIndex == a_index) {
@@ -167,9 +252,23 @@ namespace RE
 		return mod ? std::make_optional(mod->smallFileCompileIndex) : std::nullopt;
 	}
 
+	TESWorldSpace* TESDataHandler::GetExtCellDataFromFileByEditorID(const char* a_cellID, std::int32_t& a_outX, std::int32_t& a_outY)
+	{
+		using func_t = decltype(&TESDataHandler::GetExtCellDataFromFileByEditorID);
+		static REL::Relocation<func_t> func{ RELOCATION_ID(13618, 13716) };
+		return func(this, a_cellID, a_outX, a_outY);
+	}
+
 	bool TESDataHandler::IsGeneratedID(FormID a_formID)
 	{
 		return a_formID >= 0xFF000000;
+	}
+
+	FormID TESDataHandler::GetNextID()
+	{
+		using func_t = decltype(&TESDataHandler::GetNextID);
+		static REL::Relocation<func_t> func{ RELOCATION_ID(13635, 13740) };
+		return func(this);
 	}
 
 	BSTArray<TESForm*>& TESDataHandler::GetFormArray(FormType a_formType)
@@ -180,7 +279,7 @@ namespace RE
 	ObjectRefHandle TESDataHandler::CreateReferenceAtLocation(TESBoundObject* a_base, const NiPoint3& a_location, const NiPoint3& a_rotation, TESObjectCELL* a_targetCell, TESWorldSpace* a_selfWorldSpace, TESObjectREFR* a_alreadyCreatedRef, BGSPrimitive* a_primitive, const ObjectRefHandle& a_linkedRoomRefHandle, bool a_forcePersist, bool a_arg11)
 	{
 		using func_t = decltype(&TESDataHandler::CreateReferenceAtLocation);
-		REL::Relocation<func_t> func{ RELOCATION_ID(13625, 13723) };
+		static REL::Relocation<func_t> func{ RELOCATION_ID(13625, 13723) };
 		return func(this, a_base, a_location, a_rotation, a_targetCell, a_selfWorldSpace, a_alreadyCreatedRef, a_primitive, a_linkedRoomRefHandle, a_forcePersist, a_arg11);
 	}
 }

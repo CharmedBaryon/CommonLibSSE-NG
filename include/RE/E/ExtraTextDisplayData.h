@@ -36,14 +36,14 @@ namespace RE
 		void        SetName(const char* a_name);
 
 		// members
-		BSFixedString                                   displayName;       // 10
-		BGSMessage*                                     displayNameText;   // 18
-		TESQuest*                                       ownerQuest;        // 20
-		stl::enumeration<DisplayDataType, std::int32_t> ownerInstance;     // 28
-		float                                           temperFactor;      // 2C
-		std::uint16_t                                   customNameLength;  // 30 - length w/o temper string, only valid if ownerInstance is kCustomName
-		std::uint16_t                                   pad32;             // 32
-		std::uint32_t                                   pad34;             // 34
+		BSFixedString                               displayName;       // 10
+		BGSMessage*                                 displayNameText;   // 18
+		TESQuest*                                   ownerQuest;        // 20
+		REX::EnumSet<DisplayDataType, std::int32_t> ownerInstance;     // 28
+		float                                       temperFactor;      // 2C
+		std::uint16_t                               customNameLength;  // 30 - length w/o temper string, only valid if ownerInstance is kCustomName
+		std::uint16_t                               pad32;             // 32
+		std::uint32_t                               pad34;             // 34
 	};
 	static_assert(sizeof(ExtraTextDisplayData) == 0x38);
 }

@@ -8,12 +8,13 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_BSThread;
+		inline static constexpr auto VTABLE = VTABLE_BSThread;
 
 		virtual ~BSThread();  // 00
 
 		// add
-		virtual void Unk_01(void);  // 01 - { return 0; }
-		virtual void Unk_02(void);  // 02 - { return; }
+		virtual std::uint32_t ThreadProc();  // 01 - { return 0; }
+		virtual void          Unk_02(void);  // 02 - { return; }
 
 		// members
 		REX::W32::CRITICAL_SECTION lock;           // 08

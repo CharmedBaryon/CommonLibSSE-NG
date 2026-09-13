@@ -13,6 +13,7 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_TESRegionDataSound;
+		inline static constexpr auto VTABLE = VTABLE_TESRegionDataSound;
 		inline static constexpr auto TYPE = Type::kSound;
 
 		struct Sound
@@ -26,9 +27,9 @@ namespace RE
 				kSnowy = 1 << 3
 			};
 
-			BGSSoundDescriptorForm*               sound;   // 00
-			stl::enumeration<Flag, std::uint32_t> flags;   // 08
-			float                                 chance;  // 0C
+			BGSSoundDescriptorForm*           sound;   // 00
+			REX::EnumSet<Flag, std::uint32_t> flags;   // 08
+			float                             chance;  // 0C
 		};
 		static_assert(sizeof(Sound) == 0x10);
 

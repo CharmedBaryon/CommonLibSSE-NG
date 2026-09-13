@@ -9,7 +9,8 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_ExtraDetachTime;
-		inline static auto           EXTRADATATYPE = ExtraDataType::kDetachTime;
+		inline static constexpr auto VTABLE = VTABLE_ExtraDetachTime;
+		inline static constexpr auto EXTRADATATYPE = ExtraDataType::kDetachTime;
 
 		~ExtraDetachTime() override;  // 00
 

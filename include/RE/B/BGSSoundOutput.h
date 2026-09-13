@@ -41,10 +41,10 @@ namespace RE
 			};
 
 			// members
-			stl::enumeration<Flag, std::uint8_t> flags;          // 0
-			std::uint8_t                         unk1;           // 1
-			std::uint8_t                         unk2;           // 2
-			std::uint8_t                         reverbSendPct;  // 3
+			REX::EnumSet<Flag, std::uint8_t> flags;          // 0
+			std::uint8_t                     unk1;           // 1
+			std::uint8_t                     unk2;           // 2
+			std::uint8_t                     reverbSendPct;  // 3
 		};
 		static_assert(sizeof(Data) == 0x4);
 
@@ -117,10 +117,10 @@ namespace RE
 		[[nodiscard]] bool                   DoGetSupportsMonitor(std::uint32_t a_arg1) const override;                                        // 09
 
 		// members
-		Data                                  data;            // 28 - NAM1
-		stl::enumeration<Type, std::uint32_t> type;            // 2C - MNAM
-		DynamicAttenuationCharacteristics*    attenuation;     // 30 - ANAM
-		SpeakerArrays*                        speakerOutputs;  // 38 - ONAM
+		Data                               data;            // 28 - NAM1
+		REX::EnumSet<Type, std::uint32_t>  type;            // 2C - MNAM
+		DynamicAttenuationCharacteristics* attenuation;     // 30 - ANAM
+		SpeakerArrays*                     speakerOutputs;  // 38 - ONAM
 	};
 	static_assert(sizeof(BGSSoundOutput) == 0x40);
 }

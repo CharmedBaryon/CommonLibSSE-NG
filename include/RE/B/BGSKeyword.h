@@ -29,6 +29,8 @@ namespace RE
 		const char* GetFormEditorID() const override;             // 32 - { return formEditorID.c_str(); }
 		bool        SetFormEditorID(const char* a_str) override;  // 33 - { formEditorID = a_str; }
 
+		static BGSKeyword* CreateKeyword(const BSFixedString& a_formEditorID);
+
 		// members
 		BSFixedString formEditorID;  // 20
 	};

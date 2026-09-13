@@ -13,16 +13,16 @@ namespace RE
 		~BSWin32VirtualKeyboardDevice() override;  // 00
 
 		// override (BSVirtualKeyboardDevice)
-		void Initialize() override;           // 01 - { return; }
-		void Process(float a_arg1) override;  // 02 - { return; }
-		void Release() override;              // 03 - { return; }
-		void Reset() override;                // 08 - { return; }
-		void Unk_0B(void) override;           // 0B - { return; }
-		void Unk_0C(void) override;           // 0C - { return; }
-		void Unk_0D(void) override;           // 0D - { return; }
+		void Initialize() override;                 // 01 - { return; }
+		void Poll(float a_timeDelta) override;      // 02 - { return; }
+		void Shutdown() override;                   // 03 - { return; }
+		void ClearInputState() override;            // 08 - { return; }
+		void Start(const kbInfo* a_info) override;  // 0B - { return; }
+		void Stop() override;                       // 0C - { return; }
+		void UserCancelled() override;              // 0D - { return; }
 
 	protected:
 		BSWin32VirtualKeyboardDevice();
 	};
-	static_assert(sizeof(BSWin32VirtualKeyboardDevice) == 0x70);
+	STATIC_ASSERT_SIZE(BSWin32VirtualKeyboardDevice, 0x70, 0x70, 0x78, 0x8);
 }

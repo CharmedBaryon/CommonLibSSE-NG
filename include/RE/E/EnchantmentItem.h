@@ -34,16 +34,16 @@ namespace RE
 		{
 		public:
 			// members
-			std::int32_t                                     costOverride;      // 00
-			stl::enumeration<EnchantmentFlag, std::uint32_t> flags;             // 04
-			MagicSystem::CastingType                         castingType;       // 08
-			std::int32_t                                     chargeOverride;    // 0C
-			MagicSystem::Delivery                            delivery;          // 10
-			MagicSystem::SpellType                           spellType;         // 14
-			float                                            chargeTime;        // 18
-			std::uint32_t                                    pad1C;             // 1C
-			EnchantmentItem*                                 baseEnchantment;   // 20
-			BGSListForm*                                     wornRestrictions;  // 28
+			std::int32_t                                 costOverride;      // 00
+			REX::EnumSet<EnchantmentFlag, std::uint32_t> flags;             // 04
+			MagicSystem::CastingType                     castingType;       // 08
+			std::int32_t                                 chargeOverride;    // 0C
+			MagicSystem::Delivery                        delivery;          // 10
+			MagicSystem::SpellType                       spellType;         // 14
+			float                                        chargeTime;        // 18
+			std::uint32_t                                pad1C;             // 1C
+			EnchantmentItem*                             baseEnchantment;   // 20
+			BGSListForm*                                 wornRestrictions;  // 28
 		};
 		static_assert(sizeof(Data) == 0x30);
 

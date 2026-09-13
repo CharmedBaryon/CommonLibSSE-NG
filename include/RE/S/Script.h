@@ -1,5 +1,6 @@
 #pragma once
 
+#include "RE/B/BSSimpleList.h"
 #include "RE/C/CommandTable.h"
 #include "RE/F/FormTypes.h"
 #include "RE/T/TESForm.h"
@@ -55,7 +56,7 @@ namespace RE
 		{
 			static_assert((std::is_pointer_v<Args> && ...), "arguments must all be pointers");
 			using func_t = bool(const SCRIPT_PARAMETER*, SCRIPT_FUNCTION::ScriptData*, std::uint32_t&, TESObjectREFR*, TESObjectREFR*, Script*, ScriptLocals*, ...);
-			REL::Relocation<func_t> func{ RELOCATION_ID(21425, 21910) };
+			static REL::Relocation<func_t> func{ RELOCATION_ID(21425, 21910) };
 			return func(a_paramInfo, a_scriptData, a_opcodeOffsetPtr, a_thisObj, a_containingObj, a_scriptObj, a_locals, a_args...);
 		}
 

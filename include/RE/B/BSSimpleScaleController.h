@@ -8,7 +8,8 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_BSSimpleScaleController;
-		inline static auto           Ni_RTTI = NiRTTI_BSSimpleScaleController;
+		inline static constexpr auto Ni_RTTI = NiRTTI_BSSimpleScaleController;
+		inline static constexpr auto VTABLE = VTABLE_BSSimpleScaleController;
 
 		~BSSimpleScaleController() override;  // 00
 

@@ -4,7 +4,7 @@ namespace RE
 {
 	BGSFootstepManager* BGSFootstepManager::GetSingleton()
 	{
-		REL::Relocation<BGSFootstepManager**> singleton{ Offset::BGSFootstepManager::Singleton };
+		static REL::Relocation<BGSFootstepManager**> singleton{ RELOCATION_ID(517045, 403553) };
 		return *singleton;
 	}
 }

@@ -8,7 +8,7 @@ namespace RE
 	void ActiveEffect::Dispel(bool a_force)
 	{
 		using func_t = decltype(&ActiveEffect::Dispel);
-		REL::Relocation<func_t> func{ RELOCATION_ID(33286, 34061) };
+		static REL::Relocation<func_t> func{ RELOCATION_ID(33286, 34061) };
 		return func(this, a_force);
 	}
 
@@ -48,7 +48,7 @@ namespace RE
 	float ActiveEffect::GetMagnitude() const
 	{
 		using func_t = decltype(&ActiveEffect::GetMagnitude);
-		REL::Relocation<func_t> func{ RELOCATION_ID(33282, 34057) };
+		static REL::Relocation<func_t> func{ RELOCATION_ID(33282, 34057) };
 		return func(this);
 	}
 }

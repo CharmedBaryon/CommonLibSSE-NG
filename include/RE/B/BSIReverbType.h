@@ -6,6 +6,7 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_BSIReverbType;
+		inline static constexpr auto VTABLE = VTABLE_BSIReverbType;
 
 		// add
 		[[nodiscard]] virtual std::int32_t DoGetRoomLevel() const = 0;        // 00

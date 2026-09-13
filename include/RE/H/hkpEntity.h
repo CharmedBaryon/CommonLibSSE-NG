@@ -2,6 +2,7 @@
 
 #include "RE/H/hkArray.h"
 #include "RE/H/hkBaseTypes.h"
+#include "RE/H/hkRefPtr.h"
 #include "RE/H/hkSmallArray.h"
 #include "RE/H/hkpFixedRigidMotion.h"
 #include "RE/H/hkpMaterial.h"
@@ -50,11 +51,11 @@ namespace RE
 		{
 		public:
 			// members
-			hkSpuCollisionCallbackUtil*                                     util;         // 00
-			std::uint16_t                                                   capacity;     // 08
-			stl::enumeration<SpuCollisionCallbackEventFilter, std::uint8_t> eventFilter;  // 0A
-			std::uint8_t                                                    userFilter;   // 0B
-			std::uint32_t                                                   pad0C;        // 0C
+			hkSpuCollisionCallbackUtil*                                 util;         // 00
+			std::uint16_t                                               capacity;     // 08
+			REX::EnumSet<SpuCollisionCallbackEventFilter, std::uint8_t> eventFilter;  // 0A
+			std::uint8_t                                                userFilter;   // 0B
+			std::uint32_t                                               pad0C;        // 0C
 		};
 		static_assert(sizeof(SpuCollisionCallback) == 0x10);
 
@@ -75,6 +76,20 @@ namespace RE
 
 		// add
 		virtual void DeallocateInternalArrays();  // 06
+
+		void AddContactListener(hkpContactListener* a_listener)
+		{
+			using func_t = decltype(&hkpEntity::AddContactListener);
+			static REL::Relocation<func_t> func{ RELOCATION_ID(60094, 60844) };
+			return func(this, a_listener);
+		}
+
+		void RemoveContactListener(hkpContactListener* a_listener)
+		{
+			using func_t = decltype(&hkpEntity::RemoveContactListener);
+			static REL::Relocation<func_t> func{ RELOCATION_ID(60095, 60845) };
+			return func(this, a_listener);
+		}
 
 		// members
 		hkpMaterial                        material;                              // 0D0
@@ -104,6 +119,15 @@ namespace RE
 		std::uint32_t                      npData;                                // 2C0
 		std::uint32_t                      pad2C4;                                // 2C4
 		std::uint64_t                      pad2C8;                                // 2C8
+
+	protected:
+		// Activates the entity and its island.
+		void Activate()
+		{
+			using func_t = decltype(&hkpEntity::Activate);
+			static REL::Relocation<func_t> func{ RELOCATION_ID(60096, 60849) };
+			return func(this);
+		}
 	};
 	static_assert(sizeof(hkpEntity) == 0x2D0);
 }

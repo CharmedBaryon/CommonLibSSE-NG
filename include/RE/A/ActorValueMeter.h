@@ -9,6 +9,7 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_ActorValueMeter;
+		inline static constexpr auto VTABLE = VTABLE_ActorValueMeter;
 
 		~ActorValueMeter() override;  // 00
 

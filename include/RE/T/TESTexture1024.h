@@ -8,6 +8,7 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_TESTexture1024;
+		inline static constexpr auto VTABLE = VTABLE_TESTexture1024;
 
 		~TESTexture1024() override;  // 00
 

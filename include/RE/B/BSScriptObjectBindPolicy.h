@@ -1,8 +1,10 @@
 #pragma once
 
 #include "RE/B/BSAtomic.h"
+#include "RE/B/BSFixedString.h"
 #include "RE/B/BSTHashMap.h"
 #include "RE/B/BSTSmartPointer.h"
+#include "RE/V/Variable.h"
 
 namespace RE
 {
@@ -16,6 +18,7 @@ namespace RE
 		{
 		public:
 			inline static constexpr auto RTTI = RTTI_BSScript__ObjectBindPolicy;
+			inline static constexpr auto VTABLE = VTABLE_BSScript__ObjectBindPolicy;
 
 			virtual ~ObjectBindPolicy();  // 00
 
@@ -34,6 +37,7 @@ namespace RE
 			virtual void Unk_0C(void) = 0;               // 0C
 
 			void BindObject(BSTSmartPointer<Object>& a_objectPtr, VMHandle a_handle);
+			void GetInitialPropertyValues(VMHandle a_handle, const BSFixedString& a_className, BSTScrapHashMap<BSFixedString, Variable>& a_propertyValues, std::uint32_t& a_nonConvertedProperties) const;
 
 			// members
 			IVirtualMachine*               vm;                   // 08

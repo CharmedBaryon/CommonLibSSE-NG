@@ -10,6 +10,7 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI___AttachLightHitEffectVisitor;
+		inline static constexpr auto VTABLE = VTABLE___AttachLightHitEffectVisitor;
 
 		~AttachLightHitEffectVisitor() override;  // 00
 

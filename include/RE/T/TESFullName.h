@@ -9,6 +9,7 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_TESFullName;
+		inline static constexpr auto VTABLE = VTABLE_TESFullName;
 
 		~TESFullName() override;
 
@@ -24,7 +25,7 @@ namespace RE
 		void SetFullName(const char* a_name)
 		{
 			using func_t = decltype(&TESFullName::SetFullName);
-			REL::Relocation<func_t> func{ RELOCATION_ID(22318, 22791) };
+			static REL::Relocation<func_t> func{ RELOCATION_ID(22318, 22791) };
 			func(this, a_name);
 		}
 

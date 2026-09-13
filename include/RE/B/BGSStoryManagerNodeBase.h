@@ -9,6 +9,7 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_BGSStoryManagerNodeBase;
+		inline static constexpr auto VTABLE = VTABLE_BGSStoryManagerNodeBase;
 
 		struct Flags  // DNAM
 		{
@@ -29,8 +30,8 @@ namespace RE
 			};
 
 			// members
-			stl::enumeration<NodeFlag, std::uint16_t>  nodeFlags;  // 0
-			stl::enumeration<QuestFlag, std::uint16_t> questFags;  // 2
+			REX::EnumSet<NodeFlag, std::uint16_t>  nodeFlags;  // 0
+			REX::EnumSet<QuestFlag, std::uint16_t> questFags;  // 2
 		};
 		static_assert(sizeof(Flags) == 0x4);
 

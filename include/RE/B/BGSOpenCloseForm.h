@@ -9,6 +9,7 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_BGSOpenCloseForm;
+		inline static constexpr auto VTABLE = VTABLE_BGSOpenCloseForm;
 
 		enum class OPEN_STATE
 		{

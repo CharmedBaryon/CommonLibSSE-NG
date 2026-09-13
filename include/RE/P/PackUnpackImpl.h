@@ -51,6 +51,16 @@ namespace RE
 			while (it != end) {
 				if constexpr (std::is_same_v<U, std::vector<bool>>) {
 					(*array)[i++].Pack(static_cast<bool>(*it));
+				} else if constexpr (is_form_pointer_v<typename U::value_type> ||
+									 is_alias_pointer_v<typename U::value_type> ||
+									 is_active_effect_pointer_v<typename U::value_type>) {
+					// PackHandle's null path drops the element's type (SetNone()); an
+					// untyped None here silently rejects later in-script reassignment.
+					if (*it) {
+						(*array)[i++].Pack(*it);
+					} else {
+						(*array)[i++] = Variable(typeInfo);
+					}
 				} else {
 					(*array)[i++].Pack(*it);
 				}

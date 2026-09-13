@@ -1,11 +1,12 @@
 #pragma once
 
+#include "RE/B/BSSimpleList.h"
 #include "RE/B/BSString.h"
 #include "RE/B/BSTArray.h"
 #include "RE/B/BSTHashMap.h"
-#include "RE/B/BSTList.h"
 #include "RE/F/FormTypes.h"
 #include "RE/N/NiPoint2.h"
+#include "RE/N/NiPoint3.h"
 #include "RE/N/NiSmartPointer.h"
 #include "RE/N/NiTPointerMap.h"
 #include "RE/T/TESForm.h"
@@ -167,30 +168,40 @@ namespace RE
 		~TESWorldSpace() override;  // 00
 
 		// override (TESForm)
-		void        InitializeData() override;                                          // 04
-		void        ClearData() override;                                               // 05
-		bool        Load(TESFile* a_mod) override;                                      // 06
-		bool        LoadPartial(TESFile* a_mod) override;                               // 07
-		TESForm*    CreateDuplicateForm(bool a_createEditorID, void* a_arg2) override;  // 09
-		bool        FindInFileFast(TESFile* a_mod) override;                            // 0C
-		void        InitItemImpl() override;                                            // 13
-		const char* GetFormEditorID() const override;                                   // 32 - { return editorID.c_str(); }
-		bool        SetFormEditorID(const char* a_str) override;                        // 33 - { editorID = a_str; }
-		bool        IsParentForm() override;                                            // 34 - { return true; }
-		bool        IsFormTypeChild(FormType a_type) override;                          // 36
+		void        InitializeData() override;                                                                          // 04
+		void        ClearData() override;                                                                               // 05
+		bool        Load(TESFile* a_mod) override;                                                                      // 06
+		bool        LoadPartial(TESFile* a_mod) override;                                                               // 07
+		TESForm*    CreateDuplicateForm(bool a_createEditorID, NiTPointerMap<TESForm*, TESForm*>* a_copyMap) override;  // 09
+		bool        FindInFileFast(TESFile* a_mod) override;                                                            // 0C
+		void        InitItemImpl() override;                                                                            // 13
+		const char* GetFormEditorID() const override;                                                                   // 32 - { return editorID.c_str(); }
+		bool        SetFormEditorID(const char* a_str) override;                                                        // 33 - { editorID = a_str; }
+		bool        IsParentForm() override;                                                                            // 34 - { return true; }
+		bool        IsFormTypeChild(FormType a_type) override;                                                          // 36
 
 		[[nodiscard]] bool           HasMaxHeightData() const;
+		[[nodiscard]] bool           GetMaxHeightAt(const NiPoint3& a_xy, float& a_outHeight);
 		[[nodiscard]] TESObjectCELL* GetSkyCell();
 		[[nodiscard]] float          GetDefaultWaterHeight() const;
+
+		BGSTerrainManager* GetTerrainManager() const
+		{
+			auto world = this;
+			while (world->parentWorld != nullptr && world->parentUseFlags.any(RE::TESWorldSpace::ParentUseFlag::kUseLODData)) {
+				world = world->parentWorld;
+			}
+			return world->terrainManager;
+		}
 
 		// members
 		BSTHashMap<CellID, TESObjectCELL*>                            cellMap;                  // 058
 		TESObjectCELL*                                                persistentCell;           // 088
 		BGSTerrainManager*                                            terrainManager;           // 090
 		TESClimate*                                                   climate;                  // 098 - CNAM
-		stl::enumeration<Flag, std::uint8_t>                          flags;                    // 0A0 - DATA
+		REX::EnumSet<Flag, std::uint8_t>                              flags;                    // 0A0 - DATA
 		std::uint8_t                                                  unk0A1;                   // 0A1 - more flags
-		stl::enumeration<ParentUseFlag, std::uint16_t>                parentUseFlags;           // 0A2 - PNAM
+		REX::EnumSet<ParentUseFlag, std::uint16_t>                    parentUseFlags;           // 0A2 - PNAM
 		ShortPoint                                                    fixedCenter;              // 0A4 - WCTR
 		BSTHashMap<std::uint32_t, BSTArray<NiPointer<TESObjectREFR>>> fixedPersistentRefMap;    // 0A8
 		BSTArray<NiPointer<TESObjectREFR>>                            mobilePersistentRefs;     // 0D8

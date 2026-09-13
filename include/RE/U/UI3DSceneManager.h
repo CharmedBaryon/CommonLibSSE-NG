@@ -3,6 +3,7 @@
 #include "RE/B/BSAtomic.h"
 #include "RE/B/BSTArray.h"
 #include "RE/B/BSTSingleton.h"
+#include "RE/I/InterfaceLightSchemes.h"
 #include "RE/N/NiColor.h"
 #include "RE/N/NiFrustum.h"
 #include "RE/N/NiMatrix3.h"
@@ -19,20 +20,6 @@ namespace RE
 	class NiNode;
 	class ShadowSceneNode;
 	class TESImageSpaceModifier;
-
-	enum class INTERFACE_LIGHT_SCHEME
-	{
-		kJournal = 0,
-		kInventory,
-		kInventoryMagic,
-		kBook,
-		kLoading,
-		kUnk05,
-		kStats,
-		kLockpicking,
-
-		kTotal = 8
-	};
 
 	class MenuLight
 	{

@@ -10,6 +10,7 @@ namespace RE
 	public:
 		inline static constexpr auto RTTI = RTTI_NiPSysGravityModifier;
 		inline static constexpr auto Ni_RTTI = NiRTTI_NiPSysGravityModifier;
+		inline static constexpr auto VTABLE = VTABLE_NiPSysGravityModifier;
 
 		enum class ForceType
 		{
@@ -31,17 +32,17 @@ namespace RE
 		bool          Update(float a_time, NiPSysData* a_particleData, NiPoint3* a_position, NiPoint3* a_radii, NiColorA* a_rotation) override;  // 25
 
 		// members
-		NiAVObject*                                gravityObj;    // 30
-		NiPoint3                                   gravityAxis;   // 38
-		float                                      decay;         // 44
-		float                                      strength;      // 48
-		stl::enumeration<ForceType, std::uint32_t> forceType;     // 4C
-		float                                      turbulence;    // 50
-		float                                      scale;         // 54
-		bool                                       worldAligned;  // 58
-		std::uint8_t                               pad59;         // 59
-		std::uint16_t                              pad5A;         // 5A
-		std::uint32_t                              pad5C;         // 5C
+		NiAVObject*                            gravityObj;    // 30
+		NiPoint3                               gravityAxis;   // 38
+		float                                  decay;         // 44
+		float                                  strength;      // 48
+		REX::EnumSet<ForceType, std::uint32_t> forceType;     // 4C
+		float                                  turbulence;    // 50
+		float                                  scale;         // 54
+		bool                                   worldAligned;  // 58
+		std::uint8_t                           pad59;         // 59
+		std::uint16_t                          pad5A;         // 5A
+		std::uint32_t                          pad5C;         // 5C
 	};
 	static_assert(sizeof(NiPSysGravityModifier) == 0x60);
 }

@@ -24,6 +24,21 @@ namespace RE
 			inline static constexpr auto RTTI = RTTI_CraftingSubMenus__EnchantConstructMenu;
 			inline static constexpr auto VTABLE = VTABLE_CraftingSubMenus__EnchantConstructMenu;
 
+			struct FilterTypes
+			{
+				enum FilterType
+				{
+					kDisenchant = 0,
+					kDivider = 1,
+					kItem = 2,
+					kEnchantment = 3,
+					kSoulGem = 4,
+
+					kTotal = 5
+				};
+			};
+			using FilterType = FilterTypes::FilterType;
+
 			enum class FilterFlag
 			{
 				EnchantWeapon = 0x1,
@@ -53,16 +68,16 @@ namespace RE
 
 				// add
 				virtual void        ShowInItemCard(EnchantConstructMenu* a_menu);  // 01
-				virtual void        Unk_02(void);                                  // 02
+				virtual void        ShowItem3D(bool a_show);                       // 02
 				virtual const char* GetName();                                     // 03
 				virtual void        SetData(GFxValue* dataContainer);              // 04
 
 				// members
-				stl::enumeration<FilterFlag, std::uint32_t> filterFlag;  // 0C
-				bool                                        selected;    // 10
-				bool                                        enabled;     // 11
-				std::uint16_t                               pad12;       // 12
-				std::uint32_t                               pad14;       // 14
+				REX::EnumSet<FilterFlag, std::uint32_t> filterFlag;  // 0C
+				bool                                    selected;    // 10
+				bool                                    enabled;     // 11
+				std::uint16_t                           pad12;       // 12
+				std::uint32_t                           pad14;       // 14
 			};
 			static_assert(sizeof(CategoryListEntry) == 0x18);
 
@@ -135,7 +150,7 @@ namespace RE
 				~EnchantMenuDisenchantCallback() override;  // 00
 
 				// override (EnchantMenuCallback)
-				void Run(Message a_msg) override;  // 01
+				void Run(std::uint8_t a_button) override;  // 01
 			};
 			static_assert(sizeof(EnchantMenuDisenchantCallback) == 0x18);
 
@@ -148,7 +163,7 @@ namespace RE
 				~EnchantMenuCraftCallback() override;  // 00
 
 				// override (EnchantMenuCallback)
-				void Run(Message a_msg) override;  // 01
+				void Run(std::uint8_t a_button) override;  // 01
 			};
 			static_assert(sizeof(EnchantMenuCraftCallback) == 0x18);
 
@@ -161,7 +176,7 @@ namespace RE
 				~EnchantMenuExitCallback() override;  // 00
 
 				// override (EnchantMenuCallback)
-				void Run(Message a_msg) override;  // 01
+				void Run(std::uint8_t a_button) override;  // 01
 			};
 			static_assert(sizeof(EnchantMenuExitCallback) == 0x18);
 
@@ -180,40 +195,36 @@ namespace RE
 			~EnchantConstructMenu() override;  // 00
 
 			// override (CraftingSubMenu)
-			void Accept(CallbackProcessor* a_cbReg) override;          // 01
+			void               Accept(CallbackProcessor* a_cbReg) override;          // 01
 			[[nodiscard]] bool HasItemPreview() override;                            // 04 - { return currentCategory != Enchantment || craftItemPreview; }
-			bool ProcessUserEvent(BSFixedString* a_control) override;  // 05
-			void SetItemCardInfo(ItemCard* a_itemCard) override;       // 07
+			bool               ProcessUserEvent(BSFixedString* a_control) override;  // 05
+			void               SetItemCardInfo(ItemCard* a_itemCard) override;       // 07
 
 			void RenameItem(const char* a_name);
 			void RenameItem_Impl(InventoryEntryData* a_entryData, ExtraDataList* a_extraList, const char* a_name);
 			void UpdateInterface();
 
 			// members
-			stl::enumeration<FilterFlag, std::uint32_t>  filterDisenchant;        // 100
-			stl::enumeration<FilterFlag, std::uint32_t>  filterDivider;           // 104
-			stl::enumeration<FilterFlag, std::uint32_t>  filterItem;              // 108
-			stl::enumeration<FilterFlag, std::uint32_t>  filterEnchantment;       // 10C
-			stl::enumeration<FilterFlag, std::uint32_t>  filterSoulGem;           // 110
-			std::uint32_t                                pad114;                  // 114
-			BSTArray<BSTSmartPointer<CategoryListEntry>> listEntries;             // 118
-			BSString                                     customName;              // 130
-			GFxValue                                     categories;              // 140
-			GFxValue                                     inventoryLists;          // 158
-			Selections                                   selected;                // 170
-			InventoryEntryData*                          craftItemPreview;        // 1A0
-			CreateEffectFunctor                          createEffectFunctor;     // 1A8
-			std::int32_t                                 sliderEnchantmentIndex;  // 200
-			float                                        sliderMaxMagnitude;      // 204
-			std::uint32_t                                highlightIndex;          // 208
-			stl::enumeration<Category, std::uint32_t>    currentCategory;         // 20C
-			stl::enumeration<FilterFlag, std::uint32_t>  enabledFilters;          // 210
-			float                                        enchantmentCost;         // 214
-			float                                        chargeAmount;            // 218
-			bool                                         exiting;                 // 21C
-			bool                                         sliderShown;             // 21D
-			bool                                         hasHighlightedEntry;     // 21E
-			std::uint8_t                                 pad21F;                  // 21F
+			REX::EnumSet<FilterFlag, std::uint32_t>      filters[FilterType::kTotal];  // 100
+			std::uint32_t                                pad114;                       // 114
+			BSTArray<BSTSmartPointer<CategoryListEntry>> listEntries;                  // 118
+			BSString                                     customName;                   // 130
+			GFxValue                                     categories;                   // 140
+			GFxValue                                     inventoryLists;               // 158
+			Selections                                   selected;                     // 170
+			InventoryEntryData*                          craftItemPreview;             // 1A0
+			CreateEffectFunctor                          createEffectFunctor;          // 1A8
+			std::int32_t                                 sliderEnchantmentIndex;       // 200
+			float                                        sliderMaxMagnitude;           // 204
+			std::uint32_t                                highlightIndex;               // 208
+			REX::EnumSet<Category, std::uint32_t>        currentCategory;              // 20C
+			REX::EnumSet<FilterFlag, std::uint32_t>      enabledFilters;               // 210
+			float                                        enchantmentCost;              // 214
+			float                                        chargeAmount;                 // 218
+			bool                                         exiting;                      // 21C
+			bool                                         sliderShown;                  // 21D
+			bool                                         hasHighlightedEntry;          // 21E
+			std::uint8_t                                 pad21F;                       // 21F
 		};
 		static_assert(sizeof(EnchantConstructMenu) == 0x220);
 	}

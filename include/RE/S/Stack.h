@@ -67,21 +67,21 @@ namespace RE
 			Variable&     GetStackFrameVariable(const StackFrame* a_frame, std::uint32_t a_index, std::uint32_t a_pageHint);
 
 			// members
-			std::uint32_t                                pad04;          // 04
-			IMemoryPagePolicy*                           policy;         // 08
-			IProfilePolicy*                              profilePolicy;  // 10
-			BSTSmallArray<MemoryPageData, 3>             pages;          // 18
-			std::uint32_t                                frames;         // 58
-			std::uint32_t                                pad5C;          // 5C
-			StackFrame*                                  top;            // 60
-			stl::enumeration<State, std::uint32_t>       state;          // 68
-			stl::enumeration<FreezeState, std::uint32_t> freezeState;    // 6C
-			Variable                                     returnValue;    // 70
-			VMStackID                                    stackID;        // 80
-			stl::enumeration<StackType, std::uint32_t>   stackType;      // 84
-			BSTSmartPointer<Internal::CodeTasklet>       owningTasklet;  // 88
-			BSTSmartPointer<IStackCallbackFunctor>       callback;       // 90
-			BSTSmartPointer<Stack>                       nextStack;      // 98
+			std::uint32_t                            pad04;          // 04
+			IMemoryPagePolicy*                       policy;         // 08
+			IProfilePolicy*                          profilePolicy;  // 10
+			BSTSmallArray<MemoryPageData, 3>         pages;          // 18
+			std::uint32_t                            frames;         // 58
+			std::uint32_t                            pad5C;          // 5C
+			StackFrame*                              top;            // 60
+			REX::EnumSet<State, std::uint32_t>       state;          // 68
+			REX::EnumSet<FreezeState, std::uint32_t> freezeState;    // 6C
+			Variable                                 returnValue;    // 70
+			VMStackID                                stackID;        // 80
+			REX::EnumSet<StackType, std::uint32_t>   stackType;      // 84
+			BSTSmartPointer<Internal::CodeTasklet>   owningTasklet;  // 88
+			BSTSmartPointer<IStackCallbackFunctor>   callback;       // 90
+			BSTSmartPointer<Stack>                   nextStack;      // 98
 
 		private:
 			void Dtor();

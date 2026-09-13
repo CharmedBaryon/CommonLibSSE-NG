@@ -1,10 +1,10 @@
 #pragma once
 
 #include "RE/H/hkBaseObject.h"
+#include "RE/H/hkClass.h"
 
 namespace RE
 {
-	class hkClass;
 	class hkStatisticsCollector;
 
 	class hkReferencedObject : public hkBaseObject

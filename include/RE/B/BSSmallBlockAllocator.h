@@ -32,15 +32,14 @@ namespace RE
 		{
 		public:
 			// members
-			BlockPage*        pageList;              // 00
-			BlockPage*        currAlloc;             // 08
-			std::uint32_t     totalFreeBlocks;       // 10
-			std::uint32_t     totalAllocatedBlocks;  // 14
-			std::uint32_t     totalBytes;            // 18
-			std::uint32_t     elementSize;           // 1C
-			BSCriticalSection lock;                  // 20
+			BlockPage*    pageList;              // 00
+			BlockPage*    currAlloc;             // 08
+			std::uint32_t totalFreeBlocks;       // 10
+			std::uint32_t totalAllocatedBlocks;  // 14
+			std::uint32_t totalBytes;            // 18
+			std::uint32_t elementSize;           // 1C
 		};
-		static_assert(sizeof(Pool) == 0x48);
+		static_assert(sizeof(Pool) == 0x20);
 	}
 
 	struct BlockPageInternal
@@ -61,10 +60,12 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_BSSmallBlockAllocator;
+		inline static constexpr auto VTABLE = VTABLE_BSSmallBlockAllocator;
 
 		struct Pool : public BSSmallBlockAllocatorUtil::Pool
 		{
 		public:
+			BSCriticalSection lock;  // 20
 		};
 		static_assert(sizeof(Pool) == 0x48);
 

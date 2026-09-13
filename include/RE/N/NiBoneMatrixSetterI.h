@@ -6,6 +6,7 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_NiBoneMatrixSetterI;
+		inline static constexpr auto VTABLE = VTABLE_NiBoneMatrixSetterI;
 
 		virtual ~NiBoneMatrixSetterI();  // 00
 

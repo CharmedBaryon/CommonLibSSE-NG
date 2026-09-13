@@ -23,6 +23,7 @@ namespace RE
 		{
 		public:
 			inline static constexpr auto RTTI = RTTI_BSScript__IFunction;
+			inline static constexpr auto VTABLE = VTABLE_BSScript__IFunction;
 
 			enum class FunctionType
 			{

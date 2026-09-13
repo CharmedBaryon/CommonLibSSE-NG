@@ -8,14 +8,20 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_ActivateHandler;
+		inline static constexpr auto VTABLE = VTABLE_ActivateHandler;
 
 		~ActivateHandler() override;  // 00
 
 		// override (PlayerInputHandler)
-		bool CanProcess(InputEvent* a_event) override;                                  // 01
+		bool CanProcess(InputEvent* a_event) override;  // 01
+#ifdef EXCLUSIVE_SKYRIM_VR
 		void ProcessButton(ButtonEvent* a_event, PlayerControlsData* a_data) override;  // 04
+#endif
 
-		constexpr inline void SetHeldButtonActionSuccess(bool a_success) noexcept { heldButtonActionSuccess = a_success; }
+		constexpr inline void SetHeldButtonActionSuccess(bool a_success) noexcept
+		{
+			heldButtonActionSuccess = a_success;
+		}
 
 		// members
 		std::uint8_t  unk18;                    // 18
@@ -24,5 +30,5 @@ namespace RE
 		bool          disabled;                 // 1B
 		std::uint32_t unk1C;                    // 1C
 	};
-	static_assert(sizeof(ActivateHandler) == 0x20);
+	STATIC_ASSERT_SIZE(ActivateHandler, 0x20, 0x20, 0x38, 0x20);
 }

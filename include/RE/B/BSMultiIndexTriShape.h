@@ -3,7 +3,9 @@
 #include "RE/B/BSTriShape.h"
 #include "RE/N/NiColor.h"
 #include "RE/N/NiSmartPointer.h"
+#include <DirectXMath.h>
 
+#include "REL/RuntimeDataAccessors.h"
 #include "REX/W32/D3D.h"
 
 namespace RE
@@ -19,7 +21,8 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_BSMultiIndexTriShape;
-		inline static auto           Ni_RTTI = NiRTTI_BSMultiIndexTriShape;
+		inline static constexpr auto Ni_RTTI = NiRTTI_BSMultiIndexTriShape;
+		inline static constexpr auto VTABLE = VTABLE_BSMultiIndexTriShape;
 
 		struct MULTI_INDEX_TRISHAPE_RUNTIME_DATA
 		{
@@ -46,30 +49,17 @@ namespace RE
 		// override (BSGeometry)
 		const NiRTTI* GetRTTI() const override;                           // 02
 		NiObject*     CreateClone(NiCloningProcess& a_cloning) override;  // 17
-#if !defined(ENABLE_SKYRIM_VR) || (!defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_VR))
+#if defined(EXCLUSIVE_SKYRIM_FLAT)
 		// Compatibility between VR and non-VR breaks beyond this point.
 		BSMultiIndexTriShape* AsMultiIndexTriShape() override;  // 35 - { return this; }
 #endif
 
-		[[nodiscard]] inline MULTI_INDEX_TRISHAPE_RUNTIME_DATA& GetMultiIndexTrishapeRuntimeData() noexcept
-		{
-			return REL::RelocateMember<MULTI_INDEX_TRISHAPE_RUNTIME_DATA>(this, 0x160, 0x1A8);
-		}
-
-		[[nodiscard]] inline const MULTI_INDEX_TRISHAPE_RUNTIME_DATA& GetMultiIndexTrishapeRuntimeData() const noexcept
-		{
-			return REL::RelocateMember<MULTI_INDEX_TRISHAPE_RUNTIME_DATA>(this, 0x160, 0x1A8);
-		}
-
+		RUNTIME_DATA_ACCESSOR_EX(MULTI_INDEX_TRISHAPE_RUNTIME_DATA, GetMultiIndexTrishapeRuntimeData, 0x160, 0x1A0);
 		// members
 #ifndef SKYRIM_CROSS_VR
-		RUNTIME_DATA_CONTENT  // 160, 1A8
+		RUNTIME_DATA_CONTENT  // 160, 1A0
 #endif
 	};
-#ifndef ENABLE_SKYRIM_VR
-	static_assert(sizeof(BSMultiIndexTriShape) == 0x1D8);
-#elif !defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE)
-	static_assert(sizeof(BSMultiIndexTriShape) == 0x220);
-#endif
+	STATIC_ASSERT_SIZE(BSMultiIndexTriShape, 0x1D8, 0x1D8, 0x218, 0x110);
 }
 #undef RUNTIME_DATA_CONTENT

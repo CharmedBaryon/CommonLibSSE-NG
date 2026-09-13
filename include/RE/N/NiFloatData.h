@@ -9,7 +9,8 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_NiFloatData;
-		inline static auto           Ni_RTTI = NiRTTI_NiFloatData;
+		inline static constexpr auto Ni_RTTI = NiRTTI_NiFloatData;
+		inline static constexpr auto VTABLE = VTABLE_NiFloatData;
 
 		using KeyType = NiFloatKey::KeyType;
 

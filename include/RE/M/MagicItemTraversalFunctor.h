@@ -10,6 +10,7 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_MagicItemTraversalFunctor;
+		inline static constexpr auto VTABLE = VTABLE_MagicItemTraversalFunctor;
 
 		MagicItemTraversalFunctor() = default;
 		virtual ~MagicItemTraversalFunctor() = default;  // 00

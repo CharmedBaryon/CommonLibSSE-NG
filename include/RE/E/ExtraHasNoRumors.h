@@ -9,7 +9,8 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_ExtraHasNoRumors;
-		inline static auto           EXTRADATATYPE = ExtraDataType::kHasNoRumors;
+		inline static constexpr auto VTABLE = VTABLE_ExtraHasNoRumors;
+		inline static constexpr auto EXTRADATATYPE = ExtraDataType::kHasNoRumors;
 
 		~ExtraHasNoRumors() override;  // 00
 

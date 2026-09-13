@@ -8,12 +8,13 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_BGSEntryPointFunctionDataOneValue;
+		inline static constexpr auto VTABLE = VTABLE_BGSEntryPointFunctionDataOneValue;
 
 		~BGSEntryPointFunctionDataOneValue() override;  // 00
 
 		// override (BGSEntryPointFunctionData)
-		FunctionType GetType() const override;                   // 01 - { return kOneValue; }
-		bool         LoadFunctionData(TESFile* a_mod) override;  // 02
+		ENTRY_POINT_FUNCTION_DATA GetType() const override;           // 01 - { return kOneValue; }
+		bool                      LoadImpl(TESFile* a_mod) override;  // 02
 
 		// members
 		float         data;   // 08 - DATA

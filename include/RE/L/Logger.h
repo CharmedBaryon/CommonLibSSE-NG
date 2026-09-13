@@ -11,6 +11,7 @@ namespace RE
 		{
 		public:
 			inline static constexpr auto RTTI = RTTI_SkyrimScript__Logger;
+			inline static constexpr auto VTABLE = VTABLE_SkyrimScript__Logger;
 
 			~Logger() override;  // 00
 

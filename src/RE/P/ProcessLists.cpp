@@ -10,14 +10,21 @@ namespace RE
 {
 	ProcessLists* ProcessLists::GetSingleton()
 	{
-		REL::Relocation<ProcessLists**> singleton{ RELOCATION_ID(514167, 400315) };
+		static REL::Relocation<ProcessLists**> singleton{ RELOCATION_ID(514167, 400315) };
 		return *singleton;
+	}
+
+	bool ProcessLists::AreHostileActorsNear(BSScrapArray<ActorHandle>* a_arrayOut)
+	{
+		using func_t = decltype(&ProcessLists::AreHostileActorsNear);
+		static REL::Relocation<func_t> func{ RELOCATION_ID(40388, 41402) };
+		return func(this, a_arrayOut);
 	}
 
 	void ProcessLists::ClearCachedFactionFightReactions() const
 	{
 		using func_t = decltype(&ProcessLists::ClearCachedFactionFightReactions);
-		REL::Relocation<func_t> func{ RELOCATION_ID(40396, 41410) };
+		static REL::Relocation<func_t> func{ RELOCATION_ID(40396, 41410) };
 		return func(this);
 	}
 
@@ -82,14 +89,14 @@ namespace RE
 	float ProcessLists::GetSystemTimeClock()
 	{
 		using func_t = decltype(&ProcessLists::GetSystemTimeClock);
-		REL::Relocation<func_t> func{ RELOCATION_ID(40327, 41337) };
+		static REL::Relocation<func_t> func{ RELOCATION_ID(40327, 41337) };
 		return func(this);
 	}
 
 	std::int16_t ProcessLists::RequestHighestDetectionLevelAgainstActor(Actor* a_actor, std::uint32_t& a_LOSCount)
 	{
 		using func_t = decltype(&ProcessLists::RequestHighestDetectionLevelAgainstActor);
-		REL::Relocation<func_t> func{ RELOCATION_ID(40394, 41408) };
+		static REL::Relocation<func_t> func{ RELOCATION_ID(40394, 41408) };
 		return func(this, a_actor, a_LOSCount);
 	}
 
@@ -108,7 +115,7 @@ namespace RE
 	void ProcessLists::StopCombatAndAlarmOnActor(Actor* a_actor, bool a_notAlarm)
 	{
 		using func_t = decltype(&ProcessLists::StopCombatAndAlarmOnActor);
-		REL::Relocation<func_t> func{ RELOCATION_ID(40330, 41340) };
+		static REL::Relocation<func_t> func{ RELOCATION_ID(40330, 41340) };
 		return func(this, a_actor, a_notAlarm);
 	}
 }

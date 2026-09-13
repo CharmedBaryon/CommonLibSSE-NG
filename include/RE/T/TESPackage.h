@@ -31,10 +31,10 @@ namespace RE
 		kFOOD = 15
 	};
 
-	enum class PACKAGE_PROCEDURE_TYPE
+	enum class PACKAGE_TYPE
 	{
-		kNone = static_cast<std::underlying_type_t<PACKAGE_PROCEDURE_TYPE>>(-1),
-		kFind = 0,
+		kNone = static_cast<std::underlying_type_t<PACKAGE_TYPE>>(-1),
+		kExplore = 0,
 		kFollow = 1,
 		kEscort = 2,
 		kEat = 3,
@@ -51,7 +51,7 @@ namespace RE
 		kGuard = 14,
 		kDialogue = 15,
 		kUseWeapon = 16,
-		kFind2 = 17,
+		kFind = 17,
 		kPackage = 18,
 		kPackageTemplate = 19,
 		kActivate = 20,
@@ -73,13 +73,67 @@ namespace RE
 		kMovementBlocked = 36,
 		kVampireFeed = 37,
 		kCannibal = 38,
-		kUnk39 = 39,
-		kUnk40 = 40,
-		kUnk41 = 41,
-		kUnk42 = 42,
-		kUnk43 = 43,
-		kUnk44 = 44,
-		kUnk45 = 45,
+		kLanding = 39,
+		kUnused = 40,
+		kMountActor = 41,
+		kDismountActor = 42,
+		kClearMountPosition = 43,
+
+		kTotal = 44
+	};
+
+	enum class PACKAGE_PROCEDURE_TYPE
+	{
+		kNone = static_cast<std::underlying_type_t<PACKAGE_PROCEDURE_TYPE>>(-1),
+		kExploreTravel = 0,
+		kExploreWander = 1,
+		ExploreActivate = 2,
+		kExploreAcquire = 3,
+		kSleep = 4,
+		kEat = 5,
+		kFollowWithEscort = 6,
+		kAmbushFollow = 7,
+		kEscortActor = 8,
+		kEscortObject = 9,
+		kDialogue = 10,
+		kAlarm = 11,
+		kActivate = 12,
+		kGreet = 13,
+		kObserveCombat = 14,
+		kObserveDialogue = 15,
+		kTalkToDead = 16,
+		kFlee = 17,
+		kTrespass = 18,
+		kGetUpFromChairBed = 19,
+		kExploreNPC = 20,
+		kMountActor = 21,
+		kDismountActor = 22,
+		kDoNothing = 23,
+		kExploreAcquireGeneric = 24,
+		kAccompany = 25,
+		kUseItemAt = 26,
+		kVampireFeed = 27,
+		kAmbush = 28,
+		kSurface = 29,
+		kFleeNotCombat = 30,
+		kSearchForAttacker = 31,
+		kClearMountPosition = 32,
+		kWaitForDialogue = 33,
+		kAvoidPlayer = 34,
+		kSandbox = 35,
+		kPatrol = 36,
+		kReactToDestroyedObject = 37,
+		kReactToGrenadeOrMine = 38,
+		kGuard = 39,
+		kStealWarning = 40,
+		kPickPocketWarning = 41,
+		kUseWeapon = 42,
+		kFollowWithoutEscort = 43,
+		kMovementBlocked = 44,
+		kCannibal = 45,
+		kPackage = 46,
+		kLanding = 47,
+		kKeepAnEyeOn = 48
 	};
 
 	enum class PACK_EVENT_ACTION_TYPE
@@ -112,6 +166,7 @@ namespace RE
 			kUnlocksDoorsAtPackageEnd = 1 << 7,
 			kContinueIfPCNear = 1 << 9,
 			kOncePerDay = 1 << 10,
+			kCreated = 1 << 11,
 			kPreferredSpeed = 1 << 13,
 			kAlwaysSneak = 1 << 17,
 			kAllowSwimming = 1 << 18,
@@ -145,13 +200,13 @@ namespace RE
 		};
 
 		// members
-		stl::enumeration<GeneralFlag, std::uint32_t>           packFlags;              // 0
-		stl::enumeration<PACKAGE_PROCEDURE_TYPE, std::uint8_t> packType;               // 4
-		stl::enumeration<PACK_INTERRUPT_TARGET, std::uint8_t>  interruptOverrideType;  // 5
-		stl::enumeration<PreferredSpeed, std::uint8_t>         maxSpeed;               // 6
-		std::uint8_t                                           pad7;                   // 7
-		stl::enumeration<InterruptFlag, std::uint16_t>         foBehaviorFlags;        // 8
-		std::uint16_t                                          packageSpecificFlags;   // A
+		REX::EnumSet<GeneralFlag, std::uint32_t>          packFlags;              // 0
+		REX::EnumSet<PACKAGE_TYPE, std::uint8_t>          packType;               // 4
+		REX::EnumSet<PACK_INTERRUPT_TARGET, std::uint8_t> interruptOverrideType;  // 5
+		REX::EnumSet<PreferredSpeed, std::uint8_t>        maxSpeed;               // 6
+		std::uint8_t                                      pad7;                   // 7
+		REX::EnumSet<InterruptFlag, std::uint16_t>        foBehaviorFlags;        // 8
+		std::uint16_t                                     packageSpecificFlags;   // A
 	};
 	static_assert(sizeof(PACKAGE_DATA) == 0xC);
 
@@ -167,12 +222,12 @@ namespace RE
 			~Target() {}
 
 			// members
-			ObjectRefHandle                                        handle;
-			TESForm*                                               object;
-			TESForm*                                               refOrObj;
-			stl::enumeration<PACKAGE_OBJECT_TYPE, std::uint32_t>   objType;
-			std::uint32_t                                          aliasID;
-			stl::enumeration<PACK_INTERRUPT_TARGET, std::uint32_t> interruptTarg;
+			ObjectRefHandle                                    handle;
+			TESForm*                                           object;
+			TESForm*                                           refOrObj;
+			REX::EnumSet<PACKAGE_OBJECT_TYPE, std::uint32_t>   objType;
+			std::uint32_t                                      aliasID;
+			REX::EnumSet<PACK_INTERRUPT_TARGET, std::uint32_t> interruptTarg;
 		};
 		static_assert(sizeof(Target) == 0x8);
 
@@ -205,15 +260,15 @@ namespace RE
 		};
 
 		// members
-		std::int8_t                              month;      // 0
-		stl::enumeration<DayOfWeek, std::int8_t> dayOfWeek;  // 1
-		std::int8_t                              date;       // 2
-		std::int8_t                              hour;       // 3
-		std::int8_t                              minute;     // 4
-		std::uint8_t                             pad5;       // 5
-		std::uint8_t                             pad6;       // 6
-		std::uint8_t                             pad7;       // 7
-		std::int32_t                             duration;   // 8 - minutes
+		std::int8_t                          month;      // 0
+		REX::EnumSet<DayOfWeek, std::int8_t> dayOfWeek;  // 1
+		std::int8_t                          date;       // 2
+		std::int8_t                          hour;       // 3
+		std::int8_t                          minute;     // 4
+		std::uint8_t                         pad5;       // 5
+		std::uint8_t                         pad6;       // 6
+		std::uint8_t                         pad7;       // 7
+		std::int32_t                         duration;   // 8 - minutes
 	};
 	static_assert(sizeof(PACK_SCHED_DATA) == 0xC);
 
@@ -237,17 +292,17 @@ namespace RE
 			};
 
 			// members
-			stl::enumeration<Type, std::uint32_t> type;   // 00
-			std::uint32_t                         pad04;  // 04
-			TESTopic*                             topic;  // 08
+			REX::EnumSet<Type, std::uint32_t> type;   // 00
+			std::uint32_t                     pad04;  // 04
+			TESTopic*                         topic;  // 08
 		};
 		static_assert(sizeof(TopicData) == 0x10);
 
 		// members
-		TESIdleForm*                                            idle;   // 00 - INAM
-		stl::enumeration<PACK_EVENT_ACTION_TYPE, std::uint32_t> type;   // 08
-		std::uint32_t                                           pad0C;  // 0C
-		TopicData                                               topic;  // 10 - PDTO
+		TESIdleForm*                                        idle;   // 00 - INAM
+		REX::EnumSet<PACK_EVENT_ACTION_TYPE, std::uint32_t> type;   // 08
+		std::uint32_t                                       pad0C;  // 0C
+		TopicData                                           topic;  // 10 - PDTO
 	};
 	static_assert(sizeof(PackageEventAction) == 0x20);
 
@@ -296,23 +351,37 @@ namespace RE
 		[[nodiscard]] virtual bool IsTargetAtLocation(Actor* a_actor, std::int32_t a_arg2);                                        // 3E
 		[[nodiscard]] virtual bool IsPackageOwner(Actor* a_actor);                                                                 // 3F - { return true; }
 
+		static TESPackage* CreatePackage(PACKAGE_PROCEDURE_TYPE a_type)
+		{
+			using func_t = decltype(&TESPackage::CreatePackage);
+			static REL::Relocation<func_t> func{ RELOCATION_ID(28732, 29496) };
+			return func(a_type);
+		}
+
+		void SetPackType(PACKAGE_PROCEDURE_TYPE a_type)
+		{
+			using func_t = decltype(&TESPackage::SetPackType);
+			static REL::Relocation<func_t> func{ RELOCATION_ID(28751, 29525) };
+			return func(this, a_type);
+		}
+
 		// members
-		PACKAGE_DATA                                            packData;        // 20 - PKDT
-		std::uint32_t                                           pad2C;           // 2C
-		TESPackageData*                                         data;            // 30
-		PackageLocation*                                        packLoc;         // 38
-		PackageTarget*                                          packTarg;        // 40
-		BGSIdleCollection*                                      idleCollection;  // 48
-		PackageSchedule                                         packSched;       // 50 - PSDT
-		std::uint32_t                                           pad5C;           // 5C
-		TESCondition                                            packConditions;  // 60
-		TESCombatStyle*                                         combatStyle;     // 68 - CNAM
-		TESQuest*                                               ownerQuest;      // 70 - QNAM
-		PackageEventAction                                      onBegin;         // 78
-		PackageEventAction                                      onEnd;           // 98
-		PackageEventAction                                      onChange;        // B8
-		stl::enumeration<PACKAGE_PROCEDURE_TYPE, std::uint32_t> procedureType;   // D8
-		volatile std::uint32_t                                  refCount;        // DC
+		PACKAGE_DATA                                        packData;        // 20 - PKDT
+		std::uint32_t                                       pad2C;           // 2C
+		TESPackageData*                                     data;            // 30
+		PackageLocation*                                    packLoc;         // 38
+		PackageTarget*                                      packTarg;        // 40
+		BGSIdleCollection*                                  idleCollection;  // 48
+		PackageSchedule                                     packSched;       // 50 - PSDT
+		std::uint32_t                                       pad5C;           // 5C
+		TESCondition                                        packConditions;  // 60
+		TESCombatStyle*                                     combatStyle;     // 68 - CNAM
+		TESQuest*                                           ownerQuest;      // 70 - QNAM
+		PackageEventAction                                  onBegin;         // 78
+		PackageEventAction                                  onEnd;           // 98
+		PackageEventAction                                  onChange;        // B8
+		REX::EnumSet<PACKAGE_PROCEDURE_TYPE, std::uint32_t> procedureType;   // D8
+		volatile std::uint32_t                              refCount;        // DC
 	};
 	static_assert(sizeof(TESPackage) == 0xE0);
 }

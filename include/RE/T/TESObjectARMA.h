@@ -2,6 +2,8 @@
 
 #include "RE/B/BGSBipedObjectForm.h"
 #include "RE/B/BSTArray.h"
+#include "RE/B/BSTSmartPointer.h"
+#include "RE/B/BipedAnim.h"
 #include "RE/F/FormTypes.h"
 #include "RE/S/Sexes.h"
 #include "RE/T/TESModelTextureSwap.h"
@@ -50,6 +52,7 @@ namespace RE
 
 		[[nodiscard]] bool IsValidRace(TESRace* a_sourceRace) const;
 		void               GetNodeName(char* a_dstBuff, const TESObjectREFR* a_refr, const TESObjectARMO* a_armor, float a_weightOverride);
+		void               InitWornArmorAddon(TESObjectARMO* a_armor, BSTSmartPointer<RE::BipedAnim>* a_biped, SEX a_sex);
 
 		// members
 		OBJ_ARMA            data;                                 // 040 - DNAM

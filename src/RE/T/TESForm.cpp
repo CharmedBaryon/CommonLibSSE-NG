@@ -39,7 +39,7 @@ namespace RE
 	float TESForm::GetWeight() const
 	{
 		using func_t = decltype(&TESForm::GetWeight);
-		REL::Relocation<func_t> func{ RELOCATION_ID(14809, 14988) };
+		static REL::Relocation<func_t> func{ RELOCATION_ID(14809, 14988) };
 		return func(this);
 	}
 
@@ -148,9 +148,9 @@ namespace RE
 		}
 
 		const auto* expectedFile = (formID & 0xFF000000) == 0xFE000000 ?
-                                       TESDataHandler::GetSingleton()->LookupLoadedLightModByIndex(
+		                               TESDataHandler::GetSingleton()->LookupLoadedLightModByIndex(
 										   static_cast<uint16_t>((0x00FFF000 & formID) >> 12)) :
-                                       TESDataHandler::GetSingleton()->LookupLoadedModByIndex(
+		                               TESDataHandler::GetSingleton()->LookupLoadedModByIndex(
 										   static_cast<uint8_t>((0xFF000000 & formID) >> 24));
 
 		std::uint32_t fullMasters = 0;
@@ -213,10 +213,17 @@ namespace RE
 		}
 	}
 
+	void TESForm::SetFile(TESFile* a_file)
+	{
+		using func_t = decltype(&TESForm::SetFile);
+		static REL::Relocation<func_t> func{ RELOCATION_ID(14467, 14623) };
+		return func(this, a_file);
+	}
+
 	void TESForm::SetPlayerKnows(bool a_known)
 	{
 		using func_t = decltype(&TESForm::SetPlayerKnows);
-		REL::Relocation<func_t> func{ RELOCATION_ID(14482, 14639) };
+		static REL::Relocation<func_t> func{ RELOCATION_ID(14482, 14639) };
 		return func(this, a_known);
 	}
 }

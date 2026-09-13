@@ -11,6 +11,7 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_BGSSkillPerkTreeNode;
+		inline static constexpr auto VTABLE = VTABLE_BGSSkillPerkTreeNode;
 
 		BGSSkillPerkTreeNode(std::int32_t a_index, ActorValueInfo* a_avInfo);
 

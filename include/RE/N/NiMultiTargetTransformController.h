@@ -11,7 +11,8 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_NiMultiTargetTransformController;
-		inline static auto           Ni_RTTI = NiRTTI_NiMultiTargetTransformController;
+		inline static constexpr auto Ni_RTTI = NiRTTI_NiMultiTargetTransformController;
+		inline static constexpr auto VTABLE = VTABLE_NiMultiTargetTransformController;
 
 		~NiMultiTargetTransformController() override;  // 00
 

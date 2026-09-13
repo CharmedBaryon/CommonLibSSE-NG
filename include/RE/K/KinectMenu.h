@@ -21,6 +21,7 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto      RTTI = RTTI_KinectMenu;
+		inline static constexpr auto      VTABLE = VTABLE_KinectMenu;
 		constexpr static std::string_view MENU_NAME = "Kinect Menu";
 
 		~KinectMenu() override;  // 00
@@ -31,17 +32,9 @@ namespace RE
 #ifndef SKYRIM_CROSS_VR
 		// override (BSTEventSink<MenuOpenCloseEvent>)
 		BSEventNotifyControl ProcessEvent(const MenuOpenCloseEvent* a_event, BSTEventSource<MenuOpenCloseEvent>* a_eventSource) override;  // 01
+
+		RUNTIME_CAST_ACCESSOR(BSTEventSink<MenuOpenCloseEvent>, AsMenuOpenCloseEventSink, 0x30, 0x40);
 #endif
-
-		[[nodiscard]] BSTEventSink<MenuOpenCloseEvent>* AsMenuOpenCloseEventSink() noexcept
-		{
-			return &REL::RelocateMember<BSTEventSink<MenuOpenCloseEvent>>(this, 0x30, 0x40);
-		}
-
-		[[nodiscard]] const BSTEventSink<MenuOpenCloseEvent>* AsMenuOpenCloseEventSink() const noexcept
-		{
-			return const_cast<KinectMenu*>(this)->AsMenuOpenCloseEventSink();
-		}
 
 		[[nodiscard]] inline GFxValue GetRoot() const noexcept
 		{
@@ -58,9 +51,5 @@ namespace RE
 		GFxValue root;  // 38, 48 - "Menu_mc"
 #endif
 	};
-#ifndef ENABLE_SKYRIM_VR
-	static_assert(sizeof(KinectMenu) == 0x50);
-#elif !defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE)
-	static_assert(sizeof(KinectMenu) == 0x60);
-#endif
+	STATIC_ASSERT_SIZE(KinectMenu, 0x50, 0x50, 0x60, 0x30);
 }

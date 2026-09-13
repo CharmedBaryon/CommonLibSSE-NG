@@ -8,6 +8,7 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_TESAttackDamageForm;
+		inline static constexpr auto VTABLE = VTABLE_TESAttackDamageForm;
 
 		~TESAttackDamageForm() override;  // 00
 

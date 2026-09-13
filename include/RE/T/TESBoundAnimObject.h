@@ -8,6 +8,7 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_TESBoundAnimObject;
+		inline static constexpr auto VTABLE = VTABLE_TESBoundAnimObject;
 
 		~TESBoundAnimObject() override;  // 00
 

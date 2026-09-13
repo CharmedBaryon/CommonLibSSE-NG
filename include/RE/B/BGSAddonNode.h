@@ -16,9 +16,9 @@ namespace RE
 		};
 
 		// members
-		std::uint16_t                        masterParticleCap;  // 0
-		stl::enumeration<Flag, std::uint8_t> flags;              // 2
-		std::uint8_t                         pad3;               // 3
+		std::uint16_t                    masterParticleCap;  // 0
+		REX::EnumSet<Flag, std::uint8_t> flags;              // 2
+		std::uint8_t                     pad3;               // 3
 	};
 	static_assert(sizeof(ADDON_DATA) == 0x4);
 

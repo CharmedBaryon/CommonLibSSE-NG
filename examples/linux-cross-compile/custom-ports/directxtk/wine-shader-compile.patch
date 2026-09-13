@@ -1,0 +1,13 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 0000000..0000000 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -272,7 +272,7 @@
+         MAIN_DEPENDENCY "${PROJECT_SOURCE_DIR}/Src/Shaders/CompileShaders.cmd"
+         DEPENDS ${SHADER_SOURCES}
+         COMMENT "Generating HLSL shaders..."
+-        COMMAND ${CMAKE_COMMAND} -E env CompileShadersOutput="${COMPILED_SHADERS}" $<$<BOOL:${DIRECTX_FXC_TOOL}>:LegacyShaderCompiler=${DIRECTX_FXC_TOOL}> CompileShaders.cmd ARGS ${ShaderOpts} > "${COMPILED_SHADERS}/compileshaders.log"
++        COMMAND sh "${PROJECT_SOURCE_DIR}/Src/Shaders/wine-compile-shaders.sh" "${COMPILED_SHADERS}" "${DIRECTX_FXC_TOOL}" ${ShaderOpts}
+         WORKING_DIRECTORY "${PROJECT_SOURCE_DIR}/Src/Shaders"
+         USES_TERMINAL)
+ endif()

@@ -1,10 +1,12 @@
 #pragma once
 
+#include "RE/A/ActorValues.h"
 #include "RE/B/BSTArray.h"
 #include "RE/B/BSTEvent.h"
 #include "RE/G/GFxValue.h"
 #include "RE/I/IMenu.h"
 #include "RE/W/WorldSpaceMenu.h"
+#include "REL/RuntimeDataAccessors.h"
 
 namespace RE
 {
@@ -19,7 +21,7 @@ namespace RE
 	// flags = kAlwaysOpen | kRequiresUpdate | kAllowSaving | kCustomRendering | kAssignCursorToRenderer
 	// context = kNone
 	class HUDMenu :
-#if !defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE)
+#if defined(EXCLUSIVE_SKYRIM_VR)
 		public WorldSpaceMenu,                       // 00
 		public BSTEventSink<UserEventEnabledEvent>,  // 58
 		public BSTEventSink<BSRemoteGamepadEvent>    // 60
@@ -79,62 +81,40 @@ namespace RE
 			return const_cast<HUDMenu*>(this)->AsWorldSpaceMenu();
 		}
 
-		[[nodiscard]] BSTEventSink<UserEventEnabledEvent>* AsUserEventEnabledEventSink() noexcept
-		{
-			return &REL::RelocateMember<BSTEventSink<UserEventEnabledEvent>>(this, 0x30, 0x58);
-		}
+#ifndef SKYRIM_CROSS_VR
+		RUNTIME_CAST_ACCESSOR(BSTEventSink<UserEventEnabledEvent>, AsUserEventEnabledEventSink, 0x30, 0x58);
+		RUNTIME_CAST_ACCESSOR(BSTEventSink<BSRemoteGamepadEvent>, AsBSRemoteGamepadEventSink, 0x38, 0x60);
+#endif
 
-		[[nodiscard]] const BSTEventSink<UserEventEnabledEvent>* AsUserEventEnabledEventSink() const noexcept
-		{
-			return const_cast<HUDMenu*>(this)->AsUserEventEnabledEventSink();
-		}
-
-		[[nodiscard]] BSTEventSink<BSRemoteGamepadEvent>* AsBSRemoteGamepadEventSink() noexcept
-		{
-			return &REL::RelocateMember<BSTEventSink<BSRemoteGamepadEvent>>(this, 0x38, 0x60);
-		}
-
-		[[nodiscard]] const BSTEventSink<BSRemoteGamepadEvent>* AsBSRemoteGamepadEventSink() const noexcept
-		{
-			return const_cast<HUDMenu*>(this)->AsBSRemoteGamepadEventSink();
-		}
-
-		[[nodiscard]] inline RUNTIME_DATA& GetRuntimeData() noexcept
-		{
-			return REL::RelocateMember<RUNTIME_DATA>(this, 0x40, 0x70);
-		}
-
-		[[nodiscard]] inline const RUNTIME_DATA& GetRuntimeData() const noexcept
-		{
-			return REL::RelocateMember<RUNTIME_DATA>(this, 0x40, 0x70);
-		}
-
+		RUNTIME_DATA_ACCESSOR(RUNTIME_DATA, 0x40, 0x70);
 		static void FlashMeter(ActorValue a_actorValue)
 		{
 			using func_t = decltype(&HUDMenu::FlashMeter);
-			REL::Relocation<func_t> func{ RELOCATION_ID(51907, 52845) };
+			static REL::Relocation<func_t> func{ RELOCATION_ID(51907, 52845) };
 			return func(a_actorValue);
 		}
 
 		static void UpdateCrosshairMagicTarget(bool a_valid)
 		{
 			using func_t = decltype(&HUDMenu::UpdateCrosshairMagicTarget);
-			REL::Relocation<func_t> func{ RELOCATION_ID(50738, 51633) };
+			static REL::Relocation<func_t> func{ RELOCATION_ID(50738, 51633) };
 			return func(a_valid);
 		}
 
 		// members
 #ifndef SKYRIM_CROSS_VR
-#	if !defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE)
+#	if defined(EXCLUSIVE_SKYRIM_VR)
 		std::uint64_t pad68;  // 68
 #	endif
-		RUNTIME_DATA_CONTENT  // 40, 70
+		RUNTIME_DATA_CONTENT;  // 40, 70
 #endif
 	};
 #ifndef ENABLE_SKYRIM_VR
 	static_assert(sizeof(HUDMenu) == 0x98);
-#elif !defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE)
+#elif defined(EXCLUSIVE_SKYRIM_VR)
 	static_assert(sizeof(HUDMenu) == 0xC8);
+#else
+	static_assert(sizeof(HUDMenu) == 0x30);
 #endif
 }
 #undef RUNTIME_DATA_CONTENT

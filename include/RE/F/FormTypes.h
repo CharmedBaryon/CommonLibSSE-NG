@@ -293,18 +293,12 @@ namespace std
 
 #ifdef FMT_VERSION
 template <>
-struct fmt::formatter<RE::FormType>
+struct fmt::formatter<RE::FormType> : fmt::formatter<std::string_view>
 {
-	template <class ParseContext>
-	constexpr auto parse(ParseContext& a_ctx)
-	{
-		return a_ctx.begin();
-	}
-
 	template <class FormatContext>
-	auto format(const RE::FormType& a_formType, FormatContext& a_ctx)
+	auto format(const RE::FormType& a_formType, FormatContext& a_ctx) const
 	{
-		return fmt::format_to(a_ctx.out(), "{}", RE::FormTypeToString(a_formType));
+		return fmt::formatter<std::string_view>::format(RE::FormTypeToString(a_formType), a_ctx);
 	}
 };
 #endif

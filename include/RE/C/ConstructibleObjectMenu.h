@@ -12,19 +12,21 @@ namespace RE
 		{
 		public:
 			inline static constexpr auto RTTI = RTTI_CraftingSubMenus__ConstructibleObjectMenu;
+			inline static constexpr auto VTABLE = VTABLE_CraftingSubMenus__ConstructibleObjectMenu;
 
 			class CreationConfirmCallback : public IMessageBoxCallback
 			{
 			public:
 				inline static constexpr auto RTTI = RTTI_CraftingSubMenus__ConstructibleObjectMenu__CreationConfirmCallback;
+				inline static constexpr auto VTABLE = VTABLE_CraftingSubMenus__ConstructibleObjectMenu__CreationConfirmCallback;
 
 				~CreationConfirmCallback() override;  // 00
 
 				// override (IMessageBoxCallback)
-				void Run(Message a_msg) override;  // 01
+				void Run(std::uint8_t a_button) override;  // 01
 
 				// members
-				ConstructibleObjectMenu* menu;  // 10
+				ConstructibleObjectMenu* subMenu;  // 10
 			};
 			static_assert(sizeof(CreationConfirmCallback) == 0x18);
 
@@ -74,13 +76,13 @@ namespace RE
 
 			// override (CraftingSubMenu)
 			void Accept(CallbackProcessor* a_cbReg) override;     // 01
-			void Unk_06(void) override;                           // 06
+			void UpdateConstructibleList() override;              // 06
 			void SetItemCardInfo(ItemCard* a_itemCard) override;  // 07
 
 			// members
-			BSTArray<ItemEntry>             crafts;               // 100
+			BSTArray<ItemEntry>             recipes;              // 100
 			BSTHashMap<FormID, FilterFlags> materialFilterFlags;  // 118 - kwd's formid -> FilterFlags
-			std::uint32_t                   currentCobjIdx;       // 148
+			std::uint32_t                   currentIndex;         // 148
 			std::uint32_t                   pad14C;               // 14C
 			std::uint64_t                   unk150;               // 150
 			std::uint64_t                   unk158;               // 158

@@ -17,6 +17,7 @@ namespace RE
 		{
 		public:
 			inline static constexpr auto RTTI = RTTI_SkyrimScript____SetPositionFunctor;
+			inline static constexpr auto VTABLE = VTABLE_SkyrimScript____SetPositionFunctor;
 
 			~SetPositionFunctor() override;  // 00
 

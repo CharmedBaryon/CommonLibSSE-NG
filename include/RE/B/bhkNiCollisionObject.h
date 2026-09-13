@@ -11,7 +11,8 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_bhkNiCollisionObject;
-		inline static auto           Ni_RTTI = NiRTTI_bhkNiCollisionObject;
+		inline static constexpr auto Ni_RTTI = NiRTTI_bhkNiCollisionObject;
+		inline static constexpr auto VTABLE = VTABLE_bhkNiCollisionObject;
 
 		enum class Flag
 		{
@@ -51,9 +52,9 @@ namespace RE
 		virtual void Unk_30(void);      // 30 - { return 1; }
 
 		// members
-		stl::enumeration<Flag, std::uint32_t> flags;  // 18
-		std::uint32_t                         pad1C;  // 1C
-		NiPointer<bhkWorldObject>             body;   // 20
+		REX::EnumSet<Flag, std::uint32_t> flags;  // 18
+		std::uint32_t                     pad1C;  // 1C
+		NiPointer<bhkWorldObject>         body;   // 20
 	};
 	static_assert(sizeof(bhkNiCollisionObject) == 0x28);
 }

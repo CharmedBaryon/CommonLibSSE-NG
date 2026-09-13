@@ -3,9 +3,15 @@
 #include "RE/B/BSTArray.h"
 #include "RE/N/NiRefObject.h"
 #include "RE/N/NiSmartPointer.h"
+#include "RE/N/NiTPointerList.h"
 
 namespace RE
 {
+	class BSMultiBoundRoom;
+	class BSOcclusionShape;
+	class BSPortal;
+	class BSPortalGraphEntry;
+	class BSPortalSharedNode;
 	class NiAVObject;
 	class NiNode;
 
@@ -13,26 +19,42 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_BSPortalGraph;
+		inline static constexpr auto VTABLE = VTABLE_BSPortalGraph;
+
+		template <typename T>
+		struct ListEntry
+		{
+			ListEntry<T>* next;   // 00
+			ListEntry<T>* prev;   // 08
+			T*            value;  // 10
+		};
+		static_assert(sizeof(ListEntry<BSPortal>) == 0x18);
+
+		template <typename T>
+		struct List
+		{
+			ListEntry<T>* first;  // 00
+			ListEntry<T>* last;   // 08
+			uint32_t      count;  // 10
+		};
+		static_assert(sizeof(List<BSPortal>) == 0x18);
 
 		~BSPortalGraph() override;  // 00
 
+		// add
+		bool IsCompatibleEntry(const BSPortalGraphEntry* a_entry) const;
+
 		// members
-		std::uint64_t                   unk10;             // 10
-		std::uint64_t                   unk18;             // 18
-		std::uint32_t                   unk20;             // 20
-		std::uint32_t                   unk24;             // 24
-		std::uint64_t                   unk28;             // 28
-		std::uint64_t                   unk30;             // 30
-		std::uint32_t                   unk38;             // 38
-		std::uint32_t                   unk3C;             // 3C
-		BSTArray<void*>                 unk40;             // 40
-		BSTArray<void*>                 unk58;             // 58
-		NiPointer<NiNode>               portalSharedNode;  // 70
-		BSTArray<NiPointer<NiAVObject>> unk78;             // 78
-		BSTArray<NiPointer<NiAVObject>> unk90;             // 90
-		BSTArray<void*>                 unkA8;             // A8
-		FormID                          cellID;            // C0
-		std::uint32_t                   padC4;             // C4
+		NiTPointerList<BSOcclusionShape>      occlusionShapes;       // 10
+		NiTPointerList<BSPortal>              portals;               // 28
+		BSTArray<NiPointer<BSMultiBoundRoom>> rooms;                 // 40
+		BSTArray<NiPointer<NiAVObject>>       alwaysRenderChildren;  // 58
+		NiPointer<BSPortalSharedNode>         portalSharedNode;      // 70
+		BSTArray<NiPointer<NiAVObject>>       unk78;                 // 78
+		BSTArray<NiPointer<NiAVObject>>       unk90;                 // 90
+		BSTArray<NiPointer<NiNode>>           unkA8;                 // A8
+		FormID                                cellID;                // C0
+		std::uint32_t                         padC4;                 // C4
 	};
 	static_assert(sizeof(BSPortalGraph) == 0xC8);
 }

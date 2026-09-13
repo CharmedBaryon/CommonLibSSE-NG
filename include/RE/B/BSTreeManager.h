@@ -19,6 +19,7 @@ namespace RE
 		{
 		public:
 			inline static constexpr auto RTTI = RTTI_BSTreeManager__IQueryCullingCamera;
+			inline static constexpr auto VTABLE = VTABLE_BSTreeManager__IQueryCullingCamera;
 
 			virtual ~IQueryCullingCamera();  // 00
 
@@ -29,7 +30,7 @@ namespace RE
 
 		static BSTreeManager* GetSingleton()
 		{
-			REL::Relocation<BSTreeManager**> singleton{ RELOCATION_ID(514181, 400330) };
+			static REL::Relocation<BSTreeManager**> singleton{ RELOCATION_ID(514181, 400330) };
 			return *singleton;
 		}
 

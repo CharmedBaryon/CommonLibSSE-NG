@@ -13,6 +13,7 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_Archive;
+		inline static constexpr auto VTABLE = VTABLE_Archive;
 
 		~Archive() override;  // 00
 
@@ -32,5 +33,7 @@ namespace RE
 		std::uint64_t unk220;  // 220
 		std::uint64_t unk228;  // 228
 	};
+#if defined(EXCLUSIVE_SKYRIM_FLAT)
 	static_assert(sizeof(Archive) == 0x230);
+#endif
 }

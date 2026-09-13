@@ -193,7 +193,7 @@ namespace RE
 			kKeywordFurnitureForces1stPerson = 180,
 			kKeywordFurnitureForces3rdPerson = 181,
 			kKeywordActivatorFurnitureNoPlayer = 182,
-#ifndef ENABLE_SKYRIM_VR
+#if defined(EXCLUSIVE_SKYRIM_FLAT)
 			kTelekinesisGrabSound = 183,
 			kTelekinesisThrowSound = 184,
 			kWorldMapWeather = 185,
@@ -374,10 +374,16 @@ namespace RE
 			kKeywordArmorMaterialHeavyStalhrim = 360,
 			kKeywordWeaponMaterialNordic = 361,
 			kKeywordWeaponMaterialStalhrim = 362,
+#	if defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE)
+			kHelpManualInstalledContent = 363,
+			kHelpManualInstalledContentAE = 364,
+			kModsHelpFormList = 365,
+			kTotal = 366
+#	else  // SSE
 			kModsHelpFormList = 363,
-
 			kTotal = 364
-#elif !defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE)
+#	endif
+#elif defined(EXCLUSIVE_SKYRIM_VR)
 			kisJarlChair = 184,
 			kFurnitureAnimatesFast = 185,
 			isCartTravelPlayer = 186,
@@ -568,7 +574,15 @@ namespace RE
 	};
 	using DEFAULT_OBJECT = DEFAULT_OBJECTS::DEFAULT_OBJECT;
 
-#define MakeDefaultObjectID(se, vr) (se | (vr << 16))
+// IDs pack SE (low 16) + VR (high 16). Single-runtime builds resolve to the
+// concrete index; SKYRIM_CROSS_VR keeps the packed form for runtime selection.
+#if defined(SKYRIM_CROSS_VR)
+#	define MakeDefaultObjectID(se, vr) (se | (vr << 16))
+#elif defined(EXCLUSIVE_SKYRIM_VR)
+#	define MakeDefaultObjectID(se, vr) (vr)
+#else
+#	define MakeDefaultObjectID(se, vr) (se)
+#endif
 	enum class DefaultObjectID
 	{
 		kWerewolfSpell = 0,
@@ -972,13 +986,13 @@ namespace RE
 	{
 	public:
 		// members
-		const char*                                          name;         // 00
-		stl::enumeration<FormType, std::uint8_t>             type;         // 08
-		std::uint8_t                                         pad09;        // 09
-		std::uint16_t                                        pad0A;        // 0A
-		char                                                 uniqueID[4];  // 0C
-		stl::enumeration<DEFAULT_OBJECT_TYPE, std::uint32_t> doType;       // 10
-		std::uint32_t                                        pad14;        // 14
+		const char*                                      name;         // 00
+		REX::EnumSet<FormType, std::uint8_t>             type;         // 08
+		std::uint8_t                                     pad09;        // 09
+		std::uint16_t                                    pad0A;        // 0A
+		char                                             uniqueID[4];  // 0C
+		REX::EnumSet<DEFAULT_OBJECT_TYPE, std::uint32_t> doType;       // 10
+		std::uint32_t                                    pad14;        // 14
 	};
 	static_assert(sizeof(DEFAULT_OBJECT_DATA) == 0x18);
 
@@ -1009,19 +1023,21 @@ namespace RE
 		[[nodiscard]] static BGSDefaultObjectManager* GetSingleton()
 		{
 			using func_t = decltype(&BGSDefaultObjectManager::GetSingleton);
-			REL::Relocation<func_t> func{ RELOCATION_ID(10878, 13894) };
+			static REL::Relocation<func_t> func{ RELOCATION_ID(10878, 13894) };
 			return func();
 		}
 
 		[[nodiscard]] TESForm* GetObject(DefaultObject a_object) const noexcept
 		{
-			return GetObject(std::to_underlying(a_object));
+			auto obj = const_cast<BGSDefaultObjectManager*>(this)->GetObject(static_cast<DefaultObjectID>(std::to_underlying(a_object)));
+			return obj ? *obj : nullptr;
 		}
 
 		template <class T>
 		[[nodiscard]] T* GetObject(DefaultObject a_object) const noexcept
 		{
-			return GetObject<T>(std::to_underlying(a_object));
+			auto obj = const_cast<BGSDefaultObjectManager*>(this)->GetObject<T>(static_cast<DefaultObjectID>(std::to_underlying(a_object)));
+			return obj ? *obj : nullptr;
 		}
 
 		[[nodiscard]] TESForm* GetObject(std::size_t a_idx) const noexcept
@@ -1046,17 +1062,26 @@ namespace RE
 			return obj && *obj && (*obj)->As<T>() ? reinterpret_cast<T**>(obj) : nullptr;
 		}
 
+		enum class Ae1799Object : std::size_t
+		{
+			kHelpManualNX = 188,
+			kHelpMotionAttackBlock = 264,
+			kHelpMotionBowAiming = 265,
+			kHelpMotionMagicAiming = 266,
+			kHelpMotionLockpicking = 267,
+			kHelpAmiibo = 268,
+		};
+
+		[[nodiscard]] TESForm** GetAe1799Object(Ae1799Object a_object) noexcept;
+
 		[[nodiscard]] bool IsObjectInitialized(DEFAULT_OBJECT a_object) const noexcept
 		{
-			return IsObjectInitialized(std::to_underlying(a_object));
+			return IsObjectInitialized(static_cast<DefaultObjectID>(std::to_underlying(a_object)));
 		}
 
 		[[nodiscard]] bool IsObjectInitialized(DefaultObjectID a_object) const noexcept;
 
-		[[nodiscard]] bool IsObjectInitialized(std::size_t a_idx) const noexcept
-		{
-			return (&REL::RelocateMember<bool>(this, 0xB80, 0xBA8))[a_idx];
-		}
+		[[nodiscard]] bool IsObjectInitialized(std::size_t a_idx) const noexcept;
 
 		[[nodiscard]] static bool SupportsVR(DefaultObjectID a_object) noexcept;
 
@@ -1078,8 +1103,16 @@ namespace RE
 		std::uint8_t unk5D8[0x718];  // 5D8
 #endif
 	};
-#if !defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE)
+#if defined(EXCLUSIVE_SKYRIM_VR)
 	static_assert(sizeof(BGSDefaultObjectManager) == 0xD20);
+#elif defined(EXCLUSIVE_SKYRIM_FLAT)
+#	if defined(EXCLUSIVE_SKYRIM_AE)
+	static_assert(sizeof(BGSDefaultObjectManager) == 0xD08);
+#	elif defined(EXCLUSIVE_SKYRIM_SE)
+	static_assert(sizeof(BGSDefaultObjectManager) == 0xCF0);
+#	else
+	static_assert(sizeof(BGSDefaultObjectManager) == 0xCF0);
+#	endif
 #else
 	static_assert(sizeof(BGSDefaultObjectManager) == 0xCF0);
 #endif

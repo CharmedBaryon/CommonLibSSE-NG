@@ -46,20 +46,20 @@ namespace RE
 				kFitSlope = 1 << 2
 			};
 
-			std::int8_t                                        density;                 // 00
-			std::int8_t                                        minSlopeDegrees;         // 01
-			std::int8_t                                        maxSlopeDegrees;         // 02
-			std::uint8_t                                       pad03;                   // 03
-			std::uint16_t                                      distanceFromWaterLevel;  // 04
-			std::uint16_t                                      pad06;                   // 06
-			stl::enumeration<GRASS_WATER_STATE, std::uint32_t> underwater;              // 08
-			float                                              positionRange;           // 0C
-			float                                              heightRange;             // 10
-			float                                              colorRange;              // 14
-			float                                              wavePeriod;              // 18
-			stl::enumeration<Flag, std::uint8_t>               flags;                   // 1C
-			std::uint8_t                                       pad1D;                   // 1D
-			std::uint16_t                                      pad1E;                   // 1E
+			std::int8_t                                    density;                 // 00
+			std::int8_t                                    minSlopeDegrees;         // 01
+			std::int8_t                                    maxSlopeDegrees;         // 02
+			std::uint8_t                                   pad03;                   // 03
+			std::uint16_t                                  distanceFromWaterLevel;  // 04
+			std::uint16_t                                  pad06;                   // 06
+			REX::EnumSet<GRASS_WATER_STATE, std::uint32_t> underwater;              // 08
+			float                                          positionRange;           // 0C
+			float                                          heightRange;             // 10
+			float                                          colorRange;              // 14
+			float                                          wavePeriod;              // 18
+			REX::EnumSet<Flag, std::uint8_t>               flags;                   // 1C
+			std::uint8_t                                   pad1D;                   // 1D
+			std::uint16_t                                  pad1E;                   // 1E
 		};
 		static_assert(sizeof(GRASS_DATA) == 0x20);
 

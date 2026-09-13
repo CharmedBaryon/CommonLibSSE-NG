@@ -6,6 +6,8 @@
 
 namespace RE
 {
+	class CombatBehaviorThread;
+
 	struct TLSData
 	{
 		inline static constexpr uint32_t CACHED_EXTRA_DATA_SIZE = (static_cast<uint32_t>(ExtraDataType::kResourcesPreload) + 1);
@@ -16,7 +18,9 @@ namespace RE
 		BSExtraData*                     cachedExtraData[CACHED_EXTRA_DATA_SIZE];  // 020 - ExtraData types up to kResourcesPreload (0xB5) are cached
 		std::uint8_t                     unk5D0[0x30];                             // 5D0
 		bool                             consoleMode;                              // 600
-		std::uint8_t                     unk601[0x167];                            // 601
+		std::uint8_t                     unk601[0x9F];                             // 601
+		CombatBehaviorThread*            combatAIThread;                           // 6A0
+		std::uint8_t                     unk6A8[0xC0];                             // 6A8
 		std::uint32_t                    taskFlag;                                 // 768 -- unknown enum
 																				   // ... many others ...
 	};
@@ -25,8 +29,8 @@ namespace RE
 
 	inline static TLSData* GetStaticTLSData()
 	{
-		REL::Relocation<std::uint32_t*> tlsIndex{ Offset::TlsIndex };
-		auto                            tlsDataArray = reinterpret_cast<TLSData**>(__readgsqword(0x58));
+		static REL::Relocation<std::uint32_t*> tlsIndex{ RELOCATION_ID(528600, 415542) };
+		auto                                   tlsDataArray = reinterpret_cast<TLSData**>(__readgsqword(0x58));
 		return tlsDataArray[*tlsIndex];
 	}
 }

@@ -7,7 +7,7 @@ namespace RE
 {
 	const NiRTTI* NiObject::GetRTTI() const
 	{
-		REL::Relocation<const NiRTTI*> rtti{ NiObject::Ni_RTTI };
+		static REL::Relocation<const NiRTTI*> rtti{ NiObject::Ni_RTTI };
 		return rtti.get();
 	}
 
@@ -24,14 +24,21 @@ namespace RE
 	void NiObject::ProcessClone(NiCloningProcess& a_cloning)
 	{
 		using func_t = decltype(&NiObject::ProcessClone);
-		REL::Relocation<func_t> func{ RELOCATION_ID(68838, 70190) };
+		static REL::Relocation<func_t> func{ RELOCATION_ID(68838, 70190) };
 		return func(this, a_cloning);
+	}
+
+	NiObject* NiObject::Clone()
+	{
+		using func_t = decltype(&NiObject::Clone);
+		static REL::Relocation<func_t> func{ RELOCATION_ID(68835, 70187) };
+		return func(this);
 	}
 
 	void NiObject::CreateDeepCopy(NiPointer<NiObject>& a_object)
 	{
 		using func_t = decltype(&NiObject::CreateDeepCopy);
-		REL::Relocation<func_t> func{ RELOCATION_ID(68839, 70191) };
+		static REL::Relocation<func_t> func{ RELOCATION_ID(68839, 70191) };
 		return func(this, a_object);
 	}
 }

@@ -35,7 +35,7 @@ namespace RE
 		{
 		public:
 			// members
-			stl::enumeration<ArtType, std::uint32_t> artType;  // 0
+			REX::EnumSet<ArtType, std::uint32_t> artType;  // 0
 		};
 		static_assert(sizeof(Data) == 0x4);
 

@@ -8,7 +8,8 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_bhkWorldObject;
-		inline static auto           Ni_RTTI = NiRTTI_bhkWorldObject;
+		inline static constexpr auto Ni_RTTI = NiRTTI_bhkWorldObject;
+		inline static constexpr auto VTABLE = VTABLE_bhkWorldObject;
 
 		~bhkWorldObject() override;  // 00
 
@@ -19,15 +20,18 @@ namespace RE
 		bool          RegisterStreamables(NiStream& a_stream) override;  // 1A
 		void          SaveBinary(NiStream& a_stream) override;           // 1B
 		void          AdjustRefCount(bool a_increment) override;         // 26
-		hkpWorld*     GetWorld1() override;                              // 27 - { return world; }
-		ahkpWorld*    GetWorld2() override;                              // 28 - { return world; }
+		hkpWorld*     GetWorld1() override;                              // 27 - { return referencedObject ? static_cast<hkpWorldObject*>(referencedObject.get())->world : nullptr; }
+		ahkpWorld*    GetWorld2() override;                              // 28 - same as GetWorld1
 		void          MoveToWorld(bhkWorld* a_world) override;           // 29
 
 		// add
 		virtual void Unk_32(void);  // 32 - { return Unk_29(); }
 
 		// members
-		hkpWorld* world;  // 20
+		// NOT hkpWorld* - GetWorld1/GetWorld2/MoveToWorld resolve the live hkpWorld via referencedObject
+		// instead. Low word is toggled as a flag by bhkNiCollisionObject's tree-visitor callback; the
+		// rest is unconfirmed.
+		std::uint64_t unk20;  // 20
 	};
 	static_assert(sizeof(bhkWorldObject) == 0x28);
 }

@@ -4,9 +4,11 @@
 
 namespace RE
 {
-	struct hkConstraintInternal;
 	class hkpConstraintData;
+	class hkpConstraintListener;
 	class hkpConstraintOwner;
+	struct hkConstraintInternal;
+	struct hkpConstraintAtom;
 	struct hkpModifierConstraintAtom;
 
 	class hkpConstraintInstance : public hkReferencedObject
@@ -47,37 +49,37 @@ namespace RE
 		}
 
 		// members
-		hkpConstraintOwner*                                    owner;                 // 10
-		hkpConstraintData*                                     data;                  // 18
-		hkpModifierConstraintAtom*                             constraintModifiers;   // 20
-		hkpEntity*                                             entities[2];           // 28
-		stl::enumeration<ConstraintPriority, std::uint8_t>     priority;              // 38
-		bool                                                   wantRuntime;           // 39
-		stl::enumeration<OnDestructionRemapInfo, std::uint8_t> destructionRemapInfo;  // 3A
-		hkSmallArray<hkpConstraintListener*>                   listeners;             // 40
-		hkStringPtr                                            name;                  // 50
-		uint64_t                                               userData;              // 58
-		hkConstraintInternal*                                  internal;              // 60
-		uint32_t                                               uid;                   // 68
+		hkpConstraintOwner*                                owner;                 // 10
+		hkpConstraintData*                                 data;                  // 18
+		hkpModifierConstraintAtom*                         constraintModifiers;   // 20
+		hkpEntity*                                         entities[2];           // 28
+		REX::EnumSet<ConstraintPriority, std::uint8_t>     priority;              // 38
+		bool                                               wantRuntime;           // 39
+		REX::EnumSet<OnDestructionRemapInfo, std::uint8_t> destructionRemapInfo;  // 3A
+		hkSmallArray<hkpConstraintListener*>               listeners;             // 40
+		hkStringPtr                                        name;                  // 50
+		uint64_t                                           userData;              // 58
+		hkConstraintInternal*                              internal;              // 60
+		uint32_t                                           uid;                   // 68
 	};
 	static_assert(sizeof(hkpConstraintInstance) == 0x70);
 
 	struct hkConstraintInternal
 	{
-		hkpConstraintInstance*                                                    constraint;          // 00
-		hkpEntity*                                                                entities[2];         // 08
-		hkpConstraintAtom*                                                        atoms;               // 18
-		uint16_t                                                                  atomsSize;           // 20
-		uint8_t                                                                   callbackRequest;     // 22
-		stl::enumeration<hkpConstraintInstance::ConstraintPriority, std::uint8_t> priority;            // 23
-		uint16_t                                                                  sizeOfSchemas;       // 24
-		uint16_t                                                                  numSolverResults;    // 26
-		uint16_t                                                                  numSolverElemTemps;  // 28
-		uint8_t                                                                   whoIsMaster;         // 2A
-		bool                                                                      isNormalType;        // 2B
-		hkpConstraintRuntime*                                                     runtime;             // 30
-		uint16_t                                                                  runtimeSize;         // 38
-		hkObjectIndex                                                             slaveIndex;          // 3A
+		hkpConstraintInstance*                                                constraint;          // 00
+		hkpEntity*                                                            entities[2];         // 08
+		hkpConstraintAtom*                                                    atoms;               // 18
+		uint16_t                                                              atomsSize;           // 20
+		uint8_t                                                               callbackRequest;     // 22
+		REX::EnumSet<hkpConstraintInstance::ConstraintPriority, std::uint8_t> priority;            // 23
+		uint16_t                                                              sizeOfSchemas;       // 24
+		uint16_t                                                              numSolverResults;    // 26
+		uint16_t                                                              numSolverElemTemps;  // 28
+		uint8_t                                                               whoIsMaster;         // 2A
+		bool                                                                  isNormalType;        // 2B
+		hkpConstraintRuntime*                                                 runtime;             // 30
+		uint16_t                                                              runtimeSize;         // 38
+		hkObjectIndex                                                         slaveIndex;          // 3A
 	};
 	static_assert(sizeof(hkConstraintInternal) == 0x40);
 }

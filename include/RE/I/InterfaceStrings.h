@@ -2,6 +2,7 @@
 
 #include "RE/B/BSFixedString.h"
 #include "RE/B/BSTSingleton.h"
+#include "REL/RuntimeDataAccessors.h"
 
 namespace RE
 {
@@ -10,6 +11,114 @@ namespace RE
 	public:
 		static InterfaceStrings* GetSingleton();
 
+		struct RUNTIME_DATA
+		{
+#define RUNTIME_DATA_CONTENT                                                       \
+	BSFixedString creationClubMenu;        /* 198 - "Creation Club Menu */         \
+	BSFixedString titleSequenceMenu;       /* 1A8 - "TitleSequence Menu */         \
+	BSFixedString consoleNativeUIMenu;     /* 1B0 - "Console Native UI Menu */     \
+	BSFixedString kinectMenu;              /* 1B8 - "Kinect Menu */                \
+	BSFixedString loadWaitSpinner;         /* 1C0 - "LoadWaitSpinner */            \
+	BSFixedString streamingInstallMenu;    /* 1C8 - "StreamingInstallMenu */       \
+	BSFixedString textWidget;              /* 1D0 - "TextWidget */                 \
+	BSFixedString buttonBarWidget;         /* 1D8 - "ButtonBarWidget */            \
+	BSFixedString graphWidget;             /* 1E0 - "GraphWidget */                \
+	BSFixedString textureWidget;           /* 1E8 - "TextureWidget */              \
+	BSFixedString uiMenuOK;                /* 1F0 - "UIMenuOK */                   \
+	BSFixedString uiMenuCancel;            /* 1F8 - "UIMenuCancel */               \
+	BSFixedString showText;                /* 200 - "Show Text */                  \
+	BSFixedString hideText;                /* 208 - "Hide Text */                  \
+	BSFixedString showList;                /* 210 - "Show List */                  \
+	BSFixedString voiceReady;              /* 218 - "Voice Ready */                \
+	BSFixedString dmfoStr;                 /* 220 - "DMFOStr */                    \
+	BSFixedString showJournal;             /* 228 - "Show Journal */               \
+	BSFixedString journalSettingsSaved;    /* 230 - "Journal Settings Saved */     \
+	BSFixedString closeMenu;               /* 238 - "CloseMenu */                  \
+	BSFixedString closingAllMenus;         /* 240 - "Closing All Menus */          \
+	BSFixedString refreshMenu;             /* 248 - "RefreshMenu */                \
+	BSFixedString cancelLoading;           /* 250 - "CancelLoading */              \
+	BSFixedString menuTextureDegradeEvent; /* 258 - "Menu Texture Degrade Event */ \
+	BSFixedString diamondMarker;           /* 270 - "<img src='DiamondMarker' width='10' height='15' align='baseline' vspace='5 */
+
+			RUNTIME_DATA_CONTENT
+		};
+
+		struct AE_RUNTIME_DATA
+		{
+// Offsets bumped for loginMenu addition
+#define AE_RUNTIME_DATA_CONTENT                                                    \
+	BSFixedString creationClubMenu;        /* 198 - "Creation Club Menu */         \
+	BSFixedString loginMenu;               /* 1A0 - "Login Menu" */                \
+	BSFixedString marketplaceMenu;         /* 1A8 - "Marketplace Menu */           \
+	BSFixedString titleSequenceMenu;       /* 1B0 - "TitleSequence Menu */         \
+	BSFixedString consoleNativeUIMenu;     /* 1B8 - "Console Native UI Menu */     \
+	BSFixedString kinectMenu;              /* 1C0 - "Kinect Menu */                \
+	BSFixedString loadWaitSpinner;         /* 1C8 - "LoadWaitSpinner */            \
+	BSFixedString streamingInstallMenu;    /* 1D0 - "StreamingInstallMenu */       \
+	BSFixedString textWidget;              /* 1D8 - "TextWidget */                 \
+	BSFixedString buttonBarWidget;         /* 1E0 - "ButtonBarWidget */            \
+	BSFixedString graphWidget;             /* 1E8 - "GraphWidget */                \
+	BSFixedString textureWidget;           /* 1F0 - "TextureWidget */              \
+	BSFixedString uiMenuOK;                /* 1F8 - "UIMenuOK */                   \
+	BSFixedString uiMenuCancel;            /* 200 - "UIMenuCancel */               \
+	BSFixedString showText;                /* 208 - "Show Text */                  \
+	BSFixedString hideText;                /* 210 - "Hide Text */                  \
+	BSFixedString showList;                /* 218 - "Show List */                  \
+	BSFixedString voiceReady;              /* 220 - "Voice Ready */                \
+	BSFixedString dmfoStr;                 /* 228 - "DMFOStr */                    \
+	BSFixedString showJournal;             /* 230 - "Show Journal */               \
+	BSFixedString journalSettingsSaved;    /* 238 - "Journal Settings Saved */     \
+	BSFixedString closeMenu;               /* 240 - "CloseMenu */                  \
+	BSFixedString closingAllMenus;         /* 248 - "Closing All Menus */          \
+	BSFixedString refreshMenu;             /* 250 - "RefreshMenu */                \
+	BSFixedString cancelLoading;           /* 258 - "CancelLoading */              \
+	BSFixedString menuTextureDegradeEvent; /* 260 - "Menu Texture Degrade Event */ \
+	BSFixedString userSettingsLoaded;      /* 268 - "UserSettingsLoaded */         \
+	BSFixedString activityStarted;         /* 270 - "ActivityStarted */            \
+	BSFixedString diamondMarker;           /* 278 - "<img src='DiamondMarker' width='10' height='15' align='baseline' vspace='5 */
+			AE_RUNTIME_DATA_CONTENT
+		};
+
+		struct VR_RUNTIME_DATA
+		{
+#define VR_RUNTIME_DATA_CONTENT                                                                                                    \
+	BSFixedString titleSequenceMenu;       /* 1A8 - "TitleSequence Menu */                                                         \
+	BSFixedString consoleNativeUIMenu;     /* 1B0 - "Console Native UI Menu */                                                     \
+	BSFixedString kinectMenu;              /* 1B8 - "Kinect Menu */                                                                \
+	BSFixedString loadWaitSpinner;         /* 1C0 - "LoadWaitSpinner */                                                            \
+	BSFixedString streamingInstallMenu;    /* 1C8 - "StreamingInstallMenu */                                                       \
+	BSFixedString textWidget;              /* 1D0 - "TextWidget */                                                                 \
+	BSFixedString buttonBarWidget;         /* 1D8 - "ButtonBarWidget */                                                            \
+	BSFixedString graphWidget;             /* 1E0 - "GraphWidget */                                                                \
+	BSFixedString textureWidget;           /* 1E8 - "TextureWidget */                                                              \
+	BSFixedString uiMenuOK;                /* 1F0 - "UIMenuOK */                                                                   \
+	BSFixedString uiMenuCancel;            /* 1F8 - "UIMenuCancel */                                                               \
+	BSFixedString showText;                /* 200 - "Show Text */                                                                  \
+	BSFixedString hideText;                /* 208 - "Hide Text */                                                                  \
+	BSFixedString showList;                /* 210 - "Show List */                                                                  \
+	BSFixedString voiceReady;              /* 218 - "Voice Ready */                                                                \
+	BSFixedString dmfoStr;                 /* 220 - "DMFOStr */                                                                    \
+	BSFixedString showJournal;             /* 228 - "Show Journal */                                                               \
+	BSFixedString journalSettingsSaved;    /* 230 - "Journal Settings Saved */                                                     \
+	BSFixedString closeMenu;               /* 238 - "CloseMenu */                                                                  \
+	BSFixedString closingAllMenus;         /* 240 - "Closing All Menus */                                                          \
+	BSFixedString refreshMenu;             /* 248 - "RefreshMenu */                                                                \
+	BSFixedString cancelLoading;           /* 250 - "CancelLoading */                                                              \
+	BSFixedString menuTextureDegradeEvent; /* 258 - "Menu Texture Degrade Event */                                                 \
+	BSFixedString diamondMarker;           /* 270 - "<img src='DiamondMarker' width='10' height='15' align='baseline' vspace='5 */ \
+	BSFixedString wsEnemyMeters;           /* 258 - "WSEnemyMeters */                                                              \
+	BSFixedString wsActivateRollover;      /* 260 - "WSActivateRollover */                                                         \
+	BSFixedString wsDebugOverlay;          /* 268 - "WSDebugOverlay */                                                             \
+	BSFixedString statsMenuSkillRing;      /* 270 - "StatsMenuSkillRing */                                                         \
+	BSFixedString statsMenuPerks;          /* 278 - "StatsMenuPerks */                                                             \
+	BSFixedString mapMarkerText3D;         /* 280 - "MapMarkerText3D */                                                            \
+	BSFixedString calibrationOptionMenu;   /* 288 - "CalibrationOptionMenu */
+			VR_RUNTIME_DATA_CONTENT
+		};
+
+		RUNTIME_DATA_ACCESSOR(RUNTIME_DATA, 0x198, 0x198);
+		RUNTIME_DATA_ACCESSOR_EX(AE_RUNTIME_DATA, GetAERuntimeData, 0x198, 0x198);
+		RUNTIME_DATA_ACCESSOR_EX(VR_RUNTIME_DATA, GetVRRuntimeData, 0x198, 0x198);
 		// members
 		std::uint8_t  pad001;                  // 001
 		std::uint16_t pad002;                  // 002
@@ -64,42 +173,29 @@ namespace RE
 		BSFixedString tutorialMenu;            // 180 - "Tutorial Menu"
 		BSFixedString creditsMenu;             // 188 - "Credits Menu"
 		BSFixedString modManagerMenu;          // 190 - "Mod Manager Menu"
-		BSFixedString creationClubMenu;        // 198 - "Creation Club Menu"
-#ifdef SKYRIM_SUPPORT_AE
-		BSFixedString marketplaceMenu;  // 1A0 - "Marketplace Menu"
-#endif
-		BSFixedString titleSequenceMenu;        // 1A8 - "TitleSequence Menu"
-		BSFixedString consoleNativeUIMenu;      // 1B0 - "Console Native UI Menu"
-		BSFixedString kinectMenu;               // 1B8 - "Kinect Menu"
-		BSFixedString loadWaitSpinner;          // 1C0 - "LoadWaitSpinner"
-		BSFixedString streamingInstallMenu;     // 1C8 - "StreamingInstallMenu"
-		BSFixedString textWidget;               // 1D0 - "TextWidget"
-		BSFixedString buttonBarWidget;          // 1D8 - "ButtonBarWidget"
-		BSFixedString graphWidget;              // 1E0 - "GraphWidget"
-		BSFixedString textureWidget;            // 1E8 - "TextureWidget"
-		BSFixedString uiMenuOK;                 // 1F0 - "UIMenuOK"
-		BSFixedString uiMenuCancel;             // 1F8 - "UIMenuCancel"
-		BSFixedString showText;                 // 200 - "Show Text"
-		BSFixedString hideText;                 // 208 - "Hide Text"
-		BSFixedString showList;                 // 210 - "Show List"
-		BSFixedString voiceReady;               // 218 - "Voice Ready"
-		BSFixedString dmfoStr;                  // 220 - "DMFOStr"
-		BSFixedString showJournal;              // 228 - "Show Journal"
-		BSFixedString journalSettingsSaved;     // 230 - "Journal Settings Saved"
-		BSFixedString closeMenu;                // 238 - "CloseMenu"
-		BSFixedString closingAllMenus;          // 240 - "Closing All Menus"
-		BSFixedString refreshMenu;              // 248 - "RefreshMenu"
-		BSFixedString cancelLoading;            // 250 - "CancelLoading"
-		BSFixedString menuTextureDegradeEvent;  // 258 - "Menu Texture Degrade Event"
-#ifdef SKYRIM_SUPPORT_AE
-		BSFixedString userSettingsLoaded;  // 260 - "UserSettingsLoaded"
-		BSFixedString activityStarted;     // 268 - "ActivityStarted"
-#endif
-		BSFixedString diamondMarker;  // 270 - "<img src='DiamondMarker' width='10' height='15' align='baseline' vspace='5'>"
-	};
-#ifdef SKYRIM_SUPPORT_AE
-	static_assert(sizeof(InterfaceStrings) == 0x278);
+#if defined(EXCLUSIVE_SKYRIM_FLAT)
+#	ifndef ENABLE_SKYRIM_AE
+		RUNTIME_DATA_CONTENT;
+#	else
+		AE_RUNTIME_DATA_CONTENT;
+#	endif
+#elif defined(EXCLUSIVE_SKYRIM_VR)
+		VR_RUNTIME_DATA_CONTENT;
 #else
+#endif
+	};
+#if defined(EXCLUSIVE_SKYRIM_FLAT)
+#	ifndef ENABLE_SKYRIM_AE
 	static_assert(sizeof(InterfaceStrings) == 0x260);
+#	else
+	static_assert(sizeof(InterfaceStrings) == 0x280);
+#	endif
+#elif defined(EXCLUSIVE_SKYRIM_VR)
+	static_assert(sizeof(InterfaceStrings) == 0x290);
+#else
+	static_assert(sizeof(InterfaceStrings) == 0x198);
 #endif
 }
+#undef RUNTIME_DATA_CONTENT
+#undef AE_RUNTIME_DATA_CONTENT
+#undef VR_RUNTIME_DATA_CONTENT

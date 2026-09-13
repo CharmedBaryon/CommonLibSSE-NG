@@ -73,12 +73,12 @@ namespace RE
 		bool          CalculateDoFavor(Actor* a_activator, bool a_arg2, TESObjectREFR* a_toActivate, float a_arg3) override;                                                    // 4D
 
 		// members
-		BGSSoundDescriptorForm*                    soundLoop;      // A8 - SNAM
-		BGSSoundDescriptorForm*                    soundActivate;  // B0 - VNAM
-		TESWaterForm*                              waterForm;      // B8 - WNAM
-		stl::enumeration<ActiFlags, std::uint16_t> flags;          // C0 - FNAM
-		std::uint16_t                              padC2;          // C2
-		std::uint32_t                              padC4;          // C4
+		BGSSoundDescriptorForm*                soundLoop;      // A8 - SNAM
+		BGSSoundDescriptorForm*                soundActivate;  // B0 - VNAM
+		TESWaterForm*                          waterForm;      // B8 - WNAM
+		REX::EnumSet<ActiFlags, std::uint16_t> flags;          // C0 - FNAM
+		std::uint16_t                          padC2;          // C2
+		std::uint32_t                          padC4;          // C4
 	};
 	static_assert(sizeof(TESObjectACTI) == 0xC8);
 }

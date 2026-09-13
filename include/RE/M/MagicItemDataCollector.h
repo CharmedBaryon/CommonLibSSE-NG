@@ -30,17 +30,17 @@ namespace RE
 		BSContainer::ForEachResult operator()(Effect* a_effect) override;
 
 		// members
-		BSTArray<Effect*>                      projectileEffectList;       // 10
-		Effect*                                costliestEffect;            // 28
-		std::int32_t                           maxCost;                    // 30
-		std::uint32_t                          pad34;                      // 34
-		Effect*                                largestAreaEffect;          // 38
-		float                                  highestArea;                // 40
-		stl::enumeration<Flags, std::uint32_t> flags;                      // 44
-		bool                                   summonsExtraLargeCreature;  // 48
-		std::uint8_t                           pad49;                      // 49
-		std::uint16_t                          pad4A;                      // 4A
-		std::uint32_t                          pad4C;                      // 4C
+		BSTArray<Effect*>                  projectileEffectList;       // 10
+		Effect*                            costliestEffect;            // 28
+		std::int32_t                       maxCost;                    // 30
+		std::uint32_t                      pad34;                      // 34
+		Effect*                            largestAreaEffect;          // 38
+		float                              highestArea;                // 40
+		REX::EnumSet<Flags, std::uint32_t> flags;                      // 44
+		bool                               summonsExtraLargeCreature;  // 48
+		std::uint8_t                       pad49;                      // 49
+		std::uint16_t                      pad4A;                      // 4A
+		std::uint32_t                      pad4C;                      // 4C
 	};
 	static_assert(sizeof(MagicItemDataCollector) == 0x50);
 }

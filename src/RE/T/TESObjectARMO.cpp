@@ -32,4 +32,11 @@ namespace RE
 		}
 		return nullptr;
 	}
+
+	void TESObjectARMO::InitWornArmor(Actor* a_actor, BSTSmartPointer<BipedAnim>* a_biped)
+	{
+		using func_t = decltype(&TESObjectARMO::InitWornArmor);
+		static REL::Relocation<func_t> func{ RELOCATION_ID(24232, 24736) };
+		return func(this, a_actor, a_biped);
+	}
 }

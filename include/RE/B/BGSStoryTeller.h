@@ -17,6 +17,7 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_BGSStoryTeller;
+		inline static constexpr auto VTABLE = VTABLE_BGSStoryTeller;
 
 		~BGSStoryTeller() override;  // 00
 
@@ -44,5 +45,5 @@ namespace RE
 		std::uint32_t                                                                padA4;                     // A4
 		BSTHashMap<std::uint32_t, BSTArray<BSTTuple<std::uint32_t, std::uint32_t>>*> questStageWaitMap;         // A8
 	};
-	static_assert(sizeof(BGSStoryTeller) == 0xD8);
+	STATIC_ASSERT_SIZE(BGSStoryTeller, 0xD8);
 }

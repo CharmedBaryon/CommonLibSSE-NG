@@ -8,6 +8,7 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_ahkpCharacterProxy;
+		inline static constexpr auto VTABLE = VTABLE_ahkpCharacterProxy;
 
 		~ahkpCharacterProxy() override;  // 00
 

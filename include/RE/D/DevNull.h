@@ -15,6 +15,7 @@ namespace RE
 		{
 		public:
 			inline static constexpr auto RTTI = RTTI_BSResource____DevNull;
+			inline static constexpr auto VTABLE = VTABLE_BSResource____DevNull;
 
 			struct NullStream : public Stream
 			{
@@ -29,7 +30,11 @@ namespace RE
 				ErrorCode DoWrite(const void* a_buffer, std::uint64_t a_toWrite, std::uint64_t& a_written) const override;  // 07
 				ErrorCode DoSeek(std::uint64_t a_toSeek, SeekMode a_mode, std::uint64_t& a_sought) const override;          // 08
 			};
+#ifdef ENABLE_SKYRIM_AE
+			static_assert(sizeof(NullStream) == 0x18);
+#else
 			static_assert(sizeof(NullStream) == 0x10);
+#endif
 
 			~DevNull() override;  // 00
 

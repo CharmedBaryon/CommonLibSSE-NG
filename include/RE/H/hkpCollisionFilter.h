@@ -42,12 +42,12 @@ namespace RE
 		std::int32_t NumShapeKeyHitsLimitBreached(const hkpCollisionInput& a_input, const hkpCdBody& a_bodyA, const hkpCdBody& a_bodyB, const hkpBvTreeShape* a_shapeB, hkAabb& a_AABB, hkpShapeKey* a_shapeKeysInOut, std::int32_t a_shapeKeysCapacity) const override;  // 02
 
 		// members
-		std::uint32_t                                  pad30;  // 30
-		std::uint32_t                                  pad34;  // 34
-		stl::enumeration<hkpFilterType, std::uint32_t> type;   // 38
-		std::uint32_t                                  pad3C;  // 3C
-		std::uint32_t                                  pad40;  // 40
-		std::uint32_t                                  pad44;  // 44
+		std::uint32_t                              pad30;  // 30
+		std::uint32_t                              pad34;  // 34
+		REX::EnumSet<hkpFilterType, std::uint32_t> type;   // 38
+		std::uint32_t                              pad3C;  // 3C
+		std::uint32_t                              pad40;  // 40
+		std::uint32_t                              pad44;  // 44
 	};
 	static_assert(sizeof(hkpCollisionFilter) == 0x48);
 }

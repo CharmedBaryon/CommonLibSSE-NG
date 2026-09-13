@@ -38,11 +38,11 @@ namespace RE
 		bool        SetFormEditorID(const char* a_str) override;  // 33 - { formEditorID = a_str; return true; }
 
 		// members
-		BSString                             formEditorID;  // 20 - EDID
-		stl::enumeration<Type, std::uint8_t> type;          // 30 - ENAM
-		std::uint8_t                         pad31;         // 31
-		std::uint16_t                        pad32;         // 32
-		float                                value;         // 34 - FLTV
+		BSString                         formEditorID;  // 20 - EDID
+		REX::EnumSet<Type, std::uint8_t> type;          // 30 - ENAM
+		std::uint8_t                     pad31;         // 31
+		std::uint16_t                    pad32;         // 32
+		float                            value;         // 34 - FLTV
 	};
 	static_assert(sizeof(TESGlobal) == 0x38);
 }

@@ -1,6 +1,7 @@
 #pragma once
 
 #include "RE/B/BSFixedString.h"
+#include "RE/B/BSSoundHandle.h"
 #include "RE/B/BSTArray.h"
 #include "RE/B/BSTEvent.h"
 #include "RE/B/BSTSingleton.h"
@@ -13,7 +14,6 @@ namespace RE
 	struct BGSFootstepEvent;
 	struct BGSCombatImpactEvent;
 	struct BGSCollisionSoundEvent;
-	struct BSSoundHandle;
 
 	class BGSImpactManager :
 		public BSTEventSink<BGSFootstepEvent>,        // 00
@@ -22,19 +22,37 @@ namespace RE
 		public BSTSingletonSDM<BGSImpactManager>      // 18
 	{
 	public:
+		struct SoundHandlePool
+		{
+		public:
+			struct HandleEntry
+			{
+			public:
+				// members
+				BSSoundHandle sound;                 // 00
+				std::uint64_t timestamp;             // 10 - tick count
+				float         squaredAudibleFactor;  // 18
+			};
+			static_assert(sizeof(HandleEntry) == 0x20);
+
+			// members
+			BSTArray<HandleEntry> entries;  // 00
+		};
+		static_assert(sizeof(SoundHandlePool) == 0x18);
+
 		struct ImpactSoundData
 		{
 		public:
 			// members
-			BGSImpactData* impactData;      // 00
-			NiPoint3*      position;        // 08
-			NiAVObject*    objectToFollow;  // 10
-			BSSoundHandle* sound1;          // 18
-			BSSoundHandle* sound2;          // 20
-			bool           playSound1;      // 28
-			bool           playSound2;      // 29
-			bool           unk2A;           // 2A
-			void*          unk30;           // 30
+			BGSImpactData*   impactData;      // 00
+			NiPoint3*        position;        // 08
+			NiAVObject*      objectToFollow;  // 10
+			BSSoundHandle*   sound1;          // 18
+			BSSoundHandle*   sound2;          // 20
+			bool             playSound1;      // 28
+			bool             playSound2;      // 29
+			bool             lowPriority;     // 2A
+			SoundHandlePool* pool;            // 30
 		};
 		static_assert(sizeof(ImpactSoundData) == 0x38);
 
@@ -49,20 +67,20 @@ namespace RE
 
 		static BGSImpactManager* GetSingleton()
 		{
-			REL::Relocation<BGSImpactManager**> singleton{ RELOCATION_ID(515123, 401262) };
+			static REL::Relocation<BGSImpactManager**> singleton{ RELOCATION_ID(515123, 401262) };
 			return *singleton;
 		}
 
-		bool PlayImpactEffect(TESObjectREFR* a_ref, BGSImpactDataSet* a_impactEffect, const BSFixedString& a_nodeName, NiPoint3& a_pickDirection, float a_pickLength, bool a_applyNodeRotation, bool a_useNodeLocalRotation)
+		bool PlayImpactEffect(TESObjectREFR* a_ref, BGSImpactDataSet* a_impactEffect, const char* a_nodeName, NiPoint3& a_pickDirection, float a_pickLength, bool a_applyNodeRotation, bool a_useNodeLocalRotation)
 		{
 			using func_t = decltype(&BGSImpactManager::PlayImpactEffect);
-			REL::Relocation<func_t> func{ RELOCATION_ID(35320, 36215) };
+			static REL::Relocation<func_t> func{ RELOCATION_ID(35320, 36215) };
 			return func(this, a_ref, a_impactEffect, a_nodeName, a_pickDirection, a_pickLength, a_applyNodeRotation, a_useNodeLocalRotation);
 		}
 		bool PlayImpactDataSounds(ImpactSoundData& a_impactSoundData)
 		{
 			using func_t = decltype(&BGSImpactManager::PlayImpactDataSounds);
-			REL::Relocation<func_t> func{ RELOCATION_ID(35317, 36212) };
+			static REL::Relocation<func_t> func{ RELOCATION_ID(35317, 36212) };
 			return func(this, a_impactSoundData);
 		}
 	};

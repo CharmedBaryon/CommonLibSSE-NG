@@ -8,6 +8,7 @@
 namespace RE
 {
 	class BSScaleformImageLoader;
+	class BSScaleformTranslator;
 	class GFxDrawTextManager;
 	class GFxLoader;
 	class GFxMovieDef;
@@ -49,7 +50,7 @@ namespace RE
 		GPtr<GFxDrawTextManager>     textManager;     // 18
 		GPtr<BSScaleformImageLoader> imageLoader;     // 20
 		BSString                     validNameChars;  // 28
-		std::uint64_t                unk38;           // 38
+		BSScaleformTranslator*       translator;      // 38
 
 	private:
 		static std::optional<std::string>                           BuildFilePath(std::string_view a_fileName);

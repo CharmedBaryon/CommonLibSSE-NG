@@ -4,22 +4,22 @@
 #include "RE/N/NiGeometryData.h"
 #include "RE/N/NiObject.h"
 #include "RE/V/VertexDesc.h"
+#include <REX/W32/D3D11.h>
 
 namespace RE
 {
-	struct ID3D11Buffer;
 
 	namespace BSGraphics
 	{
 		struct TriShape
 		{
-			ID3D11Buffer*          vertexBuffer;   // 00
-			ID3D11Buffer*          indexBuffer;    // 08
-			BSGraphics::VertexDesc vertexDesc;     // 10
-			volatile std::uint32_t refCount;       // 18
-			std::uint32_t          pad1C;          // 1C
-			std::uint8_t*          rawVertexData;  // 20
-			std::uint16_t*         rawIndexData;   // 28
+			REX::W32::ID3D11Buffer* vertexBuffer;   // 00
+			REX::W32::ID3D11Buffer* indexBuffer;    // 08
+			BSGraphics::VertexDesc  vertexDesc;     // 10
+			volatile std::uint32_t  refCount;       // 18
+			std::uint32_t           pad1C;          // 1C
+			std::uint8_t*           rawVertexData;  // 20
+			std::uint16_t*          rawIndexData;   // 28
 		};
 		static_assert(sizeof(TriShape) == 0x30);
 	}
@@ -28,7 +28,8 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_NiSkinPartition;
-		inline static auto           Ni_RTTI = NiRTTI_NiSkinPartition;
+		inline static constexpr auto Ni_RTTI = NiRTTI_NiSkinPartition;
+		inline static constexpr auto VTABLE = VTABLE_NiSkinPartition;
 
 		class Partition
 		{

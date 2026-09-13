@@ -2,3 +2,7 @@
 * text=auto
 
 *.as linguist-language=ActionScript
+\!Update.ps1 linguist-vendored
+
+# Ensure Windows batch scripts always use CRLF
+*.cmd text eol=crlf

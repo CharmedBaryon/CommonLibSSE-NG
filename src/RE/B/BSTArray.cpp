@@ -9,7 +9,6 @@ namespace RE
 		if (_data) {
 			deallocate(_data);
 		}
-		stl::memzero(this);
 	}
 
 	void* BSScrapArrayAllocator::allocate(std::size_t a_size)

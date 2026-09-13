@@ -4,13 +4,14 @@
 #include "RE/B/BSTMessageQueue.h"
 #include "RE/S/ScrapHeap.h"
 
+#include "REL/RuntimeDataAccessors.h"
 #include "REX/W32/BASE.h"
 
 namespace RE
 {
 	class NiNode;
 	class NiCamera;
-	class Scenegraph;
+	class SceneGraph;
 	class ScrapHeap;
 	struct BSGamerProfileEvent;
 	struct BSPackedTask;
@@ -51,37 +52,58 @@ namespace RE
 	static_assert(sizeof(BSSaveDataSystemUtilityImage) == 0x18);
 
 	class Main :
+#if defined(EXCLUSIVE_SKYRIM_FLAT)
 		public BSTEventSink<PositionPlayerEvent>,  // 00
 		public BSTEventSink<BSGamerProfileEvent>   // 08
+#else
+		public BSTEventSink<PositionPlayerEvent>  // 00
+#endif
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_Main;
+		inline static constexpr auto VTABLE = VTABLE_Main;
 
 		~Main() override;  // 00
 
 		// override (BSTEventSink<PositionPlayerEvent>)
 		BSEventNotifyControl ProcessEvent(const PositionPlayerEvent* a_event, BSTEventSource<PositionPlayerEvent>* a_eventSource) override;  // 01 - { return BSEventNotifyControl::kContinue; }
 
+#if defined(EXCLUSIVE_SKYRIM_FLAT)
 		// override (BSTEventSink<BSGamerProfileEvent>)
 		BSEventNotifyControl ProcessEvent(const BSGamerProfileEvent* a_event, BSTEventSource<BSGamerProfileEvent>* a_eventSource) override;  // 01
-
+#endif
 		static Main* GetSingleton();
 
 		static float       QFrameAnimTime();
 		static NiCamera*   WorldRootCamera();
-		static Scenegraph* WorldRootNode();
+		static SceneGraph* WorldRootNode();
+		static void        RenderWorld(bool a_unk);
 
+		bool IsRoomVisible(NiNode* a_room);
 		void SetActive(bool a_active);
 
+		struct RUNTIME_DATA
+		{
+#define RUNTIME_DATA_CONTENT       \
+	bool quitGame;        /* 00 */ \
+	bool resetGame;       /* 01 */ \
+	bool fullReset;       /* 02 */ \
+	bool gameActive;      /* 03 */ \
+	bool onIdle;          /* 04 */ \
+	bool reloadContent;   /* 05 */ \
+	bool freezeTime;      /* 06 */ \
+	bool freezeNextFrame; /* 07 */
+
+			RUNTIME_DATA_CONTENT
+		};
+		static_assert(sizeof(RUNTIME_DATA) == 0x08);
+
+		RUNTIME_DATA_ACCESSOR(RUNTIME_DATA, 0x10, 0x08);
+
 		// members
-		bool                         quitGame;                     // 010
-		bool                         resetGame;                    // 011
-		bool                         fullReset;                    // 012
-		bool                         gameActive;                   // 013
-		bool                         onIdle;                       // 014
-		bool                         reloadContent;                // 015
-		bool                         freezeTime;                   // 016
-		bool                         freezeNextFrame;              // 017
+#ifndef SKYRIM_CROSS_VR
+		RUNTIME_DATA_CONTENT;  // 10, 08
+#endif
 		REX::W32::HWND               wnd;                          // 018
 		REX::W32::HINSTANCE          instance;                     // 020
 		std::uint32_t                threadID;                     // 028
@@ -98,5 +120,6 @@ namespace RE
 		BSSaveDataSystemUtilityImage saveDataBackgroundImages[3];  // 1E0
 		BSSaveDataSystemUtilityImage saveDataIconImages[3];        // 228
 	};
-	static_assert(sizeof(Main) == 0x270);
+	STATIC_ASSERT_SIZE(Main, 0x270, 0x270, 0x268, 0x260);
 }
+#undef RUNTIME_DATA_CONTENT

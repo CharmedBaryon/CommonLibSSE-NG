@@ -31,6 +31,7 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_IMemoryHeap;
+		inline static constexpr auto VTABLE = VTABLE_IMemoryHeap;
 
 		~IMemoryHeap() override = default;  // 00
 

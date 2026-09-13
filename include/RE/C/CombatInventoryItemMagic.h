@@ -24,12 +24,12 @@ namespace RE
 		float GetOptimalRange() override;                                     // 07 - { return ((maxRange - minRange) * fCombatInventoryOptimalRangePercent) + minRange; }
 		float GetEquipRange() override;                                       // 08
 		TYPE  GetType() override;                                             // 09 - { return 4; }
-		TYPE  GetEquipType(BGSEquipSlot a_slot) override;                     // 0A
+		TYPE  GetEquipType(BGSEquipSlot* a_slot) override;                    // 0A
 		float CalculateScore(CombatController* a_controller) override;        // 0C
 		bool  CheckBusy(CombatController* a_controller) override;             // 0E
 		bool  CheckShouldEquip(CombatController* a_controller) override;      // 0F - { return true; }
 		bool  GetResource(CombatInventoryItemResource& a_resource) override;  // 10
-		bool  IsValid() override;                                             // 12 - { return item && effect; }
+		bool  IsValid() override;                                             // 13 - { return item && effect; }
 
 		//add
 		virtual void*      CreateCaster() = 0;  // 15

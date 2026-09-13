@@ -3,7 +3,8 @@
 namespace RE
 {
 	BSPCGamepadDeviceDelegate::BSPCGamepadDeviceDelegate() :
-		BSGamepadDevice(),
-		gamepadDeviceHandler(nullptr)
-	{}
+		BSGamepadDevice()
+	{
+		GetRuntimeData().gamepadDeviceHandler = nullptr;
+	}
 }

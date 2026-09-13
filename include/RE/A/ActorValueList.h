@@ -10,57 +10,49 @@ namespace RE
 	public:
 		[[nodiscard]] static ActorValueList* GetSingleton()
 		{
-			REL::Relocation<ActorValueList**> singleton{ RELOCATION_ID(514139, 400267) };
+			static REL::Relocation<ActorValueList**> singleton{ RELOCATION_ID(514139, 400267) };
 			return *singleton;
 		}
 
-		[[nodiscard]] ActorValueInfo* GetActorValue(ActorValue a_actorValue) const;
-		[[nodiscard]] ActorValue      LookupActorValueByName(std::string_view a_enumName) const;
+		[[nodiscard]] static ActorValueInfo* GetActorValueInfo(ActorValue a_actorValue);
+		[[nodiscard]] static ActorValue      LookupActorValueByName(const char* a_enumName);
+		[[nodiscard]] static const char*     GetActorValueName(ActorValue a_actorValue);
 
 		// members
 		std::uint32_t   unk00;                                                // 00
 		std::uint32_t   pad04;                                                // 04
 		ActorValueInfo* actorValues[std::to_underlying(ActorValue::kTotal)];  // 08
 	};
-}
 
-namespace std
-{
-	[[nodiscard]] inline std::string to_string(RE::ActorValue a_actorValue)
-	{
-		const auto info = RE::ActorValueList::GetSingleton()->GetActorValue(a_actorValue);
-		return info ? info->enumName : "None";
-	}
+	[[nodiscard]] std::string_view ActorValueToString(ActorValue a_actorValue) noexcept;
 }
-
-#ifdef __cpp_lib_format
-template <class CharT>
-struct std::formatter<RE::ActorValue, CharT> : formatter<std::string_view, CharT>
-{
-	template <class FormatContext>
-	auto format(RE::ActorValue a_actorValue, FormatContext& a_ctx) const
-	{
-		const auto info = RE::ActorValueList::GetSingleton()->GetActorValue(a_actorValue);
-		return formatter<std::string_view, CharT>::format(info ? info->enumName : "None", a_ctx);
-	}
-};
-#endif
 
 #ifdef FMT_VERSION
-template <>
-struct fmt::formatter<RE::ActorValue>
+namespace fmt
 {
-	template <class ParseContext>
-	constexpr auto parse(ParseContext& a_ctx)
+	template <>
+	struct formatter<RE::ActorValue> : formatter<std::string_view>
 	{
-		return a_ctx.begin();
-	}
+		template <class FormatContext>
+		auto format(const RE::ActorValue& a_actorValue, FormatContext& a_ctx) const
+		{
+			return formatter<std::string_view>::format(RE::ActorValueToString(a_actorValue), a_ctx);
+		}
+	};
+}
+#endif
 
-	template <class FormatContext>
-	auto format(const RE::ActorValue& a_actorValue, FormatContext& a_ctx)
+#ifdef __cpp_lib_format
+namespace std
+{
+	template <class CharT>
+	struct formatter<RE::ActorValue, CharT> : formatter<std::string_view, CharT>
 	{
-		const auto info = RE::ActorValueList::GetSingleton()->GetActorValue(a_actorValue);
-		return fmt::format_to(a_ctx.out(), "{}", info ? info->enumName : "None");
-	}
-};
+		template <class FormatContext>
+		auto format(RE::ActorValue a_actorValue, FormatContext& a_ctx) const
+		{
+			return formatter<std::string_view, CharT>::format(RE::ActorValueToString(a_actorValue), a_ctx);
+		}
+	};
+}
 #endif

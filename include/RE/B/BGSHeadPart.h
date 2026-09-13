@@ -79,16 +79,16 @@ namespace RE
 		bool IsExtraPart();
 
 		// members
-		stl::enumeration<Flag, std::uint8_t>          flags;                         // 068 - DATA
-		std::uint8_t                                  pad069;                        // 069
-		std::uint16_t                                 pad06A;                        // 06A
-		stl::enumeration<HeadPartType, std::uint32_t> type;                          // 06C - PNAM
-		BSTArray<BGSHeadPart*>                        extraParts;                    // 070
-		BGSTextureSet*                                textureSet;                    // 088 - TNAM
-		TESModelTri                                   morphs[MorphIndices::kTotal];  // 090
-		BGSColorForm*                                 color;                         // 108 - CNAM
-		BGSListForm*                                  validRaces;                    // 110 - RNAM
-		BSFixedString                                 formEditorID;                  // 118 - EDID
+		REX::EnumSet<Flag, std::uint8_t>          flags;                         // 068 - DATA
+		std::uint8_t                              pad069;                        // 069
+		std::uint16_t                             pad06A;                        // 06A
+		REX::EnumSet<HeadPartType, std::uint32_t> type;                          // 06C - PNAM
+		BSTArray<BGSHeadPart*>                    extraParts;                    // 070
+		BGSTextureSet*                            textureSet;                    // 088 - TNAM
+		TESModelTri                               morphs[MorphIndices::kTotal];  // 090
+		BGSColorForm*                             color;                         // 108 - CNAM
+		BGSListForm*                              validRaces;                    // 110 - RNAM
+		BSFixedString                             formEditorID;                  // 118 - EDID
 	};
 	static_assert(sizeof(BGSHeadPart) == 0x120);
 }

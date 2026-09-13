@@ -14,6 +14,7 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_bhkThreadMemorySource;
+		inline static constexpr auto VTABLE = VTABLE_bhkThreadMemorySource;
 
 		struct FreeBlock
 		{

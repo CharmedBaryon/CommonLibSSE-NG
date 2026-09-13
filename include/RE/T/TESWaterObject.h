@@ -19,6 +19,7 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_TESWaterObject;
+		inline static constexpr auto VTABLE = VTABLE_TESWaterObject;
 
 		virtual ~TESWaterObject();  // 00
 

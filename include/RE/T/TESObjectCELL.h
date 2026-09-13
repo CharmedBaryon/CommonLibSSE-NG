@@ -5,9 +5,11 @@
 #include "RE/B/BSContainer.h"
 #include "RE/B/BSMultiBoundNode.h"
 #include "RE/B/BSPointerHandle.h"
+#include "RE/B/BSSimpleList.h"
 #include "RE/B/BSTArray.h"
 #include "RE/B/BSTHashMap.h"
 #include "RE/B/BSTList.h"
+#include "RE/B/BSTempEffectParticle.h"
 #include "RE/C/Color.h"
 #include "RE/E/ExtraDataList.h"
 #include "RE/F/FormTypes.h"
@@ -17,6 +19,7 @@
 #include "RE/T/TESForm.h"
 #include "RE/T/TESFullName.h"
 #include "RE/T/TESObjectREFR.h"
+#include "REL/RuntimeDataAccessors.h"
 #include "SKSE/Version.h"
 
 namespace RE
@@ -55,16 +58,16 @@ namespace RE
 		};
 
 		// members
-		std::int32_t                                 cellX;          // 00
-		std::int32_t                                 cellY;          // 04
-		char*                                        maxHeightData;  // 08
-		BGSTerrainVisibilityData*                    lodVisData;     // 10
-		float                                        worldX;         // 18
-		float                                        worldY;         // 1C
-		stl::enumeration<LandHideFlag, std::uint8_t> landHideFlags;  // 20
-		std::uint8_t                                 pad21;          // 21
-		std::uint16_t                                pad22;          // 22
-		std::uint32_t                                pad24;          // 24
+		std::int32_t                             cellX;          // 00
+		std::int32_t                             cellY;          // 04
+		char*                                    maxHeightData;  // 08
+		BGSTerrainVisibilityData*                lodVisData;     // 10
+		float                                    worldX;         // 18
+		float                                    worldY;         // 1C
+		REX::EnumSet<LandHideFlag, std::uint8_t> landHideFlags;  // 20
+		std::uint8_t                             pad21;          // 21
+		std::uint16_t                            pad22;          // 22
+		std::uint32_t                            pad24;          // 24
 	};
 	static_assert(sizeof(EXTERIOR_DATA) == 0x28);
 
@@ -82,15 +85,15 @@ namespace RE
 		// members
 		NiPointer<BSPortalGraph>                             portalGraph;             // 000 - smart ptr
 		NiPointer<NiNode>                                    cell3D;                  // 008
-		void*                                                unk010;                  // 010 - smart ptr
-		void*                                                unk018;                  // 018 - smart ptr
-		void*                                                unk020;                  // 020 - smart ptr
+		NiPointer<NiNode>                                    lightMarkerNode;         // 010 - smart ptr
+		NiPointer<NiNode>                                    soundMarkerNode;         // 018 - smart ptr
+		NiPointer<NiNode>                                    multiBoundNode;          // 020 - smart ptr
 		std::uint64_t                                        unk028;                  // 028
 		std::uint64_t                                        unk030;                  // 030
 		std::uint64_t                                        unk038;                  // 038
-		BSTArray<void*>                                      unk040;                  // 040
-		BSTArray<void*>                                      unk058;                  // 058
-		NiTMap<TESForm*, ObjectRefHandle>                    unk070;                  // 070
+		BSTArray<ObjectRefHandle>                            unk040;                  // 040
+		BSTArray<ObjectRefHandle>                            flickeringLights;        // 058
+		NiTMap<TESForm*, ObjectRefHandle>                    emittanceSourceRefMap;   // 070
 		NiTMap<ObjectRefHandle, NiNode*>                     emittanceLightRefMap;    // 090
 		NiTMap<ObjectRefHandle, NiPointer<BSMultiBoundNode>> multiboundRefMap;        // 0B0
 		NiTMap<BSMultiBoundNode*, ObjectRefHandle>           refMultiboundMap;        // 0D0
@@ -98,15 +101,15 @@ namespace RE
 		BSSimpleList<ObjectRefHandle>                        unk100;                  // 100
 		std::uint64_t                                        unk110;                  // 110
 		BSTArray<void*>                                      unk118;                  // 118
-		BSTArray<void*>                                      unk130;                  // 130
-		BSTArray<void*>                                      unk148;                  // 148
+		BSTArray<ObjectRefHandle>                            decalRefs;               // 130
+		BSTArray<ObjectRefHandle>                            skyActors;               // 148
 		BGSEncounterZone*                                    encounterZone;           // 160
-		std::uint32_t                                        unk168;                  // 168
+		bool                                                 decalsQueued;            // 168
 		volatile mutable std::int32_t                        criticalQueuedRefCount;  // 16C
 		volatile mutable std::int32_t                        queuedRefCount;          // 170
 		volatile mutable std::int32_t                        queuedDistantRefCount;   // 174
-		std::uint32_t                                        unk178;                  // 178
-		std::uint32_t                                        unk17C;                  // 17C
+		std::int32_t                                         unk178;                  // 178
+		bool                                                 refsFullyLoaded;         // 17C
 	};
 	static_assert(sizeof(LOADED_CELL_DATA) == 0x180);
 
@@ -176,48 +179,49 @@ namespace RE
 		~TESObjectCELL() override;  // 00
 
 		// override (TESForm)
-		void               ClearData() override;                                                                 // 05
-		bool               Load(TESFile* a_mod) override;                                                        // 06
-		TESForm*           CreateDuplicateForm(bool a_createEditorID, void* a_arg2) override;                    // 09 - { return 0; }
-		bool               FindInFileFast(TESFile* a_mod) override;                                              // 0C
-		void               SaveGame(BGSSaveFormBuffer* a_buf) override;                                          // 0E
-		void               LoadGame(BGSLoadFormBuffer* a_buf) override;                                          // 0F
-		void               Revert(BGSLoadFormBuffer* a_buf) override;                                            // 12
-		void               InitItemImpl() override;                                                              // 13
-		void               GetFormDetailedString(char* a_buf, std::uint32_t a_bufLen) override;                  // 16
-		void               SetAltered(bool a_set) override;                                                      // 24
-		bool               BelongsInGroup(FORM* a_form, bool a_allowParentGroups, bool a_currentOnly) override;  // 30
-		void               CreateGroupData(FORM* a_form, FORM_GROUP* a_group) override;                          // 31
-		const char*        GetFormEditorID() const override;                                                     // 32
-		bool               SetFormEditorID(const char* a_str) override;                                          // 33
-		[[nodiscard]] bool IsParentForm() override;                                                              // 34 - { return true; }
-		[[nodiscard]] bool IsFormTypeChild(FormType a_type) override;                                            // 36
+		void        ClearData() override;                                                                               // 05
+		bool        Load(TESFile* a_mod) override;                                                                      // 06
+		TESForm*    CreateDuplicateForm(bool a_createEditorID, NiTPointerMap<TESForm*, TESForm*>* a_copyMap) override;  // 09 - { return 0; }
+		bool        FindInFileFast(TESFile* a_mod) override;                                                            // 0C
+		void        SaveGame(BGSSaveFormBuffer* a_buf) override;                                                        // 0E
+		void        LoadGame(BGSLoadFormBuffer* a_buf) override;                                                        // 0F
+		void        Revert(BGSLoadFormBuffer* a_buf) override;                                                          // 12
+		void        InitItemImpl() override;                                                                            // 13
+		void        GetFormDetailedString(char* a_buf, std::uint32_t a_bufLen) override;                                // 16
+		void        SetAltered(bool a_set) override;                                                                    // 24
+		bool        BelongsInGroup(FORM* a_form, bool a_allowParentGroups, bool a_currentOnly) override;                // 30
+		void        CreateGroupData(FORM* a_form, FORM_GROUP* a_group) override;                                        // 31
+		const char* GetFormEditorID() const override;                                                                   // 32
+		bool        SetFormEditorID(const char* a_str) override;                                                        // 33
+		bool        IsParentForm() override;                                                                            // 34 - { return true; }
+		bool        IsFormTypeChild(FormType a_type) override;                                                          // 36
 
-		TESNPC*                      GetActorOwner();
-		bhkWorld*                    GetbhkWorld() const;
-		void                         ForEachReference(std::function<BSContainer::ForEachResult(TESObjectREFR*)> a_callback) const;
-		void                         ForEachReferenceInRange(const NiPoint3& a_origin, float a_radius, std::function<BSContainer::ForEachResult(TESObjectREFR*)> a_callback) const;
-		[[nodiscard]] EXTERIOR_DATA* GetCoordinates();
-		[[nodiscard]] TESFaction*    GetFactionOwner();
-		[[nodiscard]] INTERIOR_DATA* GetLighting();
-		[[nodiscard]] BGSLocation*   GetLocation() const;
-		[[nodiscard]] float          GetNorthRotation();
-		[[nodiscard]] TESForm*       GetOwner();
-		[[nodiscard]] float          GetExteriorWaterHeight() const;
-		[[nodiscard]] TESRegionList* GetRegionList(bool a_createIfMissing);
-		bool                         GetWaterHeight(const NiPoint3& a_pos, float& a_waterHeight);
-		[[nodiscard]] bool           IsAttached() const;
-		[[nodiscard]] bool           IsExteriorCell() const;
-		[[nodiscard]] bool           IsInteriorCell() const;
-		void                         SetActorOwner(TESNPC* a_owner);
-		void                         SetFactionOwner(TESFaction* a_owner);
-		void                         SetFogColor(Color a_near, Color a_far);
-		void                         SetFogPlanes(float a_near, float a_far);
-		void                         SetFogPower(float a_power);
-		void                         SetHandChanged(bool a_changed);
-		void                         SetOwner(TESForm* a_owner);
-		void                         SetPublic(bool a_public);
-		[[nodiscard]] bool           UsesSkyLighting() const;
+		TESNPC*                             GetActorOwner();
+		bhkWorld*                           GetbhkWorld() const;
+		void                                ForEachReference(std::function<BSContainer::ForEachResult(TESObjectREFR*)> a_callback) const;
+		void                                ForEachReferenceInRange(const NiPoint3& a_origin, float a_radius, std::function<BSContainer::ForEachResult(TESObjectREFR*)> a_callback) const;
+		[[nodiscard]] EXTERIOR_DATA*        GetCoordinates();
+		[[nodiscard]] TESFaction*           GetFactionOwner();
+		[[nodiscard]] INTERIOR_DATA*        GetLighting();
+		[[nodiscard]] BGSLocation*          GetLocation() const;
+		[[nodiscard]] float                 GetNorthRotation();
+		[[nodiscard]] TESForm*              GetOwner();
+		[[nodiscard]] float                 GetExteriorWaterHeight() const;
+		[[nodiscard]] TESRegionList*        GetRegionList(bool a_createIfMissing);
+		bool                                GetWaterHeight(const NiPoint3& a_pos, float& a_waterHeight);
+		[[nodiscard]] bool                  IsAttached() const;
+		[[nodiscard]] bool                  IsExteriorCell() const;
+		[[nodiscard]] bool                  IsInteriorCell() const;
+		[[nodiscard]] BSTempEffectParticle* PlaceParticleEffect(float a_lifetime, const char* a_modelName, const NiMatrix3& a_normal, const NiPoint3& a_pos, float a_scale, std::uint32_t a_flags, NiAVObject* a_target);
+		void                                SetActorOwner(TESNPC* a_owner);
+		void                                SetFactionOwner(TESFaction* a_owner);
+		void                                SetFogColor(Color a_near, Color a_far);
+		void                                SetFogPlanes(float a_near, float a_far);
+		void                                SetFogPower(float a_power);
+		void                                SetHandChanged(bool a_changed);
+		void                                SetOwner(TESForm* a_owner);
+		void                                SetPublic(bool a_public);
+		[[nodiscard]] bool                  UsesSkyLighting() const;
 
 		struct RUNTIME_DATA
 		{
@@ -241,33 +245,22 @@ namespace RE
 			RUNTIME_DATA_CONTENT
 		};
 
-		[[nodiscard]] inline RUNTIME_DATA& GetRuntimeData() noexcept
-		{
-			return REL::RelocateMemberIfNewer<RUNTIME_DATA>(SKSE::RUNTIME_SSE_1_6_629, this, 0x60, 0x68);
-		}
-
-		[[nodiscard]] inline const RUNTIME_DATA& GetRuntimeData() const noexcept
-		{
-			return REL::RelocateMemberIfNewer<RUNTIME_DATA>(SKSE::RUNTIME_SSE_1_6_629, this, 0x60, 0x68);
-		}
-
+		RUNTIME_DATA_ACCESSOR_VERSIONED(RUNTIME_DATA, SKSE::RUNTIME_SSE_1_6_629, 0x60, 0x68);
 		// members
-		mutable BSSpinLock                                   grassCreateLock;   // 030
-		mutable BSSpinLock                                   grassTaskLock;     // 038
-		stl::enumeration<Flag, std::uint16_t>                cellFlags;         // 040
-		std::uint16_t                                        cellGameFlags;     // 042
-		stl::enumeration<CellState, std::uint8_t>            cellState;         // 044
-		bool                                                 autoWaterLoaded;   // 045
-		bool                                                 cellDetached;      // 046
-		std::uint8_t                                         pad047;            // 047
-		ExtraDataList                                        extraList;         // 048
+		mutable BSSpinLock                    grassCreateLock;  // 030
+		mutable BSSpinLock                    grassTaskLock;    // 038
+		REX::EnumSet<Flag, std::uint16_t>     cellFlags;        // 040
+		std::uint16_t                         cellGameFlags;    // 042
+		REX::EnumSet<CellState, std::uint8_t> cellState;        // 044
+		bool                                  autoWaterLoaded;  // 045
+		bool                                  cellDetached;     // 046
+		std::uint8_t                          pad047;           // 047
+		ExtraDataList                         extraList;        // 048
 
-#ifndef ENABLE_SKYRIM_AE
-		RUNTIME_DATA_CONTENT
+#if defined(EXCLUSIVE_SKYRIM_SE) || defined(EXCLUSIVE_SKYRIM_VR) || defined(EXCLUSIVE_SKYRIM_AE)
+		RUNTIME_DATA_CONTENT;
 #endif
 	};
-#ifndef ENABLE_SKYRIM_AE
-	static_assert(sizeof(TESObjectCELL) == 0x140);
-#endif
+	STATIC_ASSERT_SIZE(TESObjectCELL, 0x140, 0x148, 0x140);
 }
 #undef RUNTIME_DATA_CONTENT

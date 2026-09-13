@@ -11,6 +11,7 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_CombatObject;
+		inline static constexpr auto VTABLE = VTABLE_CombatObject;
 
 		~CombatObject() override;  // 00
 

@@ -187,26 +187,26 @@ namespace RE
 			void ClearFlags(Flag a_flags);
 
 			// members
-			double                                _x = 0.0;              // 00
-			double                                _y = 0.0;              // 08
-			double                                _rotation = 0.0;       // 10
-			double                                _xScale = 0.0;         // 18
-			double                                _yScale = 0.0;         // 20
-			double                                _alpha = 0.0;          // 28
-			bool                                  _visible = false;      // 30
-			std::uint8_t                          _pad31 = 0;            // 31
-			std::uint16_t                         _pad32 = 0;            // 32
-			std::uint32_t                         _pad34 = 0;            // 34
-			double                                _z = 0.0;              // 38
-			double                                _xRotation = 0.0;      // 40
-			double                                _yRotation = 0.0;      // 48
-			double                                _zScale = 0.0;         // 50
-			double                                _fov = 0.0;            // 58
-			GMatrix3D                             _viewMatrix3D;         // 60
-			GMatrix3D                             _perspMatrix3D;        // A0
-			stl::enumeration<Flag, std::uint16_t> _flags = Flag::kNone;  // E0
-			std::uint16_t                         _padD2 = 0;            // E2
-			std::uint32_t                         _padD4 = 0;            // E4
+			double                            _x = 0.0;              // 00
+			double                            _y = 0.0;              // 08
+			double                            _rotation = 0.0;       // 10
+			double                            _xScale = 0.0;         // 18
+			double                            _yScale = 0.0;         // 20
+			double                            _alpha = 0.0;          // 28
+			bool                              _visible = false;      // 30
+			std::uint8_t                      _pad31 = 0;            // 31
+			std::uint16_t                     _pad32 = 0;            // 32
+			std::uint32_t                     _pad34 = 0;            // 34
+			double                            _z = 0.0;              // 38
+			double                            _xRotation = 0.0;      // 40
+			double                            _yRotation = 0.0;      // 48
+			double                            _zScale = 0.0;         // 50
+			double                            _fov = 0.0;            // 58
+			GMatrix3D                         _viewMatrix3D;         // 60
+			GMatrix3D                         _perspMatrix3D;        // A0
+			REX::EnumSet<Flag, std::uint16_t> _flags = Flag::kNone;  // E0
+			std::uint16_t                     _padD2 = 0;            // E2
+			std::uint32_t                     _padD4 = 0;            // E4
 		};
 		static_assert(sizeof(DisplayInfo) == 0xE8);
 
@@ -404,6 +404,22 @@ namespace RE
 		bool GotoAndPlay(const char* a_frame);
 		bool GotoAndStop(const char* a_frame);
 
+		/// <summary>
+		/// Applies a color tint to this display object by modifying its color transform.
+		/// The tint is applied by blending the object's colors toward the specified tint color.
+		/// The alpha channel of the color determines the intensity of the tint (0 = no tint, 255 = full tint).
+		/// </summary>
+		/// <param name="a_tint">The color to tint toward. Alpha channel determines intensity (0-255)</param>
+		/// <returns>True if the color transform was successfully applied, false otherwise</returns>
+		bool SetColorTint(const GColor& a_tint);
+
+		/// <summary>
+		/// Removes any color tint from this display object by resetting its color transform to identity.
+		/// This restores the original colors of the display object.
+		/// </summary>
+		/// <returns>True if the color transform was successfully reset, false otherwise</returns>
+		bool RemoveColorTint();
+
 		GFC_MEMORY_REDEFINE_NEW(GFxValue, GStatGroups::kGStatGroup_Default);
 
 	protected:
@@ -429,10 +445,10 @@ namespace RE
 		static_assert(sizeof(ValueUnion) == 0x8);
 
 		// members
-		ObjectInterface*                           _objectInterface;  // 00
-		stl::enumeration<ValueType, std::uint32_t> _type;             // 08
-		std::uint32_t                              _pad0C;            // 0C
-		ValueUnion                                 _value;            // 10
+		ObjectInterface*                       _objectInterface;  // 00
+		REX::EnumSet<ValueType, std::uint32_t> _type;             // 08
+		std::uint32_t                          _pad0C;            // 0C
+		ValueUnion                             _value;            // 10
 	};
 	static_assert(sizeof(GFxValue) == 0x18);
 }

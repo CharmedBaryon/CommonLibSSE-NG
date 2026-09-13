@@ -2,9 +2,9 @@
 
 #include "RE/B/BSFixedString.h"
 #include "RE/B/BSPointerHandle.h"
+#include "RE/B/BSSimpleList.h"
 #include "RE/B/BSString.h"
 #include "RE/B/BSTEvent.h"
-#include "RE/B/BSTList.h"
 #include "RE/B/BSTSingleton.h"
 
 #include "REX/W32/BASE.h"
@@ -26,6 +26,7 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_MenuTopicManager;
+		inline static constexpr auto VTABLE = VTABLE_MenuTopicManager;
 
 		struct Dialogue
 		{
@@ -60,8 +61,13 @@ namespace RE
 
 		static MenuTopicManager* GetSingleton()
 		{
-			REL::Relocation<MenuTopicManager**> singleton{ RELOCATION_ID(514959, 401099) };
+			static REL::Relocation<MenuTopicManager**> singleton{ RELOCATION_ID(514959, 401099) };
 			return *singleton;
+		}
+
+		bool IsCurrentSpeaker(const ObjectRefHandle& a_handle) const
+		{
+			return menuOpen && speaker == a_handle;
 		}
 
 		// members
@@ -78,16 +84,16 @@ namespace RE
 		BSTArray<BGSDialogueBranch*>   blockingBranches;      // 80
 		BSTArray<BGSDialogueBranch*>   topLevelBranches;      // 98
 		bool                           isGreetingPlayer;      // B0
-		bool                           unkB1;                 // B1
-		bool                           isSayingGoodbye;       // B2
-		bool                           unkB3;                 // B3
-		bool                           unkB4;                 // B4
-		bool                           unkB5;                 // B5
+		bool                           menuOpen;              // B1
+		bool                           forceGoodbye;          // B2
+		bool                           shutMenu;              // B3
+		bool                           rumorTopicAdded;       // B4
+		bool                           waitingToAdvance;      // B5
 		bool                           unkB6;                 // B6
 		bool                           unkB7;                 // B7
 		bool                           unkB8;                 // B8
 		bool                           unkB9;                 // B9
-		bool                           unkBA;                 // BA
+		bool                           canSkip;               // BA
 		bool                           unkBB;                 // BB
 		std::uint16_t                  padBC;                 // BC
 		BSTArray<TESTopic*>            unkC0;                 // C0

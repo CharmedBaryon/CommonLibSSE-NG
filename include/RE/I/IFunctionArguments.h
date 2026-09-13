@@ -12,6 +12,7 @@ namespace RE
 		{
 		public:
 			inline static constexpr auto RTTI = RTTI_BSScript__IFunctionArguments;
+			inline static constexpr auto VTABLE = VTABLE_BSScript__IFunctionArguments;
 
 			IFunctionArguments() = default;
 			virtual ~IFunctionArguments() = default;  // 00

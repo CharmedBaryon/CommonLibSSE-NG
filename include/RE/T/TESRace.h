@@ -4,6 +4,7 @@
 #include "RE/B/BGSAttackDataForm.h"
 #include "RE/B/BGSBehaviorGraphModel.h"
 #include "RE/B/BGSBipedObjectForm.h"
+#include "RE/B/BGSHeadPart.h"
 #include "RE/B/BGSKeywordForm.h"
 #include "RE/B/BGSSkinForm.h"
 #include "RE/B/BGSTextureModel.h"
@@ -23,6 +24,8 @@
 namespace RE
 {
 	class AttackAnimationArrayMap;
+
+	using HeadPartType = BGSHeadPart::HeadPartType;
 
 	namespace BSResource
 	{
@@ -94,43 +97,43 @@ namespace RE
 		{
 		public:
 			// members
-			stl::enumeration<ActorValue, std::uint8_t> skill;  // 0
-			std::uint8_t                               bonus;  // 1
+			REX::EnumSet<ActorValue, std::uint8_t> skill;  // 0
+			std::uint8_t                           bonus;  // 1
 		};
 		static_assert(sizeof(SkillBoost) == 0x2);
 
 		// members
-		SkillBoost                                    skillBoosts[kNumSkillBoosts];  // 00
-		std::uint16_t                                 pad0E;                         // 0E
-		float                                         height[SEXES::kTotal];         // 10
-		float                                         weight[SEXES::kTotal];         // 18
-		stl::enumeration<Flag, std::uint32_t>         flags;                         // 20
-		float                                         startingHealth;                // 24
-		float                                         startingMagicka;               // 28
-		float                                         startingStamina;               // 2C
-		float                                         baseCarryWeight;               // 30
-		float                                         baseMass;                      // 34
-		float                                         accelerate;                    // 38
-		float                                         decelerate;                    // 3C
-		stl::enumeration<RACE_SIZE, std::uint32_t>    raceSize;                      // 40
-		stl::enumeration<BIPED_OBJECT, std::uint32_t> headObject;                    // 44
-		stl::enumeration<BIPED_OBJECT, std::uint32_t> hairObject;                    // 48
-		float                                         injuredHealthPercent;          // 4C
-		stl::enumeration<BIPED_OBJECT, std::uint32_t> shieldObject;                  // 50
-		float                                         healthRegen;                   // 54
-		float                                         magickaRegen;                  // 58
-		float                                         staminaRegen;                  // 5C
-		float                                         unarmedDamage;                 // 60
-		float                                         unarmedReach;                  // 64
-		stl::enumeration<BIPED_OBJECT, std::uint32_t> bodyObject;                    // 68
-		float                                         aimAngleTolerance;             // 6C
-		float                                         flightRadius;                  // 70
-		float                                         angleAccelerate;               // 74
-		float                                         angleTolerance;                // 78
-		stl::enumeration<Flag2, std::uint32_t>        flags2;                        // 7C
-		NiPoint3                                      mountOffset;                   // 80
-		NiPoint3                                      dismountOffset;                // 8C
-		NiPoint3                                      mountCameraOffset;             // 98
+		SkillBoost                                skillBoosts[kNumSkillBoosts];  // 00
+		std::uint16_t                             pad0E;                         // 0E
+		float                                     height[SEXES::kTotal];         // 10
+		float                                     weight[SEXES::kTotal];         // 18
+		REX::EnumSet<Flag, std::uint32_t>         flags;                         // 20
+		float                                     startingHealth;                // 24
+		float                                     startingMagicka;               // 28
+		float                                     startingStamina;               // 2C
+		float                                     baseCarryWeight;               // 30
+		float                                     baseMass;                      // 34
+		float                                     accelerate;                    // 38
+		float                                     decelerate;                    // 3C
+		REX::EnumSet<RACE_SIZE, std::uint32_t>    raceSize;                      // 40
+		REX::EnumSet<BIPED_OBJECT, std::uint32_t> headObject;                    // 44
+		REX::EnumSet<BIPED_OBJECT, std::uint32_t> hairObject;                    // 48
+		float                                     injuredHealthPercent;          // 4C
+		REX::EnumSet<BIPED_OBJECT, std::uint32_t> shieldObject;                  // 50
+		float                                     healthRegen;                   // 54
+		float                                     magickaRegen;                  // 58
+		float                                     staminaRegen;                  // 5C
+		float                                     unarmedDamage;                 // 60
+		float                                     unarmedReach;                  // 64
+		REX::EnumSet<BIPED_OBJECT, std::uint32_t> bodyObject;                    // 68
+		float                                     aimAngleTolerance;             // 6C
+		float                                     flightRadius;                  // 70
+		float                                     angleAccelerate;               // 74
+		float                                     angleTolerance;                // 78
+		REX::EnumSet<Flag2, std::uint32_t>        flags2;                        // 7C
+		NiPoint3                                  mountOffset;                   // 80
+		NiPoint3                                  dismountOffset;                // 8C
+		NiPoint3                                  mountCameraOffset;             // 98
 	};
 	static_assert(sizeof(RACE_DATA) == 0xA4);
 
@@ -244,12 +247,12 @@ namespace RE
 					};
 
 					// members
-					std::uint16_t                            index;          // 00 - TINI
-					stl::enumeration<SkinTone, std::uint8_t> skinTone;       // 02 - TINP
-					std::uint8_t                             pad03;          // 03
-					std::uint32_t                            pad04;          // 04
-					TESTexture                               file;           // 08 - TINT
-					BGSColorForm*                            presetDefault;  // 18 - TIND
+					std::uint16_t                        index;          // 00 - TINI
+					REX::EnumSet<SkinTone, std::uint8_t> skinTone;       // 02 - TINP
+					std::uint8_t                         pad03;          // 03
+					std::uint32_t                        pad04;          // 04
+					TESTexture                           file;           // 08 - TINT
+					BGSColorForm*                        presetDefault;  // 18 - TIND
 				};
 				static_assert(sizeof(TintLayer) == 0x20);
 
@@ -307,45 +310,46 @@ namespace RE
 
 		[[nodiscard]] bool AllowsPCDialogue() const;
 		[[nodiscard]] bool AllowsPickpocket() const;
+		BGSHeadPart*       GetHeadPartByType(HeadPartType a_type, SEX a_sex) const;
 		[[nodiscard]] bool IsChildRace() const;
 
 		// members
-		TESModel                                       skeletonModels[SEXES::kTotal];                  // 098 - ANAM
-		RACE_DATA                                      data;                                           // 0E8
-		float                                          clampFaceGeoValue;                              // 18C - PNAM
-		float                                          clampFaceGeoValue2;                             // 18C - UNAM
-		std::uint32_t                                  pad194;                                         // 194
-		BGSTextureModel                                bodyTextureModels[SEXES::kTotal];               // 198
-		BGSBehaviorGraphModel                          behaviorGraphs[SEXES::kTotal];                  // 1E8
-		BSFixedString                                  rootBehaviorGraphNames[SEXES::kTotal];          // 238
-		BSFixedString                                  behaviorGraphProjectNames[SEXES::kTotal];       // 248
-		BGSVoiceType*                                  defaultVoiceTypes[SEXES::kTotal];               // 258 - VTCK
-		BGSBodyPartData*                               bodyPartData;                                   // 268 - GNAM
-		TESObjectARMO*                                 decapitateArmors[SEXES::kTotal];                // 270 - DNAM
-		UnkData                                        unk280;                                         // 280
-		UnkData                                        unk298;                                         // 298
-		std::uint64_t                                  unk2B0;                                         // 2B0
-		std::uint64_t                                  unk2B8;                                         // 2B8
-		std::uint64_t                                  unk2C0;                                         // 2C0
-		std::uint64_t                                  unk2C8;                                         // 2C8
-		AttackAnimationArrayMap*                       attackAnimationArrayMap[SEXES::kTotal];         // 2D0
-		BSFixedString                                  formEditorID;                                   // 2E0 - EDID
-		BGSMaterialType*                               bloodImpactMaterial;                            // 2E8 - NAM4
-		BGSImpactDataSet*                              impactDataSet;                                  // 2F0 - NAM5
-		BGSArtObject*                                  dismemberBlood;                                 // 2F8 - NAM7
-		BGSSoundDescriptorForm*                        corpseOpenSound;                                // 300 - ONAM
-		BGSSoundDescriptorForm*                        corpseCloseSound;                               // 308 - LNAM
-		BSFixedString                                  bipedObjectNameA[BIPED_OBJECTS::kEditorTotal];  // 310 - NAME
-		BSTArray<BGSEquipSlot*>                        equipSlots;                                     // 410 - QNAM
-		stl::enumeration<EquipmentFlag, std::uint32_t> validEquipTypes;                                // 428 - VNAM - bits 13+ are always set
-		std::uint32_t                                  unk42C;                                         // 42C - TESModel::unk24
-		BGSEquipSlot*                                  unarmedEquipSlot;                               // 430 - UNES
-		TESRace*                                       morphRace;                                      // 438 - NAM8
-		TESRace*                                       armorParentRace;                                // 440 - RNAM
-		UnkData                                        unk448;                                         // 448
-		BSTArray<BSFixedString>                        phonemeTargets;                                 // 460 - PHTN
-		BGSMovementType*                               baseMoveTypes[MovementTypes::kTotal];           // 478 - WKMV / RNMV / WMMV / FLMV / SNMV / SPMV
-		FaceRelatedData*                               faceRelatedData[SEXES::kTotal];                 // 4A8
+		TESModel                                   skeletonModels[SEXES::kTotal];                  // 098 - ANAM
+		RACE_DATA                                  data;                                           // 0E8
+		float                                      clampFaceGeoValue;                              // 18C - PNAM
+		float                                      clampFaceGeoValue2;                             // 18C - UNAM
+		std::uint32_t                              pad194;                                         // 194
+		BGSTextureModel                            bodyTextureModels[SEXES::kTotal];               // 198
+		BGSBehaviorGraphModel                      behaviorGraphs[SEXES::kTotal];                  // 1E8
+		BSFixedString                              rootBehaviorGraphNames[SEXES::kTotal];          // 238
+		BSFixedString                              behaviorGraphProjectNames[SEXES::kTotal];       // 248
+		BGSVoiceType*                              defaultVoiceTypes[SEXES::kTotal];               // 258 - VTCK
+		BGSBodyPartData*                           bodyPartData;                                   // 268 - GNAM
+		TESObjectARMO*                             decapitateArmors[SEXES::kTotal];                // 270 - DNAM
+		UnkData                                    unk280;                                         // 280
+		UnkData                                    unk298;                                         // 298
+		std::uint64_t                              unk2B0;                                         // 2B0
+		std::uint64_t                              unk2B8;                                         // 2B8
+		std::uint64_t                              unk2C0;                                         // 2C0
+		std::uint64_t                              unk2C8;                                         // 2C8
+		AttackAnimationArrayMap*                   attackAnimationArrayMap[SEXES::kTotal];         // 2D0
+		BSFixedString                              formEditorID;                                   // 2E0 - EDID
+		BGSMaterialType*                           bloodImpactMaterial;                            // 2E8 - NAM4
+		BGSImpactDataSet*                          impactDataSet;                                  // 2F0 - NAM5
+		BGSArtObject*                              dismemberBlood;                                 // 2F8 - NAM7
+		BGSSoundDescriptorForm*                    corpseOpenSound;                                // 300 - ONAM
+		BGSSoundDescriptorForm*                    corpseCloseSound;                               // 308 - LNAM
+		BSFixedString                              bipedObjectNameA[BIPED_OBJECTS::kEditorTotal];  // 310 - NAME
+		BSTArray<BGSEquipSlot*>                    equipSlots;                                     // 410 - QNAM
+		REX::EnumSet<EquipmentFlag, std::uint32_t> validEquipTypes;                                // 428 - VNAM - bits 13+ are always set
+		std::uint32_t                              unk42C;                                         // 42C - TESModel::unk24
+		BGSEquipSlot*                              unarmedEquipSlot;                               // 430 - UNES
+		TESRace*                                   morphRace;                                      // 438 - NAM8
+		TESRace*                                   armorParentRace;                                // 440 - RNAM
+		UnkData                                    unk448;                                         // 448
+		BSTArray<BSFixedString>                    phonemeTargets;                                 // 460 - PHTN
+		BGSMovementType*                           baseMoveTypes[MovementTypes::kTotal];           // 478 - WKMV / RNMV / WMMV / FLMV / SNMV / SPMV
+		FaceRelatedData*                           faceRelatedData[SEXES::kTotal];                 // 4A8
 	};
 	static_assert(sizeof(TESRace) == 0x4B8);
 }

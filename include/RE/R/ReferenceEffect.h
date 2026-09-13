@@ -12,7 +12,8 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_ReferenceEffect;
-		inline static auto           Ni_RTTI = NiRTTI_ReferenceEffect;
+		inline static constexpr auto Ni_RTTI = NiRTTI_ReferenceEffect;
+		inline static constexpr auto VTABLE = VTABLE_ReferenceEffect;
 		inline static constexpr auto TYPE = TEMP_EFFECT_TYPE::kRefDefault;
 
 		~ReferenceEffect() override;  // 00

@@ -4,7 +4,9 @@
 #include "RE/F/FxDelegateHandler.h"
 #include "RE/G/GFxMovieView.h"
 #include "RE/G/GPtr.h"
+#include "RE/S/Setting.h"
 #include "RE/U/UserEvents.h"
+#include "REL/RuntimeDataAccessors.h"
 
 namespace RE
 {
@@ -51,10 +53,17 @@ namespace RE
 		kPassOn = 2
 	};
 
+	enum class UI_MENU_Unk09
+	{
+		kNone = static_cast<std::underlying_type_t<UI_MENU_Unk09>>(-1),  // Entire enum needs more REing
+
+	};
+
 	class IMenu : public FxDelegateHandler
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_IMenu;
+		inline static constexpr auto VTABLE = VTABLE_IMenu;
 
 		using Context = UserEvents::INPUT_CONTEXT_ID;
 		using Flag = UI_MENU_FLAGS;
@@ -72,8 +81,15 @@ namespace RE
 		virtual void               PostDisplay();                                                // 06
 		virtual void               PreDisplay();                                                 // 07 - { return; } - only available if kRendersOffscreenTargets is set
 		virtual void               RefreshPlatform();                                            // 08
+#ifdef ENABLE_SKYRIM_VR
+		virtual void Unk_09(UI_MENU_Unk09 a_unk);  // 09 - { unk30 = a_unk; }
+		virtual void Unk_0A();                     // 0A - Does something with _root.ResetOnShow swf function
+#endif
 
-		[[nodiscard]] constexpr bool AdvancesUnderPauseMenu() const noexcept { return menuFlags.all(Flag::kAdvancesUnderPauseMenu); }
+		[[nodiscard]] constexpr bool AdvancesUnderPauseMenu() const noexcept
+		{
+			return menuFlags.all(Flag::kAdvancesUnderPauseMenu);
+		}
 		[[nodiscard]] constexpr bool AllowSaving() const noexcept { return menuFlags.all(Flag::kAllowSaving); }
 		[[nodiscard]] constexpr bool AlwaysOpen() const noexcept { return menuFlags.all(Flag::kAlwaysOpen); }
 		[[nodiscard]] constexpr bool ApplicationMenu() const noexcept { return menuFlags.all(Flag::kApplicationMenu); }
@@ -96,30 +112,51 @@ namespace RE
 		[[nodiscard]] constexpr bool RequiresUpdate() const noexcept { return menuFlags.all(Flag::kRequiresUpdate); }
 		[[nodiscard]] constexpr bool SkipRenderDuringFreezeFrameScreenshot() const noexcept { return menuFlags.all(Flag::kSkipRenderDuringFreezeFrameScreenshot); }
 		[[nodiscard]] constexpr bool TopmostRenderedMenu() const noexcept { return menuFlags.all(Flag::kTopmostRenderedMenu); }
-		[[nodiscard]] constexpr bool UpdateUsesCursor() const noexcept { return menuFlags.all(Flag::kUsesBlurredBackground); }
-		[[nodiscard]] constexpr bool UsesBlurredBackground() const noexcept { return menuFlags.all(Flag::kUsesCursor); }
-		[[nodiscard]] constexpr bool UsesCursor() const noexcept { return menuFlags.all(Flag::kUsesMenuContext); }
-		[[nodiscard]] constexpr bool UsesMenuContext() const noexcept { return menuFlags.all(Flag::kUsesMovementToDirection); }
-		[[nodiscard]] constexpr bool UsesMovementToDirection() const noexcept { return menuFlags.all(Flag::kUpdateUsesCursor); }
+		[[nodiscard]] constexpr bool UpdateUsesCursor() const noexcept { return menuFlags.all(Flag::kUpdateUsesCursor); }
+		[[nodiscard]] constexpr bool UsesBlurredBackground() const noexcept { return menuFlags.all(Flag::kUsesBlurredBackground); }
+		[[nodiscard]] constexpr bool UsesCursor() const noexcept { return menuFlags.all(Flag::kUsesCursor); }
+		[[nodiscard]] constexpr bool UsesMenuContext() const noexcept { return menuFlags.all(Flag::kUsesMenuContext); }
+		[[nodiscard]] constexpr bool UsesMovementToDirection() const noexcept { return menuFlags.all(Flag::kUsesMovementToDirection); }
+
+		struct VR_RUNTIME_DATA
+		{
+#define VR_RUNTIME_DATA_CONTENT                                               \
+	REX::EnumSet<UI_MENU_Unk09, std::uint32_t> unk30{ UI_MENU_Unk09::kNone }; \
+	std::byte                                  unk34{ 1 };                    \
+	BSFixedString                              menuName{ "N/A" };  // 38
+            VR_RUNTIME_DATA_CONTENT
+		};
+
+		// Returns nullptr on SE/AE; uses absolute VR offset so it works in cross-VR builds too.
+		[[nodiscard]] inline VR_RUNTIME_DATA* GetVRRuntimeData() noexcept
+		{
+			if SKYRIM_REL_VR_CONSTEXPR (REL::Module::IsVR()) {
+				return &REL::RelocateMember<VR_RUNTIME_DATA>(this, 0x0, 0x0);
+			}
+			return nullptr;
+		}
+
+		[[nodiscard]] inline const VR_RUNTIME_DATA* GetVRRuntimeData() const noexcept
+		{
+			if SKYRIM_REL_VR_CONSTEXPR (REL::Module::IsVR()) {
+				return &REL::RelocateMember<VR_RUNTIME_DATA>(this, 0x0, 0x0);
+			}
+			return nullptr;
+		}
 
 		// members
-		GPtr<GFxMovieView>                             uiMovie{ nullptr };              // 10
-		std::int8_t                                    depthPriority{ 3 };              // 18
-		std::uint8_t                                   pad19{ 0 };                      // 19
-		std::uint16_t                                  pad20{ 0 };                      // 1A
-		stl::enumeration<UI_MENU_FLAGS, std::uint32_t> menuFlags{ Flag::kNone };        // 1C
-		stl::enumeration<Context, std::uint32_t>       inputContext{ Context::kNone };  // 20
-		std::uint32_t                                  pad24{ 0 };                      // 24
-		GPtr<FxDelegate>                               fxDelegate{ nullptr };           // 28
-#if !defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE)
-		std::int32_t  unk30{ -1 };
-		std::int32_t  unk34{ 1 };
-		std::uint64_t unk38{ 0 };
+		GPtr<GFxMovieView>                         uiMovie{ nullptr };              // 10
+		std::int8_t                                depthPriority{ 3 };              // 18
+		std::uint8_t                               pad19{ 0 };                      // 19
+		std::uint16_t                              pad20{ 0 };                      // 1A
+		REX::EnumSet<UI_MENU_FLAGS, std::uint32_t> menuFlags{ Flag::kNone };        // 1C
+		REX::EnumSet<Context, std::uint32_t>       inputContext{ Context::kNone };  // 20
+		std::uint32_t                              pad24{ 0 };                      // 24
+		GPtr<FxDelegate>                           fxDelegate{ nullptr };           // 28
+#if defined(EXCLUSIVE_SKYRIM_VR)
+		VR_RUNTIME_DATA_CONTENT
 #endif
 	};
-#ifndef ENABLE_SKYRIM_VR
-	static_assert(sizeof(IMenu) == 0x30);
-#elif !defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE)
-	static_assert(sizeof(IMenu) == 0x40);
-#endif
+	STATIC_ASSERT_SIZE(IMenu, 0x30, 0x30, 0x40, 0x30);
 }
+#undef VR_RUNTIME_DATA_CONTENT

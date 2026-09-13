@@ -11,6 +11,7 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_BGSAttackDataForm;
+		inline static constexpr auto VTABLE = VTABLE_BGSAttackDataForm;
 
 		~BGSAttackDataForm() override;  // 00
 

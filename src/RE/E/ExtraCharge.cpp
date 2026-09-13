@@ -12,7 +12,7 @@ namespace RE
 
 	ExtraDataType ExtraCharge::GetType() const
 	{
-		return ExtraDataType::kCannotWear;
+		return ExtraDataType::kCharge;
 	}
 
 	bool ExtraCharge::IsNotEqual(const BSExtraData* a_rhs) const

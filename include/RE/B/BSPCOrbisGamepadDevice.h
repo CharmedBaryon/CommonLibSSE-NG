@@ -160,44 +160,56 @@ namespace RE
 		~BSPCOrbisGamepadDevice() override;  // 00
 
 		// override (BSPCGamepadDeviceDelegate)
-		void Initialize() override;                                                                   // 01
-		void Process(float a_arg1) override;                                                          // 02
-		void Release() override;                                                                      // 03
-		void Reset() override;                                                                        // 08 - { memset(this+0xD8, 0, 0x120); }
-		void SetRumble(float lValue, float rValue) override;                                          // 09
-		void SetLEDColor(ColorParam* colorParam) override;                                            // 0A
-		void ResetLEDColor() override;                                                                // 0B
-		void ProcessRawInput(int32_t a_rawX, int32_t a_rawY, float& a_outX, float& a_outY) override;  // 0D
-		void Unk_0E(void) override;                                                                   // 0E - { return; }
+		void Initialize() override;                                                                                          // 01
+		void Poll(float a_timeDelta) override;                                                                               // 02
+		void Shutdown() override;                                                                                            // 03
+		void ClearInputState() override;                                                                                     // 08 - { memset(this+0xD8, 0, 0x120); }
+		void SetVibration(float a_largeMotor, float a_smallMotor) override;                                                  // 09
+		void SetDeviceLight(const std::uint32_t (&a_rgb)[3]) override;                                                       // 0A
+		void ResetDeviceLight() override;                                                                                    // 0B
+		void NormalizeThumbstickValue(std::int32_t a_thumbX, std::int32_t a_thumbY, float& a_xOut, float& a_yOut) override;  // 0D
+		void DoEnableListeningMode() override;                                                                               // 0E - { return; }
 
 		ButtonState GetPreviousButtonState() const
 		{
-			return stl::unrestricted_cast<ButtonState>(previousPadState.buttonState);
+			return stl::unrestricted_cast<ButtonState>(GetRuntimeData().previousPadState.buttonState);
 		}
 		ButtonState GetCurrentButtonState() const
 		{
-			return stl::unrestricted_cast<ButtonState>(currentPadState.buttonState);
+			return stl::unrestricted_cast<ButtonState>(GetRuntimeData().currentPadState.buttonState);
 		}
 
+		struct RUNTIME_DATA
+		{
+#define RUNTIME_DATA_CONTENT                      \
+	GamepadData previousPadState; /* 0D8 / 0E0 */ \
+	float       previousLT;       /* 150 / 158 */ \
+	float       previousRT;       /* 154 / 15C */ \
+	float       previousLX;       /* 158 / 160 */ \
+	float       previousLY;       /* 15C / 164 */ \
+	float       previousRX;       /* 160 / 168 */ \
+	float       previousRY;       /* 164 / 16C */ \
+	GamepadData currentPadState;  /* 168 / 170 */ \
+	float       currentLT;        /* 1E0 / 1E8 */ \
+	float       currentRT;        /* 1E4 / 1EC */ \
+	float       currentLX;        /* 1E8 / 1F0 */ \
+	float       currentLY;        /* 1EC / 1F4 */ \
+	float       currentRX;        /* 1F0 / 1F8 */ \
+	float       currentRY;        /* 1F4 / 1FC */
+            RUNTIME_DATA_CONTENT
+		};
+		static_assert(sizeof(RUNTIME_DATA) == 0x120);
+
+		RUNTIME_DATA_ACCESSOR(RUNTIME_DATA, 0xD8, 0xE0);
+#ifndef SKYRIM_CROSS_VR
 		// members
-		GamepadData previousPadState;  // 0D8
-		float       previousLT;        // 150
-		float       previousRT;        // 154
-		float       previousLX;        // 158
-		float       previousLY;        // 15C
-		float       previousRX;        // 160
-		float       previousRY;        // 164
-		GamepadData currentPadState;   // 168
-		float       currentLT;         // 1E0
-		float       currentRT;         // 1E4
-		float       currentLX;         // 1E8
-		float       currentLY;         // 1EC
-		float       currentRX;         // 1F0
-		float       currentRY;         // 1F4
+		RUNTIME_DATA_CONTENT
+#endif
 
 	protected:
 		friend class BSGamepadDeviceHandler;
 		BSPCOrbisGamepadDevice();
 	};
-	static_assert(sizeof(BSPCOrbisGamepadDevice) == 0x1F8);
+	STATIC_ASSERT_SIZE(BSPCOrbisGamepadDevice, 0x1F8, 0x1F8, 0x200, 0x8, 0x1F8);
 }
+#undef RUNTIME_DATA_CONTENT

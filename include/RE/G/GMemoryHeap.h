@@ -71,15 +71,15 @@ namespace RE
 			void Clear();
 
 			// members
-			stl::enumeration<HeapFlags, std::uint32_t> flags;        // 00
-			std::uint32_t                              pad04;        // 04
-			UPInt                                      minAlign;     // 08
-			UPInt                                      granularity;  // 10
-			UPInt                                      reserve;      // 18
-			UPInt                                      threshold;    // 20
-			UPInt                                      limit;        // 28
-			GHeapID                                    heapID;       // 30
-			UPInt                                      arena;        // 38
+			REX::EnumSet<HeapFlags, std::uint32_t> flags;        // 00
+			std::uint32_t                          pad04;        // 04
+			UPInt                                  minAlign;     // 08
+			UPInt                                  granularity;  // 10
+			UPInt                                  reserve;      // 18
+			UPInt                                  threshold;    // 20
+			UPInt                                  limit;        // 28
+			GHeapID                                heapID;       // 30
+			UPInt                                  arena;        // 38
 		};
 		static_assert(sizeof(HeapDesc) == 0x40);
 

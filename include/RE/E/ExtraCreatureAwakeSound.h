@@ -10,7 +10,8 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_ExtraCreatureAwakeSound;
-		inline static auto           EXTRADATATYPE = ExtraDataType::kCreatureAwakeSound;
+		inline static constexpr auto VTABLE = VTABLE_ExtraCreatureAwakeSound;
+		inline static constexpr auto EXTRADATATYPE = ExtraDataType::kCreatureAwakeSound;
 
 		~ExtraCreatureAwakeSound() override;  // 00
 

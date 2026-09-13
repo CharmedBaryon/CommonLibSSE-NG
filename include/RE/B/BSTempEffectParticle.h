@@ -19,7 +19,8 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_BSTempEffectParticle;
-		inline static auto           Ni_RTTI = NiRTTI_BSTempEffectParticle;
+		inline static constexpr auto Ni_RTTI = NiRTTI_BSTempEffectParticle;
+		inline static constexpr auto VTABLE = VTABLE_BSTempEffectParticle;
 		inline static constexpr auto TYPE = TEMP_EFFECT_TYPE::kParticle;
 
 		~BSTempEffectParticle() override;  // 00
@@ -33,13 +34,13 @@ namespace RE
 		static BSTempEffectParticle* Spawn(TESObjectCELL* a_cell, float a_lifetime, const char* a_modelName, const NiPoint3& a_rotation, const NiPoint3& a_position, float a_scale, std::uint32_t a_flags, NiAVObject* a_target)
 		{
 			using func_t = BSTempEffectParticle* (*)(TESObjectCELL*, float, const char*, const NiPoint3&, const NiPoint3&, float, std::uint32_t, NiAVObject*);
-			REL::Relocation<func_t> func{ RELOCATION_ID(29218, 30071) };
+			static REL::Relocation<func_t> func{ RELOCATION_ID(29218, 30071) };
 			return func(a_cell, a_lifetime, a_modelName, a_rotation, a_position, a_scale, a_flags, a_target);
 		}
 		static BSTempEffectParticle* Spawn(TESObjectCELL* a_cell, float a_lifetime, const char* a_modelName, const NiMatrix3& a_normal, const NiPoint3& a_position, float a_scale, std::uint32_t a_flags, NiAVObject* a_target)
 		{
 			using func_t = BSTempEffectParticle* (*)(TESObjectCELL*, float, const char*, const NiMatrix3&, const NiPoint3&, float, std::uint32_t, NiAVObject*);
-			REL::Relocation<func_t> func{ RELOCATION_ID(29219, 30072) };
+			static REL::Relocation<func_t> func{ RELOCATION_ID(29219, 30072) };
 			return func(a_cell, a_lifetime, a_modelName, a_normal, a_position, a_scale, a_flags, a_target);
 		}
 

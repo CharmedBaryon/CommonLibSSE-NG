@@ -10,7 +10,7 @@ namespace RE
 		static FixedStrings* GetSingleton()
 		{
 			using func_t = decltype(&FixedStrings::GetSingleton);
-			REL::Relocation<func_t> func{ RELOCATION_ID(11308, 11437) };
+			static REL::Relocation<func_t> func{ RELOCATION_ID(11308, 11437) };
 			return func();
 		}
 

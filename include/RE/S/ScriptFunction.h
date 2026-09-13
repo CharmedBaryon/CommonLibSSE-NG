@@ -16,6 +16,7 @@ namespace RE
 			{
 			public:
 				inline static constexpr auto RTTI = RTTI_BSScript__Internal__ScriptFunction;
+				inline static constexpr auto VTABLE = VTABLE_BSScript__Internal__ScriptFunction;
 
 				~ScriptFunction() override;  // 00
 
@@ -42,23 +43,23 @@ namespace RE
 				void                 SetCallableFromTasklets(bool a_callable) override;                                                                         // 14 - { return; }
 
 				// members
-				BSFixedString                                 name;             // 10
-				BSFixedString                                 objName;          // 18
-				BSFixedString                                 stateName;        // 20
-				TypeInfo                                      retType;          // 28
-				VDescTable                                    descTable;        // 30
-				std::uint32_t                                 userFlags;        // 40
-				std::uint32_t                                 pad44;            // 44
-				ByteCode::PackedInstructionStream             instructions;     // 48
-				stl::enumeration<FunctionType, std::uint16_t> functionType;     // 58
-				bool                                          isStatic;         // 5A
-				std::uint8_t                                  pad5B;            // 5B
-				std::uint32_t                                 pad5C;            // 5C
-				BSFixedString                                 docString;        // 60
-				BSFixedString                                 sourceFileName;   // 68
-				std::uint32_t                                 lineNumberCount;  // 70
-				std::uint32_t                                 pad74;            // 74
-				std::uint16_t*                                lineNumbers;      // 78
+				BSFixedString                             name;             // 10
+				BSFixedString                             objName;          // 18
+				BSFixedString                             stateName;        // 20
+				TypeInfo                                  retType;          // 28
+				VDescTable                                descTable;        // 30
+				std::uint32_t                             userFlags;        // 40
+				std::uint32_t                             pad44;            // 44
+				ByteCode::PackedInstructionStream         instructions;     // 48
+				REX::EnumSet<FunctionType, std::uint16_t> functionType;     // 58
+				bool                                      isStatic;         // 5A
+				std::uint8_t                              pad5B;            // 5B
+				std::uint32_t                             pad5C;            // 5C
+				BSFixedString                             docString;        // 60
+				BSFixedString                             sourceFileName;   // 68
+				std::uint32_t                             lineNumberCount;  // 70
+				std::uint32_t                             pad74;            // 74
+				std::uint16_t*                            lineNumbers;      // 78
 			};
 			static_assert(sizeof(ScriptFunction) == 0x80);
 		}

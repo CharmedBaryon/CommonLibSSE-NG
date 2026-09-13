@@ -1982,7 +1982,7 @@ namespace RE
 	constexpr std::array<REL::VariantID, 1>  VTABLE_BSTCommonStaticMessageQueue_BSTSmartPointer_bgs__saveload__Request_BSTSmartPointerIntrusiveRefCount__8_{ REL::VariantID(258754, 206618, 0x16bcdd8) };
 	constexpr std::array<REL::VariantID, 1>  VTABLE_BGSSaveLoadManager__Thread{ REL::VariantID(258755, 206620, 0x16bce18) };
 	constexpr std::array<REL::VariantID, 3>  VTABLE_BGSSaveLoadManager{ REL::VariantID(258756, 206622, 0x16bce38), REL::VariantID(258757, 206624, 0x16bce50), REL::VariantID(258758, 206626, 0x16bce68) };
-	constexpr std::array<REL::VariantID, 1>  VTABLE___LoadGameMissingContentCallBack{ REL::VariantID(258783, 206638, 0x16bd138) };
+	constexpr std::array<REL::VariantID, 1>  VTABLE___LoadGameMissingContentCallBack{ REL::VariantID(258783, 465335, 0x16bd138) };
 	constexpr std::array<REL::VariantID, 1>  VTABLE_bgs__saveload__Request{ REL::VariantID(258818, 206668, 0x16bd670) };
 	constexpr std::array<REL::VariantID, 1>  VTABLE_NiTMapBase_DFALL_NiTMapItem_ENUM_FORM_ID_BSSimpleList_SavedFormData________ENUM_FORM_ID_BSSimpleList_SavedFormData______{ REL::VariantID(258840, 206675, 0x16bd9c8) };
 	constexpr std::array<REL::VariantID, 1>  VTABLE_NiTMap_ENUM_FORM_ID_BSSimpleList_SavedFormData______{ REL::VariantID(258841, 206677, 0x16bda08) };
@@ -2353,6 +2353,10 @@ namespace RE
 	constexpr std::array<REL::VariantID, 1>  VTABLE_MovementHandler{ REL::VariantID(263056, 208715, 0x16f21c8) };
 	constexpr std::array<REL::VariantID, 1>  VTABLE_SprintHandler{ REL::VariantID(263057, 208717, 0x16f2208) };
 	constexpr std::array<REL::VariantID, 1>  VTABLE_AttackBlockHandler{ REL::VariantID(263058, 208719, 0x16f2258) };
+	// AE 1.7.99-only classes -- no SE/VR counterpart exists, so those slots are unused (0).
+	constexpr std::array<REL::VariantID, 1>  VTABLE_AmiiboEvent{ REL::VariantID(0, 536708, 0) };
+	constexpr std::array<REL::VariantID, 1>  VTABLE_MotionGestureEvent{ REL::VariantID(0, 536706, 0) };
+	constexpr std::array<REL::VariantID, 1>  VTABLE_SixaxisEvent{ REL::VariantID(0, 536598, 0) };
 	constexpr std::array<REL::VariantID, 1>  VTABLE_ReadyWeaponHandler{ REL::VariantID(263059, 208721, 0x16f22a8) };
 	constexpr std::array<REL::VariantID, 1>  VTABLE_ActivateHandler{ REL::VariantID(263060, 208723, 0x16f22e8) };
 	constexpr std::array<REL::VariantID, 1>  VTABLE_AutoMoveHandler{ REL::VariantID(263061, 208725, 0x16f2338) };
@@ -4069,7 +4073,7 @@ namespace RE
 	constexpr std::array<REL::VariantID, 5>  VTABLE_MainMenu{ REL::VariantID(269432, 215698, 0x173b6b0), REL::VariantID(269433, 215700, 0x173b710), REL::VariantID(269434, 215702, 0x173b728), REL::VariantID(269435, 215704, 0x173b740), REL::VariantID(0, 0, 0x173b758) };
 	constexpr std::array<REL::VariantID, 1>  VTABLE_DLCPurchased__OpenVisitCreationClubCallback{ REL::VariantID(0, 215706, 0x0) };
 	constexpr std::array<REL::VariantID, 1>  VTABLE_DLCPurchased__PurchasedDLCDialogCallback{ REL::VariantID(0, 215710, 0x0) };
-	constexpr std::array<REL::VariantID, 1>  VTABLE_NeedToUpdateCreationClubCallback{ REL::VariantID(0, 215718, 0x0) };
+	constexpr std::array<REL::VariantID, 1>  VTABLE_NeedToUpdateCreationClubCallback{ REL::VariantID(269454, 215718, 0x0) };
 	constexpr std::array<REL::VariantID, 1>  VTABLE_FxResponseArgs_12_{ REL::VariantID(0, 215746, 0x0) };
 	constexpr std::array<REL::VariantID, 1>  VTABLE___DeviceSelectCallback{ REL::VariantID(269481, 215751, 0x173bb18) };
 	constexpr std::array<REL::VariantID, 1>  VTABLE_std___Func_impl_no_alloc_void_____char_const___bool__void_char_const___bool_{ REL::VariantID(0, 215762, 0x0) };
@@ -4346,7 +4350,7 @@ namespace RE
 	constexpr std::array<REL::VariantID, 1>  VTABLE_SkyrimScript____MoveToPackLocFunctor{ REL::VariantID(272486, 217353, 0x175ac00) };
 	constexpr std::array<REL::VariantID, 1>  VTABLE_SkyrimScript__ConcreteDelayFunctorFactory_SkyrimScript____MoveToPackLocFunctor_10_{ REL::VariantID(272487, 217355, 0x175ac40) };
 	constexpr std::array<REL::VariantID, 1>  VTABLE_IGiftMenuScriptCallback{ REL::VariantID(272438, 217360, 0x175a358) };
-	constexpr std::array<REL::VariantID, 1>  VTABLE_SkyrimScript__A0x4f420c6e____GiftMenuCallbackFunc{ REL::VariantID(0, 217429, 0x0) };
+	constexpr std::array<REL::VariantID, 1>  VTABLE_SkyrimScript__GiftMenuCallbackFunc{ REL::VariantID(272512, 217429, 0x175b188) };
 	constexpr std::array<REL::VariantID, 1>  VTABLE_BSScript__NativeFunction1_Actor_void_BGSPerk___{ REL::VariantID(272531, 217449, 0x175b568) };
 	constexpr std::array<REL::VariantID, 1>  VTABLE_BSScript__NativeFunction1_Actor_bool_TESShout___{ REL::VariantID(272532, 217451, 0x175b628) };
 	constexpr std::array<REL::VariantID, 1>  VTABLE_BSScript__NativeFunction2_Actor_bool_SpellItem___bool_{ REL::VariantID(272533, 217453, 0x175b6e8) };
@@ -7402,7 +7406,6 @@ namespace RE
 	constexpr std::array<REL::VariantID, 1>  VTABLE_SkyrimScript____StoryEventArguments_SkyrimScript____LocationStoryEventArgConverter_SkyrimScript__A0xe101b7a9__FormStoryEventArgConverter_SkyrimScript__A0xe101b7a9__EmptyStoryEventArgConverter_SkyrimScript__A0xe101b7a9__EmptyStoryEventArgConverter_SkyrimScript__A0xe101b7a9__EmptyStoryEventArgConverter_SkyrimScript__A0xe101b7a9__EmptyStoryEventArgConverter_{ REL::VariantID(271580, 0, 0x0) };
 	constexpr std::array<REL::VariantID, 1>  VTABLE_SkyrimScript____StoryEventArguments_SkyrimScript____RefStoryEventArgConverter_SkyrimScript__A0xe101b7a9__RefStoryEventArgConverter_SkyrimScript__A0xe101b7a9__FormStoryEventArgConverter_SkyrimScript__A0xe101b7a9__UIntStoryEventArgConverter_SkyrimScript__A0xe101b7a9__UIntStoryEventArgConverter_SkyrimScript__A0xe101b7a9__EmptyStoryEventArgConverter_{ REL::VariantID(271581, 0, 0x0) };
 	constexpr std::array<REL::VariantID, 1>  VTABLE_SkyrimScript____StoryEventArguments_SkyrimScript____RefStoryEventArgConverter_SkyrimScript__A0xe101b7a9__RefStoryEventArgConverter_SkyrimScript__A0xe101b7a9__LocationStoryEventArgConverter_SkyrimScript__A0xe101b7a9__FormStoryEventArgConverter_SkyrimScript__A0xe101b7a9__EmptyStoryEventArgConverter_SkyrimScript__A0xe101b7a9__EmptyStoryEventArgConverter_{ REL::VariantID(271582, 0, 0x0) };
-	constexpr std::array<REL::VariantID, 1>  VTABLE_SkyrimScript__A0xc250f300____GiftMenuCallbackFunc{ REL::VariantID(272512, 0, 0x0) };
 	constexpr std::array<REL::VariantID, 2>  VTABLE___LoggingDisabler{ REL::VariantID(291293, 0, 0x1867218), REL::VariantID(291294, 0, 0x1867230) };
 	constexpr std::array<REL::VariantID, 1>  VTABLE_bnet__CallbackBind_bnet__Callback_bnet__UniquePtr_bnet___impl__FixedVector_bnet___impl__FixedString_10_1_1_bnet___impl__StdAllocator_char___16_1_bnet___impl__StdAllocator_bnet___impl__FixedString_10_1_1_bnet___impl__StdAllocator_char_____const__bnet__HttpResponseInfo__BSPlatform__BSModsManager_{ REL::VariantID(296192, 0, 0x0) };
 	constexpr std::array<REL::VariantID, 1>  VTABLE_std___Func_impl_std___Binder_std___Unforced_void__BSPlatform__BSModsManager_____BSPlatform__BNetResult_unsigned___int64_char_const___BSPlatform__BNetResult___BSStringT_char_4294967295_DynamicMemoryManagementPol_____BSPlatform__BSModsManager___const_std___Ph_1__const___std___Ph_2__const___std___Ph_3__const___BSPlatform__BNetResult___BSStringT_char_4294967295_DynamicMemoryManagementPol_____std__allocator_int__void_BSPlatform__BNetResult_unsigned___int64_char_const___{ REL::VariantID(296194, 0, 0x0) };
@@ -7550,7 +7553,6 @@ namespace RE
 	constexpr std::array<REL::VariantOffset, 1> VTABLE_SkyrimScript____StoryEventArguments_SkyrimScript____RefStoryEventArgConverter_SkyrimScript__A0x83327dd8__RefStoryEventArgConverter_SkyrimScript__A0x83327dd8__FormStoryEventArgConverter_SkyrimScript__A0x83327dd8__UIntStoryEventArgConverter_SkyrimScript__A0x83327dd8__UIntStoryEventArgConverter_SkyrimScript__A0x83327dd8__EmptyStoryEventArgConverter_{ REL::VariantOffset(0, 0, 0x1752440) };
 	constexpr std::array<REL::VariantOffset, 1> VTABLE_SkyrimScript____StoryEventArguments_SkyrimScript____RefStoryEventArgConverter_SkyrimScript__A0x83327dd8__RefStoryEventArgConverter_SkyrimScript__A0x83327dd8__LocationStoryEventArgConverter_SkyrimScript__A0x83327dd8__FormStoryEventArgConverter_SkyrimScript__A0x83327dd8__EmptyStoryEventArgConverter_SkyrimScript__A0x83327dd8__EmptyStoryEventArgConverter_{ REL::VariantOffset(0, 0, 0x1752458) };
 	constexpr std::array<REL::VariantOffset, 1> VTABLE___MenuOpenCloseEventArguments{ REL::VariantOffset(0, 0, 0x1756958) };
-	constexpr std::array<REL::VariantOffset, 1> VTABLE_SkyrimScript__A0x6ef466f1____GiftMenuCallbackFunc{ REL::VariantOffset(0, 0, 0x175b188) };
 	constexpr std::array<REL::VariantOffset, 1> VTABLE_BSScript__NativeFunction1_BGSScene_void_uint_{ REL::VariantOffset(0, 0, 0x1762370) };
 	constexpr std::array<REL::VariantOffset, 1> VTABLE_BSScript__NativeFunction2_BSScript__StaticFunctionTag_void_float_float_{ REL::VariantOffset(0, 0, 0x17655c0) };
 	constexpr std::array<REL::VariantOffset, 1> VTABLE_BSScript__NativeFunction5_BSScript__StaticFunctionTag_void_TESObjectREFR___float_float_float_float_{ REL::VariantOffset(0, 0, 0x17661c0) };

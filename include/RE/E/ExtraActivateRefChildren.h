@@ -1,7 +1,7 @@
 #pragma once
 
 #include "RE/B/BSExtraData.h"
-#include "RE/B/BSTList.h"
+#include "RE/B/BSSimpleList.h"
 #include "RE/E/ExtraDataTypes.h"
 
 namespace RE
@@ -12,7 +12,8 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_ExtraActivateRefChildren;
-		inline static auto           EXTRADATATYPE = ExtraDataType::kActivateRefChildren;
+		inline static constexpr auto VTABLE = VTABLE_ExtraActivateRefChildren;
+		inline static constexpr auto EXTRADATATYPE = ExtraDataType::kActivateRefChildren;
 
 		~ExtraActivateRefChildren() override;  // 00
 

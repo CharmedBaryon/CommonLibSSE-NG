@@ -15,6 +15,7 @@ namespace RE
 		{
 		public:
 			inline static constexpr auto RTTI = RTTI_CompactingStore__Store;
+			inline static constexpr auto VTABLE = VTABLE_CompactingStore__Store;
 
 			~Store() override;  // 00
 

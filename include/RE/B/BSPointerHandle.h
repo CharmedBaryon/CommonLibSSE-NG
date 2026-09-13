@@ -63,7 +63,7 @@ namespace RE
 		}
 
 		[[nodiscard]] explicit operator bool() const noexcept { return has_value(); }
-		[[nodiscard]] bool     has_value() const noexcept { return _handle != 0; }
+		[[nodiscard]] bool has_value() const noexcept { return _handle != 0; }
 
 		[[nodiscard]] value_type value() const noexcept { return _handle; }
 
@@ -152,6 +152,13 @@ namespace RE
 
 		void reset() noexcept { _handle.reset(); }
 
+		[[nodiscard]] NiPointer<T> get()
+		{
+			NiPointer<T> ptr;
+			get_smartptr(ptr);
+			return ptr;
+		}
+
 		[[nodiscard]] NiPointer<T> get() const
 		{
 			NiPointer<T> ptr;
@@ -178,6 +185,7 @@ namespace RE
 		friend class BSPointerHandle;
 
 		void get_handle(T* a_ptr);
+		bool get_smartptr(NiPointer<T>& a_smartPointerOut);
 		bool get_smartptr(NiPointer<T>& a_smartPointerOut) const;
 
 		Handle _handle;
@@ -210,14 +218,21 @@ namespace RE
 		static BSPointerHandle<T> GetHandle(T* a_ptr)
 		{
 			using func_t = decltype(&BSPointerHandleManagerInterface<T, Manager>::GetHandle);
-			REL::Relocation<func_t> func{ RELOCATION_ID(15967, 16212) };
+			static REL::Relocation<func_t> func{ RELOCATION_ID(15967, 16212) };
 			return func(a_ptr);
+		}
+
+		static bool GetSmartPointer(BSPointerHandle<T>& a_handle, NiPointer<T>& a_smartPointerOut)  // clears the handle
+		{
+			using func_t = bool (*)(BSPointerHandle<T>&, NiPointer<T>&);
+			static REL::Relocation<func_t> func{ RELOCATION_ID(12785, 12922) };
+			return func(a_handle, a_smartPointerOut);
 		}
 
 		static bool GetSmartPointer(const BSPointerHandle<T>& a_handle, NiPointer<T>& a_smartPointerOut)
 		{
-			using func_t = decltype(&BSPointerHandleManagerInterface<T, Manager>::GetSmartPointer);
-			REL::Relocation<func_t> func{ RELOCATION_ID(12204, 12332) };
+			using func_t = bool (*)(const BSPointerHandle<T>&, NiPointer<T>&);
+			static REL::Relocation<func_t> func{ RELOCATION_ID(12204, 12332) };
 			return func(a_handle, a_smartPointerOut);
 		}
 	};
@@ -230,6 +245,12 @@ namespace RE
 	void BSPointerHandle<T, Handle>::get_handle(T* a_ptr)
 	{
 		*this = BSPointerHandleManagerInterface<T>::GetHandle(a_ptr);
+	}
+
+	template <class T, class Handle>
+	bool BSPointerHandle<T, Handle>::get_smartptr(NiPointer<T>& a_smartPointerOut)
+	{
+		return BSPointerHandleManagerInterface<T>::GetSmartPointer(*this, a_smartPointerOut);
 	}
 
 	template <class T, class Handle>

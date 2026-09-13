@@ -6,8 +6,11 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_IUIMessageData;
+		inline static constexpr auto VTABLE = VTABLE_IUIMessageData;
 
 		virtual ~IUIMessageData() = default;  // 00
+
+		TES_HEAP_REDEFINE_NEW();
 
 		// members
 		std::uint16_t unk08;  // 08

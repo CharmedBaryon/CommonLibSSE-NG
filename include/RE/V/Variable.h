@@ -4,6 +4,7 @@
 #include "RE/B/BSTSmartPointer.h"
 #include "RE/T/TypeInfo.h"
 
+#undef GetObject
 namespace RE
 {
 	namespace BSScript

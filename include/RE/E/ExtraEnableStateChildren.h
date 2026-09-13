@@ -2,7 +2,7 @@
 
 #include "RE/B/BSExtraData.h"
 #include "RE/B/BSPointerHandle.h"
-#include "RE/B/BSTList.h"
+#include "RE/B/BSSimpleList.h"
 #include "RE/E/ExtraDataTypes.h"
 
 namespace RE
@@ -11,7 +11,8 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_ExtraEnableStateChildren;
-		inline static auto           EXTRADATATYPE = ExtraDataType::kEnableStateChildren;
+		inline static constexpr auto VTABLE = VTABLE_ExtraEnableStateChildren;
+		inline static constexpr auto EXTRADATATYPE = ExtraDataType::kEnableStateChildren;
 
 		~ExtraEnableStateChildren() override;  // 00
 

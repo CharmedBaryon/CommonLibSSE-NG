@@ -43,25 +43,25 @@ namespace RE
 
 		struct Filter
 		{
-			stl::enumeration<FilterType, std::uint8_t> filterType;        // 00
-			std::uint8_t                               pad01;             // 01
-			std::uint16_t                              angle;             // 02
-			std::uint16_t                              distance;          // 04
-			std::uint16_t                              pad06;             // 06
-			GRenderer::BlurFilterParams                blurFilterParams;  // 08
-			float                                      colorMatrix[20];   // 4C
+			REX::EnumSet<FilterType, std::uint8_t> filterType;        // 00
+			std::uint8_t                           pad01;             // 01
+			std::uint16_t                          angle;             // 02
+			std::uint16_t                          distance;          // 04
+			std::uint16_t                          pad06;             // 06
+			GRenderer::BlurFilterParams            blurFilterParams;  // 08
+			float                                  colorMatrix[20];   // 4C
 		};
 		static_assert(sizeof(Filter) == 0x9C);
 
-		GArray<Filter>                                filterList;      // 00
-		GRenderer::Cxform                             colorTransform;  // 18
-		GMatrix2D                                     matrix;          // 38
-		float                                         ratio;           // 50
-		std::int32_t                                  depth;           // 54
-		GFxResourceID                                 characterId;     // 58
-		std::uint16_t                                 clipDepth;       // 5C
-		stl::enumeration<BlendType, std::uint8_t>     blendMode;       // 5E
-		stl::enumeration<GFxPlaceFlags, std::uint8_t> placeFlags;      // 5F
+		GArray<Filter>                            filterList;      // 00
+		GRenderer::Cxform                         colorTransform;  // 18
+		GMatrix2D                                 matrix;          // 38
+		float                                     ratio;           // 50
+		std::int32_t                              depth;           // 54
+		GFxResourceID                             characterId;     // 58
+		std::uint16_t                             clipDepth;       // 5C
+		REX::EnumSet<BlendType, std::uint8_t>     blendMode;       // 5E
+		REX::EnumSet<GFxPlaceFlags, std::uint8_t> placeFlags;      // 5F
 	};
 	static_assert(sizeof(GFxPlaceObjectUnpackedData) == 0x60);
 
@@ -74,10 +74,10 @@ namespace RE
 			kReplaceDisplayObject,
 		};
 
-		void*                                      clipActions;  // 60
-		const char*                                name;         // 68
-		stl::enumeration<ChangeType, std::int32_t> changeType;   // 70
-		std::uint32_t                              pad74;        // 74
+		void*                                  clipActions;  // 60
+		const char*                            name;         // 68
+		REX::EnumSet<ChangeType, std::int32_t> changeType;   // 70
+		std::uint32_t                          pad74;        // 74
 	};
 
 	class GFxPlaceObjectBase : public GASExecuteTag

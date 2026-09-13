@@ -11,6 +11,7 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_GFxTranslator;
+		inline static constexpr auto VTABLE = VTABLE_GFxTranslator;
 
 		using WordWrappingType = GFxWWHelper::WordWrappingType;
 
@@ -44,13 +45,13 @@ namespace RE
 			void                         SetResultHTML(const wchar_t* a_resultHTML, UPInt a_resultLen = UPINT_MAX);  // An output method which sets translated string as a HTML text.
 
 			// members
-			const wchar_t*                       key;           // 00
-			GFxWStringBuffer*                    result;        // 08
-			const char*                          instanceName;  // 10
-			stl::enumeration<Flag, std::uint8_t> flags;         // 18
-			std::uint8_t                         pad19;         // 19
-			std::uint16_t                        pad1A;         // 1A
-			std::uint32_t                        pad1C;         // 1C
+			const wchar_t*                   key;           // 00
+			GFxWStringBuffer*                result;        // 08
+			const char*                      instanceName;  // 10
+			REX::EnumSet<Flag, std::uint8_t> flags;         // 18
+			std::uint8_t                     pad19;         // 19
+			std::uint16_t                    pad1A;         // 1A
+			std::uint32_t                    pad1C;         // 1C
 		};
 		static_assert(sizeof(TranslateInfo) == 0x20);
 
@@ -67,24 +68,24 @@ namespace RE
 			};
 
 			// members
-			const wchar_t*                            paraText;                 // 00 - [in] Text of the current paragraph, wide-characters are used
-			UPInt                                     paraTextLen;              // 08 - [in] Length of the paragraph text, in characters
-			const float*                              widths;                   // 10 - [in] An array of line widths, in pixels, before the character at the corresponding index. The size of the array is NumCharsInLine + 1. Note, this is not the array of character widths. For example, there is a line that contains three characters: ABC. The NumCharInLine will be equal 3, the size of the pWidths will be 4; the pWidth[0] will be always 0 (since there are no characters before the A), the pWidth[1] will contain width of A symbol, pWidths[2] will contain width of A PLUS width of B, and, finally, pWidths[3] will contain total width of the line (width of A PLUS width of B PLUS width of C)
-			UPInt                                     lineStartPos;             // 18 - [in] The text position of the first character in line. ParaTextLen[LineStartPos] might be used to get the value of this character
-			UPInt                                     numCharsInLine;           // 20 - [in] Number of characters currently in the line
-			float                                     visibleRectWidth;         // 28 - [in] Width, in pixels, of client rectangle. This width might be used in calculation of word wrapping position: the total width of line should not exceed this width
-			float                                     currentLineWidth;         // 2C - [in] Current line width, in pixels
-			float                                     lineWidthBeforeWordWrap;  // 30 - [in] Line width before the proposedWordWrapPoint, in pixels. For example, if line is ABC DEF and proposedWordWrapPoint = 3 (space) then lineWidthBeforeWordWrap will contain the width of ABC (w/o space) part of the line
-			float                                     dashSymbolWidth;          // 34 - [in] Supplementary member, width of the hyphen symbol, in pixels. It might be used to calculate hyphenation
-			stl::enumeration<Alignment, std::uint8_t> alignment;                // 38 - [in] Alignment of the line
-			std::uint8_t                              pad39;                    // 39
-			std::uint16_t                             pad3A;                    // 3A
-			std::uint32_t                             pad3C;                    // 3C
-			UPInt                                     proposedWordWrapPoint;    // 40 - [in,out] An index in the line of the proposed word wrap position. For example, if the line text is "ABC DEF" and only "ABC DE" fits in visibleRectWidth then the proposedWordWrapPoint will be equal to 3. Note, this is the index in line, not in text (paraText), not in line. Use lineStartPos to calculate the proposed word wrapping position in the text. The user's OnWordWrapping method should change this member if it is necessary to change the word wrapping position according to custom rules
-			bool                                      useHyphenation;           // 48 - [out] The OnWordWrapping method may set this to true to indicate to put hyphen symbol at the word-wrapping position. This might be useful for implementing hyphenation
-			std::uint8_t                              pad49;                    // 49
-			std::uint16_t                             pad4A;                    // 4A
-			std::uint32_t                             pad4C;                    // 4C
+			const wchar_t*                        paraText;                 // 00 - [in] Text of the current paragraph, wide-characters are used
+			UPInt                                 paraTextLen;              // 08 - [in] Length of the paragraph text, in characters
+			const float*                          widths;                   // 10 - [in] An array of line widths, in pixels, before the character at the corresponding index. The size of the array is NumCharsInLine + 1. Note, this is not the array of character widths. For example, there is a line that contains three characters: ABC. The NumCharInLine will be equal 3, the size of the pWidths will be 4; the pWidth[0] will be always 0 (since there are no characters before the A), the pWidth[1] will contain width of A symbol, pWidths[2] will contain width of A PLUS width of B, and, finally, pWidths[3] will contain total width of the line (width of A PLUS width of B PLUS width of C)
+			UPInt                                 lineStartPos;             // 18 - [in] The text position of the first character in line. ParaTextLen[LineStartPos] might be used to get the value of this character
+			UPInt                                 numCharsInLine;           // 20 - [in] Number of characters currently in the line
+			float                                 visibleRectWidth;         // 28 - [in] Width, in pixels, of client rectangle. This width might be used in calculation of word wrapping position: the total width of line should not exceed this width
+			float                                 currentLineWidth;         // 2C - [in] Current line width, in pixels
+			float                                 lineWidthBeforeWordWrap;  // 30 - [in] Line width before the proposedWordWrapPoint, in pixels. For example, if line is ABC DEF and proposedWordWrapPoint = 3 (space) then lineWidthBeforeWordWrap will contain the width of ABC (w/o space) part of the line
+			float                                 dashSymbolWidth;          // 34 - [in] Supplementary member, width of the hyphen symbol, in pixels. It might be used to calculate hyphenation
+			REX::EnumSet<Alignment, std::uint8_t> alignment;                // 38 - [in] Alignment of the line
+			std::uint8_t                          pad39;                    // 39
+			std::uint16_t                         pad3A;                    // 3A
+			std::uint32_t                         pad3C;                    // 3C
+			UPInt                                 proposedWordWrapPoint;    // 40 - [in,out] An index in the line of the proposed word wrap position. For example, if the line text is "ABC DEF" and only "ABC DE" fits in visibleRectWidth then the proposedWordWrapPoint will be equal to 3. Note, this is the index in line, not in text (paraText), not in line. Use lineStartPos to calculate the proposed word wrapping position in the text. The user's OnWordWrapping method should change this member if it is necessary to change the word wrapping position according to custom rules
+			bool                                  useHyphenation;           // 48 - [out] The OnWordWrapping method may set this to true to indicate to put hyphen symbol at the word-wrapping position. This might be useful for implementing hyphenation
+			std::uint8_t                          pad49;                    // 49
+			std::uint16_t                         pad4A;                    // 4A
+			std::uint32_t                         pad4C;                    // 4C
 		};
 		static_assert(sizeof(LineFormatDesc) == 0x50);
 
@@ -102,8 +103,8 @@ namespace RE
 		[[nodiscard]] bool HandlesCustomWordWrapping() const;
 
 		// members
-		stl::enumeration<WordWrappingType, std::uint32_t> wwMode;  // 18
-		std::uint32_t                                     pad1C;   // 1C
+		REX::EnumSet<WordWrappingType, std::uint32_t> wwMode;  // 18
+		std::uint32_t                                 pad1C;   // 1C
 	};
 	static_assert(sizeof(GFxTranslator) == 0x20);
 }

@@ -6,10 +6,8 @@ namespace RE
 {
 	NiNode* NiNode::Create(std::uint16_t a_arrBufLen)
 	{
-		auto node = malloc<NiNode>();
-		std::memset(reinterpret_cast<void*>(node), 0, sizeof(NiNode));
-		node->Ctor(a_arrBufLen);
-		return node;
+		auto node = malloc_runtime<NiNode>(0x128, 0x150);
+		return node ? node->Ctor(a_arrBufLen) : nullptr;
 	}
 
 	void NiNode::DetachChild(NiAVObject* a_child)
@@ -45,7 +43,7 @@ namespace RE
 	NiNode* NiNode::Ctor(std::uint16_t a_arrBuffLen)
 	{
 		using func_t = decltype(&NiNode::Ctor);
-		REL::Relocation<func_t> func{ Offset::NiNode::Ctor };
+		static REL::Relocation<func_t> func{ RELOCATION_ID(68936, 70287) };
 		return func(this, a_arrBuffLen);
 	}
 

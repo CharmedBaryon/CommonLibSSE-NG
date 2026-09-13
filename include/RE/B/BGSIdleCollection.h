@@ -10,6 +10,7 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_BGSIdleCollection;
+		inline static constexpr auto VTABLE = VTABLE_BGSIdleCollection;
 
 		enum class IdleFlags
 		{
@@ -34,19 +35,19 @@ namespace RE
 		bool                         RemoveIdle(TESIdleForm* a_idle);
 
 		// members
-		stl::enumeration<IdleFlags, std::int8_t> idleFlags;          // 08 - IDLF
-		std::int8_t                              idleCount;          // 09 - IDLC
-		std::uint16_t                            pad0A;              // 0A
-		std::uint32_t                            pad0C;              // 0C
-		TESIdleForm**                            idles;              // 10 - IDLA
-		float                                    timerCheckForIdle;  // 18 - IDLT
-		std::uint32_t                            pad1C;              // 1C
+		REX::EnumSet<IdleFlags, std::int8_t> idleFlags;          // 08 - IDLF
+		std::int8_t                          idleCount;          // 09 - IDLC
+		std::uint16_t                        pad0A;              // 0A
+		std::uint32_t                        pad0C;              // 0C
+		TESIdleForm**                        idles;              // 10 - IDLA
+		float                                timerCheckForIdle;  // 18 - IDLT
+		std::uint32_t                        pad1C;              // 1C
 
 	private:
 		BGSIdleCollection* Ctor()
 		{
 			using func_t = decltype(&BGSIdleCollection::Ctor);
-			REL::Relocation<func_t> func{ RELOCATION_ID(14127, 14227) };
+			static REL::Relocation<func_t> func{ RELOCATION_ID(14127, 14227) };
 			return func(this);
 		}
 		void CopyIdles(const std::vector<TESIdleForm*>& a_copiedData);

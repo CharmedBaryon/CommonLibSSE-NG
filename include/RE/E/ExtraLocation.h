@@ -11,7 +11,8 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_ExtraLocation;
-		inline static auto           EXTRADATATYPE = ExtraDataType::kLocation;
+		inline static constexpr auto VTABLE = VTABLE_ExtraLocation;
+		inline static constexpr auto EXTRADATATYPE = ExtraDataType::kLocation;
 
 		~ExtraLocation() override;  // 00
 

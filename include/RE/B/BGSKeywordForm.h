@@ -2,6 +2,7 @@
 
 #include "RE/B/BGSKeyword.h"
 #include "RE/B/BSContainer.h"
+#include "RE/B/BSTEvent.h"
 #include "RE/B/BaseFormComponent.h"
 
 namespace RE
@@ -12,6 +13,7 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_BGSKeywordForm;
+		inline static constexpr auto VTABLE = VTABLE_BGSKeywordForm;
 
 		~BGSKeywordForm() override;  // 00
 

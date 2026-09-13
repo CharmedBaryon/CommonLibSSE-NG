@@ -43,7 +43,6 @@ namespace RE
 		Variable::~Variable()
 		{
 			Cleanup();
-			stl::memzero(this);
 		}
 
 		Variable& Variable::operator=(const Variable& a_rhs)

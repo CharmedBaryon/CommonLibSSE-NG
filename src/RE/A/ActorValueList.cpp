@@ -1,24 +1,31 @@
 #include "RE/A/ActorValueList.h"
 
-#include "RE/A/ActorValueInfo.h"
-
 namespace RE
 {
-	ActorValueInfo* ActorValueList::GetActorValue(ActorValue a_actorValue) const
+	ActorValueInfo* ActorValueList::GetActorValueInfo(ActorValue a_actorValue)
 	{
-		return a_actorValue < ActorValue::kTotal ?
-		           actorValues[std::to_underlying(a_actorValue)] :
-		           nullptr;
+		using func_t = decltype(&ActorValueList::GetActorValueInfo);
+		static REL::Relocation<func_t> func{ RELOCATION_ID(26569, 27202) };
+		return func(a_actorValue);
 	}
 
-	ActorValue ActorValueList::LookupActorValueByName(std::string_view a_enumName) const
+	ActorValue ActorValueList::LookupActorValueByName(const char* a_enumName)
 	{
-		for (std::size_t i = 0; i < std::to_underlying(ActorValue::kTotal); ++i) {
-			if (a_enumName.size() == strlen(actorValues[i]->enumName) &&
-				_strnicmp(actorValues[i]->enumName, a_enumName.data(), a_enumName.size()) == 0) {
-				return static_cast<ActorValue>(i);
-			}
-		}
-		return ActorValue::kNone;
+		using func_t = decltype(&ActorValueList::LookupActorValueByName);
+		static REL::Relocation<func_t> func{ RELOCATION_ID(26570, 27203) };
+		return func(a_enumName);
+	}
+
+	const char* ActorValueList::GetActorValueName(ActorValue a_actorValue)
+	{
+		using func_t = decltype(&ActorValueList::GetActorValueName);
+		static REL::Relocation<func_t> func{ RELOCATION_ID(26561, 27192) };
+		return func(a_actorValue);
+	}
+
+	std::string_view ActorValueToString(ActorValue a_actorValue) noexcept
+	{
+		auto name = ActorValueList::GetActorValueName(a_actorValue);
+		return name ? name : "None"sv;
 	}
 }

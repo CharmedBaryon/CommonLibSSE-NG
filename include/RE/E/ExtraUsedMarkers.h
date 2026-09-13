@@ -11,7 +11,8 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_ExtraUsedMarkers;
-		inline static auto           EXTRADATATYPE = ExtraDataType::kUsedMarkers;
+		inline static constexpr auto VTABLE = VTABLE_ExtraUsedMarkers;
+		inline static constexpr auto EXTRADATATYPE = ExtraDataType::kUsedMarkers;
 
 		~ExtraUsedMarkers() override;  // 00
 

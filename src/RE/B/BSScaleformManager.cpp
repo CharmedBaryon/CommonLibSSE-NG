@@ -11,28 +11,28 @@ namespace RE
 {
 	BSScaleformManager* BSScaleformManager::GetSingleton()
 	{
-		REL::Relocation<BSScaleformManager**> singleton{ RELOCATION_ID(516573, 402775) };
+		static REL::Relocation<BSScaleformManager**> singleton{ RELOCATION_ID(516573, 402775) };
 		return *singleton;
 	}
 
 	bool BSScaleformManager::IsValidName(const char* a_name)
 	{
 		using func_t = decltype(&BSScaleformManager::IsValidName);
-		REL::Relocation<func_t> func{ RELOCATION_ID(80307, 82331) };
+		static REL::Relocation<func_t> func{ RELOCATION_ID(80307, 82331) };
 		return func(this, a_name);
 	}
 
 	bool BSScaleformManager::FileExists(const char* a_fileName)
 	{
 		using func_t = decltype(&BSScaleformManager::FileExists);
-		REL::Relocation<func_t> func{ RELOCATION_ID(80087, 82411) };
+		static REL::Relocation<func_t> func{ RELOCATION_ID(80087, 82411) };
 		return func(a_fileName);
 	}
 
 	bool BSScaleformManager::LoadMovie(IMenu* a_menu, GPtr<GFxMovieView>& a_viewOut, const char* a_fileName, ScaleModeType a_mode, float a_backGroundAlpha)
 	{
 		using func_t = decltype(&BSScaleformManager::LoadMovie);
-		REL::Relocation<func_t> func{ RELOCATION_ID(80302, 82325) };
+		static REL::Relocation<func_t> func{ RELOCATION_ID(80302, 82325) };
 		return func(this, a_menu, a_viewOut, a_fileName, a_mode, a_backGroundAlpha);
 	}
 
@@ -59,8 +59,8 @@ namespace RE
 			return false;
 		}
 
-		const stl::enumeration loadFlags{ LoadConstants::kLoadKeepBindData, LoadConstants::kLoadWaitFrame1 };
-		const auto             def = loader->CreateMovie(filePath->c_str(), *loadFlags);
+		const REX::EnumSet loadFlags{ LoadConstants::kLoadKeepBindData, LoadConstants::kLoadWaitFrame1 };
+		const auto         def = loader->CreateMovie(filePath->c_str(), *loadFlags);
 		if (!def) {
 			return false;
 		}
@@ -119,8 +119,8 @@ namespace RE
 			return false;
 		}
 
-		const stl::enumeration loadFlags{ LoadConstants::kLoadKeepBindData, LoadConstants::kLoadWaitFrame1 };
-		const auto             def = loader->CreateMovie(filePath->c_str(), *loadFlags);
+		const REX::EnumSet loadFlags{ LoadConstants::kLoadKeepBindData, LoadConstants::kLoadWaitFrame1 };
+		const auto         def = loader->CreateMovie(filePath->c_str(), *loadFlags);
 		if (!def) {
 			return false;
 		}
@@ -195,13 +195,13 @@ namespace RE
 				static_cast<double>(state->screenWidth) /
 				static_cast<double>(state->screenHeight);
 			if (aspectRatio > 4.0 / 3.0) {
-				REL::Relocation<const Setting*> fSafeZoneXWide{ RELOCATION_ID(512509, 389569) };
-				REL::Relocation<const Setting*> fSafeZoneYWide{ RELOCATION_ID(512511, 389572) };
+				static REL::Relocation<const Setting*> fSafeZoneXWide{ RELOCATION_ID(512509, 389569) };
+				static REL::Relocation<const Setting*> fSafeZoneYWide{ RELOCATION_ID(512511, 389572) };
 
 				return std::make_pair(fSafeZoneXWide->GetFloat(), fSafeZoneYWide->GetFloat());
 			} else {
-				REL::Relocation<const Setting*> fSafeZoneX{ RELOCATION_ID(512513, 389575) };
-				REL::Relocation<const Setting*> fSafeZoneY{ RELOCATION_ID(512515, 389578) };
+				static REL::Relocation<const Setting*> fSafeZoneX{ RELOCATION_ID(512513, 389575) };
+				static REL::Relocation<const Setting*> fSafeZoneY{ RELOCATION_ID(512515, 389578) };
 
 				return std::make_pair(fSafeZoneX->GetFloat(), fSafeZoneY->GetFloat());
 			}

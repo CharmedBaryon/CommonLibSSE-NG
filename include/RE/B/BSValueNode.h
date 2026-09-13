@@ -1,6 +1,7 @@
 #pragma once
 
 #include "RE/B/BSNiNode.h"
+#include "REL/RuntimeDataAccessors.h"
 
 namespace RE
 {
@@ -11,6 +12,7 @@ namespace RE
 	public:
 		inline static constexpr auto RTTI = RTTI_BSValueNode;
 		inline static constexpr auto Ni_RTTI = NiRTTI_BSValueNode;
+		inline static constexpr auto VTABLE = VTABLE_BSValueNode;
 
 		~BSValueNode() override;  // 00
 
@@ -23,7 +25,7 @@ namespace RE
 		void          SaveBinary(NiStream& a_stream) override;            // 1B
 		bool          IsEqual(NiObject* a_object) override;               // 1C
 #ifndef SKYRIM_CROSS_VR
-		void UpdateWorldData(NiUpdateData* a_data) override;              // 30
+		void UpdateWorldData(NiUpdateData* a_data) override;  // 30
 #endif
 
 		// add
@@ -37,16 +39,7 @@ namespace RE
 	NiPointer<BSMasterParticleSystem> associatedObject; /* 130 */
 		};
 
-		[[nodiscard]] inline VALUE_NODE_RUNTIME_DATA& GetValueNodeRuntimeData() noexcept
-		{
-			return REL::RelocateMember<VALUE_NODE_RUNTIME_DATA>(this, 0x128, 0x150);
-		}
-
-		[[nodiscard]] inline const VALUE_NODE_RUNTIME_DATA& GetValueNodeRuntimeData() const noexcept
-		{
-			return REL::RelocateMember<VALUE_NODE_RUNTIME_DATA>(this, 0x128, 0x150);
-		}
-
+		RUNTIME_DATA_ACCESSOR_EX(VALUE_NODE_RUNTIME_DATA, GetValueNodeRuntimeData, 0x128, 0x150);
 		// members
 #ifndef SKYRIM_CROSS_VR
 		RUNTIME_DATA_CONTENT  // 128, 150

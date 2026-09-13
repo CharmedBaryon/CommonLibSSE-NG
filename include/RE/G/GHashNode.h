@@ -61,6 +61,12 @@ namespace RE
 			second(*a_src.second)
 		{}
 
+		void operator=(const GHashNode& a_src)
+		{
+			first = a_src.first;
+			second = a_src.second;
+		}
+
 		void operator=(const NodeRef& a_src)
 		{
 			first = *a_src.first;

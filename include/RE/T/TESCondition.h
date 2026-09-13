@@ -7,6 +7,7 @@ namespace RE
 {
 	struct BGSPackageDataList;
 	class BGSStoryEvent;
+	class TESForm;
 	class TESGlobal;
 	class TESObjectREFR;
 	class TESQuest;
@@ -887,10 +888,10 @@ namespace RE
 		~FUNCTION_DATA() = default;
 
 		// members
-		stl::enumeration<FunctionID, std::uint16_t> function;   // 00
-		std::uint16_t                               pad02;      // 02
-		std::uint32_t                               pad04;      // 04
-		void*                                       params[2];  // 08
+		REX::EnumSet<FunctionID, std::uint16_t> function;   // 00
+		std::uint16_t                           pad02;      // 02
+		std::uint32_t                           pad04;      // 04
+		void*                                   params[2];  // 08
 	};
 	static_assert(sizeof(FUNCTION_DATA) == 0x18);
 
@@ -937,14 +938,14 @@ namespace RE
 		~CONDITION_ITEM_DATA() = default;
 
 		// members
-		GlobalOrFloat                                       comparisonValue;  // 08
-		ObjectRefHandle                                     runOnRef;         // 10 - kReference
-		std::uint32_t                                       dataID;           // 14
-		FUNCTION_DATA                                       functionData;     // 18
-		Flags                                               flags;            // 30
-		stl::enumeration<CONDITIONITEMOBJECT, std::uint8_t> object;           // 31
-		std::uint16_t                                       pad32;            // 32
-		std::uint32_t                                       pad34;            // 34
+		GlobalOrFloat                                   comparisonValue;  // 08
+		ObjectRefHandle                                 runOnRef;         // 10 - kReference
+		std::uint32_t                                   dataID;           // 14
+		FUNCTION_DATA                                   functionData;     // 18
+		Flags                                           flags;            // 30
+		REX::EnumSet<CONDITIONITEMOBJECT, std::uint8_t> object;           // 31
+		std::uint16_t                                   pad32;            // 32
+		std::uint32_t                                   pad34;            // 34
 	};
 	static_assert(sizeof(CONDITION_ITEM_DATA) == 0x30);
 
@@ -980,6 +981,7 @@ namespace RE
 		TES_HEAP_REDEFINE_NEW();
 
 		bool operator()(ConditionCheckParams& a_solution) const;
+		void Copy(const TESConditionItem* a_other, TESForm* a_arg2 = nullptr);
 		bool IsTrue(ConditionCheckParams& a_solution) const;
 
 		// members
@@ -999,6 +1001,7 @@ namespace RE
 		[[nodiscard]] explicit operator bool() const;
 
 		bool operator()(TESObjectREFR* a_actionRef, TESObjectREFR* a_targetRef) const;
+		void Copy(const TESCondition* a_other, TESForm* a_arg2 = nullptr);
 		bool IsTrue(TESObjectREFR* a_actionRef, TESObjectREFR* a_targetRef) const;  // Perk fragments will short circuit
 
 		// members

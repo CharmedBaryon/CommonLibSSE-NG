@@ -10,7 +10,8 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_ExtraActivateLoopSound;
-		inline static auto           EXTRADATATYPE = ExtraDataType::kActivateLoopSound;
+		inline static constexpr auto VTABLE = VTABLE_ExtraActivateLoopSound;
+		inline static constexpr auto EXTRADATATYPE = ExtraDataType::kActivateLoopSound;
 
 		~ExtraActivateLoopSound() override;  // 00
 

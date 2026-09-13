@@ -15,14 +15,14 @@ namespace RE
 		return RelocateVirtual<decltype(&BSMultiBoundNode::QPointWithin)>(0x3F, 0x40, this, a_point);
 	}
 
-	void BSMultiBoundNode::Unk_40()
+	bool BSMultiBoundNode::CheckBound1(const BSMultiBound& a_targetBound)
 	{
-		RelocateVirtual<decltype(&BSMultiBoundNode::Unk_40)>(0x40, 0x41, this);
+		return RelocateVirtual<decltype(&BSMultiBoundNode::CheckBound1)>(0x40, 0x41, this, a_targetBound);
 	}
 
-	void BSMultiBoundNode::Unk_41()
+	bool BSMultiBoundNode::CheckBound2(const NiBound& a_targetBound)
 	{
-		RelocateVirtual<decltype(&BSMultiBoundNode::Unk_41)>(0x41, 0x42, this);
+		return RelocateVirtual<decltype(&BSMultiBoundNode::CheckBound2)>(0x41, 0x42, this, a_targetBound);
 	}
 #endif
 }

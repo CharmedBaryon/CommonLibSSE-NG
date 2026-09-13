@@ -1,5 +1,6 @@
 #pragma once
 
+#include "RE/C/CFilter.h"
 #include "RE/H/hkReferencedObject.h"
 #include "RE/H/hkSseMathTypes.h"
 #include "RE/H/hkpShapeBuffer.h"
@@ -45,7 +46,7 @@ namespace RE
 		using CastRayWithCollectorFunc = void(const void* a_this, const hkpShapeRayCastInput& a_input, const hkpCdBody& a_cdBody, hkpRayHitCollector& a_collector);
 		using CastRayBundleFunc = hkVector4Comparison(const void* a_this, const hkpShapeRayBundleCastInput& a_input, hkpShapeRayBundleCastOutput& a_output, const hkVector4Comparison& a_mask);
 		using GetChildShapeFunc = const hkpShape*(const void* a_this, hkpShapeKey a_key, hkpShapeBuffer& a_buffer);
-		using GetCollisionFilterInfoFunc = std::uint32_t(const void* a_this, hkpShapeKey a_key);
+		using GetCollisionFilterInfoFunc = CFilter(const void* a_this, hkpShapeKey a_key);
 
 		struct CalcSizeForSpuInput
 		{

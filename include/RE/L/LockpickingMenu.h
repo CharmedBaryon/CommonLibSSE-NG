@@ -1,11 +1,14 @@
 #pragma once
 
+#include "RE/B/BSResourceHandle.h"
 #include "RE/B/BSSoundHandle.h"
 #include "RE/B/BSTEvent.h"
 #include "RE/I/IMenu.h"
 #include "RE/M/MenuEventHandler.h"
 #include "RE/N/NiMatrix3.h"
 #include "RE/N/NiPoint3.h"
+#include "RE/T/TESObjectREFR.h"
+#include "REL/RuntimeDataAccessors.h"
 
 namespace RE
 {
@@ -13,7 +16,6 @@ namespace RE
 	class NiAVObject;
 	class NiControllerManager;
 	class NiControllerSequence;
-	class TESObjectREFR;
 
 	// menuDepth = 3
 	// flags = kPausesGame | kDisablePauseMenu | kRequiresUpdate
@@ -35,8 +37,8 @@ namespace RE
 		struct RUNTIME_DATA
 		{
 #define RUNTIME_DATA_CONTENT                            \
-	void*                 lockpickShiv;        /* 00 */ \
-	void*                 lockpick;            /* 08 */ \
+	ModelDBHandle         lockpickShiv;        /* 00 */ \
+	ModelDBHandle         pickModel;           /* 08 */ \
 	NiMatrix3             pickRotation;        /* 10 */ \
 	NiPoint3              lockRotCenter;       /* 34 */ \
 	NiControllerManager*  lockController;      /* 40 */ \
@@ -61,7 +63,7 @@ namespace RE
 	float                 partialPickAngle;    /* B8 */ \
 	std::uint32_t         numBrokenPicks;      /* BC */ \
 	bool                  init3DElements;      /* C0 */ \
-    bool                  animating;           /* C1 */ \
+	bool                  animating;           /* C1 */ \
 	bool                  unk10A;              /* C2 */ \
 	bool                  menuCleared;         /* C3 */ \
 	bool                  animationFinished;   /* C4 */ \
@@ -73,63 +75,60 @@ namespace RE
 		};
 		static_assert(sizeof(RUNTIME_DATA) == 0xC8);
 
+#ifdef ENABLE_SKYRIM_AE
+		struct AE1799_RUNTIME_DATA
+		{
+			float         unk110;     // 110
+			float         unk114;     // 114
+			std::uint32_t unk118;     // 118
+			bool          unk11C;     // 11C
+			bool          unk11D;     // 11D
+			bool          unk11E;     // 11E
+			bool          unk11F;     // 11F
+			bool          unk120;     // 120
+			bool          unk121;     // 121
+			bool          unk122;     // 122
+			std::uint8_t  pad123[5];  // 123
+		};
+		static_assert(sizeof(AE1799_RUNTIME_DATA) == 0x18);
+
+		RUNTIME_DATA_ACCESSOR_VERSIONED_OPTIONAL_EX(AE1799_RUNTIME_DATA, GetAe1799RuntimeData, SKSE::RUNTIME_SSE_1_7_99, 0x110);
+#endif
+
 		~LockpickingMenu() override;  // 00
 
 		// override (IMenu)
 		UI_MESSAGE_RESULTS ProcessMessage(UIMessage& a_message) override;  // 04
 
-#ifndef SKYRIM_CROSS_VR
 		// override (MenuEventHandler)
-		bool CanProcess(InputEvent* a_event) override;              // 01
+		bool CanProcess(InputEvent* a_event) override;  // 01
+#ifdef EXCLUSIVE_SKYRIM_VR
 		bool ProcessThumbstick(ThumbstickEvent* a_event) override;  // 03
 		bool ProcessMouseMove(MouseMoveEvent* a_event) override;    // 04
 		bool ProcessButton(ButtonEvent* a_event) override;          // 05
+#endif
 
+#ifndef SKYRIM_CROSS_VR
 		// override (BSTEventSink<MenuOpenCloseEvent>)
 		BSEventNotifyControl ProcessEvent(const MenuOpenCloseEvent* a_event, BSTEventSource<MenuOpenCloseEvent>* a_eventSource) override;  // 01
 #endif
 
-		[[nodiscard]] static TESObjectREFR* GetTargetReference();
+		[[nodiscard]] static TESObjectREFRPtr GetTargetReference();
+		[[nodiscard]] static std::int32_t     GetCurrentLockDifficulty();
 
-		[[nodiscard]] MenuEventHandler* AsMenuEventHandler() noexcept
-		{
-			return &REL::RelocateMember<MenuEventHandler>(this, 0x30, 0x40);
-		}
+		static void OpenMenu(TESObjectREFR* a_target);  // a_ref must be locked and player must have lockpicks
 
-		[[nodiscard]] const MenuEventHandler* AsMenuEventHandler() const noexcept
-		{
-			return const_cast<LockpickingMenu*>(this)->AsMenuEventHandler();
-		}
+		RUNTIME_CAST_ACCESSOR(MenuEventHandler, AsMenuEventHandler, 0x30, 0x40);
+#ifndef SKYRIM_CROSS_VR
+		RUNTIME_CAST_ACCESSOR(BSTEventSink<MenuOpenCloseEvent>, AsMenuOpenCloseEventSink, 0x40, 0x50);
+#endif
 
-		[[nodiscard]] BSTEventSink<MenuOpenCloseEvent>* AsMenuOpenCloseEventSink() noexcept
-		{
-			return &REL::RelocateMember<BSTEventSink<MenuOpenCloseEvent>>(this, 0x40, 0x50);
-		}
-
-		[[nodiscard]] const BSTEventSink<MenuOpenCloseEvent>* AsMenuOpenCloseEventSink() const noexcept
-		{
-			return const_cast<LockpickingMenu*>(this)->AsMenuOpenCloseEventSink();
-		}
-
-		[[nodiscard]] inline RUNTIME_DATA& GetRuntimeData() noexcept
-		{
-			return REL::RelocateMember<RUNTIME_DATA>(this, 0x48, 0x58);
-		}
-
-		[[nodiscard]] inline const RUNTIME_DATA& GetRuntimeData() const noexcept
-		{
-			return REL::RelocateMember<RUNTIME_DATA>(this, 0x48, 0x58);
-		}
-
+		RUNTIME_DATA_ACCESSOR(RUNTIME_DATA, 0x48, 0x58);
 		// members
 #ifndef SKYRIM_CROSS_VR
-		RUNTIME_DATA_CONTENT  // 48, 58
+		RUNTIME_DATA_CONTENT;  // 48, 58
 #endif
 	};
-#ifndef ENABLE_SKYRIM_VR
-	static_assert(sizeof(LockpickingMenu) == 0x110);
-#elif !defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE)
-	static_assert(sizeof(LockpickingMenu) == 0x120);
-#endif
+	STATIC_ASSERT_SIZE(LockpickingMenu, 0x110, 0x110, 0x120, 0x40);
 }
 #undef RUNTIME_DATA_CONTENT

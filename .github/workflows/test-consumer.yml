@@ -1,0 +1,131 @@
+name: Consumer Integration Test
+
+on:
+  push:
+    branches: [ ng ]
+  pull_request:
+    branches: [ ng ]
+
+# Cancel a superseded run (a new push to the same PR, or a newer merge to ng) instead of
+# letting a ~16-20 min job finish testing a commit nobody will look at anymore.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test-as-dependency:
+    name: Test CommonLib as Dependency
+    runs-on: windows-latest
+    # vcpkg `files` binary cache; separate key namespace from main_ci/prebuilt since this
+    # job installs the dynamic x64-windows triplet (FORCE_SYSTEM_BINARIES: see main_ci.yml).
+    env:
+      VCPKG_BINARY_SOURCES: "clear;files,${{ github.workspace }}/vcpkg_binary_cache,readwrite"
+      VCPKG_FORCE_SYSTEM_BINARIES: "1"
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+        with:
+          submodules: recursive
+      
+      - name: Setup MSVC
+        uses: TheMrMilchmann/setup-msvc-dev@v4.0.0
+        with:
+          arch: x64
+
+      # Pin vcpkg's download cache to a stable, cacheable path. vcpkg checks
+      # this directory (by SHA512) before fetching any asset — port source
+      # tarballs AND tools acquired via vcpkg_find_acquire_program (e.g. the
+      # pinned PowerShell-core zip applocal.ps1 needs). Caching it (below)
+      # lets those downloads survive across runs, so a transient GitHub
+      # releases 504 on a cache-cold tool fetch can't fail the build.
+      - name: Pin vcpkg downloads directory
+        shell: bash
+        run: echo "VCPKG_DOWNLOADS=${{ github.workspace }}/vcpkg_downloads" >> "$GITHUB_ENV"
+      
+      - name: Setup vcpkg
+        uses: lukka/run-vcpkg@v11
+        with:
+          # Only the root manifest — tests/ ship their own vcpkg.json (self-test consumers),
+          # and a '**/' glob would match multiple and fail baseline detection.
+          vcpkgJsonGlob: 'vcpkg.json'
+          # Bootstrap vcpkg only; do NOT install here. Manifest install runs
+          # later during the retry-wrapped step, so the flaky asset fetches
+          # happen inside the retry + with the downloads cache already restored.
+          runVcpkgInstall: false
+
+      # vcpkg download (asset) cache. Keyed on the manifest + baseline, NOT
+      # the compiler — the set of fetched assets only changes when deps or
+      # the baseline change, so this survives VS toolset drift.
+      - name: Cache vcpkg downloads (trusted, restore + save)
+        if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository
+        uses: actions/cache@v4
+        with:
+          path: ${{ github.workspace }}/vcpkg_downloads
+          key: ${{ runner.os }}-vcpkg-downloads-${{ hashFiles('vcpkg.json') }}
+          restore-keys: |
+            ${{ runner.os }}-vcpkg-downloads-
+
+      - name: Restore vcpkg downloads (fork PR, restore-only)
+        if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name != github.repository
+        uses: actions/cache/restore@v4
+        with:
+          path: ${{ github.workspace }}/vcpkg_downloads
+          key: ${{ runner.os }}-vcpkg-downloads-${{ hashFiles('vcpkg.json') }}
+          restore-keys: |
+            ${{ runner.os }}-vcpkg-downloads-
+
+      # Same trusted-write / untrusted-restore split as the downloads cache above: only a
+      # fork PR is restore-only.
+      - name: Cache vcpkg binary packages (trusted, restore + save)
+        if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository
+        uses: actions/cache@v4
+        with:
+          path: ${{ github.workspace }}/vcpkg_binary_cache
+          key: ${{ runner.os }}-vcpkg-binpkgs-x64-windows-dynamic-${{ hashFiles('vcpkg.json') }}
+          restore-keys: |
+            ${{ runner.os }}-vcpkg-binpkgs-x64-windows-dynamic-
+
+      - name: Restore vcpkg binary packages (fork PR, restore-only)
+        if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name != github.repository
+        uses: actions/cache/restore@v4
+        with:
+          path: ${{ github.workspace }}/vcpkg_binary_cache
+          key: ${{ runner.os }}-vcpkg-binpkgs-x64-windows-dynamic-${{ hashFiles('vcpkg.json') }}
+          restore-keys: |
+            ${{ runner.os }}-vcpkg-binpkgs-x64-windows-dynamic-
+
+      # Wrap the vcpkg install in retry so a transient network error
+      # (e.g. GitHub-releases 504 when fetching the PowerShell-core zip)
+      # doesn't fail the job.
+      - name: Install vcpkg dependencies (retry)
+        uses: nick-fields/retry@v3
+        with:
+          timeout_minutes: 30
+          max_attempts: 3
+          retry_wait_seconds: 30
+          shell: pwsh
+          command: |
+            $env:VCPKG_ROOT = "${{ github.workspace }}/vcpkg"
+            & "$env:VCPKG_ROOT/vcpkg" install --triplet=x64-windows
+      
+      - name: Configure Consumer Test
+        working-directory: test_consumer
+        run: |
+          cmake -B build -S . `
+            -DCMAKE_TOOLCHAIN_FILE="${{ github.workspace }}/vcpkg/scripts/buildsystems/vcpkg.cmake" `
+            -DVCPKG_INSTALLED_DIR="${{ github.workspace }}/vcpkg_installed" `
+            -DENABLE_SKYRIM_SE=ON `
+            -DENABLE_SKYRIM_AE=ON `
+            -DENABLE_SKYRIM_VR=ON
+      
+      - name: Build Consumer Test
+        working-directory: test_consumer
+        run: cmake --build build --config Release
+      
+      - name: Run Consumer Test
+        working-directory: test_consumer
+        run: |
+          Write-Host "Running consumer integration test..."
+          .\build\Release\ConsumerTest.exe
+          Write-Host "`n✓ Test passed: CommonLib headers compiled successfully when used as dependency"

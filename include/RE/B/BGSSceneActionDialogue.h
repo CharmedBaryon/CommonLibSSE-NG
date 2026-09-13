@@ -10,6 +10,7 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_BGSSceneActionDialogue;
+		inline static constexpr auto VTABLE = VTABLE_BGSSceneActionDialogue;
 		inline static constexpr auto TYPE = Type::kDialogue;
 
 		~BGSSceneActionDialogue() override;  // 00
@@ -22,8 +23,8 @@ namespace RE
 		bool          FacesTarget() const override;                                 // 06 - { return (flags >> 15) & 1; }
 		Type          GetType() const override;                                     // 07 - { return kDialogue; }
 		void          LoadBuffer(void* a_arg1, BGSLoadGameBuffer* a_buf) override;  // 09
-		void          Unk_0A(void) override;                                        // 0A
-		void          Unk_0B(void) override;                                        // 0B
+		void          SaveBuffer(BGSSaveFormBuffer* a_buf) override;                // 0A
+		void          ClearActiveFlags() override;                                  // 0B
 		void          Unk_0C(void) override;                                        // 0C
 		EmotionType   GetEmotionType() const override;                              // 0E - { return emotionType; }
 		std::uint32_t GetEmotionValue() const override;                             // 0F - { return emotionValue; }

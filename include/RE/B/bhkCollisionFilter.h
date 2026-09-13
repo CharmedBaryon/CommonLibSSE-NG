@@ -10,10 +10,11 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_bhkCollisionFilter;
+		inline static constexpr auto VTABLE = VTABLE_bhkCollisionFilter;
 
 		[[nodiscard]] static bhkCollisionFilter* GetSingleton()
 		{
-			REL::Relocation<bhkCollisionFilter**> singleton{ RELOCATION_ID(514415, 400562) };
+			static REL::Relocation<bhkCollisionFilter**> singleton{ RELOCATION_ID(514415, 400562) };
 			return *singleton;
 		}
 

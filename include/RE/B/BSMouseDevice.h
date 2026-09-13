@@ -15,13 +15,23 @@ namespace RE
 		// add
 		virtual void Reinitialize(void);  // 09 - { return; }
 
+		struct RUNTIME_DATA
+		{
+#define RUNTIME_DATA_CONTENT \
+	bool backgroundMouse; /* 70 / 78 */
+			RUNTIME_DATA_CONTENT
+		};
+
+		RUNTIME_DATA_ACCESSOR(RUNTIME_DATA, 0x70, 0x78);
+#ifndef SKYRIM_CROSS_VR
 		// members
-		bool backgroundMouse;  // 70
+		RUNTIME_DATA_CONTENT
+#endif
 
 	protected:
 		friend class BSInputDeviceFactory;
 		BSMouseDevice();
 	};
-
-	static_assert(sizeof(BSMouseDevice) == 0x78);
+	STATIC_ASSERT_SIZE(BSMouseDevice, 0x78, 0x78, 0x80, 0x8);
 }
+#undef RUNTIME_DATA_CONTENT

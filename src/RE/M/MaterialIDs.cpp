@@ -79,8 +79,8 @@ namespace RE
 			return "SnowStairs";
 		case MATERIAL_ID::kStoneHeavy:
 			return "StoneHeavy";
-		case MATERIAL_ID::kDragonSkeleton:
-			return "DragonSkeleton";
+		case MATERIAL_ID::kCharacterBumper:
+			return "CharacterBumper";
 		case MATERIAL_ID::kTrap:
 			return "Trap";
 		case MATERIAL_ID::kBowsStaves:

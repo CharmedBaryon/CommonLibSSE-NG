@@ -27,7 +27,8 @@ namespace RE
 		};
 
 		template <class T>
-		requires(is_builtin_convertible_v<T>) struct GetRawType<T>
+			requires(is_builtin_convertible_v<T>)
+		struct GetRawType<T>
 		{
 			[[nodiscard]] constexpr TypeInfo::RawType operator()() const noexcept
 			{
@@ -36,7 +37,8 @@ namespace RE
 		};
 
 		template <class T>
-		requires(is_form_pointer_v<T>) struct GetRawType<T>
+			requires(is_form_pointer_v<T>)
+		struct GetRawType<T>
 		{
 			[[nodiscard]] constexpr TypeInfo::RawType operator()() const noexcept
 			{
@@ -45,7 +47,8 @@ namespace RE
 		};
 
 		template <class T>
-		requires(is_alias_pointer_v<T>) struct GetRawType<T>
+			requires(is_alias_pointer_v<T>)
+		struct GetRawType<T>
 		{
 			[[nodiscard]] constexpr TypeInfo::RawType operator()() const noexcept
 			{
@@ -54,7 +57,8 @@ namespace RE
 		};
 
 		template <class T>
-		requires(is_active_effect_pointer_v<T>) struct GetRawType<T>
+			requires(is_active_effect_pointer_v<T>)
+		struct GetRawType<T>
 		{
 			[[nodiscard]] constexpr TypeInfo::RawType operator()() const noexcept
 			{
@@ -63,18 +67,19 @@ namespace RE
 		};
 
 		template <class T>
-		requires((is_array_v<T> || is_reference_wrapper_v<T>)&&(is_builtin_convertible_v<typename T::value_type> || is_form_pointer_v<typename T::value_type> ||
-																is_alias_pointer_v<typename T::value_type> || is_active_effect_pointer_v<typename T::value_type>)) struct GetRawType<T>
+			requires((is_array_v<T> || is_reference_wrapper_v<T>) && (is_builtin_convertible_v<typename T::value_type> || is_form_pointer_v<typename T::value_type> ||
+																		 is_alias_pointer_v<typename T::value_type> || is_active_effect_pointer_v<typename T::value_type>))
+		struct GetRawType<T>
 		{
 			[[nodiscard]] constexpr TypeInfo::RawType operator()() const noexcept
 			{
 				using value_type = typename T::value_type;
 				if constexpr (is_builtin_convertible_v<value_type>) {
-					return *(stl::enumeration{ vm_type_v<T> } + TypeInfo::RawType::kNoneArray);
+					return *(REX::EnumSet{ vm_type_v<T> } + TypeInfo::RawType::kNoneArray);
 				} else if constexpr (is_form_pointer_v<value_type>) {
-					return *(stl::enumeration{ GetRawTypeFromVMType(static_cast<VMTypeID>(unwrapped_type_t<T>::FORMTYPE)) } + TypeInfo::RawType::kObject);
+					return *(REX::EnumSet{ GetRawTypeFromVMType(static_cast<VMTypeID>(unwrapped_type_t<T>::FORMTYPE)) } + TypeInfo::RawType::kObject);
 				} else if constexpr (is_alias_pointer_v<value_type> || is_active_effect_pointer_v<value_type>) {
-					return *(stl::enumeration{ GetRawTypeFromVMType(static_cast<VMTypeID>(unwrapped_type_t<T>::VMTYPEID)) } + TypeInfo::RawType::kObject);
+					return *(REX::EnumSet{ GetRawTypeFromVMType(static_cast<VMTypeID>(unwrapped_type_t<T>::VMTYPEID)) } + TypeInfo::RawType::kObject);
 				} else {
 					static_assert(sizeof(T) && false);
 				}

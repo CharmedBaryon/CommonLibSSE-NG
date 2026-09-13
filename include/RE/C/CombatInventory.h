@@ -39,6 +39,8 @@ namespace RE
 	class CombatInventory
 	{
 	public:
+		float QRawMaxRange() const;
+
 		// members
 		CombatController*                        parentController;          // 000
 		BSTArray<NiPointer<CombatInventoryItem>> inventoryItems[7];         // 008 - sorted by score?

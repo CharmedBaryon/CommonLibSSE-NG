@@ -1,0 +1,330 @@
+# Build a prebuilt CommonLib bundle for the canonical "all" config and prove it is
+# consumable. Runs on every PR to ng (validation only) and is called by release.yml on
+# a published release (with attach_tag set) to attach the bundle to the GitHub release.
+#
+# Two bundles, one per build system, both baked with the same config (skyrim all
+# (SE+AE+VR) + rex_ini + skse_xbyak, MSVC) so the clean-tag auto-fetch in each build
+# file can download + link them with zero CommonLib recompile — see PREBUILT.md.
+#
+# xmake bundle: ships the same xmake.lua (auto-detects the prebuilt), headers, plugin-rule
+#   templates and VR headers, so a consumer's includes()/the commonlibsse-ng.plugin rule
+#   work unchanged (releasedbg).
+# cmake bundle: ships lib/ (CommonLibSSE.lib + openvr_api.lib), include/ and VR headers;
+#   an add_subdirectory consumer's cmake/Prebuilt.cmake resolves it into an IMPORTED
+#   target (Release). Each job self-tests by building a plugin against its own bundle.
+name: Prebuilt bundles
+
+on:
+  pull_request:
+    branches: [ng]
+    paths:
+      - xmake.lua
+      - CMakeLists.txt
+      - CMakePresets.json
+      - cmake/**
+      - include/**
+      - src/**
+      - res/**
+      - vcpkg.json
+      - vcpkg-configuration.json
+      - .github/workflows/prebuilt.yml
+      - tests/prebuilt-consumer/**
+      - tests/prebuilt-consumer-cmake/**
+  workflow_dispatch:
+    inputs:
+      ref:
+        type: string
+        default: ""
+      attach_tag:
+        description: "If set, create/attach the bundles to this release tag (e.g. to refresh a stale published bundle)."
+        type: string
+        default: ""
+  workflow_call:
+    inputs:
+      ref:
+        type: string
+        default: ""
+      attach_tag:
+        description: "If set, create/attach the bundles to this release tag."
+        type: string
+        default: ""
+
+permissions:
+  contents: read
+
+# Cancel a PR's in-flight run when it's superseded by a new push.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  xmake:
+    name: xmake bundle + self-test
+    runs-on: windows-latest
+    permissions:
+      contents: write # only used when attach_tag is set
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+        with:
+          ref: ${{ inputs.ref }}
+          persist-credentials: false # don't leave the repo token in the workspace; we run PR code
+          submodules: recursive # extern/openvr headers ship in the bundle
+
+      - name: Set up xmake
+        uses: xmake-io/github-action-setup-xmake@v1
+        with:
+          xmake-version: latest
+          package-cache: true
+          build-cache: true
+          project-path: .
+
+      - name: Update xmake package repo
+        run: xmake repo --update
+
+      - name: Build commonlibsse-ng (all + rex_ini + rex_json + rex_toml + skse_xbyak, releasedbg)
+        run: |
+          xmake config -m releasedbg -a x64 --skyrim_se=y --skyrim_ae=y --skyrim_vr=y --rex_ini=y --rex_json=y --rex_toml=y --skse_xbyak=y --yes
+          xmake build --yes commonlibsse-ng
+
+      - name: Assemble bundle + stage into self-test consumer
+        id: bundle
+        shell: pwsh
+        env:
+          ATTACH_TAG: ${{ inputs.attach_tag }} # via env, not template interpolation (injection-safe)
+        run: |
+          # Version the asset name with the release tag when publishing (matches the
+          # name documented in PREBUILT.md); fall back to an unversioned name for PR runs.
+          $tag = $env:ATTACH_TAG
+          $stage = if ($tag) { "commonlibsse-ng-prebuilt-$tag-all-msvc" } else { "commonlibsse-ng-prebuilt-all-msvc" }
+          New-Item -ItemType Directory -Force -Path "$stage/lib","$stage/extern/openvr" | Out-Null
+          # Drop-in replacement for the lib/commonlibsse-ng source tree: same xmake.lua
+          # (auto-detects the shipped lib), headers, plugin-rule templates, VR headers.
+          Copy-Item xmake.lua, PREBUILT.md "$stage/"
+          Copy-Item licenses/LICENSE-hde64.txt "$stage/"
+          Copy-Item -Recurse include "$stage/include"
+          Copy-Item -Recurse res "$stage/res"
+          Copy-Item -Recurse extern/openvr/headers "$stage/extern/openvr/headers"
+          $lib = "build/windows/x64/releasedbg/commonlibsse-ng.lib"
+          if (-not (Test-Path $lib)) { Write-Error "lib not found at $lib"; exit 1 }
+          Copy-Item $lib "$stage/lib/"
+          7z a -t7z -mx=9 "$stage.7z" "$stage" | Out-Null
+          # Publish a checksum so consumers (and the xmake clean-tag auto-fetch) verify it.
+          ((Get-FileHash "$stage.7z" -Algorithm SHA256).Hash.ToLower() + "  $stage.7z") | Out-File "$stage.7z.sha256" -Encoding ascii -NoNewline
+          "bundle=$stage.7z" | Out-File -FilePath $env:GITHUB_OUTPUT -Append -Encoding utf8
+          "sha=$stage.7z.sha256" | Out-File -FilePath $env:GITHUB_OUTPUT -Append -Encoding utf8
+          # Stage the same tree as the self-test consumer's lib/commonlibsse-ng.
+          $dst = "tests/prebuilt-consumer/lib/commonlibsse-ng"
+          New-Item -ItemType Directory -Force -Path $dst | Out-Null
+          Copy-Item -Recurse "$stage/*" $dst
+
+      - name: Self-test — build a plugin against the prebuilt
+        working-directory: tests/prebuilt-consumer
+        run: |
+          xmake f -P . -m releasedbg -a x64 --yes
+          xmake b -P . --yes --rebuild
+
+      - name: Upload bundle artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: prebuilt-bundle-xmake
+          path: ${{ steps.bundle.outputs.bundle }}
+          if-no-files-found: error
+
+      - name: Attach bundle to release
+        if: inputs.attach_tag != ''
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          ATTACH_TAG: ${{ inputs.attach_tag }} # via env, not template interpolation (injection-safe)
+        run: |
+          gh release view "$env:ATTACH_TAG" *> $null
+          if ($LASTEXITCODE -ne 0) {
+            gh release create "$env:ATTACH_TAG" --title "CommonLibSSE-NG $env:ATTACH_TAG" `
+              --notes "Prebuilt CommonLib bundle for downstream xmake consumers (config: skyrim all + rex_ini + rex_json + rex_toml + skse_xbyak). See PREBUILT.md."
+          }
+          gh release upload "$env:ATTACH_TAG" "${{ steps.bundle.outputs.bundle }}" "${{ steps.bundle.outputs.sha }}" --clobber
+
+  cmake:
+    name: cmake bundle + self-test
+    runs-on: windows-latest
+    permissions:
+      contents: write # only used when attach_tag is set
+    # vcpkg `files` binary cache; shares main_ci.yml's msvc key namespace since this
+    # job resolves the identical port set (see main_ci.yml for FORCE_SYSTEM_BINARIES).
+    env:
+      VCPKG_BINARY_SOURCES: "clear;files,${{ github.workspace }}/vcpkg_binary_cache,readwrite"
+      VCPKG_FORCE_SYSTEM_BINARIES: "1"
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+        with:
+          ref: ${{ inputs.ref }}
+          persist-credentials: false # don't leave the repo token in the workspace; we run PR code
+          submodules: recursive # extern/openvr (headers + win64/openvr_api.lib) ship in the bundle
+
+      - name: Extract vcpkg baseline from vcpkg.json
+        id: baseline
+        shell: pwsh
+        run: |
+          $baseline = (Get-Content vcpkg.json | ConvertFrom-Json).'builtin-baseline'
+          "baseline=$baseline" | Out-File -FilePath $env:GITHUB_OUTPUT -Append -Encoding utf8
+
+      - name: Setup MSVC Environment
+        uses: TheMrMilchmann/setup-msvc-dev@v4.0.0
+        with:
+          arch: x64
+
+      # Pin vcpkg's download cache to a stable, cacheable path. vcpkg checks
+      # this directory (by SHA512) before fetching any asset — port source
+      # tarballs AND tools acquired via vcpkg_find_acquire_program (e.g. the
+      # pinned PowerShell-core zip applocal.ps1 needs). Caching it (below)
+      # lets those downloads survive across runs, so a transient GitHub
+      # releases 504 on a cache-cold tool fetch can't fail the build.
+      - name: Pin vcpkg downloads directory
+        shell: bash
+        run: echo "VCPKG_DOWNLOADS=${{ github.workspace }}/vcpkg_downloads" >> "$GITHUB_ENV"
+
+      - name: Setup vcpkg
+        uses: lukka/run-vcpkg@v11
+        with:
+          vcpkgGitCommitId: ${{ steps.baseline.outputs.baseline }}
+          # Bootstrap vcpkg only; do NOT install here. Manifest install runs
+          # later during the retry-wrapped cmake configure, so the flaky
+          # asset fetches happen inside the retry + with the downloads cache
+          # already restored.
+          runVcpkgInstall: false
+
+      # vcpkg download (asset) cache. Keyed on the manifest + baseline, NOT
+      # the compiler — the set of fetched assets only changes when deps or
+      # the baseline change, so this survives VS toolset drift.
+      - name: Cache vcpkg downloads (trusted, restore + save)
+        if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository
+        uses: actions/cache@v4
+        with:
+          path: ${{ github.workspace }}/vcpkg_downloads
+          key: ${{ runner.os }}-vcpkg-downloads-${{ hashFiles('vcpkg.json', 'vcpkg-configuration.json') }}
+          restore-keys: |
+            ${{ runner.os }}-vcpkg-downloads-
+
+      - name: Restore vcpkg downloads (fork PR, restore-only)
+        if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name != github.repository
+        uses: actions/cache/restore@v4
+        with:
+          path: ${{ github.workspace }}/vcpkg_downloads
+          key: ${{ runner.os }}-vcpkg-downloads-${{ hashFiles('vcpkg.json', 'vcpkg-configuration.json') }}
+          restore-keys: |
+            ${{ runner.os }}-vcpkg-downloads-
+
+      # vcpkg binary (built-package) cache. Same trusted-write / untrusted-restore split
+      # as the downloads cache above — only a fork PR is restore-only.
+      - name: Cache vcpkg binary packages (trusted, restore + save)
+        if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository
+        uses: actions/cache@v4
+        with:
+          path: ${{ github.workspace }}/vcpkg_binary_cache
+          key: ${{ runner.os }}-vcpkg-binpkgs-x64-windows-static-md-msvc-${{ hashFiles('vcpkg.json', 'vcpkg-configuration.json') }}
+          restore-keys: |
+            ${{ runner.os }}-vcpkg-binpkgs-x64-windows-static-md-msvc-
+            ${{ runner.os }}-vcpkg-binpkgs-x64-windows-static-md-
+
+      - name: Restore vcpkg binary packages (fork PR, restore-only)
+        if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name != github.repository
+        uses: actions/cache/restore@v4
+        with:
+          path: ${{ github.workspace }}/vcpkg_binary_cache
+          key: ${{ runner.os }}-vcpkg-binpkgs-x64-windows-static-md-msvc-${{ hashFiles('vcpkg.json', 'vcpkg-configuration.json') }}
+          restore-keys: |
+            ${{ runner.os }}-vcpkg-binpkgs-x64-windows-static-md-msvc-
+            ${{ runner.os }}-vcpkg-binpkgs-x64-windows-static-md-
+
+      # Pre-install vcpkg deps via a CMake configure, wrapped in retry. This
+      # is the only step that hits the network for vcpkg ports/tools, so a
+      # transient GitHub-releases 504 gets retried here instead of failing
+      # the build. The subsequent run-cmake build step reuses this warm
+      # configure + the cached downloads, so it does no further network I/O.
+      - name: Pre-install vcpkg dependencies (retry)
+        uses: nick-fields/retry@v3
+        with:
+          timeout_minutes: 30
+          max_attempts: 3
+          retry_wait_seconds: 30
+          shell: pwsh
+          command: |
+            Set-Location "${{ github.workspace }}"
+            cmake --preset build-release-msvc-vcpkg-all -DREX_OPTION_INI=ON -DREX_OPTION_JSON=ON -DREX_OPTION_TOML=ON -DSKSE_SUPPORT_XBYAK=ON -DBUILD_TESTS=OFF
+
+      - name: Build CommonLibSSE (all + rex_ini + rex_json + rex_toml + skse_xbyak, release)
+        uses: lukka/run-cmake@v10
+        with:
+          cmakeListsTxtPath: ${{ github.workspace }}/CMakeLists.txt
+          configurePreset: build-release-msvc-vcpkg-all
+          configurePresetAdditionalArgs: "['-DREX_OPTION_INI=ON', '-DREX_OPTION_JSON=ON', '-DREX_OPTION_TOML=ON', '-DSKSE_SUPPORT_XBYAK=ON', '-DBUILD_TESTS=OFF']"
+          buildPreset: release-msvc-vcpkg-all
+
+      - name: Assemble bundle
+        id: bundle
+        shell: pwsh
+        env:
+          ATTACH_TAG: ${{ inputs.attach_tag }} # via env, not template interpolation (injection-safe)
+        run: |
+          $tag = $env:ATTACH_TAG
+          $stage = if ($tag) { "commonlibsse-ng-prebuilt-$tag-all-msvc-cmake" } else { "commonlibsse-ng-prebuilt-all-msvc-cmake" }
+          New-Item -ItemType Directory -Force -Path "$stage/lib","$stage/extern/openvr" | Out-Null
+          $lib = "build/release-msvc-vcpkg-all/CommonLibSSE.lib"
+          if (-not (Test-Path $lib)) { Write-Error "lib not found at $lib"; exit 1 }
+          Copy-Item $lib "$stage/lib/"
+          # openvr_api.lib is linked PUBLIC by the IMPORTED target, so it ships in the bundle.
+          Copy-Item extern/openvr/lib/win64/openvr_api.lib "$stage/lib/"
+          Copy-Item PREBUILT.md "$stage/"
+          Copy-Item licenses/LICENSE-hde64.txt "$stage/"
+          # Stamp the toolset version (Prebuilt.cmake's compatibility gate); the file-version
+          # resource, not the usage banner, is locale-independent and matches CMake's own format.
+          $clPath = (Get-Command cl.exe -ErrorAction Stop).Source
+          $clVersion = (Get-Item $clPath).VersionInfo.FileVersion
+          if (-not $clVersion) { Write-Error "could not read cl.exe FileVersion"; exit 1 }
+          $clVersion | Out-File "$stage/TOOLSET_VERSION.txt" -Encoding ascii -NoNewline
+          Copy-Item -Recurse include "$stage/include"
+          Copy-Item -Recurse extern/openvr/headers "$stage/extern/openvr/headers"
+          # .zip so the consumer's file(ARCHIVE_EXTRACT) (libarchive) unpacks it reliably.
+          Compress-Archive -Path "$stage" -DestinationPath "$stage.zip" -Force
+          ((Get-FileHash "$stage.zip" -Algorithm SHA256).Hash.ToLower() + "  $stage.zip") | Out-File "$stage.zip.sha256" -Encoding ascii -NoNewline
+          "stage=$stage" | Out-File -FilePath $env:GITHUB_OUTPUT -Append -Encoding utf8
+          "bundle=$stage.zip" | Out-File -FilePath $env:GITHUB_OUTPUT -Append -Encoding utf8
+          "sha=$stage.zip.sha256" | Out-File -FilePath $env:GITHUB_OUTPUT -Append -Encoding utf8
+
+      - name: Self-test — build a plugin against the prebuilt
+        shell: pwsh
+        env:
+          PREBUILT_DIR: ${{ github.workspace }}/${{ steps.bundle.outputs.stage }}
+        run: |
+          cmake -S tests/prebuilt-consumer-cmake -B build/cmake-selftest -G Ninja `
+            --toolchain "$env:VCPKG_ROOT/scripts/buildsystems/vcpkg.cmake" `
+            -DVCPKG_TARGET_TRIPLET=x64-windows-static-md `
+            -DCMAKE_BUILD_TYPE=Release `
+            -DCMAKE_MSVC_RUNTIME_LIBRARY=MultiThreadedDLL `
+            -DCOMMONLIB_PREBUILT_DIR="$env:PREBUILT_DIR"
+          if ($LASTEXITCODE -ne 0) { exit 1 }
+          cmake --build build/cmake-selftest
+          if ($LASTEXITCODE -ne 0) { exit 1 }
+
+      - name: Upload bundle artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: prebuilt-bundle-cmake
+          path: ${{ steps.bundle.outputs.bundle }}
+          if-no-files-found: error
+
+      - name: Attach bundle to release
+        if: inputs.attach_tag != ''
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          ATTACH_TAG: ${{ inputs.attach_tag }} # via env, not template interpolation (injection-safe)
+        run: |
+          gh release view "$env:ATTACH_TAG" *> $null
+          if ($LASTEXITCODE -ne 0) {
+            gh release create "$env:ATTACH_TAG" --title "CommonLibSSE-NG $env:ATTACH_TAG" `
+              --notes "Prebuilt CommonLib bundles for downstream consumers (config: skyrim all + rex_ini + rex_json + rex_toml + skse_xbyak). See PREBUILT.md."
+          }
+          gh release upload "$env:ATTACH_TAG" "${{ steps.bundle.outputs.bundle }}" "${{ steps.bundle.outputs.sha }}" --clobber

@@ -51,17 +51,17 @@ namespace RE
 
 		~hkpCharacterContext() override;  // 00
 
-		stl::enumeration<CharacterType, std::uint32_t> characterType;          // 10
-		std::uint32_t                                  pad14;                  // 14
-		const hkpCharacterStateManager*                stateManager;           // 18
-		hkpCharacterStateType                          currentState;           // 20
-		hkpCharacterStateType                          previousState;          // 24
-		bool                                           filterEnable;           // 28
-		std::uint8_t                                   pad29;                  // 29
-		std::uint16_t                                  pad2A;                  // 2A
-		float                                          maxLinearAcceleration;  // 2C
-		float                                          maxLinearVelocity;      // 30
-		float                                          gain;                   // 34
+		REX::EnumSet<CharacterType, std::uint32_t> characterType;          // 10
+		std::uint32_t                              pad14;                  // 14
+		const hkpCharacterStateManager*            stateManager;           // 18
+		hkpCharacterStateType                      currentState;           // 20
+		hkpCharacterStateType                      previousState;          // 24
+		bool                                       filterEnable;           // 28
+		std::uint8_t                               pad29;                  // 29
+		std::uint16_t                              pad2A;                  // 2A
+		float                                      maxLinearAcceleration;  // 2C
+		float                                      maxLinearVelocity;      // 30
+		float                                      gain;                   // 34
 	};
 	static_assert(sizeof(hkpCharacterContext) == 0x38);
 }

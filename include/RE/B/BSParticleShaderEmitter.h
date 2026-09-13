@@ -11,6 +11,7 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_BSParticleShaderEmitter;
+		inline static constexpr auto VTABLE = VTABLE_BSParticleShaderEmitter;
 
 		enum class EMITTER_TYPE
 		{
@@ -45,10 +46,10 @@ namespace RE
 			float        rotationStart;  // 20
 			float        rotationSpeed;  // 24
 			float        speedMult;      // 28
-			std::uint8_t texCoordU;      // 29
-			std::uint8_t texCoordV;      // 2A
-			std::uint8_t vertexX;        // 2B
-			std::uint8_t vertexY;        // 2C
+			std::uint8_t texCoordU;      // 2C
+			std::uint8_t texCoordV;      // 2D
+			std::uint8_t vertexX;        // 2E
+			std::uint8_t vertexY;        // 2F
 		};
 		static_assert(sizeof(ParticleData) == 0x30);
 
@@ -59,14 +60,14 @@ namespace RE
 		virtual bool        Generate(bool a_arg1, NiPoint3& a_arg2, NiPoint3& a_arg3) = 0;  // 03
 
 		// members
-		BSParticleShaderProperty*                     property;          // 10
-		stl::enumeration<EMITTER_TYPE, std::uint16_t> emitterType;       // 18
-		std::uint16_t                                 particleCount;     // 1A
-		float                                         alpha;             // 1C
-		float                                         generateReminder;  // 20
-		float                                         maxParticleRatio;  // 24
-		TextureAnimInfo*                              textureAnims;      // 28
-		ParticleData                                  instanceData[78];  // 30
+		BSParticleShaderProperty*                 property;          // 10
+		REX::EnumSet<EMITTER_TYPE, std::uint16_t> emitterType;       // 18
+		std::uint16_t                             particleCount;     // 1A
+		float                                     alpha;             // 1C
+		float                                     generateReminder;  // 20
+		float                                     maxParticleRatio;  // 24
+		TextureAnimInfo*                          textureAnims;      // 28
+		ParticleData                              instanceData[78];  // 30
 	};
 	static_assert(sizeof(BSParticleShaderEmitter) == 0xED0);
 }

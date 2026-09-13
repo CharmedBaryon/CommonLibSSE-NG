@@ -8,6 +8,7 @@ namespace RE
 		{
 		public:
 			inline static constexpr auto RTTI = RTTI_BSScript__IStackCallbackSaveInterface;
+			inline static constexpr auto VTABLE = VTABLE_BSScript__IStackCallbackSaveInterface;
 
 			virtual ~IStackCallbackSaveInterface();  // 00
 

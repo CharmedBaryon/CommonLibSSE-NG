@@ -100,8 +100,12 @@ namespace SKSE
 					if (auto vm = RE::BSScript::Internal::VirtualMachine::GetSingleton()) {
 						if (auto it = this->_regs.find(a_filter); it != this->_regs.end()) {
 							for (auto& handle : it->second) {
-								auto args = RE::MakeFunctionArguments(std::forward<Args>(a_args)...);
-								vm->SendEvent(handle, eventName, args);
+								auto copy = std::make_tuple(a_args...);
+								std::apply([&](auto&&... a_copy) {
+									auto args = RE::MakeFunctionArguments(std::forward<Args>(a_copy)...);
+									vm->SendEvent(handle, eventName, args);
+								},
+									copy);
 							}
 						}
 					}
@@ -467,13 +471,11 @@ namespace SKSE
 			RE::VMHandle handle;
 
 			for (std::size_t i = 0; i < numRegs; ++i) {
-				if (!LoadFilter(a_intfc, filter)) {
-					return false;
-				}
+				bool loadedFilter = LoadFilter(a_intfc, filter);
 				a_intfc->ReadRecordData(numHandles);
 				for (std::size_t j = 0; j < numHandles; ++j) {
 					a_intfc->ReadRecordData(handle);
-					if (a_intfc->ResolveHandle(handle, handle)) {
+					if (a_intfc->ResolveHandle(handle, handle) && loadedFilter) {
 						_regs[filter].insert(handle);
 					}
 				}

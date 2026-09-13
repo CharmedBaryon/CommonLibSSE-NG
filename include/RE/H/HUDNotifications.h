@@ -4,6 +4,7 @@
 #include "RE/B/BSString.h"
 #include "RE/B/BSTArray.h"
 #include "RE/G/GFxValue.h"
+#include "RE/H/HUDMessageTypes.h"
 #include "RE/H/HUDObject.h"
 
 namespace RE
@@ -21,16 +22,16 @@ namespace RE
 		{
 		public:
 			// members
-			BSString                text;              // 00
-			BSString                status;            // 10
-			BSFixedString           sound;             // 20
-			BSTArray<BSFixedString> objectives;        // 28
-			std::uint32_t           type{ 0 };         // 40
-			std::uint32_t           pad44{ 0 };        // 44
-			TESQuest*               quest{ nullptr };  // 48
-			TESWordOfPower*         word{ nullptr };   // 50
-			std::uint32_t           time{ 0 };         // 58 - gameTime + iObjectivesWaitTime
-			std::uint32_t           pad5C{ 0 };        // 5C
+			BSString                                      text;                             // 00
+			BSString                                      status;                           // 10
+			BSFixedString                                 sound;                            // 20
+			BSTArray<BSFixedString>                       objectives;                       // 28
+			REX::EnumSet<HUD_MESSAGE_TYPE, std::uint32_t> type{ HUD_MESSAGE_TYPE::kNone };  // 40
+			std::uint32_t                                 pad44{ 0 };                       // 44
+			TESQuest*                                     quest{ nullptr };                 // 48
+			TESWordOfPower*                               word{ nullptr };                  // 50
+			std::uint32_t                                 time{ 0 };                        // 58 - gameTime + iObjectivesWaitTime
+			std::uint32_t                                 pad5C{ 0 };                       // 5C
 		};
 		static_assert(sizeof(Notification) == 0x60);
 

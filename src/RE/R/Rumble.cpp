@@ -8,7 +8,7 @@ namespace RE
 		//  pVibration = 0;
 		//  return XInputSetState(0, &pVibration);
 		using func_t = decltype(&Rumble::DisableRumble);
-		REL::Relocation<func_t> func{ RELOCATION_ID(67224, 68533) };
+		static REL::Relocation<func_t> func{ RELOCATION_ID(67224, 68533) };
 		return func();
 	}
 }

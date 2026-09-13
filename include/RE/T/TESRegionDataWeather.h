@@ -1,6 +1,6 @@
 #pragma once
 
-#include "RE/B/BSTList.h"
+#include "RE/B/BSSimpleList.h"
 #include "RE/T/TESRegionData.h"
 
 namespace RE
@@ -11,6 +11,7 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_TESRegionDataWeather;
+		inline static constexpr auto VTABLE = VTABLE_TESRegionDataWeather;
 		inline static constexpr auto TYPE = Type::kWeather;
 
 		~TESRegionDataWeather() override;  // 00

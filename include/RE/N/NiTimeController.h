@@ -13,7 +13,8 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_NiTimeController;
-		inline static auto           Ni_RTTI = NiRTTI_NiTimeController;
+		inline static constexpr auto Ni_RTTI = NiRTTI_NiTimeController;
+		inline static constexpr auto VTABLE = VTABLE_NiTimeController;
 
 		enum class CycleType
 		{
@@ -69,21 +70,22 @@ namespace RE
 		static void StartAnimations(NiObjectNET* a_target);
 
 		[[nodiscard]] constexpr NiTimeController* GetNext() const noexcept { return next.get(); }
+		void                                      SetNext(NiTimeController* a_next);
 
 		// members
-		stl::enumeration<Flag, std::uint16_t> flags;             // 10
-		std::uint16_t                         pad12;             // 12
-		float                                 frequency;         // 14
-		float                                 phase;             // 18
-		float                                 loKeyTime;         // 1C
-		float                                 hiKeyTime;         // 20
-		float                                 startTime;         // 24
-		float                                 lastTime;          // 28
-		float                                 weightedLastTime;  // 2C
-		float                                 scaledTime;        // 30
-		std::uint32_t                         pad34;             // 34
-		NiObjectNET*                          target;            // 38
-		NiPointer<NiTimeController>           next;              // 40 - singly-linked list
+		REX::EnumSet<Flag, std::uint16_t> flags;             // 10
+		std::uint16_t                     pad12;             // 12
+		float                             frequency;         // 14
+		float                             phase;             // 18
+		float                             loKeyTime;         // 1C
+		float                             hiKeyTime;         // 20
+		float                             startTime;         // 24
+		float                             lastTime;          // 28
+		float                             weightedLastTime;  // 2C
+		float                             scaledTime;        // 30
+		std::uint32_t                     pad34;             // 34
+		NiObjectNET*                      target;            // 38
+		NiPointer<NiTimeController>       next;              // 40 - singly-linked list
 
 	private:
 		NiTimeController* ctor();

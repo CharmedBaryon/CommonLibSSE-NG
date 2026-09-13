@@ -9,6 +9,7 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_BSAnimationGraphChannel;
+		inline static constexpr auto VTABLE = VTABLE_BSAnimationGraphChannel;
 
 		virtual ~BSAnimationGraphChannel();  // 00
 

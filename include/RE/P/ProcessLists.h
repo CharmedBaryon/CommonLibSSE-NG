@@ -3,8 +3,9 @@
 #include "RE/B/BSAtomic.h"
 #include "RE/B/BSContainer.h"
 #include "RE/B/BSPointerHandle.h"
+#include "RE/B/BSSimpleList.h"
 #include "RE/B/BSTArray.h"
-#include "RE/B/BSTList.h"
+#include "RE/B/BSTEvent.h"
 #include "RE/B/BSTSingleton.h"
 #include "RE/B/BSTSmartPointer.h"
 #include "RE/C/Crime.h"
@@ -25,6 +26,7 @@ namespace RE
 		{
 		public:
 			inline static constexpr auto RTTI = RTTI_ProcessLists__GetActorsFilter;
+			inline static constexpr auto VTABLE = VTABLE_ProcessLists__GetActorsFilter;
 
 			virtual ~GetActorsFilter();  // 00
 
@@ -35,6 +37,7 @@ namespace RE
 
 		static ProcessLists* GetSingleton();
 
+		bool         AreHostileActorsNear(BSScrapArray<ActorHandle>* a_arrayOut);
 		void         ClearCachedFactionFightReactions() const;
 		void         ForAllActors(std::function<BSContainer::ForEachResult(Actor*)> a_callback);
 		void         ForEachHighActor(std::function<BSContainer::ForEachResult(Actor*)> a_callback);

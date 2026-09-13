@@ -1,5 +1,6 @@
 #pragma once
 
+#include "RE/B/BGSDestructibleObjectForm.h"
 #include "RE/B/BSString.h"
 #include "RE/F/FormTypes.h"
 #include "RE/N/NiSmartPointer.h"
@@ -24,6 +25,7 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_TESBoundObject;
+		inline static constexpr auto VTABLE = VTABLE_TESBoundObject;
 
 		struct BOUND_DATA  // OBND
 		{
@@ -42,6 +44,13 @@ namespace RE
 		bool        Activate(TESObjectREFR* a_targetRef, TESObjectREFR* a_activatorRef, std::uint8_t a_arg3, TESBoundObject* a_object, std::int32_t a_targetCount) override;  // 37
 		NiAVObject* Clone3D(TESObjectREFR* a_ref, bool a_arg3) override;                                                                                                      // 40
 		bool        ReplaceModel() override;                                                                                                                                  // 44
+
+		[[nodiscard]] BGSDestructibleObjectForm* GetDestructibleForm() const
+		{
+			using func_t = decltype(&TESBoundObject::GetDestructibleForm);
+			static REL::Relocation<func_t> func{ RELOCATION_ID(14055, 14152) };
+			return func(this);
+		}
 
 		// add
 		virtual void                        SetObjectVoiceType(BGSVoiceType* a_voiceType);                                                 // 48 - { return; }

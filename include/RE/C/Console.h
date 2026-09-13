@@ -3,10 +3,13 @@
 #include "RE/B/BSPointerHandle.h"
 #include "RE/I/IMenu.h"
 #include "RE/N/NiSmartPointer.h"
+#include "REL/RuntimeDataAccessors.h"
+#include <SKSE/Version.h>
 
 namespace RE
 {
 	class TESObjectREFR;
+	class TESQuest;
 
 	// menuDepth = 12
 	// flags = kPausesGame | kAlwaysOpen | kUsesCursor | kAllowSaving
@@ -15,6 +18,7 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto      RTTI = RTTI_Console;
+		inline static constexpr auto      VTABLE = VTABLE_Console;
 		constexpr static std::string_view MENU_NAME = "Console";
 
 		struct EXTENDED_CONSOLE_DATA
@@ -56,33 +60,17 @@ public:                                                                \
 		void               Accept(CallbackProcessor* a_processor) override;  // 01
 		UI_MESSAGE_RESULTS ProcessMessage(UIMessage& a_message) override;    // 04
 
+		static void                     ExecuteCommand(const char* a_command);
 		static NiPointer<TESObjectREFR> GetSelectedRef();
 		static ObjectRefHandle          GetSelectedRefHandle();
+		static TESQuest*                GetCommandScriptParentQuest();
 
 		void SetSelectedRef(NiPointer<TESObjectREFR> a_refPtr);
 		void SetSelectedRef(TESObjectREFR* a_ref);
 		void SetSelectedRef(ObjectRefHandle a_handle);
 
-		[[nodiscard]] inline RUNTIME_DATA& GetRuntimeData() noexcept
-		{
-			return REL::RelocateMember<RUNTIME_DATA>(this, 0x30, 0x40);
-		}
-
-		[[nodiscard]] inline const RUNTIME_DATA& GetRuntimeData() const noexcept
-		{
-			return REL::RelocateMember<RUNTIME_DATA>(this, 0x30, 0x40);
-		}
-
-		[[nodiscard]] inline RUNTIME_DATA2& GetRuntimeData2() noexcept
-		{
-			return REL::RelocateMember<RUNTIME_DATA2>(this, 0x48, 0x60);
-		}
-
-		[[nodiscard]] inline const RUNTIME_DATA2& GetRuntimeData2() const noexcept
-		{
-			return REL::RelocateMember<RUNTIME_DATA2>(this, 0x48, 0x60);
-		}
-
+		RUNTIME_DATA_ACCESSOR(RUNTIME_DATA, 0x30, 0x40);
+		RUNTIME_DATA_ACCESSOR_EX(RUNTIME_DATA2, GetRuntimeData2, 0x48, 0x60);
 		[[nodiscard]] inline EXTENDED_CONSOLE_DATA* TryGetExtendedConsoleData() noexcept
 		{
 			if (REL::Module::IsAE()) {

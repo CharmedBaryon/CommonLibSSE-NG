@@ -10,6 +10,7 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_PerkEntryVisitor;
+		inline static constexpr auto VTABLE = VTABLE_PerkEntryVisitor;
 
 		virtual BSContainer::ForEachResult Visit(BGSPerkEntry* a_perkEntry) = 0;  // 00
 	};

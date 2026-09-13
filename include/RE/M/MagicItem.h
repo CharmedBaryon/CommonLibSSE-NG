@@ -30,6 +30,7 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_MagicItem;
+		inline static constexpr auto VTABLE = VTABLE_MagicItem;
 
 		class PreloadableVisitor
 		{
@@ -112,7 +113,7 @@ namespace RE
 		[[nodiscard]] float                  CalculateTotalGoldValue(Actor* a_caster = nullptr) const;
 		[[nodiscard]] MagicItemDataCollector CollectData() const;
 		[[nodiscard]] EffectSetting*         GetAVEffect() const;
-		[[nodiscard]] Effect*                GetCostliestEffectItem(MagicSystem::Delivery a_delivery = MagicSystem::Delivery::kTotal, bool a_positiveArea = false) const;
+		[[nodiscard]] Effect*                GetCostliestEffectItem(MagicSystem::Delivery a_delivery = MagicSystem::Delivery::kNone, bool a_positiveArea = false) const;
 		[[nodiscard]] Data*                  GetData();
 		[[nodiscard]] const Data*            GetData() const;
 		[[nodiscard]] bool                   IsValid() const;
@@ -121,6 +122,7 @@ namespace RE
 		[[nodiscard]] bool                   HasEffect(EffectArchetype a_archetype);
 		[[nodiscard]] bool                   IsHostile() const;
 		[[nodiscard]] bool                   IsPermanent() const;
+		[[nodiscard]] Effect*                GetEffectIsMatch(EffectSetting* a_base, float a_mag, ::uint32_t a_area, ::uint32_t a_dur, float a_cost);
 		void                                 Traverse(MagicItemTraversalFunctor& a_visitor) const;
 
 		// members

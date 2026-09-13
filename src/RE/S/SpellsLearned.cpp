@@ -5,7 +5,7 @@ namespace RE
 	BSTEventSource<SpellsLearned::Event>* SpellsLearned::GetEventSource()
 	{
 		using func_t = decltype(&SpellsLearned::GetEventSource);
-		REL::Relocation<func_t> func{ RELOCATION_ID(37917, 38874) };
+		static REL::Relocation<func_t> func{ RELOCATION_ID(37917, 38874) };
 		return func();
 	}
 

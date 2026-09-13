@@ -5,24 +5,28 @@ namespace RE
 	namespace BSResource
 	{
 		StreamBase::StreamBase() :
-			totalSize(0),
-			flags(0)
-		{}
+			totalSize(0)
+		{
+			GetFlags() = 0;
+		}
 
 		StreamBase::StreamBase(const StreamBase& a_rhs) :
-			totalSize(a_rhs.totalSize),
-			flags(a_rhs.flags & ~kRefCountMask)
-		{}
+			totalSize(a_rhs.totalSize)
+		{
+			GetFlags() = a_rhs.GetFlags() & ~kRefCountMask;
+		}
 
 		StreamBase::StreamBase(StreamBase&& a_rhs) :
-			totalSize(a_rhs.totalSize),
-			flags(a_rhs.flags & ~kRefCountMask)
-		{}
+			totalSize(a_rhs.totalSize)
+		{
+			GetFlags() = a_rhs.GetFlags() & ~kRefCountMask;
+		}
 
 		StreamBase::StreamBase(std::uint32_t a_totalSize) :
-			totalSize(a_totalSize),
-			flags(0)
-		{}
+			totalSize(a_totalSize)
+		{
+			GetFlags() = 0;
+		}
 
 		std::uint64_t StreamBase::DoGetKey() const
 		{
@@ -36,7 +40,7 @@ namespace RE
 
 		std::uint32_t StreamBase::DecRef()
 		{
-			stl::atomic_ref myFlags{ flags };
+			stl::atomic_ref myFlags{ GetFlags() };
 			std::uint32_t   expected;
 			do {
 				expected = myFlags;
@@ -46,7 +50,7 @@ namespace RE
 
 		std::uint32_t StreamBase::IncRef()
 		{
-			stl::atomic_ref myFlags{ flags };
+			stl::atomic_ref myFlags{ GetFlags() };
 			std::uint32_t   expected;
 			do {
 				expected = myFlags;
@@ -56,7 +60,7 @@ namespace RE
 
 		bool StreamBase::IsWritable() const
 		{
-			return static_cast<bool>(flags & kWritable);
+			return static_cast<bool>(GetFlags() & kWritable);
 		}
 	}
 }

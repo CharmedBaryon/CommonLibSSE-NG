@@ -12,6 +12,7 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_NonActorMagicCaster;
+		inline static constexpr auto VTABLE = VTABLE_NonActorMagicCaster;
 		inline static constexpr auto EXTRADATATYPE = ExtraDataType::kMagicCaster;
 
 		~NonActorMagicCaster() override;  // 00

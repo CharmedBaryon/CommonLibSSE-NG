@@ -29,14 +29,14 @@ namespace RE
 		bool InitHeapEngine(const void* a_heapDesc) override  // 01
 		{
 			using func_t = decltype(&GSysAllocPaged::InitHeapEngine);
-			REL::Relocation<func_t> func{ RELOCATION_ID(82462, 84557) };
+			static REL::Relocation<func_t> func{ RELOCATION_ID(82462, 84557) };
 			return func(this, a_heapDesc);
 		}
 
 		void ShutdownHeapEngine() override  // 02
 		{
 			using func_t = decltype(&GSysAllocPaged::ShutdownHeapEngine);
-			REL::Relocation<func_t> func{ RELOCATION_ID(82464, 84559) };
+			static REL::Relocation<func_t> func{ RELOCATION_ID(82464, 84559) };
 			return func(this);
 		}
 

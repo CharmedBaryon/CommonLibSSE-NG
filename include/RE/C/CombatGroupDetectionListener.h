@@ -8,6 +8,7 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_CombatGroupDetectionListener;
+		inline static constexpr auto VTABLE = VTABLE_CombatGroupDetectionListener;
 
 		~CombatGroupDetectionListener() override;  // 00
 

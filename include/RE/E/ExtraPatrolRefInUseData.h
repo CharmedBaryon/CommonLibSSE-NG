@@ -9,7 +9,8 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_ExtraPatrolRefInUseData;
-		inline static auto           EXTRADATATYPE = ExtraDataType::kPatrolRefInUseData;
+		inline static constexpr auto VTABLE = VTABLE_ExtraPatrolRefInUseData;
+		inline static constexpr auto EXTRADATATYPE = ExtraDataType::kPatrolRefInUseData;
 
 		~ExtraPatrolRefInUseData() override;  // 00
 

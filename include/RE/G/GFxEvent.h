@@ -1,5 +1,6 @@
 #pragma once
 
+#include "RE/B/BSFixedString.h"
 #include "RE/G/GFxKey.h"
 #include "RE/G/GFxSpecialKeysState.h"
 #include "RE/G/GNewOverrideBase.h"
@@ -40,7 +41,7 @@ namespace RE
 		{}
 
 		// members
-		stl::enumeration<EventType, std::uint32_t> type;  // 0
+		REX::EnumSet<EventType, std::uint32_t> type;  // 0
 	};
 	static_assert(sizeof(GFxEvent) == 0x4);
 
@@ -121,4 +122,40 @@ namespace RE
 		std::uint16_t       pad12;            // 12
 	};
 	static_assert(sizeof(GFxKeyEvent) == 0x14);
+
+#ifdef ENABLE_SKYRIM_VR
+	// Scaleform event dispatching functions from SKSEVR (VR only)
+	namespace ScaleformEvent
+	{
+		// Global event data pointer used by QueueGFxMouseEvent
+		extern REL::Relocation<void**> g_scaleformGFxEventData;
+
+		// Function types for Scaleform event dispatching
+		using QueueGFxMouseEvent_t = GFxMouseEvent* (*)(void* eventData, GFxEvent::EventType type, std::uint32_t a_button, float x, float y, float a_scrollDelta, std::uint32_t a_mouseIndex);
+		using DispatchGFxEvent_t = void (*)(const BSFixedString& name, GFxEvent* gfxEvent);
+
+		// Function pointers
+		extern REL::Relocation<QueueGFxMouseEvent_t> QueueGFxMouseEvent;
+		extern REL::Relocation<DispatchGFxEvent_t>   DispatchGFxEvent;
+
+		// Convenience functions for creating and dispatching mouse events
+		inline GFxMouseEvent* CreateMouseEvent(GFxEvent::EventType type, std::uint32_t button, float x, float y, float scrollDelta = 0.0f, std::uint32_t mouseIndex = 0)
+		{
+			// Add null check for safety - returns nullptr if pointer is invalid
+			if (g_scaleformGFxEventData.get() == nullptr || *g_scaleformGFxEventData == nullptr) {
+				return nullptr;
+			}
+			return QueueGFxMouseEvent(*g_scaleformGFxEventData, type, button, x, y, scrollDelta, mouseIndex);
+		}
+
+		inline void SendMouseEvent(const BSFixedString& menuName, GFxEvent::EventType type, std::uint32_t button, float x, float y, float scrollDelta = 0.0f, std::uint32_t mouseIndex = 0)
+		{
+			auto event = CreateMouseEvent(type, button, x, y, scrollDelta, mouseIndex);
+			// Add null check for safety - only dispatch if event creation succeeded
+			if (event != nullptr) {
+				DispatchGFxEvent(menuName, event);
+			}
+		}
+	}
+#endif
 }

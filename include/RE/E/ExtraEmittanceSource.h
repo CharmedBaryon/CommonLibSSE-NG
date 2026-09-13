@@ -11,7 +11,8 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_ExtraEmittanceSource;
-		inline static auto           EXTRADATATYPE = ExtraDataType::kEmittanceSource;
+		inline static constexpr auto VTABLE = VTABLE_ExtraEmittanceSource;
+		inline static constexpr auto EXTRADATATYPE = ExtraDataType::kEmittanceSource;
 
 		~ExtraEmittanceSource() override;  // 00
 

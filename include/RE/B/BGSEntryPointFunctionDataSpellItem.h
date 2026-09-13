@@ -16,9 +16,9 @@ namespace RE
 		~BGSEntryPointFunctionDataSpellItem() override;  // 0
 
 		// override (BGSEntryPointFunctionData)
-		[[nodiscard]] FunctionType GetType() const override;                   // 01
-		bool                       LoadFunctionData(TESFile* a_mod) override;  // 02
-		void                       ResolveForms(TESFile* a_form) override;     // 03
+		[[nodiscard]] ENTRY_POINT_FUNCTION_DATA GetType() const override;            // 01
+		bool                                    LoadImpl(TESFile* a_mod) override;   // 02
+		void                                    InitItem(TESForm* a_form) override;  // 03
 
 		// Member variables
 		SpellItem* spell;  // 8

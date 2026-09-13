@@ -2,7 +2,7 @@
 
 #include "RE/B/BSExtraData.h"
 #include "RE/B/BSPointerHandle.h"
-#include "RE/B/BSTList.h"
+#include "RE/B/BSSimpleList.h"
 #include "RE/E/ExtraDataTypes.h"
 
 namespace RE
@@ -27,7 +27,8 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_ExtraRoomRefData;
-		inline static auto           EXTRADATATYPE = ExtraDataType::kRoomRefData;
+		inline static constexpr auto VTABLE = VTABLE_ExtraRoomRefData;
+		inline static constexpr auto EXTRADATATYPE = ExtraDataType::kRoomRefData;
 
 		~ExtraRoomRefData() override;  // 00
 

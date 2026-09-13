@@ -56,7 +56,7 @@ namespace RE
 		_dataDesc()
 	{
 		std::string_view view("");
-						 operator=(view);
+		operator=(view);
 	}
 
 	GString::GString(const GString& a_rhs) :
@@ -118,7 +118,7 @@ namespace RE
 	GString& GString::operator=(const char* a_rhs)
 	{
 		std::string_view view(a_rhs);
-		return           operator=(view);
+		return operator=(view);
 	}
 
 	GString& GString::operator=(const std::string_view& a_rhs)
@@ -260,7 +260,7 @@ namespace RE
 	GString* GString::ctor(const char* a_str)
 	{
 		using func_t = decltype(&GString::ctor);
-		REL::Relocation<func_t> func{ RELOCATION_ID(80446, 82562) };
+		static REL::Relocation<func_t> func{ RELOCATION_ID(80446, 82562) };
 		return func(this, a_str);
 	}
 

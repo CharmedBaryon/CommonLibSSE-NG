@@ -14,8 +14,8 @@ namespace RE
 		BSTHashMap<NiObject*, bool>      processMap;  // 30
 		std::uint32_t                    copyType;    // 60
 		char                             appendChar;  // 64
-		std::uint16_t                    unk65;       // 65
-		NiPoint3                         unk68;       // 68
+		std::uint16_t                    pad65;       // 65
+		NiPoint3                         scale;       // 68
 	};
 	static_assert(sizeof(NiCloningProcess) == 0x78);
 }

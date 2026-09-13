@@ -20,6 +20,7 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_BGSPerkEntry;
+		inline static constexpr auto VTABLE = VTABLE_BGSPerkEntry;
 
 		using EntryPoint = BGSEntryPoint::ENTRY_POINT;
 

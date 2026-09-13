@@ -31,7 +31,8 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_ExtraRagDollData;
-		inline static auto           EXTRADATATYPE = ExtraDataType::kRagDollData;
+		inline static constexpr auto VTABLE = VTABLE_ExtraRagDollData;
+		inline static constexpr auto EXTRADATATYPE = ExtraDataType::kRagDollData;
 
 		~ExtraRagDollData() override;  // 00
 

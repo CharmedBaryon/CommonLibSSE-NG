@@ -20,16 +20,16 @@ namespace RE
 		};
 
 		// members
-		FormID                                 formID;            // 00
-		std::uint32_t                          size;              // 04
-		std::uint32_t                          uncompressedSize;  // 08
-		std::uint32_t                          pad0C;             // 0C
-		TESForm*                               form;              // 10
-		std::uint32_t                          changeFlags;       // 18
-		std::uint32_t                          oldChangeFlags;    // 1C
-		stl::enumeration<Flags, std::uint32_t> flags;             // 20
-		std::uint8_t                           pad22;             // 22
-		std::uint8_t                           version;           // 23
+		FormID                             formID;            // 00
+		std::uint32_t                      size;              // 04
+		std::uint32_t                      uncompressedSize;  // 08
+		std::uint32_t                      pad0C;             // 0C
+		TESForm*                           form;              // 10
+		std::uint32_t                      changeFlags;       // 18
+		std::uint32_t                      oldChangeFlags;    // 1C
+		REX::EnumSet<Flags, std::uint32_t> flags;             // 20
+		std::uint8_t                       pad22;             // 22
+		std::uint8_t                       version;           // 23
 	};
 	static_assert(sizeof(BGSLoadFormData) == 0x28);
 }

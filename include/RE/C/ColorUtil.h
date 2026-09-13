@@ -60,7 +60,7 @@ namespace RE
 					std::floor(a_rhs.blue));
 			}
 
-			inline NiColor (min)(const NiColor& a_lhs, const NiColor& a_rhs)
+			inline NiColor(min)(const NiColor& a_lhs, const NiColor& a_rhs)
 			{
 				return NiColor(
 					(std::min)(a_lhs.red, a_rhs.red),
@@ -68,7 +68,7 @@ namespace RE
 					(std::min)(a_lhs.blue, a_rhs.blue));
 			}
 
-			inline NiColor (max)(const NiColor& a_lhs, const NiColor& a_rhs)
+			inline NiColor(max)(const NiColor& a_lhs, const NiColor& a_rhs)
 			{
 				return NiColor(
 					(std::max)(a_lhs.red, a_rhs.red),

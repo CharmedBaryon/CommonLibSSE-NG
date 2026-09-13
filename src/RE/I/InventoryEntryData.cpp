@@ -71,6 +71,13 @@ namespace RE
 		extraLists->push_front(a_extra);
 	}
 
+	InventoryEntryData& InventoryEntryData::DeepCopy(const InventoryEntryData& a_other)
+	{
+		using func_t = decltype(&InventoryEntryData::DeepCopy);
+		static REL::Relocation<func_t> func{ RELOCATION_ID(15745, 15983) };
+		return func(this, a_other);
+	}
+
 	const char* InventoryEntryData::GetDisplayName()
 	{
 		const char* name = nullptr;
@@ -98,7 +105,7 @@ namespace RE
 	EnchantmentItem* InventoryEntryData::GetEnchantment() const
 	{
 		using func_t = decltype(&InventoryEntryData::GetEnchantment);
-		REL::Relocation<func_t> func{ RELOCATION_ID(15788, 16026) };
+		static REL::Relocation<func_t> func{ RELOCATION_ID(15788, 16026) };
 		return func(this);
 	}
 
@@ -136,6 +143,13 @@ namespace RE
 		}
 
 		return result;
+	}
+
+	ExtraDataList* InventoryEntryData::GetFavoriteExtraList() const
+	{
+		using func_t = decltype(&InventoryEntryData::GetFavoriteExtraList);
+		static REL::Relocation<func_t> func{ RELOCATION_ID(15760, 15998) };
+		return func(this);
 	}
 
 	TESForm* InventoryEntryData::GetOwner()
@@ -180,7 +194,7 @@ namespace RE
 	std::int32_t InventoryEntryData::GetValue() const
 	{
 		using func_t = decltype(&InventoryEntryData::GetValue);
-		REL::Relocation<func_t> func{ RELOCATION_ID(15757, 15995) };
+		static REL::Relocation<func_t> func{ RELOCATION_ID(15757, 15995) };
 		return func(this);
 	}
 
@@ -233,6 +247,19 @@ namespace RE
 		return false;
 	}
 
+	bool InventoryEntryData::IsWorn(bool a_left) const
+	{
+		if (extraLists) {
+			for (const auto& xList : *extraLists) {
+				if (xList && (a_left ? xList->HasType<ExtraWornLeft>() : xList->HasType<ExtraWorn>())) {
+					return true;
+				}
+			}
+		}
+
+		return false;
+	}
+
 	bool InventoryEntryData::IsOwnedBy(Actor* a_testOwner, bool a_defaultTo)
 	{
 		return IsOwnedBy(a_testOwner, GetOwner(), a_defaultTo);
@@ -256,17 +283,31 @@ namespace RE
 		return false;
 	}
 
+	std::int32_t InventoryEntryData::NormalizeAndCountNonStackableExtraLists()
+	{
+		using func_t = decltype(&InventoryEntryData::NormalizeAndCountNonStackableExtraLists);
+		static REL::Relocation<func_t> func{ RELOCATION_ID(15797, 16035) };
+		return func(this);
+	}
+
 	void InventoryEntryData::PoisonObject(AlchemyItem* a_alchItem, std::uint32_t a_count)
 	{
 		using func_t = decltype(&InventoryEntryData::PoisonObject);
-		REL::Relocation<func_t> func{ RELOCATION_ID(15786, 16024) };
+		static REL::Relocation<func_t> func{ RELOCATION_ID(15786, 16024) };
 		return func(this, a_alchItem, a_count);
+	}
+
+	void InventoryEntryData::SetWorn(bool a_worn, bool a_left, bool a_deleteExtraList)
+	{
+		using func_t = decltype(&InventoryEntryData::SetWorn);
+		static REL::Relocation<func_t> func{ RELOCATION_ID(16027, 15789) };
+		return func(this, a_worn, a_left, a_deleteExtraList);
 	}
 
 	bool InventoryEntryData::IsOwnedBy_Impl(Actor* a_testOwner, TESForm* a_itemOwner, bool a_defaultTo)
 	{
 		using func_t = decltype(&InventoryEntryData::IsOwnedBy_Impl);
-		REL::Relocation<func_t> func{ RELOCATION_ID(15782, 16020) };
+		static REL::Relocation<func_t> func{ RELOCATION_ID(15782, 16020) };
 		return func(this, a_testOwner, a_itemOwner, a_defaultTo);
 	}
 }

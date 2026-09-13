@@ -1,10 +1,10 @@
 #pragma once
 
+#include "RE/B/BGSLoadGameSubBuffer.h"
 #include "RE/B/BSTEvent.h"
 #include "RE/B/BSTSmartPointer.h"
 #include "RE/N/NiPoint3.h"
 #include "RE/N/NiSmartPointer.h"
-#include "RE/R/RefAttachTechniqueInput.h"
 #include "RE/R/ReferenceEffect.h"
 #include "RE/S/SimpleAnimationGraphManagerHolder.h"
 
@@ -22,7 +22,8 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_SummonPlacementEffect;
-		inline static auto           Ni_RTTI = NiRTTI_SummonPlacementEffect;
+		inline static constexpr auto Ni_RTTI = NiRTTI_SummonPlacementEffect;
+		inline static constexpr auto VTABLE = VTABLE_SummonPlacementEffect;
 		inline static constexpr auto TYPE = TEMP_EFFECT_TYPE::kMagicSummon;
 
 		~SummonPlacementEffect() override;  // 00
@@ -43,13 +44,13 @@ namespace RE
 		BSEventNotifyControl ProcessEvent(const BSAnimationGraphEvent* a_event, BSTEventSource<BSAnimationGraphEvent>* a_eventSource) override;  // 01
 
 		// members
-		BGSArtObject*                          effectArt;  // 68
-		NiPoint3                               location;   // 70
-		std::uint32_t                          pad7C;      // 7C
-		NiPointer<NiAVObject>                  effect3D;   // 80
-		std::uint64_t                          unk88;      // 88
-		BSTSmartPointer<BGSArtObjectCloneTask> cloneTask;  // 90
-		std::uint8_t                           unk98;      // 98
+		BGSArtObject*                          artObject;            // 68
+		NiPoint3                               location;             // 70
+		std::uint32_t                          pad7C;                // 7C
+		NiPointer<NiAVObject>                  artObject3D;          // 80
+		BGSLoadGameSubBuffer                   loadedDataSubBuffer;  // 88
+		BSTSmartPointer<BGSArtObjectCloneTask> cloneTask;            // 90
+		bool                                   animationComplete;    // 98
 	};
 	static_assert(sizeof(SummonPlacementEffect) == 0xA0);
 }

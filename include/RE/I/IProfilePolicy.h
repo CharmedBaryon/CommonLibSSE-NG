@@ -18,6 +18,7 @@ namespace RE
 		{
 		public:
 			inline static constexpr auto RTTI = RTTI_BSScript__IProfilePolicy;
+			inline static constexpr auto VTABLE = VTABLE_BSScript__IProfilePolicy;
 
 			virtual ~IProfilePolicy();  // 00
 

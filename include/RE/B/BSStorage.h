@@ -14,16 +14,17 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_BSStorage;
+		inline static constexpr auto VTABLE = VTABLE_BSStorage;
 
-		struct UnkData
+		struct WriteBuffer
 		{
 		public:
 			// members
-			std::uint64_t unk00;  // 00
-			std::uint64_t unk08;  // 08
-			std::uint64_t unk10;  // 10
+			std::uint64_t size;      // 00
+			void*         startPtr;  // 08
+			void*         curPtr;    // 10
 		};
-		static_assert(sizeof(UnkData) == 0x18);
+		static_assert(sizeof(WriteBuffer) == 0x18);
 
 		virtual ~BSStorage();  // 00
 
@@ -35,11 +36,11 @@ namespace RE
 		virtual BSStorageDefs::ErrorCode Write(std::size_t a_numBytes, const std::byte* a_bytes) = 0;               // 05
 
 		// members
-		bool          swapBytes;  // 0C
-		bool          unk0D;      // 0D
-		uint16_t      unk0E;      // 0E
-		UnkData*      unk10;      // 10
-		std::uint64_t unk18;      // 18
+		bool         swapBytes;       // 0C
+		bool         unk0D;           // 0D
+		uint16_t     unk0E;           // 0E
+		WriteBuffer* buffer;          // 10
+		bool         bWriteToBuffer;  // 18
 	};
 	static_assert(sizeof(BSStorage) == 0x20);
 }

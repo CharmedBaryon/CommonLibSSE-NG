@@ -7,6 +7,8 @@
 #include "RE/P/PlayerInputHandler.h"
 #include "RE/T/TESCameraState.h"
 
+#include "REL/Common.h"
+
 namespace RE
 {
 	class NiNode;
@@ -22,27 +24,39 @@ namespace RE
 		~ThirdPersonState() override;  // 00
 
 		// override (TESCameraState)
-		void Begin() override;                                               // 01
-		void End() override;                                                 // 02
-		void Update(BSTSmartPointer<TESCameraState>& a_nextState) override;  // 03
-		void GetRotation(NiQuaternion& a_rotation) override;                 // 04
-		void GetTranslation(NiPoint3& a_translation) override;               // 05
-		void SaveGame(BGSSaveFormBuffer* a_buf) override;                    // 06
-		void LoadGame(BGSLoadFormBuffer* a_buf) override;                    // 07
-		void Revert(BGSLoadFormBuffer* a_buf) override;                      // 08
+		void Begin() override;  // 01
+		void End() override;    // 02
+#if defined(EXCLUSIVE_SKYRIM_FLAT)
+		// Function doesn't exist in SE/AE-only builds
+#elif defined(EXCLUSIVE_SKYRIM_VR)
+		void Unk_03() override;  // 03 - VR only
+#else
+		void Unk_03();  // 03 - Multi-runtime
+#endif
+		void Update(BSTSmartPointer<TESCameraState>& a_nextState) override;  // 03/04
+		void GetRotation(NiQuaternion& a_rotation) override;                 // 04/05
+		void GetTranslation(NiPoint3& a_translation) override;               // 05/06
+		void SaveGame(BGSSaveFormBuffer* a_buf) override;                    // 06/07
+		void LoadGame(BGSLoadFormBuffer* a_buf) override;                    // 07/08
+		void Revert(BGSLoadFormBuffer* a_buf) override;                      // 08/09
 
 		// override (PlayerInputHandler)
-		bool CanProcess(InputEvent* a_event) override;                                          // 01
+		bool CanProcess(InputEvent* a_event) override;  // 01
+#ifdef EXCLUSIVE_SKYRIM_VR
 		void ProcessButton(ButtonEvent* a_event, PlayerControlsData* a_movementData) override;  // 04
+#endif
 
 		// add
-		virtual void SetCameraHandle(RefHandle& a_handle);        // 09 - { return; }
-		virtual void Unk_0A(void);                                // 0A - { return; }
-		virtual void ProcessWeaponDrawnChange(bool a_drawn);      // 0B
-		virtual bool GetFreeRotationMode() const;                 // 0C
-		virtual void SetFreeRotationMode(bool a_weaponSheathed);  // 0D
-		virtual void UpdateRotation();                            // 0E
-		virtual void HandleLookInput(const NiPoint2& a_input);    // 0F
+		virtual void SetCameraHandle(RefHandle& a_handle);        // 09/0A - { return; }
+		virtual void Unk_0A(void);                                // 0A/0B - { return; }
+		virtual void ProcessWeaponDrawnChange(bool a_drawn);      // 0B/0C
+		virtual bool GetFreeRotationMode() const;                 // 0C/0D
+		virtual void SetFreeRotationMode(bool a_weaponSheathed);  // 0D/0E
+		virtual void UpdateRotation();                            // 0E/0F
+		virtual void HandleLookInput(const NiPoint2& a_input);    // 0F/10
+		void         ResetFreeRotation();
+		virtual void UpdateTranslation(float* a_rotationInput);  // 10/11
+		void         UpdateCameraCollision();
 
 		// members
 		NiAVObject*   thirdPersonCameraObj;   // 30
@@ -75,5 +89,5 @@ namespace RE
 		std::uint16_t unkE2;                  // E2
 		std::uint32_t unkE4;                  // E4
 	};
-	static_assert(sizeof(ThirdPersonState) == 0xE8);
+	STATIC_ASSERT_SIZE(ThirdPersonState, 0xE8, 0x100);
 }

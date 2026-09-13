@@ -4,6 +4,47 @@
 
 namespace RE
 {
+	template <class T>
+	class BSTAtomicValue
+	{
+	public:
+		static_assert(std::is_integral_v<T>);
+
+		constexpr BSTAtomicValue() noexcept = default;
+		explicit constexpr BSTAtomicValue(T a_rhs) noexcept :
+			_value(a_rhs)
+		{}
+
+		T operator++()
+		{
+			stl::atomic_ref value{ _value };
+			return ++value;
+		}
+		[[nodiscard]] T operator++(int)
+		{
+			stl::atomic_ref value{ _value };
+			return value++;
+		}
+		T operator--()
+		{
+			stl::atomic_ref value{ _value };
+			return --value;
+		}
+		[[nodiscard]] T operator--(int)
+		{
+			stl::atomic_ref value{ _value };
+			return value--;
+		}
+
+		[[nodiscard]] T&       load_unchecked() noexcept { return _value; }
+		[[nodiscard]] const T& load_unchecked() const noexcept { return _value; }
+
+	private:
+		// members
+		T _value{ 0 };  // 0
+	};
+	static_assert(sizeof(BSTAtomicValue<std::uint32_t>) == 0x4);
+
 	class BSCriticalSection
 	{
 	public:
@@ -23,6 +64,11 @@ namespace RE
 	class BSNonReentrantSpinLock
 	{
 	public:
+		BSNonReentrantSpinLock();
+
+		void Lock();
+		void Unlock();
+
 		// members
 		volatile std::uint32_t lock;  // 0
 	};

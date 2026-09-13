@@ -1,8 +1,12 @@
 #pragma once
 
+#include "RE/B/BSLightingShaderProperty.h"
+#include "RE/B/BSShaderProperty.h"
 #include "RE/N/NiAVObject.h"
+#include "RE/N/NiRTTI.h"
 #include "RE/N/NiSkinPartition.h"
 #include "RE/N/NiSmartPointer.h"
+#include "REL/RuntimeDataAccessors.h"
 
 namespace RE
 {
@@ -15,7 +19,8 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_BSGeometry;
-		inline static auto           Ni_RTTI = NiRTTI_BSGeometry;
+		inline static constexpr auto Ni_RTTI = NiRTTI_BSGeometry;
+		inline static constexpr auto VTABLE = VTABLE_BSGeometry;
 
 		enum class Type
 		{
@@ -36,19 +41,9 @@ namespace RE
 			kInstanceGroup = 14
 		};
 
-		struct States
-		{
-			enum State
-			{
-				kProperty,
-				kEffect,
-				kTotal
-			};
-		};
-
 		struct MODEL_DATA
 		{
-#if !defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE)
+#if defined(EXCLUSIVE_SKYRIM_VR)
 #	define MODEL_DATA_CONTENT        \
 		NiBound  modelBound; /* 0 */  \
 		NiPoint3 unk148;     /* 10 */ \
@@ -58,20 +53,17 @@ namespace RE
 #endif
 			MODEL_DATA_CONTENT
 		};
-#ifndef ENABLE_SKYRIM_VR
-		static_assert(sizeof(MODEL_DATA) == 0x10);
-#elif !defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE)
-		static_assert(sizeof(MODEL_DATA) == 0x28);
-#endif
+		STATIC_ASSERT_SIZE(MODEL_DATA, 0x10, 0x28);
 
 		struct GEOMETRY_RUNTIME_DATA
 		{
-#define RUNTIME_DATA_CONTENT                                                   \
-	NiPointer<NiProperty>     properties[States::kTotal]; /* 00 */             \
-	NiPointer<NiSkinInstance> skinInstance;               /* 10 */             \
-	BSGraphics::TriShape*     rendererData;               /* 18 */             \
-	void*                     unk20;                      /* 20 - smart ptr */ \
-	BSGraphics::VertexDesc    vertexDesc;                 /* 28 */
+#define RUNTIME_DATA_CONTENT                                         \
+	NiPointer<NiAlphaProperty>  alphaProperty;  /* 00 */             \
+	NiPointer<BSShaderProperty> shaderProperty; /* 08 */             \
+	NiPointer<NiSkinInstance>   skinInstance;   /* 10 */             \
+	BSGraphics::TriShape*       rendererData;   /* 18 */             \
+	void*                       unk140;         /* 20 - smart ptr */ \
+	BSGraphics::VertexDesc      vertexDesc;     /* 28 */
 
 			RUNTIME_DATA_CONTENT
 		};
@@ -97,66 +89,50 @@ namespace RE
 		void UpdateSelectedDownwardPass(NiUpdateData& a_data, std::uint32_t a_arg2) override;                             // 2D
 		void UpdateRigidDownwardPass(NiUpdateData& a_data, std::uint32_t a_arg2) override;                                // 2E
 		void UpdateWorldBound() override;                                                                                 // 2F
-		void OnVisible(NiCullingProcess& a_process) override;                                                             // 34
+		void OnVisible(NiCullingProcess& a_process, std::int32_t a_alphaGroupIndex) override;                             // 34
 #endif
 
 		// add
-		SKYRIM_REL_VR_VIRTUAL BSMultiIndexTriShape* AsMultiIndexTriShape();      // 35 - { return 0; }
+		SKYRIM_REL_VR_VIRTUAL BSMultiIndexTriShape*   AsMultiIndexTriShape();    // 35 - { return 0; }
 		SKYRIM_REL_VR_VIRTUAL BSSkinnedDecalTriShape* AsSkinnedDecalTriShape();  // 36 - { return 0; }
-		SKYRIM_REL_VR_VIRTUAL void                    Unk_37(void);              // 37 - { return 0; }
+		SKYRIM_REL_VR_VIRTUAL std::uint32_t GetVisibleGroupsTriangleCount();     // 37 - { return 0; }
 
-		[[nodiscard]] inline MODEL_DATA& GetModelData() noexcept
-		{
-			return REL::RelocateMember<MODEL_DATA>(this, 0x110, 0x138);
-		}
+		RUNTIME_DATA_ACCESSOR_EX(MODEL_DATA, GetModelData, 0x110, 0x138);
+		RUNTIME_DATA_ACCESSOR_EX(GEOMETRY_RUNTIME_DATA, GetGeometryRuntimeData, 0x120, 0x160);
+		using BSGeometryTypeSet = REX::EnumSet<Type, std::uint8_t>;
+		RUNTIME_DATA_ACCESSOR_EX(BSGeometryTypeSet, GetType, 0x150, 0x190);
 
-		[[nodiscard]] inline const MODEL_DATA& GetModelData() const noexcept
+		inline BSLightingShaderProperty* lightingShaderProp_cast()
 		{
-			return REL::RelocateMember<MODEL_DATA>(this, 0x110, 0x138);
-		}
-
-		[[nodiscard]] inline GEOMETRY_RUNTIME_DATA& GetGeometryRuntimeData() noexcept
-		{
-			return REL::RelocateMember<GEOMETRY_RUNTIME_DATA>(this, 0x120, 0x160);
-		}
-
-		[[nodiscard]] inline const GEOMETRY_RUNTIME_DATA& GetGeometryRuntimeData() const noexcept
-		{
-			return REL::RelocateMember<GEOMETRY_RUNTIME_DATA>(this, 0x120, 0x160);
-		}
-
-		[[nodiscard]] inline stl::enumeration<Type, std::uint8_t>& GetType() noexcept
-		{
-			return REL::RelocateMember<stl::enumeration<Type, std::uint8_t>>(this, 0x150, 0x190);
-		}
-
-		[[nodiscard]] inline const stl::enumeration<Type, std::uint8_t>& GetType() const noexcept
-		{
-			return REL::RelocateMember<stl::enumeration<Type, std::uint8_t>>(this, 0x150, 0x190);
+			if (auto effect = GetGeometryRuntimeData().shaderProperty.get(); effect) {
+				if (auto rtti = effect->GetRTTI(); rtti) {
+					const std::string rttiStr(rtti->GetName());
+					if (rttiStr == "BSLightingShaderProperty") {
+						return static_cast<BSLightingShaderProperty*>(effect);
+					}
+				}
+			}
+			return nullptr;
 		}
 
 		// members
 #ifndef SKYRIM_CROSS_VR
 		MODEL_DATA_CONTENT;    // 110, 138
 		RUNTIME_DATA_CONTENT;  // 120, 160
-#	ifndef ENABLE_SKYRIM_VR
-		stl::enumeration<Type, std::uint8_t> type;   // 150
-		std::uint8_t                         pad31;  // 151
-		std::uint16_t                        pad32;  // 152
-		std::uint32_t                        pad34;  // 154
-#	elif !defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE)
-		stl::enumeration<Type, std::uint32_t> type;   // 190
-		std::uint8_t                          pad31;  // 194
-		std::uint16_t                         pad32;  // 195
-		std::uint32_t                         pad34;  // 197
+#	if defined(EXCLUSIVE_SKYRIM_FLAT)
+		REX::EnumSet<Type, std::uint8_t> type;    // 150
+		std::uint8_t                     pad151;  // 151
+		std::uint16_t                    pad152;  // 152
+		std::uint32_t                    pad154;  // 154
+#	elif defined(EXCLUSIVE_SKYRIM_VR)
+		BSGeometryTypeSet type;    // 190
+		std::uint8_t      pad191;  // 191
+		std::uint16_t     pad192;  // 192
+		std::uint32_t     pad194;  // 194
 #	endif
 #endif
 	};
-#ifndef ENABLE_SKYRIM_VR
-	static_assert(sizeof(BSGeometry) == 0x158);
-#elif !defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE)
-	static_assert(sizeof(BSGeometry) == 0x1A0);
-#endif
+	STATIC_ASSERT_SIZE(BSGeometry, 0x158, 0x198);
 }
 #undef MODEL_DATA_CONTENT
 #undef RUNTIME_DATA_CONTENT

@@ -13,35 +13,19 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_BGSEntryPointPerkEntry;
+		inline static constexpr auto VTABLE = VTABLE_BGSEntryPointPerkEntry;
+
+		using Function = BGSEntryPointFunction::ENTRY_POINT_FUNCTION;
 
 		struct EntryData  // DATA
 		{
 		public:
-			enum class Function
-			{
-				kSetValue = 1,
-				kAddValue = 2,
-				kMultiplyValue = 3,
-				kAddRangeToValue = 4,
-				kAddActorValueMult = 5,
-				kAbsoluteValue = 6,
-				kNegativeAbsoluteValue = 7,
-				kAddLeveledList = 8,
-				kAddActivateChoice = 9,
-				kSelectSpell = 10,
-				kSelectText = 11,
-				kSetToActorValueMult = 12,
-				kMultiplyActorValueMult = 13,
-				kMultiply1PlusActorValueMult = 14,
-				kSetText = 15
-			};
-
 			// members
-			stl::enumeration<EntryPoint, std::uint8_t> entryPoint;  // 0
-			stl::enumeration<Function, std::uint8_t>   function;    // 1
-			std::uint8_t                               numArgs;     // 2
-			std::uint8_t                               unk3;        // 3
-			std::uint32_t                              unk4;        // 4
+			REX::EnumSet<EntryPoint, std::uint8_t> entryPoint;  // 0
+			REX::EnumSet<Function, std::uint8_t>   function;    // 1
+			std::uint8_t                           numArgs;     // 2
+			std::uint8_t                           unk3;        // 3
+			std::uint32_t                          unk4;        // 4
 		};
 		static_assert(sizeof(EntryData) == 0x8);
 

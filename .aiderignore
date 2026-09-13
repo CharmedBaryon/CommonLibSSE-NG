@@ -1,0 +1,55 @@
+# Build artifacts
+build/
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+*.sln
+*.vcxproj
+*.vcxproj.filters
+*.vcxproj.user
+
+# Dependencies
+vcpkg_installed/
+extern/
+
+# Test artifacts
+Testing/
+DartConfiguration.tcl
+CTestTestfile.cmake
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Temporary files
+*.tmp
+*.bak
+*.log
+
+# Package files
+*.zip
+*.tar.gz
+
+# Analysis scripts (temporary)
+analyze_assert_patterns.py
+find_wrong_all_sizes.py
+fix_all_flat_sizes.py
+fix_assert_sizes.py
+swap_all_flat.py
+verify_macro_migration.py
+test_pdb_types.cpp
+
+# Backup files
+backup/
+
+# Flash/AS2 (likely not needed for AI analysis)
+Flash/
+
+

@@ -16,6 +16,7 @@ namespace RE
 		{
 		public:
 			inline static constexpr auto RTTI = RTTI_SkyrimScript____SendPlayerToJailFunctor;
+			inline static constexpr auto VTABLE = VTABLE_SkyrimScript____SendPlayerToJailFunctor;
 
 			enum class Flag
 			{
@@ -35,7 +36,7 @@ namespace RE
 
 			// members
 			FormID                                     faction;  // 10
-			stl::enumeration<Flag, std::uint8_t>       flags;    // 14
+			REX::EnumSet<Flag, std::uint8_t>           flags;    // 14
 			std::uint8_t                               pad15;    // 15
 			std::uint16_t                              pad16;    // 16
 			BSTSmartPointer<BSScript::IVirtualMachine> vm;       // 18

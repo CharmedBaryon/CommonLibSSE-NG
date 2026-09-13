@@ -16,6 +16,7 @@ namespace RE
 		{
 		public:
 			inline static constexpr auto RTTI = RTTI_BSResource____LooseFileStream;
+			inline static constexpr auto VTABLE = VTABLE_BSResource____LooseFileStream;
 
 			~LooseFileStream() override;  // 00
 
@@ -44,6 +45,10 @@ namespace RE
 			LooseFileStream* Ctor(const BSFixedString& a_prefix, const BSFixedString& a_dirName, const BSFixedString& a_fileName, std::uint32_t a_fileSize, bool a_readOnly, Location* a_location);
 #endif
 		};
+#ifdef ENABLE_SKYRIM_AE
+		static_assert(sizeof(LooseFileStream) == 0x58);
+#else
 		static_assert(sizeof(LooseFileStream) == 0x50);
+#endif
 	}
 }

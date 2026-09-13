@@ -32,11 +32,11 @@ namespace RE
 		// override (bhkBackfaceContactListener)
 		void ContactPointCallback(const hkpContactPointEvent&) override;  // 00
 
-		~FOCollisionListener() override;  // 00
+		~FOCollisionListener() override;  // 04
 
 		static FOCollisionListener* GetSingleton()
 		{
-			REL::Relocation<FOCollisionListener**> singleton{ RELOCATION_ID(514284, 400444) };
+			static REL::Relocation<FOCollisionListener**> singleton{ RELOCATION_ID(514284, 400444) };
 			return *singleton;
 		}
 

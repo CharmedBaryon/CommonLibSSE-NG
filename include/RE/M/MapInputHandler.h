@@ -10,6 +10,7 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_MapInputHandler;
+		inline static constexpr auto VTABLE = VTABLE_MapInputHandler;
 
 		virtual ~MapInputHandler();  // 00
 

@@ -65,7 +65,7 @@ namespace RE
 		};
 
 		// members
-		stl::enumeration<AtomType, uint16_t> type;
+		REX::EnumSet<AtomType, uint16_t> type;
 	};
 	static_assert(sizeof(hkpConstraintAtom) == 0x2);
 

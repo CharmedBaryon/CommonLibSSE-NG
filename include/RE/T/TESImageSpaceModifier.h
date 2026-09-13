@@ -72,12 +72,12 @@ namespace RE
 			using Mode = ImageSpaceModifierInstanceDOF::DepthOfFieldMode;
 
 			// members
-			std::uint32_t                        strength;   // 00
-			std::uint32_t                        distance;   // 04
-			std::uint32_t                        range;      // 08
-			bool                                 useTarget;  // 0C
-			stl::enumeration<Mode, std::uint8_t> flags;      // 0D
-			std::uint16_t                        pad0E;      // 0E
+			std::uint32_t                    strength;   // 00
+			std::uint32_t                    distance;   // 04
+			std::uint32_t                    range;      // 08
+			bool                             useTarget;  // 0C
+			REX::EnumSet<Mode, std::uint8_t> flags;      // 0D
+			std::uint16_t                    pad0E;      // 0E
 		};
 		static_assert(sizeof(DOF) == 0x10);
 
@@ -195,7 +195,7 @@ namespace RE
 		ImageSpaceModifierInstanceForm* TriggerIfNotActive(float a_strength, NiAVObject* a_target)
 		{
 			using func_t = decltype(&TESImageSpaceModifier::TriggerIfNotActive);
-			REL::Relocation<func_t> func{ RELOCATION_ID(18187, 18572) };
+			static REL::Relocation<func_t> func{ RELOCATION_ID(18187, 18572) };
 			return func(this, a_strength, a_target);
 		}
 

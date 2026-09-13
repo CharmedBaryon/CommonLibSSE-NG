@@ -10,6 +10,7 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_BGSOverridePackCollection;
+		inline static constexpr auto VTABLE = VTABLE_BGSOverridePackCollection;
 
 		~BGSOverridePackCollection() override;  // 00
 

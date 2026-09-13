@@ -1,6 +1,6 @@
 #pragma once
 
-#include "RE/B/BSTList.h"
+#include "RE/B/BSSimpleList.h"
 #include "RE/E/ExtraDataList.h"
 #include "RE/F/FormTypes.h"
 #include "RE/M/MemoryManager.h"
@@ -34,9 +34,12 @@ namespace RE
 		InventoryEntryData& operator=(InventoryEntryData&& a_rhs);
 
 		void                                          AddExtraList(ExtraDataList* a_extra);
+		bool                                          CanItemBeTaken(bool a_noEquipped, bool a_noFavourited, bool a_noQuestItem) const;
+		InventoryEntryData&                           DeepCopy(const InventoryEntryData& a_other);
 		[[nodiscard]] const char*                     GetDisplayName();
 		[[nodiscard]] EnchantmentItem*                GetEnchantment() const;
 		[[nodiscard]] std::optional<double>           GetEnchantmentCharge() const;
+		[[nodiscard]] ExtraDataList*                  GetFavoriteExtraList() const;
 		[[nodiscard]] constexpr TESBoundObject*       GetObject() noexcept { return object; }
 		[[nodiscard]] constexpr const TESBoundObject* GetObject() const noexcept { return object; }
 		[[nodiscard]] TESForm*                        GetOwner();
@@ -48,10 +51,13 @@ namespace RE
 		[[nodiscard]] bool                            IsLeveled() const;
 		[[nodiscard]] bool                            IsPoisoned() const;
 		[[nodiscard]] bool                            IsWorn() const;
+		[[nodiscard]] bool                            IsWorn(bool a_left) const;
 		[[nodiscard]] bool                            IsOwnedBy(Actor* a_testOwner, bool a_defaultTo = true);
 		[[nodiscard]] bool                            IsOwnedBy(Actor* a_testOwner, TESForm* a_itemOwner, bool a_defaultTo = true);
 		[[nodiscard]] bool                            IsQuestObject() const;
+		[[nodiscard]] std::int32_t                    NormalizeAndCountNonStackableExtraLists();
 		void                                          PoisonObject(AlchemyItem* a_alchItem, std::uint32_t a_count);
+		void                                          SetWorn(bool a_worn, bool a_left, bool a_deleteExtraList = true);
 
 		TES_HEAP_REDEFINE_NEW();
 

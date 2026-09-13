@@ -1,30 +1,65 @@
 {
   "$schema": "https://raw.githubusercontent.com/microsoft/vcpkg/master/scripts/vcpkg.schema.json",
   "name": "commonlibsse-ng",
-  "version-semver": "3.7.0",
+  "version-semver": "8.0.1",
   "port-version": 0,
   "description": "A fork of CommonLibSSE with advanced features for modern SKSE development.",
   "homepage": "https://github.com/CharmedBaryon/CommonLibSSE",
-  "license": "MIT",
+  "license": "GPL-3.0-or-later",
   "supports": "windows & x64",
-  "builtin-baseline": "fc3f61366102c1f0d4547c06d03c523bb18c13a7",
+  "builtin-baseline": "ee12231b20c95013c6638d845d04c91559a1d1ff",
   "dependencies": [
     {
       "name": "vcpkg-cmake-config",
       "host": true
     },
-    "rapidcsv",
-    "spdlog"
+    {
+      "name": "directxmath",
+      "version>=": "2025-04-03"
+    },
+    {
+      "name": "directxtk",
+      "version>=": "2025-10-27"
+    },
+    {
+      "name": "fmt",
+      "version>=": "12.1.0"
+    },
+    {
+      "name": "nlohmann-json",
+      "version>=": "3.12.0"
+    },
+    {
+      "name": "rapidcsv",
+      "version>=": "8.90"
+    },
+    {
+      "name": "simpleini",
+      "version>=": "4.25"
+    },
+    {
+      "name": "spdlog",
+      "version>=": "1.16.0"
+    },
+    {
+      "name": "toml11",
+      "version>=": "4.4.0"
+    },
+    {
+      "name": "xbyak",
+      "version>=": "7.28"
+    }
   ],
   "features": {
     "tests": {
       "description": "Build tests for CommonLibSSE.",
       "dependencies": [
-        "catch2"
+        {
+          "name": "catch2",
+          "version>=": "3.11.0"
+        }
       ]
     }
   },
-  "default-features": [
-    "tests"
-  ]
+  "default-features": ["tests"]
 }

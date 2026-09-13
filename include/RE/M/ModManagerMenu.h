@@ -3,6 +3,7 @@
 #include "RE/G/GFxFunctionHandler.h"
 #include "RE/I/IMenu.h"
 #include "RE/M/MenuEventHandler.h"
+#include "REL/RuntimeDataAccessors.h"
 
 namespace RE
 {
@@ -20,15 +21,16 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto      RTTI = RTTI_ModManagerMenu;
+		inline static constexpr auto      VTABLE = VTABLE_ModManagerMenu;
 		constexpr static std::string_view MENU_NAME = "Mod Manager Menu";
 
 		struct RUNTIME_DATA
 		{
-#define RUNTIME_DATA_CONTENT      \
-	std::uint8_t  unk50; /* 50 */ \
-	std::uint8_t  pad51; /* 51 */ \
-	std::uint16_t pad52; /* 52 */ \
-	std::uint32_t pad54; /* 54 */
+#define RUNTIME_DATA_CONTENT                         \
+	bool          useTransparentBackground; /* 50 */ \
+	std::uint8_t  pad51;                    /* 51 */ \
+	std::uint16_t pad52;                    /* 52 */ \
+	std::uint32_t pad54;                    /* 54 */
 
 			RUNTIME_DATA_CONTENT
 		};
@@ -40,54 +42,28 @@ namespace RE
 		UI_MESSAGE_RESULTS ProcessMessage(UIMessage& a_message) override;                         // 04
 		void               AdvanceMovie(float a_interval, std::uint32_t a_currentTime) override;  // 05
 
-#ifndef SKYRIM_CROSS_VR
 		// override (MenuEventHandler)
-		bool CanProcess(InputEvent* a_event) override;              // 01
+#ifndef SKYRIM_CROSS_VR
+		bool CanProcess(InputEvent* a_event) override;  // 01
+#endif
+#ifdef EXCLUSIVE_SKYRIM_VR
 		bool ProcessThumbstick(ThumbstickEvent* a_event) override;  // 03
+#endif
 
+#ifndef SKYRIM_CROSS_VR
 		// override (GFxFunctionHandler)
 		void Call(Params& a_params) override;  // 01
 #endif
 
-		[[nodiscard]] MenuEventHandler* AsMenuEventHandler() noexcept
-		{
-			return &REL::RelocateMember<MenuEventHandler>(this, 0x30, 0x40);
-		}
+		RUNTIME_CAST_ACCESSOR(MenuEventHandler, AsMenuEventHandler, 0x30, 0x40);
+		RUNTIME_CAST_ACCESSOR(GFxFunctionHandler, AsGFxFunctionHandler, 0x40, 0x50);
 
-		[[nodiscard]] const MenuEventHandler* AsMenuEventHandler() const noexcept
-		{
-			return const_cast<ModManagerMenu*>(this)->AsMenuEventHandler();
-		}
-
-		[[nodiscard]] GFxFunctionHandler* AsGFxFunctionHandler() noexcept
-		{
-			return &REL::RelocateMember<GFxFunctionHandler>(this, 0x40, 0x50);
-		}
-
-		[[nodiscard]] const GFxFunctionHandler* AsGFxFunctionHandler() const noexcept
-		{
-			return const_cast<ModManagerMenu*>(this)->AsGFxFunctionHandler();
-		}
-
-		[[nodiscard]] inline RUNTIME_DATA& GetRuntimeData() noexcept
-		{
-			return REL::RelocateMember<RUNTIME_DATA>(this, 0x50, 0x60);
-		}
-
-		[[nodiscard]] inline const RUNTIME_DATA& GetRuntimeData() const noexcept
-		{
-			return REL::RelocateMember<RUNTIME_DATA>(this, 0x50, 0x60);
-		}
-
+		RUNTIME_DATA_ACCESSOR(RUNTIME_DATA, 0x50, 0x60);
 		// members
 #ifndef SKYRIM_CROSS_VR
-		RUNTIME_DATA_CONTENT  // 50, 60
+		RUNTIME_DATA_CONTENT;  // 50, 60
 #endif
 	};
-#ifndef ENABLE_SKYRIM_VR
-	static_assert(sizeof(ModManagerMenu) == 0x58);
-#elif !defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE)
-	static_assert(sizeof(ModManagerMenu) == 0x68);
-#endif
+	STATIC_ASSERT_SIZE(ModManagerMenu, 0x58, 0x58, 0x68, 0x30);
 }
 #undef RUNTIME_DATA_CONTENT

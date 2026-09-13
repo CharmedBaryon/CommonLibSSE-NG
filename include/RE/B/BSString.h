@@ -203,16 +203,16 @@ namespace RE
 
 		void clear() { set_cstr(EMPTY); }
 
-		[[nodiscard]] inline friend bool operator==(const BSStringT& a_lhs, const value_type* a_rhs) { return (a_lhs._data == a_rhs || stricmp(a_lhs._data, a_rhs) == 0); }
+		[[nodiscard]] inline friend bool operator==(const BSStringT& a_lhs, const value_type* a_rhs) { return a_lhs._data == a_rhs || stricmp(a_lhs.c_str(), a_rhs) == 0; }
 		[[nodiscard]] inline friend bool operator!=(const BSStringT& a_lhs, const value_type* a_rhs) { return !(a_lhs == a_rhs); }
 		[[nodiscard]] inline friend bool operator==(const value_type* a_lhs, const BSStringT& a_rhs) { return a_rhs == a_lhs; }
 		[[nodiscard]] inline friend bool operator!=(const value_type* a_lhs, const BSStringT& a_rhs) { return !(a_lhs == a_rhs); }
 		[[nodiscard]] inline friend bool operator==(const BSStringT& a_lhs, const BSStringT& a_rhs) { return a_lhs == a_rhs.c_str(); }
 		[[nodiscard]] inline friend bool operator!=(const BSStringT& a_lhs, const BSStringT& a_rhs) { return !(a_lhs == a_rhs); }
-		[[nodiscard]] inline friend bool operator==(const BSStringT& a_lhs, const std::string_view& a_rhs) { return a_lhs._data == a_rhs.data() || strnicmp(a_lhs._data, a_rhs.data(), a_rhs.size()); }
-		[[nodiscard]] inline friend bool operator!=(const BSStringT& a_lhs, const std::string_view& a_rhs) { return !(a_lhs == a_rhs); }
-		[[nodiscard]] inline friend bool operator==(const std::string_view& a_lhs, const BSStringT& a_rhs) { return a_rhs == a_lhs; }
-		[[nodiscard]] inline friend bool operator!=(const std::string_view& a_lhs, const BSStringT& a_rhs) { return !(a_lhs == a_rhs); }
+		[[nodiscard]] inline friend bool operator==(const BSStringT& a_lhs, const std::basic_string_view<value_type>& a_rhs) { return strnicmp(a_lhs.c_str(), a_rhs.data(), a_rhs.size()) == 0; }
+		[[nodiscard]] inline friend bool operator!=(const BSStringT& a_lhs, const std::basic_string_view<value_type>& a_rhs) { return !(a_lhs == a_rhs); }
+		[[nodiscard]] inline friend bool operator==(const std::basic_string_view<value_type>& a_lhs, const BSStringT& a_rhs) { return a_rhs == a_lhs; }
+		[[nodiscard]] inline friend bool operator!=(const std::basic_string_view<value_type>& a_lhs, const BSStringT& a_rhs) { return !(a_lhs == a_rhs); }
 
 		TES_HEAP_REDEFINE_NEW();
 
@@ -221,9 +221,9 @@ namespace RE
 
 		[[nodiscard]] static int stricmp(const wchar_t* a_lhs, const wchar_t* a_rhs) { return _wcsicmp(a_lhs, a_rhs); }
 
-		[[nodiscard]] static int strnicmp(const char* a_lhs, const char* a_rhs, std::size_t len) { return _strnicmp(a_lhs, a_rhs, len); }
+		[[nodiscard]] static int strnicmp(const char* a_lhs, const char* a_rhs, std::size_t a_count) { return _strnicmp(a_lhs, a_rhs, a_count); }
 
-		[[nodiscard]] static int strnicmp(const wchar_t* a_lhs, const wchar_t* a_rhs, std::size_t len) { return _wcsnicmp(a_lhs, a_rhs, len); }
+		[[nodiscard]] static int strnicmp(const wchar_t* a_lhs, const wchar_t* a_rhs, std::size_t a_count) { return _wcsnicmp(a_lhs, a_rhs, a_count); }
 
 		[[nodiscard]] pointer allocate(std::uint32_t a_num) { return allocator_type::allocate(a_num); }
 
@@ -266,7 +266,7 @@ namespace RE
 			return true;
 		}
 
-		static constexpr value_type EMPTY[]{ 0 };
+		static inline value_type EMPTY[]{ 0 };
 
 		// members
 		pointer       _data{ nullptr };  // ?? (00)

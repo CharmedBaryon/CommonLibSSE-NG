@@ -12,19 +12,34 @@ namespace RE
 		kChar,
 		kThumbstick,
 		kDeviceConnect,
-		kKinect
+		kKinect,
+		// VR only (SkyrimVR): the VR runtime emits two extra wand-touchpad event types.
+		kVrTouchpadPosition,  // 6 - VrWandTouchpadPositionEvent
+		kVrTouchpadSwipe,     // 7 - VrWandTouchpadSwipeEvent
+#ifdef ENABLE_SKYRIM_AE
+		// Duplicate values vs. the VR pair above are intentional: no build constructs both kinds.
+		kSixaxis = 6,        // 6 - SixaxisEvent
+		kMotionGesture = 7,  // 7 - MotionGestureEvent
+		kAmiibo = 8          // 8 - AmiiboEvent
+#endif
 	};
 
 	class ButtonEvent;
 	class CharEvent;
 	class IDEvent;
 	class MouseMoveEvent;
+#ifdef ENABLE_SKYRIM_AE
+	class AmiiboEvent;
+	class MotionGestureEvent;
+	class SixaxisEvent;
+#endif
 	class ThumbstickEvent;
 
 	class InputEvent
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_InputEvent;
+		inline static constexpr auto VTABLE = VTABLE_InputEvent;
 
 		virtual ~InputEvent();  // 00
 
@@ -46,13 +61,24 @@ namespace RE
 		[[nodiscard]] MouseMoveEvent*       AsMouseMoveEvent();
 		[[nodiscard]] const MouseMoveEvent* AsMouseMoveEvent() const;
 
+#ifdef ENABLE_SKYRIM_AE
+		[[nodiscard]] AmiiboEvent*       AsAmiiboEvent();
+		[[nodiscard]] const AmiiboEvent* AsAmiiboEvent() const;
+
+		[[nodiscard]] MotionGestureEvent*       AsMotionGestureEvent();
+		[[nodiscard]] const MotionGestureEvent* AsMotionGestureEvent() const;
+
+		[[nodiscard]] SixaxisEvent*       AsSixaxisEvent();
+		[[nodiscard]] const SixaxisEvent* AsSixaxisEvent() const;
+#endif
+
 		[[nodiscard]] ThumbstickEvent*       AsThumbstickEvent();
 		[[nodiscard]] const ThumbstickEvent* AsThumbstickEvent() const;
 
 		// members
-		stl::enumeration<INPUT_DEVICE, std::uint32_t>     device;     // 08
-		stl::enumeration<INPUT_EVENT_TYPE, std::uint32_t> eventType;  // 0C
-		InputEvent*                                       next;       // 10
+		REX::EnumSet<INPUT_DEVICE, std::uint32_t>     device;     // 08
+		REX::EnumSet<INPUT_EVENT_TYPE, std::uint32_t> eventType;  // 0C
+		InputEvent*                                   next;       // 10
 	};
 	static_assert(sizeof(InputEvent) == 0x18);
 }

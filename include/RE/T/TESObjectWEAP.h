@@ -87,6 +87,7 @@ namespace RE
 			enum RecordFlag : std::uint32_t
 			{
 				kNonPlayable = 1 << 2,
+				kHasInheritedFromTemplate = 1 << 3,  // cleared on load; set by relevant processing in InitItemImpl
 				kDeleted = 1 << 5,
 				kIgnored = 1 << 12
 			};
@@ -96,15 +97,15 @@ namespace RE
 		{
 		public:
 			// members
-			float                                                  sightFOV;                        // 00
-			float                                                  unk04;                           // 04
-			float                                                  firingRumbleLeftMotorStrength;   // 08
-			float                                                  firingRumbleRightMotorStrength;  // 0C
-			float                                                  firingRumbleDuration;            // 10
-			stl::enumeration<WEAPON_RUMBLE_PATTERN, std::uint32_t> rumblePattern;                   // 14
-			std::int8_t                                            numProjectiles;                  // 18
-			std::uint8_t                                           pad19;                           // 19
-			std::uint16_t                                          pad1A;                           // 1A
+			float                                              sightFOV;                        // 00
+			float                                              fireRate;                        // 04 - Fallout leftover?
+			float                                              firingRumbleLeftMotorStrength;   // 08
+			float                                              firingRumbleRightMotorStrength;  // 0C
+			float                                              firingRumbleDuration;            // 10
+			REX::EnumSet<WEAPON_RUMBLE_PATTERN, std::uint32_t> rumblePattern;                   // 14 - Fallout leftover?
+			std::int8_t                                        numProjectiles;                  // 18
+			std::uint8_t                                       pad19;                           // 19
+			std::uint16_t                                      pad1A;                           // 1A
 		};
 		static_assert(sizeof(RangedData) == 0x1C);
 
@@ -120,6 +121,7 @@ namespace RE
 				kMinorCrime = 1 << 4,
 				kRangeFixed = 1 << 5,
 				kNotUsedInNormalCombat = 1 << 6,
+				kOverridesConditionDamage = 1 << 7,
 				kDontUse3rdPersonISAnim = 1 << 8,  // unused
 				kBurstShot = 1 << 9,
 				kRumbleAlternate = 1 << 10,
@@ -164,24 +166,24 @@ namespace RE
 			};
 
 			// members
-			RangedData*                                        rangedData;           // 00
-			float                                              speed;                // 08
-			float                                              reach;                // 0C
-			float                                              minRange;             // 10
-			float                                              maxRange;             // 14
-			float                                              animationAttackMult;  // 18
-			float                                              unk1C;                // 1C
-			float                                              staggerValue;         // 20
-			stl::enumeration<WEAPONHITBEHAVIOR, std::uint32_t> hitBehavior;          // 24
-			stl::enumeration<ActorValue, std::uint32_t>        skill;                // 28
-			stl::enumeration<ActorValue, std::uint32_t>        resistance;           // 2C
-			stl::enumeration<Flag2, std::uint16_t>             flags2;               // 30
-			std::uint8_t                                       baseVATSToHitChance;  // 32
-			stl::enumeration<AttackAnimation, std::uint8_t>    attackAnimation;      // 33
-			stl::enumeration<ActorValue, std::uint8_t>         embeddedWeaponAV;     // 34 - unused
-			stl::enumeration<WEAPON_TYPE, std::uint8_t>        animationType;        // 35
-			stl::enumeration<Flag, std::uint8_t>               flags;                // 36
-			std::uint8_t                                       unk37;                // 37
+			RangedData*                                    rangedData;           // 00
+			float                                          speed;                // 08
+			float                                          reach;                // 0C
+			float                                          minRange;             // 10
+			float                                          maxRange;             // 14
+			float                                          animationAttackMult;  // 18
+			float                                          damageToWeaponMult;   // 1C - used in (unused?) condition calculations if Flag2::kOverridesConditionDamage is set
+			float                                          staggerValue;         // 20
+			REX::EnumSet<WEAPONHITBEHAVIOR, std::uint32_t> hitBehavior;          // 24
+			REX::EnumSet<ActorValue, std::uint32_t>        skill;                // 28
+			REX::EnumSet<ActorValue, std::uint32_t>        resistance;           // 2C
+			REX::EnumSet<Flag2, std::uint16_t>             flags2;               // 30
+			std::uint8_t                                   baseVATSToHitChance;  // 32
+			REX::EnumSet<AttackAnimation, std::uint8_t>    attackAnimation;      // 33
+			REX::EnumSet<ActorValue, std::uint8_t>         embeddedWeaponAV;     // 34 - unused
+			REX::EnumSet<WEAPON_TYPE, std::uint8_t>        animationType;        // 35
+			REX::EnumSet<Flag, std::uint8_t>               flags;                // 36
+			std::uint8_t                                   unk37;                // 37
 		};
 		static_assert(sizeof(Data) == 0x38);
 
@@ -195,24 +197,24 @@ namespace RE
 			};
 
 			// members
-			float                                prcntMult;  // 00
-			std::uint32_t                        pad04;      // 04
-			SpellItem*                           effect;     // 08
-			std::uint16_t                        damage;     // 10
-			stl::enumeration<Flag, std::uint8_t> flags;      // 12
-			std::uint8_t                         pad13;      // 13
-			std::uint32_t                        pad14;      // 14
+			float                            prcntMult;  // 00
+			std::uint32_t                    pad04;      // 04
+			SpellItem*                       effect;     // 08
+			std::uint16_t                    damage;     // 10
+			REX::EnumSet<Flag, std::uint8_t> flags;      // 12
+			std::uint8_t                     pad13;      // 13
+			std::uint32_t                    pad14;      // 14
 		};
 		static_assert(sizeof(CriticalData) == 0x18);
 
-		struct Unk1B8
+		struct ScopeArt
 		{
 		public:
 			// members
-			TESModel         unk00;  // 00
-			TESEffectShader* unk28;  // 28
+			TESModel         unk00;  // 00 - MOD3 and friends
+			TESEffectShader* unk28;  // 28 - EIDT
 		};
-		static_assert(sizeof(Unk1B8) == 0x30);
+		static_assert(sizeof(ScopeArt) == 0x30);
 
 		~TESObjectWEAP() override;  // 00
 
@@ -254,22 +256,22 @@ namespace RE
 		[[nodiscard]] bool          IsCrossbow() const;
 
 		// members
-		Data                                         weaponData;              // 168 - DNAM
-		CriticalData                                 criticalData;            // 1A0 - CRDT
-		Unk1B8*                                      unk1B8;                  // 1B8
-		BGSSoundDescriptorForm*                      attackSound;             // 1C0 - SNAM
-		BGSSoundDescriptorForm*                      attackSound2D;           // 1C8 - XNAM
-		BGSSoundDescriptorForm*                      attackLoopSound;         // 1D0 - NAM7
-		BGSSoundDescriptorForm*                      attackFailSound;         // 1D8 - TNAM
-		BGSSoundDescriptorForm*                      idleSound;               // 1E0 - UNAM
-		BGSSoundDescriptorForm*                      equipSound;              // 1E8 - NAM9
-		BGSSoundDescriptorForm*                      unequipSound;            // 1F0 - NAM8
-		BGSImpactDataSet*                            impactDataSet;           // 1F8
-		TESObjectSTAT*                               firstPersonModelObject;  // 200 - WNAM
-		TESObjectWEAP*                               templateWeapon;          // 208 - CNAM
-		BSFixedString                                embeddedNode;            // 210
-		stl::enumeration<SOUND_LEVEL, std::uint32_t> soundLevel;              // 218 - VNAM
-		std::uint32_t                                pad21C;                  // 21C
+		Data                                     weaponData;              // 168 - DNAM
+		CriticalData                             criticalData;            // 1A0 - CRDT
+		ScopeArt*                                scopeArt;                // 1B8
+		BGSSoundDescriptorForm*                  attackSound;             // 1C0 - SNAM
+		BGSSoundDescriptorForm*                  attackSound2D;           // 1C8 - XNAM
+		BGSSoundDescriptorForm*                  attackLoopSound;         // 1D0 - NAM7
+		BGSSoundDescriptorForm*                  attackFailSound;         // 1D8 - TNAM
+		BGSSoundDescriptorForm*                  idleSound;               // 1E0 - UNAM
+		BGSSoundDescriptorForm*                  equipSound;              // 1E8 - NAM9
+		BGSSoundDescriptorForm*                  unequipSound;            // 1F0 - NAM8
+		BGSImpactDataSet*                        impactDataSet;           // 1F8
+		TESObjectSTAT*                           firstPersonModelObject;  // 200 - WNAM
+		TESObjectWEAP*                           templateWeapon;          // 208 - CNAM
+		BSFixedString                            embeddedNode;            // 210
+		REX::EnumSet<SOUND_LEVEL, std::uint32_t> soundLevel;              // 218 - VNAM
+		std::uint32_t                            pad21C;                  // 21C
 	};
 	static_assert(sizeof(TESObjectWEAP) == 0x220);
 }

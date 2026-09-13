@@ -1,6 +1,7 @@
 #pragma once
 
 #include "RE/B/BSNiNode.h"
+#include "REL/RuntimeDataAccessors.h"
 
 namespace RE
 {
@@ -8,7 +9,8 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_BSOrderedNode;
-		inline static auto           Ni_RTTI = NiRTTI_BSOrderedNode;
+		inline static constexpr auto Ni_RTTI = NiRTTI_BSOrderedNode;
+		inline static constexpr auto VTABLE = VTABLE_BSOrderedNode;
 
 		struct RUNTIME_DATA
 		{
@@ -31,32 +33,19 @@ namespace RE
 		bool          RegisterStreamables(NiStream& a_stream) override;   // 1A
 		void          SaveBinary(NiStream& a_stream) override;            // 1B
 		bool          IsEqual(NiObject* a_object) override;               // 1C
-#if !defined(ENABLE_SKYRIM_VR) || (!defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_VR))
+#if defined(EXCLUSIVE_SKYRIM_FLAT)
 		// The following are virtual functions past the point where VR compatibility breaks.
 		void UpdateDownwardPass(NiUpdateData& a_data, std::uint32_t a_arg2) override;          // 2C
 		void UpdateSelectedDownwardPass(NiUpdateData& a_data, std::uint32_t a_arg2) override;  // 2D
-		void OnVisible(NiCullingProcess& a_process) override;                                  // 34
+		void OnVisible(NiCullingProcess& a_process, std::int32_t a_alphaGroupIndex) override;  // 34
 #endif
 
-		[[nodiscard]] inline RUNTIME_DATA& GetRuntimeData() noexcept
-		{
-			return REL::RelocateMember<RUNTIME_DATA>(this, 0x128, 0x150);
-		}
-
-		[[nodiscard]] inline const RUNTIME_DATA& GetRuntimeData() const noexcept
-		{
-			return REL::RelocateMember<RUNTIME_DATA>(this, 0x128, 0x150);
-		}
-
+		RUNTIME_DATA_ACCESSOR(RUNTIME_DATA, 0x128, 0x150);
 		// members
 #ifndef SKYRIM_CROSS_VR
 		RUNTIME_DATA_CONTENT  // 128, 150
 #endif
 	};
-#ifndef ENABLE_SKYRIM_VR
-	static_assert(sizeof(BSOrderedNode) == 0x140);
-#elif !defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE)
-	static_assert(sizeof(BSOrderedNode) == 0x168);
-#endif
+	STATIC_ASSERT_SIZE(BSOrderedNode, 0x140, 0x140, 0x168, 0x110);
 }
 #undef RUNTIME_DATA_CONTENT

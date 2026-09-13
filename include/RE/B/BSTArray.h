@@ -15,6 +15,7 @@ namespace RE
 		{
 		public:
 			inline static constexpr auto RTTI = RTTI_BSTArrayBase__IAllocatorFunctor;
+			inline static constexpr auto VTABLE = VTABLE_BSTArrayBase__IAllocatorFunctor;
 
 			// add
 			virtual bool Allocate(std::uint32_t a_num, std::uint32_t a_elemSize) = 0;                                                                                                             // 00
@@ -29,12 +30,21 @@ namespace RE
 
 		constexpr BSTArrayBase() noexcept = default;
 		constexpr BSTArrayBase(const BSTArrayBase&) noexcept = default;
-		constexpr BSTArrayBase(BSTArrayBase&&) noexcept = default;
+		constexpr BSTArrayBase(BSTArrayBase&& a_rhs) noexcept :
+			_size(a_rhs.size())
+		{
+			a_rhs._size = 0;
+		}
 
 		inline ~BSTArrayBase() noexcept { _size = 0; }
 
 		BSTArrayBase& operator=(const BSTArrayBase&) noexcept = default;
-		BSTArrayBase& operator=(BSTArrayBase&&) noexcept = default;
+		BSTArrayBase& operator=(BSTArrayBase&& a_rhs) noexcept
+		{
+			_size = a_rhs.size();
+			a_rhs._size = 0;
+			return *this;
+		}
 
 		[[nodiscard]] constexpr bool      empty() const noexcept { return _size == 0; }
 		[[nodiscard]] constexpr size_type size() const noexcept { return _size; }
@@ -119,12 +129,11 @@ namespace RE
 		inline void* allocate(std::size_t a_size)
 		{
 			const auto mem = malloc(a_size);
-			if (!mem) {
-				stl::report_and_fail("out of memory"sv);
-			} else {
-				std::memset(mem, 0, a_size);
-				return mem;
-			}
+			if (!mem)
+				stl::report_and_fail("out of memory");
+
+			std::memset(mem, 0, a_size);
+			return mem;
 		}
 
 		inline void deallocate(void* a_ptr) { free(a_ptr); }
@@ -197,12 +206,11 @@ namespace RE
 		{
 			if (a_size > N) {
 				const auto mem = malloc(a_size);
-				if (!mem) {
-					stl::report_and_fail("out of memory"sv);
-				} else {
-					std::memset(mem, 0, a_size);
-					return mem;
-				}
+				if (!mem)
+					stl::report_and_fail("out of memory");
+
+				std::memset(mem, 0, a_size);
+				return mem;
 			} else {
 				return _data.local;
 			}
@@ -405,6 +413,23 @@ namespace RE
 			set_size(newSize);
 		}
 
+		inline BSTArray(const std::initializer_list<T> a_list)
+		{
+			if (a_list.size() == 0) {
+				return;
+			}
+
+			const auto newSize = a_list.size();
+			const auto newData = allocate(newSize);
+			size_type  i = 0;
+			for (const auto& elem : a_list) {
+				std::construct_at(newData + i++, elem);
+			}
+
+			set_allocator_traits(newData, newSize);
+			set_size(newSize);
+		}
+
 		BSTArray(BSTArray&&) = default;
 
 		explicit inline BSTArray(size_type a_count)
@@ -554,6 +579,53 @@ namespace RE
 			return elem;
 		}
 
+		inline void insert(const_iterator position, const value_type& a_value) { emplace(position, a_value); }
+		inline void insert(const_iterator position, value_type&& a_value) { emplace(position, std::move(a_value)); }
+
+		inline void push_front(const value_type& a_value) { emplace(cbegin(), a_value); }
+		inline void push_front(value_type&& a_value) { emplace(cbegin(), std::move(a_value)); }
+
+		template <class... Args>
+		inline reference emplace(const_iterator position, Args&&... a_args)
+		{
+			assert(position >= cbegin() && position <= cend());
+
+			if (position == cend()) {
+				return emplace_back(std::forward<Args>(a_args)...);
+			}
+
+			pointer   oldData;
+			pointer   newData;
+			size_type newCapacity;
+
+			if (size() == capacity()) {
+				newCapacity = next_capacity();
+				newData = allocate(newCapacity);  // manually grow capacity to avoid unnecessary memcpy from change_capacity
+				oldData = data();
+			} else {
+				newData = data();
+				oldData = nullptr;
+				newCapacity = capacity();
+			}
+
+			const auto headPartToCopy = position - cbegin();
+			const auto tailPartToCopy = cend() - position;
+			const auto tailBytesToCopy = tailPartToCopy * sizeof(T);
+			std::memcpy(newData + headPartToCopy + 1, cend() - tailPartToCopy, tailBytesToCopy);
+			std::construct_at(newData + headPartToCopy, std::forward<Args>(a_args)...);
+			const auto headBytesToCopy = headPartToCopy * sizeof(T);
+			std::memcpy(newData, cbegin(), headBytesToCopy);
+
+			if (oldData) {
+				deallocate(oldData);
+				set_allocator_traits(newData, newCapacity);
+			}
+
+			set_size(size() + 1);
+
+			return *(newData + headPartToCopy);
+		}
+
 		inline void pop_back()
 		{
 			assert(!empty());
@@ -601,7 +673,14 @@ namespace RE
 				const auto oldCapacity = capacity();
 				if (newData) {
 					const auto bytesToCopy = (std::min)(oldCapacity, a_newCapacity) * sizeof(value_type);
+#ifdef __clang__
+#	pragma clang diagnostic push
+#	pragma clang diagnostic ignored "-Wnontrivial-memaccess"
+#endif
 					std::memcpy(newData, oldData, bytesToCopy);
+#ifdef __clang__
+#	pragma clang diagnostic pop
+#endif
 				}
 				deallocate(oldData);
 			}
@@ -629,13 +708,24 @@ namespace RE
 			set_size(a_newSize);
 		}
 
+		/// Calculates the next value for the array capacity.
+		/// Capacity grows exponentially: hint * 2^level, where level is the number of times the capacity has grown.
+		[[nodiscard]] inline size_type next_capacity() const { return next_capacity(capacity()); }
+
+		/// Calculates the next value for the array capacity.
+		/// Capacity grows exponentially: hint * 2^level, where level is the number of times the capacity has grown.
+		inline size_type next_capacity(size_type a_hint) const
+		{
+			auto cap = a_hint;
+			cap = cap > 0 ? static_cast<size_type>(std::ceil(static_cast<float>(cap) * GROWTH_FACTOR)) : DF_CAP;
+			return cap;
+		}
+
 		inline void grow_capacity() { grow_capacity(capacity()); }
 
 		inline void grow_capacity(size_type a_hint)
 		{
-			auto cap = a_hint;
-			cap = cap > 0 ? static_cast<size_type>(std::ceil(static_cast<float>(cap) * GROWTH_FACTOR)) : DF_CAP;
-			change_capacity(cap);
+			change_capacity(next_capacity(a_hint));
 		}
 
 		inline void release()
@@ -746,7 +836,7 @@ namespace RE
 		[[nodiscard]] inline const_iterator end() const noexcept { return data() + size(); }
 		[[nodiscard]] inline const_iterator cend() const noexcept { return end(); }
 
-		[[nodiscard]] constexpr bool empty() const noexcept { return size() != 0; }
+		[[nodiscard]] constexpr bool empty() const noexcept { return size() == 0; }
 
 		[[nodiscard]] constexpr size_type size() const noexcept { return _size; }
 

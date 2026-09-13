@@ -24,7 +24,7 @@ namespace RE
 		BSContainer::ForEachResult operator()(MagicItem* a_spell)
 		{
 			using func_t = decltype(&PermanentMagicFunctor::operator());
-			REL::Relocation<func_t> func{ RELOCATION_ID(33684, 34464) };
+			static REL::Relocation<func_t> func{ RELOCATION_ID(33684, 34464) };
 			return func(this, a_spell);
 		}
 

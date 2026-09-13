@@ -9,6 +9,7 @@
 #include "RE/B/BSTimer.h"
 #include "RE/G/GPtr.h"
 #include "RE/I/IMenu.h"
+#include "REL/RuntimeDataAccessors.h"
 
 namespace RE
 {
@@ -99,6 +100,7 @@ namespace RE
 		template <class T>
 		void RemoveEventSink(BSTEventSink<T>* a_sink);
 		void ShowMenus(bool a_show);
+		void GetTopMostMenu(RE::IMenu** a_result, std::uint32_t a_depthLimit);
 
 		template <
 			class T,
@@ -141,8 +143,24 @@ namespace RE
 		bool                                   closingAllMenus;               // 1C1
 		std::uint16_t                          pad1C2;                        // 1C2
 		std::uint32_t                          pad1C4;                        // 1C4
+
+		struct VR_RUNTIME_DATA
+		{
+#define VR_RUNTIME_DATA_CONTENT                                                                                                    \
+	std::uint32_t consoleMenuFlags; /* 1C8 - byte 0 gates a Console/Debug-Text render-to-texture pass; byte 1 clears each frame */ \
+	std::uint32_t unk1CC;           // 1CC - real offset (unk1C8 is a full 4-byte field, not 2)
+			VR_RUNTIME_DATA_CONTENT
+		};
+		static_assert(sizeof(VR_RUNTIME_DATA) == 0x8);
+
+		VR_ONLY_POINTER_ACCESSOR(VR_RUNTIME_DATA, GetVRRuntimeData, 0x1C8);
+
+#if defined(EXCLUSIVE_SKYRIM_VR)
+		VR_RUNTIME_DATA_CONTENT;
+#endif
 	};
-	static_assert(sizeof(UI) == 0x1C8);
+#undef VR_RUNTIME_DATA_CONTENT
+	STATIC_ASSERT_SIZE(UI, 0x1C8, 0x1C8, 0x1D0, 0x1C8);
 
 	template <class T>
 	void UI::AddEventSink(BSTEventSink<T>* a_sink)

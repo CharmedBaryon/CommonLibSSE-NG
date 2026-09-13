@@ -37,10 +37,10 @@ namespace RE
 				_rva(a_rva)
 			{}
 
-			[[nodiscard]] pointer            get() const { return is_good() ? REL::Relocation<T*>{ REL::Offset(_rva) }.get() : nullptr; }
-			[[nodiscard]] std::uint32_t      offset() const noexcept { return _rva; }
-			[[nodiscard]] reference          operator*() const { return *get(); }
-			[[nodiscard]] pointer            operator->() const { return get(); }
+			[[nodiscard]] pointer       get() const { return is_good() ? REL::Relocation<T*>{ REL::Offset(_rva) }.get() : nullptr; }
+			[[nodiscard]] std::uint32_t offset() const noexcept { return _rva; }
+			[[nodiscard]] reference     operator*() const { return *get(); }
+			[[nodiscard]] pointer       operator->() const { return get(); }
 			[[nodiscard]] explicit constexpr operator bool() const noexcept { return is_good(); }
 
 		protected:
@@ -79,10 +79,10 @@ namespace RE
 			};
 
 			// members
-			RVA<TypeDescriptor>                        typeDescriptor;     // 00
-			std::uint32_t                              numContainedBases;  // 04
-			PMD                                        pmd;                // 08
-			stl::enumeration<Attribute, std::uint32_t> attributes;         // 14
+			RVA<TypeDescriptor>                    typeDescriptor;     // 00
+			std::uint32_t                          numContainedBases;  // 04
+			PMD                                    pmd;                // 08
+			REX::EnumSet<Attribute, std::uint32_t> attributes;         // 14
 		};
 		static_assert(sizeof(BaseClassDescriptor) == 0x18);
 
@@ -98,10 +98,10 @@ namespace RE
 			};
 
 			// members
-			std::uint32_t                              signature;       // 00
-			stl::enumeration<Attribute, std::uint32_t> attributes;      // 04
-			std::uint32_t                              numBaseClasses;  // 08
-			RVA<BaseClassDescriptor>                   baseClassArray;  // 0C
+			std::uint32_t                          signature;       // 00
+			REX::EnumSet<Attribute, std::uint32_t> attributes;      // 04
+			std::uint32_t                          numBaseClasses;  // 08
+			RVA<BaseClassDescriptor>               baseClassArray;  // 0C
 		};
 		static_assert(sizeof(ClassHierarchyDescriptor) == 0x10);
 
@@ -115,11 +115,11 @@ namespace RE
 			};
 
 			// members
-			stl::enumeration<Signature, std::uint32_t> signature;        // 00
-			std::uint32_t                              offset;           // 04
-			std::uint32_t                              ctorDispOffset;   // 08
-			RVA<TypeDescriptor>                        typeDescriptor;   // 0C
-			RVA<ClassHierarchyDescriptor>              classDescriptor;  // 10
+			REX::EnumSet<Signature, std::uint32_t> signature;        // 00
+			std::uint32_t                          offset;           // 04
+			std::uint32_t                          ctorDispOffset;   // 08
+			RVA<TypeDescriptor>                    typeDescriptor;   // 0C
+			RVA<ClassHierarchyDescriptor>          classDescriptor;  // 10
 		};
 		static_assert(sizeof(CompleteObjectLocator) == 0x14);
 	}
@@ -127,7 +127,7 @@ namespace RE
 	inline void* RTDynamicCast(void* a_inptr, std::int32_t a_vfDelta, void* a_srcType, void* a_targetType, std::int32_t a_isReference)
 	{
 		using func_t = decltype(&RTDynamicCast);
-		REL::Relocation<func_t> func{ RELOCATION_ID(102238, 109689) };
+		static REL::Relocation<func_t> func{ RELOCATION_ID(102238, 109689) };
 		return func(a_inptr, a_vfDelta, a_srcType, a_targetType, a_isReference);
 	}
 
@@ -225,8 +225,8 @@ template <
 		int> = 0>
 To skyrim_cast(From* a_from)
 {
-	REL::Relocation<void*> from{ RE::detail::remove_cvpr_t<From>::RTTI };
-	REL::Relocation<void*> to{ RE::detail::remove_cvpr_t<To>::RTTI };
+	static REL::Relocation<void*> from{ RE::detail::remove_cvpr_t<From>::RTTI };
+	static REL::Relocation<void*> to{ RE::detail::remove_cvpr_t<To>::RTTI };
 
 	if (!from.get() || !to.get()) {
 		return nullptr;

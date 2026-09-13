@@ -8,8 +8,15 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_DeviceConnectEvent;
+		inline static constexpr auto VTABLE = VTABLE_DeviceConnectEvent;
 
 		~DeviceConnectEvent() override;  // 00
+
+		void Init(INPUT_DEVICE a_device, bool a_connected)
+		{
+			device = a_device;
+			connected = a_connected;
+		}
 
 		// members
 		bool          connected;  // 18

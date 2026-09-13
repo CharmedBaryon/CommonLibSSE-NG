@@ -1,0 +1,79 @@
+name: Semantic Release
+
+on:
+  push:
+    branches:
+      - ng
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  issues: write
+  pull-requests: write
+
+jobs:
+  # Debounce: a leading wait so several merges in close succession collapse into
+  # one release. Each new push cancels the still-waiting run (cancel-in-progress)
+  # and restarts the timer; once the branch is quiet for the window, the release
+  # job runs once and semantic-release batches every accumulated commit.
+  debounce:
+    name: Debounce
+    runs-on: ubuntu-latest
+    if: "!contains(github.event.head_commit.message, '[skip ci]')"
+    concurrency:
+      group: semantic-release-debounce
+      cancel-in-progress: true
+    steps:
+      - name: Wait for quiet period
+        # Only debounce real merges; manual dispatch releases immediately.
+        if: github.event_name == 'push'
+        run: sleep 600 # 10 min; a newer merge cancels+restarts this wait
+
+  # Release runs only after the debounce settles. It has its own concurrency
+  # group with cancel-in-progress: false so an in-progress publish is never
+  # aborted by a newer push (which would risk a partial release); concurrent
+  # publishes queue instead.
+  release:
+    name: Semantic Release
+    needs: debounce
+    runs-on: ubuntu-latest
+    concurrency:
+      group: semantic-release-publish
+      cancel-in-progress: false
+    outputs:
+      new_release_published: ${{ steps.semantic.outputs.new_release_published }}
+      new_release_version: ${{ steps.semantic.outputs.new_release_version }}
+      new_release_git_tag: ${{ steps.semantic.outputs.new_release_git_tag }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+          persist-credentials: true
+
+      - name: Semantic Release
+        id: semantic
+        uses: cycjimmy/semantic-release-action@v5
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          extra_plugins: |
+            @google/semantic-release-replace-plugin
+            @semantic-release/changelog
+            @semantic-release/git
+            conventional-changelog-conventionalcommits@^9.3.1
+
+  # On a published release, build the prebuilt CommonLib bundle and attach it to the
+  # GitHub release. The same build + consumer self-test also run on every PR to ng
+  # (see prebuilt.yml), so the bundle is validated before it ever ships.
+  prebuilt:
+    name: Prebuilt bundle
+    needs: release
+    if: needs.release.outputs.new_release_published == 'true'
+    permissions:
+      contents: write
+    uses: ./.github/workflows/prebuilt.yml
+    with:
+      ref: ${{ needs.release.outputs.new_release_git_tag }}
+      attach_tag: ${{ needs.release.outputs.new_release_git_tag }}

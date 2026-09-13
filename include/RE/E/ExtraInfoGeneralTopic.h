@@ -9,13 +9,14 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_ExtraInfoGeneralTopic;
-		inline static auto           EXTRADATATYPE = ExtraDataType::kInfoGeneralTopic;
+		inline static constexpr auto VTABLE = VTABLE_ExtraInfoGeneralTopic;
+		inline static constexpr auto EXTRADATATYPE = ExtraDataType::kInfoGeneralTopic;
 
 		struct Data
 		{
 			std::uint64_t unk00;  // 00
 			std::uint64_t unk08;  // 08
-			std::uint64_t unk10;  // 10
+			Data*         unk10;  // 10
 			std::uint64_t unk18;  // 18
 			std::uint64_t unk20;  // 20
 			std::uint64_t unk28;  // 28
@@ -33,7 +34,7 @@ namespace RE
 		[[nodiscard]] ExtraDataType GetType() const override;  // 01 - { return kInfoGeneralTopic; }
 
 		// members
-		Data* unk10;  // 10
+		Data* data;  // 10
 	};
 	static_assert(sizeof(ExtraInfoGeneralTopic) == 0x18);
 }

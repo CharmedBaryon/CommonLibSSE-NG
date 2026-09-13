@@ -78,8 +78,11 @@ namespace SKSE
 		[[nodiscard]] constexpr std::size_t allocated_size() const noexcept { return _size; }
 		[[nodiscard]] constexpr std::size_t free_size() const noexcept { return _capacity - _size; }
 
+		// a_skipSafetyCheck suppresses the SKSE_SUPPORT_PATCH_SAFETY boundary check; prefer
+		// a_expectedPatchHash (0 = unset) instead -- it re-verifies every launch rather than
+		// trusting the call site forever. a_loc defaults to the caller; leave it as-is.
 		template <std::size_t N>
-		std::uintptr_t write_branch(std::uintptr_t a_src, std::uintptr_t a_dst)
+		std::uintptr_t write_branch(std::uintptr_t a_src, std::uintptr_t a_dst, bool a_skipSafetyCheck = false, std::uint64_t a_expectedPatchHash = 0, std::source_location a_loc = std::source_location::current())
 		{
 			std::uint8_t data = 0;
 			if constexpr (N == 5) {
@@ -94,17 +97,17 @@ namespace SKSE
 				static_assert(false && N, "invalid branch size");
 			}
 
-			return write_branch<N>(a_src, a_dst, data);
+			return write_branch<N>(a_src, a_dst, data, a_skipSafetyCheck, a_expectedPatchHash, a_loc);
 		}
 
 		template <std::size_t N, class F>
-		std::uintptr_t write_branch(std::uintptr_t a_src, F a_dst)
+		std::uintptr_t write_branch(std::uintptr_t a_src, F a_dst, bool a_skipSafetyCheck = false, std::uint64_t a_expectedPatchHash = 0, std::source_location a_loc = std::source_location::current())
 		{
-			return write_branch<N>(a_src, stl::unrestricted_cast<std::uintptr_t>(a_dst));
+			return write_branch<N>(a_src, stl::unrestricted_cast<std::uintptr_t>(a_dst), a_skipSafetyCheck, a_expectedPatchHash, a_loc);
 		}
 
 		template <std::size_t N>
-		std::uintptr_t write_call(std::uintptr_t a_src, std::uintptr_t a_dst)
+		std::uintptr_t write_call(std::uintptr_t a_src, std::uintptr_t a_dst, bool a_skipSafetyCheck = false, std::uint64_t a_expectedPatchHash = 0, std::source_location a_loc = std::source_location::current())
 		{
 			std::uint8_t data = 0;
 			if constexpr (N == 5) {
@@ -119,33 +122,34 @@ namespace SKSE
 				static_assert(false && N, "invalid call size");
 			}
 
-			return write_branch<N>(a_src, a_dst, data);
+			return write_branch<N>(a_src, a_dst, data, a_skipSafetyCheck, a_expectedPatchHash, a_loc);
 		}
 
 		template <std::size_t N, class F>
-		std::uintptr_t write_call(std::uintptr_t a_src, F a_dst)
+		std::uintptr_t write_call(std::uintptr_t a_src, F a_dst, bool a_skipSafetyCheck = false, std::uint64_t a_expectedPatchHash = 0, std::source_location a_loc = std::source_location::current())
 		{
-			return write_call<N>(a_src, stl::unrestricted_cast<std::uintptr_t>(a_dst));
+			return write_call<N>(a_src, stl::unrestricted_cast<std::uintptr_t>(a_dst), a_skipSafetyCheck, a_expectedPatchHash, a_loc);
 		}
 
 	private:
 		[[nodiscard]] void* do_create(std::size_t a_size, std::uintptr_t a_address);
 		[[nodiscard]] void* do_allocate(std::size_t a_size);
 
-		void write_5branch(std::uintptr_t a_src, std::uintptr_t a_dst, std::uint8_t a_opcode);
-		void write_6branch(std::uintptr_t a_src, std::uintptr_t a_dst, std::uint8_t a_modrm);
+		void write_5branch(std::uintptr_t a_src, std::uintptr_t a_dst, std::uint8_t a_opcode, bool a_skipSafetyCheck, std::uint64_t a_expectedPatchHash, std::source_location a_loc);
+		void write_6branch(std::uintptr_t a_src, std::uintptr_t a_dst, std::uint8_t a_modrm, bool a_skipSafetyCheck, std::uint64_t a_expectedPatchHash, std::source_location a_loc);
 
 		template <std::size_t N>
-		[[nodiscard]] std::uintptr_t write_branch(std::uintptr_t a_src, std::uintptr_t a_dst, std::uint8_t a_data)
+		[[nodiscard]] std::uintptr_t write_branch(std::uintptr_t a_src, std::uintptr_t a_dst, std::uint8_t a_data, bool a_skipSafetyCheck, std::uint64_t a_expectedPatchHash, std::source_location a_loc)
 		{
+			const auto isNop = *reinterpret_cast<std::int8_t*>(a_src) == 0x90;
 			const auto disp = reinterpret_cast<std::int32_t*>(a_src + N - 4);
 			const auto nextOp = a_src + N;
-			const auto func = nextOp + *disp;
+			const auto func = isNop ? 0 : nextOp + *disp;
 
 			if constexpr (N == 5) {
-				write_5branch(a_src, a_dst, a_data);
+				write_5branch(a_src, a_dst, a_data, a_skipSafetyCheck, a_expectedPatchHash, a_loc);
 			} else if constexpr (N == 6) {
-				write_6branch(a_src, a_dst, a_data);
+				write_6branch(a_src, a_dst, a_data, a_skipSafetyCheck, a_expectedPatchHash, a_loc);
 			} else {
 				static_assert(false && N, "invalid branch size");
 			}

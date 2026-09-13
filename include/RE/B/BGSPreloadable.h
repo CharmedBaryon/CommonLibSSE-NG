@@ -8,6 +8,7 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_BGSPreloadable;
+		inline static constexpr auto VTABLE = VTABLE_BGSPreloadable;
 
 		~BGSPreloadable() override;  // 00
 

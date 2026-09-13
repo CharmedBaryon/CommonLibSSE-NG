@@ -1,13 +1,14 @@
 #pragma once
 
 #include "RE/B/BSEffectShaderData.h"
+#include "RE/B/BSRenderPass.h"
+#include "RE/B/BSShader.h"
 #include "RE/B/BSShaderMaterial.h"
 #include "RE/B/BSTSmartPointer.h"
 #include "RE/N/NiShadeProperty.h"
 
 namespace RE
 {
-	class BSRenderPass;
 	class BSShaderAccumulator;
 	class BSShaderMaterial;
 	class BSShaderPropertyLightData;
@@ -20,12 +21,14 @@ namespace RE
 
 	public:
 		inline static constexpr auto RTTI = RTTI_BSShaderProperty;
-		inline static auto           Ni_RTTI = NiRTTI_BSShaderProperty;
+		inline static constexpr auto Ni_RTTI = NiRTTI_BSShaderProperty;
+		inline static constexpr auto VTABLE = VTABLE_BSShaderProperty;
 
 		class ForEachVisitor
 		{
 		public:
 			inline static constexpr auto RTTI = RTTI_BSShaderProperty__ForEachVisitor;
+			inline static constexpr auto VTABLE = VTABLE_BSShaderProperty__ForEachVisitor;
 
 			virtual ~ForEachVisitor();  // 00
 
@@ -35,9 +38,16 @@ namespace RE
 
 		struct RenderPassArray
 		{
-			BSRenderPass* head;  // 0
+			void          Clear();
+			BSRenderPass* EmplacePass(BSShader* a_shader, BSShaderProperty* a_property, BSGeometry* a_geometry,
+				uint32_t a_technique, uint8_t a_numLights = 0, BSLight* a_light0 = nullptr, BSLight* a_light1 = nullptr,
+				BSLight* a_light2 = nullptr, BSLight* a_light3 = nullptr);
+
+			// members
+			BSRenderPass* head;   // 00
+			std::uint64_t unk08;  // 08 - Unused
 		};
-		static_assert(sizeof(RenderPassArray) == 0x8);
+		static_assert(sizeof(RenderPassArray) == 0x10);
 
 		enum class EShaderPropertyFlag : std::uint64_t
 		{
@@ -187,48 +197,48 @@ namespace RE
 		bool          IsEqual(NiObject* a_object) override;               // 1C - { return false; }
 		void          PostLinkObject(NiStream& a_stream) override;        // 1E - { NiObjectNET::PostLinkObject(a_stream); }
 		bool          SetupGeometry(BSGeometry* a_geometry) override;     // 27 - { return 1; }
-		void          Unk_29(void) override;                              // 29
+		void          SetLightState(std::int32_t lightIndex) override;    // 29
 
 		// add
-		virtual RenderPassArray*               GetRenderPasses(BSGeometry* a_geometry, std::uint32_t a_arg2, BSShaderAccumulator* a_accumulator) = 0;  // 2A
-		virtual void                           Unk_2B(void);                                                                                           // 2B - { return 0; }
-		virtual void                           Unk_2C(void);                                                                                           // 2C - { return 0; }
-		virtual void                           Unk_2D(void);                                                                                           // 2D - { return 0; }
-		virtual void                           Unk_2E(void);                                                                                           // 2E - { return 1; }
-		virtual void                           Unk_2F(void);                                                                                           // 2F - { return 0; }
-		virtual bool                           CanMerge(const BSShaderProperty* a_other);                                                              // 30
-		virtual void                           SetMaterialAlpha(float a_alpha);                                                                        // 31 - { return; }
-		[[nodiscard]] virtual float            QMaterialAlpha();                                                                                       // 32 - { return 1.0; }
-		virtual std::int32_t                   ForEachTexture(ForEachVisitor& a_visitor);                                                              // 33 - { return 1; }
-		virtual void                           DoClearRenderPasses();                                                                                  // 34
-		virtual std::int32_t                   QShader();                                                                                              // 35 - { return 0; }
-		virtual void                           Unk_36(void);                                                                                           // 36 - { return 0; }
-		[[nodiscard]] virtual NiSourceTexture* GetBaseTexture();                                                                                       // 37 - { return 0; }
-		virtual void                           Unk_38(void);                                                                                           // 38 - { return 0; }
-		[[nodiscard]] virtual bool             AcceptsEffectData() const;                                                                              // 39 - { return false; }
-		virtual void                           Unk_3A(void);                                                                                           // 3A - { return; }
-		virtual void                           Unk_3B(void);                                                                                           // 3B - { return; }
-		virtual void                           Unk_3C(void);                                                                                           // 3C - { return 0; }
-		virtual std::uint32_t                  DetermineUtilityShaderDecl();                                                                           // 3D - { return 0; }
-		virtual BSShaderMaterial::Type         GetMaterialType();                                                                                      // 3E - { return 0; }
+		virtual RenderPassArray*               GetRenderPasses(BSGeometry* a_geometry, std::uint32_t a_renderMode, BSShaderAccumulator* a_accumulator) = 0;              // 2A
+		virtual RenderPassArray*               GetRenderPasses_ShadowMapOrMask(BSGeometry* a_geometry, std::uint32_t a_renderMode, BSShaderAccumulator* a_accumulator);  // 2B - { return 0; }
+		virtual RenderPassArray*               GetRenderPasses_LocalMap(BSGeometry* a_geometry, std::uint32_t a_renderMode, BSShaderAccumulator* a_accumulator);         // 2C - { return 0; }
+		virtual RenderPassArray*               GetRenderPasses_Occlusion(BSGeometry* a_geometry, std::uint32_t a_renderMode, BSShaderAccumulator* a_accumulator);        // 2D - { return 0; }
+		virtual std::int32_t                   GetNumberofPasses(BSGeometry* a_geometry);                                                                                // 2E - { return 1; }
+		virtual BSRenderPass*                  GetRenderDepthPass(BSGeometry* a_geometry);                                                                               // 2F - { return 0; }
+		virtual bool                           CanMerge(const BSShaderProperty* a_other);                                                                                // 30
+		virtual void                           SetMaterialAlpha(float a_alpha);                                                                                          // 31 - { return; }
+		[[nodiscard]] virtual float            QMaterialAlpha();                                                                                                         // 32 - { return 1.0; }
+		virtual std::int32_t                   ForEachTexture(ForEachVisitor& a_visitor);                                                                                // 33 - { return 1; }
+		virtual void                           DoClearRenderPasses();                                                                                                    // 34
+		virtual std::int32_t                   QShader();                                                                                                                // 35 - { return 0; }
+		virtual void                           ClarifyShader(BSGeometry* a_geometry, bool, bool);                                                                        // 36 - { return 0; }
+		[[nodiscard]] virtual NiSourceTexture* GetBaseTexture();                                                                                                         // 37 - { return 0; }
+		virtual void                           GetWaterFogPassList(BSGeometry* a_geometry);                                                                              // 38 - { return 0; }
+		[[nodiscard]] virtual bool             AcceptsEffectData() const;                                                                                                // 39 - { return false; }
+		virtual void                           PrecacheTextures(void);                                                                                                   // 3A - { return; }
+		virtual void                           Unk_3B(void);                                                                                                             // 3B - { return; }
+		virtual void                           Unk_3C(void);                                                                                                             // 3C - { return 0; }
+		virtual std::uint32_t                  DetermineUtilityShaderDecl();                                                                                             // 3D - { return 0; }
+		virtual BSShaderMaterial::Type         GetMaterialType();                                                                                                        // 3E - { return 0; }
 
-		void SetEffectShaderData(const BSTSmartPointer<BSEffectShaderData>& a_data);
-		void SetMaterial(BSShaderMaterial* a_material, bool a_unk1);
-		void SetFlags(EShaderPropertyFlag8 a_flag, bool a_set);
+		BSShaderMaterial* GetBaseMaterial() { return material; }
+		bool              InvalidateMaterial();
+		void              SetEffectShaderData(const BSTSmartPointer<BSEffectShaderData>& a_data);
+		void              SetMaterial(BSShaderMaterial* a_material, bool a_unk1);
+		void              SetFlags(EShaderPropertyFlag8 a_flag, bool a_set);
 
 		// members
-		float                                                alpha;                // 30
-		std::int32_t                                         lastRenderPassState;  // 34
-		stl::enumeration<EShaderPropertyFlag, std::uint64_t> flags;                // 38
-		RenderPassArray                                      renderPassList;       // 40
-		std::uint64_t                                        unk48;                // 48
-		RenderPassArray                                      debugRenderPassList;  // 50
-		std::uint64_t                                        unk58;                // 58
-		BSFadeNode*                                          fadeNode;             // 60
-		BSTSmartPointer<BSEffectShaderData>                  effectData;           // 68
-		BSShaderPropertyLightData*                           lightData;            // 70
-		BSShaderMaterial*                                    material;             // 78
-		std::uint64_t                                        unk80;                // 80
+		float                                            alpha;                      // 30
+		std::int32_t                                     lastRenderPassState;        // 34
+		REX::EnumSet<EShaderPropertyFlag, std::uint64_t> flags;                      // 38
+		RenderPassArray                                  renderPassList;             // 40
+		RenderPassArray                                  debugRenderPassList;        // 50
+		BSFadeNode*                                      fadeNode;                   // 60
+		BSTSmartPointer<BSEffectShaderData>              effectData;                 // 68
+		BSShaderPropertyLightData*                       lightData;                  // 70
+		BSShaderMaterial*                                material;                   // 78
+		std::uint32_t                                    lastAccumulatedFrameCount;  // 80
 	};
 	static_assert(sizeof(BSShaderProperty) == 0x88);
 }

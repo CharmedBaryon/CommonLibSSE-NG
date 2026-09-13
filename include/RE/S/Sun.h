@@ -8,6 +8,7 @@ namespace RE
 	class BSShaderAccumulator;
 	class BSTriShape;
 	class NiBillboardNode;
+	class NiCamera;
 	class NiDirectionalLight;
 
 	class Sun : public SkyObject
@@ -21,6 +22,9 @@ namespace RE
 		// override (SkyObject)
 		void Init(NiNode* a_root) override;              // 02
 		void Update(Sky* a_sky, float a_arg2) override;  // 03
+
+		void SubmitOcclusionQuery(std::uint32_t a_renderFlags, BSShaderAccumulator* a_accumulator, NiCamera* a_camera);
+		void UpdateOcclusionQueries();
 
 		// members
 		NiPointer<NiBillboardNode>     sunBaseNode;       // 10

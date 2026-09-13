@@ -8,6 +8,7 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_BGSMusicSilenceTrack;
+		inline static constexpr auto VTABLE = VTABLE_BGSMusicSilenceTrack;
 
 		~BGSMusicSilenceTrack() override;  // 00
 

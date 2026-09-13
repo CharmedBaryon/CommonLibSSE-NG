@@ -14,9 +14,9 @@ namespace RE
 		return REL::RelocateVirtual<decltype(&BSGeometry::AsSkinnedDecalTriShape)>(0x36, 0x37, this);
 	}
 
-	void BSGeometry::Unk_37()
+	std::uint32_t BSGeometry::GetVisibleGroupsTriangleCount()
 	{
-		return REL::RelocateVirtual<decltype(&BSGeometry::Unk_37)>(0x37, 0x38, this);
+		return REL::RelocateVirtual<decltype(&BSGeometry::GetVisibleGroupsTriangleCount)>(0x37, 0x38, this);
 	}
 #endif
 }
