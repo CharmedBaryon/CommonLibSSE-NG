@@ -631,8 +631,8 @@ namespace SKSE
 
 	enum class StructCompatibility : std::uint32_t
 	{
-		Dependent = 0,
-		Independent = 1
+		Dependent = PluginVersionData::kVersionIndependentEx_AddressLibraryV5,
+		Independent = PluginVersionData::kVersionIndependentEx_AddressLibraryV5 | PluginVersionData::kVersionIndependentEx_NoStructUse
 	};
 
 	struct PluginDeclaration
