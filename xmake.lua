@@ -240,6 +240,12 @@ target("commonlibsse-ng", function()
     -- add options
     add_options("rex_ini", "rex_json", "rex_toml", "skyrim_se", "skyrim_ae", "skyrim_vr", "skse_xbyak", "tests", { public = true })
 
+    if (has_config("skyrim_se") and has_config("skyrim_ae"))
+        or (has_config("skyrim_se") and has_config("skyrim_vr"))
+        or (has_config("skyrim_ae") and has_config("skyrim_vr")) then
+        add_defines("HAS_SKYRIM_MULTI_TARGETING=1", { public = true })
+    end
+
     -- System links + sources. A phony (prebuilt) target ignores add_files, and the
     -- prebuilt path adds its own public syslinks in on_load, so this stays unconditional.
     add_syslinks("advapi32", "bcrypt", "d3d11", "d3dcompiler", "dbghelp", "dxgi", "ole32", "shell32", "user32", "version")
