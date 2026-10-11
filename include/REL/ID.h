@@ -313,7 +313,9 @@ namespace REL
                 const auto filename =
                         stl::utf8_to_utf16(
                             Module::IsAE() ?
-                                std::format("Data/SKSE/Plugins/versionlib-{}.bin"sv, version.string()) :
+                                (version >= Version(1, 7, 0, 0) && !std::filesystem::exists(std::format("Data/SKSE/Plugins/versionlib-{}.bin"sv, version.string())) && std::filesystem::exists(std::format("Data/SKSE/Plugins/versionl2b-{}.bin"sv, version.string())) ?
+                                    std::format("Data/SKSE/Plugins/versionl2b-{}.bin"sv, version.string()) :
+                                    std::format("Data/SKSE/Plugins/versionlib-{}.bin"sv, version.string())) :
                                 std::format("Data/SKSE/Plugins/version-{}.bin"sv, version.string()))
                                 .value_or(L"<unknown filename>"s);
                 load_file(filename, version, Module::IsAE() ? 2 : 1, true);

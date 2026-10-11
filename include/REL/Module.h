@@ -340,6 +340,7 @@ namespace REL
 						_runtime = Runtime::VR;
 						break;
 					case 6:
+					case 7:
 						_runtime = Runtime::AE;
 						break;
 					default:
