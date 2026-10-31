@@ -158,7 +158,7 @@ namespace RE
 	void GMatrix2D::SetInverse(const GMatrix2D& a_matrix)
 	{
 		// Invert the rotation part.
-		float det = GetDeterminant();
+		float det = a_matrix.GetDeterminant();
 		if (det == 0.0f) {
 			SetIdentity();
 			data[0][2] = -a_matrix.data[0][2];
