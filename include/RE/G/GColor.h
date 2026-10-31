@@ -47,6 +47,22 @@ namespace RE
 			colorData.channels.blue = a_raw & 0xFF;
 		}
 
+		constexpr std::uint8_t GetRed() const noexcept { return colorData.channels.red; }
+		constexpr std::uint8_t GetGreen() const noexcept { return colorData.channels.green; }
+		constexpr std::uint8_t GetBlue() const noexcept { return colorData.channels.blue; }
+		constexpr std::uint8_t GetAlpha() const noexcept { return colorData.channels.alpha; }
+
+		constexpr void GetRGBAFloat(float& a_red, float& a_green, float& a_blue, float& a_alpha) const noexcept
+		{
+			a_red = GetRed() == 0 ? 0.0f : GetRed() / 255.0f;
+			a_green = GetGreen() == 0 ? 0.0f : GetGreen() / 255.0f;
+			a_blue = GetBlue() == 0 ? 0.0f : GetBlue() / 255.0f;
+			a_alpha = GetAlpha() == 0 ? 0.0f : GetAlpha() / 255.0f;
+		}
+
+		bool operator==(const GColor& a_rhs) const { return colorData.raw == a_rhs.colorData.raw; }
+		bool operator!=(const GColor& a_rhs) const { return !(*this == a_rhs); }
+
 		// members
 		ColorData colorData;  // 0
 	};

@@ -899,12 +899,16 @@ set(SOURCES
 	include/RE/G/GFxEvent.h
 	include/RE/G/GFxExternalInterface.h
 	include/RE/G/GFxFileConstants.h
+	include/RE/G/GFxFillType.h
+	include/RE/G/GFxFontMap.h
 	include/RE/G/GFxFunctionHandler.h
+	include/RE/G/GFxGradientRecord.h
 	include/RE/G/GFxImageLoader.h
 	include/RE/G/GFxImageResource.h
 	include/RE/G/GFxInitImportActions.h
 	include/RE/G/GFxKey.h
 	include/RE/G/GFxKeyboardState.h
+	include/RE/G/GFxLineStyle.h
 	include/RE/G/GFxLoadProcess.h
 	include/RE/G/GFxLoadStates.h
 	include/RE/G/GFxLoadUpdateSync.h
@@ -955,6 +959,7 @@ set(SOURCES
 	include/RE/G/GFxStateBagImpl.h
 	include/RE/G/GFxStaticTextCharacterDef.h
 	include/RE/G/GFxStream.h
+	include/RE/G/GFxTagType.h
 	include/RE/G/GFxTask.h
 	include/RE/G/GFxTimelineDef.h
 	include/RE/G/GFxTranslator.h
@@ -2045,6 +2050,7 @@ set(SOURCES
 	src/RE/G/GFxValue.cpp
 	src/RE/G/GFxWStringBuffer.cpp
 	src/RE/G/GFxWWHelper.cpp
+	src/RE/G/GMatrix2D.cpp
 	src/RE/G/GMemory.cpp
 	src/RE/G/GMemoryHeap.cpp
 	src/RE/G/GRefCountImpl.cpp

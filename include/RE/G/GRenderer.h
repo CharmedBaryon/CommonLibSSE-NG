@@ -245,11 +245,21 @@ namespace RE
 
 			Cxform();
 
-			void SetIdentity();
+			void   Concatenate(const Cxform& a_rhs);
+			float  TransformChannel(float a_value, std::size_t a_channel, float a_max = 255.0f) const;
+			GColor Transform(const GColor& a_color) const;
 
+			void SetIdentity();
 			bool IsIdentity() const;
 
 			bool operator==(const Cxform& a_rhs) const;
+
+			friend Cxform operator*(const Cxform& a_lhs, const Cxform& a_rhs)
+			{
+				Cxform result = a_lhs;
+				result.Concatenate(a_rhs);
+				return result;
+			}
 
 			// members
 			float matrix[kRGBA][kMultAdd];  // 00
