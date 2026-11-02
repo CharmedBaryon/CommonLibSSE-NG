@@ -69,8 +69,8 @@ namespace RE
 			entry_type(const entry_type&) = delete;
 
 			entry_type(entry_type&& a_rhs)  //
-				noexcept(std::is_nothrow_move_constructible_v<value_type>&&
-						std::is_nothrow_destructible_v<value_type>)
+				noexcept(std::is_nothrow_move_constructible_v<value_type> &&
+						 std::is_nothrow_destructible_v<value_type>)
 			{
 				if (a_rhs.has_value()) {
 					const auto rnext = a_rhs.next;
@@ -83,8 +83,8 @@ namespace RE
 			entry_type& operator=(const entry_type&) = delete;
 
 			entry_type& operator=(entry_type&& a_rhs)  //
-				noexcept(std::is_nothrow_move_constructible_v<value_type>&&
-						std::is_nothrow_destructible_v<value_type>)
+				noexcept(std::is_nothrow_move_constructible_v<value_type> &&
+						 std::is_nothrow_destructible_v<value_type>)
 			{
 				if (this != std::addressof(a_rhs)) {
 					destroy();
@@ -120,8 +120,8 @@ namespace RE
 			}
 
 			[[nodiscard]] value_type steal() &&  //
-				noexcept(std::is_nothrow_move_constructible_v<value_type>&&
-						std::is_nothrow_destructible_v<value_type>)
+				noexcept(std::is_nothrow_move_constructible_v<value_type> &&
+						 std::is_nothrow_destructible_v<value_type>)
 			{
 				assert(has_value());
 				value_type val = std::move(value);
@@ -566,15 +566,15 @@ namespace RE
 		}
 
 		[[nodiscard]] size_type hash_function(const key_type& a_key) const  //
-			noexcept(std::is_nothrow_constructible_v<hasher>&&
-					std::is_nothrow_invocable_v<const hasher&, const key_type&>)
+			noexcept(std::is_nothrow_constructible_v<hasher> &&
+					 std::is_nothrow_invocable_v<const hasher&, const key_type&>)
 		{
 			return static_cast<size_type>(hasher()(a_key));
 		}
 
 		[[nodiscard]] bool key_eq(const key_type& a_lhs, const key_type& a_rhs) const  //
-			noexcept(std::is_nothrow_constructible_v<key_equal>&&
-					std::is_nothrow_invocable_v<const key_equal&, const key_type&, const key_type&>)
+			noexcept(std::is_nothrow_constructible_v<key_equal> &&
+					 std::is_nothrow_invocable_v<const key_equal&, const key_type&, const key_type&>)
 		{
 			return static_cast<bool>(key_equal()(a_lhs, a_rhs));
 		}

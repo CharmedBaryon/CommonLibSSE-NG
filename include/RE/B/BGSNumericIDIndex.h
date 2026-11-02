@@ -38,7 +38,7 @@ namespace RE
 				{
 					std::uint8_t                       data1;
 					REX::TEnumSet<Flags, std::uint8_t> flags;
-				};                   // 0
+				};  // 0
 				std::uint8_t data2;  // 1
 				std::uint8_t data3;  // 2
 			};

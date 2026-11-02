@@ -37,10 +37,10 @@ namespace RE
 				_rva(a_rva)
 			{}
 
-			[[nodiscard]] pointer       get() const { return is_good() ? REL::Relocation<T*>{ REL::Offset(_rva) }.get() : nullptr; }
-			[[nodiscard]] std::uint32_t offset() const noexcept { return _rva; }
-			[[nodiscard]] reference     operator*() const { return *get(); }
-			[[nodiscard]] pointer       operator->() const { return get(); }
+			[[nodiscard]] pointer            get() const { return is_good() ? REL::Relocation<T*>{ REL::Offset(_rva) }.get() : nullptr; }
+			[[nodiscard]] std::uint32_t      offset() const noexcept { return _rva; }
+			[[nodiscard]] reference          operator*() const { return *get(); }
+			[[nodiscard]] pointer            operator->() const { return get(); }
 			[[nodiscard]] explicit constexpr operator bool() const noexcept { return is_good(); }
 
 		protected:

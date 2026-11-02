@@ -9,7 +9,7 @@ namespace RE
 
 		constexpr NiPoint2(float a_x, float a_y) noexcept :
 			x(a_x),
-			y(a_y){};
+			y(a_y) {};
 
 		float&       operator[](std::size_t a_idx);
 		const float& operator[](std::size_t a_idx) const;

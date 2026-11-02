@@ -46,7 +46,7 @@ namespace RE
 		constexpr NiColor(std::uint32_t a_hexValue) noexcept :
 			red(((a_hexValue >> 16) & 0xFF) / 255.0f),
 			green(((a_hexValue >> 8) & 0xFF) / 255.0f),
-			blue(((a_hexValue)&0xFF) / 255.0f)
+			blue(((a_hexValue) & 0xFF) / 255.0f)
 		{
 		}
 

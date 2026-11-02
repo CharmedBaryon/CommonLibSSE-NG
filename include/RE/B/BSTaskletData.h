@@ -12,8 +12,8 @@ namespace RE
 
 		// add
 		virtual bool OnStartup() { return true; };  // 01
-		virtual void Process(){};                   // 02
-		virtual void OnComplete(){};                // 03
+		virtual void Process() {};                  // 02
+		virtual void OnComplete() {};               // 03
 
 		// members
 		bool         yielding;  // 08

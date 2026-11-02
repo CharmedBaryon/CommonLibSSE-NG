@@ -25,7 +25,7 @@ namespace RE
 			return func(this, a_body, a_hitInfo);
 		}
 
-		~hkpAllRayHitTempCollector() override{};  // 01
+		~hkpAllRayHitTempCollector() override {};  // 01
 
 		void Reset()
 		{

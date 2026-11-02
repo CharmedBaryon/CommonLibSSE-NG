@@ -10,7 +10,7 @@ namespace RE
 		constexpr NiPoint3(float a_x, float a_y, float a_z) noexcept :
 			x(a_x),
 			y(a_y),
-			z(a_z){};
+			z(a_z) {};
 
 		float&       operator[](std::size_t a_idx);
 		const float& operator[](std::size_t a_idx) const;

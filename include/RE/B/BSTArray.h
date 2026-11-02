@@ -835,7 +835,7 @@ namespace RE
 	private:
 		union Data
 		{
-			~Data(){};
+			~Data() {};
 
 			pointer    heap{ 0 };
 			value_type local;

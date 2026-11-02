@@ -41,7 +41,7 @@ namespace RE
 			inline static constexpr auto RTTI = RTTI_MagicTarget__ForEachActiveEffectVisitor;
 			inline static constexpr auto VTABLE = VTABLE_MagicTarget__ForEachActiveEffectVisitor;
 
-			virtual ~ForEachActiveEffectVisitor(){};  // 00
+			virtual ~ForEachActiveEffectVisitor() {};  // 00
 
 			// add
 			virtual BSContainer::ForEachResult Accept(ActiveEffect* a_effect) = 0;  // 01

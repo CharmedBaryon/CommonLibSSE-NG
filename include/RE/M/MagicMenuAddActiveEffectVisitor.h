@@ -15,7 +15,7 @@ namespace RE
 		inline static constexpr auto RTTI = RTTI___MagicMenuAddActiveEffectVisitor;
 		inline static constexpr auto VTABLE = VTABLE___MagicMenuAddActiveEffectVisitor;
 
-		virtual ~MagicMenuAddActiveEffectVisitor(){};  // 00
+		virtual ~MagicMenuAddActiveEffectVisitor() {};  // 00
 
 		virtual BSContainer::ForEachResult Visit(ActiveEffect* a_effect);  // 01
 

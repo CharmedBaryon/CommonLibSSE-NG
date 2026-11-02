@@ -7,7 +7,7 @@ namespace RE
 	class GFxGradientRecord
 	{
 	public:
-		 bool operator==(const GFxGradientRecord& a_rhs) const { return ratio == a_rhs.ratio && color == a_rhs.color; }
+		bool operator==(const GFxGradientRecord& a_rhs) const { return ratio == a_rhs.ratio && color == a_rhs.color; }
 
 		// members
 		std::uint8_t ratio{ 0 };  // 0

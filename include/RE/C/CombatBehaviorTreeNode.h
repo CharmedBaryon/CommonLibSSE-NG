@@ -18,15 +18,15 @@ namespace RE
 		CombatBehaviorTreeNode();
 		virtual ~CombatBehaviorTreeNode() = default;  // 00
 
-		virtual const BSFixedString& GetName() { return name; };                                                                                         // 01
-		virtual void                 Enter([[maybe_unused]] CombatBehaviorThread* a_thread){};                                                           // 02
-		virtual void                 Exit([[maybe_unused]] CombatBehaviorThread* a_thread){};                                                            // 03
-		virtual void                 Update(CombatBehaviorThread* a_thread) { a_thread->Ascend(); };                                                     // 04
-		virtual void                 Abort(CombatBehaviorThread* a_thread) { a_thread->Ascend(); };                                                      // 05
-		virtual void                 SaveGame([[maybe_unused]] CombatBehaviorThread* a_thread, [[maybe_unused]] BGSSaveFormBuffer* a_saveGameBuffer){};  // 06
-		virtual void                 LoadGame([[maybe_unused]] CombatBehaviorThread* a_thread, [[maybe_unused]] BGSLoadFormBuffer* a_loadGameBuffer){};  // 07
-		virtual bool                 Validate([[maybe_unused]] const CombatBehaviorTreeNode* a_node) { return true; };                                   // 08
-		virtual const BSFixedString& GetType() = 0;                                                                                                      // 09
+		virtual const BSFixedString& GetName() { return name; };                                                                                          // 01
+		virtual void                 Enter([[maybe_unused]] CombatBehaviorThread* a_thread) {};                                                           // 02
+		virtual void                 Exit([[maybe_unused]] CombatBehaviorThread* a_thread) {};                                                            // 03
+		virtual void                 Update(CombatBehaviorThread* a_thread) { a_thread->Ascend(); };                                                      // 04
+		virtual void                 Abort(CombatBehaviorThread* a_thread) { a_thread->Ascend(); };                                                       // 05
+		virtual void                 SaveGame([[maybe_unused]] CombatBehaviorThread* a_thread, [[maybe_unused]] BGSSaveFormBuffer* a_saveGameBuffer) {};  // 06
+		virtual void                 LoadGame([[maybe_unused]] CombatBehaviorThread* a_thread, [[maybe_unused]] BGSLoadFormBuffer* a_loadGameBuffer) {};  // 07
+		virtual bool                 Validate([[maybe_unused]] const CombatBehaviorTreeNode* a_node) { return true; };                                    // 08
+		virtual const BSFixedString& GetType() = 0;                                                                                                       // 09
 
 		void AddChild(CombatBehaviorTreeNode* a_child);
 		void AddChildren(const BSTArray<CombatBehaviorTreeNode*>& a_children);

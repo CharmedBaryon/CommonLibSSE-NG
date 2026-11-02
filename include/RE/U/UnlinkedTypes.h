@@ -37,7 +37,7 @@ namespace RE
 					std::uint32_t idx;
 					BSFixedString string;
 
-					~Value(){};
+					~Value() {};
 				};
 				static_assert(sizeof(Value) == 0x8);
 

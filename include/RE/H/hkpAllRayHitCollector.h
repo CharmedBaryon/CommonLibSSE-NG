@@ -25,7 +25,7 @@ namespace RE
 			return func(this, a_body, a_hitInfo);
 		}
 
-		~hkpAllRayHitCollector() override{};  // 01
+		~hkpAllRayHitCollector() override {};  // 01
 
 		// members
 		hkInplaceArray<hkpWorldRayCastOutput, 8> hits{};  // 010
