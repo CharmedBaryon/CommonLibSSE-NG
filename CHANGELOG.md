@@ -1,3 +1,10 @@
+## [15.5.0](https://github.com/alandtse/CommonLibSSE-NG/compare/v15.4.0...v15.5.0) (2026-11-02)
+
+### Features
+
+* **ai:** add AI world location and travel state ([#471](https://github.com/alandtse/CommonLibSSE-NG/issues/471)) ([91e285c](https://github.com/alandtse/CommonLibSSE-NG/commit/91e285c5ec4f04d8b389f5b1c8ba44ea6733e395))
+* **BGSLoadFormData:** add form and ref getters ([#470](https://github.com/alandtse/CommonLibSSE-NG/issues/470)) ([0810e33](https://github.com/alandtse/CommonLibSSE-NG/commit/0810e3304fe75a52ed524fc1bcdfad58b1dcf964))
+
 ## [15.4.0](https://github.com/alandtse/CommonLibSSE-NG/compare/v15.3.0...v15.4.0) (2026-10-31)
 
 ### Features
