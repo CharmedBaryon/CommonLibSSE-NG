@@ -63,6 +63,10 @@ set(SOURCES
 	include/RE/A/AutoVanityState.h
 	include/RE/A/ahkpCharacterProxy.h
 	include/RE/A/ahkpWorld.h
+	include/RE/B/BGSAIWorldLocation.h
+	include/RE/B/BGSAIWorldLocationInteriorCell.h
+	include/RE/B/BGSAIWorldLocationPointRadius.h
+	include/RE/B/BGSAIWorldLocationRefRadius.h
 	include/RE/B/BGSAbilityPerkEntry.h
 	include/RE/B/BGSAcousticSpace.h
 	include/RE/B/BGSAcousticSpaceListener.h
@@ -179,6 +183,7 @@ set(SOURCES
 	include/RE/B/BGSPerkRankArray.h
 	include/RE/B/BGSPickupPutdownSounds.h
 	include/RE/B/BGSPreloadable.h
+	include/RE/B/BGSProcedureTravelExecState.h
 	include/RE/B/BGSProcedureTreeBranch.h
 	include/RE/B/BGSProcedureTreeConditionalItem.h
 	include/RE/B/BGSProcedureTreeProcedure.h
@@ -1364,6 +1369,7 @@ set(SOURCES
 	include/RE/H/hkpWorldRayCastInput.h
 	include/RE/H/hkpWorldRayCastOutput.h
 	include/RE/H/hkpWorldRayCaster.h
+	include/RE/I/IAIWorldLocation.h
 	include/RE/I/IAIWorldLocationHandle.h
 	include/RE/I/IAnimationClipLoaderSingleton.h
 	include/RE/I/IAnimationGraphManagerHolder.h
