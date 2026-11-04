@@ -1,3 +1,14 @@
+## [15.6.0](https://github.com/alandtse/CommonLibSSE-NG/compare/v15.5.0...v15.6.0) (2026-11-04)
+
+### Features
+
+* **BGSPackageData:** add int, float, selector ([#473](https://github.com/alandtse/CommonLibSSE-NG/issues/473)) ([8edb8b1](https://github.com/alandtse/CommonLibSSE-NG/commit/8edb8b17408b9f2b6cc34f9da006b2a5b3c9e9c9)), closes [#472](https://github.com/alandtse/CommonLibSSE-NG/issues/472)
+* **BGSPackageData:** add remaining data classes ([#474](https://github.com/alandtse/CommonLibSSE-NG/issues/474)) ([f5ec557](https://github.com/alandtse/CommonLibSSE-NG/commit/f5ec55742dc568c2406adddda5e9ec141d64d1fe)), closes [#473](https://github.com/alandtse/CommonLibSSE-NG/issues/473) [#473](https://github.com/alandtse/CommonLibSSE-NG/issues/473)
+
+### Bug Fixes
+
+* **IPackageData:** InitPackage takes a TESForm* ([#472](https://github.com/alandtse/CommonLibSSE-NG/issues/472)) ([0d556e8](https://github.com/alandtse/CommonLibSSE-NG/commit/0d556e8d0988fcd721604de0daeabb641c344cb2))
+
 ## [15.5.0](https://github.com/alandtse/CommonLibSSE-NG/compare/v15.4.0...v15.5.0) (2026-11-02)
 
 ### Features
