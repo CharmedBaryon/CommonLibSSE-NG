@@ -175,12 +175,18 @@ set(SOURCES
 	include/RE/B/BGSOpenCloseForm.h
 	include/RE/B/BGSOutfit.h
 	include/RE/B/BGSOverridePackCollection.h
+	include/RE/B/BGSPackageDataBasicTemplate.h
 	include/RE/B/BGSPackageDataBool.h
 	include/RE/B/BGSPackageDataFloat.h
 	include/RE/B/BGSPackageDataInt.h
 	include/RE/B/BGSPackageDataLocation.h
+	include/RE/B/BGSPackageDataLocationWrapper.h
+	include/RE/B/BGSPackageDataObjectList.h
 	include/RE/B/BGSPackageDataPointerTemplate.h
+	include/RE/B/BGSPackageDataRef.h
+	include/RE/B/BGSPackageDataRefOLD.h
 	include/RE/B/BGSPackageDataTargetSelector.h
+	include/RE/B/BGSPackageDataTopic.h
 	include/RE/B/BGSPerk.h
 	include/RE/B/BGSPerkEntry.h
 	include/RE/B/BGSPerkRankArray.h
@@ -1372,6 +1378,7 @@ set(SOURCES
 	include/RE/H/hkpWorldRayCastInput.h
 	include/RE/H/hkpWorldRayCastOutput.h
 	include/RE/H/hkpWorldRayCaster.h
+	include/RE/I/IAITarget.h
 	include/RE/I/IAIWorldLocation.h
 	include/RE/I/IAIWorldLocationHandle.h
 	include/RE/I/IAnimationClipLoaderSingleton.h
