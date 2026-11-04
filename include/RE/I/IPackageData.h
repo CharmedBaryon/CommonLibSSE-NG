@@ -7,6 +7,7 @@ namespace RE
 {
 	class BGSLoadFormBuffer;
 	class TESFile;
+	class TESForm;
 
 	class IPackageData
 	{
@@ -17,7 +18,7 @@ namespace RE
 		virtual ~IPackageData();  // 00
 
 		// add
-		virtual void                               InitPackage() = 0;                            // 01
+		virtual void                               InitPackage(TESForm* a_form) = 0;             // 01
 		virtual void                               LoadPackage(TESFile* a_mod) = 0;              // 02
 		virtual void                               Assign(IPackageData* a_other) = 0;            // 03
 		virtual bool                               IsNotEqual(IPackageData* a_other) const = 0;  // 04

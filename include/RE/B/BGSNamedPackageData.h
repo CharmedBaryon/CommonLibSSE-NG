@@ -20,12 +20,12 @@ namespace RE
 		static_assert(sizeof(Data) == 0x8);
 
 		// override (IPackageData)
-		void InitPackage() override;                            // 01 - { return; }
+		void InitPackage(TESForm* a_form) override;             // 01 - { return; }
 		void LoadPackage(TESFile* a_mod) override;              // 02
 		void Assign(IPackageData* a_other) override;            // 03 - { return; }
 		bool IsNotEqual(IPackageData* a_other) const override;  // 04
 
 		// members
-		Data data;  // ??
+		Data data;  // 08
 	};
 }
