@@ -1614,6 +1614,7 @@ set(SOURCES
 	include/RE/N/NiFile.h
 	include/RE/N/NiFloatData.h
 	include/RE/N/NiFloatExtraData.h
+	include/RE/N/NiFloatInterpController.h
 	include/RE/N/NiFloatInterpolator.h
 	include/RE/N/NiFloatKey.h
 	include/RE/N/NiFloatsExtraData.h
@@ -1628,6 +1629,8 @@ set(SOURCES
 	include/RE/N/NiInterpolator.h
 	include/RE/N/NiKeyBasedInterpolator.h
 	include/RE/N/NiLight.h
+	include/RE/N/NiLightDimmerController.h
+	include/RE/N/NiLinFloatKey.h
 	include/RE/N/NiMath.h
 	include/RE/N/NiMatrix3.h
 	include/RE/N/NiMemManager.h
@@ -1655,6 +1658,7 @@ set(SOURCES
 	include/RE/N/NiRect.h
 	include/RE/N/NiRefObject.h
 	include/RE/N/NiShadeProperty.h
+	include/RE/N/NiSingleInterpController.h
 	include/RE/N/NiSkinData.h
 	include/RE/N/NiSkinInstance.h
 	include/RE/N/NiSkinPartition.h

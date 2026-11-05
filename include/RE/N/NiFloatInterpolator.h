@@ -42,6 +42,13 @@ namespace RE
 		std::uint8_t       GetKeyStride(std::uint16_t a_channel) const override;                                   // 3E - { return floatData ? floatData->keySize : 0; }
 		[[nodiscard]] bool GetChannelPosed(std::uint16_t a_channel) const override;                                // 3F - { return !floatData && floatValue != -3.4028235e38; }
 
+		static NiFloatInterpolator* Create()
+		{
+			using func_t = decltype(&NiFloatInterpolator::Create);
+			static REL::Relocation<func_t> func{ RELOCATION_ID(71088, 72686) };
+			return func();
+		}
+
 		// members
 		float                  floatValue;  // 18
 		std::uint32_t          pad1C;       // 1C
