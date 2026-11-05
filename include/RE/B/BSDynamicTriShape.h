@@ -39,9 +39,16 @@ namespace RE
 		RUNTIME_DATA_ACCESSOR_EX(DYNAMIC_TRISHAPE_RUNTIME_DATA, GetDynamicTrishapeRuntimeData, 0x160, 0x1A0);
 		BSDynamicTriShape* ctor()
 		{
-			using func_t = decltype(&BSDynamicTriShape::ctor);
+			using func_t = BSDynamicTriShape* (BSDynamicTriShape::*)();
 			static REL::Relocation<func_t> func{ RELOCATION_ID(69564, 70948) };
 			return func(this);
+		}
+
+		BSDynamicTriShape* ctor(std::uint64_t a_vertexDesc, std::uint16_t a_vertexCount, std::uint16_t a_triangleCount, std::uint32_t a_dataSize)
+		{
+			using func_t = BSDynamicTriShape* (BSDynamicTriShape::*)(std::uint64_t, std::uint16_t, std::uint16_t, std::uint32_t);
+			static REL::Relocation<func_t> func{ RELOCATION_ID(69563, 70947) };
+			return func(this, a_vertexDesc, a_vertexCount, a_triangleCount, a_dataSize);
 		}
 
 #ifndef SKYRIM_CROSS_VR

@@ -28,21 +28,22 @@ namespace RE
 
 		struct RUNTIME_DATA
 		{
-#define RUNTIME_DATA_CONTENT                                  \
-	BSTArray<BGSHeadPart*>           headParts[7];  /* 000 */ \
-	RaceSexCamera                    camera;        /* 0A8 */ \
-	BSTArray<RaceComponent>          sliderData[2]; /* 100 */ \
-	BSTArray<void*>                  unk170;        /* 130 */ \
-	std::uint64_t                    unk188;        /* 148 */ \
-	std::uint32_t                    unk190;        /* 150 */ \
-	std::uint32_t                    unk194;        /* 154 */ \
-	REX::EnumSet<SEX, std::uint32_t> sex;           /* 158 */ \
-	std::uint16_t                    unk19C;        /* 15C */ \
-	std::uint8_t                     unk19E;        /* 15E */ \
-	std::uint8_t                     pad19F;        /* 15F */ \
-	std::uint8_t                     unk1A0;        /* 160 */ \
-	std::uint8_t                     unk1A1;        /* 161 */ \
-	std::uint16_t                    unk1A2;        /* 162 */ \
+#define RUNTIME_DATA_CONTENT                                                               \
+	BSTArray<BGSHeadPart*>           headParts[7];  /* 000 */                              \
+	RaceSexCamera                    camera;        /* 0A8 */                              \
+	BSTArray<RaceComponent>          sliderData[2]; /* 100 */                              \
+	BSTArray<void*>                  unk170;        /* 130 */                              \
+	std::uint32_t                    raceIndex;     /* 148 - index into sliderData[sex] */ \
+	std::uint32_t                    pad18C;        /* 14C */                              \
+	std::uint32_t                    unk190;        /* 150 */                              \
+	std::uint32_t                    unk194;        /* 154 */                              \
+	REX::EnumSet<SEX, std::uint32_t> sex;           /* 158 */                              \
+	std::uint16_t                    unk19C;        /* 15C */                              \
+	std::uint8_t                     unk19E;        /* 15E */                              \
+	std::uint8_t                     pad19F;        /* 15F */                              \
+	std::uint8_t                     unk1A0;        /* 160 */                              \
+	std::uint8_t                     unk1A1;        /* 161 */                              \
+	std::uint16_t                    unk1A2;        /* 162 */                              \
 	std::uint32_t                    unk1A4;        /* 164 */
             RUNTIME_DATA_CONTENT
 		};
@@ -55,7 +56,8 @@ namespace RE
 			BSTArray<BGSHeadPart*>           headParts[7];   // 000
 			BSTArray<RaceComponent>          sliderData[2];  // 0A8
 			BSTArray<void*>                  unk170;         // 0D8
-			std::uint64_t                    unk188;         // 0F0
+			std::uint32_t                    raceIndex;      // 0F0 - index into sliderData[sex]
+			std::uint32_t                    pad18C;         // 0F4
 			std::uint32_t                    unk190;         // 0F8
 			std::uint32_t                    unk194;         // 0FC
 			REX::EnumSet<SEX, std::uint32_t> sex;            // 100
@@ -69,7 +71,7 @@ namespace RE
 		};
 		static_assert(sizeof(VR_RUNTIME_DATA) == 0x110);
 		static_assert(offsetof(VR_RUNTIME_DATA, sliderData) == 0xA8);
-		static_assert(offsetof(VR_RUNTIME_DATA, unk188) == 0xF0);
+		static_assert(offsetof(VR_RUNTIME_DATA, raceIndex) == 0xF0);
 		static_assert(offsetof(VR_RUNTIME_DATA, sex) == 0x100);
 
 		~RaceSexMenu() override;  // 00

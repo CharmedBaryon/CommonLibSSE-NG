@@ -14,16 +14,16 @@ namespace RE
 		enum
 		{
 			kTypeHeadPart = 0,
-			kTypeUnk1,
+			kTypeMorph,
 			kTypeDoubleMorph,
 			kTypePreset,
 			kTypeTintingMask,
 			kTypeHairColorPreset,
 			kTypeUnk6,
 			kTypeUnused7,
-			kTypeUnk8,
-			kTypeUnk9,
-			kTypeUnk10
+			kTypeMask,
+			kTypeMaskColor,
+			kTypeFaceDetails
 		};
 
 		float         min;            // 000
@@ -48,10 +48,12 @@ namespace RE
 	// One race+sex slider set. Stride 0x28 verified against SkyrimSE.exe.
 	struct RaceComponent
 	{
-		TESRace*            race;     // 00
-		RaceMenuSliderArray sliders;  // 08
-		std::uint32_t       unk20;    // 20
-		std::uint32_t       pad24;    // 24
+		TESRace*            race;      // 00
+		RaceMenuSliderArray sliders;   // 08
+		std::uint8_t        unk20;     // 20
+		std::uint8_t        modified;  // 21 - set to 1 after any slider in this set is changed
+		std::uint16_t       pad22;     // 22
+		std::uint32_t       pad24;     // 24
 	};
 	static_assert(sizeof(RaceComponent) == 0x28);
 }
