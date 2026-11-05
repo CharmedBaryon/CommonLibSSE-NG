@@ -1,3 +1,11 @@
+## [15.7.0](https://github.com/alandtse/CommonLibSSE-NG/compare/v15.6.0...v15.7.0) (2026-11-05)
+
+### Features
+
+* add NiLightDimmerController and other Ni classes ([#477](https://github.com/alandtse/CommonLibSSE-NG/issues/477)) ([e77efa5](https://github.com/alandtse/CommonLibSSE-NG/commit/e77efa54c797285fb77e1ee63d5a11c050f71643))
+* **LoadedReferenceCollection:** add class ([#478](https://github.com/alandtse/CommonLibSSE-NG/issues/478)) ([a8cfac6](https://github.com/alandtse/CommonLibSSE-NG/commit/a8cfac6675954ac8a99f290953ef00f745612287))
+* name RaceSexMenu fields, add ctor overload ([#476](https://github.com/alandtse/CommonLibSSE-NG/issues/476)) ([bd212d9](https://github.com/alandtse/CommonLibSSE-NG/commit/bd212d99c73943f47b581ef356f293471435abdc))
+
 ## [15.6.0](https://github.com/alandtse/CommonLibSSE-NG/compare/v15.5.0...v15.6.0) (2026-11-04)
 
 ### Features
