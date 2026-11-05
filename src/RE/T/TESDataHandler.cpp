@@ -34,7 +34,7 @@ namespace RE
 
 		FormID formID = file->compileIndex << (3 * 8);
 		formID += file->smallFileCompileIndex << ((1 * 8) + 4);
-		formID += a_rawFormID;
+		formID += a_rawFormID & (file->IsLight() ? 0xFFF : 0xFFFFFF);
 
 		return TESForm::LookupByID(formID);
 	}
@@ -48,7 +48,7 @@ namespace RE
 
 		FormID formID = file->compileIndex << (3 * 8);
 		formID += file->smallFileCompileIndex << ((1 * 8) + 4);
-		formID += a_rawFormID;
+		formID += a_rawFormID & (file->IsLight() ? 0xFFF : 0xFFFFFF);
 
 		return formID;
 	}
