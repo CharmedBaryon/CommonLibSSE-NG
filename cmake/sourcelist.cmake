@@ -1496,6 +1496,7 @@ set(SOURCES
 	include/RE/L/LoadStorageWrapper.h
 	include/RE/L/LoadWaitSpinner.h
 	include/RE/L/LoadedAreaBound.h
+	include/RE/L/LoadedReferenceCollection.h
 	include/RE/L/LoadingMenu.h
 	include/RE/L/LoadingMenuData.h
 	include/RE/L/LocalMapCamera.h
@@ -2471,6 +2472,7 @@ set(SOURCES
 	src/RE/I/ItemList.cpp
 	src/RE/I/ItemsPickpocketed.cpp
 	src/RE/L/LevelIncrease.cpp
+	src/RE/L/LoadedReferenceCollection.cpp
 	src/RE/L/LocalMapCamera.cpp
 	src/RE/L/Location.cpp
 	src/RE/L/LocationCleared.cpp
