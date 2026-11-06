@@ -2204,7 +2204,6 @@ set(SOURCES
 	src/RE/B/BSFadeNode.cpp
 	src/RE/B/BSFixedString.cpp
 	src/RE/B/BSGameSound.cpp
-	src/RE/B/BSGamepadDevice.cpp
 	src/RE/B/BSGeometry.cpp
 	src/RE/B/BSHandleRefObject.cpp
 	src/RE/B/BSIStream.cpp
@@ -2215,19 +2214,15 @@ set(SOURCES
 	src/RE/B/BSInputEventQueue.cpp
 	src/RE/B/BSInstanceTriShape.cpp
 	src/RE/B/BSInvMarker.cpp
-	src/RE/B/BSKeyboardDevice.cpp
 	src/RE/B/BSLeafAnimNode.cpp
 	src/RE/B/BSLightingShaderMaterialBase.cpp
 	src/RE/B/BSLightingShaderProperty.cpp
 	src/RE/B/BSModelDB.cpp
-	src/RE/B/BSMouseDevice.cpp
 	src/RE/B/BSMultiBoundNode.cpp
 	src/RE/B/BSMultiStreamInstanceTriShape.cpp
 	src/RE/B/BSOcclusionPlane.cpp
 	src/RE/B/BSOpenVR.cpp
-	src/RE/B/BSPCGamepadDeviceDelegate.cpp
 	src/RE/B/BSPCGamepadDeviceHandler.cpp
-	src/RE/B/BSPCOrbisGamepadDevice.cpp
 	src/RE/B/BSParticleSystemManager.cpp
 	src/RE/B/BSPathingLocation.cpp
 	src/RE/B/BSPathingRequest.cpp
@@ -2255,14 +2250,10 @@ set(SOURCES
 	src/RE/B/BSTreeNode.cpp
 	src/RE/B/BSUIMessageData.cpp
 	src/RE/B/BSValueNode.cpp
-	src/RE/B/BSVirtualKeyboardDevice.cpp
 	src/RE/B/BSVisit.cpp
 	src/RE/B/BSVolumetricLightingTextureSize.cpp
-	src/RE/B/BSWin32GamepadDevice.cpp
 	src/RE/B/BSWin32KeyboardDevice.cpp
-	src/RE/B/BSWin32MouseDevice.cpp
 	src/RE/B/BSWin32SaveDataSystemUtility.cpp
-	src/RE/B/BSWin32VirtualKeyboardDevice.cpp
 	src/RE/B/BSWindModifier.cpp
 	src/RE/B/BSXAudio2GameSound.cpp
 	src/RE/B/BSXFlags.cpp

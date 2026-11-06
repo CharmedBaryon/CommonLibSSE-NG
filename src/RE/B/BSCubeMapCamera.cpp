@@ -16,11 +16,6 @@ namespace RE
 		return camera;
 	}
 
-	BSCubeMapCamera::~BSCubeMapCamera()
-	{
-		Dtor();
-	}
-
 	BSCubeMapCamera* BSCubeMapCamera::Ctor()
 	{
 		using func_t = decltype(&BSCubeMapCamera::Ctor);

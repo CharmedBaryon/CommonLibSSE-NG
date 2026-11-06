@@ -30,7 +30,6 @@ namespace RE
 
 	protected:
 		friend class BSInputDeviceFactory;
-		BSMouseDevice();
 	};
 	STATIC_ASSERT_SIZE(BSMouseDevice, 0x78, 0x78, 0x80, 0x8);
 }

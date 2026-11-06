@@ -54,7 +54,6 @@ namespace RE
 #endif
 
 	protected:
-		BSGamepadDevice();
 	};
 	STATIC_ASSERT_SIZE(BSGamepadDevice, 0xD0, 0xD0, 0xD8, 0x8, 0xD0);
 }

@@ -208,7 +208,6 @@ namespace RE
 
 	protected:
 		friend class BSGamepadDeviceHandler;
-		BSPCOrbisGamepadDevice();
 	};
 	STATIC_ASSERT_SIZE(BSPCOrbisGamepadDevice, 0x1F8, 0x1F8, 0x200, 0x8, 0x1F8);
 }

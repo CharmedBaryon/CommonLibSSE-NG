@@ -2,16 +2,6 @@
 
 namespace RE
 {
-	NiColorData::NiColorData() :
-		numKeys(0),
-		pad14(0),
-		keys(nullptr),
-		type(KeyType::kNoInterp),
-		keySize(0),
-		pad25(0),
-		pad26(0)
-	{}
-
 	std::uint32_t NiColorData::GetNumKeys() const
 	{
 		return numKeys;

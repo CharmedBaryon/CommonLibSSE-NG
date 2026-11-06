@@ -139,7 +139,6 @@ namespace RE
 		virtual void Unk_09(void) = 0;  // 09
 		virtual void Unk_0A(void) = 0;  // 0A
 	protected:
-		BSKeyboardDevice();
 	};
 	STATIC_ASSERT_SIZE(BSKeyboardDevice, 0x70, 0x70, 0x78, 0x8);
 }

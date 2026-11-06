@@ -2,11 +2,11 @@
 
 namespace RE
 {
-	CombatBehaviorTreeNode::CombatBehaviorTreeNode()
+	CombatBehaviorTreeNode* CombatBehaviorTreeNode::Ctor()
 	{
 		using func_t = CombatBehaviorTreeNode*(CombatBehaviorTreeNode*);
 		static REL::Relocation<func_t> func{ RELOCATION_ID(46301, 47545) };
-		func(this);
+		return func(this);
 	}
 
 	void CombatBehaviorTreeNode::AddChild(CombatBehaviorTreeNode* a_child)

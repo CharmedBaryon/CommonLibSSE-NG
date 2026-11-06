@@ -15,7 +15,7 @@ namespace RE
 		inline static constexpr auto RTTI = RTTI_CombatBehaviorTreeNode;
 		inline static constexpr auto VTABLE = VTABLE_CombatBehaviorTreeNode;
 
-		CombatBehaviorTreeNode();
+		CombatBehaviorTreeNode* Ctor();
 		virtual ~CombatBehaviorTreeNode();  // 00
 
 		virtual const BSFixedString& GetName();                                                                      // 01

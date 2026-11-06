@@ -36,11 +36,11 @@ namespace RE
 		return func(this, a_other);
 	}
 
-	CombatBehaviorTree::CombatBehaviorTree(const char* a_name)
+	CombatBehaviorTree* CombatBehaviorTree::Ctor(const char* a_name)
 	{
 		using func_t = CombatBehaviorTree*(CombatBehaviorTree*, const char*);
 		static REL::Relocation<func_t> func{ RELOCATION_ID(46258, 47513) };
-		func(this, a_name);
+		return func(this, a_name);
 	}
 
 	void CombatBehaviorTree::CreateTree(CombatBehaviorTreeNode* a_node)

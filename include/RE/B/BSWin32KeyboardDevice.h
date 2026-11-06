@@ -44,7 +44,6 @@ namespace RE
 #endif
 
 	protected:
-		BSWin32KeyboardDevice();
 	};
 #ifndef SKYRIM_CROSS_VR
 	STATIC_ASSERT_OFFSET(BSWin32KeyboardDevice, prevState, 0x168, 0x170);

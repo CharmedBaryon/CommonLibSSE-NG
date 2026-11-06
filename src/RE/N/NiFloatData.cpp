@@ -2,16 +2,6 @@
 
 namespace RE
 {
-	NiFloatData::NiFloatData() :
-		numKeys(0),
-		pad14(0),
-		keys(nullptr),
-		type(KeyType::kNoInterp),
-		keySize(0),
-		pad25(0),
-		pad26(0)
-	{}
-
 	NiFloatData* NiFloatData::Create()
 	{
 		using func_t = decltype(&NiFloatData::Create);

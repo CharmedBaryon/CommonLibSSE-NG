@@ -111,7 +111,6 @@ namespace RE
 
 	protected:
 		friend class BSGamepadDeviceHandler;
-		BSWin32GamepadDevice();
 	};
 	STATIC_ASSERT_SIZE(BSWin32GamepadDevice, 0x128, 0x128, 0x130, 0x8, 0x128);
 }

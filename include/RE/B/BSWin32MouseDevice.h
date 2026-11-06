@@ -59,7 +59,6 @@ namespace RE
 #endif
 
 	protected:
-		BSWin32MouseDevice();
 	};
 	STATIC_ASSERT_SIZE(BSWin32MouseDevice, 0xB8, 0xB8, 0xC0, 0x8);
 }

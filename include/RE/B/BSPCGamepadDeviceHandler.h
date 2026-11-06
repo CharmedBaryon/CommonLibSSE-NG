@@ -40,7 +40,6 @@ namespace RE
 #endif
 	protected:
 		friend class BSInputDeviceFactory;
-		BSPCGamepadDeviceHandler();
 	};
 	STATIC_ASSERT_SIZE(BSPCGamepadDeviceHandler, 0x10, 0x10, 0x18, 0x8);
 }

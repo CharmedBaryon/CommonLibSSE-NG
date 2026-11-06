@@ -22,7 +22,6 @@ namespace RE
 		void UserCancelled() override;              // 0D - { return; }
 
 	protected:
-		BSWin32VirtualKeyboardDevice();
 	};
 	STATIC_ASSERT_SIZE(BSWin32VirtualKeyboardDevice, 0x70, 0x70, 0x78, 0x8);
 }

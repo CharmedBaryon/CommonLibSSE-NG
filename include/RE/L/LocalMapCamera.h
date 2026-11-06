@@ -40,7 +40,6 @@ namespace RE
 		};
 		static_assert(sizeof(DefaultState) == 0x48);
 
-		LocalMapCamera(float a_zRotation);
 		~LocalMapCamera() override;  // 00
 
 		void SetAreaBounds(NiPoint3& a_maxExtent, NiPoint3& a_minExtent);

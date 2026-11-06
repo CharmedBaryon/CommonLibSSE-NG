@@ -42,3 +42,24 @@ add_test(
 	NAME ConsumerCompileTest
 	COMMAND ConsumerTest
 )
+
+# Whole-archive link: a static library only resolves objects a program calls into, so a vtable
+# with undefined virtuals stays hidden until a consumer first uses that file.
+add_executable(
+	ConsumerLinkAll
+	link_all.cpp
+)
+
+target_link_libraries(
+	ConsumerLinkAll
+	PRIVATE
+	CommonLibSSE::CommonLibSSE
+)
+
+if(MSVC)
+	target_link_options(
+		ConsumerLinkAll
+		PRIVATE
+		"/WHOLEARCHIVE:$<TARGET_FILE:CommonLibSSE>"
+	)
+endif()

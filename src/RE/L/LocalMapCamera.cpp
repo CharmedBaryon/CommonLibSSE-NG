@@ -5,11 +5,6 @@
 
 namespace RE
 {
-	LocalMapCamera::LocalMapCamera(float a_zRotation)
-	{
-		Ctor(a_zRotation);
-	}
-
 	void LocalMapCamera::SetAreaBounds(NiPoint3& a_maxExtent, NiPoint3& a_minExtent)
 	{
 		auto ini = INISettingCollection::GetSingleton();

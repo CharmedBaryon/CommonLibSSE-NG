@@ -14,7 +14,6 @@ namespace RE
 
 		using KeyType = NiColorKey::KeyType;
 
-		NiColorData();
 		~NiColorData() override;  // 00
 
 		// override (NiObject)

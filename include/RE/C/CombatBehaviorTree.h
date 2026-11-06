@@ -45,7 +45,7 @@ namespace RE
 		};
 		static_assert(sizeof(TreeBuilder) == 0x18);
 
-		CombatBehaviorTree(const char* a_name);
+		CombatBehaviorTree* Ctor(const char* a_name);
 
 		virtual void Initialize();  // 00
 

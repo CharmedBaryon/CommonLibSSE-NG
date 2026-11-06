@@ -14,7 +14,7 @@ namespace RE
 	class CombatTargetLocationSearch : public CombatObject
 	{
 	public:
-		CombatTargetLocationSearch(Actor* actor, Actor* target, float R);
+		CombatTargetLocationSearch* Ctor(Actor* a_actor, Actor* a_target, float a_radius);
 
 		CombatTargetLocationSearchResult* result;
 		BSTArray<uint32_t>                array1;

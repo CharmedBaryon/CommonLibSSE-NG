@@ -36,7 +36,6 @@ namespace RE
 		virtual void UserCancelled() = 0;              // 0D
 
 	protected:
-		BSVirtualKeyboardDevice();  // The virtual keyboard device constructor does not set the device type to virtualKeyboard, it remains 'kKeyboard'
 	};
 	STATIC_ASSERT_SIZE(BSVirtualKeyboardDevice, 0x70, 0x70, 0x78, 0x8);
 }

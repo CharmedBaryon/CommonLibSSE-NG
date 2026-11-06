@@ -14,7 +14,6 @@ namespace RE
 
 		using KeyType = NiFloatKey::KeyType;
 
-		NiFloatData();
 		~NiFloatData() override;  // 00
 
 		// override (NiObject)
