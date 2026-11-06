@@ -1,3 +1,9 @@
+## [15.7.1](https://github.com/alandtse/CommonLibSSE-NG/compare/v15.7.0...v15.7.1) (2026-11-06)
+
+### Bug Fixes
+
+* drop ctors that emit undefined vtables ([#480](https://github.com/alandtse/CommonLibSSE-NG/issues/480)) ([933da2d](https://github.com/alandtse/CommonLibSSE-NG/commit/933da2d1046e4c0073f402cb6a1ea12681bf2884))
+
 ## [15.7.0](https://github.com/alandtse/CommonLibSSE-NG/compare/v15.6.0...v15.7.0) (2026-11-05)
 
 ### Features
