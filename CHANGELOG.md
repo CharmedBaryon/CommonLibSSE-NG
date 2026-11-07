@@ -1,3 +1,10 @@
+## [15.7.3](https://github.com/alandtse/CommonLibSSE-NG/compare/v15.7.2...v15.7.3) (2026-11-07)
+
+### Bug Fixes
+
+* **state:** correct SE and VR frame flag ([#481](https://github.com/alandtse/CommonLibSSE-NG/issues/481)) ([eb172fe](https://github.com/alandtse/CommonLibSSE-NG/commit/eb172fe71c01903388719e8e72445cda37e3e192))
+* **vr:** correct RaceSexMenu direct layout ([#483](https://github.com/alandtse/CommonLibSSE-NG/issues/483)) ([eda0c1b](https://github.com/alandtse/CommonLibSSE-NG/commit/eda0c1b7e3b072a396f2eb01770050a152fdab68))
+
 ## [15.7.2](https://github.com/alandtse/CommonLibSSE-NG/compare/v15.7.1...v15.7.2) (2026-11-07)
 
 ### Bug Fixes
