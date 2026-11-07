@@ -2570,6 +2570,7 @@ set(SOURCES
 	src/RE/S/ShoutAttack.cpp
 	src/RE/S/SkillIncrease.cpp
 	src/RE/S/Sky.cpp
+	src/RE/S/SkyPrecipitation.h
 	src/RE/S/SkyrimVM.cpp
 	src/RE/S/SoulsTrapped.cpp
 	src/RE/S/SourceActionMap.cpp

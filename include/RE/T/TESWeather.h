@@ -114,8 +114,8 @@ namespace RE
 			std::int8_t                                 transDelta;                   // 03
 			std::int8_t                                 sunGlare;                     // 04
 			std::int8_t                                 sunDamage;                    // 05
-			std::int8_t                                 precipitationBeginFadeIn;     // 06
-			std::int8_t                                 precipitationEndFadeOut;      // 07
+			std::uint8_t                                precipitationBeginFadeIn;     // 06
+			std::uint8_t                                precipitationEndFadeOut;      // 07
 			std::int8_t                                 thunderLightningBeginFadeIn;  // 08
 			std::int8_t                                 thunderLightningEndFadeOut;   // 09
 			std::int8_t                                 thunderLightningFrequency;    // 0A

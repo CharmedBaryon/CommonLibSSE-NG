@@ -7,6 +7,7 @@ set(TESTS
     tests/RE/I/InventoryChanges.test.cpp
     tests/RE/M/MenuEventHandlerEx.test.cpp
     tests/RE/P/PlayerInputHandler.test.cpp
+    tests/RE/S/Sky.test.cpp
     tests/REL/Relocation.test.cpp
     tests/REL/RuntimeDataAccessors.test.cpp
     tests/REL/StaticAssertSize.test.cpp
