@@ -84,9 +84,10 @@ namespace RE
 		std::uint32_t                          deactivationRefOrientation[2];     // 120
 		hkpMaxSizeMotion*                      savedMotion;                       // 128
 		std::uint16_t                          savedQualityTypeIndex;             // 130
-		std::uint16_t                          pad132;                            // 132
-		hkHalf                                 gravityFactor;                     // 134
+		hkHalf                                 gravityFactor;                     // 132
+		std::uint32_t                          pad134;                            // 134
 		std::uint64_t                          pad138;                            // 138
 	};
 	static_assert(sizeof(hkpMotion) == 0x140);
+	static_assert(offsetof(hkpMotion, gravityFactor) == 0x132);
 }
