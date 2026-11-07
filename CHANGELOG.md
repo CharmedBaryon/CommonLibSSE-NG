@@ -1,3 +1,10 @@
+## [15.7.2](https://github.com/alandtse/CommonLibSSE-NG/compare/v15.7.1...v15.7.2) (2026-11-07)
+
+### Bug Fixes
+
+* **havok:** correct hkpMotion gravityFactor offset ([#484](https://github.com/alandtse/CommonLibSSE-NG/issues/484)) ([fe51a85](https://github.com/alandtse/CommonLibSSE-NG/commit/fe51a85708e305d2c1ca1d622140375402be2966))
+* **weather:** correct precipitation checks ([#482](https://github.com/alandtse/CommonLibSSE-NG/issues/482)) ([40fb19b](https://github.com/alandtse/CommonLibSSE-NG/commit/40fb19b3da0ad00dd17f4237d0e3a16a3f66cad6))
+
 ## [15.7.1](https://github.com/alandtse/CommonLibSSE-NG/compare/v15.7.0...v15.7.1) (2026-11-06)
 
 ### Bug Fixes
