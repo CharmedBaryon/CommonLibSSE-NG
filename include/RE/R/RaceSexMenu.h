@@ -19,7 +19,7 @@ namespace RE
 		public IMenu,            // 00
 		public MenuEventHandler  // 30, 40
 #else
-		public IMenu  // 00
+		public IMenu           // 00
 #endif
 	{
 	public:
@@ -53,21 +53,23 @@ namespace RE
 		// begins at +0x50, but fields after headParts are 0x58 bytes earlier.
 		struct VR_RUNTIME_DATA
 		{
-			BSTArray<BGSHeadPart*>           headParts[7];   // 000
-			BSTArray<RaceComponent>          sliderData[2];  // 0A8
-			BSTArray<void*>                  unk170;         // 0D8
-			std::uint32_t                    raceIndex;      // 0F0 - index into sliderData[sex]
-			std::uint32_t                    pad18C;         // 0F4
-			std::uint32_t                    unk190;         // 0F8
-			std::uint32_t                    unk194;         // 0FC
-			REX::EnumSet<SEX, std::uint32_t> sex;            // 100
-			std::uint16_t                    unk19C;         // 104
-			std::uint8_t                     unk19E;         // 106
-			std::uint8_t                     pad19F;         // 107
-			std::uint8_t                     unk1A0;         // 108
-			std::uint8_t                     unk1A1;         // 109
-			std::uint16_t                    unk1A2;         // 10A
-			std::uint32_t                    unk1A4;         // 10C
+#define VR_RUNTIME_DATA_CONTENT                                                            \
+	BSTArray<BGSHeadPart*>           headParts[7];  /* 000 */                              \
+	BSTArray<RaceComponent>          sliderData[2]; /* 0A8 */                              \
+	BSTArray<void*>                  unk170;        /* 0D8 */                              \
+	std::uint32_t                    raceIndex;     /* 0F0 - index into sliderData[sex] */ \
+	std::uint32_t                    pad18C;        /* 0F4 */                              \
+	std::uint32_t                    unk190;        /* 0F8 */                              \
+	std::uint32_t                    unk194;        /* 0FC */                              \
+	REX::EnumSet<SEX, std::uint32_t> sex;           /* 100 */                              \
+	std::uint16_t                    unk19C;        /* 104 */                              \
+	std::uint8_t                     unk19E;        /* 106 */                              \
+	std::uint8_t                     pad19F;        /* 107 */                              \
+	std::uint8_t                     unk1A0;        /* 108 */                              \
+	std::uint8_t                     unk1A1;        /* 109 */                              \
+	std::uint16_t                    unk1A2;        /* 10A */                              \
+	std::uint32_t                    unk1A4;        /* 10C */
+            VR_RUNTIME_DATA_CONTENT
 		};
 		static_assert(sizeof(VR_RUNTIME_DATA) == 0x110);
 		static_assert(offsetof(VR_RUNTIME_DATA, sliderData) == 0xA8);
@@ -101,10 +103,18 @@ namespace RE
 		void ChangeName(const char* a_name);
 
 		// members
-#ifndef SKYRIM_CROSS_VR
-		RUNTIME_DATA_CONTENT;  // 40, 50
+#ifdef EXCLUSIVE_SKYRIM_VR
+		VR_RUNTIME_DATA_CONTENT;  // 50
+#elif !defined(SKYRIM_CROSS_VR)
+		RUNTIME_DATA_CONTENT;  // 40
 #endif
 	};
-	STATIC_ASSERT_SIZE(RaceSexMenu, 0x1A8, 0x1A8, 0x1B8, 0x30);
+	STATIC_ASSERT_SIZE(RaceSexMenu, 0x1A8, 0x1A8, 0x160, 0x30, 0x1A8);
+#ifdef EXCLUSIVE_SKYRIM_VR
+	static_assert(offsetof(RaceSexMenu, sliderData) == 0xF8);
+	static_assert(offsetof(RaceSexMenu, raceIndex) == 0x140);
+	static_assert(offsetof(RaceSexMenu, sex) == 0x150);
+#endif
 }
 #undef RUNTIME_DATA_CONTENT
+#undef VR_RUNTIME_DATA_CONTENT
