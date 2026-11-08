@@ -127,6 +127,7 @@ namespace RE
 
 		void SendActivateEvent(const NiPointer<TESObjectREFR>& a_objectActivated, const NiPointer<TESObjectREFR>& a_actionRef);  // may be VR only
 		void SendOpenCloseEvent(const NiPointer<TESObjectREFR>& a_ref, const NiPointer<TESObjectREFR>& a_activeRef, bool a_isOpened);
+		void SendPerkEntryRunEvent(FormID a_perkFormID, std::uint16_t a_perkEntryID, const NiPointer<TESObjectREFR>& a_targetRef, const NiPointer<TESObjectREFR>& a_perkOwner);
 		void SendSpellCastEvent(const NiPointer<TESObjectREFR>& a_object, FormID a_formID);
 
 		template <class T>

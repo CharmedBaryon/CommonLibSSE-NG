@@ -2,6 +2,7 @@
 
 #include "RE/T/TESActivateEvent.h"
 #include "RE/T/TESObjectREFR.h"
+#include "RE/T/TESPerkEntryRunEvent.h"
 #include "RE/T/TESSpellCastEvent.h"
 
 namespace RE
@@ -28,6 +29,18 @@ namespace RE
 		using func_t = decltype(&ScriptEventSourceHolder::SendOpenCloseEvent);
 		static REL::Relocation<func_t> func{ RELOCATION_ID(14190, 14299) };
 		return func(this, a_ref, a_activeRef, a_isOpened);
+	}
+
+	void ScriptEventSourceHolder::SendPerkEntryRunEvent(FormID a_perkFormID, std::uint16_t a_perkEntryID, const NiPointer<TESObjectREFR>& a_targetRef, const NiPointer<TESObjectREFR>& a_perkOwner)
+	{
+		const TESPerkEntryRunEvent e{
+			a_targetRef,
+			a_perkOwner,
+			a_perkFormID,
+			a_perkEntryID
+		};
+
+		this->SendEvent(&e);
 	}
 
 	void ScriptEventSourceHolder::SendSpellCastEvent(const NiPointer<TESObjectREFR>& a_object, FormID a_formID)

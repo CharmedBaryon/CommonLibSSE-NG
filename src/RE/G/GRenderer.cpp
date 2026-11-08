@@ -95,6 +95,39 @@ namespace RE
 		SetIdentity();
 	}
 
+	void GRenderer::Cxform::Concatenate(const Cxform& a_rhs)
+	{
+		matrix[kR][kAdd] += matrix[kR][kMult] * a_rhs.matrix[kR][kAdd];
+		matrix[kG][kAdd] += matrix[kG][kMult] * a_rhs.matrix[kG][kAdd];
+		matrix[kB][kAdd] += matrix[kB][kMult] * a_rhs.matrix[kB][kAdd];
+		matrix[kA][kAdd] += matrix[kA][kMult] * a_rhs.matrix[kA][kAdd];
+
+		matrix[kR][kMult] *= a_rhs.matrix[kR][kMult];
+		matrix[kG][kMult] *= a_rhs.matrix[kG][kMult];
+		matrix[kB][kMult] *= a_rhs.matrix[kB][kMult];
+		matrix[kA][kMult] *= a_rhs.matrix[kA][kMult];
+	}
+
+	float GRenderer::Cxform::TransformChannel(float a_value, std::size_t a_channel, float a_max) const
+	{
+		return std::clamp(a_value * matrix[a_channel][kMult] + matrix[a_channel][kAdd] / (255.0f / a_max), 0.0f, a_max);
+	}
+
+	GColor GRenderer::Cxform::Transform(const GColor& a_color) const
+	{
+		return GColor{
+			static_cast<std::uint8_t>(TransformChannel(a_color.GetRed(), kR)),
+			static_cast<std::uint8_t>(TransformChannel(a_color.GetGreen(), kG)),
+			static_cast<std::uint8_t>(TransformChannel(a_color.GetBlue(), kB)),
+			static_cast<std::uint8_t>(TransformChannel(a_color.GetAlpha(), kA))
+		};
+	}
+
+	bool GRenderer::Cxform::IsIdentity() const
+	{
+		return *this == Identity;
+	}
+
 	void GRenderer::Cxform::SetIdentity()
 	{
 		matrix[kR][kMult] = 1.0f;
@@ -105,11 +138,6 @@ namespace RE
 		matrix[kB][kAdd] = 0.0f;
 		matrix[kA][kMult] = 1.0f;
 		matrix[kA][kAdd] = 0.0f;
-	}
-
-	bool GRenderer::Cxform::IsIdentity() const
-	{
-		return *this == Identity;
 	}
 
 	bool GRenderer::Cxform::operator==(const Cxform& a_rhs) const

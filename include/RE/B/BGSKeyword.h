@@ -26,7 +26,7 @@ namespace RE
 
 		// override (TESForm)
 		bool        Load(TESFile* a_mod) override;                // 06
-		const char* GetFormEditorID() const override;             // 32 - { return formEditorID.c_str(); }
+		const char* GetFormEditorID() const override;             // 32 - { return formEditorID._data; }
 		bool        SetFormEditorID(const char* a_str) override;  // 33 - { formEditorID = a_str; }
 
 		static BGSKeyword* CreateKeyword(const BSFixedString& a_formEditorID);

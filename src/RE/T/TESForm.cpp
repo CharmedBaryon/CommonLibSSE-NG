@@ -55,7 +55,7 @@ namespace RE
 		bool hasKeyword = false;
 
 		keywordForm->ForEachKeyword([&](const BGSKeyword* a_keyword) {
-			if (std::ranges::find(editorIDs, a_keyword->GetFormEditorID()) != editorIDs.end()) {
+			if (std::ranges::find(editorIDs, a_keyword->formEditorID.c_str()) != editorIDs.end()) {
 				hasKeyword = true;
 				return BSContainer::ForEachResult::kStop;
 			}
