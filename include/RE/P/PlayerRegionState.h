@@ -31,15 +31,15 @@ namespace RE
 		}
 
 		// members
-		BSTArray<TESRegionDataSound*>      soundData;               // 10
-		BSTArray<TESRegion*>               regions;                 // 28
-		bool                               inSoundRegion;           // 40
-		bool                               unk41;                   // 41
-		std::uint16_t                      pad42;                   // 42
-		std::uint32_t                      pad44;                   // 44
-		TESRegion*                         lastKnownWeatherRegion;  // 48
-		BGSMusicType*                      currentMusicType;        // 50
-		BSTEventSource<BGSActorCellEvent>* actorCellEventSource;    // 58
+		BSTArray<TESRegionDataSound*>      soundData;             // 10
+		BSTArray<TESRegion*>               regions;               // 28
+		bool                               inSoundRegion;         // 40
+		bool                               unk41;                 // 41
+		std::uint16_t                      pad42;                 // 42
+		std::uint32_t                      pad44;                 // 44
+		TESRegion*                         currentRegion;         // 48
+		BGSMusicType*                      currentMusicType;      // 50
+		BSTEventSource<BGSActorCellEvent>* actorCellEventSource;  // 58
 	};
 	static_assert(sizeof(PlayerRegionState) == 0x60);
 }
