@@ -1,3 +1,11 @@
+## [16.0.1](https://github.com/alandtse/CommonLibSSE-NG/compare/v16.0.0...v16.0.1) (2026-11-08)
+
+### Bug Fixes
+
+* `GMatrix2D::SetInverse` ([4116603](https://github.com/alandtse/CommonLibSSE-NG/commit/41166031f5f1ed3002aba5fd8b3ca1cf0f44d9d3))
+* mask the raw ID to the plugin's own bits in `TESDataHandler::LookupForm(ID)` ([76bb517](https://github.com/alandtse/CommonLibSSE-NG/commit/76bb517dc9aa7fb9be1587cb9fa811f4f1af2366))
+* prevent crash due to missing keyword editor id ([ed5059e](https://github.com/alandtse/CommonLibSSE-NG/commit/ed5059ee3ca40bb11a3343b8852c9945d3aca53e))
+
 ## [16.0.0](https://github.com/alandtse/CommonLibSSE-NG/compare/v15.7.3...v16.0.0) (2026-11-08)
 
 ### ⚠ BREAKING CHANGES
