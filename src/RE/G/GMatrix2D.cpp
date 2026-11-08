@@ -57,18 +57,18 @@ namespace RE
 
 	void GMatrix2D::Append(const GMatrix2D& a_matrix)
 	{
-		GMatrix2D t = *this;
-		data[0][0] = a_matrix.data[0][0] * t.data[0][0] + a_matrix.data[0][1] * t.data[1][0];
-		data[1][0] = a_matrix.data[1][0] * t.data[0][0] + a_matrix.data[1][1] * t.data[1][0];
-		data[0][1] = a_matrix.data[0][0] * t.data[0][1] + a_matrix.data[0][1] * t.data[1][1];
-		data[1][1] = a_matrix.data[1][0] * t.data[0][1] + a_matrix.data[1][1] * t.data[1][1];
-		data[0][2] = a_matrix.data[0][0] * t.data[0][2] + a_matrix.data[0][1] * t.data[1][2] + a_matrix.data[0][2];
-		data[1][2] = a_matrix.data[1][0] * t.data[0][2] + a_matrix.data[1][1] * t.data[1][2] + a_matrix.data[1][2];
+		const GMatrix2D m = a_matrix;
+		GMatrix2D       t = *this;
+		data[0][0] = m.data[0][0] * t.data[0][0] + m.data[0][1] * t.data[1][0];
+		data[1][0] = m.data[1][0] * t.data[0][0] + m.data[1][1] * t.data[1][0];
+		data[0][1] = m.data[0][0] * t.data[0][1] + m.data[0][1] * t.data[1][1];
+		data[1][1] = m.data[1][0] * t.data[0][1] + m.data[1][1] * t.data[1][1];
+		data[0][2] = m.data[0][0] * t.data[0][2] + m.data[0][1] * t.data[1][2] + m.data[0][2];
+		data[1][2] = m.data[1][0] * t.data[0][2] + m.data[1][1] * t.data[1][2] + m.data[1][2];
 	}
 
 	GRectF GMatrix2D::EncloseTransform(const GRectF& a_rect) const
 	{
-		// Get the transformed bounding box.
 		const auto p0 = Transform(GPointF{ a_rect.left, a_rect.top });
 		const auto p1 = Transform(GPointF{ a_rect.right, a_rect.top });
 		const auto p2 = Transform(GPointF{ a_rect.right, a_rect.bottom });
@@ -116,13 +116,14 @@ namespace RE
 
 	void GMatrix2D::Prepend(const GMatrix2D& a_matrix)
 	{
-		GMatrix2D t = *this;
-		data[0][0] = t.data[0][0] * a_matrix.data[0][0] + t.data[0][1] * a_matrix.data[1][0];
-		data[1][0] = t.data[1][0] * a_matrix.data[0][0] + t.data[1][1] * a_matrix.data[1][0];
-		data[0][1] = t.data[0][0] * a_matrix.data[0][1] + t.data[0][1] * a_matrix.data[1][1];
-		data[1][1] = t.data[1][0] * a_matrix.data[0][1] + t.data[1][1] * a_matrix.data[1][1];
-		data[0][2] = t.data[0][0] * a_matrix.data[0][2] + t.data[0][1] * a_matrix.data[1][2] + t.data[0][2];
-		data[1][2] = t.data[1][0] * a_matrix.data[0][2] + t.data[1][1] * a_matrix.data[1][2] + t.data[1][2];
+		const GMatrix2D m = a_matrix;
+		GMatrix2D       t = *this;
+		data[0][0] = t.data[0][0] * m.data[0][0] + t.data[0][1] * m.data[1][0];
+		data[1][0] = t.data[1][0] * m.data[0][0] + t.data[1][1] * m.data[1][0];
+		data[0][1] = t.data[0][0] * m.data[0][1] + t.data[0][1] * m.data[1][1];
+		data[1][1] = t.data[1][0] * m.data[0][1] + t.data[1][1] * m.data[1][1];
+		data[0][2] = t.data[0][0] * m.data[0][2] + t.data[0][1] * m.data[1][2] + t.data[0][2];
+		data[1][2] = t.data[1][0] * m.data[0][2] + t.data[1][1] * m.data[1][2] + t.data[1][2];
 	}
 
 	void GMatrix2D::SetMatrix(const GMatrix2D& a_matrix)
@@ -157,21 +158,21 @@ namespace RE
 
 	void GMatrix2D::SetInverse(const GMatrix2D& a_matrix)
 	{
-		// Invert the rotation part.
-		float det = a_matrix.GetDeterminant();
+		const GMatrix2D m = a_matrix;
+		float           det = m.GetDeterminant();
 		if (det == 0.0f) {
 			SetIdentity();
-			data[0][2] = -a_matrix.data[0][2];
-			data[1][2] = -a_matrix.data[1][2];
+			data[0][2] = -m.data[0][2];
+			data[1][2] = -m.data[1][2];
 		} else {
 			float invDet = 1.0f / det;
-			data[0][0] = a_matrix.data[1][1] * invDet;
-			data[1][1] = a_matrix.data[0][0] * invDet;
-			data[0][1] = -a_matrix.data[0][1] * invDet;
-			data[1][0] = -a_matrix.data[1][0] * invDet;
+			data[0][0] = m.data[1][1] * invDet;
+			data[1][1] = m.data[0][0] * invDet;
+			data[0][1] = -m.data[0][1] * invDet;
+			data[1][0] = -m.data[1][0] * invDet;
 
-			data[0][2] = -(data[0][0] * a_matrix.data[0][2] + data[0][1] * a_matrix.data[1][2]);
-			data[1][2] = -(data[1][0] * a_matrix.data[0][2] + data[1][1] * a_matrix.data[1][2]);
+			data[0][2] = -(data[0][0] * m.data[0][2] + data[0][1] * m.data[1][2]);
+			data[1][2] = -(data[1][0] * m.data[0][2] + data[1][1] * m.data[1][2]);
 		}
 	}
 
