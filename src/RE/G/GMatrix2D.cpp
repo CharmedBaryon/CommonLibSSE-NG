@@ -164,7 +164,7 @@ namespace RE
 	void GMatrix2D::SetInverse(const GMatrix2D& a_matrix)
 	{
 		assert(this != std::addressof(a_matrix));
-		
+
 		// Invert the rotation part.
 		float det = a_matrix.GetDeterminant();
 		if (det == 0.0f) {
