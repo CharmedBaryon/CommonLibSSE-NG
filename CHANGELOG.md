@@ -1,3 +1,18 @@
+## [16.0.0](https://github.com/alandtse/CommonLibSSE-NG/compare/v15.7.3...v16.0.0) (2026-11-08)
+
+### ⚠ BREAKING CHANGES
+
+* **PlayerRegionState:** RE::PlayerRegionState::lastKnownWeatherRegion is renamed to currentRegion. Plugins that read this member fail to compile until the name is updated; type (TESRegion*) and offset (0x48) are unchanged.
+
+### Bug Fixes
+
+* **GMatrix2D:** handle self-aliasing args ([#490](https://github.com/alandtse/CommonLibSSE-NG/issues/490)) ([34e9aa7](https://github.com/alandtse/CommonLibSSE-NG/commit/34e9aa74105fc9ec5bdadfa4875eb745209b81cc))
+* **PlayerRegionState:** use pointer id on SE/VR ([#486](https://github.com/alandtse/CommonLibSSE-NG/issues/486)) ([4ee5bd0](https://github.com/alandtse/CommonLibSSE-NG/commit/4ee5bd039f18b2cf7fa9a6b5088a5d88bb135237))
+
+### Code Refactoring
+
+* **PlayerRegionState:** rename currentRegion ([#488](https://github.com/alandtse/CommonLibSSE-NG/issues/488)) ([2ff8034](https://github.com/alandtse/CommonLibSSE-NG/commit/2ff803460895041f9a05e1ab192a5512f757e4d2))
+
 ## [15.7.3](https://github.com/alandtse/CommonLibSSE-NG/compare/v15.7.2...v15.7.3) (2026-11-07)
 
 ### Bug Fixes
