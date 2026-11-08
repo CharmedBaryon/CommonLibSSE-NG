@@ -26,7 +26,7 @@ namespace RE
 
 		static PlayerRegionState* GetSingleton()
 		{
-			static REL::Relocation<PlayerRegionState**> singleton{ RELOCATION_ID(517160, 400477) };
+			static REL::Relocation<PlayerRegionState**> singleton{ RELOCATION_ID(514317, 400477) };
 			return *singleton;
 		}
 
