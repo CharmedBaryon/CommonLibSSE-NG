@@ -12,7 +12,7 @@ namespace RE
 			const std::uint8_t* data = static_cast<const std::uint8_t*>(a_dataIn);
 			UPInt               hash = a_seed;
 			while (a_size > 0) {
-				hash = (hash << 16) + (hash << 6) - hash + static_cast<const UPInt>(data[a_size--]);
+				hash = (hash << 16) + (hash << 6) - hash + static_cast<const UPInt>(data[--a_size]);
 			}
 			return hash;
 		}

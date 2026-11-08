@@ -57,16 +57,11 @@ namespace RE
 		kDoAbc = 82,
 		kDefineShape4 = 83,
 		kDefineShapeMorph2 = 84,
-		kDefineSceneAndFrameLabelData = 86,
-		kDefineBinaryData = 87,
-		kDefineFontName = 88,
-		kStartSound2 = 89,
-		kDefineBitsJpeg4 = 90,
-		kDefineFont4 = 91,
 
 		kSWF_TagTableEnd,
 
 		kExporterInfo = 1000,
+		kDefineExternalImage = 1001,
 		kFontTextureInfo = 1002,
 		kDefineExternalGradient = 1003,
 		kDefineGradientMap = 1004,
@@ -74,7 +69,7 @@ namespace RE
 		kDefineExternalSound = 1006,
 		kDefineExternalStreamSound = 1007,
 		kDefineSubImage = 1008,
-		kDefineExternalImage = 1009,
+		kDefineExternalImage2 = 1009,
 
 		kGFX_TagTableEnd,
 		kGFX_TagTableBegin = 1000,
