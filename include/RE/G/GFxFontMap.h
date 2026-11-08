@@ -2,6 +2,7 @@
 
 #include "RE/G/GFxState.h"
 #include "RE/G/GString.h"
+#include "RE/G/GStringHash.h"
 
 namespace RE
 {

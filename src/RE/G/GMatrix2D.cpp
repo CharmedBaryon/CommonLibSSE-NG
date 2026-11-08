@@ -55,7 +55,7 @@ namespace RE
 		return result;
 	}
 
-	void GMatrix2D::Append(const GMatrix2D& a_matrix)
+	GMatrix2D& GMatrix2D::Append(const GMatrix2D& a_matrix)
 	{
 		GMatrix2D t = *this;
 		data[0][0] = a_matrix.data[0][0] * t.data[0][0] + a_matrix.data[0][1] * t.data[1][0];
@@ -64,6 +64,7 @@ namespace RE
 		data[1][1] = a_matrix.data[1][0] * t.data[0][1] + a_matrix.data[1][1] * t.data[1][1];
 		data[0][2] = a_matrix.data[0][0] * t.data[0][2] + a_matrix.data[0][1] * t.data[1][2] + a_matrix.data[0][2];
 		data[1][2] = a_matrix.data[1][0] * t.data[0][2] + a_matrix.data[1][1] * t.data[1][2] + a_matrix.data[1][2];
+		return *this;
 	}
 
 	GRectF GMatrix2D::EncloseTransform(const GRectF& a_rect) const
@@ -87,19 +88,23 @@ namespace RE
 		return data[0][0] * data[1][1] - data[1][0] * data[0][1];
 	}
 
-	float GMatrix2D::GetXScale() const
+	double GMatrix2D::GetXScale() const
 	{
-		return std::sqrt(data[0][0] * data[0][0] + data[1][0] * data[1][0]);
+		const auto a = static_cast<double>(data[0][0]);
+		const auto b = static_cast<double>(data[1][0]);
+		return std::sqrt(a * a + b * b);
 	}
 
-	float GMatrix2D::GetYScale() const
+	double GMatrix2D::GetYScale() const
 	{
-		return std::sqrt(data[1][1] * data[1][1] + data[0][1] * data[0][1]);
+		const auto c = static_cast<double>(data[0][1]);
+		const auto d = static_cast<double>(data[1][1]);
+		return std::sqrt(d * d + c * c);
 	}
 
-	float GMatrix2D::GetRotation() const
+	double GMatrix2D::GetRotation() const
 	{
-		return std::atan2(data[1][0], data[0][0]);
+		return std::atan2(static_cast<double>(data[1][0]), static_cast<double>(data[0][0]));
 	}
 
 	float GMatrix2D::GetMaxScale() const
@@ -114,7 +119,7 @@ namespace RE
 		return result;
 	}
 
-	void GMatrix2D::Prepend(const GMatrix2D& a_matrix)
+	GMatrix2D& GMatrix2D::Prepend(const GMatrix2D& a_matrix)
 	{
 		GMatrix2D t = *this;
 		data[0][0] = t.data[0][0] * a_matrix.data[0][0] + t.data[0][1] * a_matrix.data[1][0];
@@ -123,6 +128,7 @@ namespace RE
 		data[1][1] = t.data[1][0] * a_matrix.data[0][1] + t.data[1][1] * a_matrix.data[1][1];
 		data[0][2] = t.data[0][0] * a_matrix.data[0][2] + t.data[0][1] * a_matrix.data[1][2] + t.data[0][2];
 		data[1][2] = t.data[1][0] * a_matrix.data[0][2] + t.data[1][1] * a_matrix.data[1][2] + t.data[1][2];
+		return *this;
 	}
 
 	void GMatrix2D::SetMatrix(const GMatrix2D& a_matrix)
@@ -157,6 +163,8 @@ namespace RE
 
 	void GMatrix2D::SetInverse(const GMatrix2D& a_matrix)
 	{
+		assert(this != std::addressof(a_matrix));
+		
 		// Invert the rotation part.
 		float det = a_matrix.GetDeterminant();
 		if (det == 0.0f) {
