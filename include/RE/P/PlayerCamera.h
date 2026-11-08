@@ -114,11 +114,11 @@ namespace RE
 	NiPoint3 pos;                      /* 144, VR 160 - cached camera-anchor position; recomputed from the camera */        \
 									   /*                node's world position or actor-root + eye-level offset, */         \
 									   /*                cf. ThirdPersonState::collisionPos's cache+valid-flag pattern */   \
-	float         idleTimer;           /* 150, VR 16c - countdown to auto-vanity camera when idle */                        \
+	float         idleTimer;           /* 150, VR 16c - counts UP; past fAutoVanityModeDelay, Update enters auto-vanity */  \
 	float         yaw;                 /* 154, VR 170 - target's heading + per-state offset, radians, set by UpdateYaw() */ \
 	std::uint32_t unk158;              /* 158 - ?*/                                                                         \
 	std::uint32_t unk15C;              /* 15C - ?*/                                                                         \
-	bool          allowAutoVanityMode; /* 160, VR 17c - default depends on a game setting */                                \
+	bool          allowAutoVanityMode; /* 160, VR 17c - set by SetAllowAutoVanityMode (false if bDisableAutoVanityMode) */  \
 	bool          bowZoomedIn;         /* 161, VR 17d - default false*/                                                     \
 	bool          isWeapSheathed;      /* 162, VR 17e - default true*/                                                      \
 	bool          isProcessed;         /* 163, VR 17f - default false*/                                                     \
