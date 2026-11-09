@@ -60,13 +60,19 @@ namespace RE
 			return *this;
 		}
 
-		void Union(const GRect& a_rect)
+		GRect& Union(const GRect& a_rect)
+		{
+			return Union(a_rect.left, a_rect.top, a_rect.right, a_rect.bottom);
+		}
+
+		GRect& UnionNonEmpty(const GRect& a_rect)
 		{
 			if (IsEmpty()) {
 				*this = a_rect;
 			} else if (!a_rect.IsEmpty()) {
-				Union(a_rect.left, a_rect.top, a_rect.right, a_rect.bottom);
+				return Union(a_rect);
 			}
+			return *this;
 		}
 
 		// members
