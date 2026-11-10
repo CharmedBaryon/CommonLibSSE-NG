@@ -1,3 +1,13 @@
+## [16.1.0](https://github.com/alandtse/CommonLibSSE-NG/compare/v16.0.1...v16.1.0) (2026-11-10)
+
+### Features
+
+* **PlayerCharacter:** add waypoint functions ([#494](https://github.com/alandtse/CommonLibSSE-NG/issues/494)) ([066cb90](https://github.com/alandtse/CommonLibSSE-NG/commit/066cb901b4de47907c7e7c0b0042b84c3b77c6cc))
+
+### Bug Fixes
+
+* **weather:** make weather data bytes unsigned ([#493](https://github.com/alandtse/CommonLibSSE-NG/issues/493)) ([1530c51](https://github.com/alandtse/CommonLibSSE-NG/commit/1530c517262c7711008850ec5a1b3be9777a13c4))
+
 ## [16.0.1](https://github.com/alandtse/CommonLibSSE-NG/compare/v16.0.0...v16.0.1) (2026-11-08)
 
 ### Bug Fixes
