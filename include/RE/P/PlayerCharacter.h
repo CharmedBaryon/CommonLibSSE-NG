@@ -751,9 +751,11 @@ namespace RE
 		[[nodiscard]] bool                     IsGrabbing() const;
 		bool                                   IsGrabbingWithDevice(VR_DEVICE a_device) const;
 		void                                   PlayMagicFailureSound(MagicSystem::SpellType a_spellType);
+		void                                   RemoveWaypoint();
 		void                                   SetAIDriven(bool a_enable);
 		void                                   SetEscaping(bool a_flag, bool a_escaped);
 		void                                   SetGodMode(bool a_enable);
+		void                                   SetWaypoint(const NiPoint3& a_position, TESForm* a_worldSpaceOrCell);
 		void                                   StartGrabObject(VR_DEVICE a_device = VR_DEVICE::kLeftController);
 		// Does not check whether waiting is currently allowed (combat, etc.) -- callers must gate that themselves.
 		void StartWaiting(std::int32_t a_hours);

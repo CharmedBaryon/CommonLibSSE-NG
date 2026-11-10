@@ -260,6 +260,20 @@ namespace RE
 		return func(this, a_enable);
 	}
 
+	void PlayerCharacter::SetWaypoint(const NiPoint3& a_position, TESForm* a_worldSpaceOrCell)
+	{
+		using func_t = void(PlayerCharacter*, const NiPoint3*, TESForm*);
+		static REL::Relocation<func_t> func{ RELOCATION_ID(39458, 40535) };
+		func(this, &a_position, a_worldSpaceOrCell);
+	}
+
+	void PlayerCharacter::RemoveWaypoint()
+	{
+		using func_t = decltype(&PlayerCharacter::RemoveWaypoint);
+		static REL::Relocation<func_t> func{ RELOCATION_ID(39459, 40536) };
+		func(this);
+	}
+
 	void PlayerCharacter::StartGrabObject(VR_DEVICE a_device)
 	{
 		using func_t = decltype(&PlayerCharacter::StartGrabObject);
