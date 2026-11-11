@@ -346,6 +346,7 @@ namespace RE
 				assert(false);  // unhandled type
 				break;
 			}
+			value.p = nullptr;
 		}
 
 		void Variable::Assign(const Variable& a_rhs)
