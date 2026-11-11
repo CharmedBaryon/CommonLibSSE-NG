@@ -1,3 +1,9 @@
+## [16.3.0](https://github.com/alandtse/CommonLibSSE-NG/compare/v16.2.0...v16.3.0) (2026-11-11)
+
+### Features
+
+* RE IStackCallbackSaveInterface ([#503](https://github.com/alandtse/CommonLibSSE-NG/issues/503)) ([fa5c96a](https://github.com/alandtse/CommonLibSSE-NG/commit/fa5c96af36069a7d77fb0ec82c257cd4a2f8663d))
+
 ## [16.2.0](https://github.com/alandtse/CommonLibSSE-NG/compare/v16.1.0...v16.2.0) (2026-11-11)
 
 ### Features
