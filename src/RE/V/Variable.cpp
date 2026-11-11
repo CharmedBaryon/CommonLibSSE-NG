@@ -3,7 +3,8 @@
 #include "RE/A/Array.h"
 #include "RE/O/Object.h"
 #include "RE/O/ObjectTypeInfo.h"
-#include "RE/P/PackUnpack.h"
+
+constexpr auto FLOAT_MINIMUM = 0.0001f;
 
 namespace RE
 {
@@ -207,6 +208,53 @@ namespace RE
 		bool Variable::IsString() const
 		{
 			return varType.IsString();
+		}
+
+		bool Variable::IsTruthyValue() const
+		{
+			auto unmangledType = GetType().GetUnmangledRawType();
+
+			switch (unmangledType) {
+			case TypeInfo::RawType::kNone:
+				{
+					return false;
+				}
+			case TypeInfo::RawType::kObject:
+				{
+					return GetObject() != nullptr;
+				}
+			case TypeInfo::RawType::kString:
+				{
+					return !GetString().empty();
+				}
+			case TypeInfo::RawType::kInt:
+				{
+					return GetSInt() != 0;
+				}
+			case TypeInfo::RawType::kFloat:
+				{
+					return std::fabs(GetFloat()) >= FLOAT_MINIMUM;
+				}
+			case TypeInfo::RawType::kBool:
+				{
+					return GetBool();
+				}
+			case TypeInfo::RawType::kNoneArray:
+				{
+					return false;
+				}
+			case TypeInfo::RawType::kObjectArray:
+			case TypeInfo::RawType::kStringArray:
+			case TypeInfo::RawType::kIntArray:
+			case TypeInfo::RawType::kFloatArray:
+			case TypeInfo::RawType::kBoolArray:
+				{
+					return GetArray() != nullptr && GetArray()->size() > 0;
+				}
+			case TypeInfo::RawType::kArraysEnd:
+				return false;
+			}
+			return false;
 		}
 
 		TypeInfo Variable::GetType() const
