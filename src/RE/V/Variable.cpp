@@ -123,7 +123,7 @@ namespace RE
 			case Type::kString:
 				return _stricmp(value.str.c_str(), a_rhs.value.str.c_str()) < 0;
 			case Type::kInt:
-				return value.u < a_rhs.value.u;
+				return value.i < a_rhs.value.i;
 			case Type::kFloat:
 				return value.f < a_rhs.value.f;
 			case Type::kBool:
