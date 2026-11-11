@@ -1,3 +1,14 @@
+## [16.2.0](https://github.com/alandtse/CommonLibSSE-NG/compare/v16.1.0...v16.2.0) (2026-11-11)
+
+### Features
+
+* **variable:** add IsTruthyValue to BSScript::Variable ([#499](https://github.com/alandtse/CommonLibSSE-NG/issues/499)) ([171d7e3](https://github.com/alandtse/CommonLibSSE-NG/commit/171d7e3bac8337868ec143c5c49249f779ae960c))
+
+### Bug Fixes
+
+* **variable:** compare signed int values ([#498](https://github.com/alandtse/CommonLibSSE-NG/issues/498)) ([acafd4f](https://github.com/alandtse/CommonLibSSE-NG/commit/acafd4ff3ff550af8d250ecbe8d79a6a72a85d85))
+* **variable:** null value pointer after Cleanup to prevent double-free ([#497](https://github.com/alandtse/CommonLibSSE-NG/issues/497)) ([700f43e](https://github.com/alandtse/CommonLibSSE-NG/commit/700f43e15e0c54116abf5349771590d792765918))
+
 ## [16.1.0](https://github.com/alandtse/CommonLibSSE-NG/compare/v16.0.1...v16.1.0) (2026-11-10)
 
 ### Features
