@@ -17,10 +17,10 @@ namespace RE
 			~Profiler() override;  // 00
 
 			// override (BSScript::IProfilePolicy)
-			void StackFramePushQueued(std::uint32_t a_arg1, std::uint32_t a_arg2, const BSTSmartPointer<BSScript::Internal::IFuncCallQuery>& a_arg3) override;                                                       // 01
-			void StackFramePushed(std::uint32_t a_arg1, std::uint32_t a_arg2, const BSScript::Variable& a_arg3, const BSFixedString& a_arg4, const BSFixedString& a_arg5, const BSFixedString& a_arg6) override;     // 02
-			void StackFramePopQueued(std::uint32_t a_arg1, std::uint32_t a_arg2, const BSScript::Variable& a_arg3, const BSFixedString& a_arg4, const BSFixedString& a_arg5, const BSFixedString& a_arg6) override;  // 03
-			void StackFramePopped(std::uint32_t a_arg1, std::uint32_t a_arg2, const BSScript::Variable& a_arg3, const BSFixedString& a_arg4, const BSFixedString& a_arg5, const BSFixedString& a_arg6) override;     // 04
+			void StackFramePushQueued(VMStackID a_stackID, std::uint32_t a_stackFrames, const BSTSmartPointer<BSScript::Internal::IFuncCallQuery>& a_query) override;                                                                            // 01
+			void StackFramePushed(VMStackID a_stackID, std::uint32_t a_stackFrame, const BSScript::Variable& a_selfObject, const BSFixedString& a_objectTypeName, const BSFixedString& a_stateName, const BSFixedString& a_fnName) override;     // 02
+			void StackFramePopQueued(VMStackID a_stackID, std::uint32_t a_stackFrame, const BSScript::Variable& a_selfObject, const BSFixedString& a_objectTypeName, const BSFixedString& a_stateName, const BSFixedString& a_fnName) override;  // 03
+			void StackFramePopped(VMStackID a_stackID, std::uint32_t a_stackFrame, const BSScript::Variable& a_selfObject, const BSFixedString& a_objectTypeName, const BSFixedString& a_stateName, const BSFixedString& a_fnName) override;     // 04
 
 			// members
 			mutable BSSpinLock           unk08;  // 08
