@@ -1,3 +1,18 @@
+## [16.4.0](https://github.com/alandtse/CommonLibSSE-NG/compare/v16.3.0...v16.4.0) (2026-11-12)
+
+### Features
+
+* **BSBitReader:** add class ([#504](https://github.com/alandtse/CommonLibSSE-NG/issues/504)) ([9552c81](https://github.com/alandtse/CommonLibSSE-NG/commit/9552c814d78c4ccbc956c60fd8263d1280a40376))
+* **BSScript:** RE profiler vfuncs ([#501](https://github.com/alandtse/CommonLibSSE-NG/issues/501)) ([8edac4d](https://github.com/alandtse/CommonLibSSE-NG/commit/8edac4d2cc4f9cc5b449c9be2acdb485e74346d9))
+* **BSTMessageQueue:** add concrete implementations ([#500](https://github.com/alandtse/CommonLibSSE-NG/issues/500)) ([ccd373a](https://github.com/alandtse/CommonLibSSE-NG/commit/ccd373aab111f4dec4d8ed123bc003abed0711ad))
+* **character:** add SetAnimationDrivenMotion ([#496](https://github.com/alandtse/CommonLibSSE-NG/issues/496)) ([266032b](https://github.com/alandtse/CommonLibSSE-NG/commit/266032b547ccf89902e37e9e035298b888526f4a))
+* concrete BSScript Array ([#502](https://github.com/alandtse/CommonLibSSE-NG/issues/502)) ([d4212a0](https://github.com/alandtse/CommonLibSSE-NG/commit/d4212a02ecd924a775eb379f77969d48b3d025e3))
+
+### Bug Fixes
+
+* correct Init and AddImpact return types ([#495](https://github.com/alandtse/CommonLibSSE-NG/issues/495)) ([f123da6](https://github.com/alandtse/CommonLibSSE-NG/commit/f123da61fccfdf9150e1096c1d71b1944d693e2d))
+* default ContainerItemExtra healthMult to 1 ([#506](https://github.com/alandtse/CommonLibSSE-NG/issues/506)) ([b413bc2](https://github.com/alandtse/CommonLibSSE-NG/commit/b413bc26d92b8fc53f19cf7c95d720abb1b1a53d))
+
 ## [16.3.0](https://github.com/alandtse/CommonLibSSE-NG/compare/v16.2.0...v16.3.0) (2026-11-11)
 
 ### Features
