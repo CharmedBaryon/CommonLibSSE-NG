@@ -55,6 +55,8 @@ namespace RE
 		// add
 		SKYRIM_REL_VR_VIRTUAL void Unk_128(void);  // 128
 		SKYRIM_REL_VR_VIRTUAL void Unk_129(void);  // 129 - { return 1; }
+
+		void SetAnimationDrivenMotion(bool a_active);
 	};
 	STATIC_ASSERT_SIZE(Character, 0x2B0, 0x2B8, 0x2B0, 0xC0, 0xC8);
 }
