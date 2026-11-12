@@ -40,7 +40,7 @@ namespace RE
 		TEMP_EFFECT_TYPE GetType() const override;                         // 2C - { return 9; }
 		void             SaveGame(BGSSaveGameBuffer* a_buf) override;      // 2D
 		void             LoadGame(BGSLoadGameBuffer* a_buf) override;      // 2E
-		void             Init() override;                                  // 36
+		bool             Init() override;                                  // 36
 		void             UpdateParentCell(NiAVObject* a_object) override;  // 3A
 		void             UpdatePosition() override;                        // 3B
 		NiAVObject*      GetAttachRoot() override;                         // 3C

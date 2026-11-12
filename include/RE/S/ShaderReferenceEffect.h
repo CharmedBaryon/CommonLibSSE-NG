@@ -64,7 +64,7 @@ namespace RE
 		bool             GetStackableMatch(BSTempEffect* a_effect) const override;  // 33
 		void             Push() override;                                           // 34 - { if (effectShaderData) ++pushCount; }
 		void             Pop() override;                                            // 35
-		void             Init() override;                                           // 36
+		bool             Init() override;                                           // 36
 		void             Suspend() override;                                        // 37
 		void             Resume() override;                                         // 38
 		void             ClearTarget() override;                                    // 39

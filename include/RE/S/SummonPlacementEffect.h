@@ -35,7 +35,7 @@ namespace RE
 		void             SaveGame(BGSSaveGameBuffer* a_buf) override;        // 2D
 		void             LoadGame(BGSLoadGameBuffer* a_buf) override;        // 2E
 		void             FinishLoadGame(BGSLoadGameBuffer* a_buf) override;  // 2F
-		void             Init() override;                                    // 36
+		bool             Init() override;                                    // 36
 
 		// override (SimpleAnimationGraphManagerHolder)
 		bool SetupAnimEventSinks(const BSTSmartPointer<BShkbAnimationGraph>& a_animGraph) override;  // 08

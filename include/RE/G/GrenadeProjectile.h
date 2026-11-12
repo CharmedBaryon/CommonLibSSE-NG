@@ -43,7 +43,7 @@ namespace RE
 		[[nodiscard]] bool           IsPermanent() const override;
 		bool                         TargetsWholeBody() override;                                                                                                                                                // BA - { return 1; }
 		std::uint32_t                GetCollisionGroup() override;                                                                                                                                               // BB
-		void                         AddImpact(TESObjectREFR* a_ref, const NiPoint3& a_targetLoc, const NiPoint3& a_velocity, hkpCollidable* a_collidable, std::int32_t a_arg6, std::uint32_t a_arg7) override;  // BD
+		ImpactData*                  AddImpact(TESObjectREFR* a_ref, const NiPoint3& a_targetLoc, const NiPoint3& a_velocity, hkpCollidable* a_collidable, std::int32_t a_arg6, std::uint32_t a_arg7) override;  // BD
 		void                         OnTriggerEnter() override;                                                                                                                                                  // BF - { flags |= 1 << 30; }
 		void                         Handle3DLoaded() override;                                                                                                                                                  // C0
 #endif

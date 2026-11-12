@@ -30,7 +30,7 @@ namespace RE
 		void             FinishLoadGame(BGSLoadGameBuffer* a_buf) override;  // 2F
 
 		// add
-		virtual void        Init();                                  // 36 - { return 0; }
+		virtual bool        Init();                                  // 36 - { return false; }
 		virtual void        Suspend();                               // 37 - { return; }
 		virtual void        Resume();                                // 38 - { return; }
 		virtual void        ClearTarget();                           // 39
