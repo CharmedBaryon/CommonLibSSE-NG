@@ -24,7 +24,19 @@ namespace RE
 			using reverse_iterator = std::reverse_iterator<iterator>;
 			using const_reverse_iterator = std::reverse_iterator<const_iterator>;
 
+			explicit Array(const TypeInfo& a_typeInfo, std::uint32_t a_size);
+
 			~Array();
+
+			// Allocates the array and its a_count trailing Variables from the game heap
+			[[nodiscard]] static void* operator new(std::size_t a_size, std::size_t a_count)
+			{
+				const auto mem = RE::malloc(a_size + sizeof(Variable) * a_count);
+				if (!mem) {
+					stl::report_and_fail("out of memory"sv);
+				}
+				return mem;
+			}
 
 			[[nodiscard]] reference       operator[](size_type a_pos);
 			[[nodiscard]] const_reference operator[](size_type a_pos) const;
@@ -65,6 +77,8 @@ namespace RE
 
 			[[nodiscard]] TypeInfo::RawType type() const;
 
+			[[nodiscard]] BSSpinLock& getLock() const noexcept { return _lock; }
+
 		private:
 			static inline constexpr size_type MAX_SIZE = 128;
 
@@ -72,9 +86,9 @@ namespace RE
 			[[maybe_unused]] std::uint32_t _pad04;        // 04
 			TypeInfo                       _elementType;  // 08
 			std::uint32_t                  _size;         // 10
-			[[maybe_unused]] std::uint32_t _pad14;        // 14
-			mutable BSSpinLock             _lock;         // 18
-			Variable                       _data[0];      // 20
+			mutable BSSpinLock             _lock;         // 14
+			[[maybe_unused]] std::uint32_t _pad1C;        // 1C
+			Variable                       _data[0];      // 20 - sized by _size
 		};
 		static_assert(sizeof(Array) == 0x20);
 	}

@@ -4,6 +4,16 @@ namespace RE
 {
 	namespace BSScript
 	{
+		Array::Array(const TypeInfo& a_typeInfo, const uint32_t a_size) :
+			_elementType(a_typeInfo), _size(a_size)
+		{
+			// Safety: Variable data must be 0-initialized, to prevent accessing garbage data when force-assigning new type
+			std::memset(_data, 0, size() * sizeof(Variable));
+			for (auto& var : *this) {
+				var = Variable(a_typeInfo);
+			}
+		}
+
 		Array::~Array()
 		{
 			for (size_type i = 0; i < size(); ++i) {
@@ -135,7 +145,7 @@ namespace RE
 
 		[[nodiscard]] bool Array::empty() const noexcept
 		{
-			return size() > 0;
+			return size() == 0;
 		}
 
 		[[nodiscard]] auto Array::size() const noexcept
