@@ -260,6 +260,7 @@
 #include "RE/B/BSAudioMonitor.h"
 #include "RE/B/BSBatchRenderer.h"
 #include "RE/B/BSBitField.h"
+#include "RE/B/BSBitReader.h"
 #include "RE/B/BSBloodSplatterShaderProperty.h"
 #include "RE/B/BSBound.h"
 #include "RE/B/BSCompoundFrustum.h"
