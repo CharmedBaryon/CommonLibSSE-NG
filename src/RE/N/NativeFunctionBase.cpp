@@ -103,12 +103,12 @@ namespace RE
 				return;
 			}
 
-			auto NativeFunctionBase::Call(const BSTSmartPointer<Stack>& a_stack, ErrorLogger* a_logger, Internal::VirtualMachine* a_vm, bool a_arg4)
+			auto NativeFunctionBase::Call(const BSTSmartPointer<Stack>& a_stack, ErrorLogger* a_logger, Internal::VirtualMachine* a_vm, bool a_callingFromTasklets)
 				-> CallResult
 			{
 				using func_t = decltype(&NativeFunctionBase::Call);
 				static REL::Relocation<func_t> func{ RELOCATION_ID(97923, 104651) };
-				return func(this, a_stack, a_logger, a_vm, a_arg4);
+				return func(this, a_stack, a_logger, a_vm, a_callingFromTasklets);
 			}
 
 			const BSFixedString& NativeFunctionBase::GetSourceFilename() const
