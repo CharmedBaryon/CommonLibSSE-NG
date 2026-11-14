@@ -81,11 +81,8 @@ namespace RE
 		ObjectTypeInfo* TypeInfo::GetTypeInfo() const
 		{
 			assert(IsObject() || IsObjectArray());
-			if (IsObject()) {
-				return reinterpret_cast<ObjectTypeInfo*>(std::to_underlying(GetRawType()) & ~std::to_underlying(RawType::kObject));
-			} else {
-				return reinterpret_cast<ObjectTypeInfo*>(std::to_underlying(GetRawType()) & ~std::to_underlying(RawType::kObjectArray));
-			}
+			// class types are the ObjectTypeInfo pointer itself, bit 0 is the array flag
+			return reinterpret_cast<ObjectTypeInfo*>(std::to_underlying(GetRawType()) & ~std::to_underlying(RawType::kObject));
 		}
 
 		auto TypeInfo::GetUnmangledRawType() const
