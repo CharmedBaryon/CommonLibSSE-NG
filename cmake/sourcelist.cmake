@@ -44,6 +44,7 @@ set(SOURCES
 	include/RE/A/AnimationSystemUtils.h
 	include/RE/A/Archive.h
 	include/RE/A/ArchiveStream.h
+	include/RE/A/Argument.h
 	include/RE/A/ArmorRatingVisitor.h
 	include/RE/A/ArmorRatingVisitorBase.h
 	include/RE/A/Array.h
@@ -2162,6 +2163,7 @@ set(SOURCES
 	src/RE/A/AddCallbackVisitor.cpp
 	src/RE/A/AnimationClipDataSingleton.cpp
 	src/RE/A/AnimationSystemUtils.cpp
+	src/RE/A/Argument.cpp
 	src/RE/A/ArmorRatingVisitor.cpp
 	src/RE/A/ArmorRatingVisitorBase.cpp
 	src/RE/A/Array.cpp
