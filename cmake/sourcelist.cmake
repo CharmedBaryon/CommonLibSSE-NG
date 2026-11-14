@@ -58,6 +58,8 @@ set(SOURCES
 	include/RE/A/AttackBlockHandler.h
 	include/RE/A/AudioDefs.h
 	include/RE/A/AutoMoveHandler.h
+	include/RE/A/AutoPropGetFunction.h
+	include/RE/A/AutoPropSetFunction.h
 	include/RE/A/AutoRegisterCreator.h
 	include/RE/A/AutoRegisterFactory.h
 	include/RE/A/AutoVanityState.h
@@ -2163,6 +2165,8 @@ set(SOURCES
 	src/RE/A/ArmorRatingVisitor.cpp
 	src/RE/A/ArmorRatingVisitorBase.cpp
 	src/RE/A/Array.cpp
+	src/RE/A/AutoPropGetFunction.cpp
+	src/RE/A/AutoPropSetFunction.cpp
 	src/RE/A/AutoVanityState.cpp
 	src/RE/B/BGSAcousticSpace.cpp
 	src/RE/B/BGSAttackData.cpp

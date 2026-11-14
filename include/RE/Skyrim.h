@@ -61,6 +61,8 @@
 #include "RE/A/AttackBlockHandler.h"
 #include "RE/A/AudioDefs.h"
 #include "RE/A/AutoMoveHandler.h"
+#include "RE/A/AutoPropGetFunction.h"
+#include "RE/A/AutoPropSetFunction.h"
 #include "RE/A/AutoRegisterCreator.h"
 #include "RE/A/AutoRegisterFactory.h"
 #include "RE/A/AutoVanityState.h"
