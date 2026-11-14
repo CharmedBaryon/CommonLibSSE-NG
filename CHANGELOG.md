@@ -1,3 +1,18 @@
+## [16.5.0](https://github.com/alandtse/CommonLibSSE-NG/compare/v16.4.0...v16.5.0) (2026-11-14)
+
+### Features
+
+* concrete BSScript::ByteCode::Argument ([#509](https://github.com/alandtse/CommonLibSSE-NG/issues/509)) ([bac26f0](https://github.com/alandtse/CommonLibSSE-NG/commit/bac26f054983357e093bea1496ae2891d09e87ac))
+* **papyrus:** add concrete AutoProp Get/Set functions ([#507](https://github.com/alandtse/CommonLibSSE-NG/issues/507)) ([b91ba76](https://github.com/alandtse/CommonLibSSE-NG/commit/b91ba76604956a3de9c834887f6d53b7f754420d))
+* partial BSScriptObjectBindPolicy RE ([#510](https://github.com/alandtse/CommonLibSSE-NG/issues/510)) ([be1a462](https://github.com/alandtse/CommonLibSSE-NG/commit/be1a462f58ca2a630f548fd5558d7e338241a2b8))
+* RE IFunction::Call's final parameter ([#514](https://github.com/alandtse/CommonLibSSE-NG/issues/514)) ([d072ac3](https://github.com/alandtse/CommonLibSSE-NG/commit/d072ac3b56570b40dd062e929ab75f92d61954ee))
+
+### Bug Fixes
+
+* BSTHashMap double-free and edge-boundary insert ([#515](https://github.com/alandtse/CommonLibSSE-NG/issues/515)) ([b26d412](https://github.com/alandtse/CommonLibSSE-NG/commit/b26d412306b239809c2956d2145a2dee9f8d2137))
+* **TypeInfo:** invalid array type info ([#512](https://github.com/alandtse/CommonLibSSE-NG/issues/512)) ([1f62c22](https://github.com/alandtse/CommonLibSSE-NG/commit/1f62c224fd143378d92b9398f7949441290d81d9))
+* **vr:** correct BSTrackedControllerDevice layout ([#516](https://github.com/alandtse/CommonLibSSE-NG/issues/516)) ([69b895f](https://github.com/alandtse/CommonLibSSE-NG/commit/69b895f89d047d552150d2bc41bc4c1ac3b795ed))
+
 ## [16.4.0](https://github.com/alandtse/CommonLibSSE-NG/compare/v16.3.0...v16.4.0) (2026-11-12)
 
 ### Features
