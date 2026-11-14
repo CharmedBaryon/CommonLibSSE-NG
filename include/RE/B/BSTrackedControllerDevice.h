@@ -32,12 +32,11 @@ namespace RE
 		struct RUNTIME_DATA
 		{
 #	define RUNTIME_DATA_CONTENT                                   \
-		std::uint64_t            unk70;              /* 70 / 78 */ \
-		ControllerDeviceHand     hand;               /* 78 / 80 */ \
-		vr::TrackedDeviceIndex_t trackedDeviceIndex; /* 7C / 84 */
+		ControllerDeviceHand     hand;               /* 70 / 78 */ \
+		vr::TrackedDeviceIndex_t trackedDeviceIndex; /* 74 / 7C */
 			RUNTIME_DATA_CONTENT
 		};
-		static_assert(sizeof(RUNTIME_DATA) == 0x10);
+		static_assert(sizeof(RUNTIME_DATA) == 0x8);
 
 		RUNTIME_DATA_ACCESSOR(RUNTIME_DATA, 0x70, 0x78);
 #	ifndef SKYRIM_CROSS_VR
@@ -45,7 +44,7 @@ namespace RE
 		RUNTIME_DATA_CONTENT
 #	endif
 	};
-	STATIC_ASSERT_SIZE(BSTrackedControllerDevice, 0x80, 0x80, 0x88, 0x8);
+	STATIC_ASSERT_SIZE(BSTrackedControllerDevice, 0x78, 0x78, 0x80, 0x8);
 }
 #	undef RUNTIME_DATA_CONTENT
 #endif

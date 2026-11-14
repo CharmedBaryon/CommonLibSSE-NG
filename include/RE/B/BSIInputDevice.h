@@ -27,7 +27,9 @@ namespace RE
 #if defined(EXCLUSIVE_SKYRIM_VR)
 		// VR adds an 8-byte field here, confirmed by BSInputDevice and BSPCGamepadDeviceHandler
 		// both shifting all their members by +8 in the VR binary.
-		std::uint64_t unk08;  // 08 - VR only
+		// BSInputDeviceManager::PollInputDevices skips devices where this is zero.
+		bool         pollEnabled;  // 08 - VR only
+		std::uint8_t pad09[7];     // 09
 #endif
 	};
 	STATIC_ASSERT_SIZE(BSIInputDevice, 0x8, 0x10);

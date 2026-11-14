@@ -119,12 +119,14 @@ namespace RE
 		}
 
 		// Device state block, maintained by Poll() via IVRSystem (see BSOpenVRControllerDevice::Poll
-		// RE). Begins at 0x88 (right after BSTrackedControllerDevice in VR); reached via the runtime
+		// RE). Begins at 0x80 (right after BSTrackedControllerDevice in VR); reached via the runtime
 		// accessor so cross-runtime builds, where the base classes drop their VR-only members from the
 		// C++ layout, still land on the engine's real offsets.
 		struct RUNTIME_DATA
 		{
 #	define RUNTIME_DATA_CONTENT                             \
+		std::uint32_t           prevPacketNum;     /* 080 */ \
+		std::uint32_t           pad84;             /* 084 */ \
 		std::uint64_t           prevButtonPressed; /* 088 */ \
 		std::uint64_t           prevButtonTouched; /* 090 */ \
 		vr::VRControllerAxis_t  prevAxis[5];       /* 098 */ \
@@ -133,9 +135,9 @@ namespace RE
 		std::uint32_t           swipe[8];          /* 138 */
             RUNTIME_DATA_CONTENT
 		};
-		static_assert(sizeof(RUNTIME_DATA) == 0xD0);
+		static_assert(sizeof(RUNTIME_DATA) == 0xD8);
 
-		RUNTIME_DATA_ACCESSOR(RUNTIME_DATA, 0x88, 0x88);
+		RUNTIME_DATA_ACCESSOR(RUNTIME_DATA, 0x78, 0x80);
 #	ifndef SKYRIM_CROSS_VR
 		// members
 		RUNTIME_DATA_CONTENT
