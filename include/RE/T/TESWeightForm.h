@@ -8,6 +8,7 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_TESWeightForm;
+		inline static constexpr auto VTABLE = VTABLE_TESWeightForm;
 
 		~TESWeightForm() override;  // 00
 

@@ -11,7 +11,8 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_ExtraSeenData;
-		inline static auto           EXTRADATATYPE = ExtraDataType::kSeenData;
+		inline static constexpr auto VTABLE = VTABLE_ExtraSeenData;
+		inline static constexpr auto EXTRADATATYPE = ExtraDataType::kSeenData;
 
 		~ExtraSeenData() override;  // 00
 

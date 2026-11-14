@@ -8,6 +8,7 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_NiFile;
+		inline static constexpr auto VTABLE = VTABLE_NiFile;
 
 		enum class OpenMode
 		{
@@ -29,16 +30,16 @@ namespace RE
 		[[nodiscard]] virtual std::uint32_t size() const;                                      // 07
 
 		// members
-		std::uint32_t                             bufferAllocSize;  // 20
-		std::uint32_t                             bufferReadSize;   // 24
-		std::uint32_t                             pos;              // 28
-		std::uint32_t                             pad2C;            // 2C
-		char*                                     buffer;           // 30
-		std::FILE*                                file;             // 38
-		stl::enumeration<OpenMode, std::uint32_t> mode;             // 40
-		bool                                      isGood;           // 44
-		std::uint8_t                              pad45;            // 45
-		std::uint16_t                             pad46;            // 46
+		std::uint32_t                         bufferAllocSize;  // 20
+		std::uint32_t                         bufferReadSize;   // 24
+		std::uint32_t                         pos;              // 28
+		std::uint32_t                         total;            // 2C
+		char*                                 buffer;           // 30
+		std::FILE*                            file;             // 38
+		REX::EnumSet<OpenMode, std::uint32_t> mode;             // 40
+		bool                                  isGood;           // 44
+		std::uint8_t                          pad45;            // 45
+		std::uint16_t                         pad46;            // 46
 	};
 	static_assert(sizeof(NiFile) == 0x48);
 }

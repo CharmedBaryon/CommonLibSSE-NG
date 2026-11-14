@@ -1,9 +1,36 @@
 #pragma once
 
+#include "RE/H/hkArray.h"
+#include "RE/H/hkQsTransform.h"
 #include "RE/H/hkReferencedObject.h"
 
 namespace RE
 {
+	class hkaRagdollInstance;
+	class hkaRagdollRigidBodyController;
+	class hkbCharacter;
+
+	// Ported from https://github.com/adamhynek/activeragdoll (GPL-3.0)
+	struct hkbWorldFromModelModeData
+	{
+	public:
+		enum class WorldFromModelMode : std::uint8_t
+		{
+			kUseOld = 0,
+			kUseInput = 1,
+			kCompute = 2,
+			kNone = 3,
+			kUseRootBone = 4,
+		};
+
+		// members
+		std::int16_t       poseMatchingBone0;  // 00
+		std::int16_t       poseMatchingBone1;  // 02
+		std::int16_t       poseMatchingBone2;  // 04
+		WorldFromModelMode mode;               // 06
+	};
+	static_assert(sizeof(hkbWorldFromModelModeData) == 0x8);
+
 	class hkbRagdollDriver : public hkReferencedObject
 	{
 	public:
@@ -12,32 +39,41 @@ namespace RE
 
 		~hkbRagdollDriver() override;  // 00
 
-		// members
-		std::uint64_t       unk10;                   // 10
-		std::uint64_t       unk18;                   // 18
-		std::uint64_t       unk20;                   // 20
-		std::uint64_t       unk28;                   // 28
-		std::uint64_t       unk30;                   // 30
-		std::uint64_t       unk38;                   // 38
-		std::uint64_t       unk40;                   // 40
-		std::uint64_t       unk48;                   // 48
-		std::uint64_t       unk50;                   // 50
-		hkArray<int32_t>    reportingWhenKeyframed;  // 58
-		std::uint64_t       unk68;                   // 68
-		std::uint64_t       unk70;                   // 70
-		std::uint64_t       unk78;                   // 78
-		hkbCharacter*       character;               // 80
-		hkaRagdollInstance* ragdoll;                 // 88
-		std::uint64_t       unk90;                   // 90
-		std::uint64_t       unk98;                   // 98
-		std::uint64_t       unkA0;                   // A0
-		std::uint64_t       unkA8;                   // A8
-		std::uint64_t       unkB0;                   // B0
-		std::uint32_t       unkB8;                   // B8
-		float               unkBC;                   // BC
-		float               unkC0;                   // C0
-		std::uint32_t       unkC4;                   // C4
-		std::uint64_t       unkC8;                   // C8
+		// members - total size (0xD0) and character/ragdoll's offsets are ground-truth
+		// confirmed via the dtor's own fallback free-size; the rest is ported from
+		// https://github.com/adamhynek/activeragdoll (GPL-3.0)
+		float                          ragdollBlendOutTime;                     // 10
+		hkbWorldFromModelModeData      worldFromModelModeData;                  // 14
+		bool                           autoAddRemoveRagdollToWorld;             // 1C
+		bool                           useAsynchronousStepping;                 // 1D
+		std::uint16_t                  pad1E;                                   // 1E
+		hkQsTransform                  lastWorldFromModel;                      // 20
+		hkbWorldFromModelModeData      worldFromModelModeDataInternal;          // 50
+		hkArray<std::uint32_t>         reportingWhenKeyframed;                  // 58
+		std::uint64_t                  unk68;                                   // 68
+		std::uint8_t                   attachedRigidBodyToIndexMap[0x10];       // 70 - hkPointerMap<hkReferencedObject*, uint32_t>, not modeled as a generic type here
+		hkbCharacter*                  character;                               // 80
+		hkaRagdollInstance*            ragdoll;                                 // 88
+		hkQsTransform*                 ragdollPoseWS;                           // 90
+		hkaRagdollRigidBodyController* ragdollController;                       // 98
+		hkQsTransform*                 ragdollPoseHiResLocal;                   // A0
+		hkQsTransform*                 lastPoseLocal;                           // A8
+		std::int32_t                   lastNumPoseLocal;                        // B0
+		float                          lastFrameRigidBodyOnFraction;            // B4
+		float                          lastFramePoweredOnFraction;              // B8
+		float                          timeRigidBodyControllerActive;           // BC
+		float                          ragdollBlendOutTimeElapsed;              // C0
+		bool                           canAddRagdollToWorld;                    // C4
+		bool                           shouldReinitializeRagdollController;     // C5
+		bool                           isEnabled;                               // C6
+		bool                           isPoweredControllerEnabled;              // C7
+		bool                           isRigidBodyControllerEnabled;            // C8
+		bool                           wasRigidBodyControllerEnabledLastFrame;  // C9
+		bool                           ragdollPoseWasUsed;                      // CA
+		bool                           allBonesKeyframed;                       // CB
+		std::uint32_t                  pad4CC;                                  // CC
 	};
+	static_assert(offsetof(hkbRagdollDriver, character) == 0x80);
+	static_assert(offsetof(hkbRagdollDriver, ragdoll) == 0x88);
 	static_assert(sizeof(hkbRagdollDriver) == 0xD0);
 }

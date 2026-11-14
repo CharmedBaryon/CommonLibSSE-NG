@@ -10,6 +10,9 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_IMovementState;
+		inline static constexpr auto VTABLE = VTABLE_IMovementState;
+
+		bool CanStrafe() const;
 
 		~IMovementState() override;  // 00
 

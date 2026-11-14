@@ -1,5 +1,6 @@
 #pragma once
 
+#include "RE/A/Argument.h"
 #include "RE/B/BSFixedString.h"
 #include "RE/B/BSTArray.h"
 #include "RE/B/BSTHashMap.h"
@@ -13,47 +14,6 @@ namespace RE
 	{
 		namespace ByteCode
 		{
-#pragma pack(push, 4)
-			struct Argument
-			{
-				enum class Type : std::uint32_t
-				{
-					kNone,
-					kIdentifier,  // Identifier of object variables (Forms, Actors, etc.)
-					kString,
-					kInt,
-					kFloat,
-					kBool,
-					kLocalVarIdx,   // index of local variable in function
-					kMemberVarIdx,  // index of member variable in script instance
-				};
-				static_assert(sizeof(Type) == 0x4);
-
-				union Value
-				{
-					int           i;
-					float         f;
-					bool          b;
-					std::uint32_t idx;
-					BSFixedString string;
-
-					~Value(){};
-				};
-				static_assert(sizeof(Value) == 0x8);
-
-				~Argument()
-				{
-					if (type == Type::kIdentifier || type == Type::kString) {
-						value.string.~BSFixedString();
-					}
-				};
-				// members
-				Type  type;   // 00
-				Value value;  // 04
-			};
-			static_assert(sizeof(Argument) == 0xC);
-#pragma pack(pop)
-
 			struct InstructionDefinition
 			{
 			public:

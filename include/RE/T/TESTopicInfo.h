@@ -6,6 +6,7 @@
 #include "RE/M/MemoryManager.h"
 #include "RE/T/TESCondition.h"
 #include "RE/T/TESForm.h"
+#include "REL/RuntimeDataAccessors.h"
 
 namespace RE
 {
@@ -33,8 +34,8 @@ namespace RE
 
 		[[nodiscard]] float GetResetHours() const;
 
-		stl::enumeration<TOPIC_INFO_FLAGS, std::uint16_t> flags;           // 0
-		std::uint16_t                                     timeUntilReset;  // 2 - reset hours as a std::uint16_t
+		REX::EnumSet<TOPIC_INFO_FLAGS, std::uint16_t> flags;           // 0
+		std::uint16_t                                 timeUntilReset;  // 2 - reset hours as a std::uint16_t
 	};
 	static_assert(sizeof(TOPIC_INFO_DATA) == 0x4);
 
@@ -70,7 +71,7 @@ namespace RE
 			};
 		};
 
-		struct ResponseData  // TRDT
+		struct TESResponse  // TRDT
 		{
 			enum class EmotionType
 			{
@@ -90,30 +91,38 @@ namespace RE
 				kUseEmotionAnimation = 1 << 0
 			};
 
-			~ResponseData();
-			void PopulateResponseText(TESFile* a_file);
+			~TESResponse();
+			void LoadResponseText(TESFile* a_file);
 
 			TES_HEAP_REDEFINE_NEW();
 
 			// members
-			stl::enumeration<EmotionType, std::uint32_t> emotionType;     // 00
-			std::uint32_t                                emotionValue;    // 04
-			TESTopic*                                    unk08;           // 08
-			std::uint8_t                                 responseNumber;  // 10
-			std::uint8_t                                 pad11;           // 11
-			std::uint16_t                                pad12;           // 12
-			std::uint32_t                                pad14;           // 14
-			BGSSoundDescriptorForm*                      sound;           // 18
-			stl::enumeration<Flag, std::uint8_t>         flags;           // 20
-			std::uint8_t                                 pad21;           // 21
-			std::uint16_t                                pad22;           // 22
-			std::uint32_t                                pad24;           // 24
-			BSFixedString                                responseText;    // 28 - NAM1
-			TESIdleForm*                                 speakerIdle;     // 30
-			TESIdleForm*                                 listenerIdle;    // 38
-			ResponseData*                                next;            // 40
+			REX::EnumSet<EmotionType, std::uint32_t> emotionType;     // 00
+			std::uint32_t                            emotionValue;    // 04
+			TESTopic*                                unk08;           // 08
+			std::uint8_t                             responseNumber;  // 10
+			std::uint8_t                             pad11;           // 11
+			std::uint16_t                            pad12;           // 12
+			std::uint32_t                            pad14;           // 14
+			BGSSoundDescriptorForm*                  sound;           // 18
+			REX::EnumSet<Flag, std::uint8_t>         flags;           // 20
+			std::uint8_t                             pad21;           // 21
+			std::uint16_t                            pad22;           // 22
+			std::uint32_t                            pad24;           // 24
+			BSFixedString                            responseText;    // 28 - NAM1
+			TESIdleForm*                             speakerIdle;     // 30
+			TESIdleForm*                             listenerIdle;    // 38
+			TESResponse*                             next;            // 40
 		};
-		static_assert(sizeof(ResponseData) == 0x48);
+		static_assert(sizeof(TESResponse) == 0x48);
+
+		class TESResponseList
+		{
+		public:
+			// members
+			TESResponse* head;  // 00
+		};
+		static_assert(sizeof(TESResponseList) == 0x8);
 
 		~TESTopicInfo() override;  // 00
 
@@ -129,18 +138,28 @@ namespace RE
 		bool BelongsInGroup(FORM* a_form, bool a_allowParentGroups, bool a_currentOnly) override;  // 30
 		void CreateGroupData(FORM* a_form, FORM_GROUP* a_group) override;                          // 31
 
-		DialogueItem GetDialogueData(Actor* a_speaker);
+		DialogueItem     GetDialogueData(TESObjectREFR* a_speaker);
+		TESResponseList* GetResponseList(TESResponseList* a_list = nullptr);
 
 		// members
-		TESTopic*                                  parentTopic;    // 20
-		TESTopicInfo*                              dataInfo;       // 28 - PNAM
-		TESCondition                               objConditions;  // 30 - CTDA
-		std::uint16_t                              infoIndex;      // 38 - index in infoTopics array of parent topic
-		bool                                       saidOnce;       // 3A
-		stl::enumeration<FavorLevel, std::uint8_t> favorLevel;     // 3B - CNAM
-		TOPIC_INFO_DATA                            data;           // 3C - ENAM
-		std::uint32_t                              fileOffset;     // 40
-		std::uint32_t                              pad44;          // 44
+		TESTopic*                              parentTopic;    // 20
+		TESTopicInfo*                          dataInfo;       // 28 - DNAM
+		TESCondition                           objConditions;  // 30 - CTDA
+		std::uint16_t                          infoIndex;      // 38 - index in infoTopics array of parent topic
+		bool                                   saidOnce;       // 3A
+		REX::EnumSet<FavorLevel, std::uint8_t> favorLevel;     // 3B - CNAM
+		TOPIC_INFO_DATA                        data;           // 3C - ENAM
+		std::uint32_t                          fileOffset;     // 40
+		std::uint32_t                          pad44;          // 44
+
+#ifdef ENABLE_SKYRIM_AE
+		struct AE1799_RUNTIME_DATA
+		{
+			std::uint8_t unk48[0x8];  // 48
+		};
+
+		RUNTIME_DATA_ACCESSOR_VERSIONED_OPTIONAL_EX(AE1799_RUNTIME_DATA, GetAe1799RuntimeData, SKSE::RUNTIME_SSE_1_7_99, 0x48);
+#endif
 	};
 	static_assert(sizeof(TESTopicInfo) == 0x48);
 }

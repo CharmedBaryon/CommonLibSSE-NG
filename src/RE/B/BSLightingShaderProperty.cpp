@@ -1,5 +1,8 @@
 #include "RE/B/BSLightingShaderProperty.h"
 
+#include "RE/B/BSRenderPass.h"
+#include "RE/B/BSShader.h"
+
 namespace RE
 {
 	void BSLightingShaderProperty::CopyMembers(BSLightingShaderProperty* a_other)
@@ -19,4 +22,13 @@ namespace RE
 		projectedUVColor = a_other->projectedUVColor;
 		emissiveMult = a_other->emissiveMult;
 	}
+
+#ifdef ENABLE_SKYRIM_VR
+	void BSLightingShaderProperty::InvalidateTextures(std::uint32_t a_unk1)
+	{
+		using func_t = decltype(&BSLightingShaderProperty::InvalidateTextures);
+		static REL::Relocation<func_t> func{ REL::ID(5388393136) };
+		func(this, a_unk1);
+	}
+#endif
 }

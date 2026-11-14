@@ -10,6 +10,7 @@ namespace RE
 		{
 		public:
 			inline static constexpr auto RTTI = RTTI_BSResource__AsyncStream;
+			inline static constexpr auto VTABLE = VTABLE_BSResource__AsyncStream;
 
 			virtual ~AsyncStream() = default;  // 00
 
@@ -25,6 +26,10 @@ namespace RE
 			std::uint32_t minPacketSize;  // 10
 			std::uint32_t pad14;          // 14
 		};
+#ifdef ENABLE_SKYRIM_AE
+		static_assert(sizeof(AsyncStream) == 0x20);
+#else
 		static_assert(sizeof(AsyncStream) == 0x18);
+#endif
 	}
 }

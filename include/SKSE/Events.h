@@ -60,10 +60,10 @@ namespace SKSE
 		};
 
 		// members
-		stl::enumeration<Type, std::uint32_t> type;
-		RE::Actor*                            actor;
-		RE::TESForm*                          sourceForm;
-		stl::enumeration<Slot, std::uint32_t> slot;
+		REX::EnumSet<Type, std::uint32_t> type;
+		RE::Actor*                        actor;
+		RE::TESForm*                      sourceForm;
+		REX::EnumSet<Slot, std::uint32_t> slot;
 	};
 
 	struct NiNodeUpdateEvent

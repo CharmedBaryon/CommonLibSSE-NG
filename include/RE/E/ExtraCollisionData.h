@@ -16,7 +16,8 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_ExtraCollisionData;
-		inline static auto           EXTRADATATYPE = ExtraDataType::kCollisionData;
+		inline static constexpr auto VTABLE = VTABLE_ExtraCollisionData;
+		inline static constexpr auto EXTRADATATYPE = ExtraDataType::kCollisionData;
 
 		~ExtraCollisionData() override;  // 00
 

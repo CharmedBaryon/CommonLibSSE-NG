@@ -5,12 +5,14 @@
 namespace RE
 {
 	class BGSLoadGameBuffer;
+	class BGSSaveFormBuffer;
 	class TESFile;
 
 	class BGSSceneAction
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_BGSSceneAction;
+		inline static constexpr auto VTABLE = VTABLE_BGSSceneAction;
 
 		enum class Type
 		{
@@ -39,8 +41,8 @@ namespace RE
 		[[nodiscard]] virtual Type          GetType() const = 0;                                 // 07
 		virtual void                        Unk_08(void);                                        // 08 - { return 0; }
 		virtual void                        LoadBuffer(void* a_arg1, BGSLoadGameBuffer* a_buf);  // 09
-		virtual void                        Unk_0A(void);                                        // 0A
-		virtual void                        Unk_0B(void);                                        // 0B - { unk14 &= 0xFC; }
+		virtual void                        SaveBuffer(BGSSaveFormBuffer* a_buf);                // 0A
+		virtual void                        ClearActiveFlags();                                  // 0B - { unk14 &= 0xFC; }
 		virtual void                        Unk_0C(void);                                        // 0C - { return; }
 		virtual void                        Unk_0D(void);                                        // 0D
 		[[nodiscard]] virtual EmotionType   GetEmotionType() const;                              // 0E - { return kNeutral; }
@@ -51,15 +53,15 @@ namespace RE
 		virtual void                        Unk_13(void);                                        // 13 - { return; }
 
 		// members
-		std::uint32_t                         actorID;     // 08 - ALID
-		std::uint16_t                         startPhase;  // 0C - SNAM
-		std::uint16_t                         endPhase;    // 0E - ENAM
-		stl::enumeration<Flag, std::uint32_t> flags;       // 10
-		std::uint8_t                          unk14;       // 14
-		std::uint8_t                          unk15;       // 15
-		std::uint16_t                         unk16;       // 16
-		std::uint32_t                         index;       // 18 - INAM
-		std::uint32_t                         unk1C;       // 1C
+		std::uint32_t                     actorID;     // 08 - ALID
+		std::uint16_t                     startPhase;  // 0C - SNAM
+		std::uint16_t                     endPhase;    // 0E - ENAM
+		REX::EnumSet<Flag, std::uint32_t> flags;       // 10
+		std::uint8_t                      unk14;       // 14
+		std::uint8_t                      unk15;       // 15
+		std::uint16_t                     unk16;       // 16
+		std::uint32_t                     index;       // 18 - INAM
+		std::uint32_t                     unk1C;       // 1C
 	};
 	static_assert(sizeof(BGSSceneAction) == 0x20);
 }

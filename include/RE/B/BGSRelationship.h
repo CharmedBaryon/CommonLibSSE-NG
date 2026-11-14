@@ -62,19 +62,19 @@ namespace RE
 		static BGSRelationship* GetRelationship(TESNPC* a_npc1, TESNPC* a_npc2)
 		{
 			using func_t = decltype(&BGSRelationship::GetRelationship);
-			REL::Relocation<func_t> func{ RELOCATION_ID(23632, 24084) };
+			static REL::Relocation<func_t> func{ RELOCATION_ID(23632, 24084) };
 			return func(a_npc1, a_npc2);
 		}
 
 		// members
-		TESNPC*                                            npc1;       // 20 - DATA~
-		TESNPC*                                            npc2;       // 28
-		BGSAssociationType*                                assocType;  // 30
-		stl::enumeration<RELATIONSHIP_LEVEL, std::uint8_t> level;      // 38
-		std::uint8_t                                       unk39;      // 39
-		std::uint8_t                                       unk3A;      // 3A
-		stl::enumeration<Flag, std::uint8_t>               flags;      // 3B
-		std::uint32_t                                      pad3C;      // 3C - ~DATA
+		TESNPC*                                        npc1;       // 20 - DATA~
+		TESNPC*                                        npc2;       // 28
+		BGSAssociationType*                            assocType;  // 30
+		REX::EnumSet<RELATIONSHIP_LEVEL, std::uint8_t> level;      // 38
+		std::uint8_t                                   unk39;      // 39
+		std::uint8_t                                   unk3A;      // 3A
+		REX::EnumSet<Flag, std::uint8_t>               flags;      // 3B
+		std::uint32_t                                  pad3C;      // 3C - ~DATA
 	};
 	static_assert(sizeof(BGSRelationship) == 0x40);
 }

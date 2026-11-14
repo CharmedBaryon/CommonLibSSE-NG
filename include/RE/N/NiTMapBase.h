@@ -171,7 +171,7 @@ namespace RE
 			iterator_base operator++(int)
 			{
 				iterator_base tmp(*this);
-							  operator++();
+				operator++();
 				return tmp;
 			}
 
@@ -288,9 +288,9 @@ namespace RE
 
 			// search list at hash table location for key
 			while (item) {
-				if (key_eq(a_key, item->key)) {
+				if (key_eq(a_key, item->first)) {
 					// item already in hash table, set its new value
-					item->val = std::forward<M>(a_obj);
+					item->second = std::forward<M>(a_obj);
 					return false;
 				}
 				item = item->next;

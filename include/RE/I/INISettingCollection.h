@@ -24,4 +24,32 @@ namespace RE
 		Setting* GetSetting(std::string_view a_name);
 	};
 	static_assert(sizeof(INISettingCollection) == 0x128);
+
+	namespace literals
+	{
+		template <stl::nttp::zstring S>
+		inline auto operator""_ini()
+		{
+			static RE::Setting* setting = nullptr;
+			if (!setting) {
+				if (auto collection = INISettingCollection::GetSingleton()) {
+					setting = collection->GetSetting(S.data());
+				}
+			}
+
+			if constexpr (S.front() == 'b') {
+				return setting ? std::optional(setting->data.b) : std::nullopt;
+			} else if constexpr (S.front() == 'f') {
+				return setting ? std::optional(setting->data.f) : std::nullopt;
+			} else if constexpr (S.front() == 'i') {
+				return setting ? std::optional(setting->data.i) : std::nullopt;
+			} else if constexpr (S.front() == 'r') {
+				return setting ? std::optional(setting->data.r) : std::nullopt;
+			} else if constexpr (S.front() == 's') {
+				return setting ? std::optional(setting->data.s) : std::nullopt;
+			} else if constexpr (S.front() == 'u') {
+				return setting ? std::optional(setting->data.u) : std::nullopt;
+			}
+		}
+	}
 }

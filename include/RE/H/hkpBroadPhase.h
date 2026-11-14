@@ -105,12 +105,12 @@ namespace RE
 		void CalcAabbCache(const hkArrayBase<hkpCollidable*>& a_overlappingCollidables, hkpBroadPhaseAabbCache* a_aabbCacheOut) const;
 
 		// members
-		const stl::enumeration<BroadPhaseType, std::uint16_t> type;              // 10
-		const std::uint16_t                                   size{ 0 };         // 12
-		const stl::enumeration<Capabilities, std::uint32_t>   caps;              // 14
-		mutable hkMultiThreadCheck                            multiThreadCheck;  // 18
-		std::uint32_t                                         pad24;             // 24
-		hkCriticalSection*                                    criticalSection;   // 28
+		const REX::EnumSet<BroadPhaseType, std::uint16_t> type;              // 10
+		const std::uint16_t                               size{ 0 };         // 12
+		const REX::EnumSet<Capabilities, std::uint32_t>   caps;              // 14
+		mutable hkMultiThreadCheck                        multiThreadCheck;  // 18
+		std::uint32_t                                     pad24;             // 24
+		hkCriticalSection*                                criticalSection;   // 28
 	};
 	static_assert(sizeof(hkpBroadPhase) == 0x30);
 }

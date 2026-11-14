@@ -5,11 +5,6 @@
 
 namespace RE
 {
-	LocalMapCamera::LocalMapCamera(float a_zRotation)
-	{
-		Ctor(a_zRotation);
-	}
-
 	void LocalMapCamera::SetAreaBounds(NiPoint3& a_maxExtent, NiPoint3& a_minExtent)
 	{
 		auto ini = INISettingCollection::GetSingleton();
@@ -45,14 +40,14 @@ namespace RE
 	void LocalMapCamera::SetNorthRotation(float a_northRotation)
 	{
 		using func_t = decltype(&LocalMapCamera::SetNorthRotation);
-		REL::Relocation<func_t> func{ Offset::LocalMapCamera::SetNorthRotation };
+		static REL::Relocation<func_t> func{ RELOCATION_ID(16089, 16330) };
 		return func(this, a_northRotation);
 	}
 
 	LocalMapCamera* LocalMapCamera::Ctor(float a_zRotation)
 	{
 		using func_t = decltype(&LocalMapCamera::Ctor);
-		REL::Relocation<func_t> func{ Offset::LocalMapCamera::Ctor };
+		static REL::Relocation<func_t> func{ RELOCATION_ID(16084, 16325) };
 		return func(this, a_zRotation);
 	}
 }

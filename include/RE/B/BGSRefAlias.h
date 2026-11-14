@@ -15,7 +15,8 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_BGSRefAlias;
-		inline static auto           VMTYPEID = static_cast<VMTypeID>(140);
+		inline static constexpr auto VTABLE = VTABLE_BGSRefAlias;
+		inline static constexpr auto VMTYPEID = static_cast<VMTypeID>(140);
 
 		struct ForcedFillData  // kForced
 		{
@@ -66,16 +67,16 @@ namespace RE
 				};
 
 				// members
-				std::uint16_t                           alias;   // 0
-				stl::enumeration<Create, std::uint16_t> create;  // 2
+				std::uint16_t                       alias;   // 0
+				REX::EnumSet<Create, std::uint16_t> create;  // 2
 			};
 			static_assert(sizeof(Alias) == 0x4);
 
 			// members
-			TESBoundObject*                        object;  // 00 - ALCO
-			Alias                                  alias;   // 08 - ALCA
-			stl::enumeration<Level, std::uint16_t> level;   // 0C - ALCL
-			std::uint16_t                          pad0E;   // 0E
+			TESBoundObject*                    object;  // 00 - ALCO
+			Alias                              alias;   // 08 - ALCA
+			REX::EnumSet<Level, std::uint16_t> level;   // 0C - ALCL
+			std::uint16_t                      pad0E;   // 0E
 		};
 		static_assert(sizeof(CreatedFillData) == 0x10);
 
@@ -107,8 +108,8 @@ namespace RE
 			};
 
 			// members
-			std::uint32_t                                 nearAlias;     // 0 - ALNA
-			stl::enumeration<NEARFILLTYPE, std::uint32_t> nearFillType;  // 4 - ALNT
+			std::uint32_t                             nearAlias;     // 0 - ALNA
+			REX::EnumSet<NEARFILLTYPE, std::uint32_t> nearFillType;  // 4 - ALNT
 		};
 		static_assert(sizeof(NearAliasFillData) == 0x8);
 
@@ -148,6 +149,7 @@ namespace RE
 
 		TESObjectREFR* GetReference() const;
 		Actor*         GetActorReference() const;
+		void           ForceRefTo(TESObjectREFR* a_ref);
 
 		// members
 		GenericFillData fillData;    // 28

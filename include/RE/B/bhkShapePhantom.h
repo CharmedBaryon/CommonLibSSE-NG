@@ -8,7 +8,8 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_bhkShapePhantom;
-		inline static auto           Ni_RTTI = NiRTTI_bhkShapePhantom;
+		inline static constexpr auto Ni_RTTI = NiRTTI_bhkShapePhantom;
+		inline static constexpr auto VTABLE = VTABLE_bhkShapePhantom;
 
 		~bhkShapePhantom() override;  // 00
 

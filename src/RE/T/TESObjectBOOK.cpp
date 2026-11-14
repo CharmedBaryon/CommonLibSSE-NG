@@ -57,7 +57,7 @@ namespace RE
 	bool TESObjectBOOK::Read(TESObjectREFR* a_reader)
 	{
 		using func_t = decltype(&TESObjectBOOK::Read);
-		REL::Relocation<func_t> func{ RELOCATION_ID(17439, 17842) };
+		static REL::Relocation<func_t> func{ RELOCATION_ID(17439, 17842) };
 		return func(this, a_reader);
 	}
 }

@@ -18,4 +18,4 @@ namespace RE
 		ExtraDataType GetType() const override;  // 01 - { return kCannotWear; }
 	};
 	static_assert(sizeof(ExtraCannotWear) == 0x10);
-}
+};

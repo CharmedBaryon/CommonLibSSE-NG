@@ -13,7 +13,8 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_NiObjectNET;
-		inline static auto           Ni_RTTI = NiRTTI_NiObjectNET;
+		inline static constexpr auto Ni_RTTI = NiRTTI_NiObjectNET;
+		inline static constexpr auto VTABLE = VTABLE_NiObjectNET;
 
 		~NiObjectNET() override;  // 00
 
@@ -32,6 +33,7 @@ namespace RE
 		void                            DeleteExtraData(std::uint16_t a_extraDataIndex);
 		[[nodiscard]] NiTimeController* GetControllers() const;
 		NiTimeController*               GetController(const NiRTTI* a_rtti) const;
+		void                            RemoveController(NiTimeController* a_controller);
 
 		template <class T>
 		[[nodiscard]] T* GetController() const;
@@ -46,6 +48,7 @@ namespace RE
 		bool                        InsertExtraData(NiExtraData* a_extra);
 		void                        RemoveAllExtraData();
 		bool                        RemoveExtraData(const BSFixedString& a_key);
+		bool                        RemoveExtraData(NiExtraData* a_extra);
 		bool                        RemoveExtraDataAt(std::uint16_t a_extraDataIndex);
 		bool                        SetExtraDataSize(std::uint16_t a_size);
 

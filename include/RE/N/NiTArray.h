@@ -111,12 +111,17 @@ namespace RE
 			return _capacity;
 		}
 
+		[[nodiscard]] size_type free_idx() const
+		{
+			return _freeIdx;
+		}
+
 	private:
 		// members
 		T*            _data;        // 08
 		std::uint16_t _capacity;    // 10
-		std::uint16_t _freeIdx;     // 12
-		std::uint16_t _size;        // 14
+		std::uint16_t _freeIdx;     // 12 - size including null entries
+		std::uint16_t _size;        // 14 - size without null entries
 		std::uint16_t _growthSize;  // 16
 	};
 	static_assert(sizeof(NiTArray<void*, NiTMallocInterface<void*>>) == 0x18);
@@ -140,6 +145,17 @@ namespace RE
 		{}
 	};
 	static_assert(sizeof(NiTPrimitiveArray<void*>) == 0x18);
+
+	template <class T>
+	class NiTScrapArray : public NiTArray<T, NiTScrapHeapInterface<T>>
+	{
+	public:
+		NiTScrapArray(std::uint32_t a_maxSize = 0, std::uint32_t a_growBy = 1) :
+			NiTArray<T, NiTScrapHeapInterface<T>>(a_maxSize, a_growBy)
+		{
+		}
+	};
+	static_assert(sizeof(NiTScrapArray<void*>) == 0x18);
 
 	template <class T, class Allocator>
 	class NiTLargeArray

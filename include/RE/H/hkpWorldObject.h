@@ -56,10 +56,14 @@ namespace RE
 		virtual hkWorldOperation::Result UpdateShape(hkpShapeModifier* a_shapeModifier);  // 04 - { return hkWorldOperation::Result::kDone; }
 		virtual hkMotionState*           GetMotionState() = 0;                            // 05
 
-		const hkpCollidable* GetCollidable() const;
-		hkpCollidable*       GetCollidableRW();
-		const hkpShape*      GetShape() const;
-		TESObjectREFR*       GetUserData() const;
+		const hkpCollidable*       GetCollidable() const;
+		hkpCollidable*             GetCollidableRW();
+		std::optional<hkpProperty> GetProperty(std::uint32_t a_key);
+		const hkpShape*            GetShape() const;
+		TESObjectREFR*             GetUserData() const;
+		bool                       HasProperty(std::uint32_t a_key);
+		void                       RemoveProperty(std::uint32_t a_key);
+		void                       SetProperty(std::uint32_t a_key, hkpPropertyValue a_value);
 
 		// members
 		hkpWorld*            world;             // 10

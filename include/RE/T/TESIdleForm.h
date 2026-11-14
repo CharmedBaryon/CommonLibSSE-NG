@@ -25,11 +25,11 @@ namespace RE
 		};
 
 		// members
-		std::int8_t                          loopMin;                  // 0
-		std::int8_t                          loopMax;                  // 1
-		stl::enumeration<Flag, std::uint8_t> flags;                    // 2
-		std::uint8_t                         animationGroupSelection;  // 3
-		std::uint16_t                        replayDelay;              // 4
+		std::int8_t                      loopMin;                  // 0
+		std::int8_t                      loopMax;                  // 1
+		REX::EnumSet<Flag, std::uint8_t> flags;                    // 2
+		std::uint8_t                     animationGroupSelection;  // 3
+		std::uint16_t                    replayDelay;              // 4
 	};
 	static_assert(sizeof(IDLE_DATA) == 0x6);
 
@@ -52,18 +52,18 @@ namespace RE
 		~TESIdleForm() override;  // 00
 
 		// override (TESForm)
-		void        InitializeData() override;                                          // 04
-		void        ClearData() override;                                               // 05
-		bool        Load(TESFile* a_mod) override;                                      // 06
-		TESForm*    CreateDuplicateForm(bool a_createEditorID, void* a_arg2) override;  // 09
-		void        InitItemImpl() override;                                            // 13
-		const char* GetFormEditorID() const override;                                   // 32 - { return formEditorID.c_str(); }
-		bool        SetFormEditorID(const char* a_str) override;                        // 33
+		void        InitializeData() override;                                                                          // 04
+		void        ClearData() override;                                                                               // 05
+		bool        Load(TESFile* a_mod) override;                                                                      // 06
+		TESForm*    CreateDuplicateForm(bool a_createEditorID, NiTPointerMap<TESForm*, TESForm*>* a_copyMap) override;  // 09
+		void        InitItemImpl() override;                                                                            // 13
+		const char* GetFormEditorID() const override;                                                                   // 32 - { return formEditorID.c_str(); }
+		bool        SetFormEditorID(const char* a_str) override;                                                        // 33
 
 		bool CheckConditions(Actor* a_actor, TESObjectREFR* a_target, bool a_checkParentIdle)
 		{
 			using func_t = decltype(&TESIdleForm::CheckConditions);
-			REL::Relocation<func_t> func{ RELOCATION_ID(24069, 24572) };
+			static REL::Relocation<func_t> func{ RELOCATION_ID(24069, 24572) };
 			return func(this, a_actor, a_target, a_checkParentIdle);
 		}
 

@@ -61,6 +61,48 @@ namespace RE
 			AddEventSink(a_sink);
 		}
 
+		/// Adds an event sink to the front of sinks list.
+		///
+		/// When there is an ongoing notification, sinks are prepended to a pending list.
+		/// Consider the following case: Add(A), Add(B), notifying=true, Add(C), Prepend(D), Prepend(E), notifying = false
+		/// Sinks: A, B
+		/// Pending: E, D, C
+		/// Result: A, B, E, D, C
+		///
+		/// However without notifying the same chain of calls will look like this:
+		/// Sinks: E, D, A, B, C
+		///
+		/// The relative order of C, D, and E is guaranteed in both cases, but, previous sinks may appear both before and after the new sinks.
+		void PrependEventSink(Sink* a_eventSink)
+		{
+			if (!a_eventSink) {
+				return;
+			}
+
+			BSSpinLockGuard locker(lock);
+
+			if (notifying) {
+				if (std::find(pendingRegisters.begin(), pendingRegisters.end(), a_eventSink) == pendingRegisters.end()) {
+					pendingRegisters.push_front(a_eventSink);
+				}
+			} else {
+				if (std::find(sinks.begin(), sinks.end(), a_eventSink) == sinks.end()) {
+					sinks.push_front(a_eventSink);
+				}
+			}
+
+			auto it = std::find(pendingUnregisters.begin(), pendingUnregisters.end(), a_eventSink);
+			if (it != pendingUnregisters.end()) {
+				pendingUnregisters.erase(it);
+			}
+		}
+
+		template <class SinkEvent>
+		inline void PrependEventSink(BSTEventSink<SinkEvent>* a_sink)
+		{
+			PrependEventSink(a_sink);
+		}
+
 		void RemoveEventSink(Sink* a_eventSink)
 		{
 			if (!a_eventSink) {

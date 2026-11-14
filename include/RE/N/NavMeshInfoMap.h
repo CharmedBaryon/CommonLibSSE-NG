@@ -10,7 +10,8 @@
 
 namespace RE
 {
-	struct NavMeshInfo;
+	struct NavMeshInfo : BSNavmeshInfo
+	{};
 
 	class NavMeshInfoMap :
 		public TESForm,                       // 00
@@ -57,5 +58,7 @@ namespace RE
 		std::uint16_t                                        padEA;             // EA
 		std::uint32_t                                        padEC;             // EC
 	};
+#if defined(EXCLUSIVE_SKYRIM_FLAT)
 	static_assert(sizeof(NavMeshInfoMap) == 0xF0);
+#endif
 }

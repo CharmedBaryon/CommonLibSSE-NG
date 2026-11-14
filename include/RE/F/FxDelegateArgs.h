@@ -1,5 +1,6 @@
 #pragma once
 
+#include "RE/F/FxResponseArgs.h"
 #include "RE/G/GFxValue.h"
 
 namespace RE
@@ -18,6 +19,14 @@ namespace RE
 		[[nodiscard]] FxDelegateHandler* GetHandler() const;
 		[[nodiscard]] GFxMovieView*      GetMovie() const;
 		[[nodiscard]] std::uint32_t      GetArgCount() const;
+
+		template <std::convertible_to<GFxValue>... Args>
+		void Respond(Args&&... a_args) const
+		{
+			FxResponseArgs<sizeof...(Args)> response;
+			(response.Add(std::forward<Args>(a_args)), ...);
+			Respond(response);
+		}
 
 	protected:
 		// members

@@ -6,6 +6,7 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_NiBinaryStream;
+		inline static constexpr auto VTABLE = VTABLE_NiBinaryStream;
 
 		using int_type = std::int32_t;
 		using pos_type = std::uint32_t;

@@ -8,6 +8,7 @@
 
 namespace RE
 {
+	class HeldStateHandler;
 	class InputEvent;
 	class MenuModeChangeEvent;
 	class MenuOpenCloseEvent;
@@ -26,6 +27,11 @@ namespace RE
 	struct TESFurnitureEvent;
 	struct TogglePOVHandler;
 	struct ToggleRunHandler;
+#ifdef ENABLE_SKYRIM_VR
+	struct DragonRidingHandler;
+	struct TeleportHandler;
+	struct VrSwimHandler;
+#endif
 
 	class PlayerControls :
 		public BSTEventSink<InputEvent*>,          // 000
@@ -36,6 +42,7 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_PlayerControls;
+		inline static constexpr auto VTABLE = VTABLE_PlayerControls;
 
 		PlayerControls();
 		~PlayerControls() override = default;  // 00
@@ -44,13 +51,16 @@ namespace RE
 
 		constexpr ActivateHandler* GetActivateHandler() const noexcept { return activateHandler; }
 
+		void RegisterHandler(PlayerInputHandler* a_handler, bool a_addToHeldStateHandlers);
+		void UnregisterHandler(PlayerInputHandler* a_handler);
+
 		// members
 		std::uint8_t                  pad021;                 // 021
 		std::uint16_t                 pad022;                 // 022
 		PlayerControlsData            data;                   // 024
 		std::uint32_t                 pad054;                 // 054
 		BSTArray<PlayerInputHandler*> handlers;               // 058
-		BSTArray<void*>               unk070;                 // 070
+		BSTArray<HeldStateHandler*>   heldStateHandlers;      // 070
 		BSTArray<void*>               unk088;                 // 088
 		std::uint8_t                  unk0A0[8];              // 0A0
 		std::uint64_t                 unk0A8;                 // 0A8
@@ -73,13 +83,20 @@ namespace RE
 		RunHandler*                   runHandler;             // 1C0
 		SneakHandler*                 sneakHandler;           // 1C8
 		TogglePOVHandler*             togglePOVHandler;       // 1D0
-		bool                          notifyingHandlers;      // 1D8
-		bool                          blockPlayerInput;       // 1D9
-		std::uint16_t                 unk1DA;                 // 1DA
-		std::uint32_t                 unk1DC;                 // 1DC
+#ifdef EXCLUSIVE_SKYRIM_VR
+		TeleportHandler*     teleportHandler;      // 1D8
+		VrSwimHandler*       vrSwimHandler;        // 1E0
+		DragonRidingHandler* dragonRidingHandler;  // 1E8
+		std::uint8_t         unkVr1F0[0x8];        // 1F0
+#else
+		bool          notifyingHandlers;  // 1D8
+		bool          blockPlayerInput;   // 1D9
+		std::uint16_t unk1DA;             // 1DA
+		std::uint32_t unk1DC;             // 1DC
+#endif
 
 	private:
 		PlayerControls* Ctor();
 	};
-	static_assert(sizeof(PlayerControls) == 0x1E0);
+	STATIC_ASSERT_SIZE(PlayerControls, 0x1E0, 0x1E0, 0x1F8);
 }

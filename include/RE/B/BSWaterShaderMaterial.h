@@ -13,6 +13,7 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_BSWaterShaderMaterial;
+		inline static constexpr auto VTABLE = VTABLE_BSWaterShaderMaterial;
 
 		~BSWaterShaderMaterial() override;  // 00::
 
@@ -20,7 +21,7 @@ namespace RE
 		BSShaderMaterial* Create() override;                                // 01
 		void              CopyMembers(BSShaderMaterial* a_other) override;  // 02
 		bool              DoIsCopy(BSShaderMaterial* a_other) override;     // 03
-		std::uint32_t     ComputeCRC32(void) override;                      // 04
+		std::uint32_t     ComputeCRC32(uint32_t srcHash) override;          // 04
 		BSShaderMaterial* GetDefault() override;                            // 05
 		Type              GetType() const override;                         // 07 - { return Type::kWater; }
 
@@ -51,9 +52,9 @@ namespace RE
 		float                            sunSparkleMagnitude;      // 0E8
 		float                            unk0EC;                   // 0EC
 		WaterShaderData::DepthProperties depthProperties;          // 0F0
-		std::uint64_t                    unk100;                   // 100
-		std::uint64_t                    unk108;                   // 108
-		std::uint64_t                    unk110;                   // 100
+		NiPoint2                         normalScroll1;            // 100
+		NiPoint2                         normalScroll2;            // 108
+		NiPoint2                         normalScroll3;            // 110
 		std::uint64_t                    unk118;                   // 118
 		float                            uvScaleA[3];              // 120
 		std::uint32_t                    unk12C;                   // 12C

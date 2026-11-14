@@ -18,6 +18,7 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_UISaveLoadManager;
+		inline static constexpr auto VTABLE = VTABLE_UISaveLoadManager;
 
 		~UISaveLoadManager() override;  // 00
 
@@ -29,11 +30,13 @@ namespace RE
 
 		// members
 		BSScaleformExternalTexture screenshotTexture;  // 18
-		GFxValue                   unk30;              // 30
-		BSFixedString              unk48;              // 48
+		GFxValue                   entryList;          // 30
+		BSFixedString              menuName;           // 48
 		std::uint64_t              unk50;              // 50
 		std::uint64_t              unk58;              // 58
-		std::uint64_t              unk60;              // 60
+		std::uint8_t               batchSize;          // 60
+		bool                       unk61;              // 61
+		std::uint16_t              pad62;              // 62
 	};
 	static_assert(sizeof(UISaveLoadManager) == 0x68);
 }

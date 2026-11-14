@@ -40,16 +40,33 @@ namespace RE
 	class CFilter
 	{
 	public:
-		enum class Flag
+		struct Flags
 		{
-			kNone = 0,
-			kNoCollision = 1 << 14,
+			enum Flag
+			{
+				kNone = 0,
+				kNoCollision = 1 << 14,
+				kLinkedGroup = 1 << 15,
 
-			kLayerMask = 0x7F  // COL_LAYER
+				kPartMask = 0x1F,  // BIPED_PART
+				kLayerMask = 0x7F  // COL_LAYER
+			};
 		};
 
+		COL_LAYER     GetCollisionLayer() const;  // 0–6
+		BIPED_PART    GetBipedPart() const;       // 8–12
+		bool          QNoCollision() const;       // 14
+		bool          QLinkedGroup() const;       // 15
+		std::uint32_t GetSystemGroup() const;     // 16–31
+
+		void SetCollisionLayer(COL_LAYER a_layer);
+		void SetBipedPart(BIPED_PART a_part);
+		void SetNoCollision(bool a_set);
+		void SetLinkedGroup(bool a_set);
+		void SetSystemGroup(std::uint32_t a_group);
+
 		// members
-		stl::enumeration<Flag, std::uint32_t> flags;  // 0
+		std::uint32_t filter;  // 0
 	};
 	static_assert(sizeof(CFilter) == 0x4);
 }

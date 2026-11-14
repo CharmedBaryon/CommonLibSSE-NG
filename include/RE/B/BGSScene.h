@@ -86,24 +86,25 @@ namespace RE
 		void InitItemImpl() override;                          // 13
 
 		// members
-		BSTArray<BGSScenePhase*>                                    phases;                 // 20
-		BSTArray<FormID>                                            actors;                 // 00 - ALID
-		BSTArray<stl::enumeration<SCENE_ACTOR_FLAG, std::uint32_t>> actorFlags;             // 18 - LNAM
-		BSTArray<stl::enumeration<BehaviourFlag, std::uint32_t>>    actorProgressionFlags;  // 30 - DNAM
-		BSTArray<BGSSceneAction*>                                   actions;                // 80
-		TESQuest*                                                   parentQuest;            // 98 - PNAM
-		stl::enumeration<Flag, std::uint32_t>                       flags;                  // A0 - FNAM
-		std::uint32_t                                               padA4;                  // A4
-		TESCondition                                                conditions;             // A8 - CTDA
-		bool                                                        isPlaying;              // B0
-		std::uint8_t                                                unkB1;                  // B1
-		std::uint8_t                                                unkB2;                  // B2
-		std::uint8_t                                                unkB3;                  // B3
-		std::uint32_t                                               unkB4;                  // B4
-		std::uint32_t                                               unkB8;                  // B8
-		std::uint32_t                                               unkBC;                  // BC
-		std::uint32_t                                               unkC0;                  // C0
-		std::uint32_t                                               padC4;                  // C4
+		BSTArray<BGSScenePhase*>                                phases;                 // 20
+		BSTArray<std::uint32_t>                                 actors;                 // 00 - ALID (alias ID)
+		BSTArray<REX::EnumSet<SCENE_ACTOR_FLAG, std::uint32_t>> actorFlags;             // 18 - LNAM
+		BSTArray<REX::EnumSet<BehaviourFlag, std::uint32_t>>    actorProgressionFlags;  // 30 - DNAM
+		BSTArray<BGSSceneAction*>                               actions;                // 80
+		TESQuest*                                               parentQuest;            // 98 - PNAM
+		REX::EnumSet<Flag, std::uint32_t>                       flags;                  // A0 - FNAM
+		std::uint32_t                                           padA4;                  // A4
+		TESCondition                                            conditions;             // A8 - CTDA
+		bool                                                    isPlaying;              // B0
+		std::uint8_t                                            unkB1;                  // B1
+		std::uint8_t                                            unkB2;                  // B2
+		std::uint8_t                                            unkB3;                  // B3
+		bool                                                    isShuttingDown;         // B4 - byte flag, set while the scene is shutting down
+		std::uint8_t                                            padB5[3];               // B5
+		std::uint32_t                                           unkB8;                  // B8
+		std::uint32_t                                           currentPhaseIndex;      // BC - -1 when not playing, 0 on start, incremented per phase
+		std::uint32_t                                           unkC0;                  // C0
+		std::uint32_t                                           padC4;                  // C4
 	};
 	static_assert(sizeof(BGSScene) == 0xC8);
 }

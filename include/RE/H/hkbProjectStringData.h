@@ -22,7 +22,6 @@ namespace RE
 		hkStringPtr          characterPath;       // 60
 		hkStringPtr          scriptsPath;         // 68
 		hkStringPtr          fullPathToSource;    // 70
-		hkStringPtr          rootPath;            // 78
 	};
-	static_assert(sizeof(hkbProjectStringData) == 0x80);
+	static_assert(sizeof(hkbProjectStringData) == 0x78);
 }

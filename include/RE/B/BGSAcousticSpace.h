@@ -30,6 +30,14 @@ namespace RE
 		void        UnClone3D(TESObjectREFR* a_ref) override;  // 41
 		NiAVObject* Clone3D(TESObjectREFR* a_ref) override;    // 4A - { return 0; }
 
+		// add
+
+		// Switches away from this acoustic space: fades out its looping sound (or stops it
+		// outright if the game is paused), transitions any active reverb, and clears the
+		// process-wide "current acoustic space" pointer. A no-op if this isn't the currently
+		// active acoustic space.
+		void Deactivate();
+
 		// members
 		BGSSoundDescriptorForm* loopingSound;  // 30 - SNAM
 		TESRegion*              soundRegion;   // 38 - RDAT - interiors only

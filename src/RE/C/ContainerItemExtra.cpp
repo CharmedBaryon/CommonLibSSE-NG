@@ -14,7 +14,7 @@ namespace RE
 	ContainerItemExtra::ContainerItemExtra(TESForm* a_owner) :
 		owner(a_owner),
 		conditional(),
-		healthMult(100.0f),
+		healthMult(1.0f),
 		pad14(0)
 	{}
 }

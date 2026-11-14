@@ -21,7 +21,7 @@
       },
       "vendor": {
         "microsoft.com/VisualStudioSettings/CMake/1.0": {
-          "intelliSenseMode": "$env{PROJECT_PLATFORM}-$env{PROJECT_COMPILER}-$env{PROJECT_ARCHITECTURE}",
+          "intelliSenseMode": "windows-msvc-x64",
           "enableMicrosoftCodeAnalysis": true,
           "enableClangTidyCodeAnalysis": true
         }
@@ -63,16 +63,6 @@
       }
     },
     {
-      "name": "packaging-conan",
-      "hidden": true,
-      "toolchainFile": "${sourceDir}/build/generators/conan_toolchain.cmake",
-      "cacheVariables": {
-        "CMAKE_POLICY_DEFAULT_CMP0091": "NEW",
-        "CONAN_DISABLE_CHECK_COMPILER": "ON",
-        "USE_CONAN": "ON"
-      }
-    },
-    {
       "name": "packaging-vcpkg",
       "hidden": true,
       "toolchainFile": "$env{VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake",
@@ -80,6 +70,18 @@
         "USE_VCPKG": "ON",
         "VCPKG_HOST_TRIPLET": "$env{PROJECT_ARCHITECTURE}-$env{PROJECT_PLATFORM}-static-md",
         "VCPKG_TARGET_TRIPLET": "$env{PROJECT_ARCHITECTURE}-$env{PROJECT_PLATFORM}-static-md"
+      }
+    },
+    {
+      "name": "packaging-vcpkg-linux-clangcl",
+      "hidden": true,
+      "toolchainFile": "$env{VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake",
+      "cacheVariables": {
+        "USE_VCPKG": "ON",
+        "VCPKG_TARGET_TRIPLET": "x64-windows-clangcl",
+        "VCPKG_OVERLAY_TRIPLETS": "${sourceDir}/examples/linux-cross-compile/custom-triplets",
+        "VCPKG_OVERLAY_PORTS": "${sourceDir}/examples/linux-cross-compile/custom-ports",
+        "VCPKG_CHAINLOAD_TOOLCHAIN_FILE": "${sourceDir}/cmake/toolchain-linux-clangcl.cmake"
       }
     },
     {
@@ -115,7 +117,14 @@
       },
       "environment": {
         "PROJECT_COMPILER": "clang",
-        "PROJECT_COMPILER_FLAGS": "-Wno-overloaded-virtual -Wno-delete-non-abstract-non-virtual-dtor -Wno-inconsistent-missing-override -Wno-reinterpret-base-class -D__cpp_lib_char8_t -D__cpp_consteval -D__cpp_lib_format"
+        "PROJECT_COMPILER_FLAGS": "-Wno-overloaded-virtual -Wno-delete-non-abstract-non-virtual-dtor -Wno-inconsistent-missing-override -Wno-reinterpret-base-class"
+      },
+      "vendor": {
+        "microsoft.com/VisualStudioSettings/CMake/1.0": {
+          "intelliSenseMode": "windows-clang-x64",
+          "enableMicrosoftCodeAnalysis": true,
+          "enableClangTidyCodeAnalysis": true
+        }
       }
     },
     {
@@ -137,7 +146,22 @@
       "environment": {
         "CC": "clang-cl",
         "CXX": "clang-cl",
-        "PROJECT_COMPILER_FLAGS": "/permissive- /EHsc /W4 /WX -Wno-overloaded-virtual -Wno-delete-non-abstract-non-virtual-dtor -Wno-inconsistent-missing-override -Wno-reinterpret-base-class -D__cpp_lib_char8_t -D__cpp_consteval -D__cpp_lib_format"
+        "PROJECT_COMPILER_FLAGS": "/permissive- /EHsc /W4 /WX /bigobj -Wno-overloaded-virtual -Wno-delete-non-abstract-non-virtual-dtor -Wno-inconsistent-missing-override -Wno-reinterpret-base-class -Wno-nonportable-include-path -Wno-deprecated-copy-with-user-provided-copy -Wno-invalid-offsetof -Wno-switch -Wno-unused-command-line-argument -Wno-deprecated-volatile -Wno-unused-private-field"
+      },
+      "vendor": {
+        "microsoft.com/VisualStudioSettings/CMake/1.0": {
+          "intelliSenseMode": "windows-clang-x64",
+          "enableMicrosoftCodeAnalysis": true,
+          "enableClangTidyCodeAnalysis": true
+        }
+      }
+    },
+    {
+      "name": "compiler-linux-clangcl",
+      "hidden": true,
+      "environment": {
+        "PROJECT_COMPILER": "clang-cl",
+        "PROJECT_COMPILER_FLAGS": "/permissive- /EHsc /W4 /WX /bigobj -Wno-overloaded-virtual -Wno-delete-non-abstract-non-virtual-dtor -Wno-inconsistent-missing-override -Wno-reinterpret-base-class -Wno-nonportable-include-path -Wno-deprecated-copy-with-user-provided-copy -Wno-invalid-offsetof -Wno-switch -Wno-unused-command-line-argument -Wno-deprecated-volatile -Wno-unused-private-field"
       }
     },
     {
@@ -342,6 +366,20 @@
       "binaryDir": "${sourceDir}/build/release-clang-cl-vcpkg-all"
     },
     {
+      "name": "build-release-linux-clangcl-vcpkg-all",
+      "inherits": [
+        "buildtype-release",
+        "architecture-x64",
+        "platform-win32-unicode",
+        "generator-ninja",
+        "compiler-linux-clangcl",
+        "packaging-vcpkg-linux-clangcl",
+        "runtimes-all",
+        "common"
+      ],
+      "binaryDir": "${sourceDir}/build/release-linux-clangcl-vcpkg-all"
+    },
+    {
       "name": "build-release-msvc-vcpkg-flatrim",
       "inherits": [
         "build-release-msvc-vcpkg-all",
@@ -436,254 +474,6 @@
         "runtimes-current"
       ],
       "binaryDir": "${sourceDir}/build/release-clang-cl-vcpkg-current"
-    },
-    {
-      "name": "build-debug-msvc-conan-all",
-      "inherits": [
-        "buildtype-debug",
-        "architecture-x64",
-        "platform-win32-unicode",
-        "generator-ninja",
-        "compiler-msvc",
-        "packaging-conan",
-        "runtimes-all",
-        "common"
-      ],
-      "binaryDir": "${sourceDir}/build/debug-msvc-conan-all"
-    },
-    {
-      "name": "build-debug-clang-cl-conan-all",
-      "inherits": [
-        "buildtype-debug",
-        "architecture-x64",
-        "platform-win32-unicode",
-        "generator-ninja",
-        "compiler-clang-cl",
-        "packaging-conan",
-        "runtimes-all",
-        "common"
-      ],
-      "binaryDir": "${sourceDir}/build/debug-clang-cl-conan-all"
-    },
-    {
-      "name": "build-debug-msvc-conan-flatrim",
-      "inherits": [
-        "build-debug-msvc-conan-all",
-        "runtimes-flatrim"
-      ],
-      "binaryDir": "${sourceDir}/build/debug-msvc-conan-flatrim"
-    },
-    {
-      "name": "build-debug-clang-cl-conan-flatrim",
-      "inherits": [
-        "build-debug-clang-cl-conan-all",
-        "runtimes-flatrim"
-      ],
-      "binaryDir": "${sourceDir}/build/debug-clang-cl-conan-flatrim"
-    },
-    {
-      "name": "build-debug-msvc-conan-vr",
-      "inherits": [
-        "build-debug-msvc-conan-all",
-        "runtimes-vr"
-      ],
-      "binaryDir": "${sourceDir}/build/debug-msvc-conan-vr"
-    },
-    {
-      "name": "build-debug-clang-cl-conan-vr",
-      "inherits": [
-        "build-debug-clang-cl-conan-all",
-        "runtimes-vr"
-      ],
-      "binaryDir": "${sourceDir}/build/debug-clang-cl-conan-vr"
-    },
-    {
-      "name": "build-debug-msvc-conan-ae",
-      "inherits": [
-        "build-debug-msvc-conan-all",
-        "runtimes-ae"
-      ],
-      "binaryDir": "${sourceDir}/build/debug-msvc-conan-ae"
-    },
-    {
-      "name": "build-debug-clang-cl-conan-ae",
-      "inherits": [
-        "build-debug-clang-cl-conan-all",
-        "runtimes-ae"
-      ],
-      "binaryDir": "${sourceDir}/build/debug-clang-cl-conan-ae"
-    },
-    {
-      "name": "build-debug-msvc-conan-se",
-      "inherits": [
-        "build-debug-msvc-conan-all",
-        "runtimes-se"
-      ],
-      "binaryDir": "${sourceDir}/build/debug-msvc-conan-se"
-    },
-    {
-      "name": "build-debug-clang-cl-conan-se",
-      "inherits": [
-        "build-debug-clang-cl-conan-all",
-        "runtimes-se"
-      ],
-      "binaryDir": "${sourceDir}/build/debug-clang-cl-conan-se"
-    },
-    {
-      "name": "build-debug-msvc-conan-pre-ae",
-      "inherits": [
-        "build-debug-msvc-conan-all",
-        "runtimes-pre-ae"
-      ],
-      "binaryDir": "${sourceDir}/build/debug-msvc-conan-pre-ae"
-    },
-    {
-      "name": "build-debug-clang-cl-conan-pre-ae",
-      "inherits": [
-        "build-debug-clang-cl-conan-all",
-        "runtimes-pre-ae"
-      ],
-      "binaryDir": "${sourceDir}/build/debug-clang-cl-conan-pre-ae"
-    },
-    {
-      "name": "build-debug-msvc-conan-current",
-      "inherits": [
-        "build-debug-msvc-conan-all",
-        "runtimes-current"
-      ],
-      "binaryDir": "${sourceDir}/build/debug-msvc-conan-current"
-    },
-    {
-      "name": "build-debug-clang-cl-conan-current",
-      "inherits": [
-        "build-debug-clang-cl-conan-all",
-        "runtimes-current"
-      ],
-      "binaryDir": "${sourceDir}/build/debug-clang-cl-conan-current"
-    },
-    {
-      "name": "build-release-msvc-conan-all",
-      "inherits": [
-        "buildtype-release",
-        "architecture-x64",
-        "platform-win32-unicode",
-        "generator-ninja",
-        "compiler-msvc",
-        "packaging-conan",
-        "runtimes-all",
-        "common"
-      ],
-      "binaryDir": "${sourceDir}/build/release-msvc-conan-all"
-    },
-    {
-      "name": "build-release-clang-cl-conan-all",
-      "inherits": [
-        "buildtype-release",
-        "architecture-x64",
-        "platform-win32-unicode",
-        "generator-ninja",
-        "compiler-clang-cl",
-        "packaging-conan",
-        "runtimes-all",
-        "common"
-      ],
-      "binaryDir": "${sourceDir}/build/release-clang-cl-conan-all"
-    },
-    {
-      "name": "build-release-msvc-conan-flatrim",
-      "inherits": [
-        "build-release-msvc-conan-all",
-        "runtimes-flatrim"
-      ],
-      "binaryDir": "${sourceDir}/build/release-msvc-conan-flatrim"
-    },
-    {
-      "name": "build-release-clang-cl-conan-flatrim",
-      "inherits": [
-        "build-release-clang-cl-conan-all",
-        "runtimes-flatrim"
-      ],
-      "binaryDir": "${sourceDir}/build/release-clang-cl-conan-flatrim"
-    },
-    {
-      "name": "build-release-msvc-conan-vr",
-      "inherits": [
-        "build-release-msvc-conan-all",
-        "runtimes-vr"
-      ],
-      "binaryDir": "${sourceDir}/build/release-msvc-conan-vr"
-    },
-    {
-      "name": "build-release-clang-cl-conan-vr",
-      "inherits": [
-        "build-release-clang-cl-conan-all",
-        "runtimes-vr"
-      ],
-      "binaryDir": "${sourceDir}/build/release-clang-cl-conan-vr"
-    },
-    {
-      "name": "build-release-msvc-conan-ae",
-      "inherits": [
-        "build-release-msvc-conan-all",
-        "runtimes-ae"
-      ],
-      "binaryDir": "${sourceDir}/build/release-msvc-conan-ae"
-    },
-    {
-      "name": "build-release-clang-cl-conan-ae",
-      "inherits": [
-        "build-release-clang-cl-conan-all",
-        "runtimes-ae"
-      ],
-      "binaryDir": "${sourceDir}/build/release-clang-cl-conan-ae"
-    },
-    {
-      "name": "build-release-msvc-conan-se",
-      "inherits": [
-        "build-release-msvc-conan-all",
-        "runtimes-se"
-      ],
-      "binaryDir": "${sourceDir}/build/release-msvc-conan-se"
-    },
-    {
-      "name": "build-release-clang-cl-conan-se",
-      "inherits": [
-        "build-release-clang-cl-conan-all",
-        "runtimes-se"
-      ],
-      "binaryDir": "${sourceDir}/build/release-clang-cl-conan-se"
-    },
-    {
-      "name": "build-release-msvc-conan-pre-ae",
-      "inherits": [
-        "build-release-msvc-conan-all",
-        "runtimes-pre-ae"
-      ],
-      "binaryDir": "${sourceDir}/build/release-msvc-conan-pre-ae"
-    },
-    {
-      "name": "build-release-clang-cl-conan-pre-ae",
-      "inherits": [
-        "build-release-clang-cl-conan-all",
-        "runtimes-pre-ae"
-      ],
-      "binaryDir": "${sourceDir}/build/release-clang-cl-conan-pre-ae"
-    },
-    {
-      "name": "build-release-msvc-conan-current",
-      "inherits": [
-        "build-release-msvc-conan-all",
-        "runtimes-current"
-      ],
-      "binaryDir": "${sourceDir}/build/release-msvc-conan-current"
-    },
-    {
-      "name": "build-release-clang-cl-conan-current",
-      "inherits": [
-        "build-release-clang-cl-conan-all",
-        "runtimes-current"
-      ],
-      "binaryDir": "${sourceDir}/build/release-clang-cl-conan-current"
     }
   ],
   "buildPresets": [
@@ -748,6 +538,11 @@
       "configurePreset": "build-release-clang-cl-vcpkg-all"
     },
     {
+      "name": "release-linux-clangcl-vcpkg-all",
+      "displayName": "Release (All, Clang-CL, Vcpkg, Linux host cross-compile)",
+      "configurePreset": "build-release-linux-clangcl-vcpkg-all"
+    },
+    {
       "name": "release-msvc-vcpkg-vr",
       "displayName": "Release (VR, MSVC, Vcpkg)",
       "configurePreset": "build-release-msvc-vcpkg-vr"
@@ -786,106 +581,6 @@
       "name": "release-clang-cl-vcpkg-se",
       "displayName": "Release (SE, Clang-CL, Vcpkg)",
       "configurePreset": "build-release-clang-cl-vcpkg-se"
-    },
-    {
-      "name": "debug-msvc-conan-all",
-      "displayName": "Debug (All, MSVC, Conan)",
-      "configurePreset": "build-debug-msvc-conan-all"
-    },
-    {
-      "name": "debug-clang-cl-conan-all",
-      "displayName": "Debug (All, Clang-CL, Conan)",
-      "configurePreset": "build-debug-clang-cl-conan-all"
-    },
-    {
-      "name": "debug-msvc-conan-vr",
-      "displayName": "Debug (VR, MSVC, Conan)",
-      "configurePreset": "build-debug-msvc-conan-vr"
-    },
-    {
-      "name": "debug-clang-cl-conan-vr",
-      "displayName": "Debug (VR, Clang-CL, Conan)",
-      "configurePreset": "build-debug-clang-cl-conan-vr"
-    },
-    {
-      "name": "debug-msvc-conan-flatrim",
-      "displayName": "Debug (Flatrim, MSVC, Conan)",
-      "configurePreset": "build-debug-msvc-conan-flatrim"
-    },
-    {
-      "name": "debug-clang-cl-conan-flatrim",
-      "displayName": "Debug (Flatrim, Clang-CL, Conan)",
-      "configurePreset": "build-debug-clang-cl-conan-flatrim"
-    },
-    {
-      "name": "debug-msvc-conan-ae",
-      "displayName": "Debug (AE, MSVC, Conan)",
-      "configurePreset": "build-debug-msvc-conan-ae"
-    },
-    {
-      "name": "debug-clang-cl-conan-ae",
-      "displayName": "Debug (AE, Clang-CL, Conan)",
-      "configurePreset": "build-debug-clang-cl-conan-ae"
-    },
-    {
-      "name": "debug-msvc-conan-se",
-      "displayName": "Debug (SE, MSVC, Conan)",
-      "configurePreset": "build-debug-msvc-conan-se"
-    },
-    {
-      "name": "debug-clang-cl-conan-se",
-      "displayName": "Debug (SE, Clang-CL, Conan)",
-      "configurePreset": "build-debug-clang-cl-conan-se"
-    },
-    {
-      "name": "release-msvc-conan-all",
-      "displayName": "Release (All, MSVC, Conan)",
-      "configurePreset": "build-release-msvc-conan-all"
-    },
-    {
-      "name": "release-clang-cl-conan-all",
-      "displayName": "Release (All, Clang-CL, Conan)",
-      "configurePreset": "build-release-clang-cl-conan-all"
-    },
-    {
-      "name": "release-msvc-conan-vr",
-      "displayName": "Release (VR, MSVC, Conan)",
-      "configurePreset": "build-release-msvc-conan-vr"
-    },
-    {
-      "name": "release-clang-cl-conan-vr",
-      "displayName": "Release (VR, Clang-CL, Conan)",
-      "configurePreset": "build-release-clang-cl-conan-vr"
-    },
-    {
-      "name": "release-msvc-conan-flatrim",
-      "displayName": "Release (Flatrim, MSVC, Conan)",
-      "configurePreset": "build-release-msvc-conan-flatrim"
-    },
-    {
-      "name": "release-clang-cl-conan-flatrim",
-      "displayName": "Release (Flatrim, Clang-CL, Conan)",
-      "configurePreset": "build-release-clang-cl-conan-flatrim"
-    },
-    {
-      "name": "release-msvc-conan-ae",
-      "displayName": "Release (AE, MSVC, Conan)",
-      "configurePreset": "build-release-msvc-conan-ae"
-    },
-    {
-      "name": "release-clang-cl-conan-ae",
-      "displayName": "Release (AE, Clang-CL, Conan)",
-      "configurePreset": "build-release-clang-cl-conan-ae"
-    },
-    {
-      "name": "release-msvc-conan-se",
-      "displayName": "Release (SE, MSVC, Conan)",
-      "configurePreset": "build-release-msvc-conan-se"
-    },
-    {
-      "name": "release-clang-cl-conan-se",
-      "displayName": "Release (SE, Clang-CL, Conan)",
-      "configurePreset": "build-release-clang-cl-conan-se"
     }
   ],
   "testPresets": [
@@ -893,6 +588,18 @@
       "name": "all",
       "displayName": "All Tests",
       "configurePreset": "build-debug-msvc-vcpkg-all",
+      "output": {
+        "outputOnFailure": true
+      },
+      "execution": {
+        "noTestsAction": "error",
+        "stopOnFailure": false
+      }
+    },
+    {
+      "name": "flatrim",
+      "displayName": "All Tests (Flatrim)",
+      "configurePreset": "build-debug-msvc-vcpkg-flatrim",
       "output": {
         "outputOnFailure": true
       },

@@ -3,6 +3,7 @@
 #include "RE/B/BSPointerHandle.h"
 #include "RE/F/FormTypes.h"
 #include "RE/P/Projectile.h"
+#include "REL/RuntimeDataAccessors.h"
 
 namespace RE
 {
@@ -38,10 +39,10 @@ namespace RE
 		void        InitHavok() override;                               // 66
 		NiAVObject* Load3D(bool a_backgroundLoading) override;          // 6A
 #ifndef SKYRIM_CROSS_VR
-		bool        IsBarrierProjectile() override;                              // A7 - { return 1; }
-		void        UpdateImpl(float a_delta) override;                 // AB
-		bool        ProcessImpacts() override;                              // AC
-		bool        GetKillOnCollision() override;                              // B8 - { return 0; }
+		bool IsBarrierProjectile() override;      // A7 - { return 1; }
+		void UpdateImpl(float a_delta) override;  // AB
+		bool ProcessImpacts() override;           // AC
+		bool GetKillOnCollision() override;       // B8 - { return 0; }
 #endif
 
 		struct BARRIER_RUNTIME_DATA
@@ -54,19 +55,10 @@ namespace RE
 			BARRIER_RUNTIME_DATA_CONTENT
 		};
 
-		[[nodiscard]] inline BARRIER_RUNTIME_DATA& GetBarrierRuntimeData() noexcept
-		{
-			return REL::RelocateMemberIfNewer<BARRIER_RUNTIME_DATA>(SKSE::RUNTIME_SSE_1_6_629, this, 0x1D8, 0x1E0);
-		}
-
-		[[nodiscard]] inline const BARRIER_RUNTIME_DATA& GetBarrierRuntimeData() const noexcept
-		{
-			return REL::RelocateMemberIfNewer<BARRIER_RUNTIME_DATA>(SKSE::RUNTIME_SSE_1_6_629, this, 0x1D8, 0x1E0);
-		}
-
+		RUNTIME_DATA_ACCESSOR_VERSIONED_EX(BARRIER_RUNTIME_DATA, GetBarrierRuntimeData, SKSE::RUNTIME_SSE_1_6_629, 0x1D8, 0x1E0);
 		// members
 #ifndef ENABLE_SKYRIM_AE
-		BARRIER_RUNTIME_DATA_CONTENT
+		BARRIER_RUNTIME_DATA_CONTENT;
 #endif
 	};
 #ifndef ENABLE_SKYRIM_AE

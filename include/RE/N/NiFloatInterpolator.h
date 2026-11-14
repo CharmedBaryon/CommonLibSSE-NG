@@ -11,7 +11,8 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_NiFloatInterpolator;
-		inline static auto           Ni_RTTI = NiRTTI_NiFloatInterpolator;
+		inline static constexpr auto Ni_RTTI = NiRTTI_NiFloatInterpolator;
+		inline static constexpr auto VTABLE = VTABLE_NiFloatInterpolator;
 
 		~NiFloatInterpolator() override;  // 00
 
@@ -40,6 +41,13 @@ namespace RE
 		void*              GetKeyArray(std::uint16_t a_channel) const override;                                    // 3D - { return floatData ? floatData->keys : 0; }
 		std::uint8_t       GetKeyStride(std::uint16_t a_channel) const override;                                   // 3E - { return floatData ? floatData->keySize : 0; }
 		[[nodiscard]] bool GetChannelPosed(std::uint16_t a_channel) const override;                                // 3F - { return !floatData && floatValue != -3.4028235e38; }
+
+		static NiFloatInterpolator* Create()
+		{
+			using func_t = decltype(&NiFloatInterpolator::Create);
+			static REL::Relocation<func_t> func{ RELOCATION_ID(71088, 72686) };
+			return func();
+		}
 
 		// members
 		float                  floatValue;  // 18

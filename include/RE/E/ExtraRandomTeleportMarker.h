@@ -11,7 +11,8 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_ExtraRandomTeleportMarker;
-		inline static auto           EXTRADATATYPE = ExtraDataType::kRandomTeleportMarker;
+		inline static constexpr auto VTABLE = VTABLE_ExtraRandomTeleportMarker;
+		inline static constexpr auto EXTRADATATYPE = ExtraDataType::kRandomTeleportMarker;
 
 		~ExtraRandomTeleportMarker() override;  // 00
 

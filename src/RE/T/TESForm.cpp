@@ -39,7 +39,7 @@ namespace RE
 	float TESForm::GetWeight() const
 	{
 		using func_t = decltype(&TESForm::GetWeight);
-		REL::Relocation<func_t> func{ RELOCATION_ID(14809, 14988) };
+		static REL::Relocation<func_t> func{ RELOCATION_ID(14809, 14988) };
 		return func(this);
 	}
 
@@ -55,7 +55,7 @@ namespace RE
 		bool hasKeyword = false;
 
 		keywordForm->ForEachKeyword([&](const BGSKeyword* a_keyword) {
-			if (std::ranges::find(editorIDs, a_keyword->GetFormEditorID()) != editorIDs.end()) {
+			if (std::ranges::find(editorIDs, a_keyword->formEditorID.c_str()) != editorIDs.end()) {
 				hasKeyword = true;
 				return BSContainer::ForEachResult::kStop;
 			}
@@ -148,15 +148,14 @@ namespace RE
 		}
 
 		const auto* expectedFile = (formID & 0xFF000000) == 0xFE000000 ?
-                                       TESDataHandler::GetSingleton()->LookupLoadedLightModByIndex(
+		                               TESDataHandler::GetSingleton()->LookupLoadedLightModByIndex(
 										   static_cast<uint16_t>((0x00FFF000 & formID) >> 12)) :
-                                       TESDataHandler::GetSingleton()->LookupLoadedModByIndex(
+		                               TESDataHandler::GetSingleton()->LookupLoadedModByIndex(
 										   static_cast<uint8_t>((0xFF000000 & formID) >> 24));
 
 		std::uint32_t fullMasters = 0;
-		std::uint32_t smallMasters = 0;
 
-		if SKYRIM_REL_VR_CONSTEXPR (REL::Module::IsVR()) {
+		if (REL::Module::IsVR() && !TESDataHandler::HasValidVRCompiledFileCollection(TESDataHandler::GetVRCompiledFileCollection(false))) {
 			for (std::uint32_t i = 0; i < modFile->masterCount; ++i) {
 				const auto* master = modFile->masterPtrs[i];
 				if (master == expectedFile) {
@@ -166,26 +165,19 @@ namespace RE
 			}
 			return (formID & 0x00FFFFFF) | (fullMasters << 24);
 		} else {
-			for (std::uint32_t i = 0; i < modFile->masterCount; ++i) {
-				const auto* master = modFile->masterPtrs[i];
-				if (master == expectedFile) {
-					if (master->compileIndex == 0xFE) {
-						return 0xFE000000 | (smallMasters << 12) | (formID & 0x00000FFF);
-					} else {
-						return (fullMasters << 24) | (formID & 0x00FFFFFF);
+			std::uint32_t  masterIndex = modFile->masterCount;
+			const TESFile* owner = modFile;
+			if (expectedFile && modFile->masterPtrs) {
+				for (std::uint32_t i = 0; i < modFile->masterCount; ++i) {
+					if (modFile->masterPtrs[i] == expectedFile) {
+						masterIndex = i;
+						owner = expectedFile;
+						break;
 					}
 				}
-				if (master->compileIndex == 0xFE) {
-					++smallMasters;
-				} else {
-					++fullMasters;
-				}
 			}
-			if (modFile->compileIndex == 0xFE) {
-				return (formID & 0x00000FFF) | 0xFE000000 | (smallMasters << 12);
-			} else {
-				return (formID & 0x00FFFFFF) | (fullMasters << 24);
-			}
+			const auto localMask = owner->compileIndex == 0xFE ? 0x00000FFFu : 0x00FFFFFFu;
+			return (masterIndex << 24) | (formID & localMask);
 		}
 	}
 
@@ -213,10 +205,17 @@ namespace RE
 		}
 	}
 
+	void TESForm::SetFile(TESFile* a_file)
+	{
+		using func_t = decltype(&TESForm::SetFile);
+		static REL::Relocation<func_t> func{ RELOCATION_ID(14467, 14623) };
+		return func(this, a_file);
+	}
+
 	void TESForm::SetPlayerKnows(bool a_known)
 	{
 		using func_t = decltype(&TESForm::SetPlayerKnows);
-		REL::Relocation<func_t> func{ RELOCATION_ID(14482, 14639) };
+		static REL::Relocation<func_t> func{ RELOCATION_ID(14482, 14639) };
 		return func(this, a_known);
 	}
 }

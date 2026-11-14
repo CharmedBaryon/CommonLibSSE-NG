@@ -35,7 +35,7 @@ namespace RE
 
 	volatile std::uint32_t* NiRefObject::GetTotalObjectCount()
 	{
-		static REL::Relocation<volatile std::uint32_t*> totalObjectCount{ Offset::NiRefObject::TotalObjectCount };
+		static REL::Relocation<volatile std::uint32_t*> totalObjectCount{ RELOCATION_ID(523912, 410493) };
 		return totalObjectCount.get();
 	}
 }

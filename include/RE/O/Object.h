@@ -47,9 +47,6 @@ namespace RE
 			volatile std::int32_t           refCountAndHandleLock;     // 28
 			std::uint32_t                   pad2C;                     // 2C
 			Variable                        variables[0];              // 30 - size == classPtr->GetTotalNumVariables() + 3
-
-		private:
-			void Dtor();
 		};
 		static_assert(sizeof(Object) == 0x30);
 	}

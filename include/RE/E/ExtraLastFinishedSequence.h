@@ -10,7 +10,8 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_ExtraLastFinishedSequence;
-		inline static auto           EXTRADATATYPE = ExtraDataType::kLastFinishedSequence;
+		inline static constexpr auto VTABLE = VTABLE_ExtraLastFinishedSequence;
+		inline static constexpr auto EXTRADATATYPE = ExtraDataType::kLastFinishedSequence;
 
 		~ExtraLastFinishedSequence() override;  // 00
 

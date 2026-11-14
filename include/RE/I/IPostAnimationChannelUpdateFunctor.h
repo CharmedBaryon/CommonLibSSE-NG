@@ -6,6 +6,7 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_IPostAnimationChannelUpdateFunctor;
+		inline static constexpr auto VTABLE = VTABLE_IPostAnimationChannelUpdateFunctor;
 
 		virtual ~IPostAnimationChannelUpdateFunctor();  // 00
 

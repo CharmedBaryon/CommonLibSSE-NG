@@ -13,8 +13,8 @@ namespace RE
 		virtual ~hkpEaseConstraintsAction() override;  // 00
 
 		// add
-		virtual void Unk_03(void) override;  // 03
-		virtual void Unk_07(void) override;  // 07
+		void       ApplyAction(const hkStepInfo& a_stepInfo) override;                                                         // 03
+		hkpAction* Clone(const hkArray<hkpEntity*>& a_newEntities, const hkArray<hkpPhantom*>& a_newPhantoms) const override;  // 07
 
 		// members
 		float                           duration;             // 40

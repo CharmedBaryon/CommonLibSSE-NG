@@ -15,8 +15,8 @@ namespace RE
 
 	MenuControls* MenuControls::GetSingleton()
 	{
-		REL::Relocation<MenuControls**> singelton{ Offset::MenuControls::Singleton };
-		return *singelton;
+		static REL::Relocation<MenuControls**> singleton{ RELOCATION_ID(515124, 401263) };
+		return *singleton;
 	}
 
 	void MenuControls::AddHandler(MenuEventHandler* a_handler)
@@ -24,29 +24,18 @@ namespace RE
 		return RegisterHandler(a_handler);
 	}
 
+	void MenuControls::GetKeyRepeatRates(float& a_shortRate, float& a_longRate)
+	{
+		using func_t = decltype(&MenuControls::GetKeyRepeatRates);
+		static REL::Relocation<func_t> func{ RELOCATION_ID(51360, 52207) };
+		return func(this, a_shortRate, a_longRate);
+	}
+
 	void MenuControls::RegisterHandler(MenuEventHandler* a_handler)
 	{
-		if (!a_handler) {
-			return;
-		}
-
-		if (isProcessing) {
-			auto pos = std::find_if(regBuffer.begin(), regBuffer.end(), [a_handler](const QueuedReg& a_elem) -> bool {
-				return a_elem.handler == a_handler;
-			});
-
-			if (pos == regBuffer.end()) {
-				QueuedReg reg(a_handler, true);
-				regBuffer.push_back(std::move(reg));
-			} else {
-				pos->add = true;
-			}
-		} else {
-			a_handler->registered = true;
-			if (std::find(handlers.begin(), handlers.end(), a_handler) == handlers.end()) {
-				handlers.push_back(a_handler);
-			}
-		}
+		using func_t = decltype(&MenuControls::RegisterHandler);
+		static REL::Relocation<func_t> func{ RELOCATION_ID(51358, 52202) };
+		return func(this, a_handler);
 	}
 
 	void MenuControls::RemoveHandler(MenuEventHandler* a_handler)
@@ -63,29 +52,17 @@ namespace RE
 		return true;
 	}
 
+	void MenuControls::SetKeyRepeatRates(float a_shortRate, float a_longRate)
+	{
+		using func_t = decltype(&MenuControls::SetKeyRepeatRates);
+		static REL::Relocation<func_t> func{ RELOCATION_ID(51361, 52208) };
+		return func(this, a_shortRate, a_longRate);
+	}
+
 	void MenuControls::UnregisterHandler(MenuEventHandler* a_handler)
 	{
-		if (!a_handler) {
-			return;
-		}
-
-		if (isProcessing) {
-			a_handler->registered = false;
-			auto pos = std::find_if(regBuffer.begin(), regBuffer.end(), [a_handler](const QueuedReg& a_elem) -> bool {
-				return a_elem.handler == a_handler;
-			});
-
-			if (pos == regBuffer.end()) {
-				QueuedReg reg(a_handler, false);
-				regBuffer.push_back(std::move(reg));
-			} else {
-				pos->add = false;
-			}
-		} else {
-			auto pos = std::find(handlers.begin(), handlers.end(), a_handler);
-			if (pos != handlers.end()) {
-				handlers.erase(pos);
-			}
-		}
+		using func_t = decltype(&MenuControls::UnregisterHandler);
+		static REL::Relocation<func_t> func{ RELOCATION_ID(51359, 52203) };
+		return func(this, a_handler);
 	}
 }

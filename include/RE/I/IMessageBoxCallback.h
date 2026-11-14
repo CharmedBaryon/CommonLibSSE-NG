@@ -8,21 +8,15 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_IMessageBoxCallback;
-
-		enum class Message
-		{
-			kUnk0 = 0,
-			kUnk1 = 1,
-			kUnk2 = 2
-		};
+		inline static constexpr auto VTABLE = VTABLE_IMessageBoxCallback;
 
 		virtual ~IMessageBoxCallback() = default;  // 00
 
 		// add
-		virtual void Run(Message a_msg) = 0;  // 01
+		virtual void Run(std::uint8_t a_button) = 0;  // 01
 
 		// members
-		std::uint32_t unk0C;  // 0C
+		std::uint32_t pad0C;  // 0C
 	};
 	static_assert(sizeof(IMessageBoxCallback) == 0x10);
 }

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "RE/B/BSTList.h"
+#include "RE/B/BSSimpleList.h"
 #include "RE/B/BaseFormComponent.h"
 
 namespace RE
@@ -118,6 +118,7 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_TESAIForm;
+		inline static constexpr auto VTABLE = VTABLE_TESAIForm;
 
 		~TESAIForm() override;  // 00
 

@@ -8,6 +8,7 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_bhkContactListener;
+		inline static constexpr auto VTABLE = VTABLE_bhkContactListener;
 
 		~bhkContactListener() override;  // 04
 	};

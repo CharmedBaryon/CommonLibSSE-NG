@@ -12,7 +12,8 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_bhkSerializable;
-		inline static auto           Ni_RTTI = NiRTTI_bhkSerializable;
+		inline static constexpr auto Ni_RTTI = NiRTTI_bhkSerializable;
+		inline static constexpr auto VTABLE = VTABLE_bhkSerializable;
 
 		~bhkSerializable() override;  // 00
 
@@ -37,8 +38,10 @@ namespace RE
 		virtual void       Unk_30(void);                    // 30
 		virtual void       Unk_31(void);                    // 31
 
-		// members
-		bhkSerializable* serializable;  // 18
+		// members - cinfo's identity confirmed by cross-referencing
+		// https://github.com/adamhynek/activeragdoll (GPL-3.0), which independently
+		// redeclares a cinfo-typed pointer at this same offset per subclass
+		void* cinfo;  // 18 - concrete type is per-subclass (e.g. bhkConstraint's hkConstraintCinfo*, bhkRigidBody's bhkRigidBodyCinfo*)
 	};
 	static_assert(sizeof(bhkSerializable) == 0x20);
 }

@@ -8,6 +8,7 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_SkyEffectController;
+		inline static constexpr auto VTABLE = VTABLE_SkyEffectController;
 
 		~SkyEffectController() override;  // 00
 

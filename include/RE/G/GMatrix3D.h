@@ -5,14 +5,7 @@ namespace RE
 	class GMatrix3D
 	{
 	public:
-		GMatrix3D() :
-			data{
-				{ 0.0, 0.0, 0.0, 0.0 },
-				{ 0.0, 0.0, 0.0, 0.0 },
-				{ 0.0, 0.0, 0.0, 0.0 },
-				{ 0.0, 0.0, 0.0, 0.0 }
-			}
-		{}
+		GMatrix3D() = default;
 
 		GMatrix3D& operator=(const GMatrix3D& a_rhs)
 		{
@@ -24,7 +17,7 @@ namespace RE
 			return *this;
 		}
 
-		float data[4][4];  // 00
+		float data[4][4]{};  // 00
 	};
 	static_assert(sizeof(GMatrix3D) == 0x40);
 }

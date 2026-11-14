@@ -27,7 +27,7 @@ namespace RE
 		std::uint16_t pad1E;           // 1E
 		Color         color;           // 20
 	};
-	static_assert(sizeof(DECAL_DATA_DATA) == 0x24);
+	STATIC_ASSERT_SIZE(DECAL_DATA_DATA, 0x24);
 
 	struct DecalData
 	{
@@ -35,5 +35,5 @@ namespace RE
 		// members
 		DECAL_DATA_DATA data;  // 00
 	};
-	static_assert(sizeof(DecalData) == 0x24);
+	STATIC_ASSERT_SIZE(DecalData, 0x24);
 }

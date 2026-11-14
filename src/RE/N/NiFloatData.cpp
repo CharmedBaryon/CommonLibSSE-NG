@@ -2,15 +2,12 @@
 
 namespace RE
 {
-	NiFloatData::NiFloatData() :
-		numKeys(0),
-		pad14(0),
-		keys(nullptr),
-		type(KeyType::kNoInterp),
-		keySize(0),
-		pad25(0),
-		pad26(0)
-	{}
+	NiFloatData* NiFloatData::Create()
+	{
+		using func_t = decltype(&NiFloatData::Create);
+		static REL::Relocation<func_t> func{ RELOCATION_ID(71069, 72667) };
+		return func();
+	}
 
 	std::uint32_t NiFloatData::GetNumKeys() const
 	{
@@ -23,5 +20,12 @@ namespace RE
 		a_type = type;
 		a_size = keySize;
 		return keys;
+	}
+
+	void NiFloatData::ReplaceAnim(NiFloatKey* a_keys, std::uint32_t a_numKeys, KeyType a_type)
+	{
+		using func_t = decltype(&NiFloatData::ReplaceAnim);
+		static REL::Relocation<func_t> func{ RELOCATION_ID(71071, 72669) };
+		return func(this, a_keys, a_numKeys, a_type);
 	}
 }

@@ -15,6 +15,7 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_ActorKnowledge;
+		inline static constexpr auto VTABLE = VTABLE_ActorKnowledge;
 
 		enum class FLAGS
 		{
@@ -24,14 +25,14 @@ namespace RE
 		~ActorKnowledge() override;  // 00
 
 		// members
-		ActorHandle                                     owner;                        // 10
-		ActorHandle                                     target;                       // 14
-		stl::enumeration<FIGHT_REACTION, std::uint32_t> factionFightReaction;         // 18
-		AITimeStamp                                     shouldAttackTargetTimeStamp;  // 1C
-		NiPointer<DetectionState>                       detectionState;               // 20
-		BSTArray<NiPointer<DetectionListener>>          listeners;                    // 28
-		stl::enumeration<FLAGS, std::uint32_t>          flags;                        // 40
-		AITimeStamp                                     detectionQueuedTimeStamp;     // 44
+		ActorHandle                                 owner;                        // 10
+		ActorHandle                                 target;                       // 14
+		REX::EnumSet<FIGHT_REACTION, std::uint32_t> factionFightReaction;         // 18
+		AITimeStamp                                 shouldAttackTargetTimeStamp;  // 1C
+		NiPointer<DetectionState>                   detectionState;               // 20
+		BSTArray<NiPointer<DetectionListener>>      listeners;                    // 28
+		REX::EnumSet<FLAGS, std::uint32_t>          flags;                        // 40
+		AITimeStamp                                 detectionQueuedTimeStamp;     // 44
 	};
 	static_assert(sizeof(ActorKnowledge) == 0x48);
 }

@@ -5,7 +5,7 @@ namespace RE
 	GFxMovieDef* GFxLoader::CreateMovie(const char* a_filename, LoadConstants a_loadConstants, UPInt a_memoryArena)
 	{
 		using func_t = decltype(&GFxLoader::CreateMovie);
-		REL::Relocation<func_t> func{ Offset::GFxLoader::CreateMovie };
+		static REL::Relocation<func_t> func{ RELOCATION_ID(80620, 84640) };
 		return func(this, a_filename, a_loadConstants, a_memoryArena);
 	}
 

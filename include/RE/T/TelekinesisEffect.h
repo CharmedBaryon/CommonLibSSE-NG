@@ -11,6 +11,8 @@ namespace RE
 		inline static constexpr auto RTTI = RTTI_TelekinesisEffect;
 		inline static constexpr auto VTABLE = VTABLE_TelekinesisEffect;
 
+		enum class STATE;
+
 		// override (ActiveEffect)
 		void Update(float a_delta) override;  // 04
 
@@ -22,11 +24,11 @@ namespace RE
 		// members
 		void*           unk90;          // 90 - smart ptr
 		float           moveVelocity;   // 98
-		float           unk9C;          // 9C
+		float           throwVelocity;  // 9C
 		ObjectRefHandle grabbedObject;  // A0
-		std::uint32_t   unkA4;          // A4
-		bool            unkA8;          // A8
-		bool            unkA9;          // A9
+		STATE           state;          // A4
+		bool            throwObject;    // A8
+		bool            firstUpdate;    // A9
 		std::uint8_t    unkAA;          // AA
 		std::uint8_t    unkAB;          // AB
 		std::uint32_t   unkAC;          // AC

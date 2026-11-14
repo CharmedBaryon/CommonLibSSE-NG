@@ -3,9 +3,12 @@
 #include "RE/B/BSTArray.h"
 #include "RE/G/GFxValue.h"
 #include "RE/I/IMenu.h"
+#include "REL/RuntimeDataAccessors.h"
 
 namespace RE
 {
+	class TESObjectREFR;
+
 	struct BottomBar;
 	struct ItemCard;
 	struct ItemList;
@@ -17,6 +20,7 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto      RTTI = RTTI_ContainerMenu;
+		inline static constexpr auto      VTABLE = VTABLE_ContainerMenu;
 		constexpr static std::string_view MENU_NAME = "ContainerMenu";
 
 		enum class ContainerMode : std::uint32_t
@@ -61,31 +65,19 @@ namespace RE
 		UI_MESSAGE_RESULTS ProcessMessage(UIMessage& a_message) override;    // 04
 		void               PostDisplay() override;                           // 06
 
-		[[nodiscard]] ContainerMode    GetContainerMode();
-		[[nodiscard]] static RefHandle GetTargetRefHandle();
+		[[nodiscard]] static ContainerMode GetContainerMode();
+		[[nodiscard]] static RefHandle     GetTargetRefHandle();
+		static void                        OpenMenu(TESObjectREFR* a_target, ContainerMode a_mode);  // If target is owned, kSteal is used instead of kLoot
 
 		[[nodiscard]] GFxValue  GetRoot() const noexcept;
 		[[nodiscard]] ItemList* GetItemList() const noexcept;
 
-		[[nodiscard]] inline RUNTIME_DATA& GetRuntimeData() noexcept
-		{
-			return REL::RelocateMember<RUNTIME_DATA>(this, 0x30, 0x40);
-		}
-
-		[[nodiscard]] inline const RUNTIME_DATA& GetRuntimeData() const noexcept
-		{
-			return REL::RelocateMember<RUNTIME_DATA>(this, 0x30, 0x40);
-		}
-
+		RUNTIME_DATA_ACCESSOR(RUNTIME_DATA, 0x30, 0x40);
 		// members
 #ifndef SKYRIM_CROSS_VR
-		RUNTIME_DATA_CONTENT  // 30, 40
+		RUNTIME_DATA_CONTENT;  // 30, 40
 #endif
 	};
-#ifndef ENABLE_SKYRIM_VR
-	static_assert(sizeof(ContainerMenu) == 0xC0);
-#elif !defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE)
-	static_assert(sizeof(ContainerMenu) == 0xD0);
-#endif
+	STATIC_ASSERT_SIZE(ContainerMenu, 0xC0, 0xC0, 0xD0, 0x30);
 }
 #undef RUNTIME_DATA_CONTENT

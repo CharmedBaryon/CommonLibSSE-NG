@@ -1,6 +1,7 @@
 #pragma once
 
 #include "RE/B/BSContainer.h"
+#include "RE/B/BSTArray.h"
 #include "RE/B/BaseFormComponent.h"
 #include "RE/C/ContainerItemExtra.h"
 
@@ -33,6 +34,7 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_TESContainer;
+		inline static constexpr auto VTABLE = VTABLE_TESContainer;
 
 		~TESContainer() override;  // 00
 
@@ -57,13 +59,14 @@ namespace RE
 		std::optional<std::uint32_t>    GetContainerObjectIndex(TESBoundObject* a_object, std::int32_t a_count) const;
 		bool                            AddObjectToContainer(TESBoundObject* a_object, std::int32_t a_count, TESForm* a_owner);
 		bool                            AddObjectsToContainer(std::map<TESBoundObject*, std::int32_t>& a_objects, TESForm* a_owner);
-		std::int32_t                    CountObjectsInContainer(TESBoundObject* a_object) const;
+		void                            CollectUniqueInventoryObjects(BSScrapArray<ContainerObject*>& a_objects) const;
+		[[nodiscard]] std::int32_t      GetObjectCount(const TESBoundObject* a_object) const;
 		bool                            RemoveObjectFromContainer(TESBoundObject* a_object, std::int32_t a_count);
 
 		// members
 		ContainerObject** containerObjects;     // 08
 		std::uint32_t     numContainerObjects;  // 10
-		bool              allowStolenItems;     // 14 - new in 1.6.1130
+		bool              blockStolenItems;     // 14 - new in 1.6.1130
 
 	private:
 		void CopyObjectList(const std::vector<ContainerObject*>& a_copiedData);

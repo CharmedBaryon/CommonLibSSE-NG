@@ -26,6 +26,9 @@ namespace RE
 		virtual float      GetSecondaryAVWeight() const;     // 22
 
 		// members
+		// The ctor stores mgef->data.secondAVWeight here (0.0f when
+		// data.secondaryAV is kNone); the secondary ActorValue itself is
+		// never cached — read it via GetAdditionalActorValue().
 		float         secondaryAVWeight;  // 98
 		std::uint32_t pad9C;              // 9C
 	};

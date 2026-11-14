@@ -1,7 +1,7 @@
 #pragma once
 
 #include "RE/B/BSExtraData.h"
-#include "RE/B/BSTList.h"
+#include "RE/B/BSSimpleList.h"
 #include "RE/E/ExtraDataTypes.h"
 
 namespace RE
@@ -20,7 +20,8 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_ExtraRunOncePacks;
-		inline static auto           EXTRADATATYPE = ExtraDataType::kRunOncePacks;
+		inline static constexpr auto VTABLE = VTABLE_ExtraRunOncePacks;
+		inline static constexpr auto EXTRADATATYPE = ExtraDataType::kRunOncePacks;
 
 		~ExtraRunOncePacks() override;  // 00
 

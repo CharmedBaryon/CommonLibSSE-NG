@@ -16,7 +16,8 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_NiSkinInstance;
-		inline static auto           Ni_RTTI = NiRTTI_NiSkinInstance;
+		inline static constexpr auto Ni_RTTI = NiRTTI_NiSkinInstance;
+		inline static constexpr auto VTABLE = VTABLE_NiSkinInstance;
 
 		~NiSkinInstance() override;  // 00
 
@@ -34,6 +35,7 @@ namespace RE
 		virtual void Unk_25(void);  // 25
 
 		static NiSkinInstance* Create();
+		NiSkinInstance*        Ctor();
 
 		// members
 		NiPointer<NiSkinData>      skinData;                      // 10
@@ -48,7 +50,7 @@ namespace RE
 		void*                      boneMatrices;                  // 48
 		void*                      prevBoneMatrices;              // 50
 		void*                      skinToWorldWorldToSkinMatrix;  // 58
-#ifndef ENABLE_SKYRIM_VR
+#if defined(EXCLUSIVE_SKYRIM_FLAT)
 		REX::W32::CRITICAL_SECTION lock;  // 60
 	};
 	static_assert(sizeof(NiSkinInstance) == 0x88);

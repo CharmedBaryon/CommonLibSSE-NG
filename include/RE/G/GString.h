@@ -74,8 +74,8 @@ namespace RE
 		{
 			DataDescUnion();
 
-			DataDesc*                         data;
-			stl::enumeration<HeapType, UPInt> heapType;
+			DataDesc*                     data;
+			REX::EnumSet<HeapType, UPInt> heapType;
 		};
 		static_assert(sizeof(DataDescUnion) == 0x8);
 

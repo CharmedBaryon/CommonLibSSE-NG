@@ -9,6 +9,7 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_RefrInteraction;
+		inline static constexpr auto VTABLE = VTABLE_RefrInteraction;
 
 		~RefrInteraction() override;  // 00
 

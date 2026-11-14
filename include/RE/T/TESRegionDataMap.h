@@ -9,6 +9,7 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_TESRegionDataMap;
+		inline static constexpr auto VTABLE = VTABLE_TESRegionDataMap;
 		inline static constexpr auto TYPE = Type::kMap;
 
 		~TESRegionDataMap() override;  // 00

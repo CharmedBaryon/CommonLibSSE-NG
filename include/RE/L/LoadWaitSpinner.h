@@ -3,6 +3,7 @@
 #include "RE/B/BSTEvent.h"
 #include "RE/G/GFxValue.h"
 #include "RE/I/IMenu.h"
+#include "REL/RuntimeDataAccessors.h"
 
 namespace RE
 {
@@ -25,6 +26,7 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto      RTTI = RTTI_LoadWaitSpinner;
+		inline static constexpr auto      VTABLE = VTABLE_LoadWaitSpinner;
 		constexpr static std::string_view MENU_NAME = "LoadWaitSpinner";
 
 		struct RUNTIME_DATA
@@ -57,55 +59,16 @@ namespace RE
 		BSEventNotifyControl ProcessEvent(const BGSSaveLoadManagerEvent* a_event, BSTEventSource<BGSSaveLoadManagerEvent>* a_eventSource) override;  // 01
 #endif
 
-		[[nodiscard]] BSTEventSink<BSSystemEvent>* AsBSSystemEventSink() noexcept
-		{
-			return &REL::RelocateMember<BSTEventSink<BSSystemEvent>>(this, 0x30, 0x40);
-		}
+		RUNTIME_CAST_ACCESSOR(BSTEventSink<BSSystemEvent>, AsBSSystemEventSink, 0x30, 0x40);
+		RUNTIME_CAST_ACCESSOR(BSTEventSink<BSGamerProfileEvent>, AsBSGamerProfileEventSink, 0x38, 0x48);
+		RUNTIME_CAST_ACCESSOR(BSTEventSink<BGSSaveLoadManagerEvent>, AsBGSSaveLoadManagerEvent, 0x40, 0x50);
 
-		[[nodiscard]] const BSTEventSink<BSSystemEvent>* AsBSSystemEventSink() const noexcept
-		{
-			return const_cast<LoadWaitSpinner*>(this)->AsBSSystemEventSink();
-		}
-
-		[[nodiscard]] BSTEventSink<BSGamerProfileEvent>* AsBSGamerProfileEventSink() noexcept
-		{
-			return &REL::RelocateMember<BSTEventSink<BSGamerProfileEvent>>(this, 0x38, 0x48);
-		}
-
-		[[nodiscard]] const BSTEventSink<BSGamerProfileEvent>* AsBSGamerProfileEventSink() const noexcept
-		{
-			return const_cast<LoadWaitSpinner*>(this)->AsBSGamerProfileEventSink();
-		}
-
-		[[nodiscard]] BSTEventSink<BGSSaveLoadManagerEvent>* AsBGSSaveLoadManagerEvent() noexcept
-		{
-			return &REL::RelocateMember<BSTEventSink<BGSSaveLoadManagerEvent>>(this, 0x40, 0x50);
-		}
-
-		[[nodiscard]] const BSTEventSink<BGSSaveLoadManagerEvent>* AsBGSSaveLoadManagerEvent() const noexcept
-		{
-			return const_cast<LoadWaitSpinner*>(this)->AsBGSSaveLoadManagerEvent();
-		}
-
-		[[nodiscard]] inline RUNTIME_DATA& GetRuntimeData() noexcept
-		{
-			return REL::RelocateMember<RUNTIME_DATA>(this, 0x48, 0x58);
-		}
-
-		[[nodiscard]] inline const RUNTIME_DATA& GetRuntimeData() const noexcept
-		{
-			return REL::RelocateMember<RUNTIME_DATA>(this, 0x48, 0x58);
-		}
-
+		RUNTIME_DATA_ACCESSOR(RUNTIME_DATA, 0x48, 0x58);
 		// members
 #ifndef SKYRIM_CROSS_VR
-		RUNTIME_DATA_CONTENT  // 48, 58
+		RUNTIME_DATA_CONTENT;  // 48, 58
 #endif
 	};
-#ifndef ENABLE_SKYRIM_VR
-	static_assert(sizeof(LoadWaitSpinner) == 0x68);
-#elif !defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE)
-	static_assert(sizeof(LoadWaitSpinner) == 0x78);
-#endif
+	STATIC_ASSERT_SIZE(LoadWaitSpinner, 0x68, 0x68, 0x78, 0x30);
 }
 #undef RUNTIME_DATA_CONTENT

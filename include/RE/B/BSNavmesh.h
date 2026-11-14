@@ -73,10 +73,10 @@ namespace RE
 		};
 
 		// members
-		std::uint16_t                                  vertices[3];     // 00
-		std::uint16_t                                  triangles[3];    // 06 - 0xFF == NONE
-		stl::enumeration<TriangleFlag, std::uint16_t>  triangleFlags;   // 0C
-		stl::enumeration<TraversalFlag, std::uint16_t> traversalFlags;  // 0E
+		std::uint16_t                              vertices[3];     // 00
+		std::uint16_t                              triangles[3];    // 06 - 0xFF == NONE
+		REX::EnumSet<TriangleFlag, std::uint16_t>  triangleFlags;   // 0C
+		REX::EnumSet<TraversalFlag, std::uint16_t> traversalFlags;  // 0E
 	};
 	static_assert(sizeof(BSNavmeshTriangle) == 0x10);
 
@@ -95,8 +95,8 @@ namespace RE
 	{
 	public:
 		// members
-		stl::enumeration<EDGE_EXTRA_INFO_TYPE, std::uint32_t> type;    // 0
-		BSNavmeshTriangleEdgePortal                           portal;  // 4
+		REX::EnumSet<EDGE_EXTRA_INFO_TYPE, std::uint32_t> type;    // 0
+		BSNavmeshTriangleEdgePortal                       portal;  // 4
 	};
 	static_assert(sizeof(BSNavmeshEdgeExtraInfo) == 0xC);
 
@@ -149,11 +149,23 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_BSNavmesh;
+		inline static constexpr auto VTABLE = VTABLE_BSNavmesh;
 
 		virtual ~BSNavmesh();  // 00
 
 		// add
 		virtual std::uint32_t QNavmeshID() = 0;  // 01
+
+		NiPoint3 GetNormal(std::uint16_t a_tri) const
+		{
+			NiPoint3 result;
+
+			using func_t = NiPoint3*(const BSNavmesh*, NiPoint3&, std::uint16_t);
+			static REL::Relocation<func_t> func{ RELOCATION_ID(88674, 91114) };
+			func(this, result, a_tri);
+
+			return result;
+		}
 
 		// members
 		std::uint32_t                                                pad00C;                 // 00C

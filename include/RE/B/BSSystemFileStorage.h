@@ -8,6 +8,7 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_BSSystemFileStorage;
+		inline static constexpr auto VTABLE = VTABLE_BSSystemFileStorage;
 
 		struct Attributes
 		{
@@ -27,9 +28,9 @@ namespace RE
 			};
 
 			// members
-			stl::enumeration<Error, std::uint32_t> lastError;  // 00
-			std::uint32_t                          pad24;      // 04
-			void*                                  handle;     // 08
+			REX::EnumSet<Error, std::uint32_t> lastError;  // 00
+			std::uint32_t                      pad24;      // 04
+			void*                              handle;     // 08
 		};
 		static_assert(sizeof(Attributes) == 0x10);
 

@@ -2,7 +2,7 @@ name: Main CI
 
 on:
   push:
-    branches: [ main ]
+    branches: [ main, ng ]
     paths:
       - '.github/workflows/main_ci.yml'
       - 'cmake/**'
@@ -11,14 +11,16 @@ on:
       - 'tests/**'
       - 'CMakeLists.txt'
       - 'CMakePresets.json'
-      - 'conanfile.py'
       - 'vcpkg.json'
   pull_request:
-    branches: [ main, feature/* ]
+    branches: [ vr, ng, feature/* ]
   workflow_dispatch:
 
-env:
-  VCPKG_COMMIT_ID: fc3f61366102c1f0d4547c06d03c523bb18c13a7
+# Cancel a PR's in-flight run when it's superseded by a new push -- the 20-job matrix
+# otherwise keeps occupying runner slots for a commit nobody cares about anymore.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   build-and-test-vcpkg:
@@ -38,83 +40,263 @@ jobs:
         compiler:
           - msvc
           - clang-cl
+    # vcpkg `files` binary cache (not x-gha, removed upstream). Do not drop
+    # FORCE_SYSTEM_BINARIES: the ABI hash this cache keys off depends on it staying stable.
+    env:
+      VCPKG_BINARY_SOURCES: "clear;files,${{ github.workspace }}/vcpkg_binary_cache,readwrite"
+      VCPKG_FORCE_SYSTEM_BINARIES: "1"
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v5
         with:
           path: main
+          submodules: recursive
+
+      - name: Extract vcpkg baseline from vcpkg.json
+        id: get_vcpkg_baseline
+        shell: pwsh
+        run: |
+          $vcpkgJson = Get-Content main/vcpkg.json | ConvertFrom-Json
+          $baseline = $vcpkgJson.'builtin-baseline'
+          echo "baseline=$baseline" >> $env:GITHUB_OUTPUT
+          echo "✓ Using vcpkg baseline from vcpkg.json: $baseline"
 
       - name: Setup MSVC Environment
-        uses: ilammy/msvc-dev-cmd@v1.10.0
+        uses: TheMrMilchmann/setup-msvc-dev@v4.0.0
+        with:
+          arch: x64
+
+      # Pin vcpkg's download cache to a stable, cacheable path. vcpkg checks
+      # this directory (by SHA512) before fetching any asset — port source
+      # tarballs AND tools acquired via vcpkg_find_acquire_program (e.g. the
+      # pinned PowerShell-core zip applocal.ps1 needs). Caching it (below)
+      # lets those downloads survive across runs, so a transient GitHub
+      # releases 504 on a cache-cold tool fetch can't fail the build.
+      - name: Pin vcpkg downloads directory
+        shell: bash
+        run: echo "VCPKG_DOWNLOADS=${{ github.workspace }}/vcpkg_downloads" >> "$GITHUB_ENV"
 
       - name: Setup vcpkg
-        uses: lukka/run-vcpkg@v10.0
+        uses: lukka/run-vcpkg@v11
         with:
-          vcpkgGitCommitId: ${{ env.VCPKG_COMMIT_ID }}
-          doNotCache: true
+          vcpkgGitCommitId: ${{ steps.get_vcpkg_baseline.outputs.baseline }}
+          # Bootstrap vcpkg only; do NOT install here. Manifest install runs
+          # later during the retry-wrapped cmake configure, so the flaky
+          # asset fetches happen inside the retry + with the downloads cache
+          # already restored. Explicit so a future default flip can't move
+          # the install (and its network I/O) back ahead of those guards.
+          runVcpkgInstall: false
+
+      # vcpkg download (asset) cache. Keyed on the manifest + baseline, NOT
+      # the compiler — the set of fetched assets only changes when deps or
+      # the baseline change, so this survives VS toolset drift. Same
+      # trusted-write / untrusted-restore split as the build cache below.
+      - name: Cache vcpkg downloads (trusted, restore + save)
+        if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository
+        uses: actions/cache@v4
+        with:
+          path: ${{ github.workspace }}/vcpkg_downloads
+          key: ${{ runner.os }}-vcpkg-downloads-${{ hashFiles('main/vcpkg.json', 'main/vcpkg-configuration.json') }}
+          restore-keys: |
+            ${{ runner.os }}-vcpkg-downloads-
+
+      - name: Restore vcpkg downloads (fork PR, restore-only)
+        if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name != github.repository
+        uses: actions/cache/restore@v4
+        with:
+          path: ${{ github.workspace }}/vcpkg_downloads
+          key: ${{ runner.os }}-vcpkg-downloads-${{ hashFiles('main/vcpkg.json', 'main/vcpkg-configuration.json') }}
+          restore-keys: |
+            ${{ runner.os }}-vcpkg-downloads-
+
+      # vcpkg binary (built-package) cache. Same trusted-write / untrusted-restore split
+      # as the downloads cache above — only a fork PR is restore-only.
+      - name: Cache vcpkg binary packages (trusted, restore + save)
+        if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository
+        uses: actions/cache@v4
+        with:
+          path: ${{ github.workspace }}/vcpkg_binary_cache
+          key: ${{ runner.os }}-vcpkg-binpkgs-x64-windows-static-md-${{ matrix.compiler }}-${{ hashFiles('main/vcpkg.json', 'main/vcpkg-configuration.json') }}
+          restore-keys: |
+            ${{ runner.os }}-vcpkg-binpkgs-x64-windows-static-md-${{ matrix.compiler }}-
+            ${{ runner.os }}-vcpkg-binpkgs-x64-windows-static-md-
+
+      - name: Restore vcpkg binary packages (fork PR, restore-only)
+        if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name != github.repository
+        uses: actions/cache/restore@v4
+        with:
+          path: ${{ github.workspace }}/vcpkg_binary_cache
+          key: ${{ runner.os }}-vcpkg-binpkgs-x64-windows-static-md-${{ matrix.compiler }}-${{ hashFiles('main/vcpkg.json', 'main/vcpkg-configuration.json') }}
+          restore-keys: |
+            ${{ runner.os }}-vcpkg-binpkgs-x64-windows-static-md-${{ matrix.compiler }}-
+            ${{ runner.os }}-vcpkg-binpkgs-x64-windows-static-md-
+
+      # Pre-install vcpkg deps via a CMake configure, wrapped in retry. This
+      # is the only step that hits the network for vcpkg ports/tools, so a
+      # transient GitHub-releases 504 (e.g. the PowerShell-core fetch) gets
+      # retried here instead of failing the build. The subsequent run-cmake
+      # build step re-configures the real build directory fresh, so it sees
+      # BUILD_TESTS=ON and builds CommonLibSSETests.exe.
+      #
+      # IMPORTANT: use -B to redirect to a throwaway directory. If we
+      # configured into the preset's real binaryDir with -DBUILD_TESTS=OFF,
+      # run-cmake would reuse the CMakeCache.txt with BUILD_TESTS=OFF and
+      # the test exe would never be built (the failing mode before this fix).
+      - name: Pre-install vcpkg dependencies (retry)
+        uses: nick-fields/retry@v3
+        with:
+          timeout_minutes: 30
+          max_attempts: 3
+          retry_wait_seconds: 30
+          shell: pwsh
+          command: |
+            cmake -S "${{ github.workspace }}/main" -B "$env:RUNNER_TEMP/vcpkg-warmup" --preset build-${{ matrix.build-type }}-${{ matrix.compiler }}-vcpkg-${{ matrix.runtime }} -DBUILD_TESTS=OFF
 
       - name: Build
-        uses: lukka/run-cmake@v10.0
+        uses: lukka/run-cmake@v10
         with:
           cmakeListsTxtPath: ${{ github.workspace }}/main/CMakeLists.txt
           configurePreset: build-${{ matrix.build-type }}-${{ matrix.compiler }}-vcpkg-${{ matrix.runtime }}
+          configurePresetAdditionalArgs: "['-DCOMMONLIB_ENABLE_IPO=OFF']"
           buildPreset: ${{ matrix.build-type }}-${{ matrix.compiler }}-vcpkg-${{ matrix.runtime }}
 
       - name: Unit tests
         timeout-minutes: 5
         working-directory: ${{ github.workspace }}/main/build/${{ matrix.build-type }}-${{ matrix.compiler }}-vcpkg-${{ matrix.runtime }}
         run: .\CommonLibSSETests.exe
-  build-and-test-conan:
-    runs-on: windows-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        build-type:
-          - debug
-          - release
-        runtime:
-          - all
-          - flatrim
-          - ae
-          - se
-          - vr
-        compiler:
-          - msvc
-          - clang-cl
+
+  # Guards the Linux-host cross-compile toolchain (examples/linux-cross-compile/).
+  # Build-only and unmatrixed on purpose: the output is a Windows PE a Linux
+  # runner can't execute.
+  build-linux-cross-compile:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    env:
+      # Do not drop FORCE_SYSTEM_BINARIES: the ABI hash this cache keys off
+      # depends on it staying stable.
+      VCPKG_BINARY_SOURCES: "clear;files,${{ github.workspace }}/vcpkg_binary_cache,readwrite"
+      VCPKG_FORCE_SYSTEM_BINARIES: "1"
+      XWIN_SYSROOT: ${{ github.workspace }}/xwin-out
+      # Unpinned, xwin takes the newest manifest/SDK/CRT, and the cached
+      # sysroot silently stops matching the cache key built from these.
+      XWIN_VERSION: "0.10.0"
+      XWIN_MANIFEST_VERSION: "17"
+      XWIN_SDK_VERSION: "10.0.26100"
+      XWIN_CRT_VERSION: "14.44.17.14"
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v5
         with:
           path: main
+          submodules: recursive
+          persist-credentials: false
 
-      - name: Setup MSVC Environment
-        uses: ilammy/msvc-dev-cmd@v1.10.0
+      - name: Extract vcpkg baseline from vcpkg.json
+        id: get_vcpkg_baseline
+        run: |
+          baseline=$(python3 -c "import json; print(json.load(open('main/vcpkg.json'))['builtin-baseline'])")
+          echo "baseline=$baseline" >> "$GITHUB_OUTPUT"
 
-      - name: Install Conan
-        uses: turtlebrowser/get-conan@main
+      # MSVC STL headers require Clang 19+, and mixing versions across
+      # clang-cl/lld-link/llvm-rc/llvm-mt crashes lld, so take the whole
+      # suite from apt.llvm.org rather than Ubuntu's 18.
+      #
+      # Keep wine64 named explicitly: with i386 multiarch on, apt otherwise
+      # satisfies `wine` with wine32:i386 alone and leaves no 64-bit loader,
+      # so every x86-64 PE fails with "Bad EXE format".
+      - name: Install cross-compile toolchain
+        run: |
+          sudo dpkg --add-architecture i386
+          sudo apt-get update
+          sudo apt-get install -y ninja-build wine wine64 wine32:i386 g++ lsb-release wget gnupg software-properties-common
+          curl -fsSL --retry 3 --retry-all-errors -o /tmp/llvm.sh https://raw.githubusercontent.com/opencollab/llvm-jenkins.debian.net/cf853fefa308484749df8a87004c580a6c0fe830/llvm.sh
+          echo "03878e08f47b66cc95bc4b544b0db3c6d9ce8d60e6cf2492ae357984330a9eae  /tmp/llvm.sh" | sha256sum -c -
+          chmod +x /tmp/llvm.sh
+          sudo /tmp/llvm.sh 19
 
-      - name: Run Conan
-        working-directory: ${{ github.workspace }}/main
-        run: conan install --build=missing -o commonlibsse-ng:testing=True .
+      # Create the prefix here: left implicit, its first-run setup races the
+      # shader-compile step that triggers it and fails half-initialized.
+      - name: Initialize Wine prefix
+        run: wineboot --init
 
-      - name: Build with CMake
-        uses: lukka/run-cmake@v10.0
+      - name: Cache xwin sysroot
+        id: cache-xwin
+        uses: actions/cache@v4
         with:
-          cmakeListsTxtPath: ${{ github.workspace }}/main/CMakeLists.txt
-          configurePreset: build-${{ matrix.build-type }}-${{ matrix.compiler }}-conan-${{ matrix.runtime }}
-          buildPreset: ${{ matrix.build-type }}-${{ matrix.compiler }}-conan-${{ matrix.runtime }}
+          path: ${{ env.XWIN_SYSROOT }}
+          key: xwin-sysroot-${{ env.XWIN_VERSION }}-manifest${{ env.XWIN_MANIFEST_VERSION }}-sdk${{ env.XWIN_SDK_VERSION }}-crt${{ env.XWIN_CRT_VERSION }}
 
-      - name: Build with Conan
-        if: matrix.compiler == 'msvc' && matrix.runtime == 'all'
-        working-directory: ${{ github.workspace }}/main
-        run: conan build .
+      # Both archives below are checksummed before extraction. xwin publishes
+      # its hash; llvm-mingw doesn't, so that one is pinned from a real
+      # download.
+      - name: Generate xwin sysroot
+        if: steps.cache-xwin.outputs.cache-hit != 'true'
+        env:
+          RUNNER_TEMP_DIR: ${{ runner.temp }}
+          XWIN_SYSROOT_DIR: ${{ env.XWIN_SYSROOT }}
+        run: |
+          curl -fsSL --retry 3 --retry-all-errors -o xwin.tar.gz https://github.com/Jake-Shadle/xwin/releases/download/0.10.0/xwin-0.10.0-x86_64-unknown-linux-musl.tar.gz
+          expected=$(curl -fsSL --retry 3 --retry-all-errors https://github.com/Jake-Shadle/xwin/releases/download/0.10.0/xwin-0.10.0-x86_64-unknown-linux-musl.tar.gz.sha256)
+          echo "$expected  xwin.tar.gz" | sha256sum -c -
+          tar xzf xwin.tar.gz
+          install -Dm755 xwin-0.10.0-x86_64-unknown-linux-musl/xwin "$RUNNER_TEMP_DIR/bin/xwin"
+          "$RUNNER_TEMP_DIR/bin/xwin" --accept-license --cache-dir "$RUNNER_TEMP_DIR/xwin-cache" \
+            --manifest-version "$XWIN_MANIFEST_VERSION" \
+            --sdk-version "$XWIN_SDK_VERSION" --crt-version "$XWIN_CRT_VERSION" splat \
+            --output "$XWIN_SYSROOT_DIR" --include-debug-libs \
+            --use-winsysroot-style --preserve-ms-arch-notation
 
-      - name: Unit tests
-        timeout-minutes: 5
-        working-directory: ${{ github.workspace }}/main/build/${{ matrix.build-type }}-${{ matrix.compiler }}-conan-${{ matrix.runtime }}
-        run: .\CommonLibSSETests.exe
+      # Do not put this on PATH: its bundled clang-cl/lld-link shadow the
+      # real toolchain's and break the link step. The portfile reads
+      # LLVM_MINGW_BIN directly.
+      - name: Install llvm-mingw (for the fxc2 shader-compiler stand-in, see examples/linux-cross-compile)
+        run: |
+          curl -fsSL --retry 3 --retry-all-errors -o llvm-mingw.tar.xz https://github.com/mstorsjo/llvm-mingw/releases/download/20250910/llvm-mingw-20250910-ucrt-ubuntu-22.04-x86_64.tar.xz
+          echo "f83556c9ffa4d4291fadea1a0776c1383332dacdf4d7fbdf974c2928cb32c6f7  llvm-mingw.tar.xz" | sha256sum -c -
+          tar xJf llvm-mingw.tar.xz
+          echo "LLVM_MINGW_BIN=$PWD/llvm-mingw-20250910-ucrt-ubuntu-22.04-x86_64/bin" >> "$GITHUB_ENV"
 
-      - name: Create Conan Package
-        if: matrix.compiler == 'msvc' && matrix.runtime == 'all'
-        working-directory: ${{ github.workspace }}/main
-        run: conan create .
+      - name: Setup vcpkg
+        uses: lukka/run-vcpkg@v11
+        with:
+          vcpkgGitCommitId: ${{ steps.get_vcpkg_baseline.outputs.baseline }}
+          runVcpkgInstall: false
+
+      - name: Cache vcpkg binary packages (trusted, restore + save)
+        if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository
+        uses: actions/cache@v4
+        with:
+          path: ${{ github.workspace }}/vcpkg_binary_cache
+          key: ${{ runner.os }}-vcpkg-binpkgs-x64-windows-clangcl-${{ hashFiles('main/vcpkg.json', 'main/vcpkg-configuration.json') }}
+          restore-keys: |
+            ${{ runner.os }}-vcpkg-binpkgs-x64-windows-clangcl-
+
+      - name: Restore vcpkg binary packages (fork PR, restore-only)
+        if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name != github.repository
+        uses: actions/cache/restore@v4
+        with:
+          path: ${{ github.workspace }}/vcpkg_binary_cache
+          key: ${{ runner.os }}-vcpkg-binpkgs-x64-windows-clangcl-${{ hashFiles('main/vcpkg.json', 'main/vcpkg-configuration.json') }}
+          restore-keys: |
+            ${{ runner.os }}-vcpkg-binpkgs-x64-windows-clangcl-
+
+      - name: Configure
+        run: cmake -S main -B main/build/release-linux-clangcl-vcpkg-all --preset build-release-linux-clangcl-vcpkg-all -DCOMMONLIB_ENABLE_IPO=OFF -DBUILD_TESTS=OFF
+        working-directory: ${{ github.workspace }}
+
+      - name: Build
+        run: cmake --build main/build/release-linux-clangcl-vcpkg-all
+        working-directory: ${{ github.workspace }}
+
+      - name: Verify output exists
+        run: test -f main/build/release-linux-clangcl-vcpkg-all/CommonLibSSE.lib
+
+      # This log doesn't match run-vcpkg's collection patterns, so it is
+      # invisible on failure unless surfaced here.
+      - name: Show shader-compile diagnostics on failure
+        if: failure()
+        env:
+          WORKSPACE_DIR: ${{ github.workspace }}
+        run: |
+          find "$WORKSPACE_DIR" -iname "compileshaders.log" -exec echo "=== {} ===" \; -exec cat {} \;

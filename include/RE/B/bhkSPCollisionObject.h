@@ -9,6 +9,7 @@ namespace RE
 	public:
 		inline static constexpr auto RTTI = RTTI_bhkSPCollisionObject;
 		inline static constexpr auto Ni_RTTI = NiRTTI_bhkSPCollisionObject;
+		inline static constexpr auto VTABLE = VTABLE_bhkSPCollisionObject;
 
 		~bhkSPCollisionObject() override;  // 00
 

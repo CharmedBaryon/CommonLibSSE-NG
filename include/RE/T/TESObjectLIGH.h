@@ -15,6 +15,8 @@
 
 namespace RE
 {
+	class NiLight;
+
 	enum class TES_LIGHT_FLAGS
 	{
 		kNone = 0,
@@ -40,16 +42,16 @@ namespace RE
 	{
 	public:
 		// members
-		std::int32_t                                     time;                       // 00
-		std::uint32_t                                    radius;                     // 04
-		Color                                            color;                      // 08
-		stl::enumeration<TES_LIGHT_FLAGS, std::uint32_t> flags;                      // 0C
-		float                                            fallofExponent;             // 10
-		float                                            fov;                        // 14
-		float                                            nearDistance;               // 18
-		float                                            flickerPeriodRecip;         // 1C - CK value * 100
-		float                                            flickerIntensityAmplitude;  // 20
-		float                                            flickerMovementAmplitude;   // 24
+		std::int32_t                                 time;                       // 00
+		std::uint32_t                                radius;                     // 04
+		Color                                        color;                      // 08
+		REX::EnumSet<TES_LIGHT_FLAGS, std::uint32_t> flags;                      // 0C
+		float                                        fallofExponent;             // 10
+		float                                        fov;                        // 14
+		float                                        nearDistance;               // 18
+		float                                        flickerPeriodRecip;         // 1C - CK value * 100
+		float                                        flickerIntensityAmplitude;  // 20
+		float                                        flickerMovementAmplitude;   // 24
 	};
 	static_assert(sizeof(OBJ_LIGH) == 0x28);
 
@@ -99,6 +101,14 @@ namespace RE
 		void          SetEquipSlot(BGSEquipSlot* a_slot) override;  // 05 - { return; }
 
 		[[nodiscard]] constexpr bool CanBeCarried() const noexcept { return data.flags.all(TES_LIGHT_FLAGS::kCanCarry); }
+		[[nodiscard]] constexpr bool GetNoFlicker() const noexcept { return data.flags.none(TES_LIGHT_FLAGS::kFlicker, TES_LIGHT_FLAGS::kFlickerSlow, TES_LIGHT_FLAGS::kPulse, TES_LIGHT_FLAGS::kPulseSlow); }
+
+		NiLight* GenDynamic(RE::TESObjectREFR* a_ref, RE::NiNode* a_node, char a_forceDynamic, char a_useLightRadius, char a_affectRefOnly)
+		{
+			using func_t = decltype(&TESObjectLIGH::GenDynamic);
+			static REL::Relocation<func_t> func{ RELOCATION_ID(17208, 17610) };
+			return func(this, a_ref, a_node, a_forceDynamic, a_useLightRadius, a_affectRefOnly);
+		}
 
 		// members
 		OBJ_LIGH                data;            // 0E0 - DATA

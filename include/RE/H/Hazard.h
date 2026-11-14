@@ -1,10 +1,12 @@
 #pragma once
 
 #include "RE/B/BSPointerHandle.h"
+#include "RE/B/BSResourceHandle.h"
 #include "RE/B/BSSoundHandle.h"
 #include "RE/F/FormTypes.h"
 #include "RE/N/NiSmartPointer.h"
 #include "RE/T/TESObjectREFR.h"
+#include "REL/RuntimeDataAccessors.h"
 
 namespace RE
 {
@@ -51,39 +53,28 @@ namespace RE
 
 		struct HAZARD_RUNTIME_DATA
 		{
-#define HAZARD_RUNTIME_DATA_CONTENT                                     \
-	void*                                  hazardDBHandle; /* 98, A0 */ \
-	ActorHandle                            ownerActor;     /* A0 */     \
-	float                                  age;            /* A4 */     \
-	float                                  lifetime;       /* A8 */     \
-	float                                  targetTimer;    /* AC */     \
-	float                                  radius;         /* B0 */     \
-	float                                  magnitude;      /* B4 */     \
-	BGSHazard*                             hazard;         /* B8 */     \
-	NiPointer<NiLight>                     light;          /* C0 */     \
-	BSSoundHandle                          sound;          /* C8 */     \
-	stl::enumeration<Flags, std::uint32_t> flags;          /* D4 */
+#define HAZARD_RUNTIME_DATA_CONTENT                                 \
+	void*                              hazardDBHandle; /* 98, A0 */ \
+	ActorHandle                        ownerActor;     /* A0 */     \
+	float                              age;            /* A4 */     \
+	float                              lifetime;       /* A8 */     \
+	float                              targetTimer;    /* AC */     \
+	float                              radius;         /* B0 */     \
+	float                              magnitude;      /* B4 */     \
+	BGSHazard*                         hazard;         /* B8 */     \
+	NiPointer<NiLight>                 light;          /* C0 */     \
+	BSSoundHandle                      sound;          /* C8 */     \
+	REX::EnumSet<Flags, std::uint32_t> flags;          /* D4 */
 
 			HAZARD_RUNTIME_DATA_CONTENT
 		};
 
-		[[nodiscard]] inline HAZARD_RUNTIME_DATA& GetHazardRuntimeData() noexcept
-		{
-			return REL::RelocateMemberIfNewer<HAZARD_RUNTIME_DATA>(SKSE::RUNTIME_SSE_1_6_629, this, 0x98, 0xA0);
-		}
-
-		[[nodiscard]] inline const HAZARD_RUNTIME_DATA& GetHazardRuntimeData() const noexcept
-		{
-			return REL::RelocateMemberIfNewer<HAZARD_RUNTIME_DATA>(SKSE::RUNTIME_SSE_1_6_629, this, 0x98, 0xA0);
-		}
-
+		RUNTIME_DATA_ACCESSOR_VERSIONED_EX(HAZARD_RUNTIME_DATA, GetHazardRuntimeData, SKSE::RUNTIME_SSE_1_6_629, 0x98, 0xA0);
 		// members
-#ifndef ENABLE_SKYRIM_AE
-		HAZARD_RUNTIME_DATA_CONTENT
+#if defined(EXCLUSIVE_SKYRIM_SE) || defined(EXCLUSIVE_SKYRIM_VR) || defined(EXCLUSIVE_SKYRIM_AE)
+		HAZARD_RUNTIME_DATA_CONTENT;
 #endif
 	};
-#ifndef ENABLE_SKYRIM_AE
-	static_assert(sizeof(Hazard) == 0xD8);
-#endif
+	STATIC_ASSERT_SIZE(Hazard, 0xD8, 0xE0, 0xD8);
 }
 #undef HAZARD_RUNTIME_DATA_CONTENT

@@ -1,9 +1,11 @@
 #pragma once
 
 #include "RE/N/NiTArray.h"
+#include "REL/Relocation.h"
 
 namespace RE
 {
+	class BSTriShape;
 	class ImageSpaceManager;
 	class ImageSpaceEffectParam;
 	class ImageSpaceTexture;
@@ -14,6 +16,7 @@ namespace RE
 		class EffectInput;
 
 		inline static constexpr auto RTTI = RTTI_ImageSpaceEffect;
+		inline static constexpr auto VTABLE = VTABLE_ImageSpaceEffect;
 
 		virtual ~ImageSpaceEffect();  // 00
 
@@ -27,6 +30,20 @@ namespace RE
 		virtual bool UpdateParams(ImageSpaceEffectParam* a_param);                         // 07 - { return 0; }
 		virtual bool SetRenderStates(ImageSpaceEffectParam* a_param);                      // 08 - { return 0; }
 		virtual bool RestoreRenderStates(ImageSpaceEffectParam* a_param);                  // 09 - { return 0; }
+
+		void SetEffectSlot(std::uint32_t a_slot, ImageSpaceEffect* a_effect, ImageSpaceEffectParam* a_param, std::int32_t a_arg)
+		{
+			using func_t = void (*)(ImageSpaceEffect*, std::uint32_t, ImageSpaceEffect*, ImageSpaceEffectParam*, std::int32_t);
+			static REL::Relocation<func_t> func{ RELOCATION_ID(100668, 107449) };
+			func(this, a_slot, a_effect, a_param, a_arg);
+		}
+
+		void SetEffectInput(std::uint32_t a_slot, std::uint32_t a_arg2, std::uint32_t a_arg3)
+		{
+			using func_t = void (*)(ImageSpaceEffect*, std::uint32_t, std::uint32_t, std::uint32_t);
+			static REL::Relocation<func_t> func{ RELOCATION_ID(100669, 107450) };
+			func(this, a_slot, a_arg2, a_arg3);
+		}
 
 		// members
 		bool                                              active;          // 08

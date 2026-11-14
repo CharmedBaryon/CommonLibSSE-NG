@@ -11,6 +11,7 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_SimpleAnimationGraphManagerHolder;
+		inline static constexpr auto VTABLE = VTABLE_SimpleAnimationGraphManagerHolder;
 
 		// override (IAnimationGraphManagerHolder)
 		bool GetAnimationGraphManagerImpl(BSTSmartPointer<BSAnimationGraphManager>& a_out) const override;  // 02 - { a_out = animationGraphManager; return a_out; }

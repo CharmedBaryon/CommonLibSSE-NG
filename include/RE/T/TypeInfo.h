@@ -65,7 +65,7 @@ namespace RE
 
 		protected:
 			// members
-			stl::enumeration<RawType, std::size_t> _rawType;  // 00
+			REX::EnumSet<RawType, std::size_t> _rawType;  // 00
 		};
 		static_assert(sizeof(TypeInfo) == 0x8);
 	}

@@ -13,8 +13,8 @@ namespace RE
 		virtual ~hkpArrayAction() override;  // 00
 
 		// add
-		virtual void Unk_04(void) override;  // 04
-		virtual void Unk_06(void) override;  // 06
+		void GetEntities(hkArray<hkpEntity*>& a_entitiesOut) override;  // 04
+		void EntityRemovedCallback(hkpEntity* a_entity) override;       // 06
 
 		// members
 		hkArray<hkpEntity*> entities;  // 30

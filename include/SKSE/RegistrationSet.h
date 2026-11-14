@@ -87,8 +87,12 @@ namespace SKSE
 
 				auto vm = RE::BSScript::Internal::VirtualMachine::GetSingleton();
 				for (auto& handle : _handles) {
-					auto args = RE::MakeFunctionArguments(std::forward<Args>(a_args)...);
-					vm->SendEvent(handle, eventName, args);
+					auto copy = std::make_tuple(a_args...);
+					std::apply([&](auto&&... a_copy) {
+						auto args = RE::MakeFunctionArguments(std::forward<Args>(a_copy)...);
+						vm->SendEvent(handle, eventName, args);
+					},
+						copy);
 				}
 			}
 

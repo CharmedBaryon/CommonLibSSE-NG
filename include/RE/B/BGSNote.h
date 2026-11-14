@@ -1,7 +1,7 @@
 #pragma once
 
 #include "RE/B/BGSPickupPutdownSounds.h"
-#include "RE/B/BSTList.h"
+#include "RE/B/BSSimpleList.h"
 #include "RE/F/FormTypes.h"
 #include "RE/T/TESBoundObject.h"
 #include "RE/T/TESFullName.h"

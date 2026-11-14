@@ -8,6 +8,7 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_TESModelTri;
+		inline static constexpr auto VTABLE = VTABLE_TESModelTri;
 
 		~TESModelTri() override;  // 00
 

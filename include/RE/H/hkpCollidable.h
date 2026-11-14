@@ -51,7 +51,7 @@ namespace RE
 
 		[[nodiscard]] COL_LAYER GetCollisionLayer() const
 		{
-			return static_cast<COL_LAYER>(broadPhaseHandle.collisionFilterInfo & 0x7F);
+			return broadPhaseHandle.collisionFilterInfo.GetCollisionLayer();
 		}
 
 		[[nodiscard]] void* GetOwner() const

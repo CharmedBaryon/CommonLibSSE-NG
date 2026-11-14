@@ -11,7 +11,8 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_NiMultiTargetTransformController;
-		inline static auto           Ni_RTTI = NiRTTI_NiMultiTargetTransformController;
+		inline static constexpr auto Ni_RTTI = NiRTTI_NiMultiTargetTransformController;
+		inline static constexpr auto VTABLE = VTABLE_NiMultiTargetTransformController;
 
 		~NiMultiTargetTransformController() override;  // 00
 
@@ -24,7 +25,7 @@ namespace RE
 		void                 SaveBinary(NiStream& a_stream) override;                                                                                                                                                                // 1B
 		bool                 IsEqual(NiObject* a_object) override;                                                                                                                                                                   // 1C
 		void                 ProcessClone(NiCloningProcess& a_cloning) override;                                                                                                                                                     // 1D
-		void                 Update(float a_time) override;                                                                                                                                                                          // 27
+		void                 Update(NiUpdateData& a_data) override;                                                                                                                                                                  // 27
 		bool                 TargetIsRequiredType() const override;                                                                                                                                                                  // 2E
 		std::uint16_t        GetInterpolatorCount() const override;                                                                                                                                                                  // 2F - { return numInterps; }
 		const char*          GetInterpolatorID(std::uint16_t a_index = 0) override;                                                                                                                                                  // 30 - { return targets[a_index]->name.c_str(); }

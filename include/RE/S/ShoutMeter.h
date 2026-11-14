@@ -8,6 +8,7 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_ShoutMeter;
+		inline static constexpr auto VTABLE = VTABLE_ShoutMeter;
 
 		~ShoutMeter() override;  // 00
 

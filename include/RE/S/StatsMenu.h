@@ -1,11 +1,13 @@
 #pragma once
 
 #include "RE/A/ActorValues.h"
+#include "RE/B/BSResourceHandle.h"
 #include "RE/B/BSTArray.h"
 #include "RE/G/GFxValue.h"
 #include "RE/I/IMenu.h"
 #include "RE/M/MenuEventHandler.h"
 #include "RE/N/NiPoint3.h"
+#include "REL/RuntimeDataAccessors.h"
 
 namespace RE
 {
@@ -17,11 +19,6 @@ namespace RE
 	class NiControllerSequence;
 	class NiNode;
 	class StatsNode;
-
-	namespace BSResource
-	{
-		struct ID;
-	}
 
 	// menuDepth = 3
 	// flags = kPausesGame | kUsesMenuContext | kDisablePauseMenu | kRequiresUpdate | kCustomRendering
@@ -37,12 +34,33 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto      RTTI = RTTI_StatsMenu;
+		inline static constexpr auto      VTABLE = VTABLE_StatsMenu;
 		constexpr static std::string_view MENU_NAME = "StatsMenu";
+
+		enum class MenuState : std::uint32_t
+		{
+			kNormal = 0,
+			kZoomed = 1,
+			kFadeIn = 2,
+			kFadeOut = 3
+		};
 
 		enum
 		{
 			kTotalTrees = 18
 		};
+
+		struct Models
+		{
+			enum Model : std::uint32_t
+			{
+				kSkydome,
+				kStars,
+				kLines,
+				kTotal
+			};
+		};
+		using Model = Models::Model;
 
 		struct UnkData
 		{
@@ -55,87 +73,82 @@ namespace RE
 			};
 
 			// members
-			BSEffectShaderProperty*                unk00;  // 00
-			stl::enumeration<State, std::uint32_t> state;  // 08
-			std::uint32_t                          unk0C;  // 0C
+			BSEffectShaderProperty*            unk00;  // 00
+			REX::EnumSet<State, std::uint32_t> state;  // 08
+			std::uint32_t                      unk0C;  // 0C
 		};
 		static_assert(sizeof(UnkData) == 0x10);
 
 		struct RUNTIME_DATA
 		{
-#define RUNTIME_DATA_CONTENT                                                                             \
-	NiCamera*                 unk040;                 /* 000 */                                          \
-	float                     horizontalVelocity;     /* 008 */                                          \
-	std::uint32_t             unk04C;                 /* 00C */                                          \
-	BSTArray<ActorValue>      skillTrees;             /* 010 */                                          \
-	BSResource::ID*           skydomeHash;            /* 028 */                                          \
-	BSResource::ID*           starsHash;              /* 030 */                                          \
-	BSResource::ID*           linesHash;              /* 038 */                                          \
-	BSFadeNode*               skydomeNode;            /* 040 */                                          \
-	BSFadeNode*               starsNode;              /* 048 */                                          \
-	BSFadeNode*               linesNode;              /* 050 */                                          \
-	UnkData                   unk098[kTotalTrees];    /* 058 */                                          \
-	bool                      zoomed;                 /* 178 */                                          \
-	std::uint8_t              unk1B9;                 /* 179 */                                          \
-	std::uint16_t             unk1BA;                 /* 17A */                                          \
-	bool                      scrolling;              /* 17C */                                          \
-	std::uint8_t              unk1BD;                 /* 17D */                                          \
-	std::uint16_t             unk1BE;                 /* 17E */                                          \
-	std::uint32_t             selectedTree;           /* 180 */                                          \
-	std::uint32_t             unk1C4;                 /* 184 */                                          \
-	StatsNode*                unk1C8;                 /* 188 */                                          \
-	std::uint32_t             unk1D0;                 /* 190 */                                          \
-	std::uint32_t             unk1D4;                 /* 194 */                                          \
-	std::uint32_t             unk1D8;                 /* 198 */                                          \
-	std::uint32_t             unk1DC;                 /* 19C */                                          \
-	std::uint64_t             unk1E0;                 /* 1A0 */                                          \
-	std::uint32_t             unk1E8;                 /* 1A8 */                                          \
-	NiPoint3                  skillsLookAt;           /* 1AC */                                          \
-	NiPoint3                  starCameraOffset;       /* 1B8 */                                          \
-	NiPoint3                  starLookAt;             /* 0C4 */                                          \
-	std::uint64_t             unk210;                 /* 0D0 */                                          \
-	std::uint64_t             unk218;                 /* 0D8 */                                          \
-	std::uint64_t             unk220;                 /* 0E0 */                                          \
-	std::uint64_t             unk228;                 /* 0E8 */                                          \
-	std::uint64_t             unk230;                 /* 0F0 */                                          \
-	std::uint64_t             unk238;                 /* 0F8 */                                          \
-	float                     unk240;                 /* 200 */                                          \
-	float                     unk244;                 /* 204 */                                          \
-	float                     unk248;                 /* 208 */                                          \
-	float                     unk24C;                 /* 20C */                                          \
-	float                     unk250;                 /* 210 */                                          \
-	float                     unk254;                 /* 214 */                                          \
-	float                     unk258;                 /* 218 */                                          \
-	float                     unk25C;                 /* 21C */                                          \
-	float                     unk260;                 /* 220 */                                          \
-	float                     unk264;                 /* 224 */                                          \
-	float                     unk268;                 /* 228 */                                          \
-	float                     unk26C;                 /* 22C */                                          \
-	float                     unk270;                 /* 230 */                                          \
-	float                     unk274;                 /* 234 */                                          \
-	std::uint32_t             unk278;                 /* 238 */                                          \
-	float                     unk27C;                 /* 23C */                                          \
-	float                     horizontalAcceleration; /* 240 */                                          \
-	std::uint32_t             unk284;                 /* 244 */                                          \
-	NiNode*                   cameraPosition;         /* 248 */                                          \
-	NiControllerSequence*     cameraIntro;            /* 250 */                                          \
-	NiControllerSequence*     cameraOutro;            /* 258 */                                          \
-	NiControllerSequence*     idle;                   /* 260 */                                          \
-	NiControllerManager*      unk2A8;                 /* 268 */                                          \
-	std::uint64_t             unk2B0;                 /* 270 */                                          \
-	std::uint64_t             unk2B8;                 /* 278 */                                          \
-	BSTArray<StatsNode*>      unk2C0;                 /* 280 */                                          \
-	BSTArray<GFxValue>        unk2D8;                 /* 298 */                                          \
-	BSScaleformMovieLoadTask* unk2F0;                 /* 2B0 */                                          \
-	GFxValue                  unk2F8;                 /* 2B8 - StatsMenuBaseInstance.BeastSkillHolder */ \
-	std::uint32_t             numSelectableTrees;     /* 2D0 */                                          \
-	float                     unk314;                 /* 2D4 */                                          \
-	float                     unk318;                 /* 2D8 */                                          \
-	std::uint32_t             flags;                  /* 2DC */                                          \
-	std::uint8_t              unk320;                 /* 2E0 */                                          \
-	std::uint8_t              unk321;                 /* 2E1 */                                          \
-	std::uint16_t             unk322;                 /* 2E2 */                                          \
-	std::uint32_t             unk324;                 /* 2E4 */
+#define RUNTIME_DATA_CONTENT                                                                                               \
+	NiPointer<NiCamera>                    camera;                      /* 040 */                                          \
+	float                                  horizontalVelocity;          /* 048 */                                          \
+	std::uint32_t                          unk04C;                      /* 04C */                                          \
+	BSTArray<ActorValue>                   skillTrees;                  /* 050 */                                          \
+	ModelDBHandle                          modelHandles[Model::kTotal]; /* 068 */                                          \
+	BSFadeNode*                            skydomeNode;                 /* 080 */                                          \
+	BSFadeNode*                            starsNode;                   /* 088 */                                          \
+	BSFadeNode*                            linesNode;                   /* 090 */                                          \
+	UnkData                                unk098[kTotalTrees];         /* 098 */                                          \
+	REX::EnumSet<MenuState, std::uint32_t> menuState;                   /* 1B8 */                                          \
+	bool                                   scrolling;                   /* 1BC */                                          \
+	std::uint8_t                           unk1BD;                      /* 1BD */                                          \
+	std::uint16_t                          unk1BE;                      /* 1BE */                                          \
+	std::uint32_t                          selectedTree;                /* 1C0 */                                          \
+	std::uint32_t                          unk1C4;                      /* 1C4 */                                          \
+	StatsNode*                             unk1C8;                      /* 1C8 */                                          \
+	std::uint32_t                          unk1D0;                      /* 1D0 */                                          \
+	NiPoint3                               unk1D4;                      /* 1D4 */                                          \
+	std::uint64_t                          unk1E0;                      /* 1E0 */                                          \
+	std::uint32_t                          unk1E8;                      /* 1E8 */                                          \
+	NiPoint3                               skillsLookAt;                /* 1EC */                                          \
+	NiPoint3                               starCameraOffset;            /* 1F8 */                                          \
+	NiPoint3                               starLookAt;                  /* 204 */                                          \
+	std::uint64_t                          unk210;                      /* 210 */                                          \
+	std::uint64_t                          unk218;                      /* 218 */                                          \
+	std::uint64_t                          unk220;                      /* 220 */                                          \
+	std::uint64_t                          unk228;                      /* 228 */                                          \
+	std::uint64_t                          unk230;                      /* 230 */                                          \
+	std::uint64_t                          unk238;                      /* 238 */                                          \
+	float                                  unk240;                      /* 240 */                                          \
+	float                                  unk244;                      /* 244 */                                          \
+	float                                  unk248;                      /* 248 */                                          \
+	float                                  unk24C;                      /* 24C */                                          \
+	float                                  unk250;                      /* 250 */                                          \
+	float                                  unk254;                      /* 254 */                                          \
+	float                                  unk258;                      /* 258 */                                          \
+	float                                  unk25C;                      /* 25C */                                          \
+	float                                  unk260;                      /* 260 */                                          \
+	float                                  unk264;                      /* 264 */                                          \
+	float                                  unk268;                      /* 268 */                                          \
+	float                                  unk26C;                      /* 26C */                                          \
+	float                                  unk270;                      /* 270 */                                          \
+	float                                  unk274;                      /* 274 */                                          \
+	std::uint32_t                          unk278;                      /* 278 */                                          \
+	float                                  unk27C;                      /* 27C */                                          \
+	float                                  horizontalAcceleration;      /* 280 */                                          \
+	std::uint32_t                          unk284;                      /* 284 */                                          \
+	NiNode*                                cameraPosition;              /* 288 */                                          \
+	NiControllerSequence*                  cameraIntro;                 /* 290 */                                          \
+	NiControllerSequence*                  cameraOutro;                 /* 298 */                                          \
+	NiControllerSequence*                  idle;                        /* 2A0 */                                          \
+	NiControllerManager*                   skydomeNodeController;       /* 2A8 */                                          \
+	ImageSpaceModifierInstanceForm*        unk2B0;                      /* 2B0 - SkillMenuTransition */                    \
+	ImageSpaceModifierInstanceForm*        unk2B8;                      /* 2B8 - SkillMenuIdle */                          \
+	BSTArray<StatsNode*>                   unk2C0;                      /* 2C0 */                                          \
+	BSTArray<GFxValue>                     unk2D8;                      /* 2D8 */                                          \
+	BSScaleformMovieLoadTask*              unk2F0;                      /* 2F0 */                                          \
+	GFxValue                               beastSkillHolder;            /* 2F8 - StatsMenuBaseInstance.BeastSkillHolder */ \
+	std::uint32_t                          numSelectableTrees;          /* 310 */                                          \
+	float                                  screenHeight;                /* 314 */                                          \
+	float                                  screenWidth;                 /* 318 */                                          \
+	std::uint32_t                          flags;                       /* 31C */                                          \
+	std::uint8_t                           unk320;                      /* 320 */                                          \
+	std::uint8_t                           unk321;                      /* 321 */                                          \
+	bool                                   fadeInTriggered;             /* 322 */                                          \
+	bool                                   is3dInitialized;             /* 323 */                                          \
+	std::uint32_t                          unk324;                      /* 324 */
 
 			RUNTIME_DATA_CONTENT
 		};
@@ -151,40 +164,23 @@ namespace RE
 
 		// override (MenuEventHandler)
 #ifndef SKYRIM_CROSS_VR
-		bool CanProcess(InputEvent* a_event) override;              // 01
+		bool CanProcess(InputEvent* a_event) override;  // 01
+#endif
+#ifdef EXCLUSIVE_SKYRIM_VR
 		bool ProcessThumbstick(ThumbstickEvent* a_event) override;  // 03
 		bool ProcessButton(ButtonEvent* a_event) override;          // 05
 #endif
 
-		[[nodiscard]] MenuEventHandler* AsMenuEventHandler() noexcept
-		{
-			return &REL::RelocateMember<MenuEventHandler>(this, 0x30, 0x40);
-		}
+#ifndef SKYRIM_CROSS_VR
+		RUNTIME_CAST_ACCESSOR(MenuEventHandler, AsMenuEventHandler, 0x30, 0x40);
+#endif
 
-		[[nodiscard]] const MenuEventHandler* AsMenuEventHandler() const noexcept
-		{
-			return const_cast<StatsMenu*>(this)->AsMenuEventHandler();
-		}
-
-		[[nodiscard]] inline RUNTIME_DATA& GetRuntimeData() noexcept
-		{
-			return REL::RelocateMember<RUNTIME_DATA>(this, 0x40, 0x50);
-		}
-
-		[[nodiscard]] inline const RUNTIME_DATA& GetRuntimeData() const noexcept
-		{
-			return REL::RelocateMember<RUNTIME_DATA>(this, 0x40, 0x50);
-		}
-
+		RUNTIME_DATA_ACCESSOR(RUNTIME_DATA, 0x40, 0x50);
 		// members
 #ifndef SKYRIM_CROSS_VR
-		RUNTIME_DATA_CONTENT  // 40, 50
+		RUNTIME_DATA_CONTENT;  // 40, 50
 #endif
 	};
-#ifndef ENABLE_SKYRIM_VR
-	static_assert(sizeof(StatsMenu) == 0x328);
-#elif !defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE)
-	static_assert(sizeof(StatsMenu) == 0x338);
-#endif
+	STATIC_ASSERT_SIZE(StatsMenu, 0x328, 0x328, 0x338, 0x30);
 }
 #undef RUNTIME_DATA_CONTENT

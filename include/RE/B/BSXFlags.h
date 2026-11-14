@@ -8,7 +8,8 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_BSXFlags;
-		inline static auto           Ni_RTTI = NiRTTI_BSXFlags;
+		inline static constexpr auto Ni_RTTI = NiRTTI_BSXFlags;
+		inline static constexpr auto VTABLE = VTABLE_BSXFlags;
 
 		enum class Flag
 		{

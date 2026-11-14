@@ -21,7 +21,7 @@ namespace RE
 	void hkReferencedObject::AddReference() const
 	{
 		using func_t = decltype(&hkReferencedObject::AddReference);
-		REL::Relocation<func_t> func{ Offset::hkReferencedObject::AddReference };
+		static REL::Relocation<func_t> func{ RELOCATION_ID(56606, 57010) };
 		return func(this);
 	}
 
@@ -38,7 +38,7 @@ namespace RE
 	void hkReferencedObject::RemoveReference() const
 	{
 		using func_t = decltype(&hkReferencedObject::RemoveReference);
-		REL::Relocation<func_t> func{ Offset::hkReferencedObject::RemoveReference };
+		static REL::Relocation<func_t> func{ RELOCATION_ID(56607, 57011) };
 		return func(this);
 	}
 }

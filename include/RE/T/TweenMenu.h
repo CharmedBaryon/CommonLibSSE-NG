@@ -2,6 +2,7 @@
 
 #include "RE/B/BSTArray.h"
 #include "RE/I/IMenu.h"
+#include "REL/RuntimeDataAccessors.h"
 
 namespace RE
 {
@@ -46,25 +47,20 @@ namespace RE
 		UI_MESSAGE_RESULTS ProcessMessage(UIMessage& a_message) override;    // 04
 		void               PostDisplay() override;                           // 06
 
-		[[nodiscard]] inline RUNTIME_DATA& GetRuntimeData() noexcept
-		{
-			return REL::RelocateMember<RUNTIME_DATA>(this, 0x30, 0x40);
-		}
+		RUNTIME_DATA_ACCESSOR(RUNTIME_DATA, 0x30, 0x40);
 
-		[[nodiscard]] inline const RUNTIME_DATA& GetRuntimeData() const noexcept
+		static void CloseTweenMenu()
 		{
-			return REL::RelocateMember<RUNTIME_DATA>(this, 0x30, 0x40);
+			using func_t = decltype(&CloseTweenMenu);
+			static REL::Relocation<func_t> func{ RELOCATION_ID(51839, 52711) };
+			return func();
 		}
 
 		// members
 #ifndef SKYRIM_CROSS_VR
-		RUNTIME_DATA_CONTENT  // 30, 40
+		RUNTIME_DATA_CONTENT;  // 30, 40
 #endif
 	};
-#ifndef ENABLE_SKYRIM_VR
-	static_assert(sizeof(TweenMenu) == 0x50);
-#elif !defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE)
-	static_assert(sizeof(TweenMenu) == 0x60);
-#endif
+	STATIC_ASSERT_SIZE(TweenMenu, 0x50, 0x50, 0x60, 0x30);
 }
 #undef RUNTIME_DATA_CONTENT

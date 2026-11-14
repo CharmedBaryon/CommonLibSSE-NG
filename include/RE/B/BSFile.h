@@ -1,5 +1,6 @@
 #pragma once
 
+#include "RE/B/BSString.h"
 #include "RE/N/NiFile.h"
 
 #include "REX/W32/BASE.h"
@@ -10,6 +11,7 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_BSFile;
+		inline static constexpr auto VTABLE = VTABLE_BSFile;
 
 		~BSFile() override;  // 00
 
@@ -20,17 +22,17 @@ namespace RE
 		std::uint32_t size() const override;                                      // 07
 
 		// add
-		virtual void Unk_08(void);  // 08
-		virtual void Unk_09(void);  // 09
-		virtual void Unk_0A(void);  // 0A
-		virtual void Unk_0B(void);  // 0B
-		virtual void Unk_0C(void);  // 0C
-		virtual void Unk_0D(void);  // 0D
-		virtual void Unk_0E(void);  // 0E
-		virtual void Unk_0F(void);  // 0F
-		virtual void Unk_10(void);  // 10
-		virtual void Unk_11(void);  // 11
-		virtual void Unk_12(void);  // 12
+		virtual bool          Open(std::uint64_t a_unused, bool a_textMode);                                 // 08
+		virtual bool          OpenFromFile(std::FILE* a_file);                                               // 09
+		virtual std::uint32_t UpdateFileSize();                                                              // 0A - re-measures the file and caches it in fileSize
+		virtual std::uint32_t ReadString(BSString& a_out, std::uint32_t a_maxLen);                           // 0B
+		virtual std::uint32_t ReadWString(void* a_out, std::uint32_t a_maxLen);                              // 0C - a_out is a wide string object
+		virtual std::uint32_t ReadUntil(char* a_buffer, std::uint32_t a_maxLen, std::uint16_t a_delimiter);  // 0D
+		virtual void          WriteString(const BSString& a_str, bool a_includeNull);                        // 0E
+		virtual std::uint32_t WriteWString(const void* a_str, bool a_includeNull);                           // 0F - a_str is a wide string object
+		virtual bool          FileExists();                                                                  // 10 - _access(fileName, 0) != -1
+		virtual std::uint32_t ReadBytes(void* a_buffer, std::uint32_t a_bytes);                              // 11
+		virtual std::uint32_t WriteBytes(const void* a_buffer, std::uint32_t a_bytes);                       // 12
 
 		// members
 		bool          useAuxBuffer;                  // 048

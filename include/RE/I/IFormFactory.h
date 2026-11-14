@@ -1,5 +1,6 @@
 #pragma once
 
+#include "RE/B/BSContainer.h"
 #include "RE/F/FormTypes.h"
 
 namespace RE
@@ -7,18 +8,14 @@ namespace RE
 	template <class T, FormType>
 	class ConcreteFormFactory;
 
-	enum class OBJECT_TYPE
-	{
-	};
-
-	enum class OBJECT_CATEGORY_TYPE
-	{
-	};
+	enum class OBJECT_TYPE;
+	enum class OBJECT_CATEGORY_TYPE;
 
 	class IFormFactory
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_IFormFactory;
+		inline static constexpr auto VTABLE = VTABLE_IFormFactory;
 
 		virtual ~IFormFactory();  // 00
 
@@ -27,6 +24,19 @@ namespace RE
 		virtual TESForm* CreateImpl() = 0;  // 01
 
 	public:
+		class IFactoryVisitor
+		{
+		public:
+			inline static constexpr auto RTTI = RTTI_IFormFactory__IFactoryVisitor;
+			inline static constexpr auto VTABLE = VTABLE_IFormFactory__IFactoryVisitor;
+
+			virtual ~IFactoryVisitor();  // 00
+
+			// add
+			virtual BSContainer::ForEachResult VisitFactory(const IFormFactory* a_factory) = 0;  // 01
+		};
+		static_assert(sizeof(IFormFactory::IFactoryVisitor) == 0x8);
+
 		[[nodiscard]] virtual const char*          GetFormName() const = 0;    // 02
 		[[nodiscard]] virtual FormType             GetFormType() const = 0;    // 03
 		[[nodiscard]] virtual const char*          GetObjectName() const;      // 04 - { return 0; }
@@ -40,6 +50,8 @@ namespace RE
 		static ConcreteFormFactory<T, T::FORMTYPE>* GetConcreteFormFactoryByType();
 
 		TESForm* Create();
+		template <class T>
+		static T* Create();
 	};
 	static_assert(sizeof(IFormFactory) == 0x8);
 }

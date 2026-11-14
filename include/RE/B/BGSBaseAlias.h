@@ -12,7 +12,8 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_BGSBaseAlias;
-		inline static auto           VMTYPEID = static_cast<VMTypeID>(139);
+		inline static constexpr auto VTABLE = VTABLE_BGSBaseAlias;
+		inline static constexpr auto VMTYPEID = static_cast<VMTypeID>(139);
 
 		enum class FLAGS
 		{
@@ -72,13 +73,13 @@ namespace RE
 		void                               SetProtected(bool a_set);
 
 		// members
-		BSFixedString                              aliasName;    // 08 - ALID
-		TESQuest*                                  owningQuest;  // 10
-		std::uint32_t                              aliasID;      // 18 - ALST/ALLS
-		stl::enumeration<FLAGS, std::uint32_t>     flags;        // 1C - FNAM
-		stl::enumeration<FILL_TYPE, std::uint16_t> fillType;     // 20
-		std::uint16_t                              pad22;        // 22
-		std::uint32_t                              pad24;        // 24
+		BSFixedString                          aliasName;    // 08 - ALID
+		TESQuest*                              owningQuest;  // 10
+		std::uint32_t                          aliasID;      // 18 - ALST/ALLS
+		REX::EnumSet<FLAGS, std::uint32_t>     flags;        // 1C - FNAM
+		REX::EnumSet<FILL_TYPE, std::uint16_t> fillType;     // 20
+		std::uint16_t                          pad22;        // 22
+		std::uint32_t                          pad24;        // 24
 	};
 	static_assert(sizeof(BGSBaseAlias) == 0x28);
 }

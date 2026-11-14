@@ -75,6 +75,9 @@ namespace RE
 		if (UpdateUsesCursor()) {
 			Message messageID;
 			auto    uiStr = InterfaceStrings::GetSingleton();
+			if (!uiStr) {
+				return;
+			}
 			if (gamepad) {
 				menuFlags.reset(Flag::kUsesCursor);
 				messageID = Message::kHide;
@@ -90,4 +93,23 @@ namespace RE
 			}
 		}
 	}
+
+#ifdef ENABLE_SKYRIM_VR
+	void IMenu::SetRenderTarget(VRMenuRenderTarget a_target)
+	{
+		if (auto* vrData = GetVRRuntimeData()) {
+			vrData->renderTarget = a_target;
+		}
+	}
+
+	void IMenu::ResetOnShow()
+	{
+		if SKYRIM_REL_VR_CONSTEXPR (!REL::Module::IsVR()) {
+			return;
+		}
+		using func_t = decltype(&IMenu::ResetOnShow);
+		static REL::Relocation<func_t> func{ REL::Offset(0xF2A8B0) };
+		return func(this);
+	}
+#endif
 }

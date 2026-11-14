@@ -52,7 +52,7 @@ namespace RE
 
 		[[nodiscard]] static AnimationFileManagerSingleton* GetSingleton()
 		{
-			REL::Relocation<AnimationFileManagerSingleton**> singleton{ RELOCATION_ID(520994, 407512) };
+			static REL::Relocation<AnimationFileManagerSingleton**> singleton{ RELOCATION_ID(520994, 407512) };
 			return *singleton;
 		}
 

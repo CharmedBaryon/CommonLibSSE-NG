@@ -10,14 +10,28 @@ namespace RE
 	{
 		Object::~Object()
 		{
-			Dtor();
-			stl::memzero(this);
+			if (IsConstructed()) {
+				const std::uint32_t size = type ? type->GetVariableCount() : 0;
+				for (std::uint32_t i = 0; i < size; ++i) {
+					variables[i].SetNone();
+				}
+
+				constructed = false;
+				initialized = false;
+			}
+
+			auto* lock = reinterpret_cast<std::uint32_t*>(
+				reinterpret_cast<std::uintptr_t>(lockStructure) & ~static_cast<std::uintptr_t>(1));
+			if (lock) {
+				stl::atomic_ref l{ *lock };
+				--l;
+			}
 		}
 
 		VMHandle Object::GetHandle() const
 		{
 			using func_t = decltype(&Object::GetHandle);
-			REL::Relocation<func_t> func{ RELOCATION_ID(97463, 104247) };
+			static REL::Relocation<func_t> func{ RELOCATION_ID(97463, 104247) };
 			return func(this);
 		}
 
@@ -46,14 +60,14 @@ namespace RE
 		void Object::IncRef()
 		{
 			using func_t = decltype(&Object::IncRef);
-			REL::Relocation<func_t> func{ RELOCATION_ID(97468, 104252) };
+			static REL::Relocation<func_t> func{ RELOCATION_ID(97468, 104252) };
 			return func(this);
 		}
 
 		std::uint32_t Object::DecRef()
 		{
 			using func_t = decltype(&Object::DecRef);
-			REL::Relocation<func_t> func{ RELOCATION_ID(97469, 104253) };
+			static REL::Relocation<func_t> func{ RELOCATION_ID(97469, 104253) };
 			return func(this);
 		}
 
@@ -109,13 +123,6 @@ namespace RE
 			}
 
 			return std::addressof(variables[offset + idx]);
-		}
-
-		void Object::Dtor()
-		{
-			using func_t = decltype(&Object::Dtor);
-			REL::Relocation<func_t> func{ RELOCATION_ID(97462, 104246) };
-			return func(this);
 		}
 	}
 }

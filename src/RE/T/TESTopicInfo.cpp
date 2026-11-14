@@ -4,15 +4,15 @@
 
 namespace RE
 {
-	TESTopicInfo::ResponseData::~ResponseData()
+	TESTopicInfo::TESResponse::~TESResponse()
 	{
 		delete next;
 	}
 
-	void TESTopicInfo::ResponseData::PopulateResponseText(TESFile* a_file)
+	void TESTopicInfo::TESResponse::LoadResponseText(TESFile* a_file)
 	{
-		using func_t = decltype(&TESTopicInfo::ResponseData::PopulateResponseText);
-		REL::Relocation<func_t> func{ RELOCATION_ID(24985, 25491) };
+		using func_t = decltype(&TESTopicInfo::TESResponse::LoadResponseText);
+		static REL::Relocation<func_t> func{ RELOCATION_ID(24985, 25491) };
 		return func(this, a_file);
 	}
 
@@ -21,9 +21,15 @@ namespace RE
 		return static_cast<float>(timeUntilReset);
 	}
 
-	DialogueItem TESTopicInfo::GetDialogueData(Actor* a_speaker)
+	DialogueItem TESTopicInfo::GetDialogueData(TESObjectREFR* a_speaker)
 	{
 		return { parentTopic->ownerQuest, parentTopic, this, a_speaker };
 	}
 
+	TESTopicInfo::TESResponseList* TESTopicInfo::GetResponseList(TESResponseList* a_list)
+	{
+		using func_t = decltype(&TESTopicInfo::GetResponseList);
+		static REL::Relocation<func_t> func{ RELOCATION_ID(25083, 25626) };
+		return func(this, a_list);
+	}
 }

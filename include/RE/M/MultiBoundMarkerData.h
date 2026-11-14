@@ -10,6 +10,7 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_MultiBoundMarkerData;
+		inline static constexpr auto VTABLE = VTABLE_MultiBoundMarkerData;
 		inline static constexpr auto EXTRADATATYPE = ExtraDataType::kMultiBoundMarkerData;
 
 		~MultiBoundMarkerData() override;  // 00

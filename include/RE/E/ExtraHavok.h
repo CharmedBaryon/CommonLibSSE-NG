@@ -13,7 +13,8 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_ExtraHavok;
-		inline static auto           EXTRADATATYPE = ExtraDataType::kHavok;
+		inline static constexpr auto VTABLE = VTABLE_ExtraHavok;
+		inline static constexpr auto EXTRADATATYPE = ExtraDataType::kHavok;
 
 		~ExtraHavok() override;  // 00
 

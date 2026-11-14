@@ -13,11 +13,13 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_BGSStandardSoundDef;
+		inline static constexpr auto VTABLE = VTABLE_BGSStandardSoundDef;
 
 		struct SoundPlaybackCharacteristics : public BSISoundDescriptor::BSIPlaybackCharacteristics  // BNAM
 		{
 		public:
 			inline static constexpr auto RTTI = RTTI_BGSStandardSoundDef__SoundPlaybackCharacteristics;
+			inline static constexpr auto VTABLE = VTABLE_BGSStandardSoundDef__SoundPlaybackCharacteristics;
 
 			// override (BSIPlaybackCharacteristics)
 			std::uint8_t  GetFrequencyShift() override;     // 01 - { return frequencyShift; }
@@ -46,22 +48,22 @@ namespace RE
 				kEnvelopeSlow = 1 << 5
 			};
 
-			std::uint8_t                            unk0;             // 0
-			stl::enumeration<Looping, std::uint8_t> looping;          // 1
-			std::uint8_t                            unk2;             // 2
-			std::uint8_t                            rumbleSendValue;  // 3
+			std::uint8_t                        unk0;             // 0
+			REX::EnumSet<Looping, std::uint8_t> looping;          // 1
+			std::uint8_t                        unk2;             // 2
+			std::uint8_t                        rumbleSendValue;  // 3
 		};
 		static_assert(sizeof(LengthCharacteristics) == 0x4);
 
 		~BGSStandardSoundDef() override;  // 00
 
 		// override (BGSSoundDescriptor)
-		void          Unk_01(void) override;               // 01
-		void          Unk_02(void) override;               // 02
-		void          InitSound(TESForm* a_src) override;  // 03
-		bool          LoadSound(TESFile* a_mod) override;  // 04
-		std::uint32_t GetType() const override;            // 05 - "BGSStandardSoundDef"
-		void          Unk_06(void) override;               // 06
+		bool          DoResolve(Resolution& a_resolution) override;  // 01
+		void          Unk_02(void) override;                         // 02
+		void          InitSound(TESForm* a_src) override;            // 03
+		bool          LoadSound(TESFile* a_mod) override;            // 04
+		std::uint32_t GetType() const override;                      // 05 - "BGSStandardSoundDef"
+		float         GetMaxAudibleDistance() override;              // 06
 
 		// members
 		BSTArray<BSResource::ID>     soundFiles;             // 18 - ANAM

@@ -108,8 +108,12 @@ namespace SKSE
 							for (auto& [eventFilter, handles] : it->second) {
 								if (a_callback(eventFilter.first, eventFilter.second)) {
 									for (auto& handle : handles) {
-										auto args = RE::MakeFunctionArguments(std::forward<Args>(a_args)...);
-										vm->SendEvent(handle, eventName, args);
+										auto copy = std::make_tuple(a_args...);
+										std::apply([&](auto&&... a_copy) {
+											auto args = RE::MakeFunctionArguments(std::forward<Args>(a_copy)...);
+											vm->SendEvent(handle, eventName, args);
+										},
+											copy);
 									}
 								}
 							}
@@ -556,36 +560,29 @@ namespace SKSE
 			Locker locker(_lock);
 			_regs.clear();
 
-			//FormID
+			// FormID
 			RE::FormID formID;
 			// KeyHandle
 			std::size_t numKeyHandle;
 			// Handle
 			std::size_t  numHandles;
 			RE::VMHandle vmHandle;
+			// Filter
+			Filter eventFilter{};
+			bool   match;
 
 			for (std::size_t i = 0; i < numRegs; ++i) {
 				a_intfc->ReadRecordData(formID);
-				if (!a_intfc->ResolveFormID(formID, formID)) {
-					log::warn("Failed to resolve target formID ({:X})", formID);
-					continue;
-				}
+				bool resolvedFormID = a_intfc->ResolveFormID(formID, formID);
 				a_intfc->ReadRecordData(numKeyHandle);
 				for (std::size_t j = 0; j < numKeyHandle; ++j) {
-					// filter
-					Filter eventFilter{};
-					if (!eventFilter.Load(a_intfc)) {
-						log::error("Failed to save event filters!");
-						continue;
-					}
-					bool match;
+					eventFilter.Load(a_intfc);
 					a_intfc->ReadRecordData(match);
 					EventFilter curKey = { eventFilter, match };
-					// handles
 					a_intfc->ReadRecordData(numHandles);
 					for (std::size_t k = 0; k < numHandles; ++k) {
 						a_intfc->ReadRecordData(vmHandle);
-						if (a_intfc->ResolveHandle(vmHandle, vmHandle)) {
+						if (a_intfc->ResolveHandle(vmHandle, vmHandle) && resolvedFormID) {
 							_regs[formID][curKey].insert(vmHandle);
 						}
 					}

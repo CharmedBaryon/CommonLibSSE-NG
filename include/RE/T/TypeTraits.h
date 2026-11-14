@@ -11,6 +11,8 @@ namespace RE
 
 	namespace BSScript
 	{
+		struct LatentPromiseBase;
+
 		template <class>
 		struct _is_reference_wrapper :
 			std::false_type
@@ -202,6 +204,18 @@ namespace RE
 
 		template <class T>
 		inline constexpr bool is_valid_return_v = is_valid_return<T>::value;
+
+		template <class T>
+		struct is_valid_latent_return :
+			std::conjunction<
+				std::is_base_of<
+					LatentPromiseBase,
+					typename std::coroutine_traits<T>::promise_type>,
+				is_valid_return<typename T::result_type>>
+		{};
+
+		template <class T>
+		inline constexpr bool is_valid_latent_return_v = is_valid_latent_return<T>::value;
 
 		template <class T>
 		struct is_return_convertible :

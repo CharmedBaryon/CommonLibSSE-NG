@@ -8,16 +8,21 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_BSAudioManagerThread;
+		inline static constexpr auto VTABLE = VTABLE_BSAudioManagerThread;
 
 		~BSAudioManagerThread() override;  // 00
 
 		// override (BSThread)
-		void Unk_01(void) override;  // 01
+		std::uint32_t ThreadProc() override;  // 01
 
 		// members
-		std::uint64_t unk50;  // 50
-		std::uint64_t unk58;  // 58
-		std::uint64_t unk60;  // 60
+
+		void*         semaphore1;  // 50, 58
+		void*         semaphore2;  // 58, 60
+		bool          unk60;       // 60, 68
+		bool          unk61;       // 61, 69
+		std::byte     pad62[2];    // 62, 6A
+		std::uint32_t sleepTime;   // 64, 6C
 	};
-	static_assert(sizeof(BSAudioManagerThread) == 0x68);
+	STATIC_ASSERT_SIZE(BSAudioManagerThread, 0x68, 0x70);
 }

@@ -10,7 +10,8 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_ExtraRefrPath;
-		inline static auto           EXTRADATATYPE = ExtraDataType::kRefrPath;
+		inline static constexpr auto VTABLE = VTABLE_ExtraRefrPath;
+		inline static constexpr auto EXTRADATATYPE = ExtraDataType::kRefrPath;
 
 		enum class PATH_TYPE
 		{
@@ -22,16 +23,16 @@ namespace RE
 		[[nodiscard]] ExtraDataType GetType() const override;  // 01 - { return kRefrPath; }
 
 		// members
-		NiPoint3                                   startPos;          // 10
-		NiPoint3                                   startTangent;      // 1C
-		NiPoint3                                   startEuler;        // 28
-		NiPoint3                                   goalPos;           // 34
-		NiPoint3                                   goalTangent;       // 40
-		NiPoint3                                   goalEuler;         // 4C
-		float                                      speed;             // 58
-		float                                      maxRotSpeed;       // 5C
-		float                                      currentParameter;  // 60
-		stl::enumeration<PATH_TYPE, std::uint32_t> type;              // 64
+		NiPoint3                               startPos;          // 10
+		NiPoint3                               startTangent;      // 1C
+		NiPoint3                               startEuler;        // 28
+		NiPoint3                               goalPos;           // 34
+		NiPoint3                               goalTangent;       // 40
+		NiPoint3                               goalEuler;         // 4C
+		float                                  speed;             // 58
+		float                                  maxRotSpeed;       // 5C
+		float                                  currentParameter;  // 60
+		REX::EnumSet<PATH_TYPE, std::uint32_t> type;              // 64
 	};
 	static_assert(sizeof(ExtraRefrPath) == 0x68);
 }

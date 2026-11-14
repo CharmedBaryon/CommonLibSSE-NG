@@ -17,7 +17,8 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_NiControllerManager;
-		inline static auto           Ni_RTTI = NiRTTI_NiControllerManager;
+		inline static constexpr auto Ni_RTTI = NiRTTI_NiControllerManager;
+		inline static constexpr auto VTABLE = VTABLE_NiControllerManager;
 
 		~NiControllerManager() override;  // 00
 
@@ -34,7 +35,7 @@ namespace RE
 		NiControllerManager* AsNiControllerManager() override;                    // 24 - { return this; }
 		void                 Start(float a_time) override;                        // 25
 		void                 Stop() override;                                     // 26
-		void                 Update(float a_time) override;                       // 27
+		void                 Update(NiUpdateData& a_data) override;               // 27
 		void                 SetTarget(NiObjectNET* a_target) override;           // 28
 		[[nodiscard]] bool   TargetIsRequiredType() const override;               // 2E
 

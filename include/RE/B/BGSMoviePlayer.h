@@ -15,26 +15,30 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_BGSMoviePlayer;
+		inline static constexpr auto VTABLE = VTABLE_BGSMoviePlayer;
 
 		~BGSMoviePlayer() override;  // 00
 
 		// override (MoviePlayer)
-		void Unk_01(void) override;  // 01
-		void Unk_02(void) override;  // 02
-		void Unk_03(void) override;  // 03
-		void Unk_04(void) override;  // 04
-		void Unk_05(void) override;  // 05 - { return; }
-		void Unk_06(void) override;  // 06 - { return; }
-		void Unk_07(void) override;  // 07
-		void Unk_08(void) override;  // 08
-		void Unk_09(void) override;  // 09
-		void Unk_0A(void) override;  // 0A
-		void Unk_0B(void) override;  // 0B
-		void Unk_0C(void) override;  // 0C
-		void Unk_0D(void) override;  // 0D
+		void          MuteAudio() override;              // 01
+		void          UnmuteAudio() override;            // 02
+		void          PauseMusic() override;             // 03
+		void          UnPauseMusic() override;           // 04
+		void          SuspendAudioThread() override;     // 05 - { return; }
+		void          ResumeAudioThread() override;      // 06 - { return; }
+		void          LockRenderer() override;           // 07
+		void          UnlockRenderer() override;         // 08
+		float         GetScreenWidth() override;         // 09
+		float         GetScreenHeight() override;        // 0A
+		bool          IsRendererInsideFrame() override;  // 0B
+		std::uint64_t GetMainThreadID() override;        // 0C
+		void          Unk_0D(void) override;             // 0D
 
 		// members
-		std::uint64_t unkB8;  // B8
+		std::uint8_t  unkB8;  // B8
+		std::uint8_t  padB9;  // B9
+		std::uint16_t padBA;  // BA
+		std::uint32_t padBC;  // BC
 	};
 	static_assert(sizeof(BGSMoviePlayer) == 0xC0);
 }

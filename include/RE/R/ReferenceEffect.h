@@ -12,7 +12,8 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_ReferenceEffect;
-		inline static auto           Ni_RTTI = NiRTTI_ReferenceEffect;
+		inline static constexpr auto Ni_RTTI = NiRTTI_ReferenceEffect;
+		inline static constexpr auto VTABLE = VTABLE_ReferenceEffect;
 		inline static constexpr auto TYPE = TEMP_EFFECT_TYPE::kRefDefault;
 
 		~ReferenceEffect() override;  // 00
@@ -29,7 +30,7 @@ namespace RE
 		void             FinishLoadGame(BGSLoadGameBuffer* a_buf) override;  // 2F
 
 		// add
-		virtual void        Init();                                  // 36 - { return 0; }
+		virtual bool        Init();                                  // 36 - { return false; }
 		virtual void        Suspend();                               // 37 - { return; }
 		virtual void        Resume();                                // 38 - { return; }
 		virtual void        ClearTarget();                           // 39

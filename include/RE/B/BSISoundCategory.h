@@ -6,6 +6,7 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_BSISoundCategory;
+		inline static constexpr auto VTABLE = VTABLE_BSISoundCategory;
 
 		virtual ~BSISoundCategory();  // 00
 

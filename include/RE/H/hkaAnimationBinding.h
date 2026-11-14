@@ -21,12 +21,12 @@ namespace RE
 		};
 
 		// members
-		hkStringPtr                               originalSkeletonName;          // 10
-		hkRefPtr<hkaAnimation>                    animation;                     // 18
-		hkArray<std::int16_t>                     transformTrackToBoneIndices;   // 20
-		hkArray<std::int16_t>                     floatTrackToFloatSlotIndices;  // 30
-		stl::enumeration<BlendHint, std::uint8_t> blendHint;                     // 40
-		char                                      pad41[7];                      // 41
+		hkStringPtr                           originalSkeletonName;          // 10
+		hkRefPtr<hkaAnimation>                animation;                     // 18
+		hkArray<std::int16_t>                 transformTrackToBoneIndices;   // 20
+		hkArray<std::int16_t>                 floatTrackToFloatSlotIndices;  // 30
+		REX::EnumSet<BlendHint, std::uint8_t> blendHint;                     // 40
+		char                                  pad41[7];                      // 41
 	};
 	static_assert(sizeof(hkaAnimationBinding) == 0x48);
 }

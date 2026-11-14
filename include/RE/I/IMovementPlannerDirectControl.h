@@ -8,6 +8,7 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_IMovementPlannerDirectControl;
+		inline static constexpr auto VTABLE = VTABLE_IMovementPlannerDirectControl;
 
 		~IMovementPlannerDirectControl() override;  // 00
 

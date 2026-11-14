@@ -98,11 +98,11 @@ namespace RE
 		constexpr void SetVisible(bool a_value) noexcept { a_value ? flags.set(Flag::kVisible) : flags.reset(Flag::kVisible); }
 
 		// members
-		TESFullName                                  locationName;  // 00
-		stl::enumeration<Flag, std::uint8_t>         flags;         // 10
-		std::uint8_t                                 pad11;         // 11
-		stl::enumeration<MARKER_TYPE, std::uint16_t> type;          // 12
-		std::uint32_t                                pad14;         // 14
+		TESFullName                              locationName;  // 00
+		REX::EnumSet<Flag, std::uint8_t>         flags;         // 10
+		std::uint8_t                             pad11;         // 11
+		REX::EnumSet<MARKER_TYPE, std::uint16_t> type;          // 12
+		std::uint32_t                            pad14;         // 14
 	};
 	static_assert(sizeof(MapMarkerData) == 0x18);
 
@@ -110,7 +110,8 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_ExtraMapMarker;
-		inline static auto           EXTRADATATYPE = ExtraDataType::kMapMarker;
+		inline static constexpr auto VTABLE = VTABLE_ExtraMapMarker;
+		inline static constexpr auto EXTRADATATYPE = ExtraDataType::kMapMarker;
 
 		~ExtraMapMarker() override;  // 00
 

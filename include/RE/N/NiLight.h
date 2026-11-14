@@ -3,6 +3,7 @@
 #include "RE/N/NiAVObject.h"
 #include "RE/N/NiColor.h"
 #include "RE/N/NiPoint3.h"
+#include "REL/RuntimeDataAccessors.h"
 
 namespace RE
 {
@@ -10,7 +11,8 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_NiLight;
-		inline static auto           Ni_RTTI = NiRTTI_NiLight;
+		inline static constexpr auto Ni_RTTI = NiRTTI_NiLight;
+		inline static constexpr auto VTABLE = VTABLE_NiLight;
 
 		struct LIGHT_RUNTIME_DATA
 		{
@@ -33,25 +35,12 @@ namespace RE
 		void          SaveBinary(NiStream& a_stream) override;  // 1B
 		bool          IsEqual(NiObject* a_object) override;     // 1C
 
-		[[nodiscard]] inline LIGHT_RUNTIME_DATA& GetLightRuntimeData() noexcept
-		{
-			return REL::RelocateMember<LIGHT_RUNTIME_DATA>(this, 0x110, 0x138);
-		}
-
-		[[nodiscard]] inline const LIGHT_RUNTIME_DATA& GetLightRuntimeData() const noexcept
-		{
-			return REL::RelocateMember<LIGHT_RUNTIME_DATA>(this, 0x110, 0x138);
-		}
-
+		RUNTIME_DATA_ACCESSOR_EX(LIGHT_RUNTIME_DATA, GetLightRuntimeData, 0x110, 0x138);
 		// members
 #ifndef SKYRIM_CROSS_VR
-		RUNTIME_DATA_CONTENT  // 110, 138
+		RUNTIME_DATA_CONTENT;  // 110, 138
 #endif
 	};
-#ifndef ENABLE_SKYRIM_VR
-	static_assert(sizeof(NiLight) == 0x140);
-#elif !defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE)
-	static_assert(sizeof(NiLight) == 0x168);
-#endif
+	STATIC_ASSERT_SIZE(NiLight, 0x140, 0x140, 0x168, 0x110);
 }
 #undef RUNTIME_DATA_CONTENT

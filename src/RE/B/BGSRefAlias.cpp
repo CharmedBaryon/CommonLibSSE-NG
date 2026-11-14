@@ -1,6 +1,7 @@
 #include "RE/B/BGSRefAlias.h"
 
 #include "RE/A/Actor.h"
+#include "RE/F/FormTraits.h"
 #include "RE/T/TESQuest.h"
 
 namespace RE
@@ -10,9 +11,7 @@ namespace RE
 		TESObjectREFR* ref = nullptr;
 		const auto     owner = owningQuest;
 		if (owner) {
-			ObjectRefHandle handle{};
-			owner->CreateRefHandleByAliasID(handle, aliasID);
-
+			auto       handle = owner->GetAliasedRef(aliasID);
 			const auto refPtr = handle.get();
 			ref = refPtr.get();
 		}
@@ -23,5 +22,17 @@ namespace RE
 	{
 		const auto ref = GetReference();
 		return ref ? ref->As<Actor>() : nullptr;
+	}
+
+	void BGSRefAlias::ForceRefTo(TESObjectREFR* a_ref)
+	{
+		if (!a_ref) {
+			return;
+		}
+
+		const auto owner = owningQuest;
+		if (owner) {
+			owner->ForceRefIntoAlias(aliasID, a_ref);
+		}
 	}
 }

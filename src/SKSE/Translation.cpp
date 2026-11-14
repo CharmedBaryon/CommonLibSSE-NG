@@ -163,9 +163,9 @@ namespace SKSE
 		}
 
 		// Lookup translation
-		std::wstring         key_utf16 = stl::utf8_to_utf16(key).value_or(L""s);
-		RE::GFxWStringBuffer result;
+		std::wstring key_utf16 = stl::utf8_to_utf16(key).value_or(L""s);
 
+		RE::GFxWStringBuffer             result;
 		RE::GFxTranslator::TranslateInfo translateInfo;
 		translateInfo.key = key_utf16.c_str();
 		translateInfo.result = std::addressof(result);

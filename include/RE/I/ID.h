@@ -12,7 +12,7 @@ namespace RE
 			void GenerateFromPath(const char* a_path)
 			{
 				using func_t = decltype(&ID::GenerateFromPath);
-				REL::Relocation<func_t> func{ RELOCATION_ID(68635, 69979) };
+				static REL::Relocation<func_t> func{ RELOCATION_ID(68635, 69979) };
 				return func(this, a_path);
 			}
 

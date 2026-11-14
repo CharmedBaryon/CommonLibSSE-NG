@@ -2,11 +2,13 @@
 
 #include "RE/G/GFxValue.h"
 #include "RE/I/IMenu.h"
+#include "REL/RuntimeDataAccessors.h"
 
 namespace RE
 {
 	struct BottomBar;
 	struct ItemCard;
+	struct MagicItemList;
 
 	// menuDepth = 0
 	// flags = kPausesGame | kUsesMenuContext | kDisablePauseMenu | kUpdateUsesCursor | kInventoryItemMenu | kCustomRendering
@@ -15,19 +17,20 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto      RTTI = RTTI_MagicMenu;
+		inline static constexpr auto      VTABLE = VTABLE_MagicMenu;
 		constexpr static std::string_view MENU_NAME = "MagicMenu";
 
 		struct RUNTIME_DATA
 		{
-#define RUNTIME_DATA_CONTENT                                                  \
-	void*         unk30;           /* 00 - some variation of the item list */ \
-	ItemCard*     itemCard;        /* 08 */                                   \
-	BottomBar*    bottomBar;       /* 10 */                                   \
-	GFxValue      root;            /* 18 - "Menu_mc" */                       \
-	bool          pcControlsReady; /* 30 */                                   \
-	std::uint8_t  pad61;           /* 31 */                                   \
-	std::uint16_t pad62;           /* 32 */                                   \
-	std::uint32_t pad64;           /* 34 */
+#define RUNTIME_DATA_CONTENT                             \
+	MagicItemList* itemList;        /* 00 */             \
+	ItemCard*      itemCard;        /* 08 */             \
+	BottomBar*     bottomBar;       /* 10 */             \
+	GFxValue       root;            /* 18 - "Menu_mc" */ \
+	bool           pcControlsReady; /* 30 */             \
+	std::uint8_t   pad61;           /* 31 */             \
+	std::uint16_t  pad62;           /* 32 */             \
+	std::uint32_t  pad64;           /* 34 */
 
 			RUNTIME_DATA_CONTENT
 		};
@@ -40,25 +43,12 @@ namespace RE
 		UI_MESSAGE_RESULTS ProcessMessage(UIMessage& a_message) override;    // 04
 		void               PostDisplay() override;                           // 06
 
-		[[nodiscard]] inline RUNTIME_DATA& GetRuntimeData() noexcept
-		{
-			return REL::RelocateMember<RUNTIME_DATA>(this, 0x30, 0x40);
-		}
-
-		[[nodiscard]] inline const RUNTIME_DATA& GetRuntimeData() const noexcept
-		{
-			return REL::RelocateMember<RUNTIME_DATA>(this, 0x30, 0x40);
-		}
-
+		RUNTIME_DATA_ACCESSOR(RUNTIME_DATA, 0x30, 0x40);
 		// members
 #ifndef SKYRIM_CROSS_VR
-		RUNTIME_DATA_CONTENT  // 30, 40
+		RUNTIME_DATA_CONTENT;  // 30, 40
 #endif
 	};
-#ifndef ENABLE_SKYRIM_VR
-	static_assert(sizeof(MagicMenu) == 0x68);
-#elif !defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE)
-	static_assert(sizeof(MagicMenu) == 0x78);
-#endif
+	STATIC_ASSERT_SIZE(MagicMenu, 0x68, 0x68, 0x78, 0x30);
 }
 #undef RUNTIME_DATA_CONTENT

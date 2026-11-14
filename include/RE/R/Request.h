@@ -12,6 +12,7 @@ namespace RE
 			{
 			public:
 				inline static constexpr auto RTTI = RTTI_bgs__saveload__Request;
+				inline static constexpr auto VTABLE = VTABLE_bgs__saveload__Request;
 
 				virtual ~Request();  // 00
 

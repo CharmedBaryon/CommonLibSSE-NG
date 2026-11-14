@@ -1,6 +1,6 @@
 #pragma once
 
-#include "RE/B/BSTList.h"
+#include "RE/B/BSSimpleList.h"
 #include "RE/B/BaseFormComponent.h"
 #include "RE/F/FightReactions.h"
 #include "RE/F/FormTypes.h"
@@ -19,6 +19,7 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_TESReactionForm;
+		inline static constexpr auto VTABLE = VTABLE_TESReactionForm;
 
 		~TESReactionForm() override;  // 00
 
@@ -28,11 +29,11 @@ namespace RE
 		void CopyComponent(BaseFormComponent* a_rhs) override;  // 03
 
 		// members
-		BSSimpleList<GROUP_REACTION*>            reactions;      // 08 - XNAM
-		stl::enumeration<FormType, std::uint8_t> groupFormType;  // 18
-		std::uint8_t                             pad19;          // 19
-		std::uint16_t                            pad1A;          // 1A
-		std::uint32_t                            pad1C;          // 1C
+		BSSimpleList<GROUP_REACTION*>        reactions;      // 08 - XNAM
+		REX::EnumSet<FormType, std::uint8_t> groupFormType;  // 18
+		std::uint8_t                         pad19;          // 19
+		std::uint16_t                        pad1A;          // 1A
+		std::uint32_t                        pad1C;          // 1C
 	};
 	static_assert(sizeof(TESReactionForm) == 0x20);
 }

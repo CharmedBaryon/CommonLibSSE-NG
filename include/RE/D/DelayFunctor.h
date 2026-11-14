@@ -17,6 +17,7 @@ namespace RE
 		{
 		public:
 			inline static constexpr auto RTTI = RTTI_SkyrimScript__DelayFunctor;
+			inline static constexpr auto VTABLE = VTABLE_SkyrimScript__DelayFunctor;
 
 			enum class FunctorType
 			{

@@ -10,6 +10,7 @@ namespace RE
 		{
 		public:
 			inline static constexpr auto RTTI = RTTI_SkyrimScript__SavePatcher;
+			inline static constexpr auto VTABLE = VTABLE_SkyrimScript__SavePatcher;
 
 			~SavePatcher() override;  // 00
 

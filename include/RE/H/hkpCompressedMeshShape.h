@@ -81,33 +81,33 @@ namespace RE
 		void         SetWeldingInfo(hkpShapeKey a_key, std::int16_t a_weldingInfo) override;                               // 0C
 
 		// members
-		std::int32_t                                                   bitsPerIndex;                // 030
-		std::int32_t                                                   bitsPerWIndex;               // 034
-		std::int32_t                                                   wIndexMask;                  // 03C
-		std::int32_t                                                   indexMask;                   // 038
-		float                                                          radius;                      // 040
-		stl::enumeration<hkpWeldingUtility::WeldingType, std::uint8_t> weldingType;                 // 044
-		stl::enumeration<MaterialType, std::uint8_t>                   materialType;                // 045
-		std::uint16_t                                                  pad46;                       // 046
-		hkArray<std::uint32_t>                                         materials;                   // 048
-		hkArray<std::uint16_t>                                         materials16;                 // 058
-		hkArray<std::uint8_t>                                          materials8;                  // 068
-		hkArray<hkQsTransform>                                         transforms;                  // 078
-		hkArray<hkVector4>                                             bigVertices;                 // 088
-		hkArray<BigTriangle>                                           bigTriangles;                // 098
-		hkArray<Chunk>                                                 chunks;                      // 0A8
-		hkArray<ConvexPiece>                                           convexPieces;                // 0B8
-		float                                                          error;                       // 0C8
-		std::uint32_t                                                  padCC;                       // 0CC
-		hkAabb                                                         bounds;                      // 0D0
-		std::uint32_t                                                  defaultCollisionFilterInfo;  // 0F0
-		std::uint32_t                                                  padF4;                       // 0F4
-		hkpMeshMaterial*                                               meshMaterials;               // 0F8
-		std::uint16_t                                                  materialStriding;            // 100
-		std::uint16_t                                                  numMaterials;                // 102
-		std::uint32_t                                                  pad104;                      // 104
-		hkArray<hkpNamedMeshMaterial>                                  namedMaterials;              // 108
-		std::uint64_t                                                  pad118;                      // 118
+		std::int32_t                                               bitsPerIndex;                // 030
+		std::int32_t                                               bitsPerWIndex;               // 034
+		std::int32_t                                               wIndexMask;                  // 03C
+		std::int32_t                                               indexMask;                   // 038
+		float                                                      radius;                      // 040
+		REX::EnumSet<hkpWeldingUtility::WeldingType, std::uint8_t> weldingType;                 // 044
+		REX::EnumSet<MaterialType, std::uint8_t>                   materialType;                // 045
+		std::uint16_t                                              pad46;                       // 046
+		hkArray<std::uint32_t>                                     materials;                   // 048
+		hkArray<std::uint16_t>                                     materials16;                 // 058
+		hkArray<std::uint8_t>                                      materials8;                  // 068
+		hkArray<hkQsTransform>                                     transforms;                  // 078
+		hkArray<hkVector4>                                         bigVertices;                 // 088
+		hkArray<BigTriangle>                                       bigTriangles;                // 098
+		hkArray<Chunk>                                             chunks;                      // 0A8
+		hkArray<ConvexPiece>                                       convexPieces;                // 0B8
+		float                                                      error;                       // 0C8
+		std::uint32_t                                              padCC;                       // 0CC
+		hkAabb                                                     bounds;                      // 0D0
+		CFilter                                                    defaultCollisionFilterInfo;  // 0F0
+		std::uint32_t                                              padF4;                       // 0F4
+		hkpMeshMaterial*                                           meshMaterials;               // 0F8
+		std::uint16_t                                              materialStriding;            // 100
+		std::uint16_t                                              numMaterials;                // 102
+		std::uint32_t                                              pad104;                      // 104
+		hkArray<hkpNamedMeshMaterial>                              namedMaterials;              // 108
+		std::uint64_t                                              pad118;                      // 118
 	};
 	static_assert(sizeof(hkpCompressedMeshShape) == 0x120);
 }

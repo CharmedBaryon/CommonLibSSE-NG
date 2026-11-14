@@ -2,10 +2,44 @@
 
 #include "RE/B/BSTEvent.h"
 #include "RE/I/IMenu.h"
+#include "RE/N/NiNode.h"
 
 namespace RE
 {
 	class HudModeChangeEvent;
+
+	// Used in a global array, which is processed every MAIN_DRAW
+	// Cleared after each MAIN_DRAW
+	struct QueuedMenuNodeUpdate
+	{
+	public:
+		enum class UpdateType : std::uint32_t
+		{
+			kVisibility = 0,
+			kShaderProperty = 1
+		};
+
+		enum class Flag : std::uint32_t
+		{
+			kNone = 0,
+			kLinkMaterial = 1 << 0,         // 0x01: calls BSShaderProperty::LinkMaterial if material->unk30 == 0
+			kSetRenderTarget = 1 << 1,      // 0x02: sets BSEffectShaderMaterial::renderTarget (0x84) and invalidates lastRenderPassState (0x34)
+			kAttachAlphaProperty = 1 << 2,  // 0x04: creates/attaches NiAlphaProperty (flags 0xed)
+			kSnowOff = 1 << 3,              // 0x08: clears BSShaderPropertyFlag8::kSnow (0x3c)
+			kZBufferTestOff = 1 << 4,       // 0x10: clears BSShaderPropertyFlag8::kZBufferTest (0x1f)
+			kZBufferWrite = 1 << 5,         // 0x20: sets BSShaderPropertyFlag8::kZBufferWrite (0x20)
+			kVertexColors = 1 << 6,         // 0x40: sets BSShaderPropertyFlag8::kVertexColors (0x25)
+			kTwoSided = 1 << 7              // 0x80: sets BSShaderPropertyFlag8::kTwoSided (0x24)
+		};
+
+		// members
+		NiNode*                                        menuNode;      // 00 - set to WorldSpaceMenu->menuNode
+		bool                                           hideMenu;      // 08 - false also unhides the menu if its already hidden
+		REX::EnumSet<Flag, std::uint32_t>              flags;         // 0C
+		REX::EnumSet<VRMenuRenderTarget, std::int32_t> renderTarget;  // 10 - set to WorldSpaceMenu->renderTarget, applied to every child in the menunode
+		REX::EnumSet<UpdateType, std::uint32_t>        updateType;    // 14
+	};
+	static_assert(sizeof(QueuedMenuNodeUpdate) == 0x18);
 
 	// menuDepth = 4
 	// context = 22
@@ -18,9 +52,10 @@ namespace RE
 #endif
 	{
 	public:
-#if !defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE)
+#if defined(EXCLUSIVE_SKYRIM_VR)
 		inline static constexpr auto RTTI = RTTI_WorldSpaceMenu;
 #endif
+		WorldSpaceMenu(bool a_registerHudModeChangeEvent, bool a_matchAsTopMenu, bool a_queueUpdateFixup);
 
 		~WorldSpaceMenu() override;  // 00
 
@@ -37,22 +72,28 @@ namespace RE
 			return const_cast<WorldSpaceMenu*>(this)->AsHudModeChangeEventSink();
 		}
 
-#if !defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE)
-		// add
-		virtual void Unk_11();
-		virtual void Unk_12();
-		virtual void Unk_13();
+		// override
+		virtual void               PostCreate() override;                          // 02
+		virtual UI_MESSAGE_RESULTS ProcessMessage(UIMessage& a_message) override;  // 04
+#ifdef ENABLE_SKYRIM_VR
+		SKYRIM_REL_VR_VIRTUAL void SetRenderTarget(VRMenuRenderTarget a_target) SKYRIM_REL_VR_OVERRIDE;  // 09
+#endif
 
-		// members
-		std::uint16_t unk48{ 0 };  // 40
-		std::uint8_t  unk50{ 0 };  // 42
-		std::uint8_t  unk51{ 0 };  // 43
-		std::uint8_t  unk52{ 0 };  // 44
-		std::uint8_t  pad53{ 0 };  // 45
-		std::uint32_t pad54{ 0 };  // 46
-#endif
+		// add
+		virtual void        SetupMenuNode();          // 0B - Sets up menuNode
+		virtual RE::NiNode* GetMenuParentNode() = 0;  // 0C - purecall, menuNode is attached to this in PostCreate()
+		virtual void        SetTransform() = 0;       // 0D - purecall, set rotation,translation, etc. called in PostCreate()
+
+		bool MessageMatchesMenu(RE::UIMessage* a_message);
+
+		void SetupMenuNodeWithNif(const char* nif, REX::EnumSet<QueuedMenuNodeUpdate::Flag, std::uint32_t> a_flags = QueuedMenuNodeUpdate::Flag::kNone);
+
+		RE::NiPointer<RE::NiNode> menuNode;                       // 48 - Created automatically in SetupMenuNode()
+		bool                      registerForHudModeChangeEvent;  // 50 - Set/Used in WorldSpaceMenu constructor
+		bool                      matchAsTopMenu{ false };        // 51 - Only used when calling MessageMatchesMenu so far
+		bool                      queueUpdateFixup{ false };      // 52 - Update menuNode immediately, or on next MAIN_DRAW when calling SetRenderTarget
+		std::uint8_t              pad53{ 0 };
+		std::uint32_t             pad54{ 0 };
 	};
-#if !defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE)
-	static_assert(sizeof(WorldSpaceMenu) == 0x58);
-#endif
+	STATIC_ASSERT_SIZE(WorldSpaceMenu, 0x48, 0x48, 0x58, 0x40);
 }

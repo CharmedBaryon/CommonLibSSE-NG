@@ -14,6 +14,7 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_bhkCharProxyController;
+		inline static constexpr auto VTABLE = VTABLE_bhkCharProxyController;
 
 		~bhkCharProxyController() override;  // 00
 

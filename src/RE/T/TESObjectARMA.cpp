@@ -67,4 +67,11 @@ namespace RE
 		std::uint32_t sex = npc ? static_cast<std::uint32_t>(npc->GetSex()) : 0;
 		sprintf_s(a_dstBuff, REX::W32::MAX_PATH, " (%08X)[%d]/ (%08X) [%2.0f%%]", GetFormID(), sex, a_armor->GetFormID(), weight);
 	}
+
+	void TESObjectARMA::InitWornArmorAddon(TESObjectARMO* a_armor, BSTSmartPointer<BipedAnim>* a_biped, SEX a_sex)
+	{
+		using func_t = decltype(&TESObjectARMA::InitWornArmorAddon);
+		static REL::Relocation<func_t> func{ RELOCATION_ID(17361, 17759) };
+		return func(this, a_armor, a_biped, a_sex);
+	}
 }

@@ -33,6 +33,7 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_BShkbAnimationGraph;
+		inline static constexpr auto VTABLE = VTABLE_BShkbAnimationGraph;
 
 		struct BoneNodeEntry
 		{
@@ -40,6 +41,17 @@ namespace RE
 			uint32_t unk08;
 			uint32_t unk0C;
 		};
+
+		struct ProjectDBData
+		{
+			void*                           vtbl;                // 00
+			std::uint8_t                    unk08[0x70 - 0x08];  // 08
+			BSTHashMap<char*, std::int32_t> unk70;               // 70 - BSTHashMap<char *, hkInt32> // event name -> event id
+			BSTHashMap<char*, std::int32_t> unkA0;               // A0 - BSTHashMap<char *, hkInt32> // event name -> event id. This one is read from when handling anim events.
+			BSTArray<char*>                 unkD0;               // D0 - all anim events (~2000 total)
+			BSTArray<char*>                 unkE8;               // E8 - state names?
+		};
+		static_assert(offsetof(ProjectDBData, unkA0) == 0xA0);
 
 		~BShkbAnimationGraph() override;  // 00
 
@@ -79,42 +91,42 @@ namespace RE
 		bool GetGraphVariableBool(const BSFixedString& a_variableName, bool& a_out) const
 		{
 			using func_t = decltype(&BShkbAnimationGraph::GetGraphVariableBool);
-			REL::Relocation<func_t> func{ RELOCATION_ID(62696, 63613) };
+			static REL::Relocation<func_t> func{ RELOCATION_ID(62696, 63613) };
 			return func(this, a_variableName, a_out);
 		}
 
 		bool GetGraphVariableFloat(const BSFixedString& a_variableName, float& a_out) const
 		{
 			using func_t = decltype(&BShkbAnimationGraph::GetGraphVariableFloat);
-			REL::Relocation<func_t> func{ RELOCATION_ID(62695, 63614) };
+			static REL::Relocation<func_t> func{ RELOCATION_ID(62695, 63614) };
 			return func(this, a_variableName, a_out);
 		}
 
 		bool GetGraphVariableInt(const BSFixedString& a_variableName, int& a_out) const
 		{
 			using func_t = decltype(&BShkbAnimationGraph::GetGraphVariableInt);
-			REL::Relocation<func_t> func{ RELOCATION_ID(62694, 63615) };
+			static REL::Relocation<func_t> func{ RELOCATION_ID(62694, 63615) };
 			return func(this, a_variableName, a_out);
 		}
 
 		bool SetGraphVariableBool(const BSFixedString& a_variableName, const bool a_in)
 		{
 			using func_t = decltype(&BShkbAnimationGraph::SetGraphVariableBool);
-			REL::Relocation<func_t> func{ RELOCATION_ID(63609, 62708) };
+			static REL::Relocation<func_t> func{ RELOCATION_ID(62710, 63607) };
 			return func(this, a_variableName, a_in);
 		}
 
 		bool SetGraphVariableFloat(const BSFixedString& a_variableName, const float a_in)
 		{
 			using func_t = decltype(&BShkbAnimationGraph::SetGraphVariableFloat);
-			REL::Relocation<func_t> func{ RELOCATION_ID(63608, 62709) };
+			static REL::Relocation<func_t> func{ RELOCATION_ID(62709, 63608) };
 			return func(this, a_variableName, a_in);
 		}
 
 		bool SetGraphVariableInt(const BSFixedString& a_variableName, const int a_in)
 		{
 			using func_t = decltype(&BShkbAnimationGraph::SetGraphVariableInt);
-			REL::Relocation<func_t> func{ RELOCATION_ID(63607, 62710) };
+			static REL::Relocation<func_t> func{ RELOCATION_ID(62708, 63609) };
 			return func(this, a_variableName, a_in);
 		}
 
@@ -130,7 +142,7 @@ namespace RE
 		float                          interpolationTimeOffsets[2];  // 1E8
 		BSFixedString                  projectName;                  // 1F0
 		BSResource::ID*                unk1F8;                       // 1F8
-		void*                          projectDBData;                // 200 - BShkbHkxDB::ProjectDBData*
+		ProjectDBData*                 projectDBData;                // 200 - BShkbHkxDB::ProjectDBData*
 		hkbBehaviorGraph*              behaviorGraph;                // 208
 		Actor*                         holder;                       // 210
 		BSFadeNode*                    rootNode;                     // 218

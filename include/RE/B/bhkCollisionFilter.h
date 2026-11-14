@@ -2,6 +2,7 @@
 
 #include "RE/B/BSFixedString.h"
 #include "RE/B/BSTSingleton.h"
+#include "RE/C/CollisionLayers.h"
 #include "RE/H/hkpCollisionFilter.h"
 
 namespace RE
@@ -10,10 +11,11 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_bhkCollisionFilter;
+		inline static constexpr auto VTABLE = VTABLE_bhkCollisionFilter;
 
 		[[nodiscard]] static bhkCollisionFilter* GetSingleton()
 		{
-			REL::Relocation<bhkCollisionFilter**> singleton{ RELOCATION_ID(514415, 400562) };
+			static REL::Relocation<bhkCollisionFilter**> singleton{ RELOCATION_ID(514415, 400562) };
 			return *singleton;
 		}
 
@@ -27,6 +29,12 @@ namespace RE
 			}
 			return nextSystemGroup;
 		}
+
+		// Sets or clears the mutual collision bit between two layers in layerBitfields.
+		void SetLayerPairCollisionEnabled(COL_LAYER a_layerA, COL_LAYER a_layerB, bool a_enabled);
+
+		// Sets layerBitfields[a_layer] to a_mask and mirrors each bit into the other layers' rows.
+		void SetLayerBitfield(COL_LAYER a_layer, std::uint64_t a_mask);
 
 		// members
 		std::uint32_t unk48;                     // 048

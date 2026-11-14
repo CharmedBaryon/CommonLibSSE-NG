@@ -4,27 +4,29 @@
 #include "RE/B/BSTEvent.h"
 #include "RE/G/GFxFunctionHandler.h"
 #include "RE/I/IMenu.h"
+#include "REL/RuntimeDataAccessors.h"
 
 namespace RE
 {
 	class BSSaveDataEvent;
 	class BSSystemEvent;
+	struct MapMenuMarker;
 
 	// menuDepth = 0
 	// flags = kPausesGame | kDisablePauseMenu | kRequiresUpdate | kUpdateUsesCursor | kApplicationMenu
 	// context = kMenuMode
 	class MainMenu :
 #ifndef SKYRIM_CROSS_VR
-		public IMenu,                          // 00
-		public BSTEventSink<BSSystemEvent>,    // 30
-		public BSTEventSink<BSSaveDataEvent>,  // 38
-		public GFxFunctionHandler              // 40
+		public IMenu,                         // 00
+		public BSTEventSink<BSSystemEvent>,   // 30
+		public BSTEventSink<BSSaveDataEvent>  // 38
 #else
 		public IMenu  // 00
 #endif
 	{
 	public:
 		inline static constexpr auto      RTTI = RTTI_MainMenu;
+		inline static constexpr auto      VTABLE = VTABLE_MainMenu;
 		constexpr static std::string_view MENU_NAME = "Main Menu";
 
 		struct RUNTIME_DATA
@@ -51,63 +53,62 @@ namespace RE
 #ifndef SKYRIM_CROSS_VR
 		// override (BSTEventSink<BSSystemEvent>)
 		BSEventNotifyControl ProcessEvent(const BSSystemEvent* a_event, BSTEventSource<BSSystemEvent>* a_eventSource) override;  // 01
-
 		// override (BSTEventSink<BSSaveDataEvent>)
 		BSEventNotifyControl ProcessEvent(const BSSaveDataEvent* a_event, BSTEventSource<BSSaveDataEvent>* a_eventSource) override;  // 01
-
-		// override (GFxFunctionHandler)
-		void Call(Params& a_params) override;  // 01
 #endif
 
-		[[nodiscard]] BSTEventSink<BSSystemEvent>* AsBSSystemEventSink() noexcept
+#ifndef SKYRIM_CROSS_VR
+		RUNTIME_CAST_ACCESSOR(BSTEventSink<BSSystemEvent>, AsBSSystemEventSink, 0x30, 0x40);
+		RUNTIME_CAST_ACCESSOR(BSTEventSink<BSSaveDataEvent>, AsBSSaveDataEventSink, 0x38, 0x48);
+#endif
+		[[nodiscard]] inline GFxFunctionHandler* AsGFxFunctionHandler() noexcept
 		{
-			return &REL::RelocateMember<BSTEventSink<BSSystemEvent>>(this, 0x30, 0x40);
+			if SKYRIM_REL_VR_CONSTEXPR (!REL::Module::IsVR()) {
+				return nullptr;
+			} else {
+				return &REL::RelocateMember<GFxFunctionHandler>(this, 0, 0x50);
+			}
 		}
 
-		[[nodiscard]] const BSTEventSink<BSSystemEvent>* AsBSSystemEventSink() const noexcept
-		{
-			return const_cast<MainMenu*>(this)->AsBSSystemEventSink();
-		}
-
-		[[nodiscard]] BSTEventSink<BSSaveDataEvent>* AsBSSaveDataEventSink() noexcept
-		{
-			return &REL::RelocateMember<BSTEventSink<BSSaveDataEvent>>(this, 0x38, 0x48);
-		}
-
-		[[nodiscard]] const BSTEventSink<BSSaveDataEvent>* AsBSSaveDataEventSink() const noexcept
-		{
-			return const_cast<MainMenu*>(this)->AsBSSaveDataEventSink();
-		}
-
-		[[nodiscard]] GFxFunctionHandler* AsGFxFunctionHandler() noexcept
-		{
-			return &REL::RelocateMember<GFxFunctionHandler>(this, 0x40, 0x50);
-		}
-
-		[[nodiscard]] const GFxFunctionHandler* AsGFxFunctionHandler() const noexcept
+		[[nodiscard]] inline const GFxFunctionHandler* AsGFxFunctionHandler() const noexcept
 		{
 			return const_cast<MainMenu*>(this)->AsGFxFunctionHandler();
 		}
 
-		[[nodiscard]] inline RUNTIME_DATA& GetRuntimeData() noexcept
+		[[nodiscard]] BSTEventSink<BSGamerProfileEvent>* AsBSGamerProfileEventSink() noexcept
 		{
-			return REL::RelocateMember<RUNTIME_DATA>(this, 0x50, 0x60);
+			if SKYRIM_REL_VR_CONSTEXPR (!REL::Module::IsVR()) {
+				return nullptr;
+			} else {
+				return &REL::RelocateMember<BSTEventSink<BSGamerProfileEvent>>(this, 0, 0x50);
+			}
 		}
 
-		[[nodiscard]] inline const RUNTIME_DATA& GetRuntimeData() const noexcept
+		[[nodiscard]] const BSTEventSink<BSGamerProfileEvent>* AsBSGamerProfileEventSink() const noexcept
 		{
-			return REL::RelocateMember<RUNTIME_DATA>(this, 0x50, 0x60);
+			return const_cast<MainMenu*>(this)->AsBSGamerProfileEventSink();
 		}
 
+		[[nodiscard]] const MenuEventHandler* AsMenuEventHandler() const noexcept
+		{
+			return const_cast<MainMenu*>(this)->AsMenuEventHandler();
+		}
+
+		[[nodiscard]] MenuEventHandler* AsMenuEventHandler() noexcept
+		{
+			if SKYRIM_REL_VR_CONSTEXPR (!REL::Module::IsVR()) {
+				return nullptr;
+			} else {
+				return &REL::RelocateMember<MenuEventHandler>(this, 0, 0x58);
+			}
+		}
+
+		RUNTIME_DATA_ACCESSOR(RUNTIME_DATA, 0x50, 0x60);
 		// members
 #ifndef SKYRIM_CROSS_VR
-		RUNTIME_DATA_CONTENT  // 50, 60
+		RUNTIME_DATA_CONTENT;  // 50, 60
 #endif
 	};
-#ifndef ENABLE_SKYRIM_VR
-	static_assert(sizeof(MainMenu) == 0x70);
-#elif !defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE)
-	static_assert(sizeof(MainMenu) == 0x80);
-#endif
+	STATIC_ASSERT_SIZE(MainMenu, 0x60, 0x60, 0x70, 0x30);
 }
 #undef RUNTIME_DATA_CONTENT

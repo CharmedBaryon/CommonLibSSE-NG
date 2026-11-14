@@ -99,7 +99,7 @@ namespace RE
 
 		void reserve(size_type a_newCap)
 		{
-			assert(a_newCap <= kCapacityMask);
+			assert(a_newCap <= static_cast<size_type>(kCapacityMask));
 			if (a_newCap <= capacity()) {
 				return;
 			}

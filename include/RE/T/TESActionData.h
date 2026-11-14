@@ -24,7 +24,7 @@ namespace RE
 		static TESActionData* Create()
 		{
 			auto tesActionData = malloc<TESActionData>();
-			std::memset(reinterpret_cast<void*>(tesActionData), 0, sizeof(TESActionData));
+			std::memset((void*)tesActionData, 0, sizeof(TESActionData));
 			if (tesActionData) {
 				tesActionData->Ctor();
 			}
@@ -35,8 +35,8 @@ namespace RE
 		TESActionData* Ctor()
 		{
 			using func_t = decltype(&TESActionData::Ctor);
-			REL::Relocation<func_t> func{ RELOCATION_ID(15916, 41558) };
-			TESActionData*          tesActionData = func(this);
+			static REL::Relocation<func_t> func{ RELOCATION_ID(15916, 41558) };
+			TESActionData*                 tesActionData = func(this);
 			stl::emplace_vtable<TESActionData>(tesActionData);
 			return tesActionData;
 		}

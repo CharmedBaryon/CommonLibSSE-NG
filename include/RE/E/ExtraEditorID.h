@@ -10,7 +10,8 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_ExtraEditorID;
-		inline static auto           EXTRADATATYPE = ExtraDataType::kEditorID;
+		inline static constexpr auto VTABLE = VTABLE_ExtraEditorID;
+		inline static constexpr auto EXTRADATATYPE = ExtraDataType::kEditorID;
 
 		~ExtraEditorID() override;  // 00
 

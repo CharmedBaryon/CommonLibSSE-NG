@@ -14,6 +14,7 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_LocalMapCamera;
+		inline static constexpr auto VTABLE = VTABLE_LocalMapCamera;
 
 		class DefaultState : public TESCameraState
 		{
@@ -24,8 +25,10 @@ namespace RE
 			~DefaultState() override;  // 00
 
 			// add
-			void Begin() override;                                               // 01
+			void Begin() override;  // 01
+#ifndef SKYRIM_CROSS_VR
 			void Update(BSTSmartPointer<TESCameraState>& a_nextState) override;  // 03
+#endif
 
 			// members
 			NiPoint3      initialPosition;       // 20
@@ -37,7 +40,6 @@ namespace RE
 		};
 		static_assert(sizeof(DefaultState) == 0x48);
 
-		LocalMapCamera(float a_zRotation);
 		~LocalMapCamera() override;  // 00
 
 		void SetAreaBounds(NiPoint3& a_maxExtent, NiPoint3& a_minExtent);

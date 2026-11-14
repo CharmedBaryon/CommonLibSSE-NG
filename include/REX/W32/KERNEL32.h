@@ -63,6 +63,11 @@ namespace REX::W32
 	inline constexpr auto GENERIC_EXECUTE{ 0x20000000L };
 	inline constexpr auto GENERIC_ALL{ 0x10000000L };
 
+	// file share mode / creation disposition
+	inline constexpr auto FILE_SHARE_READ{ 0x00000001u };
+	inline constexpr auto FILE_SHARE_WRITE{ 0x00000002u };
+	inline constexpr auto OPEN_EXISTING{ 3u };
+
 	// pe image header
 	inline constexpr auto IMAGE_DOS_SIGNATURE{ 0x5A4Du };
 	inline constexpr auto IMAGE_NT_SIGNATURE{ 0x00004550u };
@@ -426,6 +431,7 @@ namespace REX::W32
 namespace REX::W32
 {
 	bool                  CloseHandle(HANDLE a_handle) noexcept;
+	HANDLE                CreateFileW(const wchar_t* a_fileName, std::uint32_t a_desiredAccess, std::uint32_t a_shareMode, SECURITY_ATTRIBUTES* a_attributes, std::uint32_t a_creationDisposition, std::uint32_t a_flags, HANDLE a_templateFile) noexcept;
 	HANDLE                CreateFileMappingA(HANDLE a_file, SECURITY_ATTRIBUTES* a_attributes, std::uint32_t a_protect, std::uint32_t a_maxSizeHigh, std::uint32_t a_maxSizeLow, const char* a_name) noexcept;
 	HANDLE                CreateFileMappingW(HANDLE a_file, SECURITY_ATTRIBUTES* a_attributes, std::uint32_t a_protect, std::uint32_t a_maxSizeHigh, std::uint32_t a_maxSizeLow, const wchar_t* a_name) noexcept;
 	bool                  CreateProcessA(const char* a_name, char* a_cmd, SECURITY_ATTRIBUTES* a_procAttr, SECURITY_ATTRIBUTES* a_threadAttr, bool a_inheritHandles, std::uint32_t a_flags, void* a_env, const char* a_curDir, STARTUPINFOA* a_startInfo, PROCESS_INFORMATION* a_procInfo) noexcept;
@@ -435,8 +441,8 @@ namespace REX::W32
 	HANDLE                CreateThread(SECURITY_ATTRIBUTES* a_threadAttr, std::size_t a_stackSize, THREAD_START_ROUTINE* a_startAddr, void* a_param, std::uint32_t a_flags, std::uint32_t* a_threadID) noexcept;
 	void                  DeleteCriticalSection(CRITICAL_SECTION* a_criticalSection);
 	void                  EnterCriticalSection(CRITICAL_SECTION* a_criticalSection);
-	std::uint32_t         ExpandEnvironmentStrings(const char* a_src, char* a_dst, std::uint32_t a_dstLen) noexcept;
-	std::uint32_t         ExpandEnvironmentStrings(const wchar_t* a_src, wchar_t* a_dst, std::uint32_t a_dstLen) noexcept;
+	std::uint32_t         ExpandEnvironmentStringsA(const char* a_src, char* a_dst, std::uint32_t a_dstLen) noexcept;
+	std::uint32_t         ExpandEnvironmentStringsW(const wchar_t* a_src, wchar_t* a_dst, std::uint32_t a_dstLen) noexcept;
 	bool                  FindClose(HANDLE a_file) noexcept;
 	HANDLE                FindFirstFileA(const char* a_name, WIN32_FIND_DATAA* a_data) noexcept;
 	HANDLE                FindFirstFileW(const wchar_t* a_name, WIN32_FIND_DATAW* a_data) noexcept;

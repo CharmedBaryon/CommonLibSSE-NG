@@ -28,6 +28,21 @@ namespace RE
 		entry[2][2] = a_z.z;
 	}
 
+	NiPoint3 NiMatrix3::GetVectorX() const
+	{
+		return NiPoint3{ entry[0][0], entry[1][0], entry[2][0] };
+	}
+
+	NiPoint3 NiMatrix3::GetVectorY() const
+	{
+		return NiPoint3{ entry[0][1], entry[1][1], entry[2][1] };
+	}
+
+	NiPoint3 NiMatrix3::GetVectorZ() const
+	{
+		return NiPoint3{ entry[0][2], entry[1][2], entry[2][2] };
+	}
+
 	bool NiMatrix3::ToEulerAnglesXYZ(NiPoint3& a_angle) const
 	{
 		return ToEulerAnglesXYZ(a_angle.x, a_angle.y, a_angle.z);
@@ -106,6 +121,86 @@ namespace RE
 		entry[2][0] = cosX * sinY * cosZ + sinX * sinZ;
 		entry[2][1] = cosX * sinY * sinZ - sinX * cosZ;
 		entry[2][2] = cosX * cosY;
+	}
+
+	void NiMatrix3::MakeXRotation(float a_angle)
+	{
+		float sn = std::sin(a_angle);
+		float cs = std::cos(a_angle);
+
+		entry[0][0] = 1.0f;
+		entry[0][1] = 0.0f;
+		entry[0][2] = 0.0f;
+		entry[1][0] = 0.0f;
+		entry[1][1] = cs;
+		entry[1][2] = sn;
+		entry[2][0] = 0.0f;
+		entry[2][1] = -sn;
+		entry[2][2] = cs;
+	}
+
+	void NiMatrix3::MakeYRotation(float a_angle)
+	{
+		float sn = std::sin(a_angle);
+		float cs = std::cos(a_angle);
+
+		entry[0][0] = cs;
+		entry[0][1] = 0.0f;
+		entry[0][2] = -sn;
+		entry[1][0] = 0.0f;
+		entry[1][1] = 1.0f;
+		entry[1][2] = 0.0f;
+		entry[2][0] = sn;
+		entry[2][1] = 0.0f;
+		entry[2][2] = cs;
+	}
+
+	void NiMatrix3::MakeZRotation(float a_angle)
+	{
+		float sn = std::sin(a_angle);
+		float cs = std::cos(a_angle);
+
+		entry[0][0] = cs;
+		entry[0][1] = sn;
+		entry[0][2] = 0.0f;
+		entry[1][0] = -sn;
+		entry[1][1] = cs;
+		entry[1][2] = 0.0f;
+		entry[2][0] = 0.0f;
+		entry[2][1] = 0.0f;
+		entry[2][2] = 1.0f;
+	}
+
+	void NiMatrix3::MakeRotation(float a_angle, float a_x, float a_y, float a_z)
+	{
+		float sn = std::sin(a_angle);
+		float cs = std::cos(a_angle);
+
+		float omcs = 1.0f - cs;
+		float x2 = a_x * a_x;
+		float y2 = a_y * a_y;
+		float z2 = a_z * a_z;
+		float xym = a_x * a_y * omcs;
+		float xzm = a_x * a_z * omcs;
+		float yzm = a_y * a_z * omcs;
+		float xsin = a_x * sn;
+		float ysin = a_y * sn;
+		float zsin = a_z * sn;
+
+		entry[0][0] = x2 * omcs + cs;
+		entry[0][1] = xym + zsin;
+		entry[0][2] = xzm - ysin;
+		entry[1][0] = xym - zsin;
+		entry[1][1] = y2 * omcs + cs;
+		entry[1][2] = yzm + xsin;
+		entry[2][0] = xzm + ysin;
+		entry[2][1] = yzm - xsin;
+		entry[2][2] = z2 * omcs + cs;
+	}
+
+	void NiMatrix3::MakeRotation(float a_angle, const NiPoint3& a_axis)
+	{
+		MakeRotation(a_angle, a_axis.x, a_axis.y, a_axis.z);
 	}
 
 	NiMatrix3 NiMatrix3::Transpose() const
@@ -203,6 +298,36 @@ namespace RE
 		result.entry[2][0] = entry[2][0] * a_scalar;
 		result.entry[2][1] = entry[2][1] * a_scalar;
 		result.entry[2][2] = entry[2][2] * a_scalar;
+		return result;
+	}
+
+	NiMatrix3 NiMatrix3::operator+(const NiMatrix3& a_rhs) const
+	{
+		NiMatrix3 result;
+		result.entry[0][0] = entry[0][0] + a_rhs.entry[0][0];
+		result.entry[0][1] = entry[0][1] + a_rhs.entry[0][1];
+		result.entry[0][2] = entry[0][2] + a_rhs.entry[0][2];
+		result.entry[1][0] = entry[1][0] + a_rhs.entry[1][0];
+		result.entry[1][1] = entry[1][1] + a_rhs.entry[1][1];
+		result.entry[1][2] = entry[1][2] + a_rhs.entry[1][2];
+		result.entry[2][0] = entry[2][0] + a_rhs.entry[2][0];
+		result.entry[2][1] = entry[2][1] + a_rhs.entry[2][1];
+		result.entry[2][2] = entry[2][2] + a_rhs.entry[2][2];
+		return result;
+	}
+
+	NiMatrix3 NiMatrix3::operator-(const NiMatrix3& a_rhs) const
+	{
+		NiMatrix3 result;
+		result.entry[0][0] = entry[0][0] - a_rhs.entry[0][0];
+		result.entry[0][1] = entry[0][1] - a_rhs.entry[0][1];
+		result.entry[0][2] = entry[0][2] - a_rhs.entry[0][2];
+		result.entry[1][0] = entry[1][0] - a_rhs.entry[1][0];
+		result.entry[1][1] = entry[1][1] - a_rhs.entry[1][1];
+		result.entry[1][2] = entry[1][2] - a_rhs.entry[1][2];
+		result.entry[2][0] = entry[2][0] - a_rhs.entry[2][0];
+		result.entry[2][1] = entry[2][1] - a_rhs.entry[2][1];
+		result.entry[2][2] = entry[2][2] - a_rhs.entry[2][2];
 		return result;
 	}
 

@@ -6,6 +6,7 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_GridArray;
+		inline static constexpr auto VTABLE = VTABLE_GridArray;
 
 		virtual ~GridArray();  // 00
 

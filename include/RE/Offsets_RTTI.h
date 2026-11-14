@@ -2232,7 +2232,7 @@ namespace RE
 	constexpr REL::VariantID RTTI_BGSSaveLoadManager__Thread(686610, 394453, 0x1f02280);
 	constexpr REL::VariantID RTTI_BGSSaveLoadManager(686602, 394445, 0x1f02078);
 	constexpr REL::VariantID RTTI_BSTEventSource_BGSSaveLoadManagerEvent_(686605, 394448, 0x1f02130);
-	constexpr REL::VariantID RTTI___LoadGameMissingContentCallBack(686614, 394457, 0x1f02440);
+	constexpr REL::VariantID RTTI___LoadGameMissingContentCallBack(686614, 502590, 0x1f02440);
 	constexpr REL::VariantID RTTI_NiTMapBase_DFALL_NiTMapItem_ENUM_FORM_ID_BSSimpleList_SavedFormData________ENUM_FORM_ID_BSSimpleList_SavedFormData______(686617, 394460, 0x1f02520);
 	constexpr REL::VariantID RTTI_NiTMap_ENUM_FORM_ID_BSSimpleList_SavedFormData______(686616, 394459, 0x1f024c0);
 	constexpr REL::VariantID RTTI_BGSSaveLoadStatsMap(686615, 394458, 0x1f02488);
@@ -2678,6 +2678,10 @@ namespace RE
 	constexpr REL::VariantID RTTI_MovementHandler(687051, 394900, 0x1f0b4e8);
 	constexpr REL::VariantID RTTI_SprintHandler(687053, 394902, 0x1f0b538);
 	constexpr REL::VariantID RTTI_AttackBlockHandler(687060, 394909, 0x1f0b658);
+	// AE 1.7.99-only classes -- no SE/VR counterpart exists, so those slots are unused (0).
+	constexpr REL::VariantID RTTI_AmiiboEvent(0, 564083, 0);
+	constexpr REL::VariantID RTTI_MotionGestureEvent(0, 564082, 0);
+	constexpr REL::VariantID RTTI_SixaxisEvent(0, 564068, 0);
 	constexpr REL::VariantID RTTI_ReadyWeaponHandler(687054, 394903, 0x1f0b560);
 	constexpr REL::VariantID RTTI_ActivateHandler(687057, 394906, 0x1f0b5e0);
 	constexpr REL::VariantID RTTI_AutoMoveHandler(687055, 394904, 0x1f0b590);
@@ -4500,7 +4504,7 @@ namespace RE
 	constexpr REL::VariantID RTTI_MainMenu(688873, 396727, 0x1f47148);
 	constexpr REL::VariantID RTTI_DLCPurchased__OpenVisitCreationClubCallback(0, 396730, 0x0);
 	constexpr REL::VariantID RTTI_DLCPurchased__PurchasedDLCDialogCallback(0, 396731, 0x0);
-	constexpr REL::VariantID RTTI_NeedToUpdateCreationClubCallback(0, 396732, 0x0);
+	constexpr REL::VariantID RTTI_NeedToUpdateCreationClubCallback(688875, 396732, 0x0);
 	constexpr REL::VariantID RTTI_FxResponseArgs_12_(0, 396733, 0x0);
 	constexpr REL::VariantID RTTI___DeviceSelectCallback(688877, 396734, 0x1f471e8);
 	constexpr REL::VariantID RTTI_std___Func_impl_no_alloc_void_____char_const___bool__void_char_const___bool_(0, 396735, 0x0);
@@ -4814,7 +4818,7 @@ namespace RE
 	constexpr REL::VariantID RTTI_SkyrimScript____MoveToPackLocFunctor(689187, 397041, 0x1f4d650);
 	constexpr REL::VariantID RTTI_SkyrimScript__ConcreteDelayFunctorFactory_SkyrimScript____MoveToPackLocFunctor_10_(689188, 397042, 0x1f4d6a0);
 	constexpr REL::VariantID RTTI_IGiftMenuScriptCallback(689182, 397043, 0x1f4d478);
-	constexpr REL::VariantID RTTI_SkyrimScript__A0x4f420c6e____GiftMenuCallbackFunc(0, 397044, 0x0);
+	constexpr REL::VariantID RTTI_SkyrimScript__GiftMenuCallbackFunc(689189, 397044, 0x1f4d720);
 	constexpr REL::VariantID RTTI_BSScript__NativeFunction1_Actor_void_BGSPerk___(689190, 397045, 0x1f4d770);
 	constexpr REL::VariantID RTTI_BSScript__NativeFunction1_Actor_bool_TESShout___(689191, 397046, 0x1f4d7c0);
 	constexpr REL::VariantID RTTI_BSScript__NativeFunction2_Actor_bool_SpellItem___bool_(689192, 397047, 0x1f4d810);
@@ -7949,7 +7953,6 @@ namespace RE
 	constexpr REL::VariantID RTTI_SkyrimScript____StoryEventArguments_SkyrimScript____LocationStoryEventArgConverter_SkyrimScript__A0xe101b7a9__FormStoryEventArgConverter_SkyrimScript__A0xe101b7a9__EmptyStoryEventArgConverter_SkyrimScript__A0xe101b7a9__EmptyStoryEventArgConverter_SkyrimScript__A0xe101b7a9__EmptyStoryEventArgConverter_SkyrimScript__A0xe101b7a9__EmptyStoryEventArgConverter_(689071, 0, 0x0);
 	constexpr REL::VariantID RTTI_SkyrimScript____StoryEventArguments_SkyrimScript____RefStoryEventArgConverter_SkyrimScript__A0xe101b7a9__RefStoryEventArgConverter_SkyrimScript__A0xe101b7a9__FormStoryEventArgConverter_SkyrimScript__A0xe101b7a9__UIntStoryEventArgConverter_SkyrimScript__A0xe101b7a9__UIntStoryEventArgConverter_SkyrimScript__A0xe101b7a9__EmptyStoryEventArgConverter_(689072, 0, 0x0);
 	constexpr REL::VariantID RTTI_SkyrimScript____StoryEventArguments_SkyrimScript____RefStoryEventArgConverter_SkyrimScript__A0xe101b7a9__RefStoryEventArgConverter_SkyrimScript__A0xe101b7a9__LocationStoryEventArgConverter_SkyrimScript__A0xe101b7a9__FormStoryEventArgConverter_SkyrimScript__A0xe101b7a9__EmptyStoryEventArgConverter_SkyrimScript__A0xe101b7a9__EmptyStoryEventArgConverter_(689073, 0, 0x0);
-	constexpr REL::VariantID RTTI_SkyrimScript__A0xc250f300____GiftMenuCallbackFunc(689189, 0, 0x0);
 	constexpr REL::VariantID RTTI___LoggingDisabler(691067, 0, 0x1f6bc40);
 	constexpr REL::VariantID RTTI_bnet__CallbackBind_bnet__Callback_bnet__UniquePtr_bnet___impl__FixedVector_bnet___impl__FixedString_10_1_1_bnet___impl__StdAllocator_char___16_1_bnet___impl__StdAllocator_bnet___impl__FixedString_10_1_1_bnet___impl__StdAllocator_char_____const__bnet__HttpResponseInfo__BSPlatform__BSModsManager_(691437, 0, 0x0);
 	constexpr REL::VariantID RTTI_std___Func_impl_std___Binder_std___Unforced_void__BSPlatform__BSModsManager_____BSPlatform__BNetResult_unsigned___int64_char_const___BSPlatform__BNetResult___BSStringT_char_4294967295_DynamicMemoryManagementPol_____BSPlatform__BSModsManager___const_std___Ph_1__const___std___Ph_2__const___std___Ph_3__const___BSPlatform__BNetResult___BSStringT_char_4294967295_DynamicMemoryManagementPol_____std__allocator_int__void_BSPlatform__BNetResult_unsigned___int64_char_const___(691438, 0, 0x0);
@@ -8092,7 +8095,6 @@ namespace RE
 	constexpr REL::VariantOffset RTTI_SkyrimScript____StoryEventArguments_SkyrimScript____RefStoryEventArgConverter_SkyrimScript__A0x83327dd8__RefStoryEventArgConverter_SkyrimScript__A0x83327dd8__FormStoryEventArgConverter_SkyrimScript__A0x83327dd8__UIntStoryEventArgConverter_SkyrimScript__A0x83327dd8__UIntStoryEventArgConverter_SkyrimScript__A0x83327dd8__EmptyStoryEventArgConverter_(0, 0, 0x1f4b600);
 	constexpr REL::VariantOffset RTTI_SkyrimScript____StoryEventArguments_SkyrimScript____RefStoryEventArgConverter_SkyrimScript__A0x83327dd8__RefStoryEventArgConverter_SkyrimScript__A0x83327dd8__LocationStoryEventArgConverter_SkyrimScript__A0x83327dd8__FormStoryEventArgConverter_SkyrimScript__A0x83327dd8__EmptyStoryEventArgConverter_SkyrimScript__A0x83327dd8__EmptyStoryEventArgConverter_(0, 0, 0x1f4b6f0);
 	constexpr REL::VariantOffset RTTI___MenuOpenCloseEventArguments(0, 0, 0x1f4cd10);
-	constexpr REL::VariantOffset RTTI_SkyrimScript__A0x6ef466f1____GiftMenuCallbackFunc(0, 0, 0x1f4d720);
 	constexpr REL::VariantOffset RTTI_BSScript__NativeFunction1_BGSScene_void_uint_(0, 0, 0x1f4f7c0);
 	constexpr REL::VariantOffset RTTI_BSScript__NativeFunction2_BSScript__StaticFunctionTag_void_float_float_(0, 0, 0x1f50330);
 	constexpr REL::VariantOffset RTTI_BSScript__NativeFunction5_BSScript__StaticFunctionTag_void_TESObjectREFR___float_float_float_float_(0, 0, 0x1f509f0);

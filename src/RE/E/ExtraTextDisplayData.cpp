@@ -54,7 +54,7 @@ namespace RE
 	const char* ExtraTextDisplayData::GetDisplayName(TESBoundObject* a_baseObject, float a_temperFactor)
 	{
 		using func_t = decltype(&ExtraTextDisplayData::GetDisplayName);
-		REL::Relocation<func_t> func{ RELOCATION_ID(12626, 12768) };
+		static REL::Relocation<func_t> func{ RELOCATION_ID(12626, 12768) };
 		return func(this, a_baseObject, a_temperFactor);
 	}
 

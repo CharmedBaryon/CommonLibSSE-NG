@@ -34,10 +34,5 @@ namespace RE
 	{
 		return RelocateVirtual<decltype(&NiGeometry::Unk_3A)>(0x3A, 0x3B, this);
 	}
-
-	std::uint16_t NiGeometry::Unk_3B(bool unk1)
-	{
-		return RelocateVirtual<decltype(&NiGeometry::Unk_3B)>(0x3B, 0x3C, this, unk1);
-	}
 #endif
 }

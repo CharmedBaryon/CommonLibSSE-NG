@@ -9,8 +9,8 @@ namespace RE
 			IFormFactory* data[std::to_underlying(FormType::Max)];
 		};
 
-		REL::Relocation<Factories*> formFactories{ RELOCATION_ID(514355, 400508) };
-		REL::Relocation<bool*>      formFactoriesInitialized{ RELOCATION_ID(514349, 400503) };
+		static REL::Relocation<Factories*> formFactories{ RELOCATION_ID(514355, 400508) };
+		static REL::Relocation<bool*>      formFactoriesInitialized{ RELOCATION_ID(514349, 400503) };
 		return std::make_pair(formFactories->data, *formFactoriesInitialized);
 	}
 

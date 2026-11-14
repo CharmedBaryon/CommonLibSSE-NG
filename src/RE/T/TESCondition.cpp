@@ -43,10 +43,17 @@ namespace RE
 		return IsTrue(a_solution);
 	}
 
+	void TESConditionItem::Copy(const TESConditionItem* a_other, TESForm* a_arg2)
+	{
+		using func_t = decltype(&TESConditionItem::Copy);
+		static REL::Relocation<func_t> func{ RELOCATION_ID(29086, 29904) };
+		return func(this, a_other, a_arg2);
+	}
+
 	bool TESConditionItem::IsTrue(ConditionCheckParams& a_solution) const
 	{
 		using func_t = decltype(&TESConditionItem::IsTrue);
-		REL::Relocation<func_t> func{ RELOCATION_ID(29090, 29924) };
+		static REL::Relocation<func_t> func{ RELOCATION_ID(29090, 29924) };
 		return func(this, a_solution);
 	}
 
@@ -75,10 +82,17 @@ namespace RE
 		return IsTrue(a_actionRef, a_targetRef);
 	}
 
+	void TESCondition::Copy(const TESCondition* a_other, TESForm* a_arg2)
+	{
+		using func_t = decltype(&TESCondition::Copy);
+		static REL::Relocation<func_t> func{ RELOCATION_ID(29067, 29879) };
+		return func(this, a_other, a_arg2);
+	}
+
 	bool TESCondition::IsTrue(TESObjectREFR* a_actionRef, TESObjectREFR* a_targetRef) const
 	{
 		using func_t = decltype(&TESCondition::IsTrue);
-		REL::Relocation<func_t> func{ RELOCATION_ID(29074, 29888) };
+		static REL::Relocation<func_t> func{ RELOCATION_ID(29074, 29888) };
 		return func(this, a_actionRef, a_targetRef);
 	}
 }

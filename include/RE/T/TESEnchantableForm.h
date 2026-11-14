@@ -11,6 +11,7 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_TESEnchantableForm;
+		inline static constexpr auto VTABLE = VTABLE_TESEnchantableForm;
 
 		~TESEnchantableForm() override;  // 00
 
@@ -23,10 +24,10 @@ namespace RE
 		[[nodiscard]] virtual MagicSystem::CastingType GetCastingType() const;  // 04 - { return castingType; }
 
 		// members
-		EnchantmentItem*                                          formEnchanting;       // 08 - EITM
-		stl::enumeration<MagicSystem::CastingType, std::uint16_t> castingType;          // 10
-		std::uint16_t                                             amountofEnchantment;  // 12 - EAMT
-		std::uint32_t                                             pad14;                // 14
+		EnchantmentItem*                                      formEnchanting;       // 08 - EITM
+		REX::EnumSet<MagicSystem::CastingType, std::uint16_t> castingType;          // 10
+		std::uint16_t                                         amountofEnchantment;  // 12 - EAMT
+		std::uint32_t                                         pad14;                // 14
 	};
 	static_assert(sizeof(TESEnchantableForm) == 0x18);
 }

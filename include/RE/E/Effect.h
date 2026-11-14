@@ -28,10 +28,14 @@ namespace RE
 
 		TES_HEAP_REDEFINE_NEW();
 
+		void          Copy(const Effect* a_other);
 		float         GetMagnitude() const;
 		std::uint32_t GetArea() const;
 		std::uint32_t GetDuration() const;
 		bool          IsHostile() const;
+		bool          IsMatch(EffectSetting* a_base, float a_mag, std::uint32_t a_area, std::uint32_t a_dur, float a_cost);
+		void          SetDuration(std::int32_t a_duration);
+		void          SetMagnitude(float a_magnitude);
 
 		// members
 		EffectItem     effectItem;  // 00 - EFIT

@@ -29,7 +29,8 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_BSTempEffect;
-		inline static auto           Ni_RTTI = NiRTTI_BSTempEffect;
+		inline static constexpr auto Ni_RTTI = NiRTTI_BSTempEffect;
+		inline static constexpr auto VTABLE = VTABLE_BSTempEffect;
 		inline static constexpr auto TYPE = TEMP_EFFECT_TYPE::kDefault;
 
 		~BSTempEffect() override;  // 00

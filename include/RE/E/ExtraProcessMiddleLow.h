@@ -9,7 +9,8 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_ExtraProcessMiddleLow;
-		inline static auto           EXTRADATATYPE = ExtraDataType::kProcessMiddleLow;
+		inline static constexpr auto VTABLE = VTABLE_ExtraProcessMiddleLow;
+		inline static constexpr auto EXTRADATATYPE = ExtraDataType::kProcessMiddleLow;
 
 		~ExtraProcessMiddleLow() override;  // 00
 

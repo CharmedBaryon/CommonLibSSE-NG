@@ -1,6 +1,6 @@
 #pragma once
 
-#include "RE/B/BSTList.h"
+#include "RE/B/BSSimpleList.h"
 #include "RE/F/FormTypes.h"
 #include "RE/N/NiColor.h"
 #include "RE/N/NiPoint2.h"
@@ -75,6 +75,20 @@ namespace RE
 
 		// add
 		virtual bool Validate();  // 3B
+
+		TESWeather* SelectWeather()
+		{
+			using func_t = decltype(&TESRegion::SelectWeather);
+			static REL::Relocation<func_t> func{ RELOCATION_ID(16203, 16449) };
+			return func(this);
+		}
+
+		void SetCurrentWeather(TESWeather* a_weather)
+		{
+			using func_t = decltype(&TESRegion::SetCurrentWeather);
+			static REL::Relocation<func_t> func{ RELOCATION_ID(16202, 16448) };
+			return func(this, a_weather);
+		}
 
 		// members
 		TESRegionDataList*                 dataList;        // 20

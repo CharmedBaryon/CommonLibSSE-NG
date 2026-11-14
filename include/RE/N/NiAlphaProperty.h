@@ -38,6 +38,11 @@ namespace RE
 			kNever
 		};
 
+		enum class AlphaFlags
+		{
+			kIsEditorModifiable = 1 << 15
+		};
+
 		~NiAlphaProperty() override;  // 00
 
 		// override (NiProperty)

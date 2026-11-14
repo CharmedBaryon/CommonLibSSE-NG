@@ -8,7 +8,8 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_NiProperty;
-		inline static auto           Ni_RTTI = NiRTTI_NiProperty;
+		inline static constexpr auto Ni_RTTI = NiRTTI_NiProperty;
+		inline static constexpr auto VTABLE = VTABLE_NiProperty;
 
 		enum class Type
 		{

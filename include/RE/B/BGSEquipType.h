@@ -9,6 +9,7 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_BGSEquipType;
+		inline static constexpr auto VTABLE = VTABLE_BGSEquipType;
 
 		enum class EQUIPPED_ITEM_TYPE
 		{

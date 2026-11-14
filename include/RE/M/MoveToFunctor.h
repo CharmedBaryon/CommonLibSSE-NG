@@ -18,6 +18,7 @@ namespace RE
 		{
 		public:
 			inline static constexpr auto RTTI = RTTI_SkyrimScript____MoveToFunctor;
+			inline static constexpr auto VTABLE = VTABLE_SkyrimScript____MoveToFunctor;
 
 			~MoveToFunctor() override;  // 00
 

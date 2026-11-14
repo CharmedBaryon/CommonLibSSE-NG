@@ -11,6 +11,7 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_BGSMusicSingleTrack;
+		inline static constexpr auto VTABLE = VTABLE_BGSMusicSingleTrack;
 
 		struct LoopData  // LNAM
 		{

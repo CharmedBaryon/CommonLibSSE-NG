@@ -40,6 +40,7 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_TESLeveledList;
+		inline static constexpr auto VTABLE = VTABLE_TESLeveledList;
 
 		enum Flag : std::uint8_t  // LVLF
 		{

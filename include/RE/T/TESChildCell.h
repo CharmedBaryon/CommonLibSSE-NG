@@ -6,6 +6,7 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_TESChildCell;
+		inline static constexpr auto VTABLE = VTABLE_TESChildCell;
 
 		virtual ~TESChildCell();  // 00
 

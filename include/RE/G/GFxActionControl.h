@@ -45,8 +45,8 @@ namespace RE
 		constexpr void UnsetLongFilenameLogging() noexcept { actionFlags.reset(ActionControlFlags::kLongFilenames); }
 
 		// members
-		stl::enumeration<ActionControlFlags, std::uint32_t> actionFlags;  // 18
-		std::uint32_t                                       pad1C;        // 1C
+		REX::EnumSet<ActionControlFlags, std::uint32_t> actionFlags;  // 18
+		std::uint32_t                                   pad1C;        // 1C
 	};
 	static_assert(sizeof(GFxActionControl) == 0x20);
 }

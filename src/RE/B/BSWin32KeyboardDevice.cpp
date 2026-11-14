@@ -1,10 +1,13 @@
 #include "RE/B/BSWin32KeyboardDevice.h"
 
+#include <REX/W32/USER32.h>
+
 namespace RE
 {
 	bool BSWin32KeyboardDevice::IsPressed(std::uint32_t a_keyCode) const
 	{
-		return (a_keyCode < sizeof(curState)) && ((curState[a_keyCode] & 0x80) != 0);
+		auto& keys = GetRuntimeData().curState;
+		return (a_keyCode < sizeof(keys)) && ((keys[a_keyCode] & 0x80) != 0);
 	}
 
 	BSKeyboardDevice::Key BSWin32KeyboardDevice::RemapNumpadKey(REX::W32::DIK a_key)
@@ -42,13 +45,4 @@ namespace RE
 		}
 		return Key::kNone;
 	}
-
-	BSWin32KeyboardDevice::BSWin32KeyboardDevice() :
-		BSKeyboardDevice(),
-		dInputDevice(nullptr),
-		diObjData(),
-		prevState(),
-		curState(),
-		capsLockOn(false)
-	{}
 }

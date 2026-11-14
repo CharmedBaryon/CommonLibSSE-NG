@@ -123,9 +123,9 @@ namespace RE
 			kLeaveWaterBreath = 102
 		};
 
-		stl::enumeration<TopicFlag, std::uint8_t>     topicFlags;  // 0
-		stl::enumeration<DIALOGUE_TYPE, std::uint8_t> type;        // 1
-		stl::enumeration<Subtype, std::uint16_t>      subtype;     // 2
+		REX::EnumSet<TopicFlag, std::uint8_t>     topicFlags;  // 0
+		REX::EnumSet<DIALOGUE_TYPE, std::uint8_t> type;        // 1
+		REX::EnumSet<Subtype, std::uint16_t>      subtype;     // 2
 	};
 	static_assert(sizeof(DIALOGUE_DATA) == 0x4);
 

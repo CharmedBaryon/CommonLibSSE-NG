@@ -9,6 +9,7 @@ namespace RE
 {
 	class BSCullingProcess;
 	class BSGeometry;
+	class BSParticleShaderRainEmitter;
 	class BSShaderAccumulator;
 	class NiCamera;
 
@@ -16,6 +17,7 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_Precipitation;
+		inline static constexpr auto VTABLE = VTABLE_Precipitation;
 
 		class OcclusionMapData
 		{
@@ -24,7 +26,7 @@ namespace RE
 			alignas(0x10) REX::W32::XMFLOAT4X4 projection;  // 00
 			NiPointer<NiCamera>            camera;          // 40
 			NiPointer<BSShaderAccumulator> accumulator;     // 48
-			BSCullingProcess*              cullingProcess;  // 50
+			BSGeometryListCullingProcess*  cullingProcess;  // 50
 			std::uint64_t                  pad58;           // 58
 		};
 		static_assert(sizeof(OcclusionMapData) == 0x60);
@@ -33,8 +35,35 @@ namespace RE
 
 		static NiPoint3 GetDirection()
 		{
-			REL::Relocation<NiPoint3*> precipDirection{ RELOCATION_ID(515509, 401648) };
+			static REL::Relocation<NiPoint3*> precipDirection{ RELOCATION_ID(515509, 401648) };
 			return *precipDirection;
+		}
+
+		[[nodiscard]] static float& GetCubeSize()
+		{
+			static REL::Relocation<float*> cubeSize{ RELOCATION_ID(515451, 401590) };
+			return *cubeSize;
+		}
+
+		void SetupMask()
+		{
+			using func_t = decltype(&Precipitation::SetupMask);
+			static REL::Relocation<func_t> func{ RELOCATION_ID(25641, 26183) };
+			func(this);
+		}
+
+		void RenderMask(BSParticleShaderRainEmitter* a_emitter)
+		{
+			using func_t = decltype(&Precipitation::RenderMask);
+			static REL::Relocation<func_t> func{ RELOCATION_ID(25642, 26184) };
+			func(this, a_emitter);
+		}
+
+		void UpdateProjection(NiPointer<NiCamera> a_camera)
+		{
+			using func_t = decltype(&Precipitation::UpdateProjection);
+			static REL::Relocation<func_t> func{ RELOCATION_ID(25643, 26185) };
+			func(this, a_camera);
 		}
 
 		// members

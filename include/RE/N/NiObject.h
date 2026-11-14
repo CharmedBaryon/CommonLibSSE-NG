@@ -37,7 +37,8 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_NiObject;
-		inline static auto           Ni_RTTI = NiRTTI_NiObject;
+		inline static constexpr auto Ni_RTTI = NiRTTI_NiObject;
+		inline static constexpr auto VTABLE = VTABLE_NiObject;
 
 		~NiObject() override = default;  // 00
 
@@ -78,7 +79,8 @@ namespace RE
 		virtual void                          SetGroup([[maybe_unused]] NiObjectGroup* a_group) { return; }               // 23
 		virtual NiControllerManager*          AsNiControllerManager() { return nullptr; }                                 // 24
 
-		void CreateDeepCopy(NiPointer<NiObject>& a_object);
+		[[nodiscard]] NiObject* Clone();
+		void                    CreateDeepCopy(NiPointer<NiObject>& a_object);
 	};
 	static_assert(sizeof(NiObject) == 0x10);
 }

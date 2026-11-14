@@ -9,6 +9,7 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_BGSProcedureTreeConditionalItem;
+		inline static constexpr auto VTABLE = VTABLE_BGSProcedureTreeConditionalItem;
 
 		~BGSProcedureTreeConditionalItem() override;  // 00
 

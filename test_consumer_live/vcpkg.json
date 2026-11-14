@@ -1,0 +1,18 @@
+{
+  "$schema": "https://raw.githubusercontent.com/microsoft/vcpkg/master/scripts/vcpkg.schema.json",
+  "name": "commonlibsse-live-verify",
+  "version": "0.1.0",
+  "builtin-baseline": "ee12231b20c95013c6638d845d04c91559a1d1ff",
+  "dependencies": [
+    { "name": "vcpkg-cmake-config", "host": true },
+    { "name": "directxmath", "version>=": "2025-04-03" },
+    { "name": "directxtk", "version>=": "2025-10-27" },
+    { "name": "fmt", "version>=": "12.1.0" },
+    { "name": "nlohmann-json", "version>=": "3.12.0" },
+    { "name": "rapidcsv", "version>=": "8.90" },
+    { "name": "simpleini", "version>=": "4.25" },
+    { "name": "spdlog", "version>=": "1.16.0" },
+    { "name": "toml11", "version>=": "4.4.0" },
+    { "name": "xbyak", "version>=": "7.28" }
+  ]
+}

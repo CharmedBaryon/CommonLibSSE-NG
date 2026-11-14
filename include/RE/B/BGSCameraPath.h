@@ -1,6 +1,6 @@
 #pragma once
 
-#include "RE/B/BSTList.h"
+#include "RE/B/BSSimpleList.h"
 #include "RE/F/FormTypes.h"
 #include "RE/T/TESCondition.h"
 #include "RE/T/TESForm.h"
@@ -21,7 +21,7 @@ namespace RE
 			kAllowNoShots = 1 << 7
 		};
 
-		stl::enumeration<PathFlags, std::uint8_t> flags;  // 0
+		REX::EnumSet<PathFlags, std::uint8_t> flags;  // 0
 	};
 	static_assert(sizeof(PATH_DATA) == 0x1);
 
@@ -55,11 +55,11 @@ namespace RE
 		~BGSCameraPath() override;  // 00
 
 		// override (TESForm)
-		void     InitializeData() override;                                          // 04
-		void     ClearData() override;                                               // 05
-		bool     Load(TESFile* a_mod) override;                                      // 06
-		TESForm* CreateDuplicateForm(bool a_createEditorID, void* a_arg2) override;  // 09
-		void     InitItemImpl() override;                                            // 13
+		void     InitializeData() override;                                                                          // 04
+		void     ClearData() override;                                                                               // 05
+		bool     Load(TESFile* a_mod) override;                                                                      // 06
+		TESForm* CreateDuplicateForm(bool a_createEditorID, NiTPointerMap<TESForm*, TESForm*>* a_copyMap) override;  // 09
+		void     InitItemImpl() override;                                                                            // 13
 
 		// members
 		TESCondition                 conditions;  // 20

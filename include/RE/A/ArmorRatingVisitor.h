@@ -9,6 +9,7 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI___ArmorRatingVisitor;
+		inline static constexpr auto VTABLE = VTABLE___ArmorRatingVisitor;
 
 		~ArmorRatingVisitor() override;  // 00
 

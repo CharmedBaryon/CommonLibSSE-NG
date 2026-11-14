@@ -11,7 +11,8 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_ExtraSceneData;
-		inline static auto           EXTRADATATYPE = ExtraDataType::kSceneData;
+		inline static constexpr auto VTABLE = VTABLE_ExtraSceneData;
+		inline static constexpr auto EXTRADATATYPE = ExtraDataType::kSceneData;
 
 		~ExtraSceneData() override;  // 00
 

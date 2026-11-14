@@ -13,6 +13,7 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_AttackAnimationArrayMap;
+		inline static constexpr auto VTABLE = VTABLE_AttackAnimationArrayMap;
 
 		// hash key (hiword = right hand | loward = left hand)
 		enum HashKey : std::uint32_t

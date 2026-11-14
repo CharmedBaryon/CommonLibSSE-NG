@@ -11,6 +11,7 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_TESObject;
+		inline static constexpr auto VTABLE = VTABLE_TESObject;
 
 		struct ChangeFlags
 		{

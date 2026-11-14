@@ -8,6 +8,7 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_GRefCountImpl;
+		inline static constexpr auto VTABLE = VTABLE_GRefCountImpl;
 
 		~GRefCountImpl() override = default;  // 00
 

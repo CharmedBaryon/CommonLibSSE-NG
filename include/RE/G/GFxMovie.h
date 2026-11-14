@@ -1,5 +1,6 @@
 #pragma once
 
+#include "RE/G/GColor.h"
 #include "RE/G/GFxPlayerStats.h"
 #include "RE/G/GRefCountBase.h"
 
@@ -74,6 +75,24 @@ namespace RE
 		double                      GetVariableDouble(const char* a_pathToVar) const;
 		bool                        SetVariableArray(const char* a_pathToVar, std::uint32_t a_index, const GFxValue* a_data, std::uint32_t a_count, SetVarType a_setType = SetVarType::kSticky);
 		bool                        GetVariableArray(const char* a_pathToVar, std::uint32_t a_index, GFxValue* a_data, std::uint32_t a_count);
+
+		/// <summary>
+		/// Applies a color tint to a display object at the specified path.
+		/// This is a convenience method that retrieves the display object and calls SetColorTint on it.
+		/// The alpha channel of the color determines the intensity of the tint (0 = no tint, 255 = full tint).
+		/// </summary>
+		/// <param name="a_pathToVar">Path to the display object (e.g. "_root.MyObject")</param>
+		/// <param name="a_tint">The color to tint toward. Alpha channel determines intensity (0-255)</param>
+		/// <returns>True if the display object was found and tinted successfully, false otherwise</returns>
+		bool SetColorTint(const char* a_pathToVar, const GColor& a_tint);
+
+		/// <summary>
+		/// Removes any color tint from a display object at the specified path.
+		/// This is a convenience method that retrieves the display object and calls RemoveColorTint on it.
+		/// </summary>
+		/// <param name="a_pathToVar">Path to the display object (e.g. "_root.MyObject")</param>
+		/// <returns>True if the display object was found and the tint was removed successfully, false otherwise</returns>
+		bool RemoveColorTint(const char* a_pathToVar);
 	};
 	static_assert(sizeof(GFxMovie) == 0x10);
 }

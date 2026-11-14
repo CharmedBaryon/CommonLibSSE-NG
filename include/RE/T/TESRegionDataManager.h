@@ -18,6 +18,7 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_TESRegionDataManager;
+		inline static constexpr auto VTABLE = VTABLE_TESRegionDataManager;
 
 		virtual ~TESRegionDataManager();  // 00
 

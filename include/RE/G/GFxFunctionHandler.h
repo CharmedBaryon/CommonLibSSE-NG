@@ -12,6 +12,7 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_GFxFunctionHandler;
+		inline static constexpr auto VTABLE = VTABLE_GFxFunctionHandler;
 
 		struct Params
 		{

@@ -58,6 +58,13 @@ namespace RE
 		virtual bool          SaveObjectSizeTable(std::uint64_t a_size);                // 16
 		virtual bool          LoadObjectSizeTable();                                    // 17
 
+		void LoadLinkID()
+		{
+			using func_t = decltype(&NiStream::LoadLinkID);
+			static REL::Relocation<func_t> func{ RELOCATION_ID(69002, 70359) };
+			return func(this);
+		}
+
 		// members
 		BSStreamHeader                                header;                                // 008
 		BSTSmallArray<NiObjectGroup>                  groups;                                // 0D0

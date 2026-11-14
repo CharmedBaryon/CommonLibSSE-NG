@@ -12,9 +12,14 @@ namespace RE
 		inline static constexpr auto VTABLE = VTABLE_hkpClosestRayHitCollector;
 
 		// override (hkpRayHitCollector)
-		void AddRayHit(const hkpCdBody& a_body, const hkpShapeRayCastCollectorOutput& a_hitInfo) override;  // 01
+		void AddRayHit(const hkpCdBody& a_body, const hkpShapeRayCastCollectorOutput& a_hitInfo) override  // 00
+		{
+			using func_t = decltype(&hkpClosestRayHitCollector::AddRayHit);
+			static REL::Relocation<func_t> func{ RELOCATION_ID(59653, 60338) };
+			return func(this, a_body, a_hitInfo);
+		}
 
-		~hkpClosestRayHitCollector() override;  // 00
+		~hkpClosestRayHitCollector() override{};  // 01
 
 		constexpr bool HasHit() noexcept { return rayHit.HasHit(); }
 

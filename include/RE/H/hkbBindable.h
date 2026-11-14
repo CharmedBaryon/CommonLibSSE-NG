@@ -3,11 +3,11 @@
 #include "RE/H/hkArray.h"
 #include "RE/H/hkRefPtr.h"
 #include "RE/H/hkReferencedObject.h"
+#include "RE/H/hkbVariableBindingSet.h"
 
 namespace RE
 {
 	class hkRefVariant;
-	class hkbVariableBindingSet;
 
 	class hkbBindable : public hkReferencedObject
 	{

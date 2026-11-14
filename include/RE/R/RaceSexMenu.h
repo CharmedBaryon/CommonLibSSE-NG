@@ -1,10 +1,13 @@
 #pragma once
 
+#include "RE/B/BGSHeadPart.h"
 #include "RE/B/BSTArray.h"
 #include "RE/I/IMenu.h"
 #include "RE/M/MenuEventHandler.h"
+#include "RE/R/RaceMenuSlider.h"
 #include "RE/R/RaceSexCamera.h"
 #include "RE/S/Sexes.h"
+#include "REL/RuntimeDataAccessors.h"
 
 namespace RE
 {
@@ -16,7 +19,7 @@ namespace RE
 		public IMenu,            // 00
 		public MenuEventHandler  // 30, 40
 #else
-		public IMenu  // 00
+		public IMenu           // 00
 #endif
 	{
 	public:
@@ -25,26 +28,53 @@ namespace RE
 
 		struct RUNTIME_DATA
 		{
-#define RUNTIME_DATA_CONTENT                                  \
-	BSTArray<void*>                      unk040[7]; /* 000 */ \
-	RaceSexCamera                        camera;    /* 0A8 */ \
-	BSTArray<void*>                      unk140[2]; /* 100 */ \
-	BSTArray<void*>                      unk170;    /* 130 */ \
-	std::uint64_t                        unk188;    /* 148 */ \
-	std::uint32_t                        unk190;    /* 150 */ \
-	std::uint32_t                        unk194;    /* 154 */ \
-	stl::enumeration<SEX, std::uint32_t> sex;       /* 158 */ \
-	std::uint16_t                        unk19C;    /* 15C */ \
-	std::uint8_t                         unk19E;    /* 15E */ \
-	std::uint8_t                         pad19F;    /* 15F */ \
-	std::uint8_t                         unk1A0;    /* 160 */ \
-	std::uint8_t                         unk1A1;    /* 161 */ \
-	std::uint16_t                        unk1A2;    /* 162 */ \
-	std::uint32_t                        unk1A4;    /* 164 */
-
-			RUNTIME_DATA_CONTENT
+#define RUNTIME_DATA_CONTENT                                                               \
+	BSTArray<BGSHeadPart*>           headParts[7];  /* 000 */                              \
+	RaceSexCamera                    camera;        /* 0A8 */                              \
+	BSTArray<RaceComponent>          sliderData[2]; /* 100 */                              \
+	BSTArray<void*>                  unk170;        /* 130 */                              \
+	std::uint32_t                    raceIndex;     /* 148 - index into sliderData[sex] */ \
+	std::uint32_t                    pad18C;        /* 14C */                              \
+	std::uint32_t                    unk190;        /* 150 */                              \
+	std::uint32_t                    unk194;        /* 154 */                              \
+	REX::EnumSet<SEX, std::uint32_t> sex;           /* 158 */                              \
+	std::uint16_t                    unk19C;        /* 15C */                              \
+	std::uint8_t                     unk19E;        /* 15E */                              \
+	std::uint8_t                     pad19F;        /* 15F */                              \
+	std::uint8_t                     unk1A0;        /* 160 */                              \
+	std::uint8_t                     unk1A1;        /* 161 */                              \
+	std::uint16_t                    unk1A2;        /* 162 */                              \
+	std::uint32_t                    unk1A4;        /* 164 */
+            RUNTIME_DATA_CONTENT
 		};
 		static_assert(sizeof(RUNTIME_DATA) == 0x168);
+
+		// Skyrim VR omits the embedded RaceSexCamera. The runtime data still
+		// begins at +0x50, but fields after headParts are 0x58 bytes earlier.
+		struct VR_RUNTIME_DATA
+		{
+#define VR_RUNTIME_DATA_CONTENT                                                            \
+	BSTArray<BGSHeadPart*>           headParts[7];  /* 000 */                              \
+	BSTArray<RaceComponent>          sliderData[2]; /* 0A8 */                              \
+	BSTArray<void*>                  unk170;        /* 0D8 */                              \
+	std::uint32_t                    raceIndex;     /* 0F0 - index into sliderData[sex] */ \
+	std::uint32_t                    pad18C;        /* 0F4 */                              \
+	std::uint32_t                    unk190;        /* 0F8 */                              \
+	std::uint32_t                    unk194;        /* 0FC */                              \
+	REX::EnumSet<SEX, std::uint32_t> sex;           /* 100 */                              \
+	std::uint16_t                    unk19C;        /* 104 */                              \
+	std::uint8_t                     unk19E;        /* 106 */                              \
+	std::uint8_t                     pad19F;        /* 107 */                              \
+	std::uint8_t                     unk1A0;        /* 108 */                              \
+	std::uint8_t                     unk1A1;        /* 109 */                              \
+	std::uint16_t                    unk1A2;        /* 10A */                              \
+	std::uint32_t                    unk1A4;        /* 10C */
+            VR_RUNTIME_DATA_CONTENT
+		};
+		static_assert(sizeof(VR_RUNTIME_DATA) == 0x110);
+		static_assert(offsetof(VR_RUNTIME_DATA, sliderData) == 0xA8);
+		static_assert(offsetof(VR_RUNTIME_DATA, raceIndex) == 0xF0);
+		static_assert(offsetof(VR_RUNTIME_DATA, sex) == 0x100);
 
 		~RaceSexMenu() override;  // 00
 
@@ -56,43 +86,35 @@ namespace RE
 
 		// override (MenuEventHandler)
 #ifndef SKYRIM_CROSS_VR
-		bool CanProcess(InputEvent* a_event) override;              // 01
+		bool CanProcess(InputEvent* a_event) override;  // 01
+#endif
+#ifdef EXCLUSIVE_SKYRIM_VR
 		bool ProcessThumbstick(ThumbstickEvent* a_event) override;  // 03
 		bool ProcessMouseMove(MouseMoveEvent* a_event) override;    // 04
 		bool ProcessButton(ButtonEvent* a_event) override;          // 05
 #endif
 
-		[[nodiscard]] MenuEventHandler* AsMenuEventHandler() noexcept
-		{
-			return &REL::RelocateMember<MenuEventHandler>(this, 0x30, 0x40);
-		}
+#ifndef SKYRIM_CROSS_VR
+		RUNTIME_CAST_ACCESSOR(MenuEventHandler, AsMenuEventHandler, 0x30, 0x40);
+#endif
 
-		[[nodiscard]] const MenuEventHandler* AsMenuEventHandler() const noexcept
-		{
-			return const_cast<RaceSexMenu*>(this)->AsMenuEventHandler();
-		}
-
-		[[nodiscard]] inline RUNTIME_DATA& GetRuntimeData() noexcept
-		{
-			return REL::RelocateMember<RUNTIME_DATA>(this, 0x40, 0x50);
-		}
-
-		[[nodiscard]] inline const RUNTIME_DATA& GetRuntimeData() const noexcept
-		{
-			return REL::RelocateMember<RUNTIME_DATA>(this, 0x40, 0x50);
-		}
-
+		RUNTIME_DATA_ACCESSOR(RUNTIME_DATA, 0x40, 0x50);
+		VR_RUNTIME_DATA_ACCESSOR(VR_RUNTIME_DATA, GetVRRuntimeData, 0x50);
 		void ChangeName(const char* a_name);
 
 		// members
-#ifndef SKYRIM_CROSS_VR
-		RUNTIME_DATA_CONTENT  // 40, 50
+#ifdef EXCLUSIVE_SKYRIM_VR
+		VR_RUNTIME_DATA_CONTENT;  // 50
+#elif !defined(SKYRIM_CROSS_VR)
+		RUNTIME_DATA_CONTENT;  // 40
 #endif
 	};
-#ifndef ENABLE_SKYRIM_VR
-	static_assert(sizeof(RaceSexMenu) == 0x1A8);
-#elif !defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE)
-	static_assert(sizeof(RaceSexMenu) == 0x1B8);
+	STATIC_ASSERT_SIZE(RaceSexMenu, 0x1A8, 0x1A8, 0x160, 0x30, 0x1A8);
+#ifdef EXCLUSIVE_SKYRIM_VR
+	static_assert(offsetof(RaceSexMenu, sliderData) == 0xF8);
+	static_assert(offsetof(RaceSexMenu, raceIndex) == 0x140);
+	static_assert(offsetof(RaceSexMenu, sex) == 0x150);
 #endif
 }
 #undef RUNTIME_DATA_CONTENT
+#undef VR_RUNTIME_DATA_CONTENT

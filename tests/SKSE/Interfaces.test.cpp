@@ -3,6 +3,9 @@
 #include "REL/REL.h"
 #include "SKSE/SKSE.h"
 
+#include <cstddef>
+#include <cstring>
+
 using namespace REL::literals;
 using namespace SKSE;
 
@@ -15,6 +18,9 @@ namespace
 	constinit PluginDeclaration ForSpecificRuntimes({ .Version = "1.2.3.4"_v,
 		.Name = "Plugin",
 		.RuntimeCompatibility = { "1.5.97.0"_v, "1.6.353.0"_v } });
+
+	constinit PluginDeclaration WithDependentStructs({ .Name = "Plugin",
+		.StructCompatibility = StructCompatibility::Dependent });
 
 	SKSEPluginInfo(.Version = "1.2.3.4"_v,
 		.Name = "Plugin")
@@ -50,4 +56,34 @@ TEST_CASE("PluginDeclaration/ConstinitDeclaration")
 TEST_CASE("PluginDeclaration/GetSingleton")
 {
 	CHECK(PluginDeclaration::GetSingleton() == &SKSEPlugin_Version);
+}
+
+TEST_CASE("PluginDeclaration/StoreRuntimeVersions", "[unit]")
+{
+	// skse_version.h RUNTIME_VERSION_*_GOG / *_EPIC
+	CHECK(RUNTIME_SSE_1_6_659_GOG.pack() == 0x01062931);
+	CHECK(RUNTIME_SSE_1_6_678_EPIC.pack() == 0x01062A62);
+	CHECK(RUNTIME_SSE_1_6_1170_GOG.pack() == 0x01064921);
+	CHECK(RUNTIME_SSE_1_6_1179_GOG.pack() == 0x010649B1);
+}
+
+TEST_CASE("PluginDeclaration/VersionIndependenceEx", "[unit]")
+{
+	SECTION("With independent structs")
+	{
+		std::uint32_t flags;
+		std::memcpy(&flags,
+			reinterpret_cast<const std::byte*>(&SKSEPlugin_Version) + offsetof(PluginVersionData, versionIndependenceEx),
+			sizeof(flags));
+		CHECK(flags == (PluginVersionData::kVersionIndependentEx_AddressLibraryV5 |
+						   PluginVersionData::kVersionIndependentEx_NoStructUse));
+	}
+	SECTION("With dependent structs")
+	{
+		std::uint32_t flags;
+		std::memcpy(&flags,
+			reinterpret_cast<const std::byte*>(&WithDependentStructs) + offsetof(PluginVersionData, versionIndependenceEx),
+			sizeof(flags));
+		CHECK(flags == PluginVersionData::kVersionIndependentEx_AddressLibraryV5);
+	}
 }

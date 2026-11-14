@@ -1,6 +1,7 @@
 #pragma once
 
 #include "RE/I/IMenu.h"
+#include "REL/RuntimeDataAccessors.h"
 
 namespace RE
 {
@@ -11,6 +12,7 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto      RTTI = RTTI_ConsoleNativeUIMenu;
+		inline static constexpr auto      VTABLE = VTABLE_ConsoleNativeUIMenu;
 		constexpr static std::string_view MENU_NAME = "Console Native UI Menu";
 
 		struct RUNTIME_DATA
@@ -30,25 +32,13 @@ namespace RE
 		// override (IMenu)
 		UI_MESSAGE_RESULTS ProcessMessage(UIMessage& a_message) override;  // 04
 
-		[[nodiscard]] inline RUNTIME_DATA& GetRuntimeData() noexcept
-		{
-			return REL::RelocateMember<RUNTIME_DATA>(this, 0x30, 0x40);
-		}
-
-		[[nodiscard]] inline const RUNTIME_DATA& GetRuntimeData() const noexcept
-		{
-			return REL::RelocateMember<RUNTIME_DATA>(this, 0x30, 0x40);
-		}
-
+		RUNTIME_DATA_ACCESSOR(RUNTIME_DATA, 0x30, 0x40);
 		// members
 #ifndef SKYRIM_CROSS_VR
-		RUNTIME_DATA_CONTENT  // 30, 40
+		RUNTIME_DATA_CONTENT;  // 30, 40
 #endif
 	};
-#ifndef ENABLE_SKYRIM_VR
-	static_assert(sizeof(ConsoleNativeUIMenu) == 0x38);
-#elif !defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE)
-	static_assert(sizeof(ConsoleNativeUIMenu) == 0x48);
-#endif
+
+	STATIC_ASSERT_SIZE(ConsoleNativeUIMenu, 0x38, 0x38, 0x48, 0x30);
 }
 #undef RUNTIME_DATA_CONTENT

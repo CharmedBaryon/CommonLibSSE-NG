@@ -9,7 +9,9 @@ namespace RE
 	class BSUIScaleformData : public IUIMessageData
 	{
 	public:
-		inline static constexpr auto RTTI = RTTI_BSUIScaleformData;
+		inline static constexpr auto             RTTI = RTTI_BSUIScaleformData;
+		inline static constexpr auto             VTABLE = VTABLE_BSUIScaleformData;
+		inline static constexpr std::string_view CLASS_NAME = "BSUIScaleformData";
 
 		~BSUIScaleformData() override;  // 00
 

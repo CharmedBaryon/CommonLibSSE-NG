@@ -11,7 +11,8 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_ExtraCellAcousticSpace;
-		inline static auto           EXTRADATATYPE = ExtraDataType::kCellAcousticSpace;
+		inline static constexpr auto VTABLE = VTABLE_ExtraCellAcousticSpace;
+		inline static constexpr auto EXTRADATATYPE = ExtraDataType::kCellAcousticSpace;
 
 		~ExtraCellAcousticSpace() override;  // 00
 

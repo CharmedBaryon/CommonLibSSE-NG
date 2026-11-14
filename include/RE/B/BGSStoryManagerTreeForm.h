@@ -16,6 +16,7 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_BGSStoryManagerTreeVisitor;
+		inline static constexpr auto VTABLE = VTABLE_BGSStoryManagerTreeVisitor;
 
 		enum class VisitControl
 		{
@@ -44,6 +45,7 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_BGSStoryManagerTreeForm;
+		inline static constexpr auto VTABLE = VTABLE_BGSStoryManagerTreeForm;
 
 		~BGSStoryManagerTreeForm() override;  // 00
 

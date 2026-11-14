@@ -21,11 +21,11 @@ namespace RE
 		void                       SetResponseType(ResponseType a_type);
 
 		// members
-		stl::enumeration<ResponseType, std::uint8_t> responseType;               // 00
-		std::uint8_t                                 pad01;                      // 01
-		hkHalf                                       rollingFrictionMultiplier;  // 02
-		float                                        friction;                   // 04
-		float                                        restitution;                // 08
+		REX::EnumSet<ResponseType, std::uint8_t> responseType;               // 00
+		std::uint8_t                             pad01;                      // 01
+		hkHalf                                   rollingFrictionMultiplier;  // 02
+		float                                    friction;                   // 04
+		float                                    restitution;                // 08
 	};
 	static_assert(sizeof(hkpMaterial) == 0xC);
 }

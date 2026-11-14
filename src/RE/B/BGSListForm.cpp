@@ -5,7 +5,7 @@ namespace RE
 	void BGSListForm::AddForm(TESForm* a_form)
 	{
 		using func_t = decltype(&BGSListForm::AddForm);
-		REL::Relocation<func_t> func{ Offset::BGSListForm::AddForm };
+		static REL::Relocation<func_t> func{ RELOCATION_ID(20470, 20913) };
 		return func(this, a_form);
 	}
 

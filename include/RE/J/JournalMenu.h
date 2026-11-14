@@ -6,6 +6,7 @@
 #include "RE/J/Journal_StatsTab.h"
 #include "RE/J/Journal_SystemTab.h"
 #include "RE/M/MenuEventHandler.h"
+#include "REL/RuntimeDataAccessors.h"
 
 namespace RE
 {
@@ -51,54 +52,26 @@ namespace RE
 		void               AdvanceMovie(float a_interval, std::uint32_t a_currentTime) override;  // 05
 		void               PostDisplay() override;                                                // 06
 
-#ifndef SKYRIM_CROSS_VR
 		// override (MenuEventHandler)
-		bool CanProcess(InputEvent* a_event) override;              // 01
+		bool CanProcess(InputEvent* a_event) override;  // 01
+#ifdef EXCLUSIVE_SKYRIM_VR
 		bool ProcessThumbstick(ThumbstickEvent* a_event) override;  // 03
+#endif
 
+#ifndef SKYRIM_CROSS_VR
 		// override (BSTEventSink<BSSystemEvent>)
 		BSEventNotifyControl ProcessEvent(const BSSystemEvent* a_event, BSTEventSource<BSSystemEvent>* a_eventSource) override;  // 01
 #endif
 
-		[[nodiscard]] MenuEventHandler* AsMenuEventHandler() noexcept
-		{
-			return &REL::RelocateMember<MenuEventHandler>(this, 0x30, 0x40);
-		}
+		RUNTIME_CAST_ACCESSOR(MenuEventHandler, AsMenuEventHandler, 0x30, 0x40);
+		RUNTIME_CAST_ACCESSOR(BSTEventSink<BSSystemEvent>, AsBSSystemEventSink, 0x40, 0x50);
 
-		[[nodiscard]] const MenuEventHandler* AsMenuEventHandler() const noexcept
-		{
-			return const_cast<JournalMenu*>(this)->AsMenuEventHandler();
-		}
-
-		[[nodiscard]] BSTEventSink<BSSystemEvent>* AsBSSystemEventSink() noexcept
-		{
-			return &REL::RelocateMember<BSTEventSink<BSSystemEvent>>(this, 0x40, 0x50);
-		}
-
-		[[nodiscard]] const BSTEventSink<BSSystemEvent>* AsBSSystemEventSink() const noexcept
-		{
-			return const_cast<JournalMenu*>(this)->AsBSSystemEventSink();
-		}
-
-		[[nodiscard]] inline RUNTIME_DATA& GetRuntimeData() noexcept
-		{
-			return REL::RelocateMember<RUNTIME_DATA>(this, 0x48, 0x58);
-		}
-
-		[[nodiscard]] inline const RUNTIME_DATA& GetRuntimeData() const noexcept
-		{
-			return REL::RelocateMember<RUNTIME_DATA>(this, 0x48, 0x58);
-		}
-
+		RUNTIME_DATA_ACCESSOR(RUNTIME_DATA, 0x48, 0x58);
 		// members
 #ifndef SKYRIM_CROSS_VR
-		RUNTIME_DATA_CONTENT  // 48, 58
+		RUNTIME_DATA_CONTENT;  // 48, 58
 #endif
 	};
-#ifndef ENABLE_SKYRIM_VR
-	static_assert(sizeof(JournalMenu) == 0xE8);
-#elif !defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE)
-	static_assert(sizeof(JournalMenu) == 0xF8);
-#endif
+	STATIC_ASSERT_SIZE(JournalMenu, 0xE8, 0xE8, 0xF8, 0x40);
 }
 #undef RUNTIME_DATA_CONTENT

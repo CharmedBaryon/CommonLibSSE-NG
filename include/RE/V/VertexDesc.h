@@ -19,8 +19,9 @@ namespace RE
 				VA_SKINNING = 0x6,
 				VA_LANDDATA = 0x7,
 				VA_EYEDATA = 0x8,
+				VA_INSTANCEDATA = 0x9,
 
-				VA_COUNT = 9
+				VA_COUNT = 10
 			};
 
 			enum Flags : std::uint16_t
@@ -34,6 +35,7 @@ namespace RE
 				VF_SKINNED = 1 << VA_SKINNING,
 				VF_LANDDATA = 1 << VA_LANDDATA,
 				VF_EYEDATA = 1 << VA_EYEDATA,
+				VF_INSTANCEDATA = 1 << VA_INSTANCEDATA,
 				VF_FULLPREC = 0x400
 			};
 

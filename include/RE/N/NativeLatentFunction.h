@@ -28,7 +28,7 @@ namespace RE
 			NativeLatentFunction(std::string_view a_fnName, std::string_view a_className, function_type a_callback) :
 				NativeFunction<IS_LONG, F, std::underlying_type_t<callbackR>, Base, Args...>(a_fnName, a_className, a_callback)
 			{
-				this->_retType = GetRawType<latentR>();
+				this->_retType = GetRawType<latentR>{}();
 				this->_isLatent = true;
 			}
 
@@ -101,7 +101,7 @@ namespace RE
 
 		*/
 		template <class V>
-		requires is_return_convertible_v<V>
+			requires is_return_convertible_v<V>
 		void IVirtualMachine::ReturnLatentResult(VMStackID a_stackID, V a_result)
 		{
 			RE::BSScript::Variable var;

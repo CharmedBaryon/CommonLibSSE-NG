@@ -10,7 +10,7 @@ namespace RE
 	public:
 		static ReticuleController& GetSingleton()
 		{
-			REL::Relocation<ReticuleController*> singleton{ RELOCATION_ID(508607, 380335) };
+			static REL::Relocation<ReticuleController*> singleton{ RELOCATION_ID(508607, 380335) };
 			return *singleton;
 		}
 

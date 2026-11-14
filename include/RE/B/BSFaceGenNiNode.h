@@ -4,6 +4,7 @@
 #include "RE/N/NiMatrix3.h"
 #include "RE/N/NiNode.h"
 #include "RE/N/NiSmartPointer.h"
+#include "REL/RuntimeDataAccessors.h"
 
 namespace RE
 {
@@ -14,7 +15,8 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_BSFaceGenNiNode;
-		inline static auto           Ni_RTTI = NiRTTI_BSFaceGenNiNode;
+		inline static constexpr auto Ni_RTTI = NiRTTI_BSFaceGenNiNode;
+		inline static constexpr auto VTABLE = VTABLE_BSFaceGenNiNode;
 
 		struct RUNTIME_DATA
 		{
@@ -45,25 +47,12 @@ namespace RE
 		// add
 		SKYRIM_REL_VR_VIRTUAL void FixSkinInstances(NiNode* a_skeleton, bool a_arg2);  // 3E
 
-		[[nodiscard]] inline RUNTIME_DATA& GetRuntimeData() noexcept
-		{
-			return REL::RelocateMember<RUNTIME_DATA>(this, 0x128, 0x150);
-		}
-
-		[[nodiscard]] inline const RUNTIME_DATA& GetRuntimeData() const noexcept
-		{
-			return REL::RelocateMember<RUNTIME_DATA>(this, 0x128, 0x150);
-		}
-
+		RUNTIME_DATA_ACCESSOR(RUNTIME_DATA, 0x128, 0x150);
 		// members
 #ifndef SKYRIM_CROSS_VR
 		RUNTIME_DATA_CONTENT  // 128, 150
 #endif
 	};
-#ifndef ENABLE_SKYRIM_VR
-	static_assert(sizeof(BSFaceGenNiNode) == 0x168);
-#elif !defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE)
-	static_assert(sizeof(BSFaceGenNiNode) == 0x190);
-#endif
+	STATIC_ASSERT_SIZE(BSFaceGenNiNode, 0x168, 0x168, 0x190, 0x110);
 }
 #undef RUNTIME_DATA_CONTENT

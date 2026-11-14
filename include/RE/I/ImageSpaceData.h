@@ -1,5 +1,7 @@
 #pragma once
 
+#include "RE/N/NiColor.h"
+
 namespace RE
 {
 	struct ImageSpaceBaseData
@@ -33,19 +35,9 @@ namespace RE
 		struct Tint  // TNAM
 		{
 		public:
-			struct ColorF
-			{
-			public:
-				// members
-				float red;    // 0
-				float green;  // 4
-				float blue;   // 8
-			};
-			static_assert(sizeof(ColorF) == 0xC);
-
 			// members
-			float  amount;  // 00
-			ColorF color;   // 04
+			float   amount;  // 00
+			NiColor color;   // 04 - red/green/blue
 		};
 		static_assert(sizeof(Tint) == 0x10);
 
@@ -73,11 +65,11 @@ namespace RE
 			};
 
 			// members
-			float                                          strength;       // 00
-			float                                          distance;       // 04
-			float                                          range;          // 08
-			std::uint16_t                                  flags;          // 0C
-			stl::enumeration<SkyBlurRadius, std::uint16_t> skyBlurRadius;  // 0E
+			float                                      strength;       // 00
+			float                                      distance;       // 04
+			float                                      range;          // 08
+			std::uint16_t                              flags;          // 0C
+			REX::EnumSet<SkyBlurRadius, std::uint16_t> skyBlurRadius;  // 0E
 		};
 		static_assert(sizeof(DepthOfField) == 0x10);
 

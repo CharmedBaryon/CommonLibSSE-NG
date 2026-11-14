@@ -43,12 +43,13 @@ namespace RE
 
 	BSLightingShaderMaterialBase* BSLightingShaderMaterialBase::CreateMaterial(Feature a_feature)
 	{
+		auto scrapHeap = MemoryManager::GetSingleton()->GetThreadScrapHeap();
 		switch (a_feature) {
 		case Feature::kDefault:
 			{
-				auto material = malloc<BSLightingShaderMaterial>();
-				std::memset(reinterpret_cast<void*>(material), 0, sizeof(BSLightingShaderMaterial));
+				auto material = static_cast<BSLightingShaderMaterial*>(scrapHeap->Allocate(sizeof(BSLightingShaderMaterial), 8));
 				if (material) {
+					std::memset((void*)material, 0, sizeof(BSLightingShaderMaterial));
 					material->Ctor();
 					stl::emplace_vtable<BSLightingShaderMaterial>(material);
 				}
@@ -56,7 +57,7 @@ namespace RE
 			}
 		case Feature::kEnvironmentMap:
 			{
-				auto material = malloc<BSLightingShaderMaterialEnvmap>();
+				auto material = static_cast<BSLightingShaderMaterialEnvmap*>(scrapHeap->Allocate(sizeof(BSLightingShaderMaterialEnvmap), 8));
 				if (material) {
 					material->Ctor();
 				}
@@ -64,7 +65,7 @@ namespace RE
 			}
 		case Feature::kGlowMap:
 			{
-				auto material = malloc<BSLightingShaderMaterialGlowmap>();
+				auto material = static_cast<BSLightingShaderMaterialGlowmap*>(scrapHeap->Allocate(sizeof(BSLightingShaderMaterialGlowmap), 8));
 				if (material) {
 					material->Ctor();
 				}
@@ -72,7 +73,7 @@ namespace RE
 			}
 		case Feature::kParallax:
 			{
-				auto material = malloc<BSLightingShaderMaterialParallax>();
+				auto material = static_cast<BSLightingShaderMaterialParallax*>(scrapHeap->Allocate(sizeof(BSLightingShaderMaterialParallax), 8));
 				if (material) {
 					material->Ctor();
 				}
@@ -80,7 +81,7 @@ namespace RE
 			}
 		case Feature::kFaceGen:
 			{
-				auto material = malloc<BSLightingShaderMaterialFacegen>();
+				auto material = static_cast<BSLightingShaderMaterialFacegen*>(scrapHeap->Allocate(sizeof(BSLightingShaderMaterialFacegen), 8));
 				if (material) {
 					material->Ctor();
 				}
@@ -88,7 +89,7 @@ namespace RE
 			}
 		case Feature::kFaceGenRGBTint:
 			{
-				auto material = malloc<BSLightingShaderMaterialFacegenTint>();
+				auto material = static_cast<BSLightingShaderMaterialFacegenTint*>(scrapHeap->Allocate(sizeof(BSLightingShaderMaterialFacegenTint), 8));
 				if (material) {
 					material->Ctor();
 				}
@@ -96,7 +97,7 @@ namespace RE
 			}
 		case Feature::kHairTint:
 			{
-				auto material = malloc<BSLightingShaderMaterialHairTint>();
+				auto material = static_cast<BSLightingShaderMaterialHairTint*>(scrapHeap->Allocate(sizeof(BSLightingShaderMaterialHairTint), 8));
 				if (material) {
 					material->Ctor();
 				}
@@ -104,7 +105,7 @@ namespace RE
 			}
 		case Feature::kParallaxOcc:
 			{
-				auto material = malloc<BSLightingShaderMaterialParallaxOcc>();
+				auto material = static_cast<BSLightingShaderMaterialParallaxOcc*>(scrapHeap->Allocate(sizeof(BSLightingShaderMaterialParallaxOcc), 8));
 				if (material) {
 					material->Ctor();
 				}
@@ -113,7 +114,7 @@ namespace RE
 		case Feature::kMultiTexLand:
 		case Feature::kMultiTexLandLODBlend:
 			{
-				auto material = malloc<BSLightingShaderMaterialLandscape>();
+				auto material = static_cast<BSLightingShaderMaterialLandscape*>(scrapHeap->Allocate(sizeof(BSLightingShaderMaterialLandscape), 8));
 				if (material) {
 					material->Ctor();
 				}
@@ -122,7 +123,7 @@ namespace RE
 		case Feature::kLODLand:
 		case Feature::kLODLandNoise:
 			{
-				auto material = malloc<BSLightingShaderMaterialLODLandscape>();
+				auto material = static_cast<BSLightingShaderMaterialLODLandscape*>(scrapHeap->Allocate(sizeof(BSLightingShaderMaterialLODLandscape), 8));
 				if (material) {
 					material->Ctor();
 				}
@@ -131,7 +132,7 @@ namespace RE
 		case Feature::kUnknown:
 		case Feature::kMultiIndexTriShapeSnow:
 			{
-				auto material = malloc<BSLightingShaderMaterialSnow>();
+				auto material = static_cast<BSLightingShaderMaterialSnow*>(scrapHeap->Allocate(sizeof(BSLightingShaderMaterialSnow), 8));
 				if (material) {
 					material->Ctor();
 				}
@@ -139,7 +140,7 @@ namespace RE
 			}
 		case Feature::kMultilayerParallax:
 			{
-				auto material = malloc<BSLightingShaderMaterialMultiLayerParallax>();
+				auto material = static_cast<BSLightingShaderMaterialMultiLayerParallax*>(scrapHeap->Allocate(sizeof(BSLightingShaderMaterialMultiLayerParallax), 8));
 				if (material) {
 					material->Ctor();
 				}
@@ -147,7 +148,7 @@ namespace RE
 			}
 		case Feature::kEye:
 			{
-				auto material = malloc<BSLightingShaderMaterialEye>();
+				auto material = static_cast<BSLightingShaderMaterialEye*>(scrapHeap->Allocate(sizeof(BSLightingShaderMaterialEye), 8));
 				if (material) {
 					material->Ctor();
 				}
@@ -166,5 +167,85 @@ namespace RE
 	void BSLightingShaderMaterialBase::SetTextureSet(NiPointer<BSTextureSet> a_textureSet)
 	{
 		textureSet = a_textureSet;
+	}
+
+	void BSLightingShaderMaterialBase::CopyMembers(BSShaderMaterial* that)
+	{
+		auto vtable = REL::Relocation<uintptr_t***>(BSLightingShaderMaterialBase::VTABLE[0]);
+		auto baseMethod = reinterpret_cast<void (*)(BSShaderMaterial*, BSShaderMaterial*)>((vtable.get()[0x2]));
+		return baseMethod(this, that);
+	}
+
+	bool BSLightingShaderMaterialBase::DoIsCopy(BSShaderMaterial* that)
+	{
+		auto vtable = REL::Relocation<uintptr_t***>(BSLightingShaderMaterialBase::VTABLE[0]);
+		auto baseMethod = reinterpret_cast<bool (*)(BSShaderMaterial*, BSShaderMaterial*)>((vtable.get()[0x3]));
+		return baseMethod(this, that);
+	}
+
+	std::uint32_t BSLightingShaderMaterialBase::ComputeCRC32(uint32_t srcHash)
+	{
+		auto vtable = REL::Relocation<uintptr_t***>(BSLightingShaderMaterialBase::VTABLE[0]);
+		auto baseMethod = reinterpret_cast<uint32_t (*)(BSShaderMaterial*, uint32_t)>((vtable.get()[0x4]));
+		return baseMethod(this, srcHash);
+	}
+
+	BSShaderMaterial* BSLightingShaderMaterialBase::GetDefault()
+	{
+		auto vtable = REL::Relocation<uintptr_t***>(BSLightingShaderMaterialBase::VTABLE[0]);
+		auto baseMethod = reinterpret_cast<BSShaderMaterial* (*)(BSShaderMaterial*)>((vtable.get()[0x5]));
+		return baseMethod(this);
+	}
+
+	BSShaderMaterial::Feature BSLightingShaderMaterialBase::GetFeature() const
+	{
+		return Feature::kDefault;
+	}
+
+	BSShaderMaterial::Type BSLightingShaderMaterialBase::GetType() const
+	{
+		return Type::kLighting;
+	}
+
+	void BSLightingShaderMaterialBase::OnLoadTextureSet(std::uint64_t arg1, BSTextureSet* inTextureSet)
+	{
+		auto vtable = REL::Relocation<uintptr_t***>(BSLightingShaderMaterialBase::VTABLE[0]);
+		auto baseMethod = reinterpret_cast<void (*)(BSLightingShaderMaterialBase*, uint64_t, BSTextureSet*)>((vtable.get()[0x8]));
+		return baseMethod(this, arg1, inTextureSet);
+	}
+
+	void BSLightingShaderMaterialBase::ClearTextures()
+	{
+		auto vtable = REL::Relocation<uintptr_t***>(BSLightingShaderMaterialBase::VTABLE[0]);
+		auto baseMethod = reinterpret_cast<void (*)(BSLightingShaderMaterialBase*)>((vtable.get()[0x9]));
+		return baseMethod(this);
+	}
+
+	void BSLightingShaderMaterialBase::ReceiveValuesFromRootMaterial(bool skinned, bool rimLighting, bool softLighting, bool backLighting, bool MSN)
+	{
+		auto vtable = REL::Relocation<uintptr_t***>(BSLightingShaderMaterialBase::VTABLE[0]);
+		auto baseMethod = reinterpret_cast<void (*)(BSLightingShaderMaterialBase*, bool, bool, bool, bool, bool)>((vtable.get()[0xA]));
+		return baseMethod(this, skinned, rimLighting, softLighting, backLighting, MSN);
+	}
+
+	uint32_t BSLightingShaderMaterialBase::GetTextures(NiSourceTexture** textures)
+	{
+		auto vtable = REL::Relocation<uintptr_t***>(BSLightingShaderMaterialBase::VTABLE[0]);
+		auto baseMethod = reinterpret_cast<uint32_t (*)(BSLightingShaderMaterialBase*, NiSourceTexture**)>((vtable.get()[0xB]));
+		return baseMethod(this, textures);
+	}
+
+	void BSLightingShaderMaterialBase::SaveBinary(NiStream& stream)
+	{
+		auto vtable = REL::Relocation<uintptr_t***>(BSLightingShaderMaterialBase::VTABLE[0]);
+		auto baseMethod = reinterpret_cast<void (*)(BSLightingShaderMaterialBase*, NiStream&)>((vtable.get()[0xC]));
+		return baseMethod(this, stream);
+	}
+
+	void BSLightingShaderMaterialBase::LoadBinary(NiStream& stream)
+	{
+		auto vtable = REL::Relocation<void***>(BSLightingShaderMaterialBase::VTABLE[0]);
+		auto baseMethod = reinterpret_cast<void (*)(BSLightingShaderMaterialBase*, NiStream&)>((vtable.get()[0xD]));
+		return baseMethod(this, stream);
 	}
 }

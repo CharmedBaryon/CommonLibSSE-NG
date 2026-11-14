@@ -100,12 +100,12 @@ namespace RE
 
 	bool GFxTranslator::CanReceiveHTML() const
 	{
-		return (stl::enumeration{ GetCaps() } & TranslateCap::kReceiveHTML) != TranslateCap::kNone;
+		return (REX::EnumSet{ GetCaps() } & TranslateCap::kReceiveHTML) != TranslateCap::kNone;
 	}
 
 	bool GFxTranslator::NeedStripNewLines() const
 	{
-		return (stl::enumeration{ GetCaps() } & TranslateCap::kStripTrailingNewLines) != TranslateCap::kNone;
+		return (REX::EnumSet{ GetCaps() } & TranslateCap::kStripTrailingNewLines) != TranslateCap::kNone;
 	}
 
 	bool GFxTranslator::HandlesCustomWordWrapping() const

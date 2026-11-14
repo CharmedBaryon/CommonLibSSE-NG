@@ -4,9 +4,38 @@
 
 #include "REX/W32/KERNEL32.h"
 
+// Only the CMake build defines this (tied to PROJECT_VERSION, kept in sync with releases
+// by the semantic-release replace-plugin); xmake has no equivalent version tracking, so
+// fall back rather than fail to compile there.
+#ifndef COMMONLIB_VERSION
+#	define COMMONLIB_VERSION "unknown"
+#endif
+
 namespace REL
 {
-    Module Module::_instance;
+	namespace
+	{
+		// Emitted once per linked module (each plugin DLL statically links its own copy of
+		// REL::Module) via OutputDebugString rather than left as an inert string literal --
+		// MSVC's /Gy + /OPT:REF would otherwise strip an unreferenced constant from a Release
+		// build. Every consumer that binds any RELOCATION_ID pulls this translation unit in,
+		// so this notice reaches any plugin statically linking CommonLibSSE-NG.
+		constexpr const char* kLicenseNotice =
+			"CommonLibSSE-NG " COMMONLIB_VERSION
+			" (statically linked) is licensed under GPL-3.0-or-later with a Modding Exception. "
+			"Source: https://github.com/alandtse/CommonLibSSE-NG";
+	}
+
+	void Module::EmitLicenseNotice() noexcept { REX::W32::OutputDebugStringA(kLicenseNotice); }
+
+	// constinit enforces that _instance is constant-initialized, so a future non-literal
+	// member cannot silently give it a dynamic initializer. The Debug STL's container debug
+	// state makes Module non-literal, so the guard applies only where it's achievable.
+#ifdef NDEBUG
+	constinit Module Module::_instance;
+#else
+	Module Module::_instance;
+#endif
 
 	void Module::load_segments()
 	{
@@ -29,7 +58,6 @@ namespace REL
 		}
 	}
 
-
 	void Module::clear()
 	{
 		if (_injectedModule) {
@@ -44,7 +72,7 @@ namespace REL
 		for (auto& segment : _segments) {
 			segment = {};
 		}
-        IDDatabase::_instance.clear();
-        IDDatabase::_initialized = false;
+		IDDB::_instance.clear();
+		IDDB::_initialized = false;
 	}
 }

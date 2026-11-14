@@ -1,28 +1,25 @@
 #include "RE/C/ControlMap.h"
 
-#include "RE/U/UserEventEnabled.h"
-
 namespace RE
 {
 	ControlMap* ControlMap::GetSingleton()
 	{
-		REL::Relocation<ControlMap**> singleton{ Offset::ControlMap::Singleton };
+		static REL::Relocation<ControlMap**> singleton{ RELOCATION_ID(514705, 400863) };
 		return *singleton;
 	}
 
-	std::int8_t ControlMap::AllowTextInput(bool a_allow)
+	void ControlMap::AllowTextInput(bool a_allow)
 	{
-		if (a_allow) {
-			if (textEntryCount != -1) {
-				++textEntryCount;
-			}
-		} else {
-			if (textEntryCount != 0) {
-				--textEntryCount;
-			}
-		}
+		using func_t = decltype(&ControlMap::AllowTextInput);
+		static REL::Relocation<func_t> func{ RELOCATION_ID(67252, 68552) };
+		return func(this, a_allow);
+	}
 
-		return textEntryCount;
+	bool ControlMap::GetButtonNameFromUserEvent(const BSFixedString& a_eventID, INPUT_DEVICE a_device, BSFixedString& a_buttonName)
+	{
+		using func_t = decltype(&ControlMap::GetButtonNameFromUserEvent);
+		static REL::Relocation<func_t> func{ RELOCATION_ID(67253, 68553) };
+		return func(this, a_eventID, a_device, a_buttonName);
 	}
 
 	std::uint32_t ControlMap::GetMappedKey(std::string_view a_eventID, INPUT_DEVICE a_device, InputContextID a_context) const
@@ -41,6 +38,21 @@ namespace RE
 		}
 
 		return kInvalid;
+	}
+
+	bool ControlMap::GetMappingFromEventName(const BSFixedString& a_eventID, UserEvents::INPUT_CONTEXT_ID a_context, INPUT_DEVICE a_device, UserEventMapping& a_mapping)
+	{
+		const auto context = controlMap[a_context];
+		if (context) {
+			for (auto& mapping : context->deviceMappings[a_device]) {
+				if (mapping.eventID == a_eventID) {
+					a_mapping = mapping;
+					return true;
+				}
+			}
+		}
+
+		return false;
 	}
 
 	std::string_view ControlMap::GetUserEventName(std::uint32_t a_buttonID, INPUT_DEVICE a_device, InputContextID a_context) const
@@ -71,34 +83,63 @@ namespace RE
 	void ControlMap::PopInputContext(InputContextID a_context)
 	{
 		using func_t = decltype(&ControlMap::PopInputContext);
-		REL::Relocation<func_t> func{ RELOCATION_ID(67244, 68544) };
+		static REL::Relocation<func_t> func{ RELOCATION_ID(67244, 68544) };
 		return func(this, a_context);
 	}
 
 	void ControlMap::PushInputContext(InputContextID a_context)
 	{
 		using func_t = decltype(&ControlMap::PushInputContext);
-		REL::Relocation<func_t> func{ RELOCATION_ID(67243, 68543) };
+		static REL::Relocation<func_t> func{ RELOCATION_ID(67243, 68543) };
 		return func(this, a_context);
 	}
 
-	void ControlMap::ToggleControls(UEFlag a_flags, bool a_enable)
+	void ControlMap::StoreControls()
 	{
-		auto oldState = enabledControls;
+		using func_t = decltype(&ControlMap::StoreControls);
+		static REL::Relocation<func_t> func{ RELOCATION_ID(67246, 68546) };
+		return func(this);
+	}
 
-		if (a_enable) {
-			enabledControls.set(a_flags);
-			if (unk11C != UEFlag::kInvalid) {
-				unk11C.set(a_flags);
-			}
-		} else {
-			enabledControls.reset(a_flags);
-			if (unk11C != UEFlag::kInvalid) {
-				unk11C.reset(a_flags);
-			}
-		}
+	void ControlMap::LoadStoredControls()
+	{
+		using func_t = decltype(&ControlMap::LoadStoredControls);
+		static REL::Relocation<func_t> func{ RELOCATION_ID(67247, 68547) };
+		return func(this);
+	}
 
-		UserEventEnabled event{ enabledControls, oldState };
-		SendEvent(std::addressof(event));
+	void ControlMap::ToggleControls(UEFlag a_flags, bool a_enable, bool a_storeState)
+	{
+		using func_t = decltype(&ControlMap::ToggleControls);
+		static REL::Relocation<func_t> func{ RELOCATION_ID(67245, 68545) };
+		return func(this, a_flags, a_enable, a_storeState);
+	}
+
+	void ControlMap::GetControlsState(std::uint32_t& a_enabledControls, std::uint32_t& a_storedControls) const
+	{
+		using func_t = decltype(&ControlMap::GetControlsState);
+		static REL::Relocation<func_t> func{ RELOCATION_ID(67248, 68548) };
+		return func(this, a_enabledControls, a_storedControls);
+	}
+
+	void ControlMap::SetControlsState(std::uint32_t a_enabledControls, std::uint32_t a_storedControls)
+	{
+		using func_t = decltype(&ControlMap::SetControlsState);
+		static REL::Relocation<func_t> func{ RELOCATION_ID(67249, 68549) };
+		return func(this, a_enabledControls, a_storedControls);
+	}
+
+	void ControlMap::ResetControls()
+	{
+		using func_t = decltype(&ControlMap::ResetControls);
+		static REL::Relocation<func_t> func{ RELOCATION_ID(67250, 68550) };
+		return func(this);
+	}
+
+	void ControlMap::SetGamePadType(PC_GAMEPAD_TYPE a_gamePadType)
+	{
+		using func_t = decltype(&ControlMap::SetGamePadType);
+		static REL::Relocation<func_t> func{ RELOCATION_ID(67237, 68537) };
+		return func(this, a_gamePadType);
 	}
 }

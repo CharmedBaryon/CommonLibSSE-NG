@@ -1,0 +1,36 @@
+# Unit test for the prebuilt bundle's toolchain gate in cmake/Prebuilt.cmake: a bundle must only be
+# linked by a consumer built with the same compiler family. Run: cmake -P tests/prebuilt-toolchain-gate.cmake
+include("${CMAKE_CURRENT_LIST_DIR}/../cmake/Prebuilt.cmake")
+
+set(_tmp "${CMAKE_CURRENT_LIST_DIR}/.toolchain-gate-tmp")
+file(REMOVE_RECURSE "${_tmp}")
+file(MAKE_DIRECTORY "${_tmp}/legacy" "${_tmp}/clangcl" "${_tmp}/msvc19_44")
+file(WRITE "${_tmp}/clangcl/TOOLCHAIN_ID.txt" "clangcl")
+file(WRITE "${_tmp}/clangcl/TOOLSET_VERSION.txt" "20.1.7")
+file(WRITE "${_tmp}/msvc19_44/TOOLCHAIN_ID.txt" "msvc")
+file(WRITE "${_tmp}/msvc19_44/TOOLSET_VERSION.txt" "19.44.35207")
+
+set(_failed FALSE)
+function(expect name id variant version dir want)
+    set(CMAKE_CXX_COMPILER_ID "${id}")
+    set(CMAKE_CXX_COMPILER_FRONTEND_VARIANT "${variant}")
+    set(CMAKE_CXX_COMPILER_VERSION "${version}")
+    _commonlib_prebuilt_toolset_compatible("${dir}" got)
+    if(got STREQUAL want)
+        message(STATUS "PASS ${name}")
+    else()
+        message(SEND_ERROR "FAIL ${name}: compatible=${got}, expected ${want}")
+    endif()
+endfunction()
+
+expect("msvc consumer, unstamped bundle" MSVC MSVC 19.44.35207 "${_tmp}/legacy" TRUE)
+expect("clang-cl consumer, unstamped (MSVC) bundle" Clang MSVC 20.1.7 "${_tmp}/legacy" FALSE)
+expect("clang-cl consumer, same clang version" Clang MSVC 20.1.9 "${_tmp}/clangcl" TRUE)
+expect("clang-cl consumer, other clang minor" Clang MSVC 20.2.0 "${_tmp}/clangcl" FALSE)
+expect("clang-cl consumer, other clang major" Clang MSVC 19.1.0 "${_tmp}/clangcl" FALSE)
+expect("msvc consumer, clangcl bundle" MSVC MSVC 19.44.35207 "${_tmp}/clangcl" FALSE)
+expect("msvc consumer, same toolset" MSVC MSVC 19.44.35300 "${_tmp}/msvc19_44" TRUE)
+expect("msvc consumer, other toolset" MSVC MSVC 19.50.1 "${_tmp}/msvc19_44" FALSE)
+expect("other compiler, unstamped bundle" GNU GNU 14.2.0 "${_tmp}/legacy" FALSE)
+
+file(REMOVE_RECURSE "${_tmp}")

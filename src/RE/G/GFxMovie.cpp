@@ -1,5 +1,6 @@
 #include "RE/G/GFxMovie.h"
 
+#include "RE/G/GColor.h"
 #include "RE/G/GFxMovieDef.h"
 #include "RE/G/GFxValue.h"
 
@@ -53,5 +54,33 @@ namespace RE
 	bool GFxMovie::GetVariableArray(const char* a_pathToVar, std::uint32_t a_index, GFxValue* a_data, std::uint32_t a_count)
 	{
 		return GetVariableArray(SetArrayType::kValue, a_pathToVar, a_index, a_data, a_count);
+	}
+
+	bool GFxMovie::SetColorTint(const char* a_pathToVar, const GColor& a_tint)
+	{
+		GFxValue object;
+		if (!GetVariable(&object, a_pathToVar)) {
+			return false;
+		}
+
+		if (!object.IsDisplayObject()) {
+			return false;
+		}
+
+		return object.SetColorTint(a_tint);
+	}
+
+	bool GFxMovie::RemoveColorTint(const char* a_pathToVar)
+	{
+		GFxValue object;
+		if (!GetVariable(&object, a_pathToVar)) {
+			return false;
+		}
+
+		if (!object.IsDisplayObject()) {
+			return false;
+		}
+
+		return object.RemoveColorTint();
 	}
 }

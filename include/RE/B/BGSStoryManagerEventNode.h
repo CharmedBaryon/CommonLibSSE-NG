@@ -11,11 +11,16 @@ namespace RE
 	{
 		enum class DATA_TYPE
 		{
+			Reference,
+			Form,
+			Location,
+			Integer,
+			Keyword,
 		};
 
-		stl::enumeration<DATA_TYPE, std::uint32_t> type;      // 00
-		std::uint32_t                              uniqueID;  // 04
-		BSString                                   name;      // 08
+		REX::EnumSet<DATA_TYPE, std::uint32_t> type;      // 00
+		std::uint32_t                          uniqueID;  // 04
+		BSString                               name;      // 08
 	};
 	static_assert(sizeof(BGSStoryEventMember) == 0x18);
 
@@ -36,6 +41,7 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_BGSStoryManagerEventNode;
+		inline static constexpr auto VTABLE = VTABLE_BGSStoryManagerEventNode;
 		inline static constexpr auto FORMTYPE = FormType::StoryManagerEventNode;
 
 		struct RecordFlags

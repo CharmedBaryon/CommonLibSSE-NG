@@ -1,5 +1,7 @@
 #include "RE/B/BGSDefaultObjectManager.h"
 
+#include "SKSE/Version.h"
+
 using namespace REL;
 
 namespace RE
@@ -18,6 +20,13 @@ namespace RE
 				result = (0xFFFF0000 & a_idx) >> 16;
 			} else {
 				result = 0x0000FFFF & a_idx;
+				if (Module::IsAtLeast(SKSE::RUNTIME_SSE_1_7_99)) {
+					if (result >= 263) {
+						result += 6;
+					} else if (result >= 188) {
+						result += 1;
+					}
+				}
 			}
 			return result ? result : kInvalid;
 		}
@@ -25,19 +34,41 @@ namespace RE
 
 	TESForm** BGSDefaultObjectManager::GetObject(DefaultObjectID a_object) noexcept
 	{
-		assert(std::to_underlying(a_object) < Relocate(364, 364, 369));
 		auto idx = MapIndex(std::to_underlying(a_object));
 		if (idx == kInvalid) {
 			return nullptr;
 		}
-		return (&RelocateMember<bool>(this, 0xB80, 0xBA8))[idx] ?
-                   &RelocateMember<TESForm**>(this, 0x20, 0x20)[idx] :
-                   nullptr;
+		assert(idx < static_cast<std::size_t>(Module::IsAtLeast(SKSE::RUNTIME_SSE_1_7_99) ? 372 : Relocate(364, 364, 369)));
+		return IsObjectInitialized(idx) ?
+		           &(&RelocateMember<TESForm*>(this, 0x20, 0x20))[idx] :
+		           nullptr;
 	}
 
 	bool BGSDefaultObjectManager::IsObjectInitialized(DefaultObjectID a_object) const noexcept
 	{
-		return IsObjectInitialized(MapIndex(std::to_underlying(a_object)));
+		const auto idx = MapIndex(std::to_underlying(a_object));
+		return idx != kInvalid && IsObjectInitialized(idx);
+	}
+
+	bool BGSDefaultObjectManager::IsObjectInitialized(std::size_t a_idx) const noexcept
+	{
+		const auto count = static_cast<std::size_t>(Module::IsAtLeast(SKSE::RUNTIME_SSE_1_7_99) ? 372 : Relocate(364, 364, 369));
+		if (a_idx >= count) {
+			return false;
+		}
+		const std::uintptr_t objectInitOffset = Module::IsAtLeast(SKSE::RUNTIME_SSE_1_7_99) ? 0xBC0 : 0xB80;
+		return (&RelocateMember<bool>(this, objectInitOffset, 0xBA8))[a_idx];
+	}
+
+	TESForm** BGSDefaultObjectManager::GetAe1799Object(Ae1799Object a_object) noexcept
+	{
+		if (!Module::IsAtLeast(SKSE::RUNTIME_SSE_1_7_99)) {
+			return nullptr;
+		}
+		const auto idx = std::to_underlying(a_object);
+		return IsObjectInitialized(idx) ?
+		           &(&RelocateMember<TESForm*>(this, 0x20, 0x20))[idx] :
+		           nullptr;
 	}
 
 	bool BGSDefaultObjectManager::SupportsVR(DefaultObjectID a_object) noexcept

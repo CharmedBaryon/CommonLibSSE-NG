@@ -9,7 +9,8 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_ExtraRefractionProperty;
-		inline static auto           EXTRADATATYPE = ExtraDataType::kRefractionProperty;
+		inline static constexpr auto VTABLE = VTABLE_ExtraRefractionProperty;
+		inline static constexpr auto EXTRADATATYPE = ExtraDataType::kRefractionProperty;
 
 		~ExtraRefractionProperty() override;  // 00
 

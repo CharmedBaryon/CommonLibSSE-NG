@@ -92,8 +92,12 @@ namespace SKSE
 					const auto targetID = a_target->GetFormID();
 					if (const auto it = _regs.find(targetID); it != _regs.end()) {
 						for (auto& handle : it->second) {
-							auto args = RE::MakeFunctionArguments(std::forward<Args>(a_args)...);
-							vm->SendEvent(handle, eventName, args);
+							auto copy = std::make_tuple(a_args...);
+							std::apply([&](auto&&... a_copy) {
+								auto args = RE::MakeFunctionArguments(std::forward<Args>(a_copy)...);
+								vm->SendEvent(handle, eventName, args);
+							},
+								copy);
 						}
 					}
 				}

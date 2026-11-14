@@ -16,6 +16,7 @@ namespace RE
 		{
 		public:
 			inline static constexpr auto RTTI = RTTI_SkyrimScript__Store;
+			inline static constexpr auto VTABLE = VTABLE_SkyrimScript__Store;
 
 			~Store() override;  // 00
 

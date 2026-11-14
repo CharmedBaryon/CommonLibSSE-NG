@@ -93,13 +93,15 @@ namespace RE
 		bool Load(TESFile* a_mod) override;  // 06
 		void InitItemImpl() override;        // 13
 
+		bool HasFlag(FLAG flag) const { return (flags.all(flag)); }
+
 		// members
-		CombatStyleGeneralData                generalData;     // 20 - CSGD
-		CombatStyleMeleeData                  meleeData;       // 48 - CSME
-		CombatStyleCloseRangeData             closeRangeData;  // 68 - CSCR
-		CombatStyleLongRangeData              longRangeData;   // 78 - CSLR
-		CombatStyleFlightData                 flightData;      // 7C - CSFL
-		stl::enumeration<FLAG, std::uint32_t> flags;           // 9C - DATA
+		CombatStyleGeneralData            generalData;     // 20 - CSGD
+		CombatStyleMeleeData              meleeData;       // 48 - CSME
+		CombatStyleCloseRangeData         closeRangeData;  // 68 - CSCR
+		CombatStyleLongRangeData          longRangeData;   // 78 - CSLR
+		CombatStyleFlightData             flightData;      // 7C - CSFL
+		REX::EnumSet<FLAG, std::uint32_t> flags;           // 9C - DATA
 	};
 	static_assert(sizeof(TESCombatStyle) == 0xA0);
 }
