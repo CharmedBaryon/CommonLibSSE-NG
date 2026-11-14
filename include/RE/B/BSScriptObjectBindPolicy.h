@@ -23,18 +23,18 @@ namespace RE
 			virtual ~ObjectBindPolicy();  // 00
 
 			// add
-			virtual void Unk_01(VMHandle a_handle) = 0;  // 01
-			virtual void Unk_02(VMHandle a_handle) = 0;  // 02
-			virtual void Unk_03(VMHandle a_handle) = 0;  // 03
-			virtual void Unk_04() = 0;                   // 04
-			virtual void Unk_05(void) = 0;               // 05
-			virtual void Unk_06(void) = 0;               // 06
-			virtual void Unk_07(void) = 0;               // 07
-			virtual void Unk_08(void) = 0;               // 08
-			virtual void Unk_09(void) = 0;               // 09
-			virtual void Unk_0A(void) = 0;               // 0A
-			virtual void Unk_0B(void) = 0;               // 0B
-			virtual void Unk_0C(void) = 0;               // 0C
+			virtual void Unk_01(VMHandle a_handle) = 0;                                             // 01
+			virtual void Unk_02(VMHandle a_handle) = 0;                                             // 02
+			virtual void Unk_03(VMHandle a_handle) = 0;                                             // 03
+			virtual void Unk_04() = 0;                                                              // 04
+			virtual void Unk_05(void) = 0;                                                          // 05
+			virtual void Unk_06(void) = 0;                                                          // 06
+			virtual void Unk_07(void) = 0;                                                          // 07
+			virtual void Unk_08(void) = 0;                                                          // 08
+			virtual void Unk_09(void) = 0;                                                          // 09
+			virtual void Unk_0A(VMHandle a_handle, BSTSmartPointer<Object>& a_obj, void* unk) = 0;  // 0A
+			virtual void Unk_0B(void) = 0;                                                          // 0B
+			virtual void Unk_0C(void) = 0;                                                          // 0C
 
 			void BindObject(BSTSmartPointer<Object>& a_objectPtr, VMHandle a_handle);
 			void GetInitialPropertyValues(VMHandle a_handle, const BSFixedString& a_className, BSTScrapHashMap<BSFixedString, Variable>& a_propertyValues, std::uint32_t& a_nonConvertedProperties) const;
